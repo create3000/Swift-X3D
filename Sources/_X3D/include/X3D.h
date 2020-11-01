@@ -16,4 +16,4 @@ FOUNDATION_EXPORT const unsigned char X3DVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <X3D/PublicHeader.h>
 
-#import "ShaderDefinitions.h"
+#import "../../X3D/Shaders/ShaderDefinitions.h"

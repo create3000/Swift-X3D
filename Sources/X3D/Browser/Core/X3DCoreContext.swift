@@ -65,8 +65,3 @@ extension X3DCoreContext
    internal var inlineQueue  : DispatchQueue { DispatchQueue .global (qos: .userInitiated) }
    internal var imageQueue   : DispatchQueue { DispatchQueue .global (qos: .utility) }
 }
-
-internal extension Bundle
-{
-   static var module : Bundle { Bundle (identifier: "create3000.X3D")! }
-}

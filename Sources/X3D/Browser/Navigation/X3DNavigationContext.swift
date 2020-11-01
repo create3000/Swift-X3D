@@ -79,13 +79,13 @@ public final class X3DNavigationContextProperies :
    
    private final func set_activeNavigationInfo ()
    {
-      activeNavigationInfoNode? .$viewer           .removeFieldInterest (for: $viewer)
-      activeNavigationInfoNode? .$availableViewers .removeFieldInterest (for: $availableViewers)
+      activeNavigationInfoNode? .$viewer           .removeFieldInterest (to: $viewer)
+      activeNavigationInfoNode? .$availableViewers .removeFieldInterest (to: $availableViewers)
       
       activeNavigationInfoNode = activeLayerNode? .navigationInfoNode
 
-      activeNavigationInfoNode? .$viewer           .addFieldInterest (for: $viewer)
-      activeNavigationInfoNode? .$availableViewers .addFieldInterest (for: $availableViewers)
+      activeNavigationInfoNode? .$viewer           .addFieldInterest (to: $viewer)
+      activeNavigationInfoNode? .$availableViewers .addFieldInterest (to: $availableViewers)
       
       viewer = activeNavigationInfoNode? .viewer ?? .NONE
       

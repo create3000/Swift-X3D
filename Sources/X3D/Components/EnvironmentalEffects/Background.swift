@@ -77,12 +77,12 @@ public final class Background :
       let topTextureNode    = ImageTexture (with: executionContext!)
       let bottomTextureNode = ImageTexture (with: executionContext!)
       
-      $frontUrl  .addFieldInterest (for: frontTextureNode  .$url)
-      $backUrl   .addFieldInterest (for: backTextureNode   .$url)
-      $leftUrl   .addFieldInterest (for: leftTextureNode   .$url)
-      $rightUrl  .addFieldInterest (for: rightTextureNode  .$url)
-      $topUrl    .addFieldInterest (for: topTextureNode    .$url)
-      $bottomUrl .addFieldInterest (for: bottomTextureNode .$url)
+      $frontUrl  .addFieldInterest (to: frontTextureNode  .$url)
+      $backUrl   .addFieldInterest (to: backTextureNode   .$url)
+      $leftUrl   .addFieldInterest (to: leftTextureNode   .$url)
+      $rightUrl  .addFieldInterest (to: rightTextureNode  .$url)
+      $topUrl    .addFieldInterest (to: topTextureNode    .$url)
+      $bottomUrl .addFieldInterest (to: bottomTextureNode .$url)
       
       frontTextureNode  .url .append (contentsOf: frontUrl)
       backTextureNode   .url .append (contentsOf: backUrl)

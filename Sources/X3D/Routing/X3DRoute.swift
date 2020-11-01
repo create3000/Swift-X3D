@@ -30,7 +30,7 @@ public final class X3DRoute :
    
    private final func connect ()
    {
-      sourceField! .addFieldInterest (for: destinationField!)
+      sourceField! .addFieldInterest (to: destinationField!)
    }
    
    // Comparision operators

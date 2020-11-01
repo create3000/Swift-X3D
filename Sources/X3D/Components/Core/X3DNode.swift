@@ -92,7 +92,7 @@ public class X3DNode :
                   continue
                }
                
-               field .addReference (for: reference)
+               field .addReference (to: reference)
             }
          }
       }
@@ -123,7 +123,7 @@ public class X3DNode :
                   continue
                }
                
-               field .addReference (for: reference)
+               field .addReference (to: reference)
             }
          }
       }

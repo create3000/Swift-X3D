@@ -75,10 +75,10 @@ public final class Extrusion :
    {
       super .initialize ()
 
-      $set_crossSection .addFieldInterest (for: $crossSection)
-      $set_orientation  .addFieldInterest (for: $orientation)
-      $set_scale        .addFieldInterest (for: $scale)
-      $set_spine        .addFieldInterest (for: $spine)
+      $set_crossSection .addFieldInterest (to: $crossSection)
+      $set_orientation  .addFieldInterest (to: $orientation)
+      $set_scale        .addFieldInterest (to: $scale)
+      $set_spine        .addFieldInterest (to: $spine)
       
       rebuild ()
    }

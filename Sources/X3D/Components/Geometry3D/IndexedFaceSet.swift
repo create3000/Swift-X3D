@@ -75,10 +75,10 @@ public final class IndexedFaceSet :
    {
       super .initialize ()
 
-      $set_colorIndex    .addFieldInterest (for: $colorIndex)
-      $set_texCoordIndex .addFieldInterest (for: $texCoordIndex)
-      $set_normalIndex   .addFieldInterest (for: $normalIndex)
-      $set_coordIndex    .addFieldInterest (for: $coordIndex)
+      $set_colorIndex    .addFieldInterest (to: $colorIndex)
+      $set_texCoordIndex .addFieldInterest (to: $texCoordIndex)
+      $set_normalIndex   .addFieldInterest (to: $normalIndex)
+      $set_coordIndex    .addFieldInterest (to: $coordIndex)
       
       rebuild ()
    }

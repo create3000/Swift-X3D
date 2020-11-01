@@ -74,18 +74,18 @@ public final class X3DWorld :
          
          if oldLayerSetNode != nil
          {
-            executionContext! .$rootNodes .removeFieldInterest (for: oldLayerSetNode! .layerNode0! .$children)
+            executionContext! .$rootNodes .removeFieldInterest (to: oldLayerSetNode! .layerNode0! .$children)
             oldLayerSetNode! .layerNode0! .children .removeAll ()
          }
          
-         executionContext! .$rootNodes .addFieldInterest (for: layerSetNode! .layerNode0! .$children)
+         executionContext! .$rootNodes .addFieldInterest (to: layerSetNode! .layerNode0! .$children)
          layerSetNode! .layerNode0! .children .append (contentsOf: executionContext! .rootNodes)
          layerSetNode! .layerNode0! .setup ()
 
          // Handle active layer.
          
-         oldLayerSetNode? .$activeLayer .removeFieldInterest (for: $activeLayerNode)
-         layerSetNode!    .$activeLayer .addFieldInterest (for: $activeLayerNode)
+         oldLayerSetNode? .$activeLayer .removeFieldInterest (to: $activeLayerNode)
+         layerSetNode!    .$activeLayer .addFieldInterest (to: $activeLayerNode)
 
          activeLayerNode = layerSetNode! .activeLayerNode
       }

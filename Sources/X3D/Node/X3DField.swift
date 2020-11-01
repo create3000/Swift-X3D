@@ -35,7 +35,7 @@ public class X3DField :
       return accessType == self .accessType || accessType == .inputOutput
    }
    
-   public final func addReference (for reference : X3DField)
+   public final func addReference (to reference : X3DField)
    {
       references .add (reference)
       
@@ -44,18 +44,18 @@ public class X3DField :
       switch accessType .rawValue & reference .accessType .rawValue
       {
          case X3DAccessType .initializeOnly .rawValue:
-            reference .addFieldInterest (for: self)
+            reference .addFieldInterest (to: self)
             set (value: reference)
             
          case X3DAccessType .inputOnly .rawValue:
-            reference.addFieldInterest (for: self)
+            reference.addFieldInterest (to: self)
             
          case X3DAccessType .outputOnly .rawValue:
-            addFieldInterest (for: reference)
+            addFieldInterest (to: reference)
             
          case X3DAccessType .inputOutput .rawValue:
-            reference .addFieldInterest (for: self)
-            addFieldInterest (for: reference)
+            reference .addFieldInterest (to: self)
+            addFieldInterest (to: reference)
             set (value: reference)
             
          default: break
@@ -64,7 +64,7 @@ public class X3DField :
 //      updateReference (reference)
    }
    
-   public final func removeReference (for reference : X3DField)
+   public final func removeReference (to reference : X3DField)
    {
       references .remove (reference)
       
@@ -73,17 +73,17 @@ public class X3DField :
       switch accessType .rawValue & reference .accessType .rawValue
       {
          case X3DAccessType .initializeOnly .rawValue:
-            reference .removeFieldInterest (for: self)
+            reference .removeFieldInterest (to: self)
             
          case X3DAccessType .inputOnly .rawValue:
-            reference.removeFieldInterest (for: self)
+            reference.removeFieldInterest (to: self)
             
          case X3DAccessType .outputOnly .rawValue:
-            removeFieldInterest (for: reference)
+            removeFieldInterest (to: reference)
             
          case X3DAccessType .inputOutput .rawValue:
-            reference .removeFieldInterest (for: self)
-            removeFieldInterest (for: reference)
+            reference .removeFieldInterest (to: self)
+            removeFieldInterest (to: reference)
             
          default: break
       }
@@ -123,27 +123,27 @@ public class X3DField :
    private final var outputFieldInterests = NSHashTable <X3DField> (options: .weakMemory)
    
    /// Adds a interest for field.
-   internal final func addFieldInterest (for field : X3DField)
+   internal final func addFieldInterest (to field : X3DField)
    {
       outputFieldInterests .add (field)
-      field .addInputFieldInterest (for: self)
+      field .addInputFieldInterest (to: self)
    }
 
    /// Removes a interest for field.
-   internal final func removeFieldInterest (for field : X3DField)
+   internal final func removeFieldInterest (to field : X3DField)
    {
       outputFieldInterests .remove (field)
-      field .removeInputFieldInterest (for: self)
+      field .removeInputFieldInterest (to: self)
    }
    
    /// Adds a input interest for field.
-   private final func addInputFieldInterest (for field : X3DField)
+   private final func addInputFieldInterest (to field : X3DField)
    {
       inputFieldInterests .add (field)
    }
 
    /// Removes a input interest for field.
-   private final func removeInputFieldInterest (for field : X3DField)
+   private final func removeInputFieldInterest (to field : X3DField)
    {
       inputFieldInterests .remove (field)
    }
@@ -195,12 +195,12 @@ public class X3DField :
       
       for field in inputFieldInterests .allObjects
       {
-         field .removeFieldInterest (for: self)
+         field .removeFieldInterest (to: self)
       }
 
       for field in outputFieldInterests .allObjects
       {
-         field .removeInputFieldInterest (for: self)
+         field .removeInputFieldInterest (to: self)
       }
    }
 }

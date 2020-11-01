@@ -54,7 +54,7 @@ public final class IndexedQuadSet :
    {
       super .initialize ()
       
-      $set_index .addFieldInterest (for: $index)
+      $set_index .addFieldInterest (to: $index)
       
       rebuild ()
    }

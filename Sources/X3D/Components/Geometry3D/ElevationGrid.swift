@@ -91,7 +91,7 @@ public final class ElevationGrid :
    {
       super .initialize ()
       
-      $set_height .addFieldInterest (for: $height)
+      $set_height .addFieldInterest (to: $height)
 
       $attrib   .addInterest (ElevationGrid .set_attrib,   self)
       $fogCoord .addInterest (ElevationGrid .set_fogCoord, self)
@@ -129,7 +129,7 @@ public final class ElevationGrid :
       if colorNode != nil
       {
          colorNode! .removeInterest (ElevationGrid .requestRebuild, self)
-         colorNode! .$isTransparent .removeFieldInterest (for: $isTransparent)
+         colorNode! .$isTransparent .removeFieldInterest (to: $isTransparent)
       }
 
       colorNode = color? .innerNode as? X3DColorNode
@@ -137,7 +137,7 @@ public final class ElevationGrid :
       if colorNode != nil
       {
          colorNode! .addInterest (ElevationGrid .requestRebuild, self)
-         colorNode! .$isTransparent .addFieldInterest (for: $isTransparent)
+         colorNode! .$isTransparent .addFieldInterest (to: $isTransparent)
          
          setTransparent (colorNode! .isTransparent)
       }

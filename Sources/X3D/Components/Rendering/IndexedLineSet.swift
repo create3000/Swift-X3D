@@ -76,8 +76,8 @@ public final class IndexedLineSet :
    {
       super .initialize ()
       
-      $set_colorIndex .addFieldInterest (for: $colorIndex)
-      $set_coordIndex .addFieldInterest (for: $coordIndex)
+      $set_colorIndex .addFieldInterest (to: $colorIndex)
+      $set_coordIndex .addFieldInterest (to: $coordIndex)
 
       $attrib   .addInterest (IndexedLineSet .set_attrib,   self)
       $fogCoord .addInterest (IndexedLineSet .set_fogCoord, self)
@@ -113,7 +113,7 @@ public final class IndexedLineSet :
       if colorNode != nil
       {
          colorNode! .removeInterest (IndexedLineSet .requestRebuild, self)
-         colorNode! .$isTransparent .removeFieldInterest (for: $isTransparent)
+         colorNode! .$isTransparent .removeFieldInterest (to: $isTransparent)
       }
 
       colorNode = color? .innerNode as? X3DColorNode
@@ -121,7 +121,7 @@ public final class IndexedLineSet :
       if colorNode != nil
       {
          colorNode! .addInterest (IndexedLineSet .requestRebuild, self)
-         colorNode! .$isTransparent .addFieldInterest (for: $isTransparent)
+         colorNode! .$isTransparent .addFieldInterest (to: $isTransparent)
          
          setTransparent (colorNode! .isTransparent)
       }

@@ -53,9 +53,9 @@ public final class Layer :
    {
       super .initialize ()
       
-      $addChildren    .addFieldInterest (for: groupNode! .$addChildren)
-      $removeChildren .addFieldInterest (for: groupNode! .$removeChildren)
-      $children       .addFieldInterest (for: groupNode! .$children)
+      $addChildren    .addFieldInterest (to: groupNode! .$addChildren)
+      $removeChildren .addFieldInterest (to: groupNode! .$removeChildren)
+      $children       .addFieldInterest (to: groupNode! .$children)
 
       groupNode! .children .append (contentsOf: children)
       

@@ -101,7 +101,7 @@ public final class LineSet :
       if colorNode != nil
       {
          colorNode! .removeInterest (LineSet .requestRebuild, self)
-         colorNode! .$isTransparent .removeFieldInterest (for: $isTransparent)
+         colorNode! .$isTransparent .removeFieldInterest (to: $isTransparent)
       }
 
       colorNode = color? .innerNode as? X3DColorNode
@@ -109,7 +109,7 @@ public final class LineSet :
       if colorNode != nil
       {
          colorNode! .addInterest (LineSet .requestRebuild, self)
-         colorNode! .$isTransparent .addFieldInterest (for: $isTransparent)
+         colorNode! .$isTransparent .addFieldInterest (to: $isTransparent)
          
          setTransparent (colorNode! .isTransparent)
       }

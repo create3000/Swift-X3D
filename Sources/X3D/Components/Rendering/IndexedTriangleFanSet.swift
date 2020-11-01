@@ -54,7 +54,7 @@ public final class IndexedTriangleFanSet :
    {
       super .initialize ()
       
-      $set_index .addFieldInterest (for: $index)
+      $set_index .addFieldInterest (to: $index)
       
       $index .addInterest (IndexedTriangleFanSet .set_index_, self)
       

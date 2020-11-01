@@ -73,8 +73,8 @@ public final class Inline :
       $load .addInterest (Inline .set_load, self)
       $url  .addInterest (Inline .set_url,  self)
 
-      groupNode .$isCameraObject   .addFieldInterest (for: $isCameraObject)
-      groupNode .$isPickableObject .addFieldInterest (for: $isPickableObject)
+      groupNode .$isCameraObject   .addFieldInterest (to: $isCameraObject)
+      groupNode .$isPickableObject .addFieldInterest (to: $isPickableObject)
 
       groupNode .isPrivate = true
       groupNode .setup ()
@@ -166,7 +166,7 @@ public final class Inline :
    private final func replaceScene (scene : X3DScene?)
    {
       internalScene? .endUpdate ()
-      internalScene? .$rootNodes .removeFieldInterest (for: groupNode .$children)
+      internalScene? .$rootNodes .removeFieldInterest (to: groupNode .$children)
       groupNode .children .removeAll ()
       
       if let scene = scene
@@ -176,7 +176,7 @@ public final class Inline :
          internalScene! .executionContext = executionContext!
          internalScene! .isPrivate        = executionContext! .isPrivate
 
-         internalScene! .$rootNodes .addFieldInterest (for: groupNode .$children)
+         internalScene! .$rootNodes .addFieldInterest (to: groupNode .$children)
          groupNode .children .append (contentsOf: internalScene! .rootNodes)
 
          set_live ()

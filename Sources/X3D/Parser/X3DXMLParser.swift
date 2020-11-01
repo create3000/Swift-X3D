@@ -505,7 +505,7 @@ internal final class X3DXMLParser :
             return console .warn (t("XML parser error: field '%@' and '%@' in PROTO %@ are incompatible as an IS mapping.", nodeField .identifier, protoField .identifier, proto .identifier))
          }
 
-         nodeField .addReference (for: protoField)
+         nodeField .addReference (to: protoField)
       }
       catch
       {

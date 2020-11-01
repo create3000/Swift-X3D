@@ -99,7 +99,7 @@ public final class PointSet :
       if colorNode != nil
       {
          colorNode! .removeInterest (PointSet .requestRebuild, self)
-         colorNode! .$isTransparent .removeFieldInterest (for: $isTransparent)
+         colorNode! .$isTransparent .removeFieldInterest (to: $isTransparent)
       }
 
       colorNode = color? .innerNode as? X3DColorNode
@@ -107,7 +107,7 @@ public final class PointSet :
       if colorNode != nil
       {
          colorNode! .addInterest (PointSet .requestRebuild, self)
-         colorNode! .$isTransparent .addFieldInterest (for: $isTransparent)
+         colorNode! .$isTransparent .addFieldInterest (to: $isTransparent)
          
          setTransparent (colorNode! .isTransparent)
       }

@@ -1056,7 +1056,7 @@ internal final class X3DVRMLParser :
                         field = addUserDefinedField (node, accessType, fieldId, supportedField)
                      }
 
-                     field! .addReference (for: reference)
+                     field! .addReference (to: reference)
 
                      return true
                   }
@@ -1153,7 +1153,7 @@ internal final class X3DVRMLParser :
             throw X3DError .INVALID_X3D (t("Field '%@' and '%@' in PROTO %@ are incompatible as an IS mapping.", field .identifier, reference .identifier, proto .identifier))
          }
    
-         field .addReference (for: reference)
+         field .addReference (to: reference)
          
          return true
       }

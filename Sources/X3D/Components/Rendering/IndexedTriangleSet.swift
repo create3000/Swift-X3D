@@ -54,7 +54,7 @@ public final class IndexedTriangleSet :
    {
       super .initialize ()
       
-      $set_index .addFieldInterest (for: $index)
+      $set_index .addFieldInterest (to: $index)
       
       rebuild ()
    }

@@ -85,7 +85,7 @@ public class X3DComposedGeometryNode :
       if colorNode != nil
       {
          colorNode! .removeInterest (X3DComposedGeometryNode .requestRebuild, self)
-         colorNode! .$isTransparent .removeFieldInterest (for: $isTransparent)
+         colorNode! .$isTransparent .removeFieldInterest (to: $isTransparent)
       }
 
       colorNode = color? .innerNode as? X3DColorNode
@@ -93,7 +93,7 @@ public class X3DComposedGeometryNode :
       if colorNode != nil
       {
          colorNode! .addInterest (X3DComposedGeometryNode .requestRebuild, self)
-         colorNode! .$isTransparent .addFieldInterest (for: $isTransparent)
+         colorNode! .$isTransparent .addFieldInterest (to: $isTransparent)
          
          setTransparent (colorNode! .isTransparent)
       }

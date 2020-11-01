@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Swift-X3DTests"
-               BuildableName = "Swift-X3DTests"
-               BlueprintName = "Swift-X3DTests"
+               BlueprintIdentifier = "X3DTests"
+               BuildableName = "X3DTests"
+               BlueprintName = "X3DTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

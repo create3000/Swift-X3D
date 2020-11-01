@@ -1,6 +1,6 @@
 
 import XCTest
-@testable import Swift_X3D
+@testable import X3D
 
 final class X3DTests :
    XCTestCase

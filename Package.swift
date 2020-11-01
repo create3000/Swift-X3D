@@ -26,11 +26,11 @@ let package = Package (
       // Targets are the basic building blocks of a package. A target can define a module or a test suite.
       // Targets can depend on other targets in this package, and on products in packages this package depends on.
       .target (
-         name: "C"),
+         name: "_X3D"),
       .target (
          name: "X3D",
          dependencies: [
-            "C",
+            "_X3D",
             .product (name: "Gzip",         package: "Gzip"),
             .product (name: "LibTessSwift", package: "LibTessSwift"),
             .product (name: "Numerics",     package: "swift-numerics"),

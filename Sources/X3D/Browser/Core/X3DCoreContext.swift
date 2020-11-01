@@ -46,12 +46,8 @@ public protocol X3DCoreContext : class
 
 extension X3DCoreContext
 {
-   public var name : String { "Titania X3D Browser macOS" }
-   
-   public var version : String
-   {
-      Bundle .module .infoDictionary! ["CFBundleShortVersionString"] as! String
-   }
+   public var name    : String { "Titania X3D Browser macOS" }
+   public var version : String { "1.0" }
    
    public var supportedProfiles   : [String : X3DProfileInfo] { X3DSupportedProfiles .profiles }
    public var supportedComponents : [String : X3DComponentInfo] { X3DSupportedComponents .components }

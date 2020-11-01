@@ -41,4 +41,55 @@ public final class EaseInEaseOut :
    {
       return EaseInEaseOut (with: executionContext)
    }
+   
+   internal final override func initialize ()
+   {
+      super .initialize ()
+      
+      $easeInEaseOut .addInterest (EaseInEaseOut .set_keyValue, self)
+   }
+   
+   // Event handlers
+   
+   internal final override func set_keyValue ()
+   {
+      guard easeInEaseOut .count < key .count else { return }
+      
+      easeInEaseOut .append (contentsOf: repeatElement (easeInEaseOut .last ?? Vector2f .zero, count: key .count - easeInEaseOut .count))
+   }
+
+   internal final override func interpolate (index0 : Int, index1 : Int, weight : Float)
+   {
+      var easeOut = easeInEaseOut [index0] .y
+      var easeIn  = easeInEaseOut [index1] .x
+      let sum     = easeOut + easeIn
+
+      if sum < 0
+      {
+         modifiedFraction_changed = weight
+      }
+      else
+      {
+         if sum > 1
+         {
+            easeIn  /= sum
+            easeOut /= sum
+         }
+
+         let t = 1 / (2 - easeOut - easeIn)
+
+         if weight < easeOut
+         {
+            modifiedFraction_changed = (t / easeOut) * pow (weight, 2)
+         }
+         else if weight <= 1 - easeIn // Spec says (weight < 1 - easeIn), but then we get a NaN below if easeIn == 0.
+         {
+            modifiedFraction_changed = t * (2 * weight - easeOut)
+         }
+         else
+         {
+            modifiedFraction_changed = 1 - (t * pow (1 - weight, 2) / easeIn)
+         }
+      }
+   }
 }

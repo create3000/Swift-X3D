@@ -60,7 +60,7 @@ public final class Shape :
    
    internal final override func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
    {
-      guard geometryNode != nil else { return }
+      guard let geometryNode = geometryNode else { return }
 
       switch type
       {
@@ -77,6 +77,8 @@ public final class Shape :
          case .Render:
             renderer .addRenderShape (self)
       }
+      
+      geometryNode .traverse (type, renderer)
    }
    
    internal final override func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder)

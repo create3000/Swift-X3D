@@ -17,7 +17,7 @@ public struct Box3f
    public typealias Vector4 = Vector4f
    public typealias Matrix4 = Matrix4f
    
-   // Prperties
+   // Properties
    
    public private(set) var matrix : Matrix4
    

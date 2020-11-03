@@ -47,7 +47,7 @@ public class X3DFontStyleNode :
    
    internal func makeTextGeometry (textNode : Text) -> X3DTextGeometry? { nil }
    
-   internal var scale : Float = 1
+   internal var scale : Float { 1 }
    
    enum Alignment
    {
@@ -114,7 +114,12 @@ public class X3DFontStyleNode :
       return index > 0 ? .FIRST : .BEGIN
    }
    
-   private final func makeFont (from URL: URL, size: CGFloat) throws -> CTFont
+   internal final var font : CTFont
+   {
+      CTFontCreateWithName ("HelveticaNeue-Regular" as CFString, CGFloat (scale), nil)
+   }
+   
+   private final func makeFont (from URL: URL) throws -> CTFont
    {
       guard let dataProvider = CGDataProvider (url: URL as CFURL) else
       {
@@ -126,7 +131,7 @@ public class X3DFontStyleNode :
          throw NSError (domain: "Not a font file.", code: 77, userInfo: ["URL" : URL .absoluteURL .description])
       }
       
-      return CTFontCreateWithGraphicsFont (graphicsFont, size, nil, nil)
+      return CTFontCreateWithGraphicsFont (graphicsFont, CGFloat (scale), nil, nil)
    }
 
    //

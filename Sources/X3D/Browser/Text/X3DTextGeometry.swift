@@ -7,6 +7,7 @@
 
 import Metal
 import Foundation
+import CoreTextSwift
 
 internal class X3DTextGeometry
 {
@@ -64,7 +65,22 @@ internal class X3DTextGeometry
 
       for l in stride (from: first, to: last, by: step)
       {
-         debugPrint (font)
+         let line = textNode .string [l]
+         
+         let attributedString = CFAttributedStringCreate (nil, line as CFString, [kCTFontAttributeName : font] as CFDictionary)
+         let glyphLine        = attributedString! .line ()
+         let glyphRuns        = glyphLine .glyphRuns ()
+         let glyphs           = glyphRuns .first! .glyphs ()
+         let advances         = font .advances (of: glyphs)
+         let rects            = font .boundingRects (of: glyphs)
+
+         for i in 0 ..< glyphs .count
+         {
+            let advance = advances [i]
+            let rect    = rects [i]
+            
+            debugPrint (advance, rect)
+         }
          
          ll += 1
       }

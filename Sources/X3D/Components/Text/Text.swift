@@ -73,6 +73,8 @@ public final class Text :
       $fontStyle .addInterest (Text .set_fontStyle, self)
       
       set_fontStyle ()
+      
+      build ()
    }
    
    // Properties access

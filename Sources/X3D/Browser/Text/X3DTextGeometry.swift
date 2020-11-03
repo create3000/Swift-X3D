@@ -167,13 +167,13 @@ internal class X3DTextGeometry
       let attributedString = CFAttributedStringCreate (nil, string as CFString, [kCTFontAttributeName : font] as CFDictionary)
       let line             = attributedString! .line ()
       let glyphRuns        = line .glyphRuns ()
+      var first            = true
       var minX             = Float (0)
       var minY             = Float (0)
       var maxX             = Float (0)
       var maxY             = Float (0)
-      var first            = true
       var numGlyphes       = 0
-
+      
       for glyphRun in glyphRuns
       {
          let glyphs   = glyphRun .glyphs ()

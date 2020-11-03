@@ -47,4 +47,11 @@ public final class FontStyle :
    {
       return FontStyle (with: executionContext)
    }
+   
+   // Property access
+   
+   internal final override func makeTextGeometry (textNode : Text) -> X3DTextGeometry?
+   {
+      return X3DPolygonText (textNode: textNode, fontStyleNode: self)
+   }
 }

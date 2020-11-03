@@ -23,6 +23,7 @@ public class X3DBrowserContext :
    X3DPointingDeviceSensorContext,
    X3DRenderingContext,
    X3DShapeContext,
+   X3DTextContext,
    X3DTexturingContext,
    X3DTimeContext,
    X3DInputOutput
@@ -51,6 +52,7 @@ public class X3DBrowserContext :
    public private(set) final var pointingDeviceSensorContextProperties : X3DPointingDeviceSensorContextProperies!
    public private(set) final var renderingContextProperties            : X3DRenderingContextProperies!
    public private(set) final var shapeContextProperties                : X3DShapeContextProperies!
+   public private(set) final var textContextProperties                 : X3DTextContextProperies!
    public private(set) final var texturingContextProperties            : X3DTexturingContextProperies!
    public private(set) final var timeContextProperties                 : X3DTimeContextProperies!
 
@@ -82,6 +84,7 @@ public class X3DBrowserContext :
       pointingDeviceSensorContextProperties = X3DPointingDeviceSensorContextProperies (with: internalScene)
       renderingContextProperties            = X3DRenderingContextProperies            (with: internalScene)
       shapeContextProperties                = X3DShapeContextProperies                (with: internalScene)
+      textContextProperties                 = X3DTextContextProperies                 (with: internalScene)
       texturingContextProperties            = X3DTexturingContextProperies            (with: internalScene)
       timeContextProperties                 = X3DTimeContextProperies                 (with: internalScene)
 
@@ -99,6 +102,7 @@ public class X3DBrowserContext :
       pointingDeviceSensorContextProperties .setup ()
       renderingContextProperties            .setup ()
       shapeContextProperties                .setup ()
+      textContextProperties                 .setup ()
       texturingContextProperties            .setup ()
       timeContextProperties                 .setup ()
 

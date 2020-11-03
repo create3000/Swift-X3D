@@ -289,6 +289,8 @@ public class X3DGeometryNode :
 
    // Rendering
    
+   internal func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer) { }
+   
    /// Renders geometry to surface with selected shader.
    internal func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder)
    {

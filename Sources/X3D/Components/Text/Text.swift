@@ -103,7 +103,8 @@ public final class Text :
    
    internal final override func build ()
    {
-      isSolid = solid
+      isSolid     = solid
+      hasTexCoord = true
       
       textGeometry! .update ()
       textGeometry! .build ()

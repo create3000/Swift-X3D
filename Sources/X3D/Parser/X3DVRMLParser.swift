@@ -56,7 +56,9 @@ internal final class X3DVRMLParser :
       static let period       = "."
       static let colon        = ":"
       static let doubleQuotes = "\""
-      static let backSlash   = Character ("\\")
+      static let substring    = CharacterSet (charactersIn: "\\\"")
+      static let endstring    = Character ("\"")
+      static let backSlash    = Character ("\\")
 
       // Id
 
@@ -1463,25 +1465,33 @@ internal final class X3DVRMLParser :
       
       _ = scanner .scanCharacters (from: Grammar .whiteSpaces)
 
-      while scanner .scanString (Grammar .doubleQuotes) != nil
+      guard scanner .scanString (Grammar .doubleQuotes) != nil else { return nil }
+      
+      while !scanner .isAtEnd
       {
-         if let substring = scanner .scanUpToString (Grammar .doubleQuotes)
+         if let substring = scanner .scanUpToCharacters (from: Grammar .substring)
          {
             string += substring
-            
-            if substring .last! == Grammar .backSlash
-            {
-               string .removeLast ()
-               string += Grammar .doubleQuotes
-               continue
-            }
          }
          
-         break
+         // Double quotes
+         
+         if scanner .isAtEnd || scanner .string [scanner .currentIndex] == Grammar .endstring
+         {
+            break
+         }
+         
+         // Backslash
+         
+         scanner .currentIndex = scanner .string .index (after: scanner .currentIndex)
+
+         string += String (scanner .string [scanner .currentIndex])
+         
+         scanner .currentIndex = scanner .string .index (after: scanner .currentIndex)
       }
-      
+
       guard scanner .scanString (Grammar .doubleQuotes) != nil else { return nil }
-   
+
       return string
    }
 

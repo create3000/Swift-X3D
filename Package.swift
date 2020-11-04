@@ -39,11 +39,10 @@ let package = Package (
             .product (name: "SwiftImage",    package: "SwiftImage")
          ],
          exclude: [
-            "Info.plist"
          ],
          resources: [
-            .process ("Shaders/ShaderDefinitions.h"),
-            .process ("Info.plist")
+            .copy ("Fonts/"),
+            .process ("Shaders/ShaderDefinitions.h")
          ]),
       .testTarget (
          name: "X3DTests",

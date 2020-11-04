@@ -19,35 +19,17 @@ public class X3DFontStyleNode :
    @SFBool   public final var leftToRight : Bool = true
    @SFBool   public final var topToBottom : Bool = true
    @MFString public final var justify     : MFString .Value = ["BEGIN"]
+   
+   // Properties
+   
+   @SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE
+   
+   internal var scale                                       : Float { 1 }
+   internal private(set) final var normalizedMajorAlignment : Alignment = .BEGIN
+   internal private(set) final var normalizedMinorAlignment : Alignment = .FIRST
+   internal private(set) final var font                     : CTFont? = nil
 
-   // Construction
-   
-   internal override init (_ browser : X3DBrowser, _ executionContext : X3DExecutionContext?)
-   {
-      super .init (browser, executionContext)
-
-      types .append (.X3DFontStyleNode)
-   }
-   
-   internal final override func initialize ()
-   {
-      super .initialize ()
-      
-      $style       .addInterest (X3DFontStyleNode .set_style,   self)
-      $horizontal  .addInterest (X3DFontStyleNode .set_justify, self)
-      $leftToRight .addInterest (X3DFontStyleNode .set_justify, self)
-      $topToBottom .addInterest (X3DFontStyleNode .set_justify, self)
-      $justify     .addInterest (X3DFontStyleNode .set_justify, self)
-
-      set_style ()
-      set_justify ()
-   }
-   
-   // Member access
-   
-   internal func makeTextGeometry (textNode : Text) -> X3DTextGeometry? { nil }
-   
-   internal var scale : Float { 1 }
+   // Member types
    
    enum Alignment
    {
@@ -57,13 +39,49 @@ public class X3DFontStyleNode :
       case END
    }
    
-   internal private(set) final var normalizedMajorAlignment : Alignment = .BEGIN
-   internal private(set) final var normalizedMinorAlignment : Alignment = .FIRST
+   // Construction
+   
+   internal override init (_ browser : X3DBrowser, _ executionContext : X3DExecutionContext?)
+   {
+      super .init (browser, executionContext)
+
+      types .append (.X3DFontStyleNode)
+      
+      addChildObjects ($loadState)
+   }
+   
+   internal final override func initialize ()
+   {
+      super .initialize ()
+      
+      $family      .addInterest (X3DFontStyleNode .set_family,  self)
+      $style       .addInterest (X3DFontStyleNode .set_style,   self)
+      $horizontal  .addInterest (X3DFontStyleNode .set_justify, self)
+      $leftToRight .addInterest (X3DFontStyleNode .set_justify, self)
+      $topToBottom .addInterest (X3DFontStyleNode .set_justify, self)
+      $justify     .addInterest (X3DFontStyleNode .set_justify, self)
+
+      set_style ()
+      set_justify ()
+   }
 
    // Event handlers
    
+   private final func set_family ()
+   {
+      guard checkLoadState != .IN_PROGRESS_STATE else { return }
+      
+      setLoadState (.NOT_STARTED_STATE)
+
+      requestImmediateLoad ()
+   }
+
    private final func set_style ()
    {
+      guard checkLoadState != .IN_PROGRESS_STATE else { return }
+      
+      setLoadState (.NOT_STARTED_STATE)
+
       requestImmediateLoad ()
    }
    
@@ -114,11 +132,10 @@ public class X3DFontStyleNode :
       return index > 0 ? .FIRST : .BEGIN
    }
    
-   internal final var font : CTFont
-   {
-      CTFontCreateWithName ("HelveticaNeue-Regular" as CFString, CGFloat (scale), nil)
-   }
+   // Member access
    
+   internal func makeTextGeometry (textNode : Text) -> X3DTextGeometry? { nil }
+
    private final func makeFont (from URL: URL) throws -> CTFont
    {
       guard let dataProvider = CGDataProvider (url: URL as CFURL) else
@@ -131,13 +148,102 @@ public class X3DFontStyleNode :
          throw NSError (domain: "Not a font file.", code: 77, userInfo: ["URL" : URL .absoluteURL .description])
       }
       
-      return CTFontCreateWithGraphicsFont (graphicsFont, CGFloat (scale), nil, nil)
+      return CTFontCreateWithGraphicsFont (graphicsFont, 1, nil, nil)
    }
 
-   //
+   static private var defaultFonts : [String : [String : URL]] =
+   [
+      "SERIF" : [
+         "PLAIN" :      Bundle .module .url (forResource: "Fonts/DroidSerif-Regular",    withExtension: "ttf")!,
+         "ITALIC" :     Bundle .module .url (forResource: "Fonts/DroidSerif-Italic",     withExtension: "ttf")!,
+         "BOLD" :       Bundle .module .url (forResource: "Fonts/DroidSerif-Bold",       withExtension: "ttf")!,
+         "BOLDITALIC" : Bundle .module .url (forResource: "Fonts/DroidSerif-BoldItalic", withExtension: "ttf")!,
+      ],
+      "SANS" : [
+         "PLAIN" :      Bundle .module .url (forResource: "Fonts/Ubuntu-R",  withExtension: "ttf")!,
+         "ITALIC" :     Bundle .module .url (forResource: "Fonts/Ubuntu-RI", withExtension: "ttf")!,
+         "BOLD" :       Bundle .module .url (forResource: "Fonts/Ubuntu-B",  withExtension: "ttf")!,
+         "BOLDITALIC" : Bundle .module .url (forResource: "Fonts/Ubuntu-BI", withExtension: "ttf")!,
+      ],
+      "TYPEWRITER" : [
+         "PLAIN" :      Bundle .module .url (forResource: "Fonts/UbuntuMono-R",  withExtension: "ttf")!,
+         "ITALIC" :     Bundle .module .url (forResource: "Fonts/UbuntuMono-RI", withExtension: "ttf")!,
+         "BOLD" :       Bundle .module .url (forResource: "Fonts/UbuntuMono-B",  withExtension: "ttf")!,
+         "BOLDITALIC" : Bundle .module .url (forResource: "Fonts/UbuntuMono-BI", withExtension: "ttf")!,
+      ],
+   ]
+   
+   // Load state handling
+   
+   internal func setLoadState (_ value : X3DLoadState)
+   {
+      guard value != loadState else { return }
+      
+      loadState = value
+   }
+   
+   public var checkLoadState : X3DLoadState { loadState }
+
+   // Load
    
    private final func requestImmediateLoad ()
    {
+      guard checkLoadState != .COMPLETE_STATE && checkLoadState != .IN_PROGRESS_STATE else { return }
       
+      setLoadState (.IN_PROGRESS_STATE)
+
+      // Start load.
+
+      let url : [URL] = self .family .map
+      {
+         if let defaultFonts = X3DFontStyleNode .defaultFonts [$0], let defaultFont = defaultFonts [style] ?? defaultFonts ["PLAIN"]
+         {
+            return defaultFont
+         }
+         else
+         {
+            return URL (string: $0, relativeTo: executionContext! .worldURL)
+         }
+      }
+      .compactMap { $0 }
+      
+      let defaultFonts = X3DFontStyleNode .defaultFonts ["SERIF"]!
+      let defaultFont  = defaultFonts [style] ?? defaultFonts ["PLAIN"]!
+      
+      browser! .fontQueue .async
+      {
+         guard let browser = self .browser else { return }
+         
+         for URL in url
+         {
+            do
+            {
+               let font = try self .makeFont (from: URL)
+               
+               DispatchQueue .main .async
+               {
+                  self .font = font
+                  
+                  self .setLoadState (.COMPLETE_STATE)
+               }
+               
+               return
+            }
+            catch
+            {
+               browser .console .warn (t("Invalid font. %@", error .localizedDescription))
+               continue
+            }
+         }
+         
+         let font = try? self .makeFont (from: defaultFont)
+         
+         DispatchQueue .main .async
+         {
+            self .font = font
+            
+            self .setLoadState (.FAILED_STATE)
+         }
+      }
    }
 }

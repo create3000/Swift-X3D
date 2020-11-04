@@ -52,11 +52,13 @@ internal class X3DTextGeometry
    
    private final func horizontal ()
    {
-      let font        = fontStyleNode .font
+      guard let font = fontStyleNode .font else { return }
+      
       let numLines    = textNode .string .count
       let maxExtent   = max (0, textNode .maxExtent)
       let topToBottom = fontStyleNode .topToBottom
-      let spacing     = fontStyleNode .spacing * fontStyleNode .scale
+      let spacing     = fontStyleNode .spacing
+      let scale       = fontStyleNode .scale
       
       var bbox = Box2f ()
             
@@ -80,7 +82,7 @@ internal class X3DTextGeometry
          
          var charSpacing = Float (0)
          var length      = textNode .length (index: l)
-         var lineBound   = Vector2f (size .x, ll == 0 ? extents .max .y - Float (font .descent ()) : spacing)
+         var lineBound   = Vector2f (size .x, ll == 0 ? extents .max .y - Float (font .descent ()) : spacing) * scale
 
          if maxExtent > 0
          {
@@ -90,7 +92,7 @@ internal class X3DTextGeometry
             }
             else
             {
-               length = min (maxExtent, size .x)
+               length = min (maxExtent, size .x * scale)
             }
          }
          
@@ -98,7 +100,7 @@ internal class X3DTextGeometry
          {
             charSpacing  = (length - lineBound .x) / Float (extents .numGlyphes - 1)
             lineBound .x = length
-            size .x      = length
+            size .x      = length / scale
          }
          
          charSpacings [ll]        = charSpacing
@@ -115,12 +117,14 @@ internal class X3DTextGeometry
             case .END:
                translations [ll] = Vector2f (-extents .min .x - size .x, Float (-ll) * spacing)
          }
+         
+         translations [ll] *= scale
 
          // Calculate center.
 
          let center = extents .min + size / 2
          
-         bbox += Box2f (size: size, center: center + translations [ll])
+         bbox += Box2f (size: size * scale, center: center * scale + translations [ll])
                   
          ll += 1
       }
@@ -146,7 +150,7 @@ internal class X3DTextGeometry
          case .MIDDLE:
             minorAlignment = Vector2f (0, size .y / 2 - extents .max .y)
          case .END:
-            minorAlignment = Vector2f (0, Float (numLines - 1) * spacing)
+            minorAlignment = Vector2f (0, Float (numLines - 1) * (spacing * scale))
       }
       
       // Translate bbox by minorAlignment.

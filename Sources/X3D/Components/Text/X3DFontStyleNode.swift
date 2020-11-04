@@ -28,6 +28,7 @@ public class X3DFontStyleNode :
    internal private(set) final var normalizedMajorAlignment : Alignment = .BEGIN
    internal private(set) final var normalizedMinorAlignment : Alignment = .FIRST
    internal private(set) final var font                     : CTFont? = nil
+   internal private(set) final var fileURL                  : URL?
 
    // Member types
    
@@ -222,7 +223,8 @@ public class X3DFontStyleNode :
                
                DispatchQueue .main .async
                {
-                  self .font = font
+                  self .font    = font
+                  self .fileURL = URL .absoluteURL
                   
                   self .setLoadState (.COMPLETE_STATE)
                }
@@ -240,7 +242,8 @@ public class X3DFontStyleNode :
          
          DispatchQueue .main .async
          {
-            self .font = font
+            self .font    = font
+            self .fileURL = defaultFont .absoluteURL
             
             self .setLoadState (.FAILED_STATE)
          }

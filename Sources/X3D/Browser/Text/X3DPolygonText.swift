@@ -10,10 +10,18 @@ import LibTessSwift
 internal final class X3DPolygonText :
    X3DTextGeometry
 {
+   // Static properties
+   
+   static private var glyphCache = [URL : [UInt16 : [Vector3f]]] ()
+   
+   // Construction
+   
    internal init (textNode : Text, fontStyleNode : FontStyle)
    {
       super .init (textNode: textNode, fontStyleNode: fontStyleNode)
    }
+   
+   // Build
    
    internal final override func build ()
    {
@@ -66,12 +74,20 @@ internal final class X3DPolygonText :
    
    private final func glyphGeometry (_ font : CTFont, _ glyph : CGGlyph, _ dimension : Int) -> [Vector3f]
    {
+      // Try get geometry.
+      
+      if let geometry = X3DPolygonText .glyphCache [fontStyleNode .fileURL!]? [glyph]
+      {
+         return geometry
+      }
+      
       // Make contours.
       
-      let path      = font .path (for: glyph)
-      var contours  = [[Vector3f]] ()
-      var contour   = [Vector3f] ()
-      var current   = CGPoint ()
+      guard let tess = TessC () else { return [ ] }
+      
+      let path    = font .path (for: glyph)
+      var contour = [Vector3f] ()
+      var current = CGPoint ()
 
       path? .applyWithBlock
       {
@@ -130,7 +146,8 @@ internal final class X3DPolygonText :
                
                let ccw = dot (X3DPolygonText .makePolygonNormal (for: contour), .zAxis) > 0
                
-               contours .append (ccw ? contour : contour .reversed ())
+               // Add contour.
+               tess .addContour (ccw ? contour : contour .reversed ())
                contour .removeAll (keepingCapacity: true)
             }
             @unknown default:
@@ -138,16 +155,6 @@ internal final class X3DPolygonText :
          }
       }
       
-      // Tessellate contours.
-      
-      guard let tess = TessC () else { return [ ] }
-      
-      for contour in contours
-      {
-         // Add the contour to LibTess.
-         tess .addContour (contour)
-      }
-
       // Tesselate - if no errors are thrown, we're good!
       guard let (points, indices) = try? tess .tessellate (windingRule: .evenOdd, elementType: .polygons, polySize: 3) else
       {
@@ -155,7 +162,12 @@ internal final class X3DPolygonText :
       }
       
       // Extract each index for each polygon triangle found.
-      return indices .map { points [$0] }
+      let geometry = indices .map { points [$0] }
+      
+      // Cache geometry.
+      X3DPolygonText .glyphCache [fontStyleNode .fileURL!]? [glyph] = geometry
+      
+      return geometry
    }
    
    static private func dimension (_ primitiveQuality : String) -> Int

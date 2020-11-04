@@ -1474,9 +1474,11 @@ internal final class X3DVRMLParser :
             string += substring
          }
          
+         if scanner .isAtEnd { break }
+
          // Double quotes
          
-         if scanner .isAtEnd || scanner .string [scanner .currentIndex] == Grammar .endstring
+         if scanner .string [scanner .currentIndex] == Grammar .endstring
          {
             break
          }
@@ -1484,6 +1486,8 @@ internal final class X3DVRMLParser :
          // Backslash
          
          scanner .currentIndex = scanner .string .index (after: scanner .currentIndex)
+         
+         if scanner .isAtEnd { break }
 
          string += String (scanner .string [scanner .currentIndex])
          

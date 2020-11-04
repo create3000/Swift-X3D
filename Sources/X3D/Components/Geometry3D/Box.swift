@@ -71,61 +71,61 @@ public final class Box :
       // Front face
       
       addPrimitive (texCoords: [Vector4f (0, 0, 0, 1)], normal: Vector3f (0, 0, 1), point: Vector3f (-x, -y, z))
-      addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (0, 0, 1), point: Vector3f (x, -y, z))
-      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (0, 0, 1), point: Vector3f (x, y, z))
+      addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (0, 0, 1), point: Vector3f ( x, -y, z))
+      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (0, 0, 1), point: Vector3f ( x,  y, z))
 
       addPrimitive (texCoords: [Vector4f (0, 0, 0, 1)], normal: Vector3f (0, 0, 1), point: Vector3f (-x, -y, z))
-      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (0, 0, 1), point: Vector3f (x, y, z))
-      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (0, 0, 1), point: Vector3f (-x, y, z))
+      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (0, 0, 1), point: Vector3f ( x,  y, z))
+      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (0, 0, 1), point: Vector3f (-x,  y, z))
 
       // Back face
       
       addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (0, 0, -1), point: Vector3f (-x, -y, -z))
-      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (0, 0, -1), point: Vector3f (-x, y, -z))
-      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (0, 0, -1), point: Vector3f (x, y, -z))
+      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (0, 0, -1), point: Vector3f (-x,  y, -z))
+      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (0, 0, -1), point: Vector3f ( x,  y, -z))
 
       addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (0, 0, -1), point: Vector3f (-x, -y, -z))
-      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (0, 0, -1), point: Vector3f (x, y, -z))
-      addPrimitive (texCoords: [Vector4f (0, 0, 0, 1)], normal: Vector3f (0, 0, -1), point: Vector3f (x, -y, -z))
+      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (0, 0, -1), point: Vector3f ( x,  y, -z))
+      addPrimitive (texCoords: [Vector4f (0, 0, 0, 1)], normal: Vector3f (0, 0, -1), point: Vector3f ( x, -y, -z))
 
       // Top face
       
       addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (0, 1, 0), point: Vector3f (-x, y, -z))
-      addPrimitive (texCoords: [Vector4f (0, 0, 0, 1)], normal: Vector3f (0, 1, 0), point: Vector3f (-x, y, z))
-      addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (0, 1, 0), point: Vector3f (x, y, z))
+      addPrimitive (texCoords: [Vector4f (0, 0, 0, 1)], normal: Vector3f (0, 1, 0), point: Vector3f (-x, y,  z))
+      addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (0, 1, 0), point: Vector3f ( x, y,  z))
 
       addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (0, 1, 0), point: Vector3f (-x, y, -z))
-      addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (0, 1, 0), point: Vector3f (x, y, z))
-      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (0, 1, 0), point: Vector3f (x, y, -z))
+      addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (0, 1, 0), point: Vector3f ( x, y,  z))
+      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (0, 1, 0), point: Vector3f ( x, y, -z))
 
       // Bottom face
       
       addPrimitive (texCoords: [Vector4f (0, 0, 0, 1)], normal: Vector3f (0, -1, 0), point: Vector3f (-x, -y, -z))
-      addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (0, -1, 0), point: Vector3f (x, -y, -z))
-      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (0, -1, 0), point: Vector3f (x, -y, z))
+      addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (0, -1, 0), point: Vector3f ( x, -y, -z))
+      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (0, -1, 0), point: Vector3f ( x, -y,  z))
 
       addPrimitive (texCoords: [Vector4f (0, 0, 0, 1)], normal: Vector3f (0, -1, 0), point: Vector3f (-x, -y, -z))
-      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (0, -1, 0), point: Vector3f (x, -y, z))
-      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (0, -1, 0), point: Vector3f (-x, -y, z))
+      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (0, -1, 0), point: Vector3f ( x, -y,  z))
+      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (0, -1, 0), point: Vector3f (-x, -y,  z))
 
       // Right face
       
       addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (1, 0, 0), point: Vector3f (x, -y, -z))
-      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (1, 0, 0), point: Vector3f (x, y, -z))
-      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (1, 0, 0), point: Vector3f (x, y, z))
+      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (1, 0, 0), point: Vector3f (x,  y, -z))
+      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (1, 0, 0), point: Vector3f (x,  y,  z))
 
       addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (1, 0, 0), point: Vector3f (x, -y, -z))
-      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (1, 0, 0), point: Vector3f (x, y, z))
-      addPrimitive (texCoords: [Vector4f (0, 0, 0, 1)], normal: Vector3f (1, 0, 0), point: Vector3f (x, -y, z))
+      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (1, 0, 0), point: Vector3f (x,  y,  z))
+      addPrimitive (texCoords: [Vector4f (0, 0, 0, 1)], normal: Vector3f (1, 0, 0), point: Vector3f (x, -y,  z))
 
       // Left face
       
       addPrimitive (texCoords: [Vector4f (0, 0, 0, 1)], normal: Vector3f (-1, 0, 0), point: Vector3f (-x, -y, -z))
-      addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (-1, 0, 0), point: Vector3f (-x, -y, z))
-      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (-1, 0, 0), point: Vector3f (-x, y, z))
+      addPrimitive (texCoords: [Vector4f (1, 0, 0, 1)], normal: Vector3f (-1, 0, 0), point: Vector3f (-x, -y,  z))
+      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (-1, 0, 0), point: Vector3f (-x,  y,  z))
 
       addPrimitive (texCoords: [Vector4f (0, 0, 0, 1)], normal: Vector3f (-1, 0, 0), point: Vector3f (-x, -y, -z))
-      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (-1, 0, 0), point: Vector3f (-x, y, z))
-      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (-1, 0, 0), point: Vector3f (-x, y, -z))
+      addPrimitive (texCoords: [Vector4f (1, 1, 0, 1)], normal: Vector3f (-1, 0, 0), point: Vector3f (-x,  y,  z))
+      addPrimitive (texCoords: [Vector4f (0, 1, 0, 1)], normal: Vector3f (-1, 0, 0), point: Vector3f (-x,  y, -z))
    }
 }

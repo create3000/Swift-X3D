@@ -47,3 +47,25 @@ public func interval <Type : FloatingPoint> (_ value : Type, low : Type, high : 
 
    return value
 }
+
+public func quad_mix (_ a : Vector2f, _ b : Vector2f, _ c : Vector2f, t : Float) -> Vector2f
+{
+   let q0 = mix (a, b, t: t)
+   let q1 = mix (b, c, t: t)
+   let r  = mix (q0, q1, t: t)
+   
+   return r
+}
+
+public func cubic_mix (_ a : Vector2f, _ b : Vector2f, _ c : Vector2f, _ d : Vector2f, t : Float) -> Vector2f
+{
+   let u = mix (a, b, t: t)
+   let v = mix (b, c, t: t)
+   let w = mix (c, d, t: t)
+
+   let m = mix (u, v, t: t)
+   let n = mix (v, w, t: t)
+   let p = mix (m, n, t: t)
+
+   return p
+}

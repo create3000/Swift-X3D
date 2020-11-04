@@ -72,8 +72,6 @@ internal final class X3DPolygonText :
       var contours  = [[Vector3f]] ()
       var contour   = [Vector3f] ()
       var current   = CGPoint ()
-      
-      debugPrint (path)
 
       path? .applyWithBlock
       {
@@ -111,6 +109,20 @@ internal final class X3DPolygonText :
             }
             case .addCurveToPoint: do
             {
+               let a = Vector2f (Float (current .x), Float (current .y))
+               let b = Vector2f (Float (element .pointee .points [0] .x), Float (element .pointee .points [0] .y))
+               let c = Vector2f (Float (element .pointee .points [1] .x), Float (element .pointee .points [1] .y))
+               let d = Vector2f (Float (element .pointee .points [2] .x), Float (element .pointee .points [2] .y))
+
+               for i in 0 ..< dimension
+               {
+                  let t = Float (i) / Float (dimension - 1)
+                  let p = cubic_mix (a, b, c, d, t: t)
+                  
+                  contour .append (Vector3f (Float (p .x), Float (p .y), Float (0)))
+               }
+               
+               current = element .pointee .points [2]
             }
             case .closeSubpath: do
             {
@@ -151,13 +163,4 @@ internal final class X3DPolygonText :
          default:     return 5
       }
    }
-}
-
-internal func quad_mix (_ a : Vector2f, _ b : Vector2f, _ c : Vector2f, t : Float) -> Vector2f
-{
-   let q0 = mix (a, b, t: t)
-   let q1 = mix (b, c, t: t)
-   let r  = mix (q0, q1, t: t)
-   
-   return r
 }

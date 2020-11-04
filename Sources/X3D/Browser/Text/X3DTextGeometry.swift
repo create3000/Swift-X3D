@@ -74,7 +74,7 @@ internal class X3DTextGeometry
 
       for l in stride (from: first, to: last, by: step)
       {
-         let line = textNode .string [l]
+         let line = fontStyleNode .leftToRight ? textNode .string [l] : String (textNode .string [l])
          
          // Get line extents.
          

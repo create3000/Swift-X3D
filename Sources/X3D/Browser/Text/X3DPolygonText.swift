@@ -49,17 +49,18 @@ internal final class X3DPolygonText :
                let geometry = glyphGeometry (font, glyph, dimension)
                let xOffset  = minorAlignment .x + translation .x + advance + Float (g) * charSpacing
                let yOffset  = minorAlignment .y + translation .y
+               let offset   = Vector3f (xOffset, yOffset, 0)
                
                for point in geometry
                {
-                  let x = point .x * scale + xOffset
-                  let y = point .y * scale + yOffset
+                  let p = point * scale + offset
+                  let t = Vector4f ((p .x - origin .x) / spacing, (p .y - origin .y) / spacing, 0, 1)
                   
                   textNode .addPrimitive (fogDepth: 0,
                                           color: Vector4f .one,
-                                          texCoords: [Vector4f ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1)],
+                                          texCoords: [t],
                                           normal: Vector3f .zAxis,
-                                          point: Vector3f (x, y, 0))
+                                          point: p)
                }
                
                advance += Float (advances [g] .width) * scale

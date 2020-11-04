@@ -126,7 +126,11 @@ internal final class X3DPolygonText :
             }
             case .closeSubpath: do
             {
-               contours .append (contour .reversed ())
+               guard !contour .isEmpty else { break }
+               
+               let ccw = dot (X3DPolygonText .makePolygonNormal (for: contour), .zAxis) > 0
+               
+               contours .append (ccw ? contour : contour .reversed ())
                contour .removeAll (keepingCapacity: true)
             }
             @unknown default:
@@ -162,5 +166,28 @@ internal final class X3DPolygonText :
          case "HIGH": return 7
          default:     return 5
       }
+   }
+   
+   static private func makePolygonNormal (for vertices : [Vector3f]) -> Vector3f
+   {
+      // Determine polygon normal.
+      // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
+
+      var normal  = Vector3f .zero
+      var current = Vector3f .zero
+      var next    = vertices [0]
+
+      for i in 0 ..< vertices .count
+      {
+         swap (&current, &next)
+
+         next = vertices [(i + 1) % vertices .count]
+
+         normal .x += (current .y - next .y) * (current .z + next .z)
+         normal .y += (current .z - next .z) * (current .x + next .x)
+         normal .z += (current .x - next .x) * (current .y + next .y)
+      }
+
+      return normalize (normal)
    }
 }

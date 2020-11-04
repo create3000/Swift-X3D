@@ -151,7 +151,7 @@ public class X3DFontStyleNode :
       return CTFontCreateWithGraphicsFont (graphicsFont, 1, nil, nil)
    }
 
-   static private var defaultFonts : [String : [String : URL]] =
+   static private let defaultFonts : [String : [String : URL]] =
    [
       "SERIF" : [
          "PLAIN" :      Bundle .module .url (forResource: "Fonts/DroidSerif-Regular",    withExtension: "ttf")!,

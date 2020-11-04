@@ -1478,10 +1478,7 @@ internal final class X3DVRMLParser :
 
          // Double quotes
          
-         if scanner .string [scanner .currentIndex] == Grammar .endstring
-         {
-            break
-         }
+         if scanner .string [scanner .currentIndex] == Grammar .endstring { break }
          
          // Backslash
          

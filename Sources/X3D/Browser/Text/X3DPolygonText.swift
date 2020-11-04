@@ -12,7 +12,7 @@ internal final class X3DPolygonText :
 {
    // Member types
    
-   private typealias GlyphCache  = [UInt16 : [Vector3f]]
+   private typealias GlyphCache  = [CGGlyph : [Vector3f]]
    private typealias GlyphCaches = [URL : GlyphCache]
    
    // Static properties

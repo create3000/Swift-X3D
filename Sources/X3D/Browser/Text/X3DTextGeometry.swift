@@ -171,37 +171,34 @@ internal class X3DTextGeometry
    private final func horizontalLineExtents (lineNumber : Int, string : String, font : CTFont) -> (min : Vector2f, max : Vector2f)
    {
       let attributedString = CFAttributedStringCreate (nil, string as CFString, [kCTFontAttributeName : font] as CFDictionary)
-      let line             = attributedString! .line ()
-      let glyphRuns        = line .glyphRuns ()
-      var first            = true
+      let glyphs           = attributedString! .glyphs ()
+      let advances         = font .advances (of: glyphs)
+      let rects            = font .boundingRects (of: glyphs)
       var minX             = Float (0)
       var minY             = Float (0)
       var maxX             = Float (0)
       var maxY             = Float (0)
       
-      for glyphRun in glyphRuns
-      {
-         let glyphs   = glyphRun .glyphs ()
-         let advances = font .advances (of: glyphs)
-         let rects    = font .boundingRects (of: glyphs)
-         
-         self .glyphs [lineNumber] .append (contentsOf: glyphs)
-         
-         if first && !glyphs .isEmpty
-         {
-            first = false
-            minX  = Float (rects [0] .minX)
-         }
+      self .glyphs [lineNumber] = glyphs
 
-         for i in 0 ..< glyphs .count
-         {
-            let advance = advances [i]
-            let rect    = rects [i]
-            
-            maxX += Float (advance .width)
-            minY  = min (minY, Float (rect .minY))
-            maxY  = max (maxY, Float (rect .maxY))
-         }
+      for i in 0 ..< glyphs .count
+      {
+         let advance = advances [i]
+         let rect    = rects [i]
+         
+         maxX += Float (advance .width)
+         minY  = min (minY, Float (rect .minY))
+         maxY  = max (maxY, Float (rect .maxY))
+      }
+      
+      if glyphs .isEmpty
+      {
+         minY = 0
+         maxY = 0
+      }
+      else
+      {
+         minX = Float (rects [0] .minX)
       }
       
       switch fontStyleNode .normalizedMajorAlignment
@@ -217,7 +214,32 @@ internal class X3DTextGeometry
    
    private final func vertical ()
    {
+      guard let font = fontStyleNode .font else { return }
       
+      let numLines    = textNode .string .count
+      let maxExtent   = max (0, textNode .maxExtent)
+      let leftToRight = fontStyleNode .leftToRight
+      let spacing     = fontStyleNode .spacing
+      let scale       = fontStyleNode .scale
+      
+      var bbox = Box2f ()
+            
+      // Calculate bboxes.
+
+      let first = leftToRight ? 0 : numLines - 1
+      let last  = leftToRight ? numLines : -1
+      let step  = leftToRight ? 1 : -1
+      var t     = 0
+
+      for l in stride (from: first, to: last, by: step)
+      {
+         let attributedString = CFAttributedStringCreate (nil, textNode .string [l] as CFString, [kCTFontAttributeName : font] as CFDictionary)
+         let glyphs           = attributedString! .glyphs ()
+         
+         for glyph in glyphs
+         {
+         }
+      }
    }
 
    internal func build () { }
@@ -227,4 +249,21 @@ internal class X3DTextGeometry
    internal func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer) { }
    
    internal func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder) { }
+}
+
+fileprivate extension CFAttributedString
+{
+   func glyphs () -> [CGGlyph]
+   {
+      var glyphs    = [CGGlyph] ()
+      let line      = self .line ()
+      let glyphRuns = line .glyphRuns ()
+      
+      for glyphRun in glyphRuns
+      {
+         glyphs .append (contentsOf: glyphRun .glyphs ())
+      }
+      
+      return glyphs
+   }
 }

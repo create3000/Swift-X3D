@@ -74,13 +74,23 @@ internal final class X3DPolygonText :
    
    private final func glyphGeometry (_ font : CTFont, _ glyph : CGGlyph, _ dimension : Int) -> [Vector3f]
    {
-      // Try get geometry.
-      
+      // Try get cached geometry.
       if let geometry = X3DPolygonText .glyphCache [fontStyleNode .fileURL!]? [glyph]
       {
          return geometry
       }
       
+      // Extract each index for each polygon triangle found.
+      let geometry = makeGlyphGeometry (font, glyph, dimension)
+      
+      // Cache geometry.
+      X3DPolygonText .glyphCache [fontStyleNode .fileURL!, default: [UInt16 : [Vector3f]] ()] [glyph] = geometry
+      
+      return geometry
+   }
+      
+   private final func makeGlyphGeometry (_ font : CTFont, _ glyph : CGGlyph, _ dimension : Int) -> [Vector3f]
+   {
       // Make contours.
       
       guard let tess = TessC () else { return [ ] }
@@ -162,12 +172,7 @@ internal final class X3DPolygonText :
       }
       
       // Extract each index for each polygon triangle found.
-      let geometry = indices .map { points [$0] }
-      
-      // Cache geometry.
-      X3DPolygonText .glyphCache [fontStyleNode .fileURL!]? [glyph] = geometry
-      
-      return geometry
+      return indices .map { points [$0] }
    }
    
    static private func dimension (_ primitiveQuality : String) -> Int

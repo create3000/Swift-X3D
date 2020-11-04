@@ -85,16 +85,18 @@ internal final class X3DPolygonText :
       {
          return geometry
       }
-      
-      // Extract each index for each polygon triangle found.
-      let geometry = makeGlyphGeometry (font, glyph, dimension)
-      
-      // Cache geometry.
-      X3DPolygonText .glyphCaches [fontStyleNode .fileURL!, default: GlyphCache ()] [glyph] = geometry
-      
-      return geometry
+      else
+      {
+         // Make glyph geometry.
+         let geometry = makeGlyphGeometry (font, glyph, dimension)
+         
+         // Cache geometry.
+         X3DPolygonText .glyphCaches [fontStyleNode .fileURL!, default: GlyphCache ()] [glyph] = geometry
+         
+         return geometry
+      }
    }
-      
+   
    private final func makeGlyphGeometry (_ font : CTFont, _ glyph : CGGlyph, _ dimension : Int) -> [Vector3f]
    {
       // Make contours.

@@ -10,9 +10,14 @@ import LibTessSwift
 internal final class X3DPolygonText :
    X3DTextGeometry
 {
+   // Member types
+   
+   private typealias GlyphCache  = [UInt16 : [Vector3f]]
+   private typealias GlyphCaches = [URL : GlyphCache]
+   
    // Static properties
    
-   static private var glyphCache = [URL : [UInt16 : [Vector3f]]] ()
+   static private var glyphCaches = GlyphCaches ()
    
    // Construction
    
@@ -76,7 +81,7 @@ internal final class X3DPolygonText :
    private final func glyphGeometry (_ font : CTFont, _ glyph : CGGlyph, _ dimension : Int) -> [Vector3f]
    {
       // Try get cached geometry.
-      if let geometry = X3DPolygonText .glyphCache [fontStyleNode .fileURL!]? [glyph]
+      if let geometry = X3DPolygonText .glyphCaches [fontStyleNode .fileURL!]? [glyph]
       {
          return geometry
       }
@@ -85,7 +90,7 @@ internal final class X3DPolygonText :
       let geometry = makeGlyphGeometry (font, glyph, dimension)
       
       // Cache geometry.
-      X3DPolygonText .glyphCache [fontStyleNode .fileURL!, default: [UInt16 : [Vector3f]] ()] [glyph] = geometry
+      X3DPolygonText .glyphCaches [fontStyleNode .fileURL!, default: GlyphCache ()] [glyph] = geometry
       
       return geometry
    }

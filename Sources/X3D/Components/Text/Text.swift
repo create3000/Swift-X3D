@@ -73,8 +73,6 @@ public final class Text :
       $fontStyle .addInterest (Text .set_fontStyle, self)
       
       set_fontStyle ()
-      
-      build ()
    }
    
    // Properties access
@@ -97,6 +95,8 @@ public final class Text :
       fontStyleNode? .$loadState .addInterest (Text .requestRebuild, self)
       
       textGeometry = fontStyleNode! .makeTextGeometry (textNode: self)
+      
+      rebuild ()
    }
    
    // Build

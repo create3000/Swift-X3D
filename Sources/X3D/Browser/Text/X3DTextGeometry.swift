@@ -11,11 +11,13 @@ import CoreTextSwift
 
 internal class X3DTextGeometry
 {
-   private final var textNode           : Text
-   private final var fontStyleNode      : X3DFontStyleNode
-   internal private(set) final var bbox : Box3f = Box3f ()
-   internal final var charSpacings      : [Float] = [ ]
-   internal final var translations      : [Vector2f] = [ ]
+   internal private(set) final var textNode       : Text
+   internal private(set) final var fontStyleNode  : X3DFontStyleNode
+   internal private(set) final var bbox           : Box3f = Box3f ()
+   internal private(set) final var glyphs         : [[CGGlyph]] = [ ]
+   internal private(set) final var charSpacings   : [Float] = [ ]
+   internal private(set) final var translations   : [Vector2f] = [ ]
+   internal private(set) final var minorAlignment : Vector2f = Vector2f .zero
 
    internal init (textNode : Text, fontStyleNode : X3DFontStyleNode)
    {
@@ -29,6 +31,7 @@ internal class X3DTextGeometry
       
       textNode .lineBounds .resize (numLines, fillWith: Vector2f .zero)
       
+      glyphs       = [[CGGlyph]] (repeating: [ ], count: numLines)
       charSpacings = [Float] (repeating: 0, count: numLines)
       translations = [Vector2f] (repeating: Vector2f .zero, count: numLines)
 
@@ -75,7 +78,7 @@ internal class X3DTextGeometry
          
          // Get line extents.
          
-         let extents = horizontalLineExtents (string: line, font: font)
+         let extents = horizontalLineExtents (lineNumber: ll, string: line, font: font)
          var size    = extents .max - extents .min
          
          // Calculate charSpacing and lineBounds.
@@ -98,7 +101,7 @@ internal class X3DTextGeometry
          
          if length > 0
          {
-            charSpacing  = (length - lineBound .x) / Float (extents .numGlyphes - 1)
+            charSpacing  = (length - lineBound .x) / Float (glyphs [ll] .count - 1)
             lineBound .x = length
             size .x      = length / scale
          }
@@ -138,8 +141,7 @@ internal class X3DTextGeometry
 
       textNode .textBounds = size
       
-      let bearing        = Vector2f (0, -extents .max .y)
-      var minorAlignment = Vector2f .zero
+      let bearing = Vector2f (0, -extents .max .y)
 
       switch fontStyleNode .normalizedMinorAlignment
       {
@@ -166,7 +168,7 @@ internal class X3DTextGeometry
                           max: Vector3f (extents .max .x, extents .max .y, 0));
    }
    
-   private final func horizontalLineExtents (string : String, font : CTFont) -> (numGlyphes : Int, min : Vector2f, max : Vector2f)
+   private final func horizontalLineExtents (lineNumber : Int, string : String, font : CTFont) -> (min : Vector2f, max : Vector2f)
    {
       let attributedString = CFAttributedStringCreate (nil, string as CFString, [kCTFontAttributeName : font] as CFDictionary)
       let line             = attributedString! .line ()
@@ -176,13 +178,14 @@ internal class X3DTextGeometry
       var minY             = Float (0)
       var maxX             = Float (0)
       var maxY             = Float (0)
-      var numGlyphes       = 0
       
       for glyphRun in glyphRuns
       {
          let glyphs   = glyphRun .glyphs ()
          let advances = font .advances (of: glyphs)
          let rects    = font .boundingRects (of: glyphs)
+         
+         self .glyphs [lineNumber] .append (contentsOf: glyphs)
          
          if first && !glyphs .isEmpty
          {
@@ -199,8 +202,6 @@ internal class X3DTextGeometry
             minY  = min (minY, Float (rect .minY))
             maxY  = max (maxY, Float (rect .maxY))
          }
-         
-         numGlyphes += glyphs .count
       }
       
       switch fontStyleNode .normalizedMajorAlignment
@@ -211,7 +212,7 @@ internal class X3DTextGeometry
             break
       }
 
-      return (numGlyphes, Vector2f (minX, minY), Vector2f (maxX, maxY))
+      return (Vector2f (minX, minY), Vector2f (maxX, maxY))
    }
    
    private final func vertical ()

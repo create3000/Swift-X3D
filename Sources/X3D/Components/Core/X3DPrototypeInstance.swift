@@ -106,7 +106,7 @@ public class X3DPrototypeInstance :
 
       body = X3DExecutionContext (executionContext! .browser!, executionContext)
       
-      body! .executionContext = proto .executionContext!
+      body! .executionContext = proto .executionContext
       
       // Extern protos
       

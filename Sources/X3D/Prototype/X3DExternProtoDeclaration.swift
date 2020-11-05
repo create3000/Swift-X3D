@@ -21,7 +21,7 @@ public final class X3DExternProtoDeclaration :
    {
       if let internalScene = internalScene
       {
-         if let fragment = fileURL? .fragment
+         if let fragment = internalScene .worldURL .fragment
          {
             return internalScene .protos .first { $0 .identifier == fragment }
          }
@@ -35,7 +35,6 @@ public final class X3DExternProtoDeclaration :
    // Properties
    
    @SFNode internal final var internalScene : X3DScene?
-   private final var fileURL : URL?
 
    // Construction
    
@@ -57,8 +56,6 @@ public final class X3DExternProtoDeclaration :
       scene! .$isLive .addInterest (X3DExternProtoDeclaration .set_live, self)
 
       $url .addInterest (X3DExternProtoDeclaration .set_url, self)
-      
-      requestImmediateLoad ()
    }
    
    // Event handlers
@@ -77,6 +74,8 @@ public final class X3DExternProtoDeclaration :
 
    private final func set_url ()
    {
+      guard checkLoadState != .IN_PROGRESS_STATE else { return }
+      
       setLoadState (.NOT_STARTED_STATE)
 
       requestImmediateLoad ()
@@ -98,28 +97,21 @@ public final class X3DExternProtoDeclaration :
       {
          guard let browser = self .browser else { return }
          
-         for URL in url
+         if let scene = try? browser .createX3DFromURL (url: url)
          {
-            if let scene = try? browser .createX3DFromURL (url: [URL])
+            DispatchQueue .main .async
             {
-               DispatchQueue .main .async
-               {
-                  self .fileURL = URL
-                  
-                  self .replaceScene (scene: scene)
-                  self .setLoadState (.COMPLETE_STATE)
-               }
-               
-               return
+               self .replaceScene (scene: scene)
+               self .setLoadState (.COMPLETE_STATE)
             }
          }
-         
-         DispatchQueue .main .async
+         else
          {
-            self .fileURL = nil
-            
-            self .replaceScene (scene: nil)
-            self .setLoadState (.FAILED_STATE)
+            DispatchQueue .main .async
+            {
+               self .replaceScene (scene: nil)
+               self .setLoadState (.FAILED_STATE)
+            }
          }
       }
    }

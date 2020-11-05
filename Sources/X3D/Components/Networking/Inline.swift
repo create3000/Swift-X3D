@@ -119,8 +119,7 @@ public final class Inline :
    
    private final func set_url ()
    {
-      guard load else { return }
-      guard checkLoadState != .IN_PROGRESS_STATE else { return }
+      guard load && checkLoadState != .IN_PROGRESS_STATE else { return }
       
       setLoadState (.NOT_STARTED_STATE)
       

@@ -46,6 +46,11 @@ public class X3DPrototypeInstance :
       
       self .protoNode = protoNode
       self .body      = X3DExecutionContext (executionContext .browser!, executionContext)
+      
+      if let externproto = protoNode as? X3DExternProtoDeclaration
+      {
+         DispatchQueue .main .async { externproto .requestImmediateLoad () }
+      }
    }
    
    internal final override func create (with executionContext : X3DExecutionContext) -> X3DPrototypeInstance

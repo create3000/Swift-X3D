@@ -47,8 +47,6 @@ public class X3DBaseNode :
    
    /// Override to initialize node.
    internal func initialize () { }
-   
-   internal func copy (with protoInstance : X3DPrototypeInstance) -> X3DBaseNode { self }
 
    // Children handling
    

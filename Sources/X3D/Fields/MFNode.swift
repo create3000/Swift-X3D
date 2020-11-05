@@ -56,21 +56,13 @@ public final class MFNode <Element : X3DBaseNode> :
    }
    
    internal final override func set (with protoInstance : X3DPrototypeInstance, value field : X3DField)
+      where Element == X3DNode
    {
       guard let field = field as? MFNode else { return }
       
       value .set (field .value .map
       {
-         (node) -> Element? in
-         
-         if let node = node
-         {
-            return node .copy (with: protoInstance) as? Element
-         }
-         else
-         {
-            return nil
-         }
+         $0? .copy (with: protoInstance)
       })
    }
 }

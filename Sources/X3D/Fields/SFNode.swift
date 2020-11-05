@@ -71,16 +71,10 @@ public final class SFNode <Type : X3DBaseNode> :
    }
    
    internal final override func set (with protoInstance : X3DPrototypeInstance, value field : X3DField)
+      where Type == X3DNode
    {
       guard let field = field as? SFNode else { return }
       
-      if field .value == nil
-      {
-         value = nil
-      }
-      else
-      {
-         value = field .value .copy (with: protoInstance) as? Type
-      }
+      value = field .value? .copy (with: protoInstance)
    }
 }

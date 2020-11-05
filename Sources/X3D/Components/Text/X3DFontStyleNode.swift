@@ -139,9 +139,11 @@ public class X3DFontStyleNode :
 
    private final func makeFont (from URL: URL) throws -> CTFont
    {
-      guard let dataProvider = CGDataProvider (url: URL as CFURL) else
+      let data = try Data (contentsOf: URL)
+      
+      guard let dataProvider = CGDataProvider (data: data as CFData) else
       {
-         throw NSError (domain: "File not found.", code: 77, userInfo: ["URL" : URL .absoluteURL .description])
+         throw NSError (domain: "Couldn't read font data.", code: 77, userInfo: ["URL" : URL .absoluteURL .description])
       }
       
       guard let graphicsFont = CGFont (dataProvider) else
@@ -195,18 +197,18 @@ public class X3DFontStyleNode :
 
       // Start load.
 
-      let url : [URL] = self .family .map
+      let url : [(URL: URL?, custom: Bool)] = self .family .map
       {
          if let defaultFonts = X3DFontStyleNode .defaultFonts [$0], let defaultFont = defaultFonts [style] ?? defaultFonts ["PLAIN"]
          {
-            return defaultFont
+            return (defaultFont, false)
          }
          else
          {
-            return URL (string: $0, relativeTo: executionContext! .worldURL)
+            return (URL (string: $0, relativeTo: executionContext! .worldURL), true)
          }
       }
-      .compactMap { $0 }
+      .filter { $0 .URL != nil }
       
       let defaultFonts = X3DFontStyleNode .defaultFonts ["SERIF"]!
       let defaultFont  = defaultFonts [style] ?? defaultFonts ["PLAIN"]!
@@ -219,14 +221,19 @@ public class X3DFontStyleNode :
          {
             do
             {
-               let font = try self .makeFont (from: URL)
-               
+               let font = try self .makeFont (from: URL .URL!)
+
                DispatchQueue .main .async
                {
                   self .font    = font
-                  self .fileURL = URL .absoluteURL
+                  self .fileURL = URL .URL! .absoluteURL
                   
                   self .setLoadState (.COMPLETE_STATE)
+                  
+                  if URL .custom
+                  {
+                     browser .console .info (t("Done loading font '%@'.", URL .URL! .absoluteURL .description))
+                  }
                }
                
                return

@@ -169,7 +169,7 @@ public final class X3DBrowser :
             
             scene .setup ()
             
-            console .info (t("Done loading '%@'", scene .worldURL .description))
+            console .info (t("Done loading scene '%@'", scene .worldURL .description))
             
             return scene
          }

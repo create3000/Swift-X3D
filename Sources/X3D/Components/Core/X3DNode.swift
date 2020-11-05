@@ -73,6 +73,8 @@ public class X3DNode :
          {
             continue
          }
+         
+         field .isSet = preDefinedField .isSet
 
          if preDefinedField .references .count == 0
          {
@@ -104,6 +106,8 @@ public class X3DNode :
          let field = userDefinedField .copy ()
          
          copy .addUserDefinedField (userDefinedField .accessType, userDefinedField .identifier, field)
+         
+         field .isSet = userDefinedField .isSet
 
          if userDefinedField .references .count == 0
          {

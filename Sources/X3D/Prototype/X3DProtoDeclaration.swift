@@ -13,6 +13,8 @@ public final class X3DProtoDeclaration :
    
    @SFNode public private(set) var body : X3DExecutionContext?
 
+   public final override var proto : X3DProtoDeclaration? { self }
+   
    // Construction
    
    internal init (executionContext : X3DExecutionContext)

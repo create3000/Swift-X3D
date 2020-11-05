@@ -57,18 +57,51 @@ public class X3DPrototypeInstance :
    {
       super .initialize ()
       
-      if protoNode! .isExternProto
-      {
-         
-      }
-      else
-      {
-         update (with: protoNode as! X3DProtoDeclaration)
-      }
+      protoNode! .addInterest (X3DPrototypeInstance .set_proto, self)
+      
+      set_proto ()
    }
    
-   private func update (with proto : X3DProtoDeclaration)
+   private func update ()
    {
+      guard let proto = protoNode! .proto else { return }
+      
+      if protoNode! .isExternProto
+      {
+         for protoField in proto .userDefinedFields
+         {
+            if let field = try? getField (name: protoField .identifier)
+            {
+               // Continue if something is wrong.
+               guard field .accessType == protoField .accessType else { continue }
+ 
+               // Continue if something is wrong.
+               guard field .type == protoField .type else { continue }
+
+               // Continue if field is eventIn or eventOut.
+               guard field .isInitializable else { continue }
+
+               // Is set during parse or later.
+               guard !field .isSet else { continue }
+
+               // Has IS references.
+               guard field .references .count == 0 else { continue }
+
+               // Field are equal.
+               //guard !field .equals (protoField)) else { continue }
+               
+               // If default value of protoField is different from field update default value for field.
+               field .set (value: protoField)
+               field .addEvent ()
+            }
+            else
+            {
+               // Definition exists in proto but does not exist in extern proto.
+               addField (protoField .accessType, protoField .identifier, protoField .copy ())
+            }
+         }
+      }
+
       body = X3DExecutionContext (executionContext! .browser!, executionContext)
       
       body! .executionContext = executionContext!
@@ -120,6 +153,11 @@ public class X3DPrototypeInstance :
       
       // Inform parents about root node change.
       addEvent ()
+   }
+   
+   private final func set_proto ()
+   {
+      update ()
    }
 
    // Root node handling

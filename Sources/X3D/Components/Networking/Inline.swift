@@ -56,7 +56,8 @@ public final class Inline :
       addField (.initializeOnly, "bboxSize",   $bboxSize)
       addField (.initializeOnly, "bboxCenter", $bboxCenter)
       
-      addChildObjects ($loadState)
+      addChildObjects ($loadState,
+                       $internalScene)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> Inline
@@ -142,17 +143,15 @@ public final class Inline :
       {
          guard let browser = self .browser else { return }
          
-         do
+         if let scene = try? browser .createX3DFromURL (url: url)
          {
-            let scene = try browser .createX3DFromURL (url: url)
-            
             DispatchQueue .main .async
             {
                self .replaceScene (scene: scene)
                self .setLoadState (.COMPLETE_STATE)
             }
          }
-         catch
+         else
          {
             DispatchQueue .main .async
             {

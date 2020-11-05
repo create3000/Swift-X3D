@@ -14,6 +14,7 @@ public class X3DProtoDeclarationNode :
    public final override var canUserDefinedFields : Bool { true }
 
    public var isExternProto : Bool { false }
+   public var proto         : X3DProtoDeclaration? { nil }
    
    // Instance construction
    

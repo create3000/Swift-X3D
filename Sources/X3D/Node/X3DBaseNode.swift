@@ -163,8 +163,6 @@ public class X3DBaseNode :
    internal final override func addEvent (for object : X3DChildObject)
    {
       guard let field = object as? X3DField else { return }
-      
-      field .isSet = true
 
       guard !field .isTainted else { return }
 
@@ -178,8 +176,6 @@ public class X3DBaseNode :
    internal final override func addEventObject (for field : X3DField, event : X3DEvent)
    {
       // Register field for processEvent.
-      
-      field .isSet = true
       
       browser! .addTaintedField (field: field, event: event)
 

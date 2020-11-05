@@ -300,8 +300,6 @@ internal final class X3DXMLParser :
       guard let value = element .stringValue else { return }
       
       field .wrappedValue .append (value)
-      
-      field .isSet = true
    }
    
    private final func externProtoDeclareElement (_ element : XMLElement?)
@@ -855,15 +853,12 @@ internal final class X3DXMLParser :
                   let sfnode = field as! SFNode <X3DNode>
    
                   sfnode .wrappedValue = childNode
-                  sfnode .isSet        = true
                }
                case .MFNode: do
                {
                   let mfnode = field as! MFNode <X3DNode>
    
                   mfnode .wrappedValue .append (childNode)
-                  
-                  mfnode .isSet = true
                }
                default:
                   break
@@ -886,15 +881,12 @@ internal final class X3DXMLParser :
                let sfnode = field as! SFNode <X3DNode>
 
                sfnode .wrappedValue = childNode
-               sfnode .isSet        = true
             }
             case .MFNode: do
             {
                let mfnode = field as! MFNode <X3DNode>
 
                mfnode .wrappedValue .append (childNode)
-               
-               mfnode .isSet = true
             }
             default:
                break
@@ -904,8 +896,6 @@ internal final class X3DXMLParser :
    
    private final func fieldValue (_ field : X3DField, _ value : String?)
    {
-      field .isSet = true
-      
       switch field .type
       {
          case .SFBool:

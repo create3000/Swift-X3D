@@ -15,7 +15,7 @@ public class X3DChildObject :
    
    internal final var isTainted : Bool = false
    
-   internal final func addEvent ()
+   internal func addEvent ()
    {
       for parent in parents .allObjects
       {

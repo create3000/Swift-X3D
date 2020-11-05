@@ -1081,8 +1081,6 @@ internal final class X3DVRMLParser :
                   if interfaceDeclaration .field .isInitializable
                   {
                      existingField .set (value: interfaceDeclaration .field)
-                     
-                     existingField .isSet = true
                   }
                   
                   return true
@@ -1273,8 +1271,6 @@ internal final class X3DVRMLParser :
    
    private final func fieldValue (for field : X3DField) throws -> Bool
    {
-      field .isSet = true
-      
       switch field .type
       {
          case .SFBool:      return sfboolValue      (for: field as! SFBool)

@@ -72,9 +72,9 @@ public final class StaticGroup :
    
    public final var bbox : Box3f { groupNode .bbox }
    
-   // Traverse
+   // Rendering
    
-   internal final override func traverse (_ type: X3DTraverseType, _ renderer: X3DRenderer)
+   internal final override func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
    {
       groupNode .traverse (type, renderer)
    }

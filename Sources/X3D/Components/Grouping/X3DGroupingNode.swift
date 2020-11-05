@@ -25,11 +25,12 @@ public class X3DGroupingNode :
    @MFBool public final var visible  : MFBool .Value
    @SFBool public final var isHidden : Bool = false
 
-   @MFNode private final var fogNodes           : MFNode <LocalFog> .Value
-   @MFNode private final var lightNodes         : MFNode <X3DLightNode> .Value
-   @MFNode private final var maybeCameraObjects : MFNode <X3DChildNode> .Value
-   @MFNode private final var cameraObjects      : MFNode <X3DChildNode> .Value
-   @MFNode private final var childNodes         : MFNode <X3DChildNode> .Value
+   @MFNode private  final var fogNodes             : MFNode <LocalFog> .Value
+   @MFNode private  final var lightNodes           : MFNode <X3DLightNode> .Value
+   @MFNode internal final var transformSensorNodes : MFNode <TransformSensor> .Value
+   @MFNode private  final var maybeCameraObjects   : MFNode <X3DChildNode> .Value
+   @MFNode private  final var cameraObjects        : MFNode <X3DChildNode> .Value
+   @MFNode private  final var childNodes           : MFNode <X3DChildNode> .Value
 
    // Construction
    
@@ -43,7 +44,9 @@ public class X3DGroupingNode :
       
       addChildObjects ($visible,
                        $isHidden,
+                       $fogNodes,
                        $lightNodes,
+                       $transformSensorNodes,
                        $maybeCameraObjects,
                        $cameraObjects,
                        $childNodes)
@@ -170,7 +173,7 @@ public class X3DGroupingNode :
    
    // Event handlers
       
-   private final func set_cameraObjects ()
+   internal func set_cameraObjects ()
    {
       cameraObjects .removeAll ()
 
@@ -183,6 +186,11 @@ public class X3DGroupingNode :
       }
 
       setCameraObject (!cameraObjects .isEmpty)
+   }
+   
+   internal func set_pickableObjects ()
+   {
+      
    }
 
    // Rendering

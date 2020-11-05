@@ -39,7 +39,7 @@ public class X3DPrototypeInstance :
          let field = protoField .copy ()
 
          addField (protoField .accessType, protoField .identifier, field)
-     }
+      }
 
       addChildObjects ($protoNode,
                        $body)

@@ -22,6 +22,10 @@ public final class Switch :
    // Fields
    
    @SFInt32 public final var whichChoice : Int32 = 0
+   
+   // Properties
+   
+   @SFNode private final var childNode : X3DChildNode?
 
    // Construction
    
@@ -43,10 +47,79 @@ public final class Switch :
       {
          addFieldAlias (alias: "choice", name: "children")
       }
+      
+      addChildObjects ($childNode)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> Switch
    {
       return Switch (with: executionContext)
+   }
+   
+   internal final override func initialize ()
+   {
+      super .initialize ()
+      
+      $whichChoice .addInterest (Switch .set_whichChoice, self)
+      $children    .addInterest (Switch .set_whichChoice, self)
+      
+      set_whichChoice ()
+   }
+   
+   // Property access
+   
+   public final override var bbox : Box3f
+   {
+      if bboxSize == Vector3f (-1, -1, -1)
+      {
+         if let boundedObject = childNode as? X3DBoundedObject
+         {
+            return boundedObject .bbox
+         }
+
+         return Box3f ()
+      }
+
+      return Box3f (size: bboxSize, center: bboxCenter)
+   }
+   
+   // Event handlers
+   
+   private final func set_whichChoice ()
+   {
+      if children .indices .contains (Int (whichChoice))
+      {
+         childNode = children [whichChoice]? .innerNode as? X3DChildNode
+      }
+      else
+      {
+         childNode = nil
+      }
+
+      set_cameraObjects ()
+      set_pickableObjects ()
+   }
+   
+   internal final override func set_cameraObjects ()
+   {
+      setCameraObject (childNode? .isCameraObject ?? false)
+   }
+
+   internal final override func set_pickableObjects ()
+   {
+      setPickableObject (childNode? .isPickableObject ?? false || !transformSensorNodes .isEmpty)
+   }
+   
+   // Rendering
+   
+   internal final override func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   {
+      guard let childNode = childNode else { return }
+      
+      switch type
+      {
+         default:
+            childNode .traverse (type, renderer)
+      }
    }
 }

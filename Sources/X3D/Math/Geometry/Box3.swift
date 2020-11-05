@@ -24,10 +24,10 @@ public struct Box3f
    /// Constructs an empty box.
    public init ()
    {
-      matrix = Matrix4 (columns: (Vector4 (0.5, 0,   0,   0),
-                                  Vector4 (0,   0.5, 0,   0),
-                                  Vector4 (0,   0,   0.5, 0),
-                                  Vector4 (0,   0,   0,   0)))
+      matrix = Matrix4 (columns: (Vector4 (0, 0, 0, 0),
+                                  Vector4 (0, 0, 0, 0),
+                                  Vector4 (0, 0, 0, 0),
+                                  Vector4 (0, 0, 0, 0)))
    }
    
    /// Constructs a box of `size` and `center`.
@@ -98,7 +98,7 @@ public struct Box3f
          min = simd_min (min, p)
          max = simd_max (max, p)
       }
-      
+
       return (min, max)
    }
 

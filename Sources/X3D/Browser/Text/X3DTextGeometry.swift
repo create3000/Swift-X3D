@@ -58,7 +58,7 @@ internal class X3DTextGeometry
       let spacing     = fontStyleNode .spacing
       let scale       = fontStyleNode .scale
       
-      var bbox = Box2f (size: Vector2f .zero, center: Vector2f .zero)
+      var bbox = Box2f ()
       
       textNode .lineBounds .resize (numLines, fillWith: Vector2f .zero)
       
@@ -181,7 +181,7 @@ internal class X3DTextGeometry
       let spacing     = fontStyleNode .spacing
       let scale       = fontStyleNode .scale
       
-      var bbox = Box2f (size: Vector2f .zero, center: Vector2f .zero)
+      var bbox = Box2f ()
       var yPad = [Float] (repeating: 0, count: numChars)
             
       textNode .lineBounds .resize (numLines, fillWith: Vector2f .zero)
@@ -203,7 +203,7 @@ internal class X3DTextGeometry
          let string           = topToBottom ? textNode .string [l] : String (textNode .string [l] .reversed ())
          let attributedString = CFAttributedStringCreate (nil, string as CFString, [kCTFontAttributeName : font] as CFDictionary)
          let glyphs           = attributedString! .glyphs ()
-         var lineBBox         = Box2f (size: Vector2f .zero, center: Vector2f .zero)
+         var lineBBox         = Box2f ()
          let t0               = t
          
          self .glyphs [ll] = glyphs
@@ -316,7 +316,7 @@ internal class X3DTextGeometry
          // Add bbox.
 
          bbox += Box2f (size: size * scale, center: (center + translation) * scale)
-
+ 
          ll += 1
       }
       
@@ -379,7 +379,7 @@ internal class X3DTextGeometry
       // The value of the origin field represents the upper left corner of the textBounds.
 
       textNode .origin = Vector3f (extents .min .x, extents .max .y, 0)
-
+ 
       self .bbox = Box3f (min: Vector3f (extents .min, 0),
                           max: Vector3f (extents .max, 0));
 

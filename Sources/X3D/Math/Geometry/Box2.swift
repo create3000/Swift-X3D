@@ -23,9 +23,9 @@ public struct Box2f
    /// Constructs an empty box.
    public init ()
    {
-      matrix = Matrix3 (columns: (Vector3 (0.5, 0,   0),
-                                  Vector3 (0,   0.5, 0),
-                                  Vector3 (0,   0,   0)))
+      matrix = Matrix3 (columns: (Vector3 (0, 0, 0),
+                                  Vector3 (0, 0, 0),
+                                  Vector3 (0, 0, 0)))
    }
    
    /// Constructs a box of `size` and `center`.
@@ -86,7 +86,7 @@ public struct Box2f
          min = simd_min (min, p)
          max = simd_max (max, p)
       }
-      
+
       return (min, max)
    }
 

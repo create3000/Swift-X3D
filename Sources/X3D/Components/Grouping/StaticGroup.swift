@@ -23,11 +23,17 @@ public final class StaticGroup :
    @SFVec3f public final var bboxSize   : Vector3f = Vector3f (-1, -1, -1)
    @SFVec3f public final var bboxCenter : Vector3f = Vector3f .zero
    @MFNode  public final var children   : MFNode <X3DNode> .Value
+   
+   // Properties
+   
+   @SFNode private final var groupNode : Group!
 
    // Construction
    
    public init (with executionContext : X3DExecutionContext)
    {
+      self .groupNode = Group (with: executionContext)
+      
       super .init (executionContext .browser!, executionContext)
       
       initBoundedObject (bboxSize: $bboxSize, bboxCenter: $bboxCenter)
@@ -38,6 +44,8 @@ public final class StaticGroup :
       addField (.initializeOnly, "bboxSize",   $bboxSize)
       addField (.initializeOnly, "bboxCenter", $bboxCenter)
       addField (.initializeOnly, "children",   $children)
+      
+      addChildObjects ($groupNode)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> StaticGroup
@@ -45,7 +53,29 @@ public final class StaticGroup :
       return StaticGroup (with: executionContext)
    }
    
+   internal final override func initialize ()
+   {
+      super .initialize ()
+      
+      $bboxSize   .addFieldInterest (to: groupNode .$bboxSize)
+      $bboxCenter .addFieldInterest (to: groupNode .$bboxCenter)
+      $children   .addFieldInterest (to: groupNode .$children)
+      
+      groupNode .isPrivate  = true
+      groupNode .bboxSize   = bboxSize
+      groupNode .bboxCenter = bboxCenter
+      groupNode .children .append (contentsOf: children)
+      groupNode .setup ()
+   }
+   
    // Bounded object
    
-   public final var bbox : Box3f { Box3f () }
+   public final var bbox : Box3f { groupNode .bbox }
+   
+   // Traverse
+   
+   internal final override func traverse (_ type: X3DTraverseType, _ renderer: X3DRenderer)
+   {
+      groupNode .traverse (type, renderer)
+   }
 }

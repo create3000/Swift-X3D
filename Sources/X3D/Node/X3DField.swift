@@ -20,7 +20,7 @@ public class X3DField :
    
    /// Return true if value was set.
    internal final var isSet : Bool = false
-   
+
    /// Assigns a value to this field without generating an event.
    internal func set (value field : X3DField) { }
    

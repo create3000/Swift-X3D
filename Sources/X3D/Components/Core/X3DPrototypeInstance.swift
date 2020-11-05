@@ -87,7 +87,7 @@ public class X3DPrototypeInstance :
                // Has IS references.
                guard field .references .count == 0 else { continue }
 
-               // Field are equal.
+               // Fields are equal.
                //guard !field .equals (protoField)) else { continue }
                
                // If default value of protoField is different from field update default value for field.
@@ -101,10 +101,12 @@ public class X3DPrototypeInstance :
             }
          }
       }
+      
+      // Create body.
 
       body = X3DExecutionContext (executionContext! .browser!, executionContext)
       
-      body! .executionContext = executionContext!
+      body! .executionContext = proto .executionContext!
       
       // Extern protos
       

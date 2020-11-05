@@ -106,7 +106,6 @@ public final class Text :
       isSolid     = solid
       hasTexCoord = true
       
-      textGeometry! .update ()
       textGeometry! .build ()
    }
    

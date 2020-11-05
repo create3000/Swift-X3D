@@ -26,7 +26,7 @@ internal class X3DTextGeometry
       self .fontStyleNode = fontStyleNode
    }
    
-   internal final func update ()
+   internal func build ()
    {
       let numLines = textNode .string .count
       
@@ -437,8 +437,6 @@ internal class X3DTextGeometry
       return (Vector2f (Float (rect .minX), Float (rect .minY)),
               Vector2f (Float (rect .maxX), Float (rect .maxY)))
    }
-   
-   internal func build () { }
    
    // Rendering preparations
    

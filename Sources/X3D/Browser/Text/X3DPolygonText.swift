@@ -30,6 +30,8 @@ internal final class X3DPolygonText :
    
    internal final override func build ()
    {
+      super .build ()
+      
       guard let font = fontStyleNode .font else { return }
       
       let primitiveQuality = fontStyleNode .browser! .browserOptions .PrimitiveQuality

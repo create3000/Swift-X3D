@@ -201,8 +201,8 @@ internal class X3DTextGeometry
       for l in stride (from: first, to: last, by: step)
       {
          let string           = topToBottom ? textNode .string [l] : String (textNode .string [l] .reversed ())
-         let attributedString = CFAttributedStringCreate (nil, string as CFString, [kCTFontAttributeName : font] as CFDictionary)
-         let glyphs           = attributedString! .glyphs ()
+         let attributedString = font .attributedString (string)
+         let glyphs           = attributedString .glyphs ()
          var lineBBox         = Box2f ()
          let t0               = t
          
@@ -387,8 +387,8 @@ internal class X3DTextGeometry
    
    private final func lineExtents (lineNumber : Int, string : String, font : CTFont) -> (min : Vector2f, max : Vector2f)
    {
-      let attributedString = CFAttributedStringCreate (nil, string as CFString, [kCTFontAttributeName : font] as CFDictionary)
-      let glyphs           = attributedString! .glyphs ()
+      let attributedString = font .attributedString (string)
+      let glyphs           = attributedString .glyphs ()
       let advances         = font .advances (of: glyphs)
       let rects            = font .boundingRects (of: glyphs)
       var minX             = Float (0)
@@ -443,6 +443,14 @@ internal class X3DTextGeometry
    internal func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer) { }
    
    internal func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder) { }
+}
+
+fileprivate extension CTFont
+{
+   func attributedString (_ string : String) -> CFAttributedString
+   {
+      return CFAttributedStringCreate (nil, string as CFString, [kCTFontAttributeName : self] as CFDictionary)
+   }
 }
 
 fileprivate extension CFAttributedString

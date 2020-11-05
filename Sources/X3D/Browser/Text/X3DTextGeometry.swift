@@ -58,7 +58,7 @@ internal class X3DTextGeometry
       let spacing     = fontStyleNode .spacing
       let scale       = fontStyleNode .scale
       
-      var bbox = Box2f ()
+      var bbox = Box2f (size: Vector2f .zero, center: Vector2f .zero)
       
       textNode .lineBounds .resize (numLines, fillWith: Vector2f .zero)
       
@@ -181,7 +181,7 @@ internal class X3DTextGeometry
       let spacing     = fontStyleNode .spacing
       let scale       = fontStyleNode .scale
       
-      var bbox = Box2f ()
+      var bbox = Box2f (size: Vector2f .zero, center: Vector2f .zero)
       var yPad = [Float] (repeating: 0, count: numChars)
             
       textNode .lineBounds .resize (numLines, fillWith: Vector2f .zero)
@@ -203,7 +203,7 @@ internal class X3DTextGeometry
          let string           = topToBottom ? textNode .string [l] : String (textNode .string [l] .reversed ())
          let attributedString = CFAttributedStringCreate (nil, string as CFString, [kCTFontAttributeName : font] as CFDictionary)
          let glyphs           = attributedString! .glyphs ()
-         var lineBBox         = Box2f ()
+         var lineBBox         = Box2f (size: Vector2f .zero, center: Vector2f .zero)
          let t0               = t
          
          self .glyphs [ll] = glyphs

@@ -195,8 +195,8 @@ internal class X3DTextGeometry
       let first = leftToRight ? 0 : numLines - 1
       let last  = leftToRight ? numLines : -1
       let step  = leftToRight ? 1 : -1
-      var ll    = 0
-      var t     = 0  // Translation index
+      var ll    = 0 // Normalized line number
+      var t     = 0 // Translation index
 
       for l in stride (from: first, to: last, by: step)
       {

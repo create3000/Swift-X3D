@@ -36,7 +36,7 @@ internal final class X3DPolygonText :
       
       let primitiveQuality = fontStyleNode .browser! .browserOptions .PrimitiveQuality
       let dimension        = X3DPolygonText .dimension (primitiveQuality)
-      let scale            = fontStyleNode .scale
+      let scale            = Vector3f (repeating: fontStyleNode .scale)
       let spacing          = fontStyleNode .spacing
       let origin           = textNode .origin
       
@@ -60,7 +60,7 @@ internal final class X3DPolygonText :
                
                for point in geometry
                {
-                  let p = point * scale + offset
+                  let p = simd_muladd (point, scale, offset)
                   let t = Vector4f ((p .x - origin .x) / spacing, (p .y - origin .y) / spacing, 0, 1)
                   
                   textNode .addPrimitive (fogDepth: 0,
@@ -70,7 +70,7 @@ internal final class X3DPolygonText :
                                           point: p)
                }
                
-               advance += Float (advances [g] .width) * scale
+               advance += Float (advances [g] .width) * scale .x
             }
          }
       }
@@ -88,7 +88,7 @@ internal final class X3DPolygonText :
 
                for point in geometry
                {
-                  let p = point * scale + offset
+                  let p = simd_muladd (point, scale, offset)
                   let t = Vector4f ((p .x - origin .x) / spacing, (p .y - origin .y) / spacing, 0, 1)
                   
                   textNode .addPrimitive (fogDepth: 0,

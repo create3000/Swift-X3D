@@ -18,6 +18,7 @@ internal class X3DTextGeometry
    internal private(set) final var charSpacings   : [Float] = [ ]
    internal private(set) final var translations   : [Vector2f] = [ ]
    internal private(set) final var minorAlignment : Vector2f = Vector2f .zero
+   internal private(set) final var bearing        : Vector2f = Vector2f .zero
 
    internal init (textNode : Text, fontStyleNode : X3DFontStyleNode)
    {
@@ -29,12 +30,6 @@ internal class X3DTextGeometry
    {
       let numLines = textNode .string .count
       
-      textNode .lineBounds .resize (numLines, fillWith: Vector2f .zero)
-      
-      glyphs       = [[CGGlyph]] (repeating: [ ], count: numLines)
-      charSpacings = [Float] (repeating: 0, count: numLines)
-      translations = [Vector2f] (repeating: Vector2f .zero, count: numLines)
-
       if numLines == 0
       {
          textNode .origin     = Vector3f .zero
@@ -64,7 +59,13 @@ internal class X3DTextGeometry
       let scale       = fontStyleNode .scale
       
       var bbox = Box2f ()
-            
+      
+      textNode .lineBounds .resize (numLines, fillWith: Vector2f .zero)
+      
+      glyphs       = [[CGGlyph]] (repeating: [ ], count: numLines)
+      charSpacings = [Float] (repeating: 0, count: numLines)
+      translations = [Vector2f] (repeating: Vector2f .zero, count: numLines)
+
       // Calculate bboxes.
       
       let first = topToBottom ? 0 : numLines - 1
@@ -78,7 +79,7 @@ internal class X3DTextGeometry
          
          // Get line extents.
          
-         let extents = horizontalLineExtents (lineNumber: ll, string: line, font: font)
+         let extents = lineExtents (lineNumber: ll, string: line, font: font)
          var size    = extents .max - extents .min
          
          // Calculate charSpacing and lineBounds.
@@ -167,8 +168,224 @@ internal class X3DTextGeometry
       self .bbox = Box3f (min: Vector3f (extents .min .x, extents .min .y, 0),
                           max: Vector3f (extents .max .x, extents .max .y, 0));
    }
+
+   private final func vertical ()
+   {
+      guard let font = fontStyleNode .font else { return }
+      
+      let numLines    = textNode .string .count
+      let numChars    = textNode .string .reduce (0) { $0 + $1 .count }
+      let maxExtent   = max (0, textNode .maxExtent)
+      let topToBottom = fontStyleNode .topToBottom
+      let leftToRight = fontStyleNode .leftToRight
+      let spacing     = fontStyleNode .spacing
+      let scale       = fontStyleNode .scale
+      
+      var bbox = Box2f ()
+      var yPad = [Float] (repeating: 0, count: numChars)
+            
+      textNode .lineBounds .resize (numLines, fillWith: Vector2f .zero)
+      
+      glyphs       = [[CGGlyph]] (repeating: [ ], count: numLines)
+      charSpacings = [Float] (repeating: 0, count: numChars)
+      translations = [Vector2f] (repeating: Vector2f .zero, count: numChars)
+
+      // Calculate bboxes.
+
+      let first = leftToRight ? 0 : numLines - 1
+      let last  = leftToRight ? numLines : -1
+      let step  = leftToRight ? 1 : -1
+      var ll    = 0
+      var t     = 0  // Translation index
+
+      for l in stride (from: first, to: last, by: step)
+      {
+         let string           = topToBottom ? textNode .string [l] : String (textNode .string [l] .reversed ())
+         let attributedString = CFAttributedStringCreate (nil, string as CFString, [kCTFontAttributeName : font] as CFDictionary)
+         let glyphs           = attributedString! .glyphs ()
+         var lineBBox         = Box2f ()
+         let t0               = t
+         
+         self .glyphs [ll] = glyphs
+
+         for g in 0 ..< glyphs .count
+         {
+            let glyph       = glyphs [g]
+            let extents     = glyphExtents (font: font, glyph: glyph)
+            let size        = extents .max - extents .min
+            
+            // Calculate glyph translation
+            
+            translations [t] = Vector2f ((spacing - size .x - extents .min .x) / 2, Float (-g))
+            
+            // Calculate center.
+
+            let center = extents .min + size / 2 + translations [t]
+
+            // Add bbox.
+
+            lineBBox += Box2f (size: size, center: center)
+
+            t += 1
+         }
+         
+         // Get line extents.
+         
+         var extents = lineBBox .extents
+         var size    = extents .max - extents .min
+         
+         // Calculate charSpacing and lineBounds.
+         
+         let padding     = (spacing - size .x) / 2
+         var charSpacing = Float (0)
+         var length      = textNode .length (index: l)
+         var lineBound   = Vector2f (l == 0 ? spacing - padding : spacing, numChars > 0 ? size .y : 0) * scale
+
+         if maxExtent > 0
+         {
+            if length > 0
+            {
+               length = min (maxExtent, length)
+            }
+            else
+            {
+               length = min (maxExtent, size .y * scale)
+            }
+         }
+
+         if length > 0
+         {
+            charSpacing     = (length - lineBound .y) / Float (glyphs .count - 1) / scale
+            lineBound .y    = length
+            size .y         = length / scale
+            extents .min .y = extents .max .y  - size .y
+         }
+         
+         textNode .lineBounds [l] = lineBound
+         
+         // Calculate line translation.
+         
+         var translation = Vector2f .zero
+
+         switch fontStyleNode .normalizedMajorAlignment
+         {
+            case .BEGIN, .FIRST:
+               translation = Vector2f (Float (ll) * spacing, -1)
+            case .MIDDLE:
+               translation = Vector2f (Float (ll) * spacing, (size .y / 2 - extents .max .y))
+            case .END: do
+            {
+               // This is needed to make maxExtend and charSpacing work.
+               guard !glyphs .isEmpty else { break }
+               
+               let e = glyphExtents (font: font, glyph: glyphs .last!)
+               
+               translation = Vector2f (Float (ll) * spacing, (size .y - extents .max .y + e .min .y))
+            }
+         }
+
+         // Calculate glyph translation
+
+         var space = Float (0)
+
+         for t in t0 ..< t
+         {
+            translations [t]    += translation
+            translations [t] .y -= space
+            translations [t]    *= scale
+
+            space += charSpacing
+         }
+
+         // Add bbox.
+            
+         switch fontStyleNode .normalizedMajorAlignment
+         {
+            case .BEGIN, .FIRST:
+               yPad [l] = extents .max .y + translation .y
+            case .MIDDLE:
+               break
+            case .END:
+               yPad [l] = extents .min .y + translation .y
+         }
+
+         // Calculate center.
+
+         let center = extents .min + size / 2
+         
+         // Add bbox.
+
+         bbox += Box2f (size: size * scale, center: (center + translation) * scale)
+
+         ll += 1
+      }
+      
+      // Get text extents.
+
+      var extents = bbox .extents
+      let size    = extents .max - extents .min
+
+      // Extend lineBounds.
+
+      switch fontStyleNode .normalizedMajorAlignment
+      {
+         case .BEGIN, .FIRST: do
+         {
+            for i in 0 ..< textNode .lineBounds .count
+            {
+               textNode .lineBounds [i] .y += extents .max .y - yPad [i] * scale
+            }
+         }
+         case .MIDDLE:
+            break
+         case .END: do
+         {
+            for i in 0 ..< textNode .lineBounds .count
+            {
+               textNode .lineBounds [i] .y += yPad [i] * scale - extents .min .y
+            }
+         }
+      }
+
+      // Calculate text position
+
+      textNode .textBounds = size
+
+      switch fontStyleNode .normalizedMajorAlignment
+      {
+         case .BEGIN, .FIRST:
+            bearing = Vector2f (-extents .min .x, extents .max .y)
+         case .MIDDLE:
+            bearing = Vector2f (-extents .min .x, 0);
+         case .END:
+            bearing = Vector2f (-extents .min .x, extents .min .y)
+      }
+
+      switch fontStyleNode .normalizedMinorAlignment
+      {
+         case .BEGIN, .FIRST:
+            minorAlignment = Vector2f (-extents .min .x, 0)
+         case .MIDDLE:
+            minorAlignment = Vector2f (-extents .min .x - size .x / 2, 0)
+         case .END:
+            minorAlignment = Vector2f (-extents .min .x - size .x, 0)
+      }
+
+      // Translate bbox by minorAlignment.
+
+      extents .min += minorAlignment
+      extents .max += minorAlignment
+
+      // The value of the origin field represents the upper left corner of the textBounds.
+
+      textNode .origin = Vector3f (extents .min .x, extents .max .y, 0)
+
+      self .bbox = Box3f (min: Vector3f (extents .min, 0),
+                          max: Vector3f (extents .max, 0));
+
+   }
    
-   private final func horizontalLineExtents (lineNumber : Int, string : String, font : CTFont) -> (min : Vector2f, max : Vector2f)
+   private final func lineExtents (lineNumber : Int, string : String, font : CTFont) -> (min : Vector2f, max : Vector2f)
    {
       let attributedString = CFAttributedStringCreate (nil, string as CFString, [kCTFontAttributeName : font] as CFDictionary)
       let glyphs           = attributedString! .glyphs ()
@@ -209,39 +426,18 @@ internal class X3DTextGeometry
             break
       }
 
-      return (Vector2f (minX, minY), Vector2f (maxX, maxY))
+      return (Vector2f (minX, minY),
+              Vector2f (maxX, maxY))
    }
    
-   private final func vertical ()
+   private final func glyphExtents (font : CTFont, glyph : CGGlyph) -> (min : Vector2f, max : Vector2f)
    {
-      guard let font = fontStyleNode .font else { return }
-      
-      let numLines    = textNode .string .count
-      let maxExtent   = max (0, textNode .maxExtent)
-      let leftToRight = fontStyleNode .leftToRight
-      let spacing     = fontStyleNode .spacing
-      let scale       = fontStyleNode .scale
-      
-      var bbox = Box2f ()
-            
-      // Calculate bboxes.
+      let rect = font .boundingRects (of: [glyph]) .first!
 
-      let first = leftToRight ? 0 : numLines - 1
-      let last  = leftToRight ? numLines : -1
-      let step  = leftToRight ? 1 : -1
-      var t     = 0
-
-      for l in stride (from: first, to: last, by: step)
-      {
-         let attributedString = CFAttributedStringCreate (nil, textNode .string [l] as CFString, [kCTFontAttributeName : font] as CFDictionary)
-         let glyphs           = attributedString! .glyphs ()
-         
-         for glyph in glyphs
-         {
-         }
-      }
+      return (Vector2f (Float (rect .minX), Float (rect .minY)),
+              Vector2f (Float (rect .maxX), Float (rect .maxY)))
    }
-
+   
    internal func build () { }
    
    // Rendering preparations

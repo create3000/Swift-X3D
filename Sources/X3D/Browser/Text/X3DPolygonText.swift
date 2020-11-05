@@ -74,7 +74,31 @@ internal final class X3DPolygonText :
       }
       else
       {
+         var t = 0
          
+         for line in glyphs
+         {
+            for glyph in line
+            {
+               let translation = translations [t]
+               let geometry    = glyphGeometry (font, glyph, dimension)
+               let offset      = Vector3f (minorAlignment + translation, 0)
+
+               for point in geometry
+               {
+                  let p = point * scale + offset
+                  let t = Vector4f ((p .x - origin .x) / spacing, (p .y - origin .y) / spacing, 0, 1)
+                  
+                  textNode .addPrimitive (fogDepth: 0,
+                                          color: Vector4f .one,
+                                          texCoords: [t],
+                                          normal: Vector3f .zAxis,
+                                          point: p)
+               }
+               
+               t += 1
+            }
+         }
       }
    }
    
@@ -183,16 +207,6 @@ internal final class X3DPolygonText :
       return indices .map { points [$0] }
    }
    
-   static private func dimension (_ primitiveQuality : String) -> Int
-   {
-      switch primitiveQuality
-      {
-         case "LOW":  return 3
-         case "HIGH": return 7
-         default:     return 5
-      }
-   }
-   
    static private func makePolygonNormal (for vertices : [Vector3f]) -> Vector3f
    {
       // Determine polygon normal.
@@ -214,5 +228,15 @@ internal final class X3DPolygonText :
       }
 
       return normalize (normal)
+   }
+   
+   static private func dimension (_ primitiveQuality : String) -> Int
+   {
+      switch primitiveQuality
+      {
+         case "LOW":  return 3
+         case "HIGH": return 7
+         default:     return 5
+      }
    }
 }

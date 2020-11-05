@@ -13,10 +13,16 @@ public class X3DChildObject :
 {
    // Event handling
    
-   internal final var isTainted : Bool = false
+   /// Return true if this object was modified some times in the past.
+   internal final var isSet : Bool = false
    
-   internal func addEvent ()
+   /// Return true if this object was recently modified and needs to be processed.
+   internal final var isTainted : Bool = false
+
+   internal final func addEvent ()
    {
+      isSet = true
+      
       for parent in parents .allObjects
       {
          parent .addEvent (for: self)
@@ -25,6 +31,8 @@ public class X3DChildObject :
 
    internal func addEvent (for object : X3DChildObject)
    {
+      isSet = true
+      
       for parent in parents .allObjects
       {
          parent .addEvent (for: self)
@@ -33,6 +41,8 @@ public class X3DChildObject :
    
    internal func addEventObject (for field : X3DField, event : X3DEvent)
    {
+      isSet = true
+      
       for parent in parents .allObjects
       {
          parent .addEventObject (for: field, event: event)

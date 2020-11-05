@@ -188,6 +188,7 @@ public class X3DBaseNode :
    {
       guard !isTainted else { return }
 
+      isSet     = true
       isTainted = true
 
       // Register node for processEvents.

@@ -15,33 +15,7 @@ public class X3DField :
    
    /// Creates a new fresh copy of this field.
    public func copy () -> X3DField { self }
-   
-   // Event handling
-   
-   /// Return true if value was set.
-   internal final var isSet : Bool = false
-
-   internal final override func addEvent ()
-   {
-      isSet = true
       
-      super .addEvent ()
-   }
-
-   internal final override func addEvent (for object : X3DChildObject)
-   {
-      isSet = true
-      
-      super .addEvent (for: object)
-   }
-   
-   internal final override func  addEventObject (for field : X3DField, event : X3DEvent)
-   {
-      isSet = true
-      
-      super .addEventObject (for: field, event: event)
-   }
-   
    // Value handling
 
    /// Assigns a value to this field without generating an event.

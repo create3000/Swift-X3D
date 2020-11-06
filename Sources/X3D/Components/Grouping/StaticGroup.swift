@@ -64,6 +64,7 @@ public final class StaticGroup :
       groupNode .isPrivate  = true
       groupNode .bboxSize   = bboxSize
       groupNode .bboxCenter = bboxCenter
+      
       groupNode .children .append (contentsOf: children)
       groupNode .setup ()
    }

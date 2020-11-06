@@ -204,10 +204,7 @@ public class X3DGroupingNode :
          }
          case .Camera: do
          {
-            for cameraObject in cameraObjects
-            {
-               cameraObject! .traverse (type, renderer)
-            }
+            cameraObjects .forEach { $0! .traverse (type, renderer) }
          }
          case .Picking: do
          {
@@ -220,30 +217,13 @@ public class X3DGroupingNode :
          }
          case .Render: do
          {
-            for fogNode in fogNodes
-            {
-               fogNode! .push (renderer)
-            }
+            fogNodes   .forEach { $0! .push (renderer) }
+            lightNodes .forEach { $0! .push (renderer, self) }
             
-            for lightNode in lightNodes
-            {
-               lightNode! .push (renderer, self)
-            }
+            childNodes .forEach { $0! .traverse (type, renderer) }
             
-            for childNode in childNodes
-            {
-               childNode! .traverse (type, renderer)
-            }
-            
-            for lightNode in lightNodes .reversed ()
-            {
-               lightNode! .pop (renderer)
-            }
-            
-            for fogNode in fogNodes .reversed ()
-            {
-               fogNode! .pop (renderer)
-            }
+            lightNodes .reversed () .forEach { $0! .pop (renderer) }
+            fogNodes   .reversed () .forEach { $0! .pop (renderer) }
          }
       }
    }

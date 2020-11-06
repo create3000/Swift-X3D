@@ -70,8 +70,8 @@ public struct Box2f
    
    private var absoluteExtents : (min: Vector2, max: Vector2)
    {
-      let x = Vector2 (matrix [0] [0], matrix [0] [1])
-      let y = Vector2 (matrix [1] [0], matrix [1] [1])
+      let x = matrix .xAxis
+      let y = matrix .yAxis
       
       let p1 = x + y
       let p2 = y - x

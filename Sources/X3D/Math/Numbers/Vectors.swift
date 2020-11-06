@@ -60,6 +60,38 @@ extension Vector4f
    public static let wAxis = Vector4f (0, 0, 0, 1)
 }
 
+// norm
+
+public func norm (_ vector : Vector2d) -> Double
+{
+   return dot (vector, vector)
+}
+
+public func norm (_ vector : Vector2f) -> Float
+{
+   return dot (vector, vector)
+}
+
+public func norm (_ vector : Vector3d) -> Double
+{
+   return dot (vector, vector)
+}
+
+public func norm (_ vector : Vector3f) -> Float
+{
+   return dot (vector, vector)
+}
+
+public func norm (_ vector : Vector4d) -> Double
+{
+   return dot (vector, vector)
+}
+
+public func norm (_ vector : Vector4f) -> Float
+{
+   return dot (vector, vector)
+}
+
 // Save normalize
 
 public func normalize (_ vector : Vector2d) -> Vector2d

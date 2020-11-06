@@ -39,7 +39,7 @@ public final class X3DTimeContextProperties :
       if let activeLayerNode = browser! .world .layerSetNode? .activeLayerNode
       {
          let cameraSpaceMatrix = activeLayerNode .viewpointNode .cameraSpaceMatrix
-         let currentPosition   = Vector3d (Double (cameraSpaceMatrix [3] [0]), Double (cameraSpaceMatrix [3] [1]), Double (cameraSpaceMatrix [3] [2]))
+         let currentPosition   = Vector3d (cameraSpaceMatrix .origin)
 
          currentSpeed = length (currentPosition - lastPosition) * currentFrameRate
          lastPosition = currentPosition

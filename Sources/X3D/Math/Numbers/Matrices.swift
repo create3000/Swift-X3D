@@ -20,11 +20,17 @@ public typealias Matrix4f = simd_float4x4
 extension Matrix2d
 {
    public static let identity = matrix_identity_double2x2
+   
+   public var xAxis  : Double { self [0] [0] }
+   public var origin : Double { self [1] [0] }
 }
 
 extension Matrix2f
 {
    public static let identity = matrix_identity_float2x2
+   
+   public var xAxis  : Float { self [0] [0] }
+   public var origin : Float { self [1] [0] }
 }
 
 extension Matrix3d
@@ -36,6 +42,10 @@ extension Matrix3d
       self .init (rotation .quat)
    }
    
+   public var xAxis  : Vector2d { Vector2d (self [0] [0], self [0] [1]) }
+   public var yAxis  : Vector2d { Vector2d (self [1] [0], self [1] [1]) }
+   public var origin : Vector2d { Vector2d (self [2] [0], self [2] [1]) }
+
    public var submatrix : Matrix2d
    {
       let c0 = columns .0
@@ -57,6 +67,10 @@ extension Matrix3f
       self .init (rotation .quat)
    }
    
+   public var xAxis  : Vector2f { Vector2f (self [0] [0], self [0] [1]) }
+   public var yAxis  : Vector2f { Vector2f (self [1] [0], self [1] [1]) }
+   public var origin : Vector2f { Vector2f (self [2] [0], self [2] [1]) }
+
    public var submatrix : Matrix2f
    {
       let c0 = columns .0
@@ -78,6 +92,11 @@ extension Matrix4d
       self .init (rotation .quat)
    }
    
+   public var xAxis  : Vector3d { Vector3d (self [0] [0], self [0] [1], self [0] [2]) }
+   public var yAxis  : Vector3d { Vector3d (self [1] [0], self [1] [1], self [1] [2]) }
+   public var zAxis  : Vector3d { Vector3d (self [2] [0], self [2] [1], self [2] [2]) }
+   public var origin : Vector3d { Vector3d (self [3] [0], self [3] [1], self [3] [2]) }
+
    public var submatrix : Matrix3d
    {
       let c0 = columns .0
@@ -101,6 +120,11 @@ extension Matrix4f
       self .init (rotation .quat)
    }
    
+   public var xAxis  : Vector3f { Vector3f (self [0] [0], self [0] [1], self [0] [2]) }
+   public var yAxis  : Vector3f { Vector3f (self [1] [0], self [1] [1], self [1] [2]) }
+   public var zAxis  : Vector3f { Vector3f (self [2] [0], self [2] [1], self [2] [2]) }
+   public var origin : Vector3f { Vector3f (self [3] [0], self [3] [1], self [3] [2]) }
+
    public var submatrix : Matrix3f
    {
       let c0 = columns .0

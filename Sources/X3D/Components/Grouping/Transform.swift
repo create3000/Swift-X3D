@@ -82,9 +82,9 @@ public final class Transform :
    {
       renderer .modelViewMatrix .push ()
       renderer .modelViewMatrix .mult (matrix)
+      
+      defer { renderer .modelViewMatrix .pop () }
 
       super .traverse (type, renderer)
-
-      renderer .modelViewMatrix .pop ()
    }
 }

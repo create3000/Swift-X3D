@@ -73,9 +73,9 @@ public struct Box3f
    
    private var absoluteExtents : (min: Vector3, max: Vector3)
    {
-      let x = Vector3 (matrix [0] [0], matrix [0] [1], matrix [0] [2])
-      let y = Vector3 (matrix [1] [0], matrix [1] [1], matrix [1] [2])
-      let z = Vector3 (matrix [2] [0], matrix [2] [1], matrix [2] [2])
+      let x = matrix .xAxis
+      let y = matrix .yAxis
+      let z = matrix .zAxis
       
       let r1 = y + z
       let r2 = z - y

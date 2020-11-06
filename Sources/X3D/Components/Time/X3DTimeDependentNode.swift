@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class X3DTimeDependentProperies
+public final class X3DTimeDependentProperties
 {
    fileprivate final var startTime  : TimeInterval = 0
    fileprivate final var resumeTime : TimeInterval = 0
@@ -61,7 +61,7 @@ public protocol X3DTimeDependentNode :
    
    // Properties
    
-   var timeDependentProperties : X3DTimeDependentProperies { get }
+   var timeDependentProperties : X3DTimeDependentProperties { get }
    
    // Event handler
    

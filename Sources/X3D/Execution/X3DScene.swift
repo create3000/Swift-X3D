@@ -11,7 +11,7 @@ import Foundation
 public final class X3DScene :
    X3DExecutionContext
 {
-   // Common properies
+   // Common properties
    
    public final override class var typeName : String { "X3DScene" }
    

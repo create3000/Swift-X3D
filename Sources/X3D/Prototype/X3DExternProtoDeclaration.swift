@@ -10,6 +10,10 @@ public final class X3DExternProtoDeclaration :
    X3DProtoDeclarationNode,
    X3DUrlObject
 {
+   // Common properties
+   
+   public final override class var typeName : String { "X3DExternProtoDeclaration" }
+   
    // Properties
    
    @SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE

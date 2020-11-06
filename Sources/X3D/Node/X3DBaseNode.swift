@@ -9,7 +9,7 @@
 public class X3DBaseNode :
    X3DChildObject
 {
-   // Common properies
+   // Common properties
 
    public private(set) final weak var browser : X3DBrowser?
    public var scene : X3DScene? { executionContext? .scene }

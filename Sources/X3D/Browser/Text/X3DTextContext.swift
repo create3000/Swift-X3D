@@ -5,7 +5,7 @@
 //  Created by Holger Seelig on 03.11.20.
 //
 
-public final class X3DTextContextProperies :
+public final class X3DTextContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -34,7 +34,7 @@ public final class X3DTextContextProperies :
 public protocol X3DTextContext : class
 {
    var browser               : X3DBrowser { get }
-   var textContextProperties : X3DTextContextProperies! { get }
+   var textContextProperties : X3DTextContextProperties! { get }
 }
 
 extension X3DTextContext

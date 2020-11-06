@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DNavigationContextProperies :
+public final class X3DNavigationContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -48,15 +48,15 @@ public final class X3DNavigationContextProperies :
       
       // Viewer
       
-      browser! .addBrowserInterest (event: .Browser_Initialized, method: X3DNavigationContextProperies .set_initialized, object: self)
-      $viewer .addInterest (X3DNavigationContextProperies .set_viewer, self)
+      browser! .addBrowserInterest (event: .Browser_Initialized, method: X3DNavigationContextProperties .set_initialized, object: self)
+      $viewer .addInterest (X3DNavigationContextProperties .set_viewer, self)
       
       set_viewer ()
    }
    
    private final func set_initialized ()
    {
-      browser! .world .$activeLayerNode .addInterest (X3DNavigationContextProperies .set_activeLayer, self)
+      browser! .world .$activeLayerNode .addInterest (X3DNavigationContextProperties .set_activeLayer, self)
 
       set_activeLayer ()
    }
@@ -65,13 +65,13 @@ public final class X3DNavigationContextProperies :
    {
       guard activeLayerNode != browser! .world .activeLayerNode else { return }
       
-      activeLayerNode? .navigationInfoStack .removeInterest (X3DNavigationContextProperies .set_activeNavigationInfo, self)
-      activeLayerNode? .viewpointStack      .removeInterest (X3DNavigationContextProperies .set_activeViewpoint,      self)
+      activeLayerNode? .navigationInfoStack .removeInterest (X3DNavigationContextProperties .set_activeNavigationInfo, self)
+      activeLayerNode? .viewpointStack      .removeInterest (X3DNavigationContextProperties .set_activeViewpoint,      self)
 
       activeLayerNode = browser! .world .activeLayerNode
 
-      activeLayerNode? .navigationInfoStack .addInterest (X3DNavigationContextProperies .set_activeNavigationInfo, self)
-      activeLayerNode? .viewpointStack      .addInterest (X3DNavigationContextProperies .set_activeViewpoint,      self)
+      activeLayerNode? .navigationInfoStack .addInterest (X3DNavigationContextProperties .set_activeNavigationInfo, self)
+      activeLayerNode? .viewpointStack      .addInterest (X3DNavigationContextProperties .set_activeViewpoint,      self)
 
       set_activeNavigationInfo ()
       set_activeViewpoint ()
@@ -131,7 +131,7 @@ public final class X3DNavigationContextProperies :
 public protocol X3DNavigationContext : class
 {
    var browser                     : X3DBrowser { get }
-   var navigationContextProperties : X3DNavigationContextProperies! { get }
+   var navigationContextProperties : X3DNavigationContextProperties! { get }
 }
 
 extension X3DNavigationContext

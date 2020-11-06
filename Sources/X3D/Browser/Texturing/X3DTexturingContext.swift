@@ -10,7 +10,7 @@ import Metal
 import MetalKit
 import SwiftImage
 
-public final class X3DTexturingContextProperies :
+public final class X3DTexturingContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -38,7 +38,7 @@ public final class X3DTexturingContextProperies :
 public protocol X3DTexturingContext : class
 {
    var browser                    : X3DBrowser { get }
-   var texturingContextProperties : X3DTexturingContextProperies! { get }
+   var texturingContextProperties : X3DTexturingContextProperties! { get }
 }
 
 extension X3DTexturingContext

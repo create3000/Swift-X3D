@@ -9,6 +9,10 @@
 public final class X3DProtoDeclaration :
    X3DProtoDeclarationNode
 {
+   // Common properties
+   
+   public final override class var typeName : String { "X3DProtoDeclaration" }
+   
    // Properties
    
    @SFNode public private(set) var body : X3DExecutionContext?

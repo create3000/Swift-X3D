@@ -6,12 +6,21 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DComponentInfo
+public final class X3DComponentInfo :
+   X3DObject
 {
+   // Common properties
+   
+   public final override class var typeName : String { "X3DComponentInfo" }
+   
+   // Properties
+   
    public final let title       : String
    public final let name        : String
    public final let level       : Int32
    public final let providerUrl : String
+   
+   // Construction
    
    internal init (title : String, name : String,  level : Int32, providerUrl : String)
    {
@@ -19,5 +28,7 @@ public final class X3DComponentInfo
       self .name        = name
       self .level       = level
       self .providerUrl = providerUrl
+      
+      super .init ()
    }
 }

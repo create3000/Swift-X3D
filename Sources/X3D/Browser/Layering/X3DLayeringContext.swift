@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DLayeringContextProperies :
+public final class X3DLayeringContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -35,7 +35,7 @@ public final class X3DLayeringContextProperies :
 public protocol X3DLayeringContext : class
 {
    var browser                   : X3DBrowser { get }
-   var layeringContextProperties : X3DLayeringContextProperies! { get }
+   var layeringContextProperties : X3DLayeringContextProperties! { get }
 }
 
 extension X3DLayeringContext

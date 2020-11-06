@@ -40,7 +40,7 @@ public final class AudioClip :
    
    // X3DTimeDependendNode
    
-   public final let timeDependentProperties = X3DTimeDependentProperies ()
+   public final let timeDependentProperties = X3DTimeDependentProperties ()
    
    // X3DUrlObject
    

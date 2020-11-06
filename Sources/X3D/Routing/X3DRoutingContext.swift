@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DRoutingContextProperies :
+public final class X3DRoutingContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -25,7 +25,7 @@ public final class X3DRoutingContextProperies :
 public protocol X3DRoutingContext : class
 {
    var browser                  : X3DBrowser { get }
-   var routingContextProperties : X3DRoutingContextProperies! { get }
+   var routingContextProperties : X3DRoutingContextProperties! { get }
 }
 
 public extension X3DRoutingContext

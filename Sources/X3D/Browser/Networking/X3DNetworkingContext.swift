@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class X3DNetworkingContextProperies :
+public final class X3DNetworkingContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -26,10 +26,10 @@ public final class X3DNetworkingContextProperies :
 public protocol X3DNetworkingContext : class
 {
    var browser                     : X3DBrowser { get }
-   var networkingContextProperties : X3DNetworkingContextProperies! { get }
+   var networkingContextProperties : X3DNetworkingContextProperties! { get }
 }
 
 extension X3DNetworkingContext
 {
-   public static var providerUrl : URL { X3DNetworkingContextProperies .providerUrl }
+   public static var providerUrl : URL { X3DNetworkingContextProperties .providerUrl }
 }

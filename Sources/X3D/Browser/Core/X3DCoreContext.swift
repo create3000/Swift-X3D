@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class X3DCoreContextProperies :
+public final class X3DCoreContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -41,7 +41,7 @@ public final class X3DCoreContextProperies :
 public protocol X3DCoreContext : class
 {
    var browser               : X3DBrowser { get }
-   var coreContextProperties : X3DCoreContextProperies! { get }
+   var coreContextProperties : X3DCoreContextProperties! { get }
 }
 
 extension X3DCoreContext

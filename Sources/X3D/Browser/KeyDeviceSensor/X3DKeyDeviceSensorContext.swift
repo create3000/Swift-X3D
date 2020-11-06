@@ -8,7 +8,7 @@
 
 import Cocoa
 
-public final class X3DKeyDeviceSensorContextProperies :
+public final class X3DKeyDeviceSensorContextProperties :
    X3DBaseNode
 {
    // Construction
@@ -32,7 +32,7 @@ public final class X3DKeyDeviceSensorContextProperies :
 public protocol X3DKeyDeviceSensorContext : class
 {
    var browser                          : X3DBrowser { get }
-   var keyDeviceSensorContextProperties : X3DKeyDeviceSensorContextProperies! { get }
+   var keyDeviceSensorContextProperties : X3DKeyDeviceSensorContextProperties! { get }
 }
 
 extension X3DKeyDeviceSensorContext { }

@@ -9,7 +9,7 @@
 import Foundation
 import simd
 
-public final class X3DTimeContextProperies :
+public final class X3DTimeContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -54,7 +54,7 @@ public final class X3DTimeContextProperies :
 public protocol X3DTimeContext : class
 {
    var browser               : X3DBrowser { get }
-   var timeContextProperties : X3DTimeContextProperies! { get }
+   var timeContextProperties : X3DTimeContextProperties! { get }
 }
 
 extension X3DTimeContext

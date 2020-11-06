@@ -41,7 +41,7 @@ public final class TimeSensor :
    
    // X3DTimeDependendNode
    
-   public final let timeDependentProperties = X3DTimeDependentProperies ()
+   public final let timeDependentProperties = X3DTimeDependentProperties ()
    
    // Properties
 

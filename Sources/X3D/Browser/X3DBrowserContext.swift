@@ -33,28 +33,28 @@ public class X3DBrowserContext :
    @SFNode public internal(set) final var world        : X3DWorld!
    @SFNode public internal(set) final var currentScene : X3DScene!
    
-   // Prpperties
+   // Properties
    
    public var browser : X3DBrowser { self as! X3DBrowser }
    internal private(set) final var internalScene : X3DScene!
 
    // Context properties
    
-   public private(set) final var routingContextProperties              : X3DRoutingContextProperies!
-   public private(set) final var coreContextProperties                 : X3DCoreContextProperies!
-   public private(set) final var geometry2DContextProperties           : X3DGeometry2DContextProperies!
-   public private(set) final var geometry3DContextProperties           : X3DGeometry3DContextProperies!
-   public private(set) final var keyDeviceSensorContextProperties      : X3DKeyDeviceSensorContextProperies!
-   public private(set) final var layeringContextProperties             : X3DLayeringContextProperies!
-   public private(set) final var lightingContextProperties             : X3DLightingContextProperies!
-   public private(set) final var navigationContextProperties           : X3DNavigationContextProperies!
-   public private(set) final var networkingContextProperties           : X3DNetworkingContextProperies!
-   public private(set) final var pointingDeviceSensorContextProperties : X3DPointingDeviceSensorContextProperies!
-   public private(set) final var renderingContextProperties            : X3DRenderingContextProperies!
-   public private(set) final var shapeContextProperties                : X3DShapeContextProperies!
-   public private(set) final var textContextProperties                 : X3DTextContextProperies!
-   public private(set) final var texturingContextProperties            : X3DTexturingContextProperies!
-   public private(set) final var timeContextProperties                 : X3DTimeContextProperies!
+   public private(set) final var routingContextProperties              : X3DRoutingContextProperties!
+   public private(set) final var coreContextProperties                 : X3DCoreContextProperties!
+   public private(set) final var geometry2DContextProperties           : X3DGeometry2DContextProperties!
+   public private(set) final var geometry3DContextProperties           : X3DGeometry3DContextProperties!
+   public private(set) final var keyDeviceSensorContextProperties      : X3DKeyDeviceSensorContextProperties!
+   public private(set) final var layeringContextProperties             : X3DLayeringContextProperties!
+   public private(set) final var lightingContextProperties             : X3DLightingContextProperties!
+   public private(set) final var navigationContextProperties           : X3DNavigationContextProperties!
+   public private(set) final var networkingContextProperties           : X3DNetworkingContextProperties!
+   public private(set) final var pointingDeviceSensorContextProperties : X3DPointingDeviceSensorContextProperties!
+   public private(set) final var renderingContextProperties            : X3DRenderingContextProperties!
+   public private(set) final var shapeContextProperties                : X3DShapeContextProperties!
+   public private(set) final var textContextProperties                 : X3DTextContextProperties!
+   public private(set) final var texturingContextProperties            : X3DTexturingContextProperties!
+   public private(set) final var timeContextProperties                 : X3DTimeContextProperties!
 
    // Console handling
    
@@ -72,21 +72,21 @@ public class X3DBrowserContext :
       
       // Init context objects.
 
-      routingContextProperties              = X3DRoutingContextProperies              (with: internalScene)
-      coreContextProperties                 = X3DCoreContextProperies                 (with: internalScene)
-      geometry2DContextProperties           = X3DGeometry2DContextProperies           (with: internalScene)
-      geometry3DContextProperties           = X3DGeometry3DContextProperies           (with: internalScene)
-      keyDeviceSensorContextProperties      = X3DKeyDeviceSensorContextProperies      (with: internalScene)
-      layeringContextProperties             = X3DLayeringContextProperies             (with: internalScene)
-      lightingContextProperties             = X3DLightingContextProperies             (with: internalScene)
-      navigationContextProperties           = X3DNavigationContextProperies           (with: internalScene)
-      networkingContextProperties           = X3DNetworkingContextProperies           (with: internalScene)
-      pointingDeviceSensorContextProperties = X3DPointingDeviceSensorContextProperies (with: internalScene)
-      renderingContextProperties            = X3DRenderingContextProperies            (with: internalScene)
-      shapeContextProperties                = X3DShapeContextProperies                (with: internalScene)
-      textContextProperties                 = X3DTextContextProperies                 (with: internalScene)
-      texturingContextProperties            = X3DTexturingContextProperies            (with: internalScene)
-      timeContextProperties                 = X3DTimeContextProperies                 (with: internalScene)
+      routingContextProperties              = X3DRoutingContextProperties              (with: internalScene)
+      coreContextProperties                 = X3DCoreContextProperties                 (with: internalScene)
+      geometry2DContextProperties           = X3DGeometry2DContextProperties           (with: internalScene)
+      geometry3DContextProperties           = X3DGeometry3DContextProperties           (with: internalScene)
+      keyDeviceSensorContextProperties      = X3DKeyDeviceSensorContextProperties      (with: internalScene)
+      layeringContextProperties             = X3DLayeringContextProperties             (with: internalScene)
+      lightingContextProperties             = X3DLightingContextProperties             (with: internalScene)
+      navigationContextProperties           = X3DNavigationContextProperties           (with: internalScene)
+      networkingContextProperties           = X3DNetworkingContextProperties           (with: internalScene)
+      pointingDeviceSensorContextProperties = X3DPointingDeviceSensorContextProperties (with: internalScene)
+      renderingContextProperties            = X3DRenderingContextProperties            (with: internalScene)
+      shapeContextProperties                = X3DShapeContextProperties                (with: internalScene)
+      textContextProperties                 = X3DTextContextProperties                 (with: internalScene)
+      texturingContextProperties            = X3DTexturingContextProperties            (with: internalScene)
+      timeContextProperties                 = X3DTimeContextProperties                 (with: internalScene)
 
       // Setup context objects.
       

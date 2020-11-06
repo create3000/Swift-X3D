@@ -11,6 +11,10 @@ import Foundation
 public class X3DExecutionContext :
    X3DBaseNode
 {
+   // Common properties
+   
+   public override class var typeName : String { "X3DExecutionContext" }
+   
    // Properties
    
    public override var scene : X3DScene? { super .scene }

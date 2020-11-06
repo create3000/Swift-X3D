@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DShapeContextProperies :
+public final class X3DShapeContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -35,7 +35,7 @@ public final class X3DShapeContextProperies :
 public protocol X3DShapeContext : class
 {
    var browser                : X3DBrowser { get }
-   var shapeContextProperties : X3DShapeContextProperies! { get }
+   var shapeContextProperties : X3DShapeContextProperties! { get }
 }
 
 extension X3DShapeContext

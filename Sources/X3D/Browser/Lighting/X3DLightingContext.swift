@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DLightingContextProperies :
+public final class X3DLightingContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -27,7 +27,7 @@ public final class X3DLightingContextProperies :
 public protocol X3DLightingContext : class
 {
    var browser                   : X3DBrowser { get }
-   var lightingContextProperties : X3DLightingContextProperies! { get }
+   var lightingContextProperties : X3DLightingContextProperties! { get }
 }
 
 extension X3DLightingContext { }

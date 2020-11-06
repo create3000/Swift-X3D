@@ -8,7 +8,7 @@
 
 import Cocoa
 
-public final class X3DPointingDeviceSensorContextProperies :
+public final class X3DPointingDeviceSensorContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -75,7 +75,7 @@ public final class X3DPointingDeviceSensorContextProperies :
 public protocol X3DPointingDeviceSensorContext : class
 {
    var browser                               : X3DBrowser { get }
-   var pointingDeviceSensorContextProperties : X3DPointingDeviceSensorContextProperies! { get }
+   var pointingDeviceSensorContextProperties : X3DPointingDeviceSensorContextProperties! { get }
 }
 
 extension X3DPointingDeviceSensorContext

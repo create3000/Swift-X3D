@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DGeometry3DContextProperies :
+public final class X3DGeometry3DContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -43,7 +43,7 @@ public final class X3DGeometry3DContextProperies :
 public protocol X3DGeometry3DContext : class
 {
    var browser                     : X3DBrowser { get }
-   var geometry3DContextProperties : X3DGeometry3DContextProperies! { get }
+   var geometry3DContextProperties : X3DGeometry3DContextProperties! { get }
 }
 
 extension X3DGeometry3DContext

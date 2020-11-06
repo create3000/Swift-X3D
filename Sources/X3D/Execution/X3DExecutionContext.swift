@@ -70,7 +70,7 @@ public class X3DExecutionContext :
 
    // Node handling
    
-   /// Creates a new node of type `typeName`.
+   /// Creates a new node of type `Type`.
    /// * parameters:
    ///   * type: A supported node type.
    /// * returns: A node of type `Type`.

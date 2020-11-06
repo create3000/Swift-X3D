@@ -152,7 +152,7 @@ public class X3DLayerNode :
    
    private final func camera (_ type : X3DTraverseType, _ renderer : X3DRenderer)
    {
-      renderer .modelViewMatrix .push (Matrix4f .identity)
+      renderer .modelViewMatrix .push (.identity)
 
       groupNode! .traverse (type, renderer)
 

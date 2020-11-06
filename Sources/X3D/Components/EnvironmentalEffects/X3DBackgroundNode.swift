@@ -40,7 +40,7 @@ public class X3DBackgroundNode :
 
    // Rendering properties
    
-   private final var modelMatrix = Matrix4f .identity
+   private final var modelMatrix : Matrix4f = .identity
    
    private final var sphereContext : X3DRenderContext!
    private final var cubeContexts  : [X3DRenderContext] = [ ]
@@ -384,8 +384,8 @@ public class X3DBackgroundNode :
       // Set uniforms.
       let uniforms = sphereContext .uniforms
       
-      uniforms .pointee .projectionMatrix = sphere ? renderer .projectionMatrix .top : Matrix4f .identity
-      uniforms .pointee .modelViewMatrix  = sphere ? modelViewMatrix : Matrix4f .identity
+      uniforms .pointee .projectionMatrix = sphere ? renderer .projectionMatrix .top : .identity
+      uniforms .pointee .modelViewMatrix  = sphere ? modelViewMatrix : .identity
       uniforms .pointee .numTextures      = 0
       uniforms .pointee .fog .type        = x3d_NoFog
       uniforms .pointee .lighting         = false
@@ -441,7 +441,7 @@ public class X3DBackgroundNode :
          
          uniforms .pointee .projectionMatrix = renderer .projectionMatrix .top
          uniforms .pointee .modelViewMatrix  = modelViewMatrix
-         uniforms .pointee .textureMatrices  = (Matrix4f .identity, Matrix4f .identity)
+         uniforms .pointee .textureMatrices  = (.identity, .identity)
          uniforms .pointee .numTextures      = Int32 (textureNode .numTextures)
          uniforms .pointee .fog .type        = x3d_NoFog
          uniforms .pointee .lighting         = false

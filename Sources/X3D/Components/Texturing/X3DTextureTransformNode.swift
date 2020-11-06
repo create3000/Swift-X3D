@@ -11,7 +11,7 @@ public class X3DTextureTransformNode :
 {
    // Properties
    
-   internal final var textureMatrix = Matrix4f .identity
+   internal final var textureMatrix : Matrix4f = .identity
    
    // Construction
    

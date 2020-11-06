@@ -111,7 +111,7 @@ public class X3DViewpointNode :
 
    // Rendering
    
-   internal func makeProjectionMatrix (_ viewport : Vector4i, _ nearValue : Float, _ farValue : Float) -> Matrix4f { Matrix4f .identity }
+   internal func makeProjectionMatrix (_ viewport : Vector4i, _ nearValue : Float, _ farValue : Float) -> Matrix4f { .identity }
    
    // Traverse camera
 

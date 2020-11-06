@@ -239,7 +239,7 @@ public final class Appearance :
          switch textureMatrices .count
          {
             case 0:
-               uniforms .pointee .textureMatrices = (Matrix4f .identity, Matrix4f .identity)
+               uniforms .pointee .textureMatrices = (.identity, .identity)
             case 1:
                uniforms .pointee .textureMatrices = (textureMatrices [0], textureMatrices [0])
             default:
@@ -248,7 +248,7 @@ public final class Appearance :
       }
       else
       {
-         uniforms .pointee .textureMatrices = (Matrix4f .identity, Matrix4f .identity)
+         uniforms .pointee .textureMatrices = (.identity, .identity)
       }
 
       // Texture

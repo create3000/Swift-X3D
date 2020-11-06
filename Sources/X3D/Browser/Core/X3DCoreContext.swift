@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class X3DCoreContextProperties :
+internal final class X3DCoreContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -38,7 +38,7 @@ public final class X3DCoreContextProperties :
    }
 }
 
-public protocol X3DCoreContext : class
+internal protocol X3DCoreContext : class
 {
    var browser               : X3DBrowser { get }
    var coreContextProperties : X3DCoreContextProperties! { get }
@@ -46,16 +46,16 @@ public protocol X3DCoreContext : class
 
 extension X3DCoreContext
 {
-   public var name    : String { "Titania X3D Browser macOS" }
-   public var version : String { "1.0" }
+   internal var name    : String { "Titania X3D Browser macOS" }
+   internal var version : String { "1.0" }
    
-   public var supportedProfiles   : [String : X3DProfileInfo] { X3DSupportedProfiles .profiles }
-   public var supportedComponents : [String : X3DComponentInfo] { X3DSupportedComponents .components }
-   public var supportedNodes      : [String : X3DNodeInterface .Type] { X3DSupportedNodes .nodes }
-   public var supportedFields     : [String : X3DFieldInterface .Type] { X3DSupportedFields .fields }
-   public var browserOptions      : X3DBrowserOptions { coreContextProperties .browserOptions! }
-   public var browserProperties   : X3DBrowserProperties { coreContextProperties .browserProperties! }
-   public var renderingProperties : X3DRenderingProperties { coreContextProperties .renderingProperties! }
+   internal var supportedProfiles   : [String : X3DProfileInfo] { X3DSupportedProfiles .profiles }
+   internal var supportedComponents : [String : X3DComponentInfo] { X3DSupportedComponents .components }
+   internal var supportedNodes      : [String : X3DNodeInterface .Type] { X3DSupportedNodes .nodes }
+   internal var supportedFields     : [String : X3DFieldInterface .Type] { X3DSupportedFields .fields }
+   internal var browserOptions      : X3DBrowserOptions { coreContextProperties .browserOptions! }
+   internal var browserProperties   : X3DBrowserProperties { coreContextProperties .browserProperties! }
+   internal var renderingProperties : X3DRenderingProperties { coreContextProperties .renderingProperties! }
    
    internal var browserQueue : DispatchQueue { DispatchQueue .global (qos: .userInteractive) }
    internal var inlineQueue  : DispatchQueue { DispatchQueue .global (qos: .userInitiated) }

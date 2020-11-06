@@ -34,7 +34,7 @@ public final class ViewpointGroup :
 
    // Construction
    
-   public init (with executionContext : X3DExecutionContext)
+   internal init (with executionContext : X3DExecutionContext)
    {
       self .proximitySensorNode = ProximitySensor (with: executionContext)
       

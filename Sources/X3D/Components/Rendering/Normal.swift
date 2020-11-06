@@ -23,7 +23,7 @@ public final class Normal :
 
    // Construction
    
-   public init (with executionContext : X3DExecutionContext)
+   internal init (with executionContext : X3DExecutionContext)
    {
       super .init (executionContext .browser!, executionContext)
 

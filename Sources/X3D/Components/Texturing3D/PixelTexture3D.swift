@@ -23,7 +23,7 @@ public final class PixelTexture3D :
 
    // Construction
    
-   public init (with executionContext : X3DExecutionContext)
+   internal init (with executionContext : X3DExecutionContext)
    {
       super .init (executionContext .browser!, executionContext)
 

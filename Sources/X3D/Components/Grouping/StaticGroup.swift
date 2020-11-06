@@ -30,7 +30,7 @@ public final class StaticGroup :
 
    // Construction
    
-   public init (with executionContext : X3DExecutionContext)
+   internal init (with executionContext : X3DExecutionContext)
    {
       self .groupNode = Group (with: executionContext)
       

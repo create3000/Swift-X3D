@@ -36,7 +36,7 @@ public final class Text :
 
    // Construction
    
-   public init (with executionContext : X3DExecutionContext)
+   internal init (with executionContext : X3DExecutionContext)
    {
       super .init (executionContext .browser!, executionContext)
 

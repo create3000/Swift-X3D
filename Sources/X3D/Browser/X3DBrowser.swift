@@ -31,6 +31,26 @@ public final class X3DBrowser :
    
    // Configuration
    
+   public final func getName () -> String { name }
+   
+   public final func getVersion () -> String { version }
+   
+   public final func getCurrentSpeed () -> Double { currentSpeed }
+   
+   public final func getCurrentFrameRate () -> Double { currentFrameRate }
+   
+   public final func getSupportedProfiles () -> [X3DProfileInfo]
+   {
+      var profiles = [X3DProfileInfo] ()
+      
+      for (_, profile) in supportedProfiles
+      {
+         profiles .append (profile)
+      }
+      
+      return profiles .sorted { $0 .name < $1 .name }
+   }
+
    public final func getProfile (name : String) throws -> X3DProfileInfo
    {
       guard let profile = supportedProfiles [name] else
@@ -39,6 +59,18 @@ public final class X3DBrowser :
       }
       
       return profile
+   }
+   
+   public final func getSupportedComponents () -> [X3DComponentInfo]
+   {
+      var components = [X3DComponentInfo] ()
+      
+      for (_, component) in supportedComponents
+      {
+         components .append (component)
+      }
+      
+      return components .sorted { $0 .name < $1 .name }
    }
    
    public final func getComponent (name : String, level : Int32) throws -> X3DComponentInfo
@@ -55,8 +87,34 @@ public final class X3DBrowser :
       
       return component
    }
+   
+   public final func getSupportedNodes () -> [String]
+   {
+      var nodes = [String] ()
+      
+      for (name, _) in supportedNodes
+      {
+         nodes .append (name)
+      }
+      
+      return nodes .sorted ()
+   }
+   
+   public final func getSupportedFields () -> [String]
+   {
+      var fields = [String] ()
+      
+      for (name, _) in supportedFields
+      {
+         fields .append (name)
+      }
+      
+      return fields .sorted ()
+   }
 
    // Scene handling
+   
+   public final func getExecutionContext () -> X3DScene { currentScene }
    
    public final func createScene (profile : X3DProfileInfo, components : X3DComponentInfoArray) -> X3DScene
    {
@@ -139,6 +197,11 @@ public final class X3DBrowser :
       }
    }
    
+   public final func setDescription (_ string : String)
+   {
+      
+   }
+   
    public final func createX3DFromString (x3dSyntax : String) throws -> X3DScene
    {
       let scene = X3DScene (with: self)
@@ -189,7 +252,7 @@ public final class X3DBrowser :
 
    // Update control
    
-   public private(set) final var live : Bool = true
+   private final var live : Bool = true
 
    public final func beginUpdate ()
    {
@@ -204,6 +267,21 @@ public final class X3DBrowser :
       
       currentScene .endUpdate ()
    }
+   
+   // Browser properties
+   
+   public final func getRenderingProperties () -> X3DRenderingProperties { renderingProperties }
+   
+   public final func getBrowserProperties () -> X3DBrowserProperties { browserProperties }
+   
+   public final func getBrowserOptions () -> X3DBrowserOptions { browserOptions }
+
+   // Viewpoint handling
+   
+   // nextViewpoint
+   // previousViewpoint
+   // firstViewpoint
+   // lastViewpoint
    
    // Browser interests
    
@@ -261,6 +339,8 @@ public final class X3DBrowser :
    {
       console .log (arguments .map { $0 .description } .joined (separator: " "), lineBreak: true)
    }
+   
+   public final func getConsole () -> X3DConsole { console }
 
    // Destruction
       

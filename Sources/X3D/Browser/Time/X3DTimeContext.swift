@@ -9,14 +9,14 @@
 import Foundation
 import simd
 
-public final class X3DTimeContextProperties :
+internal final class X3DTimeContextProperties :
    X3DBaseNode
 {
    // Properties
    
    fileprivate final var currentTime      : TimeInterval = Date () .timeIntervalSince1970
-   fileprivate final var currentFrameRate : Double = 0
    fileprivate final var currentSpeed     : Double = 0
+   fileprivate final var currentFrameRate : Double = 0
    fileprivate final var lastPosition     : Vector3d = Vector3d .zero
    
    // Construction
@@ -51,7 +51,7 @@ public final class X3DTimeContextProperties :
    }
 }
 
-public protocol X3DTimeContext : class
+internal protocol X3DTimeContext : class
 {
    var browser               : X3DBrowser { get }
    var timeContextProperties : X3DTimeContextProperties! { get }
@@ -59,9 +59,9 @@ public protocol X3DTimeContext : class
 
 extension X3DTimeContext
 {
-   public var currentTime      : TimeInterval { timeContextProperties .currentTime }
-   public var currentFrameRate : Double { timeContextProperties .currentFrameRate }
-   public var currentSpeed     : Double { timeContextProperties .currentSpeed }
+   internal var currentTime      : TimeInterval { timeContextProperties .currentTime }
+   internal var currentSpeed     : Double { timeContextProperties .currentSpeed }
+   internal var currentFrameRate : Double { timeContextProperties .currentFrameRate }
 
    internal func advanceTime () { timeContextProperties .advanceTime () }
 }

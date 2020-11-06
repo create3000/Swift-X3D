@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DNavigationContextProperties :
+internal final class X3DNavigationContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -128,7 +128,7 @@ public final class X3DNavigationContextProperties :
    }
 }
 
-public protocol X3DNavigationContext : class
+internal protocol X3DNavigationContext : class
 {
    var browser                     : X3DBrowser { get }
    var navigationContextProperties : X3DNavigationContextProperties! { get }

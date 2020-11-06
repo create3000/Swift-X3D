@@ -30,35 +30,35 @@ public class X3DBrowserContext :
 {
    // Public properties
    
-   @SFNode public internal(set) final var world        : X3DWorld!
-   @SFNode public internal(set) final var currentScene : X3DScene!
+   @SFNode internal final var world        : X3DWorld!
+   @SFNode internal final var currentScene : X3DScene!
    
    // Properties
    
-   public var browser : X3DBrowser { self as! X3DBrowser }
+   internal var browser : X3DBrowser { self as! X3DBrowser }
    internal private(set) final var internalScene : X3DScene!
 
    // Context properties
    
-   public private(set) final var routingContextProperties              : X3DRoutingContextProperties!
-   public private(set) final var coreContextProperties                 : X3DCoreContextProperties!
-   public private(set) final var geometry2DContextProperties           : X3DGeometry2DContextProperties!
-   public private(set) final var geometry3DContextProperties           : X3DGeometry3DContextProperties!
-   public private(set) final var keyDeviceSensorContextProperties      : X3DKeyDeviceSensorContextProperties!
-   public private(set) final var layeringContextProperties             : X3DLayeringContextProperties!
-   public private(set) final var lightingContextProperties             : X3DLightingContextProperties!
-   public private(set) final var navigationContextProperties           : X3DNavigationContextProperties!
-   public private(set) final var networkingContextProperties           : X3DNetworkingContextProperties!
-   public private(set) final var pointingDeviceSensorContextProperties : X3DPointingDeviceSensorContextProperties!
-   public private(set) final var renderingContextProperties            : X3DRenderingContextProperties!
-   public private(set) final var shapeContextProperties                : X3DShapeContextProperties!
-   public private(set) final var textContextProperties                 : X3DTextContextProperties!
-   public private(set) final var texturingContextProperties            : X3DTexturingContextProperties!
-   public private(set) final var timeContextProperties                 : X3DTimeContextProperties!
+   internal private(set) final var routingContextProperties              : X3DRoutingContextProperties!
+   internal private(set) final var coreContextProperties                 : X3DCoreContextProperties!
+   internal private(set) final var geometry2DContextProperties           : X3DGeometry2DContextProperties!
+   internal private(set) final var geometry3DContextProperties           : X3DGeometry3DContextProperties!
+   internal private(set) final var keyDeviceSensorContextProperties      : X3DKeyDeviceSensorContextProperties!
+   internal private(set) final var layeringContextProperties             : X3DLayeringContextProperties!
+   internal private(set) final var lightingContextProperties             : X3DLightingContextProperties!
+   internal private(set) final var navigationContextProperties           : X3DNavigationContextProperties!
+   internal private(set) final var networkingContextProperties           : X3DNetworkingContextProperties!
+   internal private(set) final var pointingDeviceSensorContextProperties : X3DPointingDeviceSensorContextProperties!
+   internal private(set) final var renderingContextProperties            : X3DRenderingContextProperties!
+   internal private(set) final var shapeContextProperties                : X3DShapeContextProperties!
+   internal private(set) final var textContextProperties                 : X3DTextContextProperties!
+   internal private(set) final var texturingContextProperties            : X3DTexturingContextProperties!
+   internal private(set) final var timeContextProperties                 : X3DTimeContextProperties!
 
    // Console handling
    
-   public final let console = X3DConsole ()
+   internal final let console = X3DConsole ()
    
    // Initialization
 

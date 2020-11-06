@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DGeometry3DContextProperties :
+internal final class X3DGeometry3DContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -40,7 +40,7 @@ public final class X3DGeometry3DContextProperties :
    }
 }
 
-public protocol X3DGeometry3DContext : class
+internal protocol X3DGeometry3DContext : class
 {
    var browser                     : X3DBrowser { get }
    var geometry3DContextProperties : X3DGeometry3DContextProperties! { get }

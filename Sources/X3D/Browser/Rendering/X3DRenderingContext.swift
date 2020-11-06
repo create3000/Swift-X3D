@@ -20,7 +20,7 @@ internal enum X3DRenderPipelineState
    case PhongTransparent
 }
 
-public final class X3DRenderingContextProperties :
+internal final class X3DRenderingContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -119,7 +119,7 @@ public final class X3DRenderingContextProperties :
    }
 }
 
-public protocol X3DRenderingContext : class
+internal protocol X3DRenderingContext : class
 {
    var browser                    : X3DBrowser { get }
    var renderingContextProperties : X3DRenderingContextProperties! { get }
@@ -127,7 +127,7 @@ public protocol X3DRenderingContext : class
 
 extension X3DRenderingContext
 {
-   public var renderer : X3DRenderer { renderingContextProperties .renderer }
+   internal var renderer : X3DRenderer { renderingContextProperties .renderer }
    
    internal var viewport : Vector4i { Vector4i (0, 0, Int32 (browser .drawableSize .width), Int32 (browser .drawableSize .height)) }
    

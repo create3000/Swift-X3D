@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DLightingContextProperties :
+internal final class X3DLightingContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -24,7 +24,7 @@ public final class X3DLightingContextProperties :
    }
 }
 
-public protocol X3DLightingContext : class
+internal protocol X3DLightingContext : class
 {
    var browser                   : X3DBrowser { get }
    var lightingContextProperties : X3DLightingContextProperties! { get }

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public protocol X3DNodeInterface :
+internal protocol X3DNodeInterface :
    X3DNode
 {
    /// Creates a new fresh instance of this node.

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DRoutingContextProperties :
+internal final class X3DRoutingContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -22,25 +22,25 @@ public final class X3DRoutingContextProperties :
    }
 }
 
-public protocol X3DRoutingContext : class
+internal protocol X3DRoutingContext : class
 {
    var browser                  : X3DBrowser { get }
    var routingContextProperties : X3DRoutingContextProperties! { get }
 }
 
-public extension X3DRoutingContext
+internal extension X3DRoutingContext
 {
-   internal func addTaintedField (field : X3DField, event : X3DEvent)
+   func addTaintedField (field : X3DField, event : X3DEvent)
    {
       routingContextProperties .taintedFields .append ((field, event))
    }
    
-   internal func addTaintedNode (node : X3DBaseNode)
+   func addTaintedNode (node : X3DBaseNode)
    {
       routingContextProperties .taintedNodes .append (node)
    }
    
-   internal func processEvents ()
+   func processEvents ()
    {
       repeat
       {

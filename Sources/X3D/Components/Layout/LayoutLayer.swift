@@ -26,7 +26,7 @@ public final class LayoutLayer :
 
    // Construction
    
-   public init (with executionContext : X3DExecutionContext)
+   internal init (with executionContext : X3DExecutionContext)
    {
       let viewpointNode = OrthoViewpoint (with: executionContext)
       let groupNode     = LayoutGroup (with: executionContext)

@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DLayeringContextProperties :
+internal final class X3DLayeringContextProperties :
    X3DBaseNode
 {
    // Properties
@@ -32,7 +32,7 @@ public final class X3DLayeringContextProperties :
    }
 }
 
-public protocol X3DLayeringContext : class
+internal protocol X3DLayeringContext : class
 {
    var browser                   : X3DBrowser { get }
    var layeringContextProperties : X3DLayeringContextProperties! { get }

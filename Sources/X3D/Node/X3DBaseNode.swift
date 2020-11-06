@@ -177,7 +177,7 @@ public class X3DBaseNode :
    {
       // Register field for processEvent.
       
-      browser! .addTaintedField (field: field, event: event)
+      browser? .addTaintedField (field: field, event: event)
 
       guard field .isInput || (extendedEventHandling && !field .isOutput) else { return }
 
@@ -193,8 +193,8 @@ public class X3DBaseNode :
 
       // Register node for processEvents.
       
-      browser! .addTaintedNode (node: self)
-      browser! .setNeedsDisplay ()
+      browser? .addTaintedNode (node: self)
+      browser? .setNeedsDisplay ()
    }
    
    internal final func processEvents ()

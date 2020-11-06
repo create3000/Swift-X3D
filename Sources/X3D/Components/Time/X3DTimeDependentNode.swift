@@ -96,10 +96,7 @@ extension X3DTimeDependentNode
       timeDependentProperties .pauseTime  = pauseTime
       timeDependentProperties .stopTime   = stopTime
       
-      DispatchQueue .main .async
-      {
-         self .set_loop ()
-      }
+      DispatchQueue .main .async { self .set_loop () }
    }
    
    // Event handler

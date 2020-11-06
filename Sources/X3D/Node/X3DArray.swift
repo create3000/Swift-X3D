@@ -73,6 +73,13 @@ public final class X3DArray <Element> :
    {
       array .reserveCapacity (minimumCapacity)
    }
+   
+   public final func resize (_ size : Int, fillWith value : Iterator .Element)
+   {
+      array .resize (size, fillWith: value)
+      
+      field .addEvent ()
+   }
 
    // Combining Arrays
    
@@ -117,10 +124,11 @@ public final class X3DArray <Element> :
 
    public final var startIndex : Int { get { array .startIndex } }
    public final var endIndex   : Int { get { array .endIndex } }
-   
-   // Resize
-   
-   public final func resize (_ size : Int, fillWith value : Iterator .Element)
+}
+
+extension RangeReplaceableCollection
+{
+   public mutating func resize (_ size : Int, fillWith value : Iterator .Element)
    {
       let c = count
       
@@ -134,8 +142,6 @@ public final class X3DArray <Element> :
          
          removeSubrange (newEnd ..< endIndex)
       }
-      
-      field .addEvent ()
    }
 }
 

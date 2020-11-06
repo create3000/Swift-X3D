@@ -28,12 +28,10 @@ internal class X3DTextGeometry
    
    internal func build ()
    {
-      let numLines = textNode .string .count
-      
-      if numLines == 0
+      if textNode .string .isEmpty
       {
-         textNode .origin     = Vector3f .zero
-         textNode .textBounds = Vector2f .zero
+         textNode .origin     = .zero
+         textNode .textBounds = .zero
          bbox                 = Box3f ()
          return
       }
@@ -60,11 +58,11 @@ internal class X3DTextGeometry
       
       var bbox = Box2f ()
       
-      textNode .lineBounds .resize (numLines, fillWith: Vector2f .zero)
+      textNode .lineBounds .resize (numLines, fillWith: .zero)
       
-      glyphs       = [[CGGlyph]] (repeating: [ ], count: numLines)
-      charSpacings = [Float] (repeating: 0, count: numLines)
-      translations = [Vector2f] (repeating: Vector2f .zero, count: numLines)
+      glyphs       .resize (numLines, fillWith: [ ])
+      charSpacings .resize (numLines, fillWith: 0)
+      translations .resize (numLines, fillWith: .zero)
 
       // Calculate bboxes.
       
@@ -184,11 +182,11 @@ internal class X3DTextGeometry
       var bbox = Box2f ()
       var yPad = [Float] (repeating: 0, count: numChars)
             
-      textNode .lineBounds .resize (numLines, fillWith: Vector2f .zero)
+      textNode .lineBounds .resize (numLines, fillWith: .zero)
       
-      glyphs       = [[CGGlyph]] (repeating: [ ], count: numLines)
-      charSpacings = [Float] (repeating: 0, count: numChars)
-      translations = [Vector2f] (repeating: Vector2f .zero, count: numChars)
+      glyphs       .resize (numLines, fillWith: [ ])
+      charSpacings .resize (numChars, fillWith: 0)
+      translations .resize (numChars, fillWith: .zero)
 
       // Calculate bboxes.
 

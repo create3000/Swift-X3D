@@ -118,6 +118,15 @@ public final class X3DObjectArray <ElementT : X3DChildObject> :
    {
       array .reserveCapacity (minimumCapacity)
    }
+   
+   public final func resize (_ size : Int, fillWith value : Iterator .Element)
+   {
+      value? .addParent (field)
+      
+      array .resize (size, fillWith: value)
+      
+      field .addEvent ()
+   }
 
    // Combining Arrays
 

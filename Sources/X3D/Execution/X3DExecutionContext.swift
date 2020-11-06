@@ -72,22 +72,32 @@ public class X3DExecutionContext :
    
    /// Creates a new node of type `typeName`.
    /// * parameters:
+   ///   * type: A supported node type.
+   /// * returns: A node of type `Type`.
+   public final func createNode <Type : X3DNode> (_ type : Type .Type) -> Type
+   {
+      return try! createNode (typeName: Type .typeName, setup: true) as! Type
+   }
+   
+   /// Creates a new node of type `typeName`.
+   /// * parameters:
    ///   * typeName: A supported node type name.
-   ///   * setup: If true, the node will be setuped.
    /// * throws:
    ///   * `INVALID_NAME`  if node of type `typeName` was not found.
    /// * returns: A node of type `typeName`.
-   public func createNode (typeName : String, setup : Bool = true) throws -> X3DNode
+   public final func createNode (typeName : String) throws -> X3DNode
+   {
+      return try createNode (typeName: typeName, setup: true)
+   }
+   
+   internal final func createNode (typeName : String, setup : Bool) throws -> X3DNode
    {
       guard let node = browser! .supportedNodes [typeName]? .init (with: self) else
       {
          throw X3DError .INVALID_NAME ("Unknown node type '\(typeName)'.")
       }
 
-      if (setup)
-      {
-         node .setup ()
-      }
+      if (setup) { node .setup () }
       
       return node
    }
@@ -99,10 +109,15 @@ public class X3DExecutionContext :
    /// * throws:
    ///   * `INVALID_NAME`  if proto named `typeName` was not found.
    /// * returns: A prototype instance of type `typeName`.
-   public func createProto (typeName : String, setup : Bool = true) throws -> X3DPrototypeInstance
+   public final func createProto (typeName : String) throws -> X3DPrototypeInstance
+   {
+      return try createProto (typeName: typeName, setup: true)
+   }
+   
+   internal final func createProto (typeName : String, setup : Bool) throws -> X3DPrototypeInstance
    {
       let protoNode     = try findProtoDeclaration (name: typeName)
-      let protoInstance = protoNode .createInstance (executionContext: self, setup: setup)
+      let protoInstance = protoNode .createInstance (with: self, setup: setup)
       
       return protoInstance
    }

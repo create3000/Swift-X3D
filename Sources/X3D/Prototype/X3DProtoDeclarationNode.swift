@@ -18,14 +18,16 @@ public class X3DProtoDeclarationNode :
    
    // Instance construction
    
-   public final func createInstance (executionContext : X3DExecutionContext, setup : Bool = true) -> X3DPrototypeInstance
+   internal final func createInstance (with executionContext : X3DExecutionContext) -> X3DPrototypeInstance
+   {
+      return createInstance (with: executionContext, setup: true)
+   }
+   
+   internal final func createInstance (with executionContext : X3DExecutionContext, setup : Bool) -> X3DPrototypeInstance
    {
       let instance = X3DPrototypeInstance (with: executionContext, from: self)
       
-      if setup
-      {
-         instance .setup ()
-      }
+      if setup { instance .setup () }
       
       return instance
    }

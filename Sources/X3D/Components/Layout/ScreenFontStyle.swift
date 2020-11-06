@@ -45,4 +45,13 @@ public final class ScreenFontStyle :
    {
       return ScreenFontStyle (with: executionContext)
    }
+   
+   // Property access
+   
+   internal final override var scale : Float { 1 }
+   
+   internal final override func makeTextGeometry (textNode : Text) -> X3DScreenText?
+   {
+      return X3DScreenText (textNode: textNode, fontStyleNode: self)
+   }
 }

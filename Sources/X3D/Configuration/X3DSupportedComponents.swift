@@ -106,7 +106,7 @@ internal final class X3DSupportedComponents
 
       add (title:      "Layout",
            name:       "Layout",
-           level:       1,
+           level:       2,
            providerUrl: X3DBrowser .providerUrl .description)
 
       add (title:      "Lighting",

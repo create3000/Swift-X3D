@@ -34,9 +34,9 @@ public class X3DViewpointNode :
    
    // Viewpoint matrices, these matrices are only up to date in bound viewpoint.
    
-   internal private(set) var cameraSpaceMatrix = Matrix4f .identity
-   internal private(set) var viewMatrix        = Matrix4f .identity
-   internal private(set) var modelMatrix       = Matrix4f .identity
+   internal private(set) var cameraSpaceMatrix : Matrix4f = .identity
+   internal private(set) var viewMatrix        : Matrix4f = .identity
+   internal private(set) var modelMatrix       : Matrix4f = .identity
 
    // Construction
    

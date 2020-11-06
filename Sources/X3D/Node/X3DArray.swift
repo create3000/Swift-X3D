@@ -74,7 +74,7 @@ public final class X3DArray <Element> :
       array .reserveCapacity (minimumCapacity)
    }
    
-   public final func resize (_ size : Int, fillWith value : Iterator .Element)
+   public final func resize (_ size : Int, fillWith value : Element)
    {
       array .resize (size, fillWith: value)
       
@@ -126,9 +126,9 @@ public final class X3DArray <Element> :
    public final var endIndex   : Int { get { array .endIndex } }
 }
 
-extension RangeReplaceableCollection
+internal extension RangeReplaceableCollection
 {
-   public mutating func resize (_ size : Int, fillWith value : Iterator .Element)
+   mutating func resize (_ size : Int, fillWith value : Element)
    {
       let c = count
       

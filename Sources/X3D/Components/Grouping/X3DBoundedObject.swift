@@ -11,7 +11,7 @@ public protocol X3DBoundedObject :
 {
    // Fields
 
-   //@SFVec3f public final var bboxSize   : Vector3f = Vector3f (-1, -1, -1)
+   //@SFVec3f public final var bboxSize   : Vector3f = -.one
    //@SFVec3f public final var bboxCenter : Vector3f = .zero
 
    var bboxSize   : Vector3f { get set }

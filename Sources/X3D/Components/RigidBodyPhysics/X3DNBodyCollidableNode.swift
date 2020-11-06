@@ -15,7 +15,7 @@ public class X3DNBodyCollidableNode :
    @SFBool     public final var enabled     : Bool = true
    @SFVec3f    public final var translation : Vector3f = .zero
    @SFRotation public final var rotation    : Rotation4f = .identity
-   @SFVec3f    public final var bboxSize    : Vector3f = Vector3f (-1, -1, -1)
+   @SFVec3f    public final var bboxSize    : Vector3f = -.one
    @SFVec3f    public final var bboxCenter  : Vector3f = .zero
 
    // Construction

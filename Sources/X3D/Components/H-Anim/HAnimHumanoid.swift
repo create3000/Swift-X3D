@@ -28,7 +28,7 @@ public final class HAnimHumanoid :
    @SFVec3f    public final var scale            : Vector3f = Vector3f (1, 1, 1)
    @SFRotation public final var scaleOrientation : Rotation4f = .identity
    @SFVec3f    public final var center           : Vector3f = .zero
-   @SFVec3f    public final var bboxSize         : Vector3f = Vector3f (-1, -1, -1)
+   @SFVec3f    public final var bboxSize         : Vector3f = -.one
    @SFVec3f    public final var bboxCenter       : Vector3f = .zero
    @MFNode     public final var viewpoints       : MFNode <X3DNode> .Value
    @MFNode     public final var sites            : MFNode <X3DNode> .Value

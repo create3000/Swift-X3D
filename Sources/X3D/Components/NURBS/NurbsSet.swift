@@ -21,7 +21,7 @@ public final class NurbsSet :
    // Fields
 
    @SFFloat public final var tessellationScale : Float = 1
-   @SFVec3f public final var bboxSize          : Vector3f = Vector3f (-1, -1, -1)
+   @SFVec3f public final var bboxSize          : Vector3f = -.one
    @SFVec3f public final var bboxCenter        : Vector3f = .zero
    @MFNode  public final var addGeometry       : MFNode <X3DNode> .Value
    @MFNode  public final var removeGeometry    : MFNode <X3DNode> .Value

@@ -70,7 +70,7 @@ public final class Switch :
    
    public final override var bbox : Box3f
    {
-      if bboxSize == Vector3f (-1, -1, -1)
+      if bboxSize == -.one
       {
          if let boundedObject = childNode as? X3DBoundedObject
          {

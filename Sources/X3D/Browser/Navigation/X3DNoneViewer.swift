@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DNoneViewer :
+internal final class X3DNoneViewer :
    X3DViewer
 {
    internal init (with executionContext : X3DExecutionContext)

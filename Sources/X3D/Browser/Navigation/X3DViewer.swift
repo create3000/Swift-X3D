@@ -9,7 +9,7 @@
 import Cocoa
 import simd
 
-public class X3DViewer :
+internal class X3DViewer :
    X3DBaseNode
 {
    internal func mouseDown (with event : NSEvent) { }

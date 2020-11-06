@@ -59,7 +59,9 @@ public final class Arc2D :
       
       DispatchQueue .main .async
       {
-         self .browser! .arc2DOptions .addInterest (Arc2D .requestRebuild, self)
+         guard let browser = self .browser else { return }
+         
+         browser .arc2DOptions .addInterest (Arc2D .requestRebuild, self)
          
          self .rebuild ()
       }

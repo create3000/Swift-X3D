@@ -564,6 +564,18 @@ function initialize ()
          XCTAssert (name == node .typeName)
       }
    }
+   
+   func testNodes2 () throws
+   {
+      let browser = X3DBrowser ()
+      
+      for typeName in browser .getSupportedNodes ()
+      {
+         let node = try browser .getExecutionContext () .createNode (typeName: typeName)
+         debugPrint (typeName, node .typeName)
+         XCTAssert (typeName == node .typeName)
+      }
+   }
 
    func testInterests () throws
    {

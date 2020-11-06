@@ -51,7 +51,9 @@ public final class Circle2D :
       
       DispatchQueue .main .async
       {
-         self .browser! .circle2DOptions .addInterest (Circle2D .requestRebuild, self)
+         guard let browser = self .browser else { return }
+         
+         browser .circle2DOptions .addInterest (Circle2D .requestRebuild, self)
          
          self .rebuild ()
       }

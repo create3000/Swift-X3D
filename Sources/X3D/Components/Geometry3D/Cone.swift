@@ -58,7 +58,9 @@ public final class Cone :
       
       DispatchQueue .main .async
       {
-         self .browser! .coneOptions .addInterest (Cone .requestRebuild, self)
+         guard let browser = self .browser else { return }
+         
+         browser .coneOptions .addInterest (Cone .requestRebuild, self)
          
          self .rebuild ()
       }

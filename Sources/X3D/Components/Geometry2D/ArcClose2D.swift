@@ -61,7 +61,9 @@ public final class ArcClose2D :
       
       DispatchQueue .main .async
       {
-         self .browser! .arcClose2DOptions .addInterest (ArcClose2D .requestRebuild, self)
+         guard let browser = self .browser else { return }
+         
+         browser .arcClose2DOptions .addInterest (ArcClose2D .requestRebuild, self)
          
          self .rebuild ()
       }

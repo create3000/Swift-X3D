@@ -56,7 +56,9 @@ public final class Disk2D :
       
       DispatchQueue .main .async
       {
-         self .browser! .disk2DOptions .addInterest (Disk2D .requestRebuild, self)
+         guard let browser = self .browser else { return }
+         
+         browser .disk2DOptions .addInterest (Disk2D .requestRebuild, self)
          
          self .rebuild ()
       }

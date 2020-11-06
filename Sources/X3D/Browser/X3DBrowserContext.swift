@@ -30,8 +30,8 @@ public class X3DBrowserContext :
 {
    // Public properties
    
-   @SFNode internal final var world        : X3DWorld!
-   @SFNode internal final var currentScene : X3DScene!
+   internal final var world        : X3DWorld!
+   internal final var currentScene : X3DScene!
    
    // Properties
    

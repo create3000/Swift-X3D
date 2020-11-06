@@ -80,7 +80,7 @@ internal protocol X3DPointingDeviceSensorContext : class
 
 extension X3DPointingDeviceSensorContext
 {
-   public var selection : Bool
+   internal var selection : Bool
    {
       get { pointingDeviceSensorContextProperties .selection }
       set { pointingDeviceSensorContextProperties .selection = newValue }

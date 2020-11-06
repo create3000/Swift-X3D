@@ -9,7 +9,7 @@
 import Cocoa
 import simd
 
-public final class X3DExamineViewer :
+internal final class X3DExamineViewer :
    X3DViewer
 {
    // Constants

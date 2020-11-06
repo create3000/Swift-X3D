@@ -60,7 +60,9 @@ public final class Cylinder :
       
       DispatchQueue .main .async
       {
-         self .browser! .cylinderOptions .addInterest (Cylinder .requestRebuild, self)
+         guard let browser = self .browser else { return }
+         
+         browser .cylinderOptions .addInterest (Cylinder .requestRebuild, self)
          
          self .rebuild ()
       }

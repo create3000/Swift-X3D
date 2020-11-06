@@ -50,7 +50,9 @@ public final class Sphere :
       
       DispatchQueue .main .async
       {
-         self .browser! .sphereOptions .addInterest (Sphere .requestRebuild, self)
+         guard let browser = self .browser else { return }
+         
+         browser .sphereOptions .addInterest (Sphere .requestRebuild, self)
          
          self .rebuild ()
       }

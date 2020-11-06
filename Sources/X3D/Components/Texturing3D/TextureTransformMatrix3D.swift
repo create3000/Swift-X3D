@@ -19,7 +19,7 @@ public final class TextureTransformMatrix3D :
 
    // Fields
 
-   @SFMatrix4f public final var matrix : Matrix4f = Matrix4f .identity
+   @SFMatrix4f public final var matrix : Matrix4f = .identity
 
    // Construction
    

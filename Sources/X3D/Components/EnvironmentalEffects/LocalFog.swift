@@ -21,7 +21,7 @@ public final class LocalFog :
    // Fields
 
    @SFBool   public final var enabled         : Bool = true
-   @SFColor  public final var color           : Color3f = Color3f .one
+   @SFColor  public final var color           : Color3f = .one
    @SFString public final var fogType         : String = "LINEAR"
    @SFFloat  public final var visibilityRange : Float = 0
    

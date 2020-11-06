@@ -19,7 +19,7 @@ public final class NurbsSurfaceInterpolator :
 
    // Fields
 
-   @SFVec2f  public final var set_fraction     : Vector2f = Vector2f .zero
+   @SFVec2f  public final var set_fraction     : Vector2f = .zero
    @SFInt32  public final var uOrder           : Int32 = 3
    @SFInt32  public final var vOrder           : Int32 = 3
    @SFInt32  public final var uDimension       : Int32 = 0
@@ -28,8 +28,8 @@ public final class NurbsSurfaceInterpolator :
    @MFDouble public final var vKnot            : MFDouble .Value
    @MFDouble public final var weight           : MFDouble .Value
    @SFNode   public final var controlPoint     : X3DNode?
-   @SFVec3f  public final var normal_changed   : Vector3f = Vector3f .zero
-   @SFVec3f  public final var position_changed : Vector3f = Vector3f .zero
+   @SFVec3f  public final var normal_changed   : Vector3f = .zero
+   @SFVec3f  public final var position_changed : Vector3f = .zero
 
    // Construction
    

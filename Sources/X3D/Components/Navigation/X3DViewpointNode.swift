@@ -14,23 +14,23 @@ public class X3DViewpointNode :
    // Fields
 
    @SFString   public final var description       : String = ""
-   @SFRotation public final var orientation       : Rotation4f = Rotation4f .identity
+   @SFRotation public final var orientation       : Rotation4f = .identity
    @SFBool     public final var jump              : Bool = true
    @SFBool     public final var retainUserOffsets : Bool = false
    
    // Properties
    
-   @SFVec3f    internal final var positionOffset         : Vector3f = Vector3f .zero
-   @SFRotation internal final var orientationOffset      : Rotation4f = Rotation4f .identity
-   @SFVec3f    internal final var scaleOffset            : Vector3f = Vector3f .one
-   @SFRotation internal final var scaleOrientationOffset : Rotation4f = Rotation4f .identity
-   @SFVec3f    internal final var centerOfRotationOffset : Vector3f = Vector3f .zero
+   @SFVec3f    internal final var positionOffset         : Vector3f = .zero
+   @SFRotation internal final var orientationOffset      : Rotation4f = .identity
+   @SFVec3f    internal final var scaleOffset            : Vector3f = .one
+   @SFRotation internal final var scaleOrientationOffset : Rotation4f = .identity
+   @SFVec3f    internal final var centerOfRotationOffset : Vector3f = .zero
    @SFFloat    internal final var fieldOfViewScale       : Float = 1
    
    internal var userPosition         : Vector3f { positionOffset + getPosition () }
    internal var userOrientation      : Rotation4f { orientationOffset * getOrientation () }
    internal var userCenterOfRotation : Vector3f { centerOfRotationOffset + getCenterOfRotation () }
-   internal var upVector             : Vector3f { Vector3f .yAxis }
+   internal var upVector             : Vector3f { .yAxis }
    
    // Viewpoint matrices, these matrices are only up to date in bound viewpoint.
    
@@ -63,9 +63,9 @@ public class X3DViewpointNode :
    
    internal var maxFarValue : Float { 100_000 }
    
-   internal func getPosition () -> Vector3f { Vector3f .zero }
+   internal func getPosition () -> Vector3f { .zero }
    internal final func getOrientation () -> Rotation4f { orientation }
-   internal func getCenterOfRotation () -> Vector3f { Vector3f .zero }
+   internal func getCenterOfRotation () -> Vector3f { .zero }
    
    // Operations
    
@@ -81,11 +81,11 @@ public class X3DViewpointNode :
    
    internal final func resetUserOffsets ()
    {
-      positionOffset         = Vector3f   .zero
-      orientationOffset      = Rotation4f .identity
-      scaleOffset            = Vector3f   .one
-      scaleOrientationOffset = Rotation4f .identity
-      centerOfRotationOffset = Vector3f   .zero
+      positionOffset         = .zero
+      orientationOffset      = .identity
+      scaleOffset            = .one
+      scaleOrientationOffset = .identity
+      centerOfRotationOffset = .zero
       fieldOfViewScale       = 1
    }
    
@@ -98,12 +98,12 @@ public class X3DViewpointNode :
       // If viewer looks along the up vector.
       if abs (dot (localZAxis, upVector)) >= 1
       {
-         return Rotation4f .identity
+         return .identity
       }
 
       if abs (dot (vector, localXAxis)) >= 1
       {
-         return Rotation4f .identity
+         return .identity
       }
 
       return Rotation4f (from: localXAxis, to: vector)

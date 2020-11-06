@@ -23,9 +23,9 @@ public final class Material :
 
    @SFFloat public final var ambientIntensity : Float = 0.2
    @SFColor public final var diffuseColor     : Color3f = Color3f (0.8, 0.8, 0.8)
-   @SFColor public final var emissiveColor    : Color3f = Color3f .zero
+   @SFColor public final var emissiveColor    : Color3f = .zero
    @SFFloat public final var shininess        : Float = 0.2
-   @SFColor public final var specularColor    : Color3f = Color3f .zero
+   @SFColor public final var specularColor    : Color3f = .zero
    @SFFloat public final var transparency     : Float = 0
 
    // Properties
@@ -82,17 +82,17 @@ public final class Material :
    
    private final func set_diffuseColor ()
    {
-      frontMaterial .diffuseColor = clamp (diffuseColor, min: Color3f .zero, max: Color3f .one)
+      frontMaterial .diffuseColor = clamp (diffuseColor, min: .zero, max: .one)
    }
    
    private final func set_specularColor ()
    {
-      frontMaterial .specularColor = clamp (specularColor, min: Color3f .zero, max: Color3f .one)
+      frontMaterial .specularColor = clamp (specularColor, min: .zero, max: .one)
    }
    
    private final func set_emissiveColor ()
    {
-      frontMaterial .emissiveColor = clamp (emissiveColor, min: Color3f .zero, max: Color3f .one)
+      frontMaterial .emissiveColor = clamp (emissiveColor, min: .zero, max: .one)
    }
    
    private final func set_shininess ()

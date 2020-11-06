@@ -22,9 +22,9 @@ public final class GeoTouchSensor :
 
    @MFString public final var geoSystem           : MFString .Value = ["GD", "WE"]
    @SFNode   public final var geoOrigin           : X3DNode?
-   @SFVec2f  public final var hitTexCoord_changed : Vector2f = Vector2f .zero
-   @SFVec3f  public final var hitNormal_changed   : Vector3f = Vector3f .zero
-   @SFVec3f  public final var hitPoint_changed    : Vector3f = Vector3f .zero
+   @SFVec2f  public final var hitTexCoord_changed : Vector2f = .zero
+   @SFVec3f  public final var hitNormal_changed   : Vector3f = .zero
+   @SFVec3f  public final var hitPoint_changed    : Vector3f = .zero
    @SFVec3d  public final var hitGeoCoord_changed : Vector3d = Vector3d .zero
 
    // Construction

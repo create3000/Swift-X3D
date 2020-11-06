@@ -20,7 +20,7 @@ public final class PointLight :
    // Fields
 
    @SFVec3f public final var attenuation : Vector3f = Vector3f (1, 0, 0)
-   @SFVec3f public final var location    : Vector3f = Vector3f .zero
+   @SFVec3f public final var location    : Vector3f = .zero
    @SFFloat public final var radius      : Float = 100
 
    // Construction

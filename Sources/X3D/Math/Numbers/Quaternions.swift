@@ -194,3 +194,15 @@ extension Quaternion4f
       return Self ()
    }
 }
+
+// Normalize
+
+public func normalize (_ quat : Quaternion4d) -> Quaternion4d
+{
+   return quat .normalized
+}
+
+public func normalize (_ quat : Quaternion4f) -> Quaternion4f
+{
+   return quat .normalized
+}

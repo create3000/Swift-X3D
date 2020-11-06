@@ -50,7 +50,7 @@ public final class ReceiverPdu :
    @SFBool   public final var enabled                  : Bool = true
    @SFBool   public final var isActive                 : Bool = false
    @SFVec3f  public final var bboxSize                 : Vector3f = Vector3f (-1, -1, -1)
-   @SFVec3f  public final var bboxCenter               : Vector3f = Vector3f .zero
+   @SFVec3f  public final var bboxCenter               : Vector3f = .zero
 
    // Construction
    

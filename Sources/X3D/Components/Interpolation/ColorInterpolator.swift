@@ -20,7 +20,7 @@ public final class ColorInterpolator :
    // Fields
 
    @MFColor public final var keyValue      : MFColor .Value
-   @SFColor public final var value_changed : Color3f = Color3f .zero
+   @SFColor public final var value_changed : Color3f = .zero
 
    // Construction
    
@@ -55,7 +55,7 @@ public final class ColorInterpolator :
    {
       guard keyValue .count < key .count else { return }
       
-      keyValue .append (contentsOf: repeatElement (keyValue .last ?? Color3f .zero, count: key .count - keyValue .count))
+      keyValue .append (contentsOf: repeatElement (keyValue .last ?? .zero, count: key .count - keyValue .count))
    }
    
    internal final override func interpolate (index0 : Int, index1 : Int, weight : Float)

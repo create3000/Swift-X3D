@@ -19,11 +19,11 @@ public final class PositionChaser2D :
 
    // Fields
 
-   @SFVec2f public final var set_value          : Vector2f = Vector2f .zero
-   @SFVec2f public final var set_destination    : Vector2f = Vector2f .zero
-   @SFVec2f public final var initialValue       : Vector2f = Vector2f .zero
-   @SFVec2f public final var initialDestination : Vector2f = Vector2f .zero
-   @SFVec2f public final var value_changed      : Vector2f = Vector2f .zero
+   @SFVec2f public final var set_value          : Vector2f = .zero
+   @SFVec2f public final var set_destination    : Vector2f = .zero
+   @SFVec2f public final var initialValue       : Vector2f = .zero
+   @SFVec2f public final var initialDestination : Vector2f = .zero
+   @SFVec2f public final var value_changed      : Vector2f = .zero
 
    // Construction
    

@@ -24,14 +24,14 @@ public final class TwoSidedMaterial :
    @SFBool  public final var separateBackColor    : Bool = false
    @SFFloat public final var ambientIntensity     : Float = 0.2
    @SFColor public final var diffuseColor         : Color3f = Color3f (0.8, 0.8, 0.8)
-   @SFColor public final var specularColor        : Color3f = Color3f .zero
-   @SFColor public final var emissiveColor        : Color3f = Color3f .zero
+   @SFColor public final var specularColor        : Color3f = .zero
+   @SFColor public final var emissiveColor        : Color3f = .zero
    @SFFloat public final var shininess            : Float = 0.2
    @SFFloat public final var transparency         : Float = 0
    @SFFloat public final var backAmbientIntensity : Float = 0.2
    @SFColor public final var backDiffuseColor     : Color3f = Color3f (0.8, 0.8, 0.8)
-   @SFColor public final var backSpecularColor    : Color3f = Color3f .zero
-   @SFColor public final var backEmissiveColor    : Color3f = Color3f .zero
+   @SFColor public final var backSpecularColor    : Color3f = .zero
+   @SFColor public final var backEmissiveColor    : Color3f = .zero
    @SFFloat public final var backShininess        : Float = 0.2
    @SFFloat public final var backTransparency     : Float = 0
 
@@ -109,17 +109,17 @@ public final class TwoSidedMaterial :
    
    private final func set_diffuseColor ()
    {
-      frontMaterial .diffuseColor = clamp (diffuseColor, min: Color3f .zero, max: Color3f .one)
+      frontMaterial .diffuseColor = clamp (diffuseColor, min: .zero, max: .one)
    }
    
    private final func set_specularColor ()
    {
-      frontMaterial .specularColor = clamp (specularColor, min: Color3f .zero, max: Color3f .one)
+      frontMaterial .specularColor = clamp (specularColor, min: .zero, max: .one)
    }
    
    private final func set_emissiveColor ()
    {
-      frontMaterial .emissiveColor = clamp (emissiveColor, min: Color3f .zero, max: Color3f .one)
+      frontMaterial .emissiveColor = clamp (emissiveColor, min: .zero, max: .one)
    }
    
    private final func set_shininess ()
@@ -141,17 +141,17 @@ public final class TwoSidedMaterial :
    
    private final func set_backDiffuseColor ()
    {
-      backMaterial .diffuseColor = clamp (backDiffuseColor, min: Color3f .zero, max: Color3f .one)
+      backMaterial .diffuseColor = clamp (backDiffuseColor, min: .zero, max: .one)
    }
    
    private final func set_backSpecularColor ()
    {
-      backMaterial .specularColor = clamp (backSpecularColor, min: Color3f .zero, max: Color3f .one)
+      backMaterial .specularColor = clamp (backSpecularColor, min: .zero, max: .one)
    }
    
    private final func set_backEmissiveColor ()
    {
-      backMaterial .emissiveColor = clamp (backEmissiveColor, min: Color3f .zero, max: Color3f .one)
+      backMaterial .emissiveColor = clamp (backEmissiveColor, min: .zero, max: .one)
    }
    
    private final func set_backShininess ()

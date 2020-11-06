@@ -22,7 +22,7 @@ public final class PositionInterpolator :
    // Fields
 
    @MFVec3f public final var keyValue      : MFVec3f .Value
-   @SFVec3f public final var value_changed : Vector3f = Vector3f .zero
+   @SFVec3f public final var value_changed : Vector3f = .zero
 
    // Construction
    
@@ -57,7 +57,7 @@ public final class PositionInterpolator :
    {
       guard keyValue .count < key .count else { return }
       
-      keyValue .append (contentsOf: repeatElement (keyValue .last ?? Vector3f .zero, count: key .count - keyValue .count))
+      keyValue .append (contentsOf: repeatElement (keyValue .last ?? .zero, count: key .count - keyValue .count))
    }
    
    internal final override func interpolate (index0 : Int, index1 : Int, weight : Float)

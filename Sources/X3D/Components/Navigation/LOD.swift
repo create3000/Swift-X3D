@@ -22,7 +22,7 @@ public final class LOD :
    // Fields
 
    @SFBool  public final var forceTransitions : Bool = false
-   @SFVec3f public final var center           : Vector3f = Vector3f .zero
+   @SFVec3f public final var center           : Vector3f = .zero
    @MFFloat public final var range            : MFFloat .Value
    @SFInt32 public final var level_changed    : Int32 = -1
 

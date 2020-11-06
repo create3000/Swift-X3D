@@ -20,7 +20,7 @@ public final class SphereSensor :
    // Fields
 
    @SFRotation public final var offset           : Rotation4f = Rotation4f (0, 1, 0, 0)
-   @SFRotation public final var rotation_changed : Rotation4f = Rotation4f .identity
+   @SFRotation public final var rotation_changed : Rotation4f = .identity
 
    // Construction
    

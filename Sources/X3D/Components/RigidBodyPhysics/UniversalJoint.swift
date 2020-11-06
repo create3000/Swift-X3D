@@ -19,17 +19,17 @@ public final class UniversalJoint :
 
    // Fields
 
-   @SFVec3f public final var anchorPoint          : Vector3f = Vector3f .zero
-   @SFVec3f public final var axis1                : Vector3f = Vector3f .zero
-   @SFVec3f public final var axis2                : Vector3f = Vector3f .zero
+   @SFVec3f public final var anchorPoint          : Vector3f = .zero
+   @SFVec3f public final var axis1                : Vector3f = .zero
+   @SFVec3f public final var axis2                : Vector3f = .zero
    @SFFloat public final var stop1Bounce          : Float = 0
    @SFFloat public final var stop2Bounce          : Float = 0
    @SFFloat public final var stop1ErrorCorrection : Float = 0.8
    @SFFloat public final var stop2ErrorCorrection : Float = 0.8
-   @SFVec3f public final var body1AnchorPoint     : Vector3f = Vector3f .zero
-   @SFVec3f public final var body2AnchorPoint     : Vector3f = Vector3f .zero
-   @SFVec3f public final var body1Axis            : Vector3f = Vector3f .zero
-   @SFVec3f public final var body2Axis            : Vector3f = Vector3f .zero
+   @SFVec3f public final var body1AnchorPoint     : Vector3f = .zero
+   @SFVec3f public final var body2AnchorPoint     : Vector3f = .zero
+   @SFVec3f public final var body1Axis            : Vector3f = .zero
+   @SFVec3f public final var body2Axis            : Vector3f = .zero
 
    // Construction
    

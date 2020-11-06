@@ -19,7 +19,7 @@ public final class WindPhysicsModel :
 
    // Fields
 
-   @SFVec3f public final var direction  : Vector3f = Vector3f .zero
+   @SFVec3f public final var direction  : Vector3f = .zero
    @SFFloat public final var speed      : Float = 0.1
    @SFFloat public final var gustiness  : Float = 0.1
    @SFFloat public final var turbulence : Float = 0

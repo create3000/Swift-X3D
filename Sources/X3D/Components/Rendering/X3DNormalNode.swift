@@ -25,6 +25,6 @@ public class X3DNormalNode :
    
    internal func get1Vector (at index : Int) -> Vector3f
    {
-      return Vector3f .zero
+      return .zero
    }
 }

@@ -52,7 +52,7 @@ public final class Coordinate :
          return point [index]
       }
       
-      return Vector3f .zero
+      return .zero
    }
    
    internal final override func makeNormal (index1 : Int, index2 : Int, index3 : Int) -> Vector3f
@@ -64,7 +64,7 @@ public final class Coordinate :
          return normal (point [index1], point [index2], point [index3])
       }
       
-      return Vector3f .zero
+      return .zero
    }
    
    internal final override func makeNormal (index1 : Int, index2 : Int, index3 : Int, index4 : Int) -> Vector3f
@@ -76,6 +76,6 @@ public final class Coordinate :
          return normal (point [index1], point [index2], point [index3], point [index4])
       }
       
-      return Vector3f .zero
+      return .zero
    }
 }

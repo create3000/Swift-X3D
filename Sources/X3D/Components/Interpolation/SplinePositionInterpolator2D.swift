@@ -23,7 +23,7 @@ public final class SplinePositionInterpolator2D :
    @MFVec2f public final var keyValue          : MFVec2f .Value
    @MFVec2f public final var keyVelocity       : MFVec2f .Value
    @SFBool  public final var normalizeVelocity : Bool = false
-   @SFVec2f public final var value_changed     : Vector2f = Vector2f .zero
+   @SFVec2f public final var value_changed     : Vector2f = .zero
 
    // Construction
    

@@ -21,9 +21,9 @@ public final class MotorJoint :
 
    @SFBool  public final var autoCalc             : Bool = false
    @SFInt32 public final var enabledAxes          : Int32 = 1
-   @SFVec3f public final var motor1Axis           : Vector3f = Vector3f .zero
-   @SFVec3f public final var motor2Axis           : Vector3f = Vector3f .zero
-   @SFVec3f public final var motor3Axis           : Vector3f = Vector3f .zero
+   @SFVec3f public final var motor1Axis           : Vector3f = .zero
+   @SFVec3f public final var motor2Axis           : Vector3f = .zero
+   @SFVec3f public final var motor3Axis           : Vector3f = .zero
    @SFFloat public final var axis1Angle           : Float = 0
    @SFFloat public final var axis2Angle           : Float = 0
    @SFFloat public final var axis3Angle           : Float = 0

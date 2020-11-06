@@ -15,7 +15,7 @@ public class X3DGroupingNode :
    // Fields
 
    @SFVec3f public final var bboxSize       : Vector3f = Vector3f (-1, -1, -1)
-   @SFVec3f public final var bboxCenter     : Vector3f = Vector3f .zero
+   @SFVec3f public final var bboxCenter     : Vector3f = .zero
    @MFNode  public final var addChildren    : MFNode <X3DNode> .Value
    @MFNode  public final var removeChildren : MFNode <X3DNode> .Value
    @MFNode  public final var children       : MFNode <X3DNode> .Value

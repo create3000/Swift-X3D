@@ -23,7 +23,7 @@ public final class CADFace :
 
    @SFString public final var name       : String = ""
    @SFVec3f  public final var bboxSize   : Vector3f = Vector3f (-1, -1, -1)
-   @SFVec3f  public final var bboxCenter : Vector3f = Vector3f .zero
+   @SFVec3f  public final var bboxCenter : Vector3f = .zero
    @SFNode   public final var shape      : X3DNode?
 
    // Construction

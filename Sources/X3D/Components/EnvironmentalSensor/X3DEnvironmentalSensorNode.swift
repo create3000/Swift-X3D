@@ -15,8 +15,8 @@ public class X3DEnvironmentalSensorNode :
    // Fields
 
    @SFBool  public final var enabled   : Bool = true
-   @SFVec3f public final var size      : Vector3f = Vector3f .zero
-   @SFVec3f public final var center    : Vector3f = Vector3f .zero
+   @SFVec3f public final var size      : Vector3f = .zero
+   @SFVec3f public final var center    : Vector3f = .zero
    @SFTime  public final var enterTime : TimeInterval = 0
    @SFTime  public final var exitTime  : TimeInterval = 0
    @SFBool  public final var isActive  : Bool = false

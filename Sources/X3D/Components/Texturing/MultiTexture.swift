@@ -19,7 +19,7 @@ public final class MultiTexture :
 
    // Fields
 
-   @SFColor  public final var color    : Color3f = Color3f .one
+   @SFColor  public final var color    : Color3f = .one
    @SFFloat  public final var alpha    : Float = 1
    @MFString public final var mode     : MFString .Value
    @MFString public final var source   : MFString .Value

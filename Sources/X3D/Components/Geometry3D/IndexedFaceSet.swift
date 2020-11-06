@@ -312,7 +312,7 @@ public final class IndexedFaceSet :
    private final func makeNormals (for polygons : Polygons, with coordNode : X3DCoordinateNode) -> Normals
    {
       var normalIndex = NormalIndex ()
-      var faceNormals = Normals (repeating: Vector3f .zero, count: coordIndex .count)
+      var faceNormals = Normals (repeating: .zero, count: coordIndex .count)
       var normal      = Vector3f .zero
 
       for (_, vertices, _) in polygons
@@ -365,7 +365,7 @@ public final class IndexedFaceSet :
    
    private final func makePolygonNormal (for vertices : Vertices) -> Vector3f
    {
-      guard let coordNode = coordNode else { return Vector3f .zero }
+      guard let coordNode = coordNode else { return .zero }
       
       // Determine polygon normal.
       // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:

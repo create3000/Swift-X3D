@@ -19,11 +19,11 @@ public final class OrientationChaser :
 
    // Fields
 
-   @SFRotation public final var set_value          : Rotation4f = Rotation4f .identity
-   @SFRotation public final var set_destination    : Rotation4f = Rotation4f .identity
+   @SFRotation public final var set_value          : Rotation4f = .identity
+   @SFRotation public final var set_destination    : Rotation4f = .identity
    @SFRotation public final var initialValue       : Rotation4f = Rotation4f (0, 1, 0, 0)
    @SFRotation public final var initialDestination : Rotation4f = Rotation4f (0, 1, 0, 0)
-   @SFRotation public final var value_changed      : Rotation4f = Rotation4f .identity
+   @SFRotation public final var value_changed      : Rotation4f = .identity
 
    // Construction
    

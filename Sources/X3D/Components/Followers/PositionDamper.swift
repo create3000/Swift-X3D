@@ -19,11 +19,11 @@ public final class PositionDamper :
 
    // Fields
 
-   @SFVec3f public final var set_value          : Vector3f = Vector3f .zero
-   @SFVec3f public final var set_destination    : Vector3f = Vector3f .zero
-   @SFVec3f public final var initialValue       : Vector3f = Vector3f .zero
-   @SFVec3f public final var initialDestination : Vector3f = Vector3f .zero
-   @SFVec3f public final var value_changed      : Vector3f = Vector3f .zero
+   @SFVec3f public final var set_value          : Vector3f = .zero
+   @SFVec3f public final var set_destination    : Vector3f = .zero
+   @SFVec3f public final var initialValue       : Vector3f = .zero
+   @SFVec3f public final var initialDestination : Vector3f = .zero
+   @SFVec3f public final var value_changed      : Vector3f = .zero
 
    // Construction
    

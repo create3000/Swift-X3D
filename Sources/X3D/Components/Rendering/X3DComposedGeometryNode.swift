@@ -262,7 +262,7 @@ public class X3DComposedGeometryNode :
    
    private final func makePolygonNormal (_ index : Int, _ verticesPerPolygon : Int) -> Vector3f
    {
-      guard let coordNode = coordNode else { return Vector3f .zero }
+      guard let coordNode = coordNode else { return .zero }
       
       // Determine polygon normal.
       // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:

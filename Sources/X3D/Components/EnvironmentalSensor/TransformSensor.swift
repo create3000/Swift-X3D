@@ -20,8 +20,8 @@ public final class TransformSensor :
    // Fields
 
    @SFNode     public final var targetObject        : X3DNode?
-   @SFVec3f    public final var position_changed    : Vector3f = Vector3f .zero
-   @SFRotation public final var orientation_changed : Rotation4f = Rotation4f .identity
+   @SFVec3f    public final var position_changed    : Vector3f = .zero
+   @SFRotation public final var orientation_changed : Rotation4f = .identity
 
    // Construction
    

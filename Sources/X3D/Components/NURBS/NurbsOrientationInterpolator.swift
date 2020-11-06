@@ -24,7 +24,7 @@ public final class NurbsOrientationInterpolator :
    @MFDouble   public final var knot          : MFDouble .Value
    @MFDouble   public final var weight        : MFDouble .Value
    @SFNode     public final var controlPoint  : X3DNode?
-   @SFRotation public final var value_changed : Rotation4f = Rotation4f .identity
+   @SFRotation public final var value_changed : Rotation4f = .identity
 
    // Construction
    

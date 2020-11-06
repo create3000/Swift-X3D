@@ -19,16 +19,16 @@ public final class Contact :
 
    // Fields
 
-   @SFVec3f  public final var position                 : Vector3f = Vector3f .zero
+   @SFVec3f  public final var position                 : Vector3f = .zero
    @SFVec3f  public final var contactNormal            : Vector3f = Vector3f (0, 1, 0)
    @SFFloat  public final var depth                    : Float = 0
    @SFVec3f  public final var frictionDirection        : Vector3f = Vector3f (0, 1, 0)
    @MFString public final var appliedParameters        : MFString .Value = ["BOUNCE"]
    @SFFloat  public final var bounce                   : Float = 0
    @SFFloat  public final var minBounceSpeed           : Float = 0
-   @SFVec2f  public final var frictionCoefficients     : Vector2f = Vector2f .zero
-   @SFVec2f  public final var surfaceSpeed             : Vector2f = Vector2f .zero
-   @SFVec2f  public final var slipCoefficients         : Vector2f = Vector2f .zero
+   @SFVec2f  public final var frictionCoefficients     : Vector2f = .zero
+   @SFVec2f  public final var surfaceSpeed             : Vector2f = .zero
+   @SFVec2f  public final var slipCoefficients         : Vector2f = .zero
    @SFFloat  public final var softnessConstantForceMix : Float = 0.0001
    @SFFloat  public final var softnessErrorCorrection  : Float = 0.8
    @SFNode   public final var geometry1                : X3DNode?

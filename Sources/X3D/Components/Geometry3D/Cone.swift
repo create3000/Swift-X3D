@@ -168,15 +168,15 @@ public final class Cone :
             let p2 = points [i + 1]
 
             addPrimitive (texCoords: [t0],
-                          normal: -Vector3f .yAxis,
+                          normal: -.yAxis,
                           point: Vector3f (p0 .x, p0 .y, p0 .z))
 
             addPrimitive (texCoords: [t1],
-                          normal: -Vector3f .yAxis,
+                          normal: -.yAxis,
                           point: Vector3f (p1 .x, p1 .y, p1 .z))
 
             addPrimitive (texCoords: [t2],
-                          normal: -Vector3f .yAxis,
+                          normal: -.yAxis,
                           point: Vector3f (p2 .x, p2 .y, p2 .z))
          }
 

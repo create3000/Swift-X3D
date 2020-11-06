@@ -26,7 +26,7 @@ public final class Inline :
    @SFBool   public final var load       : Bool = true
    @MFString public final var url        : MFString .Value
    @SFVec3f  public final var bboxSize   : Vector3f = Vector3f (-1, -1, -1)
-   @SFVec3f  public final var bboxCenter : Vector3f = Vector3f .zero
+   @SFVec3f  public final var bboxCenter : Vector3f = .zero
    
    // X3DUrlObject
    

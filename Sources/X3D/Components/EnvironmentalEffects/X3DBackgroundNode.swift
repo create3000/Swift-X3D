@@ -274,8 +274,8 @@ public class X3DBackgroundNode :
    {
       spherePrimitives .append (x3d_VertexIn (fogDepth: 0,
                                               color: color,
-                                              texCoords: (Vector4f .zero, Vector4f .zero),
-                                              normal: Vector3f .zero,
+                                              texCoords: (.zero, .zero),
+                                              normal: .zero,
                                               point: point))
    }
    
@@ -343,7 +343,7 @@ public class X3DBackgroundNode :
       cubePrimitives .append (x3d_VertexIn (fogDepth: 0,
                                             color: Color4f .one,
                                             texCoords: (texCoord, texCoord),
-                                            normal: Vector3f .zero,
+                                            normal: .zero,
                                             point: point))
    }
    

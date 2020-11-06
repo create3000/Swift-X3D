@@ -32,7 +32,7 @@ public final class GeoLOD :
    @SFFloat  public final var range         : Float = 10
    @SFInt32  public final var level_changed : Int32 = -1
    @SFVec3f  public final var bboxSize      : Vector3f = Vector3f (-1, -1, -1)
-   @SFVec3f  public final var bboxCenter    : Vector3f = Vector3f .zero
+   @SFVec3f  public final var bboxCenter    : Vector3f = .zero
    @MFNode   public final var rootNode      : MFNode <X3DNode> .Value
    @MFNode   public final var children      : MFNode <X3DNode> .Value
 

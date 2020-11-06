@@ -24,7 +24,7 @@ public final class CylinderSensor :
    @SFFloat    public final var minAngle         : Float = 0
    @SFFloat    public final var maxAngle         : Float = -1
    @SFFloat    public final var offset           : Float = 0
-   @SFRotation public final var rotation_changed : Rotation4f = Rotation4f .identity
+   @SFRotation public final var rotation_changed : Rotation4f = .identity
 
    // Construction
    

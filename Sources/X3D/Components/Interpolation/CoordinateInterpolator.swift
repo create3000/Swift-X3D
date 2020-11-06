@@ -53,7 +53,7 @@ public final class CoordinateInterpolator :
       let i0 = index0 * size
       let i1 = i0 + size
 
-      value_changed .resize (size, fillWith: Vector3f .zero)
+      value_changed .resize (size, fillWith: .zero)
 
       for i in 0 ..< size
       {

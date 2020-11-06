@@ -41,7 +41,7 @@ public final class Shape :
    
    public final override var bbox : Box3f
    {
-      if bboxSize == -Vector3f .one
+      if bboxSize == -.one
       {
          if geometryNode != nil
          {

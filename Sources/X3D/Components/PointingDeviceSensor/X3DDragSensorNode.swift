@@ -12,7 +12,7 @@ public class X3DDragSensorNode :
    // Fields
 
    @SFBool  public final var autoOffset         : Bool = true
-   @SFVec3f public final var trackPoint_changed : Vector3f = Vector3f .zero
+   @SFVec3f public final var trackPoint_changed : Vector3f = .zero
 
    // Construction
    

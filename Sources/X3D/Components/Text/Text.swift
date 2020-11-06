@@ -25,8 +25,8 @@ public final class Text :
    @MFFloat  public final var length     : MFFloat .Value
    @SFFloat  public final var maxExtent  : Float = 0
    @SFBool   public final var solid      : Bool = false
-   @SFVec3f  public final var origin     : Vector3f = Vector3f .zero
-   @SFVec2f  public final var textBounds : Vector2f = Vector2f .zero
+   @SFVec3f  public final var origin     : Vector3f = .zero
+   @SFVec2f  public final var textBounds : Vector2f = .zero
    @MFVec2f  public final var lineBounds : MFVec2f .Value
    @SFNode   public final var fontStyle  : X3DNode?
    

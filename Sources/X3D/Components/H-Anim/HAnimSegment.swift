@@ -21,7 +21,7 @@ public final class HAnimSegment :
 
    @SFString public final var name             : String = ""
    @SFFloat  public final var mass             : Float = 0
-   @SFVec3f  public final var centerOfMass     : Vector3f = Vector3f .zero
+   @SFVec3f  public final var centerOfMass     : Vector3f = .zero
    @MFFloat  public final var momentsOfInertia : MFFloat .Value = [0, 0, 0, 0, 0, 0, 0, 0, 0]
    @MFNode   public final var displacers       : MFNode <X3DNode> .Value
    @SFNode   public final var coord            : X3DNode?

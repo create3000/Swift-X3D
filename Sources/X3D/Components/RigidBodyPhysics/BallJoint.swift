@@ -19,9 +19,9 @@ public final class BallJoint :
 
    // Fields
 
-   @SFVec3f public final var anchorPoint      : Vector3f = Vector3f .zero
-   @SFVec3f public final var body1AnchorPoint : Vector3f = Vector3f .zero
-   @SFVec3f public final var body2AnchorPoint : Vector3f = Vector3f .zero
+   @SFVec3f public final var anchorPoint      : Vector3f = .zero
+   @SFVec3f public final var body1AnchorPoint : Vector3f = .zero
+   @SFVec3f public final var body2AnchorPoint : Vector3f = .zero
 
    // Construction
    

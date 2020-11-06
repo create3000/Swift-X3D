@@ -19,10 +19,10 @@ public final class TextureTransform3D :
 
    // Fields
 
-   @SFVec3f    public final var translation : Vector3f = Vector3f .zero
-   @SFRotation public final var rotation    : Rotation4f = Rotation4f .identity
+   @SFVec3f    public final var translation : Vector3f = .zero
+   @SFRotation public final var rotation    : Rotation4f = .identity
    @SFVec3f    public final var scale       : Vector3f = Vector3f (1, 1, 1)
-   @SFVec3f    public final var center      : Vector3f = Vector3f .zero
+   @SFVec3f    public final var center      : Vector3f = .zero
 
    // Construction
    

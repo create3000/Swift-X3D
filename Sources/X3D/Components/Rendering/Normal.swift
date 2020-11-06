@@ -55,6 +55,6 @@ public final class Normal :
          return vector [index % vector .count]
       }
 
-      return Vector3f .zero
+      return .zero
    }
 }

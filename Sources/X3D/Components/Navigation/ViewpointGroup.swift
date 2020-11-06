@@ -22,8 +22,8 @@ public final class ViewpointGroup :
    @SFString public final var description       : String = ""
    @SFBool   public final var displayed         : Bool = true
    @SFBool   public final var retainUserOffsets : Bool = false
-   @SFVec3f  public final var size              : Vector3f = Vector3f .zero
-   @SFVec3f  public final var center            : Vector3f = Vector3f .zero
+   @SFVec3f  public final var size              : Vector3f = .zero
+   @SFVec3f  public final var center            : Vector3f = .zero
    @MFNode   public final var children          : MFNode <X3DNode> .Value
    
    // Properties
@@ -85,7 +85,7 @@ public final class ViewpointGroup :
    
    private final func set_displayed ()
    {
-      if displayed && size != Vector3f .zero
+      if displayed && size != .zero
       {
          proximitySensorNode .enabled = true
          

@@ -33,7 +33,7 @@ public final class Extrusion :
    @SFBool     public final var convex           : Bool = true
    @SFFloat    public final var creaseAngle      : Float = 0
    @MFVec2f    public final var crossSection     : MFVec2f .Value = [Vector2f (1, 1), Vector2f (1, -1), Vector2f (-1, -1), Vector2f (-1, 1), Vector2f (1, 1)]
-   @MFRotation public final var orientation      : MFRotation .Value = [Rotation4f .identity]
+   @MFRotation public final var orientation      : MFRotation .Value = [.identity]
    @MFVec2f    public final var scale            : MFVec2f .Value = [Vector2f (1, 1)]
    @MFVec3f    public final var spine            : MFVec3f .Value = [Vector3f (0, 0, 0), Vector3f (0, 1, 0)]
 
@@ -392,7 +392,7 @@ public final class Extrusion :
          {
             SCPyAxis = normalize (spine [i] - spine [numSpines - 2])
 
-            if SCPyAxis != Vector3f .zero
+            if SCPyAxis != .zero
             {
                break
             }
@@ -403,7 +403,7 @@ public final class Extrusion :
          {
             SCPzAxis = normalize (cross (spine [i + 1] - spine [i], spine [numSpines - 2] - spine [i]))
 
-            if SCPzAxis != Vector3f .zero
+            if SCPzAxis != .zero
             {
                break
             }
@@ -416,7 +416,7 @@ public final class Extrusion :
          {
             SCPyAxis = normalize (spine [i + 1] - spine [i])
 
-            if SCPyAxis != Vector3f .zero
+            if SCPyAxis != .zero
             {
                break
             }
@@ -427,7 +427,7 @@ public final class Extrusion :
          {
             SCPzAxis = normalize (cross (spine [i + 1] - spine [i], spine [i - 1] - spine [i]))
 
-            if SCPzAxis != Vector3f .zero
+            if SCPzAxis != .zero
             {
                break
             }
@@ -435,15 +435,15 @@ public final class Extrusion :
       }
 
       // The entire spine is coincident:
-      if SCPyAxis == Vector3f .zero
+      if SCPyAxis == .zero
       {
-         SCPyAxis = Vector3f .yAxis
+         SCPyAxis = .yAxis
       }
 
       // The entire spine is collinear:
-      if SCPzAxis == Vector3f .zero
+      if SCPzAxis == .zero
       {
-         SCPzAxis = Rotation4f (from: Vector3f .yAxis, to: SCPyAxis) * Vector3f .zAxis
+         SCPzAxis = Rotation4f (from: .yAxis, to: SCPyAxis) * Vector3f .zAxis
       }
 
       // We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
@@ -476,7 +476,7 @@ public final class Extrusion :
          }
 
          // The two points used in computing the Y-axis are coincident.
-         if SCPyAxis == Vector3f .zero
+         if SCPyAxis == .zero
          {
             SCPyAxis = SCPyAxisPrevious
          }
@@ -486,7 +486,7 @@ public final class Extrusion :
          }
 
          // The three points used in computing the Z-axis are collinear.
-         if SCPzAxis == Vector3f .zero
+         if SCPzAxis == .zero
          {
             SCPzAxis = SCPzAxisPrevious
          }
@@ -528,7 +528,7 @@ public final class Extrusion :
          }
 
          // The two points used in computing the Y-axis are coincident.
-         if SCPyAxis == Vector3f .zero
+         if SCPyAxis == .zero
          {
             SCPyAxis = SCPyAxisPrevious
          }
@@ -538,7 +538,7 @@ public final class Extrusion :
          }
 
          // The three points used in computing the Z-axis are collinear.
-         if SCPzAxis == Vector3f .zero
+         if SCPzAxis == .zero
          {
             SCPzAxis = SCPzAxisPrevious
          }

@@ -23,9 +23,9 @@ public final class GeoProximitySensor :
    @MFString   public final var geoSystem                : MFString .Value = ["GD", "WE"]
    @SFNode     public final var geoOrigin                : X3DNode?
    @SFVec3d    public final var geoCoord_changed         : Vector3d = Vector3d .zero
-   @SFVec3f    public final var position_changed         : Vector3f = Vector3f .zero
-   @SFRotation public final var orientation_changed      : Rotation4f = Rotation4f .identity
-   @SFVec3f    public final var centerOfRotation_changed : Vector3f = Vector3f .zero
+   @SFVec3f    public final var position_changed         : Vector3f = .zero
+   @SFRotation public final var orientation_changed      : Rotation4f = .identity
+   @SFVec3f    public final var centerOfRotation_changed : Vector3f = .zero
 
    // Construction
    

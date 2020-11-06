@@ -23,13 +23,13 @@ public final class HAnimHumanoid :
    @SFString   public final var name             : String = ""
    @SFString   public final var version          : String = ""
    @MFString   public final var info             : MFString .Value
-   @SFVec3f    public final var translation      : Vector3f = Vector3f .zero
-   @SFRotation public final var rotation         : Rotation4f = Rotation4f .identity
+   @SFVec3f    public final var translation      : Vector3f = .zero
+   @SFRotation public final var rotation         : Rotation4f = .identity
    @SFVec3f    public final var scale            : Vector3f = Vector3f (1, 1, 1)
-   @SFRotation public final var scaleOrientation : Rotation4f = Rotation4f .identity
-   @SFVec3f    public final var center           : Vector3f = Vector3f .zero
+   @SFRotation public final var scaleOrientation : Rotation4f = .identity
+   @SFVec3f    public final var center           : Vector3f = .zero
    @SFVec3f    public final var bboxSize         : Vector3f = Vector3f (-1, -1, -1)
-   @SFVec3f    public final var bboxCenter       : Vector3f = Vector3f .zero
+   @SFVec3f    public final var bboxCenter       : Vector3f = .zero
    @MFNode     public final var viewpoints       : MFNode <X3DNode> .Value
    @MFNode     public final var sites            : MFNode <X3DNode> .Value
    @MFNode     public final var joints           : MFNode <X3DNode> .Value

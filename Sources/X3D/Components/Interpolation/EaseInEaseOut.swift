@@ -55,7 +55,7 @@ public final class EaseInEaseOut :
    {
       guard easeInEaseOut .count < key .count else { return }
       
-      easeInEaseOut .append (contentsOf: repeatElement (easeInEaseOut .last ?? Vector2f .zero, count: key .count - easeInEaseOut .count))
+      easeInEaseOut .append (contentsOf: repeatElement (easeInEaseOut .last ?? .zero, count: key .count - easeInEaseOut .count))
    }
 
    internal final override func interpolate (index0 : Int, index1 : Int, weight : Float)

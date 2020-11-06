@@ -25,16 +25,16 @@ public class X3DCoordinateNode :
 
    internal func get1Point (at index : Int) -> Vector3f
    {
-      return Vector3f .zero
+      return .zero
    }
    
    internal func makeNormal (index1 : Int, index2 : Int, index3 : Int) -> Vector3f
    {
-      return Vector3f .zero
+      return .zero
    }
    
    internal func makeNormal (index1 : Int, index2 : Int, index3 : Int, index4 : Int) -> Vector3f
    {
-      return Vector3f .zero
+      return .zero
    }
 }

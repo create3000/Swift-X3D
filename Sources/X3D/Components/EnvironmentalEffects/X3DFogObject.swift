@@ -11,7 +11,7 @@ public protocol X3DFogObject :
 {
    // Fields
 
-   //@SFColor  public final var color           : Color3f = Color3f .one
+   //@SFColor  public final var color           : Color3f = .one
    //@SFString public final var fogType         : String = "LINEAR"
    //@SFFloat  public final var visibilityRange : Float = 0
 

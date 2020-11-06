@@ -131,15 +131,15 @@ public final class ArcClose2D :
             let p2 = points [i + 1]
             
             addPrimitive (texCoords: [Vector4f (t0 .real, t0 .imaginary, 0, 1)],
-                          normal: Vector3f .zAxis,
+                          normal: .zAxis,
                           point: Vector3f (p0 .real, p0 .imaginary, 0))
             
             addPrimitive (texCoords: [Vector4f (t1 .real, t1 .imaginary, 0, 1)],
-                          normal: Vector3f .zAxis,
+                          normal: .zAxis,
                           point: Vector3f (p1 .real, p1 .imaginary, 0))
             
             addPrimitive (texCoords: [Vector4f (t2 .real, t2 .imaginary, 0, 1)],
-                          normal: Vector3f .zAxis,
+                          normal: .zAxis,
                           point: Vector3f (p2 .real, p2 .imaginary, 0))
          }
       }
@@ -153,15 +153,15 @@ public final class ArcClose2D :
             let p2 = points [i + 1]
             
             addPrimitive (texCoords: [Vector4f (0.5, 0.5, 0, 1)],
-                          normal: Vector3f .zAxis,
+                          normal: .zAxis,
                           point: Vector3f (0, 0, 0))
             
             addPrimitive (texCoords: [Vector4f (t1 .real, t1 .imaginary, 0, 1)],
-                          normal: Vector3f .zAxis,
+                          normal: .zAxis,
                           point: Vector3f (p1 .real, p1 .imaginary, 0))
             
             addPrimitive (texCoords: [Vector4f (t2 .real, t2 .imaginary, 0, 1)],
-                          normal: Vector3f .zAxis,
+                          normal: .zAxis,
                           point: Vector3f (p2 .real, p2 .imaginary, 0))
          }
       }

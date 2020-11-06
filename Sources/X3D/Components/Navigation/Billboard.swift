@@ -19,7 +19,7 @@ public final class Billboard :
 
    // Fields
 
-   @SFVec3f public final var axisOfRotation : Vector3f = Vector3f (0, 1, 0)
+   @SFVec3f public final var axisOfRotation : Vector3f = .yAxis
 
    // Construction
    
@@ -79,7 +79,7 @@ public final class Billboard :
       else
       {
          let N1 = cross (axisOfRotation, billboardToViewer) // Normal vector of plane as in specification
-         let N2 = cross (axisOfRotation, Vector3f .zAxis)   // Normal vector of plane between axisOfRotation and zAxis
+         let N2 = cross (axisOfRotation, .zAxis)            // Normal vector of plane between axisOfRotation and zAxis
 
          matrix = Matrix4f (Rotation4f (from: N2, to: N1))  // Rotate zAxis in plane
       }

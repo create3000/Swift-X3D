@@ -19,11 +19,11 @@ public final class PlaneSensor :
 
    // Fields
 
-   @SFRotation public final var axisRotation        : Rotation4f = Rotation4f .identity
-   @SFVec3f    public final var offset              : Vector3f = Vector3f .zero
-   @SFVec2f    public final var minPosition         : Vector2f = Vector2f .zero
+   @SFRotation public final var axisRotation        : Rotation4f = .identity
+   @SFVec3f    public final var offset              : Vector3f = .zero
+   @SFVec2f    public final var minPosition         : Vector2f = .zero
    @SFVec2f    public final var maxPosition         : Vector2f = Vector2f (-1, -1)
-   @SFVec3f    public final var translation_changed : Vector3f = Vector3f .zero
+   @SFVec3f    public final var translation_changed : Vector3f = .zero
 
    // Construction
    

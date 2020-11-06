@@ -21,10 +21,10 @@ public final class TextureTransform :
 
    // Fields
 
-   @SFVec2f public final var translation : Vector2f = Vector2f .zero
+   @SFVec2f public final var translation : Vector2f = .zero
    @SFFloat public final var rotation    : Float = 0
    @SFVec2f public final var scale       : Vector2f = Vector2f (1, 1)
-   @SFVec2f public final var center      : Vector2f = Vector2f .zero
+   @SFVec2f public final var center      : Vector2f = .zero
 
    // Construction
    

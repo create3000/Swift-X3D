@@ -21,22 +21,22 @@ public final class RigidBody :
 
    @SFBool     public final var enabled              : Bool = true
    @SFBool     public final var fixed                : Bool = false
-   @SFVec3f    public final var position             : Vector3f = Vector3f .zero
-   @SFRotation public final var orientation          : Rotation4f = Rotation4f .identity
-   @SFVec3f    public final var linearVelocity       : Vector3f = Vector3f .zero
-   @SFVec3f    public final var angularVelocity      : Vector3f = Vector3f .zero
+   @SFVec3f    public final var position             : Vector3f = .zero
+   @SFRotation public final var orientation          : Rotation4f = .identity
+   @SFVec3f    public final var linearVelocity       : Vector3f = .zero
+   @SFVec3f    public final var angularVelocity      : Vector3f = .zero
    @SFBool     public final var useFiniteRotation    : Bool = false
-   @SFVec3f    public final var finiteRotationAxis   : Vector3f = Vector3f .zero
+   @SFVec3f    public final var finiteRotationAxis   : Vector3f = .zero
    @SFBool     public final var autoDamp             : Bool = false
    @SFFloat    public final var linearDampingFactor  : Float = 0.001
    @SFFloat    public final var angularDampingFactor : Float = 0.001
    @SFFloat    public final var mass                 : Float = 1
-   @SFVec3f    public final var centerOfMass         : Vector3f = Vector3f .zero
+   @SFVec3f    public final var centerOfMass         : Vector3f = .zero
    @SFNode     public final var massDensityModel     : X3DNode?
    @SFBool     public final var useGlobalGravity     : Bool = true
    @MFVec3f    public final var forces               : MFVec3f .Value
    @MFVec3f    public final var torques              : MFVec3f .Value
-   @SFMatrix3f public final var inertia              : Matrix3f = Matrix3f .identity
+   @SFMatrix3f public final var inertia              : Matrix3f = .identity
    @SFBool     public final var autoDisable          : Bool = false
    @SFFloat    public final var disableTime          : Float = 0
    @SFFloat    public final var disableLinearSpeed   : Float = 0

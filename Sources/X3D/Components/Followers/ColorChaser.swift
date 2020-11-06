@@ -19,11 +19,11 @@ public final class ColorChaser :
 
    // Fields
 
-   @SFColor public final var set_value          : Color3f = Color3f .zero
-   @SFColor public final var set_destination    : Color3f = Color3f .zero
+   @SFColor public final var set_value          : Color3f = .zero
+   @SFColor public final var set_destination    : Color3f = .zero
    @SFColor public final var initialValue       : Color3f = Color3f (0.8, 0.8, 0.8)
    @SFColor public final var initialDestination : Color3f = Color3f (0.8, 0.8, 0.8)
-   @SFColor public final var value_changed      : Color3f = Color3f .zero
+   @SFColor public final var value_changed      : Color3f = .zero
 
    // Construction
    

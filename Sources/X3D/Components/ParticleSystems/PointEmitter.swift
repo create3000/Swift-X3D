@@ -19,7 +19,7 @@ public final class PointEmitter :
 
    // Fields
 
-   @SFVec3f public final var position  : Vector3f = Vector3f .zero
+   @SFVec3f public final var position  : Vector3f = .zero
    @SFVec3f public final var direction : Vector3f = Vector3f (0, 1, 0)
 
    // Construction

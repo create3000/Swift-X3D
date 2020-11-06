@@ -21,7 +21,7 @@ public final class SquadOrientationInterpolator :
 
    @SFBool     public final var closed        : Bool = false
    @MFRotation public final var keyValue      : MFRotation .Value
-   @SFRotation public final var value_changed : Rotation4f = Rotation4f .identity
+   @SFRotation public final var value_changed : Rotation4f = .identity
 
    // Construction
    

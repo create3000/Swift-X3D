@@ -38,11 +38,11 @@ public final class EspduTransform :
    @MFInt32    public final var articulationParameterIdPartAttachedToArray : MFInt32 .Value
    @MFInt32    public final var articulationParameterTypeArray             : MFInt32 .Value
    @MFFloat    public final var articulationParameterArray                 : MFFloat .Value
-   @SFVec3f    public final var center                                     : Vector3f = Vector3f .zero
+   @SFVec3f    public final var center                                     : Vector3f = .zero
    @SFInt32    public final var collisionType                              : Int32 = 0
    @SFInt32    public final var deadReckoning                              : Int32 = 0
-   @SFVec3f    public final var detonationLocation                         : Vector3f = Vector3f .zero
-   @SFVec3f    public final var detonationRelativeLocation                 : Vector3f = Vector3f .zero
+   @SFVec3f    public final var detonationLocation                         : Vector3f = .zero
+   @SFVec3f    public final var detonationRelativeLocation                 : Vector3f = .zero
    @SFInt32    public final var detonationResult                           : Int32 = 0
    @SFInt32    public final var entityCategory                             : Int32 = 0
    @SFInt32    public final var entityCountry                              : Int32 = 0
@@ -63,25 +63,25 @@ public final class EspduTransform :
    @SFInt32    public final var firingRate                                 : Int32 = 0
    @SFInt32    public final var forceID                                    : Int32 = 0
    @SFInt32    public final var fuse                                       : Int32 = 0
-   @SFVec3f    public final var linearVelocity                             : Vector3f = Vector3f .zero
-   @SFVec3f    public final var linearAcceleration                         : Vector3f = Vector3f .zero
+   @SFVec3f    public final var linearVelocity                             : Vector3f = .zero
+   @SFVec3f    public final var linearAcceleration                         : Vector3f = .zero
    @SFString   public final var marking                                    : String = ""
    @SFString   public final var multicastRelayHost                         : String = ""
    @SFInt32    public final var multicastRelayPort                         : Int32 = 0
    @SFInt32    public final var munitionApplicationID                      : Int32 = 1
-   @SFVec3f    public final var munitionEndPoint                           : Vector3f = Vector3f .zero
+   @SFVec3f    public final var munitionEndPoint                           : Vector3f = .zero
    @SFInt32    public final var munitionEntityID                           : Int32 = 0
    @SFInt32    public final var munitionQuantity                           : Int32 = 0
    @SFInt32    public final var munitionSiteID                             : Int32 = 0
-   @SFVec3f    public final var munitionStartPoint                         : Vector3f = Vector3f .zero
+   @SFVec3f    public final var munitionStartPoint                         : Vector3f = .zero
    @SFString   public final var networkMode                                : String = "standAlone"
    @SFInt32    public final var port                                       : Int32 = 0
    @SFTime     public final var readInterval                               : TimeInterval = 0.1
-   @SFRotation public final var rotation                                   : Rotation4f = Rotation4f .identity
+   @SFRotation public final var rotation                                   : Rotation4f = .identity
    @SFVec3f    public final var scale                                      : Vector3f = Vector3f (1, 1, 1)
-   @SFRotation public final var scaleOrientation                           : Rotation4f = Rotation4f .identity
+   @SFRotation public final var scaleOrientation                           : Rotation4f = .identity
    @SFInt32    public final var siteID                                     : Int32 = 0
-   @SFVec3f    public final var translation                                : Vector3f = Vector3f .zero
+   @SFVec3f    public final var translation                                : Vector3f = .zero
    @SFInt32    public final var warhead                                    : Int32 = 0
    @SFTime     public final var writeInterval                              : TimeInterval = 1
    @SFFloat    public final var articulationParameterValue0_changed        : Float = 0

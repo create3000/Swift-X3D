@@ -19,9 +19,9 @@ public final class ProximitySensor :
 
    // Fields
 
-   @SFVec3f    public final var centerOfRotation_changed : Vector3f = Vector3f .zero
-   @SFRotation public final var orientation_changed      : Rotation4f = Rotation4f .identity
-   @SFVec3f    public final var position_changed         : Vector3f = Vector3f .zero
+   @SFVec3f    public final var centerOfRotation_changed : Vector3f = .zero
+   @SFRotation public final var orientation_changed      : Rotation4f = .identity
+   @SFVec3f    public final var position_changed         : Vector3f = .zero
 
    // Construction
    

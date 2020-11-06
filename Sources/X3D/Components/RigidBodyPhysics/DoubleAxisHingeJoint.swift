@@ -19,9 +19,9 @@ public final class DoubleAxisHingeJoint :
 
    // Fields
 
-   @SFVec3f public final var anchorPoint               : Vector3f = Vector3f .zero
-   @SFVec3f public final var axis1                     : Vector3f = Vector3f .zero
-   @SFVec3f public final var axis2                     : Vector3f = Vector3f .zero
+   @SFVec3f public final var anchorPoint               : Vector3f = .zero
+   @SFVec3f public final var axis1                     : Vector3f = .zero
+   @SFVec3f public final var axis2                     : Vector3f = .zero
    @SFFloat public final var minAngle1                 : Float = -3.14159
    @SFFloat public final var maxAngle1                 : Float = 3.14159
    @SFFloat public final var desiredAngularVelocity1   : Float = 0
@@ -33,10 +33,10 @@ public final class DoubleAxisHingeJoint :
    @SFFloat public final var stopErrorCorrection1      : Float = 0.8
    @SFFloat public final var suspensionForce           : Float = 0
    @SFFloat public final var suspensionErrorCorrection : Float = 0.8
-   @SFVec3f public final var body1AnchorPoint          : Vector3f = Vector3f .zero
-   @SFVec3f public final var body2AnchorPoint          : Vector3f = Vector3f .zero
-   @SFVec3f public final var body1Axis                 : Vector3f = Vector3f .zero
-   @SFVec3f public final var body2Axis                 : Vector3f = Vector3f .zero
+   @SFVec3f public final var body1AnchorPoint          : Vector3f = .zero
+   @SFVec3f public final var body2AnchorPoint          : Vector3f = .zero
+   @SFVec3f public final var body1Axis                 : Vector3f = .zero
+   @SFVec3f public final var body2Axis                 : Vector3f = .zero
    @SFFloat public final var hinge1Angle               : Float = 0
    @SFFloat public final var hinge2Angle               : Float = 0
    @SFFloat public final var hinge1AngleRate           : Float = 0

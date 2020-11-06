@@ -13,10 +13,10 @@ public class X3DLightNode :
 
    @SFBool  public final var global           : Bool = true
    @SFBool  public final var on               : Bool = true
-   @SFColor public final var color            : Color3f = Color3f .one
+   @SFColor public final var color            : Color3f = .one
    @SFFloat public final var intensity        : Float = 1
    @SFFloat public final var ambientIntensity : Float = 0
-   @SFColor public final var shadowColor      : Color3f = Color3f .zero
+   @SFColor public final var shadowColor      : Color3f = .zero
    @SFFloat public final var shadowIntensity  : Float = 0
    @SFFloat public final var shadowBias       : Float = 0.005
    @SFInt32 public final var shadowMapSize    : Int32 = 1024

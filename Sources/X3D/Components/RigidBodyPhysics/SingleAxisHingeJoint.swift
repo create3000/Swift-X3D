@@ -19,14 +19,14 @@ public final class SingleAxisHingeJoint :
 
    // Fields
 
-   @SFVec3f public final var anchorPoint         : Vector3f = Vector3f .zero
-   @SFVec3f public final var axis                : Vector3f = Vector3f .zero
+   @SFVec3f public final var anchorPoint         : Vector3f = .zero
+   @SFVec3f public final var axis                : Vector3f = .zero
    @SFFloat public final var minAngle            : Float = -3.14159
    @SFFloat public final var maxAngle            : Float = 3.14159
    @SFFloat public final var stopBounce          : Float = 0
    @SFFloat public final var stopErrorCorrection : Float = 0.8
-   @SFVec3f public final var body1AnchorPoint    : Vector3f = Vector3f .zero
-   @SFVec3f public final var body2AnchorPoint    : Vector3f = Vector3f .zero
+   @SFVec3f public final var body1AnchorPoint    : Vector3f = .zero
+   @SFVec3f public final var body2AnchorPoint    : Vector3f = .zero
    @SFFloat public final var angle               : Float = 0
    @SFFloat public final var angleRate           : Float = 0
 

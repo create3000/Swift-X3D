@@ -19,7 +19,7 @@ public final class ExplosionEmitter :
 
    // Fields
 
-   @SFVec3f public final var position : Vector3f = Vector3f .zero
+   @SFVec3f public final var position : Vector3f = .zero
 
    // Construction
    

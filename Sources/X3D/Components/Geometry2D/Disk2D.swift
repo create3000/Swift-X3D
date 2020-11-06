@@ -128,7 +128,7 @@ public final class Disk2D :
             for vertex in browser! .disk2DOptions .diskPrimitives
             {
                addPrimitive (texCoords: [vertex .texCoord],
-                             normal: Vector3f .zAxis,
+                             normal: .zAxis,
                              point: vertex .point)
             }
          }
@@ -137,7 +137,7 @@ public final class Disk2D :
             for vertex in browser! .disk2DOptions .diskPrimitives
             {
                addPrimitive (texCoords: [vertex .texCoord],
-                             normal: Vector3f .zAxis,
+                             normal: .zAxis,
                              point: vertex .point * radius)
             }
          }
@@ -164,28 +164,28 @@ public final class Disk2D :
          let p4 = primitives [i + 2]
 
          addPrimitive (texCoords: [Vector4f (p2 .texCoord .x * scale + offset, p2 .texCoord .y * scale + offset, 0, 1)],
-                       normal: Vector3f .zAxis,
+                       normal: .zAxis,
                        point: Vector3f (p2 .point * minRadius))
          
          addPrimitive (texCoords: [p2 .texCoord],
-                       normal: Vector3f .zAxis,
+                       normal: .zAxis,
                        point: Vector3f (p2 .point * maxRadius))
          
          addPrimitive (texCoords: [p4 .texCoord],
-                       normal: Vector3f .zAxis,
+                       normal: .zAxis,
                        point: Vector3f (p4 .point * maxRadius))
 
          
          addPrimitive (texCoords: [Vector4f (p2 .texCoord .x * scale + offset, p2 .texCoord .y * scale + offset, 0, 1)],
-                       normal: Vector3f .zAxis,
+                       normal: .zAxis,
                        point: Vector3f (p2 .point * minRadius))
          
          addPrimitive (texCoords: [p4 .texCoord],
-                       normal: Vector3f .zAxis,
+                       normal: .zAxis,
                        point: Vector3f (p4 .point * maxRadius))
          
          addPrimitive (texCoords: [Vector4f (p4 .texCoord .x * scale + offset, p4 .texCoord .y * scale + offset, 0, 1)],
-                       normal: Vector3f .zAxis,
+                       normal: .zAxis,
                        point: Vector3f (p4 .point * minRadius))
       }
    }

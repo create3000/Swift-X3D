@@ -124,7 +124,7 @@ public class X3DGeometryNode :
    internal final func addPrimitive (fogDepth : Float = 0,
                                      color: Vector4f = Vector4f .one,
                                      texCoords: [Vector4f] = [ ],
-                                     normal: Vector3f = Vector3f .zAxis,
+                                     normal: Vector3f = .zAxis,
                                      point: Vector3f)
    {
       var multiTexCoords = (Vector4f .zero, Vector4f .zero)
@@ -261,7 +261,7 @@ public class X3DGeometryNode :
       }
 
       let cosCreaseAngle = cos (clamp (creaseAngle, min: 0, max: Float .pi))
-      var normals        = Normals (repeating: Vector3f .zero, count: faceNormals .count)
+      var normals        = Normals (repeating: .zero, count: faceNormals .count)
       
       for (_, vertex) in normalIndex
       {

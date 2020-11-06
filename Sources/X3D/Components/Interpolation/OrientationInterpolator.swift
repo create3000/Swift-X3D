@@ -20,7 +20,7 @@ public final class OrientationInterpolator :
    // Fields
 
    @MFRotation public final var keyValue      : MFRotation .Value
-   @SFRotation public final var value_changed : Rotation4f = Rotation4f .identity
+   @SFRotation public final var value_changed : Rotation4f = .identity
 
    // Construction
    
@@ -55,7 +55,7 @@ public final class OrientationInterpolator :
    {
       guard keyValue .count < key .count else { return }
       
-      keyValue .append (contentsOf: repeatElement (keyValue .last ?? Rotation4f .identity, count: key .count - keyValue .count))
+      keyValue .append (contentsOf: repeatElement (keyValue .last ?? .identity, count: key .count - keyValue .count))
    }
    
    internal final override func interpolate (index0 : Int, index1 : Int, weight : Float)

@@ -15,7 +15,7 @@ public class X3DShapeNode :
    // Fields
 
    @SFVec3f public final var bboxSize   : Vector3f = Vector3f (-1, -1, -1)
-   @SFVec3f public final var bboxCenter : Vector3f = Vector3f .zero
+   @SFVec3f public final var bboxCenter : Vector3f = .zero
    @SFNode  public final var appearance : X3DNode?
    @SFNode  public final var geometry   : X3DNode?
    

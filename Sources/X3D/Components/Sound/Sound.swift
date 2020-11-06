@@ -21,7 +21,7 @@ public final class Sound :
 
    @SFFloat public final var intensity  : Float = 1
    @SFBool  public final var spatialize : Bool = true
-   @SFVec3f public final var location   : Vector3f = Vector3f .zero
+   @SFVec3f public final var location   : Vector3f = .zero
    @SFVec3f public final var direction  : Vector3f = Vector3f (0, 0, 1)
    @SFFloat public final var minBack    : Float = 1
    @SFFloat public final var minFront   : Float = 1

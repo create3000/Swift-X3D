@@ -24,7 +24,7 @@ public final class NurbsPositionInterpolator :
    @MFDouble public final var knot          : MFDouble .Value
    @MFDouble public final var weight        : MFDouble .Value
    @SFNode   public final var controlPoint  : X3DNode?
-   @SFVec3f  public final var value_changed : Vector3f = Vector3f .zero
+   @SFVec3f  public final var value_changed : Vector3f = .zero
 
    // Construction
    

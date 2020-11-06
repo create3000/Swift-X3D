@@ -21,7 +21,7 @@ public final class FillProperties :
 
    @SFBool  public final var filled     : Bool = true
    @SFBool  public final var hatched    : Bool = true
-   @SFColor public final var hatchColor : Color3f = Color3f .one
+   @SFColor public final var hatchColor : Color3f = .one
    @SFInt32 public final var hatchStyle : Int32 = 1
    
    // Properties

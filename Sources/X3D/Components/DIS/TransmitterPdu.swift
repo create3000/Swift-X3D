@@ -24,7 +24,7 @@ public final class TransmitterPdu :
    // Fields
 
    @SFString public final var address                            : String = "localhost"
-   @SFVec3f  public final var antennaLocation                    : Vector3f = Vector3f .zero
+   @SFVec3f  public final var antennaLocation                    : Vector3f = .zero
    @SFInt32  public final var antennaPatternLength               : Int32 = 0
    @SFInt32  public final var antennaPatternType                 : Int32 = 0
    @SFInt32  public final var applicationID                      : Int32 = 1
@@ -51,7 +51,7 @@ public final class TransmitterPdu :
    @SFInt32  public final var radioEntityTypeNomenclatureVersion : Int32 = 0
    @SFInt32  public final var radioID                            : Int32 = 0
    @SFFloat  public final var readInterval                       : Float = 0.1
-   @SFVec3f  public final var relativeAntennaLocation            : Vector3f = Vector3f .zero
+   @SFVec3f  public final var relativeAntennaLocation            : Vector3f = .zero
    @SFBool   public final var rtpHeaderExpected                  : Bool = false
    @SFInt32  public final var siteID                             : Int32 = 0
    @SFFloat  public final var transmitFrequencyBandwidth         : Float = 0
@@ -66,7 +66,7 @@ public final class TransmitterPdu :
    @SFBool   public final var enabled                            : Bool = true
    @SFBool   public final var isActive                           : Bool = false
    @SFVec3f  public final var bboxSize                           : Vector3f = Vector3f (-1, -1, -1)
-   @SFVec3f  public final var bboxCenter                         : Vector3f = Vector3f .zero
+   @SFVec3f  public final var bboxCenter                         : Vector3f = .zero
 
    // Construction
    

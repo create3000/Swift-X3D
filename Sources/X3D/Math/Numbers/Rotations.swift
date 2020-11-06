@@ -49,57 +49,9 @@ public struct Rotation4d
       self .angle = angle
    }
 
-   public init (from fromVector : Vector3, to toVector : Vector3)
+   public init (from : Vector3, to : Vector3)
    {
-      // https://bitbucket.org/Coin3D/coin/src/abc9f50968c9/src/base/SbRotation.cpp
-      
-      let from = normalize (fromVector)
-      let to   = normalize (toVector)
-
-      let cos_angle = clamp (dot (from, to), min: -1, max: 1)
-      var crossvec  = normalize (cross (from, to))
-      let crosslen  = length (crossvec)
-
-      if crosslen == 0
-      {
-         // Parallel vectors
-         // Check if they are pointing in the same direction.
-         if cos_angle > 0
-         {
-            // standard rotation
-            self .quat = .identity
-         }
-         // Ok, so they are parallel and pointing in the opposite direction
-         // of each other.
-         else
-         {
-            // Try crossing with x axis.
-            var t = cross (from, .xAxis)
-
-            // If not ok, cross with y axis.
-            if norm (t) == 0
-            {
-               t = cross (from, .yAxis)
-            }
-
-            t = normalize (t)
-
-            self .quat = Quaternion4 (ix: t [0], iy: t [1], iz: t [2], r: 0);
-         }
-      }
-      else
-      {
-         // Vectors are not parallel
-         // The abs () wrapping is to avoid problems when `dot' "overflows" a tiny wee bit,
-         // which can lead to sqrt () returning NaN.
-         crossvec *= sqrt (abs (1 - cos_angle) / 2)
-         
-         self .quat = Quaternion4 (ix: crossvec [0],
-                                   iy: crossvec [1],
-                                   iz: crossvec [2],
-                                   r: sqrt (abs (1 + cos_angle) / 2))
-      }
-
+      self .quat  = Quaternion4 (from: from, to: to) .normalized
       self .axis  = self .quat .axis
       self .angle = self .quat .angle
    }
@@ -228,61 +180,13 @@ public struct Rotation4f
       self .angle = angle
    }
    
-   public init (from fromVector : Vector3, to toVector : Vector3)
+   public init (from : Vector3, to : Vector3)
    {
-      // https://bitbucket.org/Coin3D/coin/src/abc9f50968c9/src/base/SbRotation.cpp
-      
-      let from = normalize (fromVector)
-      let to   = normalize (toVector)
-
-      let cos_angle = clamp (dot (from, to), min: -1, max: 1)
-      var crossvec  = normalize (cross (from, to))
-      let crosslen  = length (crossvec)
-
-      if crosslen == 0
-      {
-         // Parallel vectors
-         // Check if they are pointing in the same direction.
-         if cos_angle > 0
-         {
-            // standard rotation
-            self .quat = .identity
-         }
-         // Ok, so they are parallel and pointing in the opposite direction
-         // of each other.
-         else
-         {
-            // Try crossing with x axis.
-            var t = cross (from, .xAxis)
-
-            // If not ok, cross with y axis.
-            if norm (t) == 0
-            {
-               t = cross (from, .yAxis)
-            }
-
-            t = normalize (t)
-
-            self .quat = Quaternion4 (ix: t [0], iy: t [1], iz: t [2], r: 0);
-         }
-      }
-      else
-      {
-         // Vectors are not parallel
-         // The abs () wrapping is to avoid problems when `dot' "overflows" a tiny wee bit,
-         // which can lead to sqrt () returning NaN.
-         crossvec *= sqrt (abs (1 - cos_angle) / 2)
-         
-         self .quat = Quaternion4 (ix: crossvec [0],
-                                   iy: crossvec [1],
-                                   iz: crossvec [2],
-                                   r: sqrt (abs (1 + cos_angle) / 2))
-      }
-
+      self .quat  = Quaternion4 (from: from, to: to) .normalized
       self .axis  = self .quat .axis
       self .angle = self .quat .angle
    }
-   
+
    public init (_ rotationMatrix : Matrix3)
    {
       self .quat  = Quaternion4 (rotationMatrix) .normalized

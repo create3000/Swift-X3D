@@ -43,4 +43,27 @@ public final class BooleanFilter :
    {
       return BooleanFilter (with: executionContext)
    }
+
+   internal final override func initialize ()
+   {
+      super .initialize ()
+
+      $set_boolean .addInterest (BooleanFilter .set_boolean_, self)
+   }
+   
+   // Event handlers
+
+   private final func set_boolean_ ()
+   {
+      if set_boolean
+      {
+         inputTrue = true
+      }
+      else
+      {
+         inputFalse = false
+      }
+
+      inputNegate = !set_boolean
+   }
 }

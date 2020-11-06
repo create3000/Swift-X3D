@@ -41,4 +41,18 @@ public final class IntegerTrigger :
    {
       return IntegerTrigger (with: executionContext)
    }
+
+   internal final override func initialize ()
+   {
+      super .initialize ()
+
+      $set_boolean .addInterest (IntegerTrigger .set_boolean_, self)
+   }
+   
+   // Event handlers
+
+   private final func set_boolean_ ()
+   {
+      triggerValue = integerKey
+   }
 }

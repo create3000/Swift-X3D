@@ -41,4 +41,18 @@ public final class BooleanTrigger :
    {
       return BooleanTrigger (with: executionContext)
    }
+
+   internal final override func initialize ()
+   {
+      super .initialize ()
+
+      $set_triggerTime .addInterest (BooleanTrigger .set_triggerTime_, self)
+   }
+   
+   // Event handlers
+
+   private final func set_triggerTime_ ()
+   {
+      triggerTrue = true
+   }
 }

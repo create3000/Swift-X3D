@@ -39,4 +39,21 @@ public final class BooleanToggle :
    {
       return BooleanToggle (with: executionContext)
    }
+
+   internal final override func initialize ()
+   {
+      super .initialize ()
+
+      $set_boolean .addInterest (BooleanToggle .set_boolean_, self)
+   }
+   
+   // Event handlers
+
+   private final func set_boolean_ ()
+   {
+      if set_boolean
+      {
+         toggle = !toggle
+      }
+   }
 }

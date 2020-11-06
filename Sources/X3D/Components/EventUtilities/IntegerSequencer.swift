@@ -43,4 +43,22 @@ public final class IntegerSequencer :
    {
       return IntegerSequencer (with: executionContext)
    }
+
+   internal final override func initialize ()
+   {
+      super .initialize ()
+
+      $keyValue .addInterest (IntegerSequencer .set_index, self)
+   }
+   
+   // Property access
+   
+   internal final override var size : Int { min (Int (Int32 .max), keyValue .count) }
+   
+   // Event handlers
+
+   internal final override func sequence (index : Int)
+   {
+      value_changed = keyValue [index]
+   }
 }

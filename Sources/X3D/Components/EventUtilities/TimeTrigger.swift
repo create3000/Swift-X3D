@@ -41,4 +41,18 @@ public final class TimeTrigger :
    {
       return TimeTrigger (with: executionContext)
    }
+
+   internal final override func initialize ()
+   {
+      super .initialize ()
+
+      $set_boolean .addInterest (TimeTrigger .set_boolean_, self)
+   }
+   
+   // Event handlers
+
+   private final func set_boolean_ ()
+   {
+      triggerTime = browser! .currentTime
+   }
 }

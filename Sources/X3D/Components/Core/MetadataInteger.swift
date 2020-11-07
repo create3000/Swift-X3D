@@ -13,10 +13,10 @@ public final class MetadataInteger :
 {
    // Common properties
    
-   public final override class var typeName       : String { "MetadataInteger" }
-   public final override class var component      : String { "Core" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "metadata" }
+   internal final override class var typeName       : String { "MetadataInteger" }
+   internal final override class var component      : String { "Core" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "metadata" }
 
    // Fields
 

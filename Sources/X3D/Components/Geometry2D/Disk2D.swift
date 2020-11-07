@@ -15,10 +15,10 @@ public final class Disk2D :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Disk2D" }
-   public final override class var component      : String { "Geometry2D" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "geometry" }
+   internal final override class var typeName       : String { "Disk2D" }
+   internal final override class var component      : String { "Geometry2D" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "geometry" }
 
    // Fields
 

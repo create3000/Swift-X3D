@@ -12,10 +12,10 @@ public final class SpotLight :
 {
    // Common properties
    
-   public final override class var typeName       : String { "SpotLight" }
-   public final override class var component      : String { "Lighting" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "SpotLight" }
+   internal final override class var component      : String { "Lighting" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

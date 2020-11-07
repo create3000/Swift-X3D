@@ -14,10 +14,10 @@ public final class Appearance :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Appearance" }
-   public final override class var component      : String { "Shape" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "appearance" }
+   internal final override class var typeName       : String { "Appearance" }
+   internal final override class var component      : String { "Shape" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "appearance" }
 
    // Fields
 

@@ -25,8 +25,8 @@ public final class SFTime :
 
    // Common properties
    
-   public final override class var typeName : String { "SFTime" }
-   public final override class var type     : X3DFieldType { .SFTime }
+   internal final override class var typeName : String { "SFTime" }
+   internal final override class var type     : X3DFieldType { .SFTime }
 
    // Construction
    

@@ -12,10 +12,10 @@ public final class BoundaryEnhancementVolumeStyle :
 {
    // Common properties
    
-   public final override class var typeName       : String { "BoundaryEnhancementVolumeStyle" }
-   public final override class var component      : String { "VolumeRendering" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "renderStyle" }
+   internal final override class var typeName       : String { "BoundaryEnhancementVolumeStyle" }
+   internal final override class var component      : String { "VolumeRendering" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "renderStyle" }
 
    // Fields
 

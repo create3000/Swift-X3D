@@ -24,8 +24,8 @@ public final class MFImage :
 
    // Common properties
    
-   public final override class var typeName : String { "MFImage" }
-   public final override class var type     : X3DFieldType { .MFImage }
+   internal final override class var typeName : String { "MFImage" }
+   internal final override class var type     : X3DFieldType { .MFImage }
 
    // Construction
    

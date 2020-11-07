@@ -12,10 +12,10 @@ public final class Matrix3VertexAttribute :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Matrix3VertexAttribute" }
-   public final override class var component      : String { "Shaders" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "attrib" }
+   internal final override class var typeName       : String { "Matrix3VertexAttribute" }
+   internal final override class var component      : String { "Shaders" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "attrib" }
 
    // Fields
 

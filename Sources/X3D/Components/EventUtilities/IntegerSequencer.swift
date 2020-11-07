@@ -12,10 +12,10 @@ public final class IntegerSequencer :
 {
    // Common properties
    
-   public final override class var typeName       : String { "IntegerSequencer" }
-   public final override class var component      : String { "EventUtilities" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "IntegerSequencer" }
+   internal final override class var component      : String { "EventUtilities" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

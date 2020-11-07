@@ -13,11 +13,12 @@ public class X3DPrototypeInstance :
 {
    // Common properties
    
-   public final override class var typeName       : String { "X3DPrototypeInstance" }
-   public final override var typeName             : String { protoNode! .identifier }
-   public final override class var component      : String { "Core" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "X3DPrototypeInstance" }
+   internal final override class var component      : String { "Core" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
+   
+   public final override func getTypeName () -> String { protoNode! .getName () }
 
    // Properties
    
@@ -38,7 +39,7 @@ public class X3DPrototypeInstance :
       {
          let field = protoField .copy ()
 
-         addField (protoField .accessType, protoField .identifier, field)
+         addField (protoField .getAccessType (), protoField .getName (), field)
       }
 
       addChildObjects ($protoNode,
@@ -75,13 +76,13 @@ public class X3DPrototypeInstance :
       {
          for protoField in proto .userDefinedFields
          {
-            if let field = try? getField (name: protoField .identifier)
+            if let field = try? getField (name: protoField .getName ())
             {
                // Continue if something is wrong.
-               guard field .accessType == protoField .accessType else { continue }
+               guard field .getAccessType () == protoField .getAccessType () else { continue }
  
                // Continue if something is wrong.
-               guard field .type == protoField .type else { continue }
+               guard field .getType () == protoField .getType () else { continue }
 
                // Continue if field is eventIn or eventOut.
                guard field .isInitializable else { continue }
@@ -102,7 +103,7 @@ public class X3DPrototypeInstance :
             else
             {
                // Definition exists in proto but does not exist in extern proto.
-               addField (protoField .accessType, protoField .identifier, protoField .copy ())
+               addField (protoField .getAccessType (), protoField .getName (), protoField .copy ())
             }
          }
       }
@@ -117,14 +118,14 @@ public class X3DPrototypeInstance :
       
       for externproto in proto .body! .externprotos
       {
-         try! body! .updateExternProtoDeclaration (name: externproto .identifier, externproto: externproto)
+         try! body! .updateExternProtoDeclaration (name: externproto .getName (), externproto: externproto)
       }
       
       // Protos
       
       for proto in proto .body! .protos
       {
-         try! body! .updateProtoDeclaration (name: proto .identifier, proto: proto)
+         try! body! .updateProtoDeclaration (name: proto .getName (), proto: proto)
       }
       
       // Root nodes
@@ -147,10 +148,10 @@ public class X3DPrototypeInstance :
       
       for route in proto .body! .routes
       {
-         let sourceNode       = try! body! .getNamedNode (name: route .sourceNode! .identifier)
-         let sourceField      = route .sourceField! .identifier
-         let destinationNode  = try! body! .getNamedNode (name: route .destinationNode! .identifier)
-         let destinationField = route .destinationField! .identifier
+         let sourceNode       = try! body! .getNamedNode (name: route .sourceNode! .getName ())
+         let sourceField      = route .sourceField! .getName ()
+         let destinationNode  = try! body! .getNamedNode (name: route .destinationNode! .getName ())
+         let destinationField = route .destinationField! .getName ()
          
          _ = try! body! .addRoute (sourceNode: sourceNode,
                                    sourceField: sourceField,

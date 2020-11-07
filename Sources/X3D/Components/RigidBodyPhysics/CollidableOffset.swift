@@ -12,10 +12,10 @@ public final class CollidableOffset :
 {
    // Common properties
    
-   public final override class var typeName       : String { "CollidableOffset" }
-   public final override class var component      : String { "RigidBodyPhysics" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "CollidableOffset" }
+   internal final override class var component      : String { "RigidBodyPhysics" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

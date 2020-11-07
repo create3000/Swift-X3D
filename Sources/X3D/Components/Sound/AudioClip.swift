@@ -16,10 +16,10 @@ public final class AudioClip :
 {
    // Common properties
    
-   public final override class var typeName       : String { "AudioClip" }
-   public final override class var component      : String { "Sound" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "source" }
+   internal final override class var typeName       : String { "AudioClip" }
+   internal final override class var component      : String { "Sound" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "source" }
    
    // Fields
 

@@ -12,10 +12,10 @@ public final class GeoMetadata :
 {
    // Common properties
    
-   public final override class var typeName       : String { "GeoMetadata" }
-   public final override class var component      : String { "Geospatial" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "GeoMetadata" }
+   internal final override class var component      : String { "Geospatial" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

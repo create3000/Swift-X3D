@@ -102,6 +102,6 @@ public class X3DShapeNode :
    
    deinit
    {
-      debugPrint (typeName, #function, hashValue)
+      debugPrint (getTypeName (), #function, hashValue)
    }
 }

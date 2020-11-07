@@ -14,10 +14,10 @@ public final class CoordinateInterpolator2D :
 {
    // Common properties
    
-   public final override class var typeName       : String { "CoordinateInterpolator2D" }
-   public final override class var component      : String { "Interpolation" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "CoordinateInterpolator2D" }
+   internal final override class var component      : String { "Interpolation" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

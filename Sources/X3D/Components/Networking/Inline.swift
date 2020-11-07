@@ -16,10 +16,10 @@ public final class Inline :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Inline" }
-   public final override class var component      : String { "Networking" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "Inline" }
+   internal final override class var component      : String { "Networking" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

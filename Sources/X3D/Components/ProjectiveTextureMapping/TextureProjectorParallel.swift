@@ -12,10 +12,10 @@ public final class TextureProjectorParallel :
 {
    // Common properties
    
-   public final override class var typeName       : String { "TextureProjectorParallel" }
-   public final override class var component      : String { "ProjectiveTextureMapping" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "TextureProjectorParallel" }
+   internal final override class var component      : String { "ProjectiveTextureMapping" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

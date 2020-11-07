@@ -12,10 +12,10 @@ public final class TextureCoordinateGenerator :
 {
    // Common properties
    
-   public final override class var typeName       : String { "TextureCoordinateGenerator" }
-   public final override class var component      : String { "Texturing" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "texCoord" }
+   internal final override class var typeName       : String { "TextureCoordinateGenerator" }
+   internal final override class var component      : String { "Texturing" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "texCoord" }
 
    // Fields
 

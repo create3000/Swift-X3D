@@ -13,10 +13,10 @@ public final class GeoElevationGrid :
 {
    // Common properties
    
-   public final override class var typeName       : String { "GeoElevationGrid" }
-   public final override class var component      : String { "Geospatial" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "geometry" }
+   internal final override class var typeName       : String { "GeoElevationGrid" }
+   internal final override class var component      : String { "Geospatial" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "geometry" }
 
    // Fields
 

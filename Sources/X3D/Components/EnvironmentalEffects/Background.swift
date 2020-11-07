@@ -12,10 +12,10 @@ public final class Background :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Background" }
-   public final override class var component      : String { "EnvironmentalEffects" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "Background" }
+   internal final override class var component      : String { "EnvironmentalEffects" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

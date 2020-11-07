@@ -16,10 +16,10 @@ public final class MovieTexture :
 {
    // Common properties
    
-   public final override class var typeName       : String { "MovieTexture" }
-   public final override class var component      : String { "Texturing" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "texture" }
+   internal final override class var typeName       : String { "MovieTexture" }
+   internal final override class var component      : String { "Texturing" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "texture" }
 
    // Fields
 

@@ -14,10 +14,10 @@ public final class GeoLOD :
 {
    // Common properties
    
-   public final override class var typeName       : String { "GeoLOD" }
-   public final override class var component      : String { "Geospatial" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "GeoLOD" }
+   internal final override class var component      : String { "Geospatial" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

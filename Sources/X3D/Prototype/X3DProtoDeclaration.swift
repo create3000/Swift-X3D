@@ -11,7 +11,7 @@ public final class X3DProtoDeclaration :
 {
    // Common properties
    
-   public final override class var typeName : String { "X3DProtoDeclaration" }
+   internal final override class var typeName : String { "X3DProtoDeclaration" }
    
    // Properties
    

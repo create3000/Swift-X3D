@@ -104,7 +104,7 @@ internal final class X3DVRMLParser :
    
    private final var lineNumber : Int
    {
-      1 + scanner .string .prefix (upTo: scanner .currentIndex) .reduce (0, { r, e in e == "\n" ? r + 1 : r })
+      1 + scanner .string .prefix (upTo: scanner .currentIndex) .count (of: "\n")
    }
    
    // Construction
@@ -1035,25 +1035,25 @@ internal final class X3DVRMLParser :
                      
                      guard let reference = try? proto .getField (name: isId) else
                      {
-                        throw X3DError .INVALID_X3D (t("No such event or field '%@' inside PROTO %@ interface declaration.", isId, proto .identifier))
+                        throw X3DError .INVALID_X3D (t("No such event or field '%@' inside PROTO %@ interface declaration.", isId, proto .getName ()))
                      }
 
                      let supportedField = scene .browser! .supportedFields [fieldType]!
 
-                     guard supportedField .type == reference .type else
+                     guard supportedField .type == reference .getType () else
                      {
-                        throw X3DError .INVALID_X3D (t("Field '%@' and '%@' in PROTO '%@' have different types.", fieldId, reference .identifier, proto .identifier))
+                        throw X3DError .INVALID_X3D (t("Field '%@' and '%@' in PROTO '%@' have different types.", fieldId, reference .getName (), proto .getName ()))
                      }
                      
                      guard reference .isReference (for: accessType) else
                      {
-                        throw X3DError .INVALID_X3D (t("Field '%@' and '%@' in PROTO '%@' are incompatible as an IS mapping.", fieldId, reference .identifier, proto .identifier))
+                        throw X3DError .INVALID_X3D (t("Field '%@' and '%@' in PROTO '%@' are incompatible as an IS mapping.", fieldId, reference .getName (), proto .getName ()))
                      }
                      
                      var field = try? node .getField (name: fieldId)
                      
                      // If a field with exactly the same type is found, do not add a new field.
-                     if !(field != nil && accessType == field! .accessType && reference .type == field! .type)
+                     if !(field != nil && accessType == field! .getAccessType () && reference .getType () == field! .getType ())
                      {
                         field = addUserDefinedField (node, accessType, fieldId, supportedField)
                      }
@@ -1074,9 +1074,9 @@ internal final class X3DVRMLParser :
       {
          if let existingField = try? node .getField (name: interfaceDeclaration .name)
          {
-            if interfaceDeclaration .accessType == existingField .accessType
+            if interfaceDeclaration .accessType == existingField .getAccessType ()
             {
-               if interfaceDeclaration .field .type == existingField .type
+               if interfaceDeclaration .field .getType () == existingField .getType ()
                {
                   if interfaceDeclaration .field .isInitializable
                   {
@@ -1142,17 +1142,17 @@ internal final class X3DVRMLParser :
          
          guard let reference = try? proto .getField (name: isId) else
          {
-            throw X3DError .INVALID_X3D (t("No such event or field '%@' inside PROTO %@.", isId, proto .identifier))
+            throw X3DError .INVALID_X3D (t("No such event or field '%@' inside PROTO %@.", isId, proto .getName ()))
          }
 
-         guard field .type == reference .type else
+         guard field .getType () == reference .getType () else
          {
-            throw X3DError .INVALID_X3D (t("Field '%@' and '%@' in PROTO %@ have different types.", field .identifier, reference .identifier, proto .identifier))
+            throw X3DError .INVALID_X3D (t("Field '%@' and '%@' in PROTO %@ have different types.", field .getName (), reference .getName (), proto .getName ()))
          }
          
-         guard reference .isReference (for: field.accessType) else
+         guard reference .isReference (for: field .getAccessType ()) else
          {
-            throw X3DError .INVALID_X3D (t("Field '%@' and '%@' in PROTO %@ are incompatible as an IS mapping.", field .identifier, reference .identifier, proto .identifier))
+            throw X3DError .INVALID_X3D (t("Field '%@' and '%@' in PROTO %@ are incompatible as an IS mapping.", field .getName (), reference .getName (), proto .getName ()))
          }
    
          field .addReference (to: reference)
@@ -1162,7 +1162,7 @@ internal final class X3DVRMLParser :
 
       guard field .isInitializable else
       {
-         throw X3DError .INVALID_X3D (t("Couldn't assign value to %@ field '%@', field is not initializable.", field .accessType .description, fieldId))
+         throw X3DError .INVALID_X3D (t("Couldn't assign value to %@ field '%@', field is not initializable.", field .getAccessType () .description, fieldId))
       }
 
       guard try fieldValue (for: field) else
@@ -1271,7 +1271,7 @@ internal final class X3DVRMLParser :
    
    private final func fieldValue (for field : X3DField) throws -> Bool
    {
-      switch field .type
+      switch field .getType ()
       {
          case .SFBool:      return sfboolValue      (for: field as! SFBool)
          case .SFColor:     return sfcolorValue     (for: field as! SFColor)
@@ -2721,5 +2721,14 @@ internal final class X3DVRMLParser :
       
       field .wrappedValue .removeAll ()
       field .wrappedValue .append (contentsOf: value)
+   }
+}
+
+fileprivate extension Collection
+   where Element : Equatable
+{
+   func count (of needle : Element) -> Int
+   {
+      reduce (0) { $1 == needle ? $0 + 1 : $0 }
    }
 }

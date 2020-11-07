@@ -11,7 +11,7 @@ public final class X3DRoute :
 {
    // Common properties
    
-   public final override class var typeName : String { "X3DRoute" }
+   internal final override class var typeName : String { "X3DRoute" }
    
    // Properties
    

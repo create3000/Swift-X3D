@@ -12,10 +12,10 @@ public final class IndexedQuadSet :
 {
    // Common properties
    
-   public final override class var typeName       : String { "IndexedQuadSet" }
-   public final override class var component      : String { "CADGeometry" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "geometry" }
+   internal final override class var typeName       : String { "IndexedQuadSet" }
+   internal final override class var component      : String { "CADGeometry" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "geometry" }
 
    // Fields
 

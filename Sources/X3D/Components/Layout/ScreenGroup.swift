@@ -12,10 +12,10 @@ public final class ScreenGroup :
 {
    // Common properties
    
-   public final override class var typeName       : String { "ScreenGroup" }
-   public final override class var component      : String { "Layout" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "ScreenGroup" }
+   internal final override class var component      : String { "Layout" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Construction
    

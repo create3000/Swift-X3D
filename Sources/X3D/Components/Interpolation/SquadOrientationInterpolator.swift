@@ -12,10 +12,10 @@ public final class SquadOrientationInterpolator :
 {
    // Common properties
    
-   public final override class var typeName       : String { "SquadOrientationInterpolator" }
-   public final override class var component      : String { "Interpolation" }
-   public final override class var componentLevel : Int32 { 5 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "SquadOrientationInterpolator" }
+   internal final override class var component      : String { "Interpolation" }
+   internal final override class var componentLevel : Int32 { 5 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

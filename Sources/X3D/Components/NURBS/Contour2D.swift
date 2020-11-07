@@ -12,10 +12,10 @@ public final class Contour2D :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Contour2D" }
-   public final override class var component      : String { "NURBS" }
-   public final override class var componentLevel : Int32 { 4 }
-   public final override class var containerField : String { "trimmingContour" }
+   internal final override class var typeName       : String { "Contour2D" }
+   internal final override class var component      : String { "NURBS" }
+   internal final override class var componentLevel : Int32 { 4 }
+   internal final override class var containerField : String { "trimmingContour" }
 
    // Fields
 

@@ -12,10 +12,10 @@ public final class ClipPlane :
 {
    // Common properties
    
-   public final override class var typeName       : String { "ClipPlane" }
-   public final override class var component      : String { "Rendering" }
-   public final override class var componentLevel : Int32 { 5 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "ClipPlane" }
+   internal final override class var component      : String { "Rendering" }
+   internal final override class var componentLevel : Int32 { 5 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

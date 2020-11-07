@@ -14,10 +14,10 @@ public final class TwoSidedMaterial :
 {
    // Common properties
    
-   public final override class var typeName       : String { "TwoSidedMaterial" }
-   public final override class var component      : String { "Shape" }
-   public final override class var componentLevel : Int32 { 4 }
-   public final override class var containerField : String { "material" }
+   internal final override class var typeName       : String { "TwoSidedMaterial" }
+   internal final override class var component      : String { "Shape" }
+   internal final override class var componentLevel : Int32 { 4 }
+   internal final override class var containerField : String { "material" }
 
    // Fields
 

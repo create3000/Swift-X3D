@@ -12,10 +12,10 @@ public final class Billboard :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Billboard" }
-   public final override class var component      : String { "Navigation" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "Billboard" }
+   internal final override class var component      : String { "Navigation" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

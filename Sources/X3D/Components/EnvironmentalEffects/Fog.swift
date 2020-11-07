@@ -13,10 +13,10 @@ public final class Fog :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Fog" }
-   public final override class var component      : String { "EnvironmentalEffects" }
-   public final override class var componentLevel : Int32 { 4 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "Fog" }
+   internal final override class var component      : String { "EnvironmentalEffects" }
+   internal final override class var componentLevel : Int32 { 4 }
+   internal final override class var containerField : String { "children" }
    
    // Fields
    

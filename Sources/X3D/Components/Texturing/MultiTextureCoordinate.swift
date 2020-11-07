@@ -12,10 +12,10 @@ public final class MultiTextureCoordinate :
 {
    // Common properties
    
-   public final override class var typeName       : String { "MultiTextureCoordinate" }
-   public final override class var component      : String { "Texturing" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "texCoord" }
+   internal final override class var typeName       : String { "MultiTextureCoordinate" }
+   internal final override class var component      : String { "Texturing" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "texCoord" }
 
    // Fields
 

@@ -24,8 +24,8 @@ public final class MFBool :
 
    // Common properties
    
-   public final override class var typeName : String { "MFBool" }
-   public final override class var type     : X3DFieldType { .MFBool }
+   internal final override class var typeName : String { "MFBool" }
+   internal final override class var type     : X3DFieldType { .MFBool }
 
    // Construction
    

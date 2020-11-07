@@ -14,10 +14,10 @@ public final class Switch :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Switch" }
-   public final override class var component      : String { "Grouping" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "Switch" }
+   internal final override class var component      : String { "Grouping" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
    
    // Fields
    

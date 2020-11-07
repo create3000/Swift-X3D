@@ -12,10 +12,10 @@ public final class MultiTexture :
 {
    // Common properties
    
-   public final override class var typeName       : String { "MultiTexture" }
-   public final override class var component      : String { "Texturing" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "texture" }
+   internal final override class var typeName       : String { "MultiTexture" }
+   internal final override class var component      : String { "Texturing" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "texture" }
 
    // Fields
 

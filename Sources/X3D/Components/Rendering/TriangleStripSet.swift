@@ -12,10 +12,10 @@ public final class TriangleStripSet :
 {
    // Common properties
    
-   public final override class var typeName       : String { "TriangleStripSet" }
-   public final override class var component      : String { "Rendering" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "geometry" }
+   internal final override class var typeName       : String { "TriangleStripSet" }
+   internal final override class var component      : String { "Rendering" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "geometry" }
 
    // Fields
 

@@ -26,8 +26,8 @@ public final class MFTime :
 
    // Common properties
    
-   public final override class var typeName : String { "MFTime" }
-   public final override class var type     : X3DFieldType { .MFTime }
+   internal final override class var typeName : String { "MFTime" }
+   internal final override class var type     : X3DFieldType { .MFTime }
 
    // Construction
    

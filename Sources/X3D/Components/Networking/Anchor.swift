@@ -13,10 +13,10 @@ public final class Anchor :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Anchor" }
-   public final override class var component      : String { "Networking" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "Anchor" }
+   internal final override class var component      : String { "Networking" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

@@ -24,8 +24,8 @@ public final class MFFloat :
 
    // Common properties
    
-   public final override class var typeName : String { "MFFloat" }
-   public final override class var type     : X3DFieldType { .MFFloat }
+   internal final override class var typeName : String { "MFFloat" }
+   internal final override class var type     : X3DFieldType { .MFFloat }
 
    // Construction
    

@@ -12,10 +12,10 @@ public final class GeneratedCubeMapTexture :
 {
    // Common properties
    
-   public final override class var typeName       : String { "GeneratedCubeMapTexture" }
-   public final override class var component      : String { "CubeMapTexturing" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "texture" }
+   internal final override class var typeName       : String { "GeneratedCubeMapTexture" }
+   internal final override class var component      : String { "CubeMapTexturing" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "texture" }
 
    // Fields
 

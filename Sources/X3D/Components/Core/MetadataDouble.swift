@@ -13,10 +13,10 @@ public final class MetadataDouble :
 {
    // Common properties
    
-   public final override class var typeName       : String { "MetadataDouble" }
-   public final override class var component      : String { "Core" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "metadata" }
+   internal final override class var typeName       : String { "MetadataDouble" }
+   internal final override class var component      : String { "Core" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "metadata" }
 
    // Fields
 

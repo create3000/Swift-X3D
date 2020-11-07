@@ -14,10 +14,10 @@ public final class ParticleSystem :
 {
    // Common properties
    
-   public final override class var typeName       : String { "ParticleSystem" }
-   public final override class var component      : String { "ParticleSystems" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "ParticleSystem" }
+   internal final override class var component      : String { "ParticleSystems" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

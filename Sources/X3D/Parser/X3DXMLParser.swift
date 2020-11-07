@@ -495,14 +495,14 @@ internal final class X3DXMLParser :
          let nodeField  = try node  .getField (name: nodeFieldName)
          let protoField = try proto .getField (name: protoFieldName)
          
-         guard nodeField .type == protoField .type else
+         guard nodeField .getType () == protoField .getType () else
          {
-            return console .warn (t("XML parser error: field '%@' and '%@' in PROTO %@ have different types.", nodeField .identifier, protoField .identifier, proto .identifier))
+            return console .warn (t("XML parser error: field '%@' and '%@' in PROTO %@ have different types.", nodeField .getName (), protoField .getName (), proto .getName ()))
          }
          
-         guard protoField .isReference (for: nodeField .accessType) else
+         guard protoField .isReference (for: nodeField .getAccessType ()) else
          {
-            return console .warn (t("XML parser error: field '%@' and '%@' in PROTO %@ are incompatible as an IS mapping.", nodeField .identifier, protoField .identifier, proto .identifier))
+            return console .warn (t("XML parser error: field '%@' and '%@' in PROTO %@ are incompatible as an IS mapping.", nodeField .getName (), protoField .getName (), proto .getName ()))
          }
 
          nodeField .addReference (to: protoField)
@@ -571,7 +571,7 @@ internal final class X3DXMLParser :
 
       guard let field = try? instance .getField (name: name) else
       {
-         return console .warn (t("XML parser error: No such field '%@' in node type %@.", name, instance .typeName))
+         return console .warn (t("XML parser error: No such field '%@' in node type %@.", name, instance .getTypeName ()))
       }
 
       if field .isInitializable
@@ -594,7 +594,7 @@ internal final class X3DXMLParser :
 
       guard node .canUserDefinedFields else
       {
-         return console .warn (t("XML parser error: node type %@ does not support user-defined fields.", node .typeName))
+         return console .warn (t("XML parser error: node type %@ does not support user-defined fields.", node .getTypeName ()))
       }
 
       let accessType = X3DAccessType (element .attribute (name: "accessType") ?? "initializeOnly") ?? .initializeOnly
@@ -843,10 +843,10 @@ internal final class X3DXMLParser :
       {
          do
          {
-            let containerField = element .attribute (name: "containerField") ?? childNode .containerField
+            let containerField = element .attribute (name: "containerField") ?? childNode .getContainerField ()
             let field          = try node .getField (name: containerField)
             
-            switch field .type
+            switch field .getType ()
             {
                case .SFNode: do
                {
@@ -874,7 +874,7 @@ internal final class X3DXMLParser :
    
       else if let field = parents .last! as? X3DField
       {
-         switch field .type
+         switch field .getType ()
          {
             case .SFNode: do
             {
@@ -896,7 +896,7 @@ internal final class X3DXMLParser :
    
    private final func fieldValue (_ field : X3DField, _ value : String?)
    {
-      switch field .type
+      switch field .getType ()
       {
          case .SFBool:
             _ = makeParser (value)? .sfboolValueXML (for: field as! SFBool)

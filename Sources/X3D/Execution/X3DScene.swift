@@ -13,7 +13,7 @@ public final class X3DScene :
 {
    // Common properties
    
-   public final override class var typeName : String { "X3DScene" }
+   internal final override class var typeName : String { "X3DScene" }
    
    // Properties
    
@@ -31,7 +31,7 @@ public final class X3DScene :
       
       addChildObjects ($isLive)
 
-      $rootNodes .accessType = .inputOutput
+      $rootNodes .setAccessType (.inputOutput)
    }
    
    internal override func initialize ()

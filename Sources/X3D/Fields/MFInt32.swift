@@ -24,8 +24,8 @@ public final class MFInt32 :
 
    // Common properties
    
-   public final override class var typeName : String { "MFInt32" }
-   public final override class var type     : X3DFieldType { .MFInt32 }
+   internal final override class var typeName : String { "MFInt32" }
+   internal final override class var type     : X3DFieldType { .MFInt32 }
 
    // Construction
    

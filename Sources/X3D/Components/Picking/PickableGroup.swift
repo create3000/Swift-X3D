@@ -13,10 +13,10 @@ public final class PickableGroup :
 {
    // Common properties
    
-   public final override class var typeName       : String { "PickableGroup" }
-   public final override class var component      : String { "Picking" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "PickableGroup" }
+   internal final override class var component      : String { "Picking" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
    
    // Fields
    

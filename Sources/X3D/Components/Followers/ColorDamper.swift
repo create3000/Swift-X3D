@@ -12,10 +12,10 @@ public final class ColorDamper :
 {
    // Common properties
    
-   public final override class var typeName       : String { "ColorDamper" }
-   public final override class var component      : String { "Followers" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "ColorDamper" }
+   internal final override class var component      : String { "Followers" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

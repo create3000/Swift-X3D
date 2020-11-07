@@ -14,10 +14,10 @@ public final class ShaderProgram :
 {
    // Common properties
    
-   public final override class var typeName       : String { "ShaderProgram" }
-   public final override class var component      : String { "Shaders" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "programs" }
+   internal final override class var typeName       : String { "ShaderProgram" }
+   internal final override class var component      : String { "Shaders" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "programs" }
 
    // Fields
 

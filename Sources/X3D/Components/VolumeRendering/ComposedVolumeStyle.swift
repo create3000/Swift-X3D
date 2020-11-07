@@ -12,10 +12,10 @@ public final class ComposedVolumeStyle :
 {
    // Common properties
    
-   public final override class var typeName       : String { "ComposedVolumeStyle" }
-   public final override class var component      : String { "VolumeRendering" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "renderStyle" }
+   internal final override class var typeName       : String { "ComposedVolumeStyle" }
+   internal final override class var component      : String { "VolumeRendering" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "renderStyle" }
 
    // Fields
 

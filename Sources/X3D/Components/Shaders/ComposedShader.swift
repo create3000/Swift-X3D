@@ -13,10 +13,10 @@ public final class ComposedShader :
 {
    // Common properties
    
-   public final override class var typeName       : String { "ComposedShader" }
-   public final override class var component      : String { "Shaders" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "shaders" }
+   internal final override class var typeName       : String { "ComposedShader" }
+   internal final override class var component      : String { "Shaders" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "shaders" }
 
    // Fields
 

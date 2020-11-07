@@ -12,7 +12,7 @@ public final class X3DExternProtoDeclaration :
 {
    // Common properties
    
-   public final override class var typeName : String { "X3DExternProtoDeclaration" }
+   internal final override class var typeName : String { "X3DExternProtoDeclaration" }
    
    // Properties
    
@@ -27,7 +27,7 @@ public final class X3DExternProtoDeclaration :
       {
          if let fragment = internalScene .worldURL .fragment
          {
-            return internalScene .protos .first { $0 .identifier == fragment }
+            return internalScene .protos .first { $0 .getName () == fragment }
          }
          
          return internalScene .protos .first

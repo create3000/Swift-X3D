@@ -12,10 +12,10 @@ public final class TextureTransform3D :
 {
    // Common properties
    
-   public final override class var typeName       : String { "TextureTransform3D" }
-   public final override class var component      : String { "Texturing3D" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "textureTransform" }
+   internal final override class var typeName       : String { "TextureTransform3D" }
+   internal final override class var component      : String { "Texturing3D" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "textureTransform" }
 
    // Fields
 

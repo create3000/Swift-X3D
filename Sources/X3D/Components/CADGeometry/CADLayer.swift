@@ -12,10 +12,10 @@ public final class CADLayer :
 {
    // Common properties
    
-   public final override class var typeName       : String { "CADLayer" }
-   public final override class var component      : String { "CADGeometry" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "CADLayer" }
+   internal final override class var component      : String { "CADGeometry" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

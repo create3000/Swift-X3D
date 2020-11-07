@@ -38,7 +38,7 @@ public final class X3DBindableList <Type : X3DBindableNode> :
                continue
             }
 
-            if node .identifier == name
+            if node .getName () == name
             {
                return node
             }

@@ -24,8 +24,8 @@ public final class MFDouble :
 
    // Common properties
    
-   public final override class var typeName : String { "MFDouble" }
-   public final override class var type     : X3DFieldType { .MFDouble }
+   internal final override class var typeName : String { "MFDouble" }
+   internal final override class var type     : X3DFieldType { .MFDouble }
 
    // Construction
    

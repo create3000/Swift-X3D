@@ -12,10 +12,10 @@ public final class TextureProjectorPerspective :
 {
    // Common properties
    
-   public final override class var typeName       : String { "TextureProjectorPerspective" }
-   public final override class var component      : String { "ProjectiveTextureMapping" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "TextureProjectorPerspective" }
+   internal final override class var component      : String { "ProjectiveTextureMapping" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

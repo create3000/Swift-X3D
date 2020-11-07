@@ -23,8 +23,8 @@ public final class SFFloat :
 
    // Common properties
    
-   public final override class var typeName : String { "SFFloat" }
-   public final override class var type     : X3DFieldType { .SFFloat }
+   internal final override class var typeName : String { "SFFloat" }
+   internal final override class var type     : X3DFieldType { .SFFloat }
 
    // Construction
    

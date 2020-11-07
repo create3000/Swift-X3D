@@ -13,10 +13,10 @@ public final class GeoCoordinate :
 {
    // Common properties
    
-   public final override class var typeName       : String { "GeoCoordinate" }
-   public final override class var component      : String { "Geospatial" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "coord" }
+   internal final override class var typeName       : String { "GeoCoordinate" }
+   internal final override class var component      : String { "Geospatial" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "coord" }
 
    // Fields
 

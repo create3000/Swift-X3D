@@ -12,10 +12,10 @@ public final class WindPhysicsModel :
 {
    // Common properties
    
-   public final override class var typeName       : String { "WindPhysicsModel" }
-   public final override class var component      : String { "ParticleSystems" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "physics" }
+   internal final override class var typeName       : String { "WindPhysicsModel" }
+   internal final override class var component      : String { "ParticleSystems" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "physics" }
 
    // Fields
 

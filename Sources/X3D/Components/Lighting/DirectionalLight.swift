@@ -12,10 +12,10 @@ public final class DirectionalLight :
 {
    // Common properties
    
-   public final override class var typeName       : String { "DirectionalLight" }
-   public final override class var component      : String { "Lighting" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "DirectionalLight" }
+   internal final override class var component      : String { "Lighting" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

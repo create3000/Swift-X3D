@@ -12,10 +12,10 @@ public final class Group :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Group" }
-   public final override class var component      : String { "Grouping" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "Group" }
+   internal final override class var component      : String { "Grouping" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "children" }
 
    // Construction
    

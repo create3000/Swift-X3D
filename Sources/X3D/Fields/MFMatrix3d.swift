@@ -24,8 +24,8 @@ public final class MFMatrix3d :
 
    // Common properties
    
-   public final override class var typeName : String { "MFMatrix3d" }
-   public final override class var type     : X3DFieldType { .MFMatrix3d }
+   internal final override class var typeName : String { "MFMatrix3d" }
+   internal final override class var type     : X3DFieldType { .MFMatrix3d }
 
    // Construction
    

@@ -12,10 +12,10 @@ public final class NurbsCurve :
 {
    // Common properties
    
-   public final override class var typeName       : String { "NurbsCurve" }
-   public final override class var component      : String { "NURBS" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "geometry" }
+   internal final override class var typeName       : String { "NurbsCurve" }
+   internal final override class var component      : String { "NURBS" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "geometry" }
 
    // Fields
 

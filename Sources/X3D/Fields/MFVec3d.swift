@@ -24,8 +24,8 @@ public final class MFVec3d :
 
    // Common properties
    
-   public final override class var typeName : String { "MFVec3d" }
-   public final override class var type     : X3DFieldType { .MFVec3d }
+   internal final override class var typeName : String { "MFVec3d" }
+   internal final override class var type     : X3DFieldType { .MFVec3d }
 
    // Construction
    

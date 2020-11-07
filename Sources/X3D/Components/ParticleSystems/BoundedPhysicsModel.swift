@@ -12,10 +12,10 @@ public final class BoundedPhysicsModel :
 {
    // Common properties
    
-   public final override class var typeName       : String { "BoundedPhysicsModel" }
-   public final override class var component      : String { "ParticleSystems" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "physics" }
+   internal final override class var typeName       : String { "BoundedPhysicsModel" }
+   internal final override class var component      : String { "ParticleSystems" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "physics" }
 
    // Fields
 

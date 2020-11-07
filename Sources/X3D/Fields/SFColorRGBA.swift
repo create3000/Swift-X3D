@@ -23,8 +23,8 @@ public final class SFColorRGBA :
 
    // Common properties
    
-   public final override class var typeName : String { "SFColorRGBA" }
-   public final override class var type     : X3DFieldType { .SFColorRGBA }
+   internal final override class var typeName : String { "SFColorRGBA" }
+   internal final override class var type     : X3DFieldType { .SFColorRGBA }
 
    // Construction
    

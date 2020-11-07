@@ -14,10 +14,10 @@ public final class PositionInterpolator :
 {
    // Common properties
    
-   public final override class var typeName       : String { "PositionInterpolator" }
-   public final override class var component      : String { "Interpolation" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "PositionInterpolator" }
+   internal final override class var component      : String { "Interpolation" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

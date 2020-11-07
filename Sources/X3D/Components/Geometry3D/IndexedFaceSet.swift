@@ -15,10 +15,10 @@ public final class IndexedFaceSet :
 {
    // Common properties
    
-   public final override class var typeName       : String { "IndexedFaceSet" }
-   public final override class var component      : String { "Geometry3D" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "geometry" }
+   internal final override class var typeName       : String { "IndexedFaceSet" }
+   internal final override class var component      : String { "Geometry3D" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "geometry" }
 
    // Fields
 

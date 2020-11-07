@@ -22,8 +22,8 @@ public final class SFEnum <Type> :
 
    // Common properties
    
-   public final override class var typeName : String { "SFEnum" }
-   public final override class var type     : X3DFieldType { .SFInt32 }
+   internal final override class var typeName : String { "SFEnum" }
+   internal final override class var type     : X3DFieldType { .SFInt32 }
 
    // Construction
 

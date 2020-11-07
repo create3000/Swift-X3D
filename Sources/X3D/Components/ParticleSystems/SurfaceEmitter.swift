@@ -12,10 +12,10 @@ public final class SurfaceEmitter :
 {
    // Common properties
    
-   public final override class var typeName       : String { "SurfaceEmitter" }
-   public final override class var component      : String { "ParticleSystems" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "emitter" }
+   internal final override class var typeName       : String { "SurfaceEmitter" }
+   internal final override class var component      : String { "ParticleSystems" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "emitter" }
 
    // Fields
 

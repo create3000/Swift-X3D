@@ -12,10 +12,10 @@ public final class NormalInterpolator :
 {
    // Common properties
    
-   public final override class var typeName       : String { "NormalInterpolator" }
-   public final override class var component      : String { "Interpolation" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "NormalInterpolator" }
+   internal final override class var component      : String { "Interpolation" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

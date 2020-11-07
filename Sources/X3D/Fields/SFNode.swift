@@ -40,8 +40,8 @@ public final class SFNode <Type : X3DBaseNode> :
    
    // Common properties
    
-   public final override class var typeName : String { "SFNode" }
-   public final override class var type     : X3DFieldType { .SFNode }
+   internal final override class var typeName : String { "SFNode" }
+   internal final override class var type     : X3DFieldType { .SFNode }
 
    // Construction
    

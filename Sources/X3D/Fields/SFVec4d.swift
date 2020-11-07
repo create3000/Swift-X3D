@@ -23,8 +23,8 @@ public final class SFVec4d :
 
    // Common properties
    
-   public final override class var typeName : String { "SFVec4d" }
-   public final override class var type     : X3DFieldType { .SFVec4d }
+   internal final override class var typeName : String { "SFVec4d" }
+   internal final override class var type     : X3DFieldType { .SFVec4d }
 
    // Construction
    

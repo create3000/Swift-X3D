@@ -23,8 +23,8 @@ public final class SFDouble :
 
    // Common properties
    
-   public final override class var typeName : String { "SFDouble" }
-   public final override class var type     : X3DFieldType { .SFDouble }
+   internal final override class var typeName : String { "SFDouble" }
+   internal final override class var type     : X3DFieldType { .SFDouble }
 
    // Construction
    

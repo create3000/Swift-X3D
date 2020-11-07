@@ -12,10 +12,10 @@ public final class TransformSensor :
 {
    // Common properties
    
-   public final override class var typeName       : String { "TransformSensor" }
-   public final override class var component      : String { "EnvironmentalSensor" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "TransformSensor" }
+   internal final override class var component      : String { "EnvironmentalSensor" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

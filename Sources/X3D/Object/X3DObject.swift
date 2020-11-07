@@ -11,10 +11,17 @@ public class X3DObject :
 {
    // Object requirements
    
-   public class var typeName : String { "X3DObject" }
-   public var typeName : String { Self .typeName }
-   public internal(set) final var identifier : String = ""
+   internal class var typeName : String { "X3DObject" }
+   private final var name : String = ""
    
+   // Common properties
+   
+   public func getTypeName () -> String { Self .typeName }
+   
+   public final func getName () -> String { name }
+   
+   internal final func setName (_ value : String) { name = value }
+
    // Convert to string
    
    public final func toString () -> String
@@ -57,22 +64,22 @@ public class X3DObject :
    
    internal func toStream (_ stream : X3DOutputStream)
    {
-      stream += typeName
+      stream += getTypeName ()
    }
    
    internal func toXMLStream (_ stream : X3DOutputStream)
    {
-      stream += typeName
+      stream += getTypeName ()
    }
    
    internal func toJSONStream (_ stream : X3DOutputStream)
    {
-      stream += typeName
+      stream += getTypeName ()
    }
    
    internal func toVRMLStream (_ stream : X3DOutputStream)
    {
-      stream += typeName
+      stream += getTypeName ()
    }
 }
 
@@ -95,6 +102,6 @@ extension X3DObject :
 {
    public var debugDescription : String
    {
-      return "\(typeName) { }"
+      return "\(getTypeName ()) { }"
    }
 }

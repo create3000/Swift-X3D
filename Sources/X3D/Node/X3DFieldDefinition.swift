@@ -11,12 +11,16 @@ public class X3DFieldDefinition :
 {
    // Common properties
    
-   public class var type : X3DFieldType { .SFBool }
-   public final var type : X3DFieldType { Swift .type (of: self) .type }
+   internal class var type : X3DFieldType { .SFBool }
+   
+   public final func getType () -> X3DFieldType { Self .type }
 
    // Access type handling
    
-   public internal(set) final var accessType : X3DAccessType = .initializeOnly
+   private final var accessType : X3DAccessType = .initializeOnly
+   
+   public final func getAccessType () -> X3DAccessType { accessType }
+   internal final func setAccessType (_ value : X3DAccessType) { accessType = value }
 
    public final var isInitializable : Bool { accessType .rawValue & X3DAccessType .initializeOnly .rawValue != 0 }
    public final var isInput : Bool { accessType .rawValue & X3DAccessType .inputOnly .rawValue != 0 }

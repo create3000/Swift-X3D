@@ -24,8 +24,8 @@ public final class MFColor :
 
    // Common properties
    
-   public final override class var typeName : String { "MFColor" }
-   public final override class var type     : X3DFieldType { .MFColor }
+   internal final override class var typeName : String { "MFColor" }
+   internal final override class var type     : X3DFieldType { .MFColor }
 
    // Construction
    

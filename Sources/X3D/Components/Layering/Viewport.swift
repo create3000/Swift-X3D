@@ -12,10 +12,10 @@ public final class Viewport :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Viewport" }
-   public final override class var component      : String { "Layering" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "viewport" }
+   internal final override class var typeName       : String { "Viewport" }
+   internal final override class var component      : String { "Layering" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "viewport" }
 
    // Fields
 

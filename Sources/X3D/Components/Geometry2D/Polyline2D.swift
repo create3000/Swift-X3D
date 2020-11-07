@@ -14,10 +14,10 @@ public final class Polyline2D :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Polyline2D" }
-   public final override class var component      : String { "Geometry2D" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "geometry" }
+   internal final override class var typeName       : String { "Polyline2D" }
+   internal final override class var component      : String { "Geometry2D" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "geometry" }
 
    // Fields
 

@@ -12,10 +12,10 @@ public final class FloatVertexAttribute :
 {
    // Common properties
    
-   public final override class var typeName       : String { "FloatVertexAttribute" }
-   public final override class var component      : String { "Shaders" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "attrib" }
+   internal final override class var typeName       : String { "FloatVertexAttribute" }
+   internal final override class var component      : String { "Shaders" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "attrib" }
 
    // Fields
 

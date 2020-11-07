@@ -12,10 +12,10 @@ public final class SplinePositionInterpolator2D :
 {
    // Common properties
    
-   public final override class var typeName       : String { "SplinePositionInterpolator2D" }
-   public final override class var component      : String { "Interpolation" }
-   public final override class var componentLevel : Int32 { 4 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "SplinePositionInterpolator2D" }
+   internal final override class var component      : String { "Interpolation" }
+   internal final override class var componentLevel : Int32 { 4 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

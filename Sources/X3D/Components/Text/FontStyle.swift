@@ -12,10 +12,10 @@ public final class FontStyle :
 {
    // Common properties
    
-   public final override class var typeName       : String { "FontStyle" }
-   public final override class var component      : String { "Text" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "fontStyle" }
+   internal final override class var typeName       : String { "FontStyle" }
+   internal final override class var component      : String { "Text" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "fontStyle" }
 
    // Fields
 

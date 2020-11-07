@@ -12,10 +12,10 @@ public final class NurbsPatchSurface :
 {
    // Common properties
    
-   public final override class var typeName       : String { "NurbsPatchSurface" }
-   public final override class var component      : String { "NURBS" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "geometry" }
+   internal final override class var typeName       : String { "NurbsPatchSurface" }
+   internal final override class var component      : String { "NURBS" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "geometry" }
 
    // Construction
    

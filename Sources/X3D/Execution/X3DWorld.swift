@@ -13,7 +13,7 @@ public final class X3DWorld :
 {
    // Common properties
    
-   public final override class var typeName : String { "X3DWorld" }
+   internal final override class var typeName : String { "X3DWorld" }
    
    // Properties
    

@@ -12,10 +12,10 @@ public final class SphereSensor :
 {
    // Common properties
    
-   public final override class var typeName       : String { "SphereSensor" }
-   public final override class var component      : String { "PointingDeviceSensor" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "SphereSensor" }
+   internal final override class var component      : String { "PointingDeviceSensor" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

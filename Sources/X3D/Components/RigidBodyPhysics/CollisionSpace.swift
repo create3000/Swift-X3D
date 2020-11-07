@@ -12,10 +12,10 @@ public final class CollisionSpace :
 {
    // Common properties
    
-   public final override class var typeName       : String { "CollisionSpace" }
-   public final override class var component      : String { "RigidBodyPhysics" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "CollisionSpace" }
+   internal final override class var component      : String { "RigidBodyPhysics" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

@@ -23,8 +23,8 @@ public final class SFInt32 :
 
    // Common properties
    
-   public final override class var typeName : String { "SFInt32" }
-   public final override class var type     : X3DFieldType { .SFInt32 }
+   internal final override class var typeName : String { "SFInt32" }
+   internal final override class var type     : X3DFieldType { .SFInt32 }
 
    // Construction
    

@@ -24,8 +24,8 @@ public final class MFRotation :
 
    // Common properties
    
-   public final override class var typeName : String { "MFRotation" }
-   public final override class var type     : X3DFieldType { .MFRotation }
+   internal final override class var typeName : String { "MFRotation" }
+   internal final override class var type     : X3DFieldType { .MFRotation }
 
    // Construction
    

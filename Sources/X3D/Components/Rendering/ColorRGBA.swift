@@ -12,10 +12,10 @@ public final class ColorRGBA :
 {
    // Common properties
    
-   public final override class var typeName       : String { "ColorRGBA" }
-   public final override class var component      : String { "Rendering" }
-   public final override class var componentLevel : Int32 { 4 }
-   public final override class var containerField : String { "color" }
+   internal final override class var typeName       : String { "ColorRGBA" }
+   internal final override class var component      : String { "Rendering" }
+   internal final override class var componentLevel : Int32 { 4 }
+   internal final override class var containerField : String { "color" }
 
    // Fields
 

@@ -12,10 +12,10 @@ public final class ComposedCubeMapTexture :
 {
    // Common properties
    
-   public final override class var typeName       : String { "ComposedCubeMapTexture" }
-   public final override class var component      : String { "CubeMapTexturing" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "texture" }
+   internal final override class var typeName       : String { "ComposedCubeMapTexture" }
+   internal final override class var component      : String { "CubeMapTexturing" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "texture" }
 
    // Fields
 

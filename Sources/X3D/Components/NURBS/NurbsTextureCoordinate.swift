@@ -12,10 +12,10 @@ public final class NurbsTextureCoordinate :
 {
    // Common properties
    
-   public final override class var typeName       : String { "NurbsTextureCoordinate" }
-   public final override class var component      : String { "NURBS" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "texCoord" }
+   internal final override class var typeName       : String { "NurbsTextureCoordinate" }
+   internal final override class var component      : String { "NURBS" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "texCoord" }
 
    // Fields
 

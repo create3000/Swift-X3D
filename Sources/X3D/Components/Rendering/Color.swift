@@ -12,10 +12,10 @@ public final class Color :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Color" }
-   public final override class var component      : String { "Rendering" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "color" }
+   internal final override class var typeName       : String { "Color" }
+   internal final override class var component      : String { "Rendering" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "color" }
 
    // Fields
 

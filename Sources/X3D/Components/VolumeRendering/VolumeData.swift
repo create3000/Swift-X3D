@@ -12,10 +12,10 @@ public final class VolumeData :
 {
    // Common properties
    
-   public final override class var typeName       : String { "VolumeData" }
-   public final override class var component      : String { "VolumeRendering" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "VolumeData" }
+   internal final override class var component      : String { "VolumeRendering" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

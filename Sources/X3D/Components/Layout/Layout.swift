@@ -12,10 +12,10 @@ public final class Layout :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Layout" }
-   public final override class var component      : String { "Layout" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "layout" }
+   internal final override class var typeName       : String { "Layout" }
+   internal final override class var component      : String { "Layout" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "layout" }
 
    // Fields
 

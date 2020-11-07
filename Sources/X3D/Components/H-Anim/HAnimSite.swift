@@ -12,10 +12,10 @@ public final class HAnimSite :
 {
    // Common properties
    
-   public final override class var typeName       : String { "HAnimSite" }
-   public final override class var component      : String { "H-Anim" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "HAnimSite" }
+   internal final override class var component      : String { "H-Anim" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

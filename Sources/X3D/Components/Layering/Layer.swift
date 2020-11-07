@@ -12,10 +12,10 @@ public final class Layer :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Layer" }
-   public final override class var component      : String { "Layering" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "layers" }
+   internal final override class var typeName       : String { "Layer" }
+   internal final override class var component      : String { "Layering" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "layers" }
 
    // Fields
 

@@ -23,8 +23,8 @@ public final class SFImage :
 
    // Common properties
    
-   public final override class var typeName : String { "SFImage" }
-   public final override class var type     : X3DFieldType { .SFImage }
+   internal final override class var typeName : String { "SFImage" }
+   internal final override class var type     : X3DFieldType { .SFImage }
 
    // Construction
    

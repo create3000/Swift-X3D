@@ -18,10 +18,10 @@ public final class PackagedShader :
 {
    // Common properties
    
-   public final override class var typeName       : String { "PackagedShader" }
-   public final override class var component      : String { "Shaders" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "shaders" }
+   internal final override class var typeName       : String { "PackagedShader" }
+   internal final override class var component      : String { "Shaders" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "shaders" }
    
    // Fields
    
@@ -107,7 +107,7 @@ public final class PackagedShader :
          .map { URL (string: $0, relativeTo: executionContext! .worldURL) }
          .compactMap { $0 }
       
-      let name           = self .identifier
+      let name           = self .getName ()
       let constantValues = self .makeConstantValues ()
 
       browser! .inlineQueue .async
@@ -228,7 +228,7 @@ public final class PackagedShader :
       }
       catch
       {
-         browser! .console .warn (t("Couldn't set fields for shader named '%@'. %@", identifier, error .localizedDescription))
+         browser! .console .warn (t("Couldn't set fields for shader named '%@'. %@", getName (), error .localizedDescription))
       }
    }
    
@@ -239,7 +239,7 @@ public final class PackagedShader :
       
       for field in userDefinedFields
       {
-         switch field .type
+         switch field .getType ()
          {
             case .SFBool:
                let field = field as! SFBool

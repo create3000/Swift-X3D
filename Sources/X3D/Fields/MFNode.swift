@@ -24,8 +24,8 @@ public final class MFNode <Element : X3DBaseNode> :
 
    // Common properties
    
-   public final override class var typeName : String { "MFNode" }
-   public final override class var type     : X3DFieldType { .MFNode }
+   internal final override class var typeName : String { "MFNode" }
+   internal final override class var type     : X3DFieldType { .MFNode }
 
    // Construction
 

@@ -23,8 +23,8 @@ public final class SFColor :
 
    // Common properties
    
-   public final override class var typeName : String { "SFColor" }
-   public final override class var type     : X3DFieldType { .SFColor }
+   internal final override class var typeName : String { "SFColor" }
+   internal final override class var type     : X3DFieldType { .SFColor }
 
    // Construction
    

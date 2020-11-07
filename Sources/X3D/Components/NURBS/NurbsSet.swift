@@ -13,10 +13,10 @@ public final class NurbsSet :
 {
    // Common properties
    
-   public final override class var typeName       : String { "NurbsSet" }
-   public final override class var component      : String { "NURBS" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "NurbsSet" }
+   internal final override class var component      : String { "NURBS" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

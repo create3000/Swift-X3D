@@ -12,10 +12,10 @@ public final class ConeEmitter :
 {
    // Common properties
    
-   public final override class var typeName       : String { "ConeEmitter" }
-   public final override class var component      : String { "ParticleSystems" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "emitter" }
+   internal final override class var typeName       : String { "ConeEmitter" }
+   internal final override class var component      : String { "ParticleSystems" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "emitter" }
 
    // Fields
 

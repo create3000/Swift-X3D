@@ -13,10 +13,10 @@ public final class GroupAnnotation :
 {
    // Common properties
    
-   public final override class var typeName       : String { "GroupAnnotation" }
-   public final override class var component      : String { "Annotation" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "GroupAnnotation" }
+   internal final override class var component      : String { "Annotation" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
    
    // Fields
    

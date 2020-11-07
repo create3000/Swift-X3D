@@ -12,10 +12,10 @@ public final class RigidBodyCollection :
 {
    // Common properties
    
-   public final override class var typeName       : String { "RigidBodyCollection" }
-   public final override class var component      : String { "RigidBodyPhysics" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "RigidBodyCollection" }
+   internal final override class var component      : String { "RigidBodyPhysics" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

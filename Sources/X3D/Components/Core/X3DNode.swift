@@ -13,12 +13,15 @@ public class X3DNode :
 {
    // Common properties
    
-   public class var component : String { "Sunrise" }
-   public final var component : String { Self .component }
-   public class var componentLevel : Int32 { 0 }
-   public final var componentLevel : Int32 { Self .componentLevel }
-   public class var containerField : String { "Sunrise" }
-   public final var containerField : String { Self .containerField }
+   internal class var component : String { "Sunrise" }
+   internal class var componentLevel : Int32 { 0 }
+   internal class var containerField : String { "sunrise" }
+   
+   // Common properties
+   
+   public final func getComponent () -> String { Self .component }
+   public final func getComponentLevel () -> Int32 { Self .componentLevel }
+   public final func getContainerField () -> String { Self .containerField }
    
    // Fields
 
@@ -39,7 +42,7 @@ public class X3DNode :
    
    internal func create (with executionContext : X3DExecutionContext) -> X3DNode
    {
-      assert (false, "'\(typeName).create' is not supported.")
+      assert (false, "'\(getTypeName ()).create' is not supported.")
       return self
    }
    
@@ -48,28 +51,28 @@ public class X3DNode :
    {
       let body = protoInstance .body!
       
-      if let namedNode = try? body .getNamedNode (name: identifier)
+      if let namedNode = try? body .getNamedNode (name: getName ())
       {
          return namedNode
       }
       
       let copy = self .create (with: body)
       
-      if !identifier .isEmpty
+      if !getName () .isEmpty
       {
-         try! body .updateNamedNode (name: identifier, node: copy)
+         try! body .updateNamedNode (name: getName (), node: copy)
       }
       
       // Pre defined fields
       
       for preDefinedField in preDefinedFields
       {
-         guard let field = try? copy .getField (name: preDefinedField .identifier) else
+         guard let field = try? copy .getField (name: preDefinedField .getName ()) else
          {
             continue
          }
          
-         guard field .accessType == preDefinedField .accessType && field .type == preDefinedField .type else
+         guard field .getAccessType () == preDefinedField .getAccessType () && field .getType () == preDefinedField .getType () else
          {
             continue
          }
@@ -89,7 +92,7 @@ public class X3DNode :
             
             for originalReference in preDefinedField .references .allObjects
             {
-               guard let reference = try? protoInstance .getField (name: originalReference .identifier) else
+               guard let reference = try? protoInstance .getField (name: originalReference .getName ()) else
                {
                   continue
                }
@@ -105,7 +108,7 @@ public class X3DNode :
       {
          let field = userDefinedField .copy ()
          
-         copy .addUserDefinedField (userDefinedField .accessType, userDefinedField .identifier, field)
+         copy .addUserDefinedField (userDefinedField .getAccessType (), userDefinedField .getName (), field)
          
          field .isSet = userDefinedField .isSet
 
@@ -122,7 +125,7 @@ public class X3DNode :
 
             for originalReference in userDefinedField .references .allObjects
             {
-               guard let reference = try? protoInstance .getField (name: originalReference .identifier) else
+               guard let reference = try? protoInstance .getField (name: originalReference .getName ()) else
                {
                   continue
                }

@@ -12,10 +12,10 @@ public final class PointProperties :
 {
    // Common properties
    
-   public final override class var typeName       : String { "PointProperties" }
-   public final override class var component      : String { "Shape" }
-   public final override class var componentLevel : Int32 { 5 }
-   public final override class var containerField : String { "pointProperties" }
+   internal final override class var typeName       : String { "PointProperties" }
+   internal final override class var component      : String { "Shape" }
+   internal final override class var componentLevel : Int32 { 5 }
+   internal final override class var containerField : String { "pointProperties" }
 
    // Fields
 

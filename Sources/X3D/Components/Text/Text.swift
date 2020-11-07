@@ -14,10 +14,10 @@ public final class Text :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Text" }
-   public final override class var component      : String { "Text" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "geometry" }
+   internal final override class var typeName       : String { "Text" }
+   internal final override class var component      : String { "Text" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "geometry" }
 
    // Fields
 

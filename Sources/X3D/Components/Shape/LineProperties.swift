@@ -12,10 +12,10 @@ public final class LineProperties :
 {
    // Common properties
    
-   public final override class var typeName       : String { "LineProperties" }
-   public final override class var component      : String { "Shape" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "lineProperties" }
+   internal final override class var typeName       : String { "LineProperties" }
+   internal final override class var component      : String { "Shape" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "lineProperties" }
 
    // Fields
 

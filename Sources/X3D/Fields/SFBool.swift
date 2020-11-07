@@ -23,8 +23,8 @@ public final class SFBool :
    
    // Common properties
    
-   public final override class var typeName : String { "SFBool" }
-   public final override class var type     : X3DFieldType { .SFBool }
+   internal final override class var typeName : String { "SFBool" }
+   internal final override class var type     : X3DFieldType { .SFBool }
 
    // Construction
    

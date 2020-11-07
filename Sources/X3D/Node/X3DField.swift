@@ -32,7 +32,7 @@ public class X3DField :
    /// Test if this field is possible for a `IS` relation ship.
    public final func isReference (for accessType : X3DAccessType) -> Bool
    {
-      return accessType == self .accessType || accessType == .inputOutput
+      return accessType == self .getAccessType () || accessType == .inputOutput
    }
    
    public final func addReference (to reference : X3DField)
@@ -41,7 +41,7 @@ public class X3DField :
       
       // Add IS relationship.
 
-      switch accessType .rawValue & reference .accessType .rawValue
+      switch getAccessType () .rawValue & reference .getAccessType () .rawValue
       {
          case X3DAccessType .initializeOnly .rawValue:
             reference .addFieldInterest (to: self)
@@ -70,7 +70,7 @@ public class X3DField :
       
       // Remove IS relationship.
 
-      switch accessType .rawValue & reference .accessType .rawValue
+      switch getAccessType () .rawValue & reference .getAccessType () .rawValue
       {
          case X3DAccessType .initializeOnly .rawValue:
             reference .removeFieldInterest (to: self)

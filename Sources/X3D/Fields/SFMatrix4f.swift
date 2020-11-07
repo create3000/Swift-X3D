@@ -23,8 +23,8 @@ public final class SFMatrix4f :
 
    // Common properties
    
-   public final override class var typeName : String { "SFMatrix4f" }
-   public final override class var type     : X3DFieldType { .SFMatrix4f }
+   internal final override class var typeName : String { "SFMatrix4f" }
+   internal final override class var type     : X3DFieldType { .SFMatrix4f }
 
    // Construction
    

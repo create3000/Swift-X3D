@@ -23,8 +23,8 @@ public final class SFString :
 
    // Common properties
    
-   public final override class var typeName : String { "SFString" }
-   public final override class var type     : X3DFieldType { .SFString }
+   internal final override class var typeName : String { "SFString" }
+   internal final override class var type     : X3DFieldType { .SFString }
 
    // Construction
    

@@ -12,10 +12,10 @@ public final class GeoOrigin :
 {
    // Common properties
    
-   public final override class var typeName       : String { "GeoOrigin" }
-   public final override class var component      : String { "Geospatial" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "geoOrigin" }
+   internal final override class var typeName       : String { "GeoOrigin" }
+   internal final override class var component      : String { "Geospatial" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "geoOrigin" }
 
    // Fields
 

@@ -12,10 +12,10 @@ public final class ProjectionVolumeStyle :
 {
    // Common properties
    
-   public final override class var typeName       : String { "ProjectionVolumeStyle" }
-   public final override class var component      : String { "VolumeRendering" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "renderStyle" }
+   internal final override class var typeName       : String { "ProjectionVolumeStyle" }
+   internal final override class var component      : String { "VolumeRendering" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "renderStyle" }
 
    // Fields
 

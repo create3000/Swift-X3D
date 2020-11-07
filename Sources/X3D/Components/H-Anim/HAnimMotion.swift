@@ -14,10 +14,10 @@ public final class HAnimMotion :
 {
    // Common properties
    
-   public final override class var typeName       : String { "HAnimMotion" }
-   public final override class var component      : String { "H-Anim" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "motions" }
+   internal final override class var typeName       : String { "HAnimMotion" }
+   internal final override class var component      : String { "H-Anim" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "motions" }
 
    // Fields
 

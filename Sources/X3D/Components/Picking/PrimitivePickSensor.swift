@@ -12,10 +12,10 @@ public final class PrimitivePickSensor :
 {
    // Common properties
    
-   public final override class var typeName       : String { "PrimitivePickSensor" }
-   public final override class var component      : String { "Picking" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "PrimitivePickSensor" }
+   internal final override class var component      : String { "Picking" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "children" }
 
    // Construction
    

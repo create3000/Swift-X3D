@@ -13,10 +13,10 @@ public final class StaticGroup :
 {
    // Common properties
    
-   public final override class var typeName       : String { "StaticGroup" }
-   public final override class var component      : String { "Grouping" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "StaticGroup" }
+   internal final override class var component      : String { "Grouping" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
    

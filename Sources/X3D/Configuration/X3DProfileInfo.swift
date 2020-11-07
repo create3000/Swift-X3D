@@ -11,7 +11,7 @@ public final class X3DProfileInfo :
 {
    // Common properties
    
-   public final override class var typeName : String { "X3DProfileInfo" }
+   internal final override class var typeName : String { "X3DProfileInfo" }
    
    // Properties
    

@@ -12,10 +12,10 @@ public final class ScreenFontStyle :
 {
    // Common properties
    
-   public final override class var typeName       : String { "ScreenFontStyle" }
-   public final override class var component      : String { "Layout" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "fontStyle" }
+   internal final override class var typeName       : String { "ScreenFontStyle" }
+   internal final override class var component      : String { "Layout" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "fontStyle" }
 
    // Fields
 

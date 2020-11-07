@@ -14,10 +14,10 @@ public final class Sphere :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Sphere" }
-   public final override class var component      : String { "Geometry3D" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "geometry" }
+   internal final override class var typeName       : String { "Sphere" }
+   internal final override class var component      : String { "Geometry3D" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "geometry" }
 
    // Fields
 

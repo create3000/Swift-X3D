@@ -15,10 +15,10 @@ public final class Extrusion :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Extrusion" }
-   public final override class var component      : String { "Geometry3D" }
-   public final override class var componentLevel : Int32 { 4 }
-   public final override class var containerField : String { "geometry" }
+   internal final override class var typeName       : String { "Extrusion" }
+   internal final override class var component      : String { "Geometry3D" }
+   internal final override class var componentLevel : Int32 { 4 }
+   internal final override class var containerField : String { "geometry" }
 
    // Fields
 

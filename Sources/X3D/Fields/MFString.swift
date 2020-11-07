@@ -24,8 +24,8 @@ public final class MFString :
 
    // Common properties
    
-   public final override class var typeName : String { "MFString" }
-   public final override class var type     : X3DFieldType { .MFString }
+   internal final override class var typeName : String { "MFString" }
+   internal final override class var type     : X3DFieldType { .MFString }
 
    // Construction
    

@@ -12,10 +12,10 @@ public final class FogCoordinate :
 {
    // Common properties
    
-   public final override class var typeName       : String { "FogCoordinate" }
-   public final override class var component      : String { "EnvironmentalEffects" }
-   public final override class var componentLevel : Int32 { 4 }
-   public final override class var containerField : String { "fogCoord" }
+   internal final override class var typeName       : String { "FogCoordinate" }
+   internal final override class var component      : String { "EnvironmentalEffects" }
+   internal final override class var componentLevel : Int32 { 4 }
+   internal final override class var containerField : String { "fogCoord" }
 
    // Fields
 

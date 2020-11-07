@@ -12,10 +12,10 @@ public final class KeySensor :
 {
    // Common properties
    
-   public final override class var typeName       : String { "KeySensor" }
-   public final override class var component      : String { "KeyDeviceSensor" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "KeySensor" }
+   internal final override class var component      : String { "KeyDeviceSensor" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

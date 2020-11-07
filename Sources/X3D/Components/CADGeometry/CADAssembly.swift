@@ -13,10 +13,10 @@ public final class CADAssembly :
 {
    // Common properties
    
-   public final override class var typeName       : String { "CADAssembly" }
-   public final override class var component      : String { "CADGeometry" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "CADAssembly" }
+   internal final override class var component      : String { "CADGeometry" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
    
    // Fields
    

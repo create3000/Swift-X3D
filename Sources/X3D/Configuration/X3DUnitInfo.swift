@@ -11,7 +11,7 @@ public final class X3DUnitInfo :
 {
    // Common properties
    
-   public final override class var typeName : String { "X3DUnitInfo" }
+   internal final override class var typeName : String { "X3DUnitInfo" }
    
    // Properties
    

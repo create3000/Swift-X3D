@@ -14,10 +14,10 @@ public final class Material :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Material" }
-   public final override class var component      : String { "Shape" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "material" }
+   internal final override class var typeName       : String { "Material" }
+   internal final override class var component      : String { "Shape" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "material" }
 
    // Fields
 

@@ -14,7 +14,9 @@ public class X3DBaseNode :
    public private(set) final weak var browser : X3DBrowser?
    public var scene : X3DScene? { executionContext? .scene }
    public internal(set) weak var executionContext : X3DExecutionContext?
-   public internal(set) final var types : [X3DNodeType] = [ ]
+   internal final var types : [X3DNodeType] = [ ]
+   
+   public final func getType () -> [X3DNodeType] { types }
 
    // Construction
    
@@ -76,8 +78,8 @@ public class X3DBaseNode :
       field .isTainted = true
       field .addParent (self)
 
-      field .identifier = name
-      field .accessType = accessType
+      field .setName (name)
+      field .setAccessType (accessType)
       
       // Add to field set
       
@@ -97,7 +99,7 @@ public class X3DBaseNode :
    {
       aliases [alias] = name
       
-      if fieldIndex [name]! .accessType == .inputOutput
+      if fieldIndex [name]! .getAccessType () == .inputOutput
       {
          aliases ["set_" + alias]    = name
          aliases [alias + "changed"] = name
@@ -134,7 +136,7 @@ public class X3DBaseNode :
       
       if let field = fieldIndex ["set_" + name]
       {
-         if field .accessType == .inputOutput
+         if field .getAccessType () == .inputOutput
          {
             return field
          }
@@ -142,13 +144,13 @@ public class X3DBaseNode :
       
       if let field = fieldIndex [name + "_changed"]
       {
-         if field .accessType == .inputOutput
+         if field .getAccessType () == .inputOutput
          {
             return field
          }
       }
 
-      throw X3DError .INVALID_X3D (t("Unknown field '%@' in class '%@'.", name, typeName))
+      throw X3DError .INVALID_X3D (t("Unknown field '%@' in class '%@'.", name, getTypeName ()))
    }
    
    // Private
@@ -208,7 +210,7 @@ public class X3DBaseNode :
    
    internal override func toStream (_ stream : X3DOutputStream)
    {
-      stream += typeName + " { }"
+      stream += getTypeName () + " { }"
    }
 
    // Destruction
@@ -227,9 +229,9 @@ public class X3DBaseNode :
          field .removeParent (self)
       }
 
-      if !identifier .isEmpty
+      if !getName () .isEmpty
       {
-         executionContext? .removeNamedNode (name: identifier)
+         executionContext? .removeNamedNode (name: getName ())
       }
    }
 }

@@ -13,10 +13,10 @@ public final class GeoProximitySensor :
 {
    // Common properties
    
-   public final override class var typeName       : String { "GeoProximitySensor" }
-   public final override class var component      : String { "Geospatial" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "GeoProximitySensor" }
+   internal final override class var component      : String { "Geospatial" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

@@ -13,7 +13,7 @@ public class X3DExecutionContext :
 {
    // Common properties
    
-   public override class var typeName : String { "X3DExecutionContext" }
+   internal override class var typeName : String { "X3DExecutionContext" }
    
    // Properties
    
@@ -177,14 +177,14 @@ public class X3DExecutionContext :
          throw X3DError .INVALID_NAME (t("Couldn't add named node: named node '%@' already exits.", name))
       }
       
-      guard node .identifier .isEmpty else
+      guard node .getName () .isEmpty else
       {
-         throw X3DError .INVALID_NAME (t("Couldn't add named node: node name not empty, is '%@'.", node .identifier))
+         throw X3DError .INVALID_NAME (t("Couldn't add named node: node name not empty, is '%@'.", node .getName ()))
       }
 
       namedNodes [name] = X3DNamedNode (node)
 
-      node .identifier = name
+      node .setName (name)
    }
    
    /// Update the name for a node.
@@ -202,14 +202,14 @@ public class X3DExecutionContext :
       
       if let oldNamedNode = namedNodes [name]
       {
-         oldNamedNode .node? .identifier .removeAll ()
+         oldNamedNode .node? .setName ("")
       }
 
-      namedNodes .removeValue (forKey: node .identifier)
+      namedNodes .removeValue (forKey: node .getName ())
 
       namedNodes [name] = X3DNamedNode (node)
       
-      node .identifier = name
+      node .setName (name)
    }
    
    /// Removes a named node or silently returns if a named node with`name` does not exists.
@@ -217,7 +217,7 @@ public class X3DExecutionContext :
    {
       guard let oldNamedNode = namedNodes .removeValue (forKey: name) else { return }
       
-      oldNamedNode .node? .identifier .removeAll ()
+      oldNamedNode .node? .setName ("")
    }
 
    /// Return either an imported node or a named node with `localName`.
@@ -277,7 +277,7 @@ public class X3DExecutionContext :
    {
       let proto = X3DProtoDeclaration (executionContext: self)
       
-      proto .identifier = name
+      proto .setName (name)
       
       for interfaceDeclaration in interfaceDeclarations
       {
@@ -304,7 +304,7 @@ public class X3DExecutionContext :
          throw X3DError .INVALID_NAME (t("Couldn't add proto declaration: proto '%@' is already in use.", name))
       }
       
-      proto .identifier = name
+      proto .setName (name)
       
       protos .append (proto)
    }
@@ -321,11 +321,11 @@ public class X3DExecutionContext :
          throw X3DError .INVALID_NAME (t("Couldn't add proto declaration: proto '%@' is already in use.", name))
       }
 
-      if let existing = try? getProtoDeclaration (name: proto .identifier)
+      if let existing = try? getProtoDeclaration (name: proto .getName ())
       {
          if existing === proto
          {
-            proto .identifier = name
+            proto .setName (name)
          }
          else
          {
@@ -340,12 +340,12 @@ public class X3DExecutionContext :
    
    public final func removeProtoDeclaration (name : String)
    {
-      protos .removeAll (where: { $0 .identifier == name })
+      protos .removeAll (where: { $0 .getName () == name })
    }
    
    public final func getProtoDeclaration (name : String) throws -> X3DProtoDeclaration
    {
-      guard let proto = protos .first (where: { $0 .identifier == name }) else
+      guard let proto = protos .first (where: { $0 .getName () == name }) else
       {
          throw X3DError .INVALID_NAME (t("Proto declaration '%@' not found.", name))
       }
@@ -355,7 +355,7 @@ public class X3DExecutionContext :
    
    public final func hasProtoDeclaration (name : String) -> Bool
    {
-      return protos .contains (where: { $0 .identifier == name })
+      return protos .contains (where: { $0 .getName () == name })
    }
    
    // Extern proto handling
@@ -366,7 +366,7 @@ public class X3DExecutionContext :
    {
       let externproto = X3DExternProtoDeclaration (executionContext: self, url: url)
       
-      externproto .identifier = name
+      externproto .setName (name)
       
       for interfaceDeclaration in interfaceDeclarations
       {
@@ -393,7 +393,7 @@ public class X3DExecutionContext :
          throw X3DError .INVALID_NAME (t("Couldn't add extern proto declaration: extern proto '%@' is already in use.", name))
       }
       
-      externproto .identifier = name
+      externproto .setName (name)
       
       externprotos .append (externproto)
    }
@@ -410,11 +410,11 @@ public class X3DExecutionContext :
          throw X3DError .INVALID_NAME (t("Couldn't add extern proto declaration: extern proto '%@' is already in use.", name))
       }
 
-      if let existing = try? getExternProtoDeclaration (name: externproto .identifier)
+      if let existing = try? getExternProtoDeclaration (name: externproto .getName ())
       {
          if existing === externproto
          {
-            externproto .identifier = name
+            externproto .setName (name)
          }
          else
          {
@@ -429,12 +429,12 @@ public class X3DExecutionContext :
 
    public final func removeExternProtoDeclaration (name : String)
    {
-      externprotos .removeAll (where: { $0 .identifier == name })
+      externprotos .removeAll (where: { $0 .getName () == name })
    }
 
    public final func getExternProtoDeclaration (name : String) throws -> X3DExternProtoDeclaration
    {
-      guard let externproto = externprotos .first (where: { $0 .identifier == name }) else
+      guard let externproto = externprotos .first (where: { $0 .getName () == name }) else
       {
          throw X3DError .INVALID_NAME (t("Extern proto declaration '%@' not found.", name))
       }
@@ -444,7 +444,7 @@ public class X3DExecutionContext :
    
    public final func hasExternProtoDeclaration (name : String) -> Bool
    {
-      return externprotos .contains (where: { $0 .identifier == name })
+      return externprotos .contains (where: { $0 .getName () == name })
    }
 
    // Route handling
@@ -470,7 +470,7 @@ public class X3DExecutionContext :
          throw X3DError .INVALID_ACCESS_TYPE (t("Bad route specification: destination field must be an output."))
       }
       
-      guard sourceField .type == destinationField .type else
+      guard sourceField .getType () == destinationField .getType () else
       {
          throw X3DError .NOT_SUPPORTED (t("Bad route specification: source field and destination field must be of same type."))
       }

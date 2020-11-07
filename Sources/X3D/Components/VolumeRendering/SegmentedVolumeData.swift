@@ -12,10 +12,10 @@ public final class SegmentedVolumeData :
 {
    // Common properties
    
-   public final override class var typeName       : String { "SegmentedVolumeData" }
-   public final override class var component      : String { "VolumeRendering" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "SegmentedVolumeData" }
+   internal final override class var component      : String { "VolumeRendering" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

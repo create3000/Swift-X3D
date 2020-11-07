@@ -15,10 +15,10 @@ public final class Collision :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Collision" }
-   public final override class var component      : String { "Navigation" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "Collision" }
+   internal final override class var component      : String { "Navigation" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
 

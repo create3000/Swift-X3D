@@ -12,10 +12,10 @@ public final class Normal :
 {
    // Common properties
    
-   public final override class var typeName       : String { "Normal" }
-   public final override class var component      : String { "Rendering" }
-   public final override class var componentLevel : Int32 { 2 }
-   public final override class var containerField : String { "normal" }
+   internal final override class var typeName       : String { "Normal" }
+   internal final override class var component      : String { "Rendering" }
+   internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "normal" }
 
    // Fields
 

@@ -23,8 +23,8 @@ public final class SFRotation :
 
    // Common properties
    
-   public final override class var typeName : String { "SFRotation" }
-   public final override class var type     : X3DFieldType { .SFRotation }
+   internal final override class var typeName : String { "SFRotation" }
+   internal final override class var type     : X3DFieldType { .SFRotation }
 
    // Construction
    

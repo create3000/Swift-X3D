@@ -23,8 +23,8 @@ public final class MFEnum <Type> :
 
    // Common properties
    
-   public final override class var typeName : String { "MFEnum" }
-   public final override class var type     : X3DFieldType { .MFInt32 }
+   internal final override class var typeName : String { "MFEnum" }
+   internal final override class var type     : X3DFieldType { .MFInt32 }
 
    // Construction
    

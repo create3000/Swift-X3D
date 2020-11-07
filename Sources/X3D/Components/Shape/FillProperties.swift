@@ -12,10 +12,10 @@ public final class FillProperties :
 {
    // Common properties
    
-   public final override class var typeName       : String { "FillProperties" }
-   public final override class var component      : String { "Shape" }
-   public final override class var componentLevel : Int32 { 3 }
-   public final override class var containerField : String { "fillProperties" }
+   internal final override class var typeName       : String { "FillProperties" }
+   internal final override class var component      : String { "Shape" }
+   internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "fillProperties" }
 
    // Fields
 

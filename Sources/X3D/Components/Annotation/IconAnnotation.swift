@@ -14,10 +14,10 @@ public final class IconAnnotation :
 {
    // Common properties
    
-   public final override class var typeName       : String { "IconAnnotation" }
-   public final override class var component      : String { "Annotation" }
-   public final override class var componentLevel : Int32 { 1 }
-   public final override class var containerField : String { "children" }
+   internal final override class var typeName       : String { "IconAnnotation" }
+   internal final override class var component      : String { "Annotation" }
+   internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "children" }
 
    // Fields
    

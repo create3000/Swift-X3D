@@ -29,9 +29,9 @@ public final class PackagedShader :
    
    // Properties
    
-   public final override var sourceText           : MFString? { $url }
-   public final override var canUserDefinedFields : Bool { true }
-   
+   public   final override var canUserDefinedFields : Bool { true }
+   internal final override var sourceText           : MFString? { $url }
+
    // X3DUrlObject
    
    @SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE
@@ -237,7 +237,7 @@ public final class PackagedShader :
       let constantValues = MTLFunctionConstantValues ()
       var index          = 0
       
-      for field in userDefinedFields
+      for field in getUserDefinedFields ()
       {
          switch field .getType ()
          {

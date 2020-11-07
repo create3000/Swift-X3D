@@ -41,7 +41,7 @@ public class X3DBaseNode :
          child .isTainted = false
       }
 
-      for field in fields
+      for field in fieldDefinitions
       {
          field .isTainted = false
       }
@@ -67,11 +67,13 @@ public class X3DBaseNode :
 
    // Field handling
    
-   public var canUserDefinedFields : Bool { false }
-   public var extendedEventHandling : Bool { true }
-   public private(set) final var fields : [X3DField] = [ ]
-   private final var fieldIndex : [String : X3DField] = [:]
+   public var canUserDefinedFields    : Bool { false }
+   internal var extendedEventHandling : Bool { true }
+   private final var fieldDefinitions : [X3DField] = [ ]
+   private final var fieldIndex       : [String : X3DField] = [:]
 
+   public final func getFieldDefinitions () -> [X3DField] { fieldDefinitions }
+   
    ///
    internal final func addField (_ accessType : X3DAccessType, _ name : String, _ field : X3DField)
    {
@@ -84,7 +86,7 @@ public class X3DBaseNode :
       // Add to field set
       
       fieldIndex [name] = field
-      fields .append (field)
+      fieldDefinitions .append (field)
       
       if accessType == .inputOutput
       {
@@ -108,14 +110,14 @@ public class X3DBaseNode :
    
    private final var numUserDefinedFields : Int = 0
    
-   public final var preDefinedFields : ArraySlice <X3DField>
+   public final func getPreDefinedFields () -> ArraySlice <X3DField>
    {
-      return fields [..<(fields .count - numUserDefinedFields)]
+      fieldDefinitions [..<(fieldDefinitions .count - numUserDefinedFields)]
    }
    
-   public final var userDefinedFields : ArraySlice <X3DField>
+   public final func getUserDefinedFields () -> ArraySlice <X3DField>
    {
-      return fields [(fields .count - numUserDefinedFields)...]
+      fieldDefinitions [(fieldDefinitions .count - numUserDefinedFields)...]
    }
  
    internal final func addUserDefinedField (_ accessType : X3DAccessType, _ name : String, _ field : X3DField)
@@ -224,7 +226,7 @@ public class X3DBaseNode :
          child .removeParent (self)
       }
       
-      for field in fields
+      for field in fieldDefinitions
       {
          field .removeParent (self)
       }

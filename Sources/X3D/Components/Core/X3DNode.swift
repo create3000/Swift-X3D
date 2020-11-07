@@ -29,7 +29,7 @@ public class X3DNode :
    
    // Properties
    
-   public var sourceText : MFString? { nil }
+   internal var sourceText : MFString? { nil }
 
    // Construction
    
@@ -65,7 +65,7 @@ public class X3DNode :
       
       // Pre defined fields
       
-      for preDefinedField in preDefinedFields
+      for preDefinedField in getPreDefinedFields ()
       {
          guard let field = try? copy .getField (name: preDefinedField .getName ()) else
          {
@@ -104,7 +104,7 @@ public class X3DNode :
       
       // User defined fields from Script and Shader
       
-      for userDefinedField in userDefinedFields
+      for userDefinedField in getUserDefinedFields ()
       {
          let field = userDefinedField .copy ()
          

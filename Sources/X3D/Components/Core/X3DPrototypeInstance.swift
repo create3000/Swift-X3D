@@ -35,7 +35,7 @@ public class X3DPrototypeInstance :
 
       addField (.inputOutput, "metadata", $metadata)
       
-      for protoField in protoNode .userDefinedFields
+      for protoField in protoNode .getUserDefinedFields ()
       {
          let field = protoField .copy ()
 
@@ -74,7 +74,7 @@ public class X3DPrototypeInstance :
       
       if protoNode! .isExternProto
       {
-         for protoField in proto .userDefinedFields
+         for protoField in proto .getUserDefinedFields ()
          {
             if let field = try? getField (name: protoField .getName ())
             {

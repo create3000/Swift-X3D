@@ -26,9 +26,9 @@ public final class ShaderProgram :
    
    // Properties
    
-   public final override var sourceText           : MFString? { $url }
-   public final override var canUserDefinedFields : Bool { true }
-   
+   public   final override var canUserDefinedFields : Bool { true }
+   internal final override var sourceText           : MFString? { $url }
+
    // X3DUrlObject
    
    @SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE

@@ -5,7 +5,7 @@
 //  Created by Holger Seelig on 07.11.20.
 //
 
-internal final class X3DJSONParser :
+internal final class JSONParser :
    X3DParser
 {
    // Properties

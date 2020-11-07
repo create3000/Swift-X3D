@@ -1,5 +1,5 @@
 //
-//  X3DXMLParser.swift
+//  XMLParser.swift
 //  X3D
 //
 //  Created by Holger Seelig on 18.10.20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal final class X3DXMLParser :
+internal final class XMLParser :
    X3DParser
 {
    // Properties
@@ -986,11 +986,11 @@ internal final class X3DXMLParser :
       }
    }
    
-   private final func makeParser (_ value : String?) -> X3DVRMLParser?
+   private final func makeParser (_ value : String?) -> VRMLParser?
    {
       guard let value = value else { return nil }
       
-      let parser = X3DVRMLParser (scene: scene, x3dSyntax: value)
+      let parser = VRMLParser (scene: scene, x3dSyntax: value)
       
       if isInsideProtoDefinition
       {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal final class X3DVRMLParser :
+internal final class VRMLParser :
    X3DParser
 {
    // Grammar

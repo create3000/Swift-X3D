@@ -72,9 +72,9 @@ public class X3DExecutionContext :
    
    /// Creates a new node of type `Type`.
    /// * parameters:
-   ///   * type: A supported node type.
+   ///   * of: A supported node type.
    /// * returns: A node of type `Type`.
-   public final func createNode <Type : X3DNode> (_ type : Type .Type) -> Type
+   public final func createNode <Type : X3DNode> (of type : Type .Type) -> Type
    {
       return try! createNode (typeName: Type .typeName, setup: true) as! Type
    }

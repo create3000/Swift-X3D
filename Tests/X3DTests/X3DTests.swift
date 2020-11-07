@@ -665,8 +665,8 @@ function initialize ()
          let browser = X3DBrowser ()
          let a1 = MFNode ()
          let a2 = MFNode ()
-         let b1 = try? browser .currentScene? .createNode (typeName: "Box")
-         let b2 = try? browser .currentScene? .createNode (typeName: "Box")
+         let b1 = try? browser .currentScene .createNode (typeName: "Box")
+         let b2 = browser .currentScene .createNode (of: Box .self)
 
          a1 .wrappedValue .append (b1)
          a1 .wrappedValue .append (b2)
@@ -678,7 +678,7 @@ function initialize ()
          XCTAssert(a2 .wrappedValue [0] === b1)
          XCTAssert(a2 .wrappedValue [1] === b2)
          XCTAssert(b1? .parents .count == 2)
-         XCTAssert(b2? .parents .count == 2)
+         XCTAssert(b2 .parents .count == 2)
       }
    }
    

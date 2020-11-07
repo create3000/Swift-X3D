@@ -19,7 +19,7 @@ public protocol X3DParserInterface
 
 public final class X3DGoldenGate
 {
-   static private var parsers : [X3DParserInterface .Type] = [
+   private static var parsers : [X3DParserInterface .Type] = [
       XMLParser  .self,
       JSONParser .self,
       VRMLParser .self,

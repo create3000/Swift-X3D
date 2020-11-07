@@ -32,14 +32,14 @@ internal final class XMLParser :
    
    // Operations
    
-   internal final override var isValid : Bool
+   internal final var isValid : Bool
    {
       guard let document = document else { return false }
       
       return document .rootElement () != nil
    }
 
-   internal final override func parseIntoScene () throws
+   internal final func parseIntoScene () throws
    {
       guard let document = document else
       {

@@ -126,7 +126,7 @@ internal final class VRMLParser :
    
    // Operations
    
-   internal final override var isValid : Bool
+   internal final var isValid : Bool
    {
       let currentIndex = scanner .currentIndex
       
@@ -160,7 +160,7 @@ internal final class VRMLParser :
       return false
    }
 
-   internal final override func parseIntoScene () throws
+   internal final func parseIntoScene () throws
    {
       do
       {

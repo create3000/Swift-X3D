@@ -25,6 +25,17 @@ internal final class X3DGoldenGate
       
       do
       {
+         let parser = X3DJSONParser (scene: scene, x3dSyntax: x3dSyntax)
+
+         if parser .isJSON
+         {
+            try parser .parseIntoScene ()
+            return
+         }
+      }
+      
+      do
+      {
          let parser = X3DVRMLParser (scene: scene, x3dSyntax: x3dSyntax)
 
          if parser .isVRML

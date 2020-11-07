@@ -1,6 +1,6 @@
 //
 //  X3DRenderer.swift
-//  Titania X3D Editor
+//  Sunrise X3D Editor
 //
 //  Created by Holger Seelig on 18.08.20.
 //  Copyright © 2020 Holger Seelig. All rights reserved.

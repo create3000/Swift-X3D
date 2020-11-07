@@ -197,9 +197,16 @@ public final class X3DBrowser :
       }
    }
    
+   private final var browserDescription : String = ""
+   
+   public final func getDescription () -> String
+   {
+      return browserDescription
+   }
+   
    public final func setDescription (_ string : String)
    {
-      
+      browserDescription = string
    }
    
    public final func createX3DFromString (x3dSyntax : String) throws -> X3DScene

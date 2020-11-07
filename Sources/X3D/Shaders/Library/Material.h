@@ -1,6 +1,6 @@
 //
 //  Material.h
-//  Titania X3D Editor
+//  Sunrise X3D Editor
 //
 //  Created by Holger Seelig on 11.10.20.
 //  Copyright © 2020 Holger Seelig. All rights reserved.

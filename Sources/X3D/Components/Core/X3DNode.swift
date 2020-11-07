@@ -13,11 +13,11 @@ public class X3DNode :
 {
    // Common properties
    
-   public class var component : String { "Titania" }
+   public class var component : String { "Sunrise" }
    public final var component : String { Self .component }
    public class var componentLevel : Int32 { 0 }
    public final var componentLevel : Int32 { Self .componentLevel }
-   public class var containerField : String { "Titania" }
+   public class var containerField : String { "Sunrise" }
    public final var containerField : String { Self .containerField }
    
    // Fields

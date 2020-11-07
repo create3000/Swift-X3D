@@ -46,7 +46,7 @@ internal protocol X3DCoreContext : class
 
 extension X3DCoreContext
 {
-   internal var name    : String { "Titania X3D Browser macOS" }
+   internal var name    : String { "Sunrise X3D Browser" }
    internal var version : String { "1.0" }
    
    internal var supportedProfiles   : [String : X3DProfileInfo] { X3DSupportedProfiles .profiles }

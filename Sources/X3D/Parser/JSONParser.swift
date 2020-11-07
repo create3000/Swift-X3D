@@ -6,7 +6,8 @@
 //
 
 internal final class JSONParser :
-   X3DParser
+   X3DParser,
+   X3DParserInterface
 {
    // Properties
    
@@ -27,12 +28,12 @@ internal final class JSONParser :
 
    // Operations
    
-   internal final var isJSON : Bool
+   internal final override var isValid : Bool
    {
       return json != nil
    }
 
-   internal final func parseIntoScene () throws
+   internal final override func parseIntoScene () throws
    {
       guard let json = json else
       {

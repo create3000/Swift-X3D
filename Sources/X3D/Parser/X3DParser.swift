@@ -8,6 +8,12 @@
 
 internal class X3DParser
 {
+   // Common properties and functions
+   
+   internal var isValid : Bool { false }
+   
+   internal func parseIntoScene () throws { }
+   
    // Execution context
    
    internal final var executionContexts = [X3DExecutionContext] ()

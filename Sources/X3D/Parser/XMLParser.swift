@@ -9,7 +9,8 @@
 import Foundation
 
 internal final class XMLParser :
-   X3DParser
+   X3DParser,
+   X3DParserInterface
 {
    // Properties
    
@@ -31,14 +32,14 @@ internal final class XMLParser :
    
    // Operations
    
-   internal var isXML : Bool
+   internal final override var isValid : Bool
    {
       guard let document = document else { return false }
       
       return document .rootElement () != nil
    }
 
-   internal final func parseIntoScene () throws
+   internal final override func parseIntoScene () throws
    {
       guard let document = document else
       {

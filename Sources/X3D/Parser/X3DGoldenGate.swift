@@ -8,37 +8,30 @@
 
 import Foundation
 
+internal protocol X3DParserInterface
+{
+   init (scene : X3DScene, x3dSyntax : String)
+   
+   var isValid : Bool { get }
+   
+   func parseIntoScene () throws
+}
+
 internal final class X3DGoldenGate
 {
+   static private var parsers : [X3DParserInterface .Type] = [
+      XMLParser  .self,
+      JSONParser .self,
+      VRMLParser .self,
+   ]
+   
    internal static func parseIntoScene (scene : X3DScene, x3dSyntax : String) throws
    {
-      do
+      for interface in parsers
       {
-         let parser = XMLParser (scene: scene, x3dSyntax: x3dSyntax)
+         let parser = interface .init (scene: scene, x3dSyntax: x3dSyntax)
 
-         if parser .isXML
-         {
-            try parser .parseIntoScene ()
-            return
-         }
-      }
-      
-      do
-      {
-         let parser = JSONParser (scene: scene, x3dSyntax: x3dSyntax)
-
-         if parser .isJSON
-         {
-            try parser .parseIntoScene ()
-            return
-         }
-      }
-      
-      do
-      {
-         let parser = VRMLParser (scene: scene, x3dSyntax: x3dSyntax)
-
-         if parser .isVRML
+         if parser .isValid
          {
             try parser .parseIntoScene ()
             return

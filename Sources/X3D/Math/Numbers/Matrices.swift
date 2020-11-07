@@ -137,6 +137,31 @@ extension Matrix4f
          Vector3f (c2 .x, c2 .y, c2 .z)
       ))
    }
+   
+   public func translate (_ translation : Vector3f) -> Matrix4f
+   {
+      let translationMatrix = Matrix4f (columns: (Vector4f (1, 0, 0, 0),
+                                                  Vector4f (0, 1, 0, 0),
+                                                  Vector4f (0, 0, 1, 0),
+                                                  Vector4f (translation .x, translation .y, translation .z, 1)))
+      
+      return self * translationMatrix
+   }
+   
+   public func rotate (_ rotation : Rotation4f) -> Matrix4f
+   {
+      return self * Matrix4f (rotation)
+   }
+   
+   public func scale (_ scale : Vector3f) -> Matrix4f
+   {
+      let scaleMatrix = Matrix4f (columns: (Vector4f (scale .x, 0, 0, 0),
+                                            Vector4f (0, scale .y, 0, 0),
+                                            Vector4f (0, 0, scale .z, 0),
+                                            Vector4f (0, 0, 0, 1)))
+      
+      return self * scaleMatrix
+   }
 }
 
 // ! Matrix2

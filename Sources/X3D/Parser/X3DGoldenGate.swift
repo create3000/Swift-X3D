@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal protocol X3DParserInterface
+public protocol X3DParserInterface
 {
    init (scene : X3DScene, x3dSyntax : String)
    
@@ -17,13 +17,18 @@ internal protocol X3DParserInterface
    func parseIntoScene () throws
 }
 
-internal final class X3DGoldenGate
+public final class X3DGoldenGate
 {
    static private var parsers : [X3DParserInterface .Type] = [
       XMLParser  .self,
       JSONParser .self,
       VRMLParser .self,
    ]
+   
+   public static func addParser (of type : X3DParserInterface .Type)
+   {
+      parsers .append (type)
+   }
    
    internal static func parseIntoScene (scene : X3DScene, x3dSyntax : String) throws
    {

@@ -222,6 +222,14 @@ public final class X3DBrowser :
       return scene
    }
    
+   public final func createX3DFromStream (stream : InputStream) throws -> X3DScene
+   {
+      let data      = Data (reading: stream)
+      let x3dSyntax = String (decoding: data .isGzipped ? try data .gunzipped () : data, as: UTF8 .self)
+      
+      return try createX3DFromString (x3dSyntax: x3dSyntax)
+   }
+   
    /// Creates a new scene from `url`. This function is thread save.
    public final func createX3DFromURL (url : [URL]) throws -> X3DScene
    {
@@ -359,3 +367,31 @@ public final class X3DBrowser :
    }
 }
 
+fileprivate extension Data
+{
+   init (reading stream : InputStream)
+   {
+      self .init ()
+      
+      stream .open ()
+
+      let bufferSize = 1024
+      let buffer     = UnsafeMutablePointer <UInt8> .allocate (capacity: bufferSize)
+      
+      defer { buffer .deallocate () }
+
+      while stream .hasBytesAvailable
+      {
+         let read = stream .read (buffer, maxLength: bufferSize)
+         
+         if (read == 0)
+         {
+            break // added
+         }
+         
+         self .append (buffer, count: read)
+      }
+
+      stream .close ()
+   }
+}

@@ -36,11 +36,9 @@ public final class X3DGoldenGate
       {
          let parser = interface .init (scene: scene, x3dSyntax: x3dSyntax)
 
-         if parser .isValid
-         {
-            try parser .parseIntoScene ()
-            return
-         }
+         guard parser .isValid else { continue }
+         
+         return try parser .parseIntoScene ()
       }
       
       throw X3DError .INVALID_X3D ("Couldn't determine file type.")

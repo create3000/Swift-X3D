@@ -15,7 +15,7 @@ public final class HAnimMotion :
    // Common properties
    
    internal final override class var typeName       : String { "HAnimMotion" }
-   internal final override class var component      : String { "H-Anim" }
+   internal final override class var component      : String { "HAnim" }
    internal final override class var componentLevel : Int32 { 3 }
    internal final override class var containerField : String { "motions" }
 

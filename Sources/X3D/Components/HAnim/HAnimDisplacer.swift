@@ -13,7 +13,7 @@ public final class HAnimDisplacer :
    // Common properties
    
    internal final override class var typeName       : String { "HAnimDisplacer" }
-   internal final override class var component      : String { "H-Anim" }
+   internal final override class var component      : String { "HAnim" }
    internal final override class var componentLevel : Int32 { 1 }
    internal final override class var containerField : String { "displacers" }
 

@@ -75,7 +75,7 @@ public final class X3DBrowser :
    
    public final func getComponent (name : String, level : Int32) throws -> X3DComponentInfo
    {
-      guard let component = supportedComponents [name] else
+      guard let component = supportedComponents [supportedComponentsAliases [name] ?? name] else
       {
          throw X3DError .INVALID_NAME (t("Component named '%@' does not exists.", name))
       }

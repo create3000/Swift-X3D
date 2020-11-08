@@ -28,10 +28,7 @@ internal final class JSONParser :
 
    // Operations
    
-   internal final var isValid : Bool
-   {
-      return json != nil
-   }
+   internal final var isValid : Bool { json != nil }
 
    internal final func parseIntoScene () throws
    {

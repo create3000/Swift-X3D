@@ -49,13 +49,14 @@ extension X3DCoreContext
    internal var name    : String { "Sunrise X3D Browser" }
    internal var version : String { "1.0" }
    
-   internal var supportedProfiles   : [String : X3DProfileInfo] { X3DSupportedProfiles .profiles }
-   internal var supportedComponents : [String : X3DComponentInfo] { X3DSupportedComponents .components }
-   internal var supportedNodes      : [String : X3DNodeInterface .Type] { X3DSupportedNodes .nodes }
-   internal var supportedFields     : [String : X3DFieldInterface .Type] { X3DSupportedFields .fields }
-   internal var browserOptions      : X3DBrowserOptions { coreContextProperties .browserOptions! }
-   internal var browserProperties   : X3DBrowserProperties { coreContextProperties .browserProperties! }
-   internal var renderingProperties : X3DRenderingProperties { coreContextProperties .renderingProperties! }
+   internal var supportedProfiles          : [String : X3DProfileInfo] { X3DSupportedProfiles .profiles }
+   internal var supportedComponents        : [String : X3DComponentInfo] { X3DSupportedComponents .components }
+   internal var supportedComponentsAliases : [String : String] { X3DSupportedComponents .aliases }
+   internal var supportedNodes             : [String : X3DNodeInterface .Type] { X3DSupportedNodes .nodes }
+   internal var supportedFields            : [String : X3DFieldInterface .Type] { X3DSupportedFields .fields }
+   internal var browserOptions             : X3DBrowserOptions { coreContextProperties .browserOptions! }
+   internal var browserProperties          : X3DBrowserProperties { coreContextProperties .browserProperties! }
+   internal var renderingProperties        : X3DRenderingProperties { coreContextProperties .renderingProperties! }
    
    internal var browserQueue : DispatchQueue { DispatchQueue .global (qos: .userInteractive) }
    internal var inlineQueue  : DispatchQueue { DispatchQueue .global (qos: .userInitiated) }

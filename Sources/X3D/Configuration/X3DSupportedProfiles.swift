@@ -62,7 +62,7 @@ internal final class X3DSupportedProfiles
                "Geometry3D",
                "Geospatial",
                "Grouping",
-               "H-Anim",
+               "HAnim",
                "Interpolation",
                "KeyDeviceSensor",
                "Layering",

@@ -9,6 +9,7 @@
 internal final class X3DSupportedComponents
 {
    internal static let components : [String : X3DComponentInfo] = make ()
+   internal static let aliases    : [String : String] = makeAliases ()
    
    private static func make () -> [String : X3DComponentInfo]
    {
@@ -85,7 +86,7 @@ internal final class X3DSupportedComponents
            providerUrl: X3DBrowser .providerUrl .description)
 
       add (title:      "Humanoid animation (H-Anim)",
-           name:       "H-Anim",
+           name:       "HAnim",
            level:       3,
            providerUrl: X3DBrowser .providerUrl .description)
 
@@ -205,5 +206,14 @@ internal final class X3DSupportedComponents
            providerUrl: X3DBrowser .providerUrl .description)
    
       return components
+   }
+
+   private static func makeAliases () -> [String : String]
+   {
+      var aliases = [String : String] ()
+      
+      aliases ["H-Anim"] = "HAnim"
+
+      return aliases
    }
 }

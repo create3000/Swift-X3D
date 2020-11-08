@@ -188,6 +188,79 @@ internal final class JSONParser :
    {
       guard let object = object as? [String : Any] else { return }
       
-      debugPrint (#function)
+      childrenArray (object ["-children"], scene .$rootNodes)
+   }
+
+   private final func childrenArray (_ objects : Any?, _ field : MFNode <X3DNode>)
+   {
+      guard let objects = objects as? [Any] else { return }
+      
+      for object in objects
+      {
+         let (success, node) = childObject (object)
+         
+         if success
+         {
+            field .wrappedValue .append (node)
+         }
+      }
+   }
+
+   private final func childObject (_ object : Any?) -> (Bool, X3DNode?)
+   {
+      guard let object = object as? [String : Any] else { return (false, nil) }
+            
+      for (key, value) in object
+      {
+         switch key
+         {
+            case "ExternProtoDeclare":
+               externProtoDeclareObject (value)
+            case "ProtoDeclare":
+               protoDeclareObject (value)
+            case "ROUTE":
+               routeObject (value)
+            case "IMPORT":
+               importObject (value)
+            case "EXPORT":
+               exportObject (value)
+            default:
+               return nodeObject (value, nodeType: key)
+         }
+      }
+      
+      return (false, nil)
+   }
+
+   private final func externProtoDeclareObject (_ object : Any?)
+   {
+      guard let object = object as? [String : Any] else { return }
+   }
+
+   private final func protoDeclareObject (_ object : Any?)
+   {
+      guard let object = object as? [String : Any] else { return }
+   }
+
+   private final func routeObject (_ object : Any?)
+   {
+      guard let object = object as? [String : Any] else { return }
+   }
+
+   private final func importObject (_ object : Any?)
+   {
+      guard let object = object as? [String : Any] else { return }
+   }
+
+   private final func exportObject (_ object : Any?)
+   {
+      guard let object = object as? [String : Any] else { return }
+   }
+
+   private final func nodeObject (_ object : Any?, nodeType : String) -> (Bool, X3DNode?)
+   {
+      guard let object = object as? [String : Any] else { return (false, nil) }
+      
+      return (false, nil)
    }
 }

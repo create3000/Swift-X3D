@@ -89,44 +89,34 @@ internal final class JSONParser :
    private final func componentArray (_ element : Any?)
    {
       guard let element = element as? [Any] else { return }
-      
-      var components = X3DComponentInfoArray ()
 
       for element in element
       {
-         if let componentStatement = componentObject (element)
-         {
-            components .append (componentStatement)
-         }
+         componentObject (element)
       }
-      
-      scene .components = components
    }
    
-   private final func componentObject (_ element : Any?) -> X3DComponentInfo?
+   private final func componentObject (_ element : Any?)
    {
-      guard let element = element as? [String : Any] else { return nil }
+      guard let element = element as? [String : Any] else { return }
       
       guard let componentName = element ["@name"] as? String else
       {
-         scene .browser! .console .warn (t("Expected a component name."))
-         return nil
+         return scene .browser! .console .warn (t("Expected a component name."))
       }
       
       guard let componentLevel = element ["@level"] as? Int32 else
       {
-         scene .browser! .console .warn (t("Expected a component support level."))
-         return nil
+         return scene .browser! .console .warn (t("Expected a component support level."))
       }
       
       do
       {
-         return try scene .browser! .getComponent (name: componentName, level: componentLevel)
+         scene .components .append (try scene .browser! .getComponent (name: componentName, level: componentLevel))
       }
       catch
       {
          scene .browser! .console .warn (error .localizedDescription)
-         return nil
       }
    }
    

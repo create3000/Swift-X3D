@@ -109,7 +109,7 @@ internal final class JSONParser :
       {
          return scene .browser! .console .warn (t("Expected a component support level."))
       }
-      
+
       do
       {
          scene .components .append (try scene .browser! .getComponent (name: componentName, level: componentLevel))
@@ -136,26 +136,22 @@ internal final class JSONParser :
       
       guard let categoryName = element ["@category"] as? String else
       {
-         scene .browser! .console .warn (t("Expected category name identificator in unit statement."))
-         return
+         return scene .browser! .console .warn (t("Expected category name identificator in unit statement."))
       }
       
       guard let category = X3DUnitCategory (categoryName) else
       {
-         scene .browser! .console .warn (t("Unkown unit category '%@'.", categoryName))
-         return
+         return scene .browser! .console .warn (t("Unkown unit category '%@'.", categoryName))
       }
 
       guard let unitName = element ["@name"] as? String else
       {
-         scene .browser! .console .warn (t("Expected unit name identificator."))
-         return
+         return scene .browser! .console .warn (t("Expected unit name identificator."))
       }
       
       guard let conversionFactor = element ["@conversionFactor"] as? Double else
       {
-         scene .browser! .console .warn (t("Expected unit conversion factor."))
-         return
+         return scene .browser! .console .warn (t("Expected unit conversion factor."))
       }
       
       scene .updateUnit (category, name: unitName, conversionFactor: conversionFactor)
@@ -177,14 +173,12 @@ internal final class JSONParser :
 
       guard let metaName = element ["@name"] as? String else
       {
-         scene .browser! .console .warn (t("Expected metadata key."))
-         return
+         return scene .browser! .console .warn (t("Expected metadata key."))
       }
       
       guard let metaContent = element ["@content"] as? String else
       {
-         scene .browser! .console .warn (t("Expected metadata value."))
-         return
+         return scene .browser! .console .warn (t("Expected metadata value."))
       }
       
       scene .metadata [metaName, default: [ ]] .append (metaContent)

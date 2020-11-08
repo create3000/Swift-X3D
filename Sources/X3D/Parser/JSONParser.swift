@@ -37,15 +37,57 @@ internal final class JSONParser :
          throw X3DError .INVALID_X3D ("Couldn't read JSON data.")
       }
 
-      x3d (json ["X3D"] as? [String : Any])
+      x3dObject (json ["X3D"])
    }
    
    // Parse
    
-   private final func x3d (_ element : [String : Any]?)
+   private final func x3dObject (_ element : Any?)
    {
-      guard let element = element else { return }
+      guard let element = element as? [String : Any] else { return }
       
-      debugPrint ("JSON")
+      executionContexts .append (scene)
+      
+      defer { executionContexts .removeLast () }
+      
+      if let _ = element ["encoding"] as? String
+      {
+         
+      }
+      
+      if let profileString = element ["@profile"] as? String
+      {
+         do
+         {
+            scene .profile = try scene .browser! .getProfile (name: profileString)
+         }
+         catch
+         {
+            scene .browser! .console .warn (error .localizedDescription)
+         }
+      }
+      
+      if let versionString = element ["@version"] as? String
+      {
+         scene .specificationVersion = versionString
+      }
+
+      headObject (element ["head"])
+
+      sceneObject (element ["Scene"])
+   }
+   
+   private final func headObject (_ element : Any?)
+   {
+      guard let element = element as? [String : Any] else { return }
+      
+      debugPrint (#function)
+   }
+   
+   private final func sceneObject (_ element : Any?)
+   {
+      guard let element = element as? [String : Any] else { return }
+      
+      debugPrint (#function)
    }
 }

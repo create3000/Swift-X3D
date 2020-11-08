@@ -34,7 +34,7 @@ internal final class JSONParser :
    {
       guard let json = json else
       {
-         throw X3DError .INVALID_X3D ("Couldn't read JSON data.")
+         throw X3DError .INVALID_X3D (t("Couldn't read JSON data."))
       }
 
       x3dObject (json ["X3D"])
@@ -81,9 +81,125 @@ internal final class JSONParser :
    {
       guard let element = element as? [String : Any] else { return }
       
-      debugPrint (#function)
+      componentArray (element ["component"])
+      unitArray      (element ["unit"])
+      metaArray      (element ["meta"])
    }
    
+   private final func componentArray (_ element : Any?)
+   {
+      guard let element = element as? [Any] else { return }
+      
+      var components = X3DComponentInfoArray ()
+
+      for element in element
+      {
+         if let componentStatement = componentObject (element)
+         {
+            components .append (componentStatement)
+         }
+      }
+      
+      scene .components = components
+   }
+   
+   private final func componentObject (_ element : Any?) -> X3DComponentInfo?
+   {
+      guard let element = element as? [String : Any] else { return nil }
+      
+      guard let componentName = element ["@name"] as? String else
+      {
+         scene .browser! .console .warn (t("Expected a component name."))
+         return nil
+      }
+      
+      guard let componentLevel = element ["@level"] as? Int32 else
+      {
+         scene .browser! .console .warn (t("Expected a component support level."))
+         return nil
+      }
+      
+      do
+      {
+         return try scene .browser! .getComponent (name: componentName, level: componentLevel)
+      }
+      catch
+      {
+         scene .browser! .console .warn (error .localizedDescription)
+         return nil
+      }
+   }
+   
+   private final func unitArray (_ element : Any?)
+   {
+      guard let element = element as? [Any] else { return }
+      
+      for element in element
+      {
+         unitObject (element)
+      }
+   }
+   
+   private final func unitObject (_ element : Any?)
+   {
+      guard let element = element as? [String : Any] else { return }
+      
+      guard let categoryName = element ["@category"] as? String else
+      {
+         scene .browser! .console .warn (t("Expected category name identificator in unit statement."))
+         return
+      }
+      
+      guard let category = X3DUnitCategory (categoryName) else
+      {
+         scene .browser! .console .warn (t("Unkown unit category '%@'.", categoryName))
+         return
+      }
+
+      guard let unitName = element ["@name"] as? String else
+      {
+         scene .browser! .console .warn (t("Expected unit name identificator."))
+         return
+      }
+      
+      guard let conversionFactor = element ["@conversionFactor"] as? Double else
+      {
+         scene .browser! .console .warn (t("Expected unit conversion factor."))
+         return
+      }
+      
+      scene .updateUnit (category, name: unitName, conversionFactor: conversionFactor)
+   }
+
+   private final func metaArray (_ element : Any?)
+   {
+      guard let element = element as? [Any] else { return }
+      
+      for element in element
+      {
+         metaObject (element)
+      }
+   }
+
+   private final func metaObject (_ element : Any?)
+   {
+      guard let element = element as? [String : Any] else { return }
+
+      guard let metaName = element ["@name"] as? String else
+      {
+         scene .browser! .console .warn (t("Expected metadata key."))
+         return
+      }
+      
+      guard let metaContent = element ["@content"] as? String else
+      {
+         scene .browser! .console .warn (t("Expected metadata value."))
+         return
+      }
+      
+      scene .metadata [metaName, default: [ ]] .append (metaContent)
+   }
+
    private final func sceneObject (_ element : Any?)
    {
       guard let element = element as? [String : Any] else { return }

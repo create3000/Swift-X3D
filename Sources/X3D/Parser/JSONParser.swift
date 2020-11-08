@@ -42,20 +42,20 @@ internal final class JSONParser :
    
    // Parse
    
-   private final func x3dObject (_ element : Any?)
+   private final func x3dObject (_ object : Any?)
    {
-      guard let element = element as? [String : Any] else { return }
+      guard let object = object as? [String : Any] else { return }
       
       executionContexts .append (scene)
       
       defer { executionContexts .removeLast () }
       
-      if let _ = element ["encoding"] as? String
+      if let _ = object ["encoding"] as? String
       {
          
       }
       
-      if let profileString = element ["@profile"] as? String
+      if let profileString = object ["@profile"] as? String
       {
          do
          {
@@ -67,45 +67,45 @@ internal final class JSONParser :
          }
       }
       
-      if let versionString = element ["@version"] as? String
+      if let versionString = object ["@version"] as? String
       {
          scene .specificationVersion = versionString
       }
 
-      headObject (element ["head"])
+      headObject (object ["head"])
 
-      sceneObject (element ["Scene"])
+      sceneObject (object ["Scene"])
    }
    
-   private final func headObject (_ element : Any?)
+   private final func headObject (_ object : Any?)
    {
-      guard let element = element as? [String : Any] else { return }
+      guard let object = object as? [String : Any] else { return }
       
-      componentArray (element ["component"])
-      unitArray      (element ["unit"])
-      metaArray      (element ["meta"])
+      componentArray (object ["component"])
+      unitArray      (object ["unit"])
+      metaArray      (object ["meta"])
    }
    
-   private final func componentArray (_ element : Any?)
+   private final func componentArray (_ objects : Any?)
    {
-      guard let element = element as? [Any] else { return }
+      guard let objects = objects as? [Any] else { return }
 
-      for element in element
+      for object in objects
       {
-         componentObject (element)
+         componentObject (object)
       }
    }
    
-   private final func componentObject (_ element : Any?)
+   private final func componentObject (_ object : Any?)
    {
-      guard let element = element as? [String : Any] else { return }
+      guard let object = object as? [String : Any] else { return }
       
-      guard let componentName = element ["@name"] as? String else
+      guard let componentName = object ["@name"] as? String else
       {
          return scene .browser! .console .warn (t("Expected a component name."))
       }
       
-      guard let componentLevel = element ["@level"] as? Int32 else
+      guard let componentLevel = object ["@level"] as? Int32 else
       {
          return scene .browser! .console .warn (t("Expected a component support level."))
       }
@@ -120,21 +120,21 @@ internal final class JSONParser :
       }
    }
    
-   private final func unitArray (_ element : Any?)
+   private final func unitArray (_ objects : Any?)
    {
-      guard let element = element as? [Any] else { return }
+      guard let objects = objects as? [Any] else { return }
       
-      for element in element
+      for object in objects
       {
-         unitObject (element)
+         unitObject (object)
       }
    }
    
-   private final func unitObject (_ element : Any?)
+   private final func unitObject (_ object : Any?)
    {
-      guard let element = element as? [String : Any] else { return }
+      guard let object = object as? [String : Any] else { return }
       
-      guard let categoryName = element ["@category"] as? String else
+      guard let categoryName = object ["@category"] as? String else
       {
          return scene .browser! .console .warn (t("Expected category name identificator in unit statement."))
       }
@@ -144,12 +144,12 @@ internal final class JSONParser :
          return scene .browser! .console .warn (t("Unkown unit category '%@'.", categoryName))
       }
 
-      guard let unitName = element ["@name"] as? String else
+      guard let unitName = object ["@name"] as? String else
       {
          return scene .browser! .console .warn (t("Expected unit name identificator."))
       }
       
-      guard let conversionFactor = element ["@conversionFactor"] as? Double else
+      guard let conversionFactor = object ["@conversionFactor"] as? Double else
       {
          return scene .browser! .console .warn (t("Expected unit conversion factor."))
       }
@@ -157,26 +157,26 @@ internal final class JSONParser :
       scene .updateUnit (category, name: unitName, conversionFactor: conversionFactor)
    }
 
-   private final func metaArray (_ element : Any?)
+   private final func metaArray (_ objects : Any?)
    {
-      guard let element = element as? [Any] else { return }
+      guard let objects = objects as? [Any] else { return }
       
-      for element in element
+      for object in objects
       {
-         metaObject (element)
+         metaObject (object)
       }
    }
 
-   private final func metaObject (_ element : Any?)
+   private final func metaObject (_ object : Any?)
    {
-      guard let element = element as? [String : Any] else { return }
+      guard let object = object as? [String : Any] else { return }
 
-      guard let metaName = element ["@name"] as? String else
+      guard let metaName = object ["@name"] as? String else
       {
          return scene .browser! .console .warn (t("Expected metadata key."))
       }
       
-      guard let metaContent = element ["@content"] as? String else
+      guard let metaContent = object ["@content"] as? String else
       {
          return scene .browser! .console .warn (t("Expected metadata value."))
       }
@@ -184,9 +184,9 @@ internal final class JSONParser :
       scene .metadata [metaName, default: [ ]] .append (metaContent)
    }
 
-   private final func sceneObject (_ element : Any?)
+   private final func sceneObject (_ object : Any?)
    {
-      guard let element = element as? [String : Any] else { return }
+      guard let object = object as? [String : Any] else { return }
       
       debugPrint (#function)
    }

@@ -407,7 +407,7 @@ internal final class JSONParser :
 
    private final func fieldValueValue (_ object : Any?, _ field : X3DField) -> Bool
    {
-      guard let object = object else { return false }
+      guard object != nil else { return false }
       
       switch field .getType ()
       {

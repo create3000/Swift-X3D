@@ -461,7 +461,7 @@ internal final class JSONParser :
    {
       guard let object = object as? Double else { return false }
       
-      field .wrappedValue = object
+      field .wrappedValue = fromUnit (field .unit, value: object)
       
       return true
    }
@@ -470,8 +470,10 @@ internal final class JSONParser :
    {
       guard let objects = objects as? [Double] else { return false }
       
+      let unit = field .unit
+      
       field .wrappedValue .removeAll ()
-      field .wrappedValue .append (contentsOf: objects)
+      field .wrappedValue .append (contentsOf: objects .map { fromUnit (unit, value: $0)})
       
       return true
    }
@@ -480,8 +482,8 @@ internal final class JSONParser :
    {
       guard let object = object as? Float else { return false }
       
-      field .wrappedValue = object
-      
+      field .wrappedValue = fromUnit (field .unit, value: object)
+
       return true
    }
    
@@ -489,9 +491,11 @@ internal final class JSONParser :
    {
       guard let objects = objects as? [Float] else { return false }
       
-      field .wrappedValue .removeAll ()
-      field .wrappedValue .append (contentsOf: objects)
+      let unit = field .unit
       
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: objects .map { fromUnit (unit, value: $0)})
+
       return true
    }
    

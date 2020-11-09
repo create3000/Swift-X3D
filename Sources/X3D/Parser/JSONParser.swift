@@ -420,8 +420,20 @@ internal final class JSONParser :
    {
       switch field .getType ()
       {
-         case .SFBool: return sfboolValue (object, field as! SFBool)
-         case .MFBool: return mfboolValue (object, field as! MFBool)
+         case .SFBool:   return sfboolValue   (object, field as! SFBool)
+         case .SFDouble: return sfdoubleValue (object, field as! SFDouble)
+         case .SFFloat:  return sffloatValue  (object, field as! SFFloat)
+         case .SFInt32:  return sfint32Value  (object, field as! SFInt32)
+         case .SFString: return sfstringValue (object, field as! SFString)
+         case .SFTime:   return sftimeValue   (object, field as! SFTime)
+
+         case .MFBool:   return mfboolValue   (object, field as! MFBool)
+         case .MFDouble: return mfdoubleValue (object, field as! MFDouble)
+         case .MFFloat:  return mffloatValue  (object, field as! MFFloat)
+         case .MFInt32:  return mfint32Value  (object, field as! MFInt32)
+         case .MFString: return mfstringValue (object, field as! MFString)
+         case .MFTime:   return mftimeValue   (object, field as! MFTime)
+         
          default: return false
       }
    }
@@ -438,6 +450,101 @@ internal final class JSONParser :
    private final func mfboolValue (_ objects : Any?, _ field : MFBool) -> Bool
    {
       guard let objects = objects as? [Bool] else { return false }
+      
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: objects)
+      
+      return true
+   }
+   
+   private final func sfdoubleValue (_ object : Any?, _ field : SFDouble) -> Bool
+   {
+      guard let object = object as? Double else { return false }
+      
+      field .wrappedValue = object
+      
+      return true
+   }
+   
+   private final func mfdoubleValue (_ objects : Any?, _ field : MFDouble) -> Bool
+   {
+      guard let objects = objects as? [Double] else { return false }
+      
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: objects)
+      
+      return true
+   }
+   
+   private final func sffloatValue (_ object : Any?, _ field : SFFloat) -> Bool
+   {
+      guard let object = object as? Float else { return false }
+      
+      field .wrappedValue = object
+      
+      return true
+   }
+   
+   private final func mffloatValue (_ objects : Any?, _ field : MFFloat) -> Bool
+   {
+      guard let objects = objects as? [Float] else { return false }
+      
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: objects)
+      
+      return true
+   }
+   
+   private final func sfint32Value (_ object : Any?, _ field : SFInt32) -> Bool
+   {
+      guard let object = object as? Int32 else { return false }
+      
+      field .wrappedValue = object
+      
+      return true
+   }
+   
+   private final func mfint32Value (_ objects : Any?, _ field : MFInt32) -> Bool
+   {
+      guard let objects = objects as? [Int32] else { return false }
+      
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: objects)
+      
+      return true
+   }
+   
+   private final func sfstringValue (_ object : Any?, _ field : SFString) -> Bool
+   {
+      guard let object = object as? String else { return false }
+      
+      field .wrappedValue = object
+      
+      return true
+   }
+   
+   private final func mfstringValue (_ objects : Any?, _ field : MFString) -> Bool
+   {
+      guard let objects = objects as? [String] else { return false }
+      
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: objects)
+      
+      return true
+   }
+   
+   private final func sftimeValue (_ object : Any?, _ field : SFTime) -> Bool
+   {
+      guard let object = object as? Double else { return false }
+      
+      field .wrappedValue = object
+      
+      return true
+   }
+   
+   private final func mftimeValue (_ objects : Any?, _ field : MFTime) -> Bool
+   {
+      guard let objects = objects as? [Double] else { return false }
       
       field .wrappedValue .removeAll ()
       field .wrappedValue .append (contentsOf: objects)

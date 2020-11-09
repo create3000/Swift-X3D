@@ -468,7 +468,9 @@ internal final class JSONParser :
       
       guard objects .count == 3 else { return false }
 
-      field .wrappedValue = Color3f (objects [0], objects [1], objects [2])
+      field .wrappedValue = Color3f (objects [0],
+                                     objects [1],
+                                     objects [2])
       
       return true
    }
@@ -477,13 +479,18 @@ internal final class JSONParser :
    {
       guard let objects = objects as? [Float] else { return false }
       
-      field .wrappedValue .removeAll ()
+      var value = ContiguousArray <Color3f> ()
       
       for i in stride (from: 0, to: objects .count, by: 3)
       {
-         field .wrappedValue .append (Color3f (objects [0], objects [i + 1], objects [i + 2]))
+         value .append (Color3f (objects [i + 0],
+                                 objects [i + 1],
+                                 objects [i + 2]))
       }
       
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
       return true
    }
    
@@ -493,7 +500,10 @@ internal final class JSONParser :
       
       guard objects .count == 4 else { return false }
 
-      field .wrappedValue = Color4f (objects [0], objects [1], objects [2], objects [3])
+      field .wrappedValue = Color4f (objects [0],
+                                     objects [1],
+                                     objects [2],
+                                     objects [3])
       
       return true
    }
@@ -502,13 +512,19 @@ internal final class JSONParser :
    {
       guard let objects = objects as? [Float] else { return false }
       
-      field .wrappedValue .removeAll ()
-      
+      var value = ContiguousArray <Color4f> ()
+
       for i in stride (from: 0, to: objects .count, by: 4)
       {
-         field .wrappedValue .append (Color4f (objects [0], objects [i + 1], objects [i + 2], objects [i + 3]))
+         value .append (Color4f (objects [i + 0],
+                                 objects [i + 1],
+                                 objects [i + 2],
+                                 objects [i + 3]))
       }
       
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
       return true
    }
 
@@ -629,16 +645,18 @@ internal final class JSONParser :
    {
       guard let objects = objects as? [Double] else { return false }
       
-      let unit = field .unit
-      
-      field .wrappedValue .removeAll ()
-      
+      var value = ContiguousArray <Vector2d> ()
+      let unit  = field .unit
+
       for i in stride (from: 0, to: objects .count, by: 2)
       {
-         field .wrappedValue .append (Vector2d (fromUnit (unit, value: objects [i + 0]),
-                                                fromUnit (unit, value: objects [i + 1])))
+         value .append (Vector2d (fromUnit (unit, value: objects [i + 0]),
+                                  fromUnit (unit, value: objects [i + 1])))
       }
       
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
       return true
    }
    
@@ -660,16 +678,18 @@ internal final class JSONParser :
    {
       guard let objects = objects as? [Float] else { return false }
       
-      let unit = field .unit
-      
-      field .wrappedValue .removeAll ()
-      
+      var value = ContiguousArray <Vector2f> ()
+      let unit  = field .unit
+
       for i in stride (from: 0, to: objects .count, by: 2)
       {
-         field .wrappedValue .append (Vector2f (fromUnit (unit, value: objects [i + 0]),
-                                                fromUnit (unit, value: objects [i + 1])))
+         value .append (Vector2f (fromUnit (unit, value: objects [i + 0]),
+                                  fromUnit (unit, value: objects [i + 1])))
       }
       
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
       return true
    }
 
@@ -692,17 +712,19 @@ internal final class JSONParser :
    {
       guard let objects = objects as? [Double] else { return false }
       
-      let unit = field .unit
-      
-      field .wrappedValue .removeAll ()
+      var value = ContiguousArray <Vector3d> ()
+      let unit  = field .unit
       
       for i in stride (from: 0, to: objects .count, by: 3)
       {
-         field .wrappedValue .append (Vector3d (fromUnit (unit, value: objects [i + 0]),
-                                                fromUnit (unit, value: objects [i + 1]),
-                                                fromUnit (unit, value: objects [i + 2])))
+         value .append (Vector3d (fromUnit (unit, value: objects [i + 0]),
+                                  fromUnit (unit, value: objects [i + 1]),
+                                  fromUnit (unit, value: objects [i + 2])))
       }
       
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
       return true
    }
 
@@ -725,17 +747,19 @@ internal final class JSONParser :
    {
       guard let objects = objects as? [Float] else { return false }
       
-      let unit = field .unit
-      
-      field .wrappedValue .removeAll ()
+      var value = ContiguousArray <Vector3f> ()
+      let unit  = field .unit
       
       for i in stride (from: 0, to: objects .count, by: 3)
       {
-         field .wrappedValue .append (Vector3f (fromUnit (unit, value: objects [i + 0]),
-                                                fromUnit (unit, value: objects [i + 1]),
-                                                fromUnit (unit, value: objects [i + 2])))
+         value .append (Vector3f (fromUnit (unit, value: objects [i + 0]),
+                                  fromUnit (unit, value: objects [i + 1]),
+                                  fromUnit (unit, value: objects [i + 2])))
       }
       
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
       return true
    }
 
@@ -759,18 +783,20 @@ internal final class JSONParser :
    {
       guard let objects = objects as? [Double] else { return false }
       
-      let unit = field .unit
-      
-      field .wrappedValue .removeAll ()
+      var value = ContiguousArray <Vector4d> ()
+      let unit  = field .unit
       
       for i in stride (from: 0, to: objects .count, by: 4)
       {
-         field .wrappedValue .append (Vector4d (fromUnit (unit, value: objects [i + 0]),
-                                                fromUnit (unit, value: objects [i + 1]),
-                                                fromUnit (unit, value: objects [i + 2]),
-                                                fromUnit (unit, value: objects [i + 3])))
+         value .append (Vector4d (fromUnit (unit, value: objects [i + 0]),
+                                  fromUnit (unit, value: objects [i + 1]),
+                                  fromUnit (unit, value: objects [i + 2]),
+                                  fromUnit (unit, value: objects [i + 3])))
       }
       
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
       return true
    }
  
@@ -794,18 +820,20 @@ internal final class JSONParser :
    {
       guard let objects = objects as? [Float] else { return false }
       
-      let unit = field .unit
-      
-      field .wrappedValue .removeAll ()
+      var value = ContiguousArray <Vector4f> ()
+      let unit  = field .unit
       
       for i in stride (from: 0, to: objects .count, by: 4)
       {
-         field .wrappedValue .append (Vector4f (fromUnit (unit, value: objects [i + 0]),
-                                                fromUnit (unit, value: objects [i + 1]),
-                                                fromUnit (unit, value: objects [i + 2]),
-                                                fromUnit (unit, value: objects [i + 3])))
+         value .append (Vector4f (fromUnit (unit, value: objects [i + 0]),
+                                  fromUnit (unit, value: objects [i + 1]),
+                                  fromUnit (unit, value: objects [i + 2]),
+                                  fromUnit (unit, value: objects [i + 3])))
       }
       
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
       return true
    }
 }

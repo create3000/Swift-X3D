@@ -407,33 +407,38 @@ internal final class JSONParser :
 
    private final func fieldValueValue (_ object : Any?, _ field : X3DField) -> Bool
    {
-      if (fieldValue (object, field))
-      {
-         field .isSet = true
-         return true
-      }
-
-      return false
-   }
-
-   private final func fieldValue (_ object : Any?, _ field : X3DField) -> Bool
-   {
       switch field .getType ()
       {
-         case .SFBool:   return sfboolValue   (object, field as! SFBool)
-         case .SFDouble: return sfdoubleValue (object, field as! SFDouble)
-         case .SFFloat:  return sffloatValue  (object, field as! SFFloat)
-         case .SFInt32:  return sfint32Value  (object, field as! SFInt32)
-         case .SFString: return sfstringValue (object, field as! SFString)
-         case .SFTime:   return sftimeValue   (object, field as! SFTime)
+         case .SFBool:      return sfboolValue       (object, field as! SFBool)
+         case .SFColor:     return sfcolorValue      (object, field as! SFColor)
+         case .SFColorRGBA: return sfcolorrgbaValue  (object, field as! SFColorRGBA)
+         case .SFDouble:    return sfdoubleValue     (object, field as! SFDouble)
+         case .SFFloat:     return sffloatValue      (object, field as! SFFloat)
+         case .SFInt32:     return sfint32Value      (object, field as! SFInt32)
+         case .SFString:    return sfstringValue     (object, field as! SFString)
+         case .SFTime:      return sftimeValue       (object, field as! SFTime)
+         case .SFVec2d:     return sfvec2dValue      (object, field as! SFVec2d)
+         case .SFVec2f:     return sfvec2fValue      (object, field as! SFVec2f)
+         case .SFVec3d:     return sfvec3dValue      (object, field as! SFVec3d)
+         case .SFVec3f:     return sfvec3fValue      (object, field as! SFVec3f)
+         case .SFVec4d:     return sfvec4dValue      (object, field as! SFVec4d)
+         case .SFVec4f:     return sfvec4fValue      (object, field as! SFVec4f)
 
-         case .MFBool:   return mfboolValue   (object, field as! MFBool)
-         case .MFDouble: return mfdoubleValue (object, field as! MFDouble)
-         case .MFFloat:  return mffloatValue  (object, field as! MFFloat)
-         case .MFInt32:  return mfint32Value  (object, field as! MFInt32)
-         case .MFString: return mfstringValue (object, field as! MFString)
-         case .MFTime:   return mftimeValue   (object, field as! MFTime)
-         
+         case .MFBool:      return mfboolValue       (object, field as! MFBool)
+         case .MFColor:     return mfcolorValue      (object, field as! MFColor)
+         case .MFColorRGBA: return mfcolorrgbaValue  (object, field as! MFColorRGBA)
+         case .MFDouble:    return mfdoubleValue     (object, field as! MFDouble)
+         case .MFFloat:     return mffloatValue      (object, field as! MFFloat)
+         case .MFInt32:     return mfint32Value      (object, field as! MFInt32)
+         case .MFString:    return mfstringValue     (object, field as! MFString)
+         case .MFTime:      return mftimeValue       (object, field as! MFTime)
+         case .MFVec2d:     return mfvec2dValue      (object, field as! MFVec2d)
+         case .MFVec2f:     return mfvec2fValue      (object, field as! MFVec2f)
+         case .MFVec3d:     return mfvec3dValue      (object, field as! MFVec3d)
+         case .MFVec3f:     return mfvec3fValue      (object, field as! MFVec3f)
+         case .MFVec4d:     return mfvec4dValue      (object, field as! MFVec4d)
+         case .MFVec4f:     return mfvec4fValue      (object, field as! MFVec4f)
+
          default: return false
       }
    }
@@ -457,6 +462,56 @@ internal final class JSONParser :
       return true
    }
    
+   private final func sfcolorValue (_ objects : Any?, _ field : SFColor) -> Bool
+   {
+      guard let objects = objects as? [Float] else { return false }
+      
+      guard objects .count == 3 else { return false }
+
+      field .wrappedValue = Color3f (objects [0], objects [1], objects [2])
+      
+      return true
+   }
+   
+   private final func mfcolorValue (_ objects : Any?, _ field : MFColor) -> Bool
+   {
+      guard let objects = objects as? [Float] else { return false }
+      
+      field .wrappedValue .removeAll ()
+      
+      for i in stride (from: 0, to: objects .count, by: 3)
+      {
+         field .wrappedValue .append (Color3f (objects [0], objects [i + 1], objects [i + 2]))
+      }
+      
+      return true
+   }
+   
+   private final func sfcolorrgbaValue (_ objects : Any?, _ field : SFColorRGBA) -> Bool
+   {
+      guard let objects = objects as? [Float] else { return false }
+      
+      guard objects .count == 4 else { return false }
+
+      field .wrappedValue = Color4f (objects [0], objects [1], objects [2], objects [3])
+      
+      return true
+   }
+   
+   private final func mfcolorrgbaValue (_ objects : Any?, _ field : MFColorRGBA) -> Bool
+   {
+      guard let objects = objects as? [Float] else { return false }
+      
+      field .wrappedValue .removeAll ()
+      
+      for i in stride (from: 0, to: objects .count, by: 4)
+      {
+         field .wrappedValue .append (Color4f (objects [0], objects [i + 1], objects [i + 2], objects [i + 3]))
+      }
+      
+      return true
+   }
+
    private final func sfdoubleValue (_ object : Any?, _ field : SFDouble) -> Bool
    {
       guard let object = object as? Double else { return false }
@@ -552,6 +607,204 @@ internal final class JSONParser :
       
       field .wrappedValue .removeAll ()
       field .wrappedValue .append (contentsOf: objects)
+      
+      return true
+   }
+   
+   private final func sfvec2dValue (_ objects : Any?, _ field : SFVec2d) -> Bool
+   {
+      guard let objects = objects as? [Double] else { return false }
+      
+      guard objects .count == 2 else { return false }
+
+      let unit = field .unit
+      
+      field .wrappedValue = Vector2d (fromUnit (unit, value: objects [0]),
+                                      fromUnit (unit, value: objects [1]))
+
+      return true
+   }
+   
+   private final func mfvec2dValue (_ objects : Any?, _ field : MFVec2d) -> Bool
+   {
+      guard let objects = objects as? [Double] else { return false }
+      
+      let unit = field .unit
+      
+      field .wrappedValue .removeAll ()
+      
+      for i in stride (from: 0, to: objects .count, by: 2)
+      {
+         field .wrappedValue .append (Vector2d (fromUnit (unit, value: objects [i + 0]),
+                                                fromUnit (unit, value: objects [i + 1])))
+      }
+      
+      return true
+   }
+   
+   private final func sfvec2fValue (_ objects : Any?, _ field : SFVec2f) -> Bool
+   {
+      guard let objects = objects as? [Float] else { return false }
+      
+      guard objects .count == 2 else { return false }
+
+      let unit = field .unit
+      
+      field .wrappedValue = Vector2f (fromUnit (unit, value: objects [0]),
+                                      fromUnit (unit, value: objects [1]))
+
+      return true
+   }
+   
+   private final func mfvec2fValue (_ objects : Any?, _ field : MFVec2f) -> Bool
+   {
+      guard let objects = objects as? [Float] else { return false }
+      
+      let unit = field .unit
+      
+      field .wrappedValue .removeAll ()
+      
+      for i in stride (from: 0, to: objects .count, by: 2)
+      {
+         field .wrappedValue .append (Vector2f (fromUnit (unit, value: objects [i + 0]),
+                                                fromUnit (unit, value: objects [i + 1])))
+      }
+      
+      return true
+   }
+
+   private final func sfvec3dValue (_ objects : Any?, _ field : SFVec3d) -> Bool
+   {
+      guard let objects = objects as? [Double] else { return false }
+      
+      guard objects .count == 3 else { return false }
+
+      let unit = field .unit
+      
+      field .wrappedValue = Vector3d (fromUnit (unit, value: objects [0]),
+                                      fromUnit (unit, value: objects [1]),
+                                      fromUnit (unit, value: objects [2]))
+
+      return true
+   }
+   
+   private final func mfvec3dValue (_ objects : Any?, _ field : MFVec3d) -> Bool
+   {
+      guard let objects = objects as? [Double] else { return false }
+      
+      let unit = field .unit
+      
+      field .wrappedValue .removeAll ()
+      
+      for i in stride (from: 0, to: objects .count, by: 3)
+      {
+         field .wrappedValue .append (Vector3d (fromUnit (unit, value: objects [i + 0]),
+                                                fromUnit (unit, value: objects [i + 1]),
+                                                fromUnit (unit, value: objects [i + 2])))
+      }
+      
+      return true
+   }
+
+   private final func sfvec3fValue (_ objects : Any?, _ field : SFVec3f) -> Bool
+   {
+      guard let objects = objects as? [Float] else { return false }
+      
+      guard objects .count == 3 else { return false }
+
+      let unit = field .unit
+      
+      field .wrappedValue = Vector3f (fromUnit (unit, value: objects [0]),
+                                      fromUnit (unit, value: objects [1]),
+                                      fromUnit (unit, value: objects [2]))
+
+      return true
+   }
+   
+   private final func mfvec3fValue (_ objects : Any?, _ field : MFVec3f) -> Bool
+   {
+      guard let objects = objects as? [Float] else { return false }
+      
+      let unit = field .unit
+      
+      field .wrappedValue .removeAll ()
+      
+      for i in stride (from: 0, to: objects .count, by: 3)
+      {
+         field .wrappedValue .append (Vector3f (fromUnit (unit, value: objects [i + 0]),
+                                                fromUnit (unit, value: objects [i + 1]),
+                                                fromUnit (unit, value: objects [i + 2])))
+      }
+      
+      return true
+   }
+
+   private final func sfvec4dValue (_ objects : Any?, _ field : SFVec4d) -> Bool
+   {
+      guard let objects = objects as? [Double] else { return false }
+      
+      guard objects .count == 4 else { return false }
+
+      let unit = field .unit
+      
+      field .wrappedValue = Vector4d (fromUnit (unit, value: objects [0]),
+                                      fromUnit (unit, value: objects [1]),
+                                      fromUnit (unit, value: objects [2]),
+                                      fromUnit (unit, value: objects [3]))
+
+      return true
+   }
+   
+   private final func mfvec4dValue (_ objects : Any?, _ field : MFVec4d) -> Bool
+   {
+      guard let objects = objects as? [Double] else { return false }
+      
+      let unit = field .unit
+      
+      field .wrappedValue .removeAll ()
+      
+      for i in stride (from: 0, to: objects .count, by: 4)
+      {
+         field .wrappedValue .append (Vector4d (fromUnit (unit, value: objects [i + 0]),
+                                                fromUnit (unit, value: objects [i + 1]),
+                                                fromUnit (unit, value: objects [i + 2]),
+                                                fromUnit (unit, value: objects [i + 3])))
+      }
+      
+      return true
+   }
+ 
+   private final func sfvec4fValue (_ objects : Any?, _ field : SFVec4f) -> Bool
+   {
+      guard let objects = objects as? [Float] else { return false }
+      
+      guard objects .count == 4 else { return false }
+
+      let unit = field .unit
+      
+      field .wrappedValue = Vector4f (fromUnit (unit, value: objects [0]),
+                                      fromUnit (unit, value: objects [1]),
+                                      fromUnit (unit, value: objects [2]),
+                                      fromUnit (unit, value: objects [3]))
+      
+      return true
+   }
+   
+   private final func mfvec4fValue (_ objects : Any?, _ field : MFVec4f) -> Bool
+   {
+      guard let objects = objects as? [Float] else { return false }
+      
+      let unit = field .unit
+      
+      field .wrappedValue .removeAll ()
+      
+      for i in stride (from: 0, to: objects .count, by: 4)
+      {
+         field .wrappedValue .append (Vector4f (fromUnit (unit, value: objects [i + 0]),
+                                                fromUnit (unit, value: objects [i + 1]),
+                                                fromUnit (unit, value: objects [i + 2]),
+                                                fromUnit (unit, value: objects [i + 3])))
+      }
       
       return true
    }

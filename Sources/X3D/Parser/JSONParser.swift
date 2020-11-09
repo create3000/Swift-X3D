@@ -294,11 +294,11 @@ internal final class JSONParser :
             }
             
             prototypeInstance = true
-            node              = try executionContext .createProto (typeName: name)
+            node              = try executionContext .createProto (typeName: name, setup: false)
          }
          else
          {
-            node = try executionContext .createNode (typeName: nodeType)
+            node = try executionContext .createNode (typeName: nodeType, setup: false)
          }
       }
       catch
@@ -338,7 +338,7 @@ internal final class JSONParser :
 
          if metadata .isInitializable && metadata .getType () == .SFNode
          {
-            fieldValueValue (object ["-metadata"], metadata)
+            _ = fieldValueValue (object ["-metadata"], metadata)
          }
          
          fieldValueArray (object ["fieldValue"], node!)
@@ -407,6 +407,8 @@ internal final class JSONParser :
 
    private final func fieldValueValue (_ object : Any?, _ field : X3DField) -> Bool
    {
+      guard let object = object else { return false }
+      
       switch field .getType ()
       {
          case .SFBool:      return sfboolValue       (object, field as! SFBool)
@@ -420,6 +422,7 @@ internal final class JSONParser :
          case .SFMatrix3f:  return sfmatrix3fValue   (object, field as! SFMatrix3f)
          case .SFMatrix4d:  return sfmatrix4dValue   (object, field as! SFMatrix4d)
          case .SFMatrix4f:  return sfmatrix4fValue   (object, field as! SFMatrix4f)
+         case .SFNode:      return sfnodeValue       (object, field as! SFNode <X3DNode>)
          case .SFRotation:  return sfrotationValue   (object, field as! SFRotation)
          case .SFString:    return sfstringValue     (object, field as! SFString)
          case .SFTime:      return sftimeValue       (object, field as! SFTime)
@@ -441,6 +444,7 @@ internal final class JSONParser :
          case .MFMatrix3f:  return mfmatrix3fValue   (object, field as! MFMatrix3f)
          case .MFMatrix4d:  return mfmatrix4dValue   (object, field as! MFMatrix4d)
          case .MFMatrix4f:  return mfmatrix4fValue   (object, field as! MFMatrix4f)
+         case .MFNode:      return mfnodeValue       (object, field as! MFNode <X3DNode>)
          case .MFRotation:  return mfrotationValue   (object, field as! MFRotation)
          case .MFString:    return mfstringValue     (object, field as! MFString)
          case .MFTime:      return mftimeValue       (object, field as! MFTime)
@@ -450,8 +454,6 @@ internal final class JSONParser :
          case .MFVec3f:     return mfvec3fValue      (object, field as! MFVec3f)
          case .MFVec4d:     return mfvec4dValue      (object, field as! MFVec4d)
          case .MFVec4f:     return mfvec4fValue      (object, field as! MFVec4f)
-
-         default: return false
       }
    }
    
@@ -888,6 +890,31 @@ internal final class JSONParser :
       return true
    }
    
+   private final func sfnodeValue (_ object : Any?, _ field : SFNode <X3DNode>) -> Bool
+   {
+      let (success, node) = childObject (object)
+      
+      if success
+      {
+         field .wrappedValue = node
+         return true
+      }
+      else
+      {
+         field .wrappedValue = nil
+         return true
+      }
+   }
+   
+   private final func mfnodeValue (_ objects : Any?, _ field : MFNode <X3DNode>) -> Bool
+   {
+      field .wrappedValue .removeAll ()
+
+      childrenArray (objects, field)
+
+      return true
+   }
+
    private final func sfrotationValue (_ objects : Any?, _ field : SFRotation) -> Bool
    {
       guard let objects = objects as? [Any] else { return false }
@@ -901,7 +928,7 @@ internal final class JSONParser :
         
       return true
    }
-   
+
    private final func mfrotationValue (_ objects : Any?, _ field : MFRotation) -> Bool
    {
       guard let objects = objects as? [Any] else { return false }

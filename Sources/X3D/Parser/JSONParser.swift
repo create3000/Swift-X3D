@@ -42,6 +42,8 @@ internal final class JSONParser :
    
    // Parse
    
+   private final var console : X3DConsole { scene .browser! .console }
+   
    private final func x3dObject (_ object : Any?)
    {
       guard let object = object as? [String : Any] else { return }
@@ -63,7 +65,7 @@ internal final class JSONParser :
          }
          catch
          {
-            scene .browser! .console .warn (error .localizedDescription)
+            console .warn (error .localizedDescription)
          }
       }
       
@@ -102,12 +104,12 @@ internal final class JSONParser :
       
       guard let componentName = object ["@name"] as? String else
       {
-         return scene .browser! .console .warn (t("Expected a component name."))
+         return console .warn (t("Expected a component name."))
       }
       
       guard let componentLevel = object ["@level"] as? Int32 else
       {
-         return scene .browser! .console .warn (t("Expected a component support level."))
+         return console .warn (t("Expected a component support level."))
       }
 
       do
@@ -116,7 +118,7 @@ internal final class JSONParser :
       }
       catch
       {
-         scene .browser! .console .warn (error .localizedDescription)
+         console .warn (error .localizedDescription)
       }
    }
    
@@ -136,22 +138,22 @@ internal final class JSONParser :
       
       guard let categoryName = object ["@category"] as? String else
       {
-         return scene .browser! .console .warn (t("Expected category name identificator in unit statement."))
+         return console .warn (t("Expected category name identificator in unit statement."))
       }
       
       guard let category = X3DUnitCategory (categoryName) else
       {
-         return scene .browser! .console .warn (t("Unkown unit category '%@'.", categoryName))
+         return console .warn (t("Unkown unit category '%@'.", categoryName))
       }
 
       guard let unitName = object ["@name"] as? String else
       {
-         return scene .browser! .console .warn (t("Expected unit name identificator."))
+         return console .warn (t("Expected unit name identificator."))
       }
       
       guard let conversionFactor = object ["@conversionFactor"] as? Double else
       {
-         return scene .browser! .console .warn (t("Expected unit conversion factor."))
+         return console .warn (t("Expected unit conversion factor."))
       }
       
       scene .updateUnit (category, name: unitName, conversionFactor: conversionFactor)
@@ -173,12 +175,12 @@ internal final class JSONParser :
 
       guard let metaName = object ["@name"] as? String else
       {
-         return scene .browser! .console .warn (t("Expected metadata key."))
+         return console .warn (t("Expected metadata key."))
       }
       
       guard let metaContent = object ["@content"] as? String else
       {
-         return scene .browser! .console .warn (t("Expected metadata value."))
+         return console .warn (t("Expected metadata value."))
       }
       
       scene .metadata [metaName, default: [ ]] .append (metaContent)
@@ -225,7 +227,7 @@ internal final class JSONParser :
             case "EXPORT":
                exportObject (value)
             default:
-               return nodeObject (value, nodeType: key)
+               return (true, nodeObject (value, nodeType: key))
          }
       }
       
@@ -257,10 +259,143 @@ internal final class JSONParser :
       guard let object = object as? [String : Any] else { return }
    }
 
-   private final func nodeObject (_ object : Any?, nodeType : String) -> (Bool, X3DNode?)
+   private final func nodeObject (_ object : Any?, nodeType : String) -> X3DNode?
    {
-      guard let object = object as? [String : Any] else { return (false, nil) }
+      guard let object = object as? [String : Any] else { return nil }
       
-      return (false, nil)
+      // USE property
+
+      do
+      {
+         if let nodeName = object ["@USE"] as? String
+         {
+            return try executionContext .getNamedNode (name: nodeName)
+         }
+      }
+      catch
+      {
+         console .warn (error .localizedDescription)
+         return nil
+      }
+
+      // Node object
+
+      var prototypeInstance = false
+      var node : X3DNode? = nil
+
+      do
+      {
+         if nodeType == "ProtoInstance"
+         {
+            guard let name = object ["@name"] as? String else
+            {
+               console .warn (t("Couldn't create proto instance, no name given."))
+               return nil
+            }
+            
+            prototypeInstance = true
+            node              = try executionContext .createProto (typeName: name)
+         }
+         else
+         {
+            node = try executionContext .createNode (typeName: nodeType)
+         }
+      }
+      catch
+      {
+         console .warn (error .localizedDescription)
+         return nil
+      }
+      
+      // Node name
+      
+      do
+      {
+         if let nodeName = object ["@DEF"] as? String
+         {
+            if !nodeName .isEmpty
+            {
+               if let namedNode = try? executionContext .getNamedNode (name: nodeName)
+               {
+                  try executionContext .updateNamedNode (name: executionContext .getUniqueName (for: nodeName),
+                                                         node: namedNode)
+               }
+
+               try executionContext .addNamedNode (name: nodeName, node: node!)
+            }
+         }
+      }
+      catch
+      {
+         console .warn (t("Invalid DEF name. %@", error .localizedDescription))
+      }
+
+      // Fields
+
+      if prototypeInstance
+      {
+         let metadata = try! node! .getField (name: "metadata")
+
+         if metadata .isInitializable && metadata .getType () == .SFNode
+         {
+            fieldValueValue (object ["-metadata"])
+         }
+         
+         fieldValueArray (object ["fieldValue"], node!)
+      }
+      else
+      {
+         // Predefined fields
+         nodeFieldsObject (object, node!)
+      }
+
+      if node! .canUserDefinedFields
+      {
+         fieldArray (object ["field"], node!)
+      }
+
+      sourceTextArray (object ["#sourceText"], node!)
+
+      if isInsideProtoDefinition
+      {
+         isObject (object ["IS"], node!)
+      }
+      else
+      {
+         // After fields are parsed initialize node.
+         node! .setup ()
+      }
+
+      return node
+   }
+
+   private final func nodeFieldsObject (_ object : Any?, _ node : X3DNode)
+   {
+      guard let object = object as? [String : Any] else { return }
+   }
+
+   private final func fieldArray (_ object : Any?, _ node : X3DNode)
+   {
+      guard let object = object as? [Any] else { return }
+   }
+
+   private final func sourceTextArray (_ object : Any?, _ node : X3DNode)
+   {
+      guard let object = object as? [Any] else { return }
+   }
+
+   private final func fieldValueArray (_ object : Any?, _ node : X3DNode)
+   {
+      guard let object = object as? [Any] else { return }
+   }
+
+   private final func fieldValueValue (_ object : Any?)
+   {
+      guard let object = object as? [String : Any] else { return }
+   }
+   
+   private final func isObject (_ object : Any?, _ node : X3DNode)
+   {
+      guard let object = object as? [String : Any] else { return }
    }
 }

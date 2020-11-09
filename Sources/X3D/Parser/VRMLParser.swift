@@ -974,7 +974,7 @@ internal final class VRMLParser :
                                                    node: namedNode)
          }
 
-         try executionContext .addNamedNode (name: nodeNameId!, node: node!)
+         try! executionContext .addNamedNode (name: nodeNameId!, node: node!)
       }
       
       comments ()

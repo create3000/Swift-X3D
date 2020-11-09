@@ -52,12 +52,12 @@ internal final class JSONParser :
       
       defer { executionContexts .removeLast () }
       
-      if let _ = object ["encoding"] as? String
+      if let _ = string (object ["encoding"])
       {
          
       }
       
-      if let profileString = object ["@profile"] as? String
+      if let profileString = string (object ["@profile"])
       {
          do
          {
@@ -69,7 +69,7 @@ internal final class JSONParser :
          }
       }
       
-      if let versionString = object ["@version"] as? String
+      if let versionString = string (object ["@version"])
       {
          scene .specificationVersion = versionString
       }
@@ -102,12 +102,12 @@ internal final class JSONParser :
    {
       guard let object = object as? [String : Any] else { return }
       
-      guard let componentName = object ["@name"] as? String else
+      guard let componentName = string (object ["@name"]) else
       {
          return console .warn (t("Expected a component name."))
       }
       
-      guard let componentLevel = object ["@level"] as? Int32 else
+      guard let componentLevel = int32 (object ["@level"]) else
       {
          return console .warn (t("Expected a component support level."))
       }
@@ -136,7 +136,7 @@ internal final class JSONParser :
    {
       guard let object = object as? [String : Any] else { return }
       
-      guard let categoryName = object ["@category"] as? String else
+      guard let categoryName = string (object ["@category"]) else
       {
          return console .warn (t("Expected category name identificator in unit statement."))
       }
@@ -146,12 +146,12 @@ internal final class JSONParser :
          return console .warn (t("Unkown unit category '%@'.", categoryName))
       }
 
-      guard let unitName = object ["@name"] as? String else
+      guard let unitName = string (object ["@name"]) else
       {
          return console .warn (t("Expected unit name identificator."))
       }
       
-      guard let conversionFactor = object ["@conversionFactor"] as? Double else
+      guard let conversionFactor = double (object ["@conversionFactor"]) else
       {
          return console .warn (t("Expected unit conversion factor."))
       }
@@ -173,12 +173,12 @@ internal final class JSONParser :
    {
       guard let object = object as? [String : Any] else { return }
 
-      guard let metaName = object ["@name"] as? String else
+      guard let metaName = string (object ["@name"]) else
       {
          return console .warn (t("Expected metadata key."))
       }
       
-      guard let metaContent = object ["@content"] as? String else
+      guard let metaContent = string (object ["@content"]) else
       {
          return console .warn (t("Expected metadata value."))
       }
@@ -267,7 +267,7 @@ internal final class JSONParser :
 
       do
       {
-         if let nodeName = object ["@USE"] as? String
+         if let nodeName = string (object ["@USE"])
          {
             return try executionContext .getNamedNode (name: nodeName)
          }
@@ -287,7 +287,7 @@ internal final class JSONParser :
       {
          if nodeType == "ProtoInstance"
          {
-            guard let name = object ["@name"] as? String else
+            guard let name = string (object ["@name"]) else
             {
                console .warn (t("Couldn't create proto instance, no name given."))
                return nil
@@ -311,7 +311,7 @@ internal final class JSONParser :
       
       do
       {
-         if let nodeName = object ["@DEF"] as? String
+         if let nodeName = string (object ["@DEF"])
          {
             if !nodeName .isEmpty
             {
@@ -415,6 +415,10 @@ internal final class JSONParser :
          case .SFDouble:    return sfdoubleValue     (object, field as! SFDouble)
          case .SFFloat:     return sffloatValue      (object, field as! SFFloat)
          case .SFInt32:     return sfint32Value      (object, field as! SFInt32)
+         case .SFMatrix3d:  return sfmatrix3dValue   (object, field as! SFMatrix3d)
+         case .SFMatrix3f:  return sfmatrix3fValue   (object, field as! SFMatrix3f)
+         case .SFMatrix4d:  return sfmatrix4dValue   (object, field as! SFMatrix4d)
+         case .SFMatrix4f:  return sfmatrix4fValue   (object, field as! SFMatrix4f)
          case .SFString:    return sfstringValue     (object, field as! SFString)
          case .SFTime:      return sftimeValue       (object, field as! SFTime)
          case .SFVec2d:     return sfvec2dValue      (object, field as! SFVec2d)
@@ -430,6 +434,10 @@ internal final class JSONParser :
          case .MFDouble:    return mfdoubleValue     (object, field as! MFDouble)
          case .MFFloat:     return mffloatValue      (object, field as! MFFloat)
          case .MFInt32:     return mfint32Value      (object, field as! MFInt32)
+         case .MFMatrix3d:  return mfmatrix3dValue   (object, field as! MFMatrix3d)
+         case .MFMatrix3f:  return mfmatrix3fValue   (object, field as! MFMatrix3f)
+         case .MFMatrix4d:  return mfmatrix4dValue   (object, field as! MFMatrix4d)
+         case .MFMatrix4f:  return mfmatrix4fValue   (object, field as! MFMatrix4f)
          case .MFString:    return mfstringValue     (object, field as! MFString)
          case .MFTime:      return mftimeValue       (object, field as! MFTime)
          case .MFVec2d:     return mfvec2dValue      (object, field as! MFVec2d)
@@ -443,49 +451,87 @@ internal final class JSONParser :
       }
    }
    
+   private final func bool (_ object : Any?) -> Bool?
+   {
+      return object as? Bool
+   }
+   
+   private final func double (_ object : Any?) -> Double?
+   {
+      if let object = object as? Double { return object }
+      if let object = object as? Float  { return Double (object) }
+      if let object = object as? Int32  { return Double (object) }
+      if let object = object as? Int    { return Double (object) }
+
+      return nil
+   }
+
+   private final func float (_ object : Any?) -> Float?
+   {
+      if let object = object as? Double { return Float (object) }
+      if let object = object as? Float  { return object }
+      if let object = object as? Int32  { return Float (object) }
+      if let object = object as? Int    { return Float (object) }
+
+      return nil
+   }
+   
+   private final func int32 (_ object : Any?) -> Int32?
+   {
+      if let object = object as? Int32  { return object }
+      if let object = object as? Int    { return Int32 (object) }
+      if let object = object as? Double { return Int32 (object) }
+      if let object = object as? Float  { return Int32 (object) }
+      
+      return nil
+   }
+   
+   private final func string (_ object : Any?) -> String?
+   {
+      return object as? String
+   }
+
    private final func sfboolValue (_ object : Any?, _ field : SFBool) -> Bool
    {
-      guard let object = object as? Bool else { return false }
-      
-      field .wrappedValue = object
+      field .wrappedValue = bool (object) ?? false
       
       return true
    }
    
    private final func mfboolValue (_ objects : Any?, _ field : MFBool) -> Bool
    {
-      guard let objects = objects as? [Bool] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       field .wrappedValue .removeAll ()
-      field .wrappedValue .append (contentsOf: objects)
+      field .wrappedValue .append (contentsOf: objects .map { bool ($0) ?? false })
       
       return true
    }
    
    private final func sfcolorValue (_ objects : Any?, _ field : SFColor) -> Bool
    {
-      guard let objects = objects as? [Float] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       guard objects .count == 3 else { return false }
 
-      field .wrappedValue = Color3f (objects [0],
-                                     objects [1],
-                                     objects [2])
+      field .wrappedValue = Color3f (float (objects [0]) ?? 0,
+                                     float (objects [1]) ?? 0,
+                                     float (objects [2]) ?? 0)
       
       return true
    }
    
    private final func mfcolorValue (_ objects : Any?, _ field : MFColor) -> Bool
    {
-      guard let objects = objects as? [Float] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       var value = ContiguousArray <Color3f> ()
       
       for i in stride (from: 0, to: objects .count, by: 3)
       {
-         value .append (Color3f (objects [i + 0],
-                                 objects [i + 1],
-                                 objects [i + 2]))
+         value .append (Color3f (float (objects [i + 0]) ?? 0,
+                                 float (objects [i + 1]) ?? 0,
+                                 float (objects [i + 2]) ?? 0))
       }
       
       field .wrappedValue .removeAll ()
@@ -496,30 +542,30 @@ internal final class JSONParser :
    
    private final func sfcolorrgbaValue (_ objects : Any?, _ field : SFColorRGBA) -> Bool
    {
-      guard let objects = objects as? [Float] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       guard objects .count == 4 else { return false }
 
-      field .wrappedValue = Color4f (objects [0],
-                                     objects [1],
-                                     objects [2],
-                                     objects [3])
+      field .wrappedValue = Color4f (float (objects [0]) ?? 0,
+                                     float (objects [1]) ?? 0,
+                                     float (objects [2]) ?? 0,
+                                     float (objects [3]) ?? 0)
       
       return true
    }
    
    private final func mfcolorrgbaValue (_ objects : Any?, _ field : MFColorRGBA) -> Bool
    {
-      guard let objects = objects as? [Float] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       var value = ContiguousArray <Color4f> ()
 
       for i in stride (from: 0, to: objects .count, by: 4)
       {
-         value .append (Color4f (objects [i + 0],
-                                 objects [i + 1],
-                                 objects [i + 2],
-                                 objects [i + 3]))
+         value .append (Color4f (float (objects [i + 0]) ?? 0,
+                                 float (objects [i + 1]) ?? 0,
+                                 float (objects [i + 2]) ?? 0,
+                                 float (objects [i + 3]) ?? 0))
       }
       
       field .wrappedValue .removeAll ()
@@ -530,128 +576,322 @@ internal final class JSONParser :
 
    private final func sfdoubleValue (_ object : Any?, _ field : SFDouble) -> Bool
    {
-      guard let object = object as? Double else { return false }
-      
-      field .wrappedValue = fromUnit (field .unit, value: object)
+      field .wrappedValue = fromUnit (field .unit, value: double (object) ?? 0)
       
       return true
    }
    
    private final func mfdoubleValue (_ objects : Any?, _ field : MFDouble) -> Bool
    {
-      guard let objects = objects as? [Double] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       let unit = field .unit
       
       field .wrappedValue .removeAll ()
-      field .wrappedValue .append (contentsOf: objects .map { fromUnit (unit, value: $0)})
+      field .wrappedValue .append (contentsOf: objects .map { fromUnit (unit, value: double ($0) ?? 0)})
       
       return true
    }
    
    private final func sffloatValue (_ object : Any?, _ field : SFFloat) -> Bool
    {
-      guard let object = object as? Float else { return false }
-      
-      field .wrappedValue = fromUnit (field .unit, value: object)
+      field .wrappedValue = fromUnit (field .unit, value: float (object) ?? 0)
 
       return true
    }
    
    private final func mffloatValue (_ objects : Any?, _ field : MFFloat) -> Bool
    {
-      guard let objects = objects as? [Float] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       let unit = field .unit
       
       field .wrappedValue .removeAll ()
-      field .wrappedValue .append (contentsOf: objects .map { fromUnit (unit, value: $0)})
+      field .wrappedValue .append (contentsOf: objects .map { fromUnit (unit, value: float ($0) ?? 0)})
 
       return true
    }
    
    private final func sfint32Value (_ object : Any?, _ field : SFInt32) -> Bool
    {
-      guard let object = object as? Int32 else { return false }
-      
-      field .wrappedValue = object
+      field .wrappedValue = int32 (object) ?? 0
       
       return true
    }
    
    private final func mfint32Value (_ objects : Any?, _ field : MFInt32) -> Bool
    {
-      guard let objects = objects as? [Int32] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       field .wrappedValue .removeAll ()
-      field .wrappedValue .append (contentsOf: objects)
+      field .wrappedValue .append (contentsOf: objects .map { int32 ($0) ?? 0 })
       
       return true
    }
-   
+
+   private final func sfmatrix3dValue (_ objects : Any?, _ field : SFMatrix3d) -> Bool
+   {
+      guard let objects = objects as? [Any] else { return false }
+     
+      guard objects .count == 9 else { return false }
+     
+      field .wrappedValue = Matrix3d (columns: (Vector3d (double (objects [0]) ?? 0,
+                                                          double (objects [1]) ?? 0,
+                                                          double (objects [2]) ?? 0),
+                                                Vector3d (double (objects [3]) ?? 0,
+                                                          double (objects [4]) ?? 0,
+                                                          double (objects [5]) ?? 0),
+                                                Vector3d (double (objects [6]) ?? 0,
+                                                          double (objects [7]) ?? 0,
+                                                          double (objects [8]) ?? 0)))
+     
+      return true
+   }
+
+   private final func mfmatrix3dValue (_ objects : Any?, _ field : MFMatrix3d) -> Bool
+   {
+      guard let objects = objects as? [Any] else { return false }
+     
+      var value = ContiguousArray <Matrix3d> ()
+     
+      for i in stride (from: 0, to: objects .count, by: 9)
+      {
+         value .append (Matrix3d (columns: (Vector3d (double (objects [i + 0]) ?? 0,
+                                                      double (objects [i + 1]) ?? 0,
+                                                      double (objects [i + 2]) ?? 0),
+                                            Vector3d (double (objects [i + 3]) ?? 0,
+                                                      double (objects [i + 4]) ?? 0,
+                                                      double (objects [i + 5]) ?? 0),
+                                            Vector3d (double (objects [i + 6]) ?? 0,
+                                                      double (objects [i + 7]) ?? 0,
+                                                      double (objects [i + 8]) ?? 0))))
+      }
+     
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
+      return true
+   }
+
+   private final func sfmatrix3fValue (_ objects : Any?, _ field : SFMatrix3f) -> Bool
+   {
+      guard let objects = objects as? [Any] else { return false }
+     
+      guard objects .count == 9 else { return false }
+     
+      field .wrappedValue = Matrix3f (columns: (Vector3f (float (objects [0]) ?? 0,
+                                                          float (objects [1]) ?? 0,
+                                                          float (objects [2]) ?? 0),
+                                                Vector3f (float (objects [3]) ?? 0,
+                                                          float (objects [4]) ?? 0,
+                                                          float (objects [5]) ?? 0),
+                                                Vector3f (float (objects [6]) ?? 0,
+                                                          float (objects [7]) ?? 0,
+                                                          float (objects [8]) ?? 0)))
+     
+      return true
+   }
+
+   private final func mfmatrix3fValue (_ objects : Any?, _ field : MFMatrix3f) -> Bool
+   {
+      guard let objects = objects as? [Any] else { return false }
+     
+      var value = ContiguousArray <Matrix3f> ()
+     
+      for i in stride (from: 0, to: objects .count, by: 9)
+      {
+         value .append (Matrix3f (columns: (Vector3f (float (objects [i + 0]) ?? 0,
+                                                      float (objects [i + 1]) ?? 0,
+                                                      float (objects [i + 2]) ?? 0),
+                                            Vector3f (float (objects [i + 3]) ?? 0,
+                                                      float (objects [i + 4]) ?? 0,
+                                                      float (objects [i + 5]) ?? 0),
+                                            Vector3f (float (objects [i + 6]) ?? 0,
+                                                      float (objects [i + 7]) ?? 0,
+                                                      float (objects [i + 8]) ?? 0))))
+      }
+     
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
+      return true
+   }
+
+   private final func sfmatrix4dValue (_ objects : Any?, _ field : SFMatrix4d) -> Bool
+   {
+      guard let objects = objects as? [Any] else { return false }
+     
+      guard objects .count == 16 else { return false }
+     
+      field .wrappedValue = Matrix4d (columns: (Vector4d (double (objects [ 0]) ?? 0,
+                                                          double (objects [ 1]) ?? 0,
+                                                          double (objects [ 2]) ?? 0,
+                                                          double (objects [ 3]) ?? 0),
+                                                Vector4d (double (objects [ 4]) ?? 0,
+                                                          double (objects [ 5]) ?? 0,
+                                                          double (objects [ 6]) ?? 0,
+                                                          double (objects [ 7]) ?? 0),
+                                                Vector4d (double (objects [ 8]) ?? 0,
+                                                          double (objects [ 9]) ?? 0,
+                                                          double (objects [10]) ?? 0,
+                                                          double (objects [11]) ?? 0),
+                                                Vector4d (double (objects [12]) ?? 0,
+                                                          double (objects [13]) ?? 0,
+                                                          double (objects [14]) ?? 0,
+                                                          double (objects [15]) ?? 0)))
+     
+      return true
+   }
+
+   private final func mfmatrix4dValue (_ objects : Any?, _ field : MFMatrix4d) -> Bool
+   {
+      guard let objects = objects as? [Any] else { return false }
+     
+      var value = ContiguousArray <Matrix4d> ()
+     
+      for i in stride (from: 0, to: objects .count, by: 16)
+      {
+         value .append (Matrix4d (columns: (Vector4d (double (objects [i +  0]) ?? 0,
+                                                      double (objects [i +  1]) ?? 0,
+                                                      double (objects [i +  2]) ?? 0,
+                                                      double (objects [i +  3]) ?? 0),
+                                            Vector4d (double (objects [i +  4]) ?? 0,
+                                                      double (objects [i +  5]) ?? 0,
+                                                      double (objects [i +  6]) ?? 0,
+                                                      double (objects [i +  7]) ?? 0),
+                                            Vector4d (double (objects [i +  8]) ?? 0,
+                                                      double (objects [i +  9]) ?? 0,
+                                                      double (objects [i + 10]) ?? 0,
+                                                      double (objects [i + 11]) ?? 0),
+                                            Vector4d (double (objects [i + 12]) ?? 0,
+                                                      double (objects [i + 13]) ?? 0,
+                                                      double (objects [i + 14]) ?? 0,
+                                                      double (objects [i + 15]) ?? 0))))
+      }
+     
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
+      return true
+   }
+
+   private final func sfmatrix4fValue (_ objects : Any?, _ field : SFMatrix4f) -> Bool
+   {
+      guard let objects = objects as? [Any] else { return false }
+     
+      guard objects .count == 16 else { return false }
+     
+      field .wrappedValue = Matrix4f (columns: (Vector4f (float (objects [ 0]) ?? 0,
+                                                          float (objects [ 1]) ?? 0,
+                                                          float (objects [ 2]) ?? 0,
+                                                          float (objects [ 3]) ?? 0),
+                                                Vector4f (float (objects [ 4]) ?? 0,
+                                                          float (objects [ 5]) ?? 0,
+                                                          float (objects [ 6]) ?? 0,
+                                                          float (objects [ 7]) ?? 0),
+                                                Vector4f (float (objects [ 8]) ?? 0,
+                                                          float (objects [ 9]) ?? 0,
+                                                          float (objects [10]) ?? 0,
+                                                          float (objects [11]) ?? 0),
+                                                Vector4f (float (objects [12]) ?? 0,
+                                                          float (objects [13]) ?? 0,
+                                                          float (objects [14]) ?? 0,
+                                                          float (objects [15]) ?? 0)))
+     
+      return true
+   }
+
+   private final func mfmatrix4fValue (_ objects : Any?, _ field : MFMatrix4f) -> Bool
+   {
+      guard let objects = objects as? [Any] else { return false }
+     
+      var value = ContiguousArray <Matrix4f> ()
+     
+      for i in stride (from: 0, to: objects .count, by: 16)
+      {
+         value .append (Matrix4f (columns: (Vector4f (float (objects [i +  0]) ?? 0,
+                                                      float (objects [i +  1]) ?? 0,
+                                                      float (objects [i +  2]) ?? 0,
+                                                      float (objects [i +  3]) ?? 0),
+                                            Vector4f (float (objects [i +  4]) ?? 0,
+                                                      float (objects [i +  5]) ?? 0,
+                                                      float (objects [i +  6]) ?? 0,
+                                                      float (objects [i +  7]) ?? 0),
+                                            Vector4f (float (objects [i +  8]) ?? 0,
+                                                      float (objects [i +  9]) ?? 0,
+                                                      float (objects [i + 10]) ?? 0,
+                                                      float (objects [i + 11]) ?? 0),
+                                            Vector4f (float (objects [i + 12]) ?? 0,
+                                                      float (objects [i + 13]) ?? 0,
+                                                      float (objects [i + 14]) ?? 0,
+                                                      float (objects [i + 15]) ?? 0))))
+      }
+     
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
+      return true
+   }
+
    private final func sfstringValue (_ object : Any?, _ field : SFString) -> Bool
    {
-      guard let object = object as? String else { return false }
-      
-      field .wrappedValue = object
+      field .wrappedValue = string (object) ?? ""
       
       return true
    }
    
    private final func mfstringValue (_ objects : Any?, _ field : MFString) -> Bool
    {
-      guard let objects = objects as? [String] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       field .wrappedValue .removeAll ()
-      field .wrappedValue .append (contentsOf: objects)
+      field .wrappedValue .append (contentsOf: objects .map { string ($0) ?? "" })
       
       return true
    }
    
    private final func sftimeValue (_ object : Any?, _ field : SFTime) -> Bool
    {
-      guard let object = object as? Double else { return false }
-      
-      field .wrappedValue = object
+      field .wrappedValue = double (object) ?? 0
       
       return true
    }
    
    private final func mftimeValue (_ objects : Any?, _ field : MFTime) -> Bool
    {
-      guard let objects = objects as? [Double] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       field .wrappedValue .removeAll ()
-      field .wrappedValue .append (contentsOf: objects)
+      field .wrappedValue .append (contentsOf: objects .map { double ($0) ?? 0 })
       
       return true
    }
    
    private final func sfvec2dValue (_ objects : Any?, _ field : SFVec2d) -> Bool
    {
-      guard let objects = objects as? [Double] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       guard objects .count == 2 else { return false }
 
       let unit = field .unit
       
-      field .wrappedValue = Vector2d (fromUnit (unit, value: objects [0]),
-                                      fromUnit (unit, value: objects [1]))
+      field .wrappedValue = Vector2d (fromUnit (unit, value: double (objects [0]) ?? 0),
+                                      fromUnit (unit, value: double (objects [1]) ?? 0))
 
       return true
    }
    
    private final func mfvec2dValue (_ objects : Any?, _ field : MFVec2d) -> Bool
    {
-      guard let objects = objects as? [Double] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       var value = ContiguousArray <Vector2d> ()
       let unit  = field .unit
 
       for i in stride (from: 0, to: objects .count, by: 2)
       {
-         value .append (Vector2d (fromUnit (unit, value: objects [i + 0]),
-                                  fromUnit (unit, value: objects [i + 1])))
+         value .append (Vector2d (fromUnit (unit, value: double (objects [i + 0]) ?? 0),
+                                  fromUnit (unit, value: double (objects [i + 1]) ?? 0)))
       }
       
       field .wrappedValue .removeAll ()
@@ -662,29 +902,29 @@ internal final class JSONParser :
    
    private final func sfvec2fValue (_ objects : Any?, _ field : SFVec2f) -> Bool
    {
-      guard let objects = objects as? [Float] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       guard objects .count == 2 else { return false }
 
       let unit = field .unit
       
-      field .wrappedValue = Vector2f (fromUnit (unit, value: objects [0]),
-                                      fromUnit (unit, value: objects [1]))
+      field .wrappedValue = Vector2f (fromUnit (unit, value: float (objects [0]) ?? 0),
+                                      fromUnit (unit, value: float (objects [1]) ?? 0))
 
       return true
    }
    
    private final func mfvec2fValue (_ objects : Any?, _ field : MFVec2f) -> Bool
    {
-      guard let objects = objects as? [Float] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       var value = ContiguousArray <Vector2f> ()
       let unit  = field .unit
 
       for i in stride (from: 0, to: objects .count, by: 2)
       {
-         value .append (Vector2f (fromUnit (unit, value: objects [i + 0]),
-                                  fromUnit (unit, value: objects [i + 1])))
+         value .append (Vector2f (fromUnit (unit, value: float (objects [i + 0]) ?? 0),
+                                  fromUnit (unit, value: float (objects [i + 1]) ?? 0)))
       }
       
       field .wrappedValue .removeAll ()
@@ -695,31 +935,31 @@ internal final class JSONParser :
 
    private final func sfvec3dValue (_ objects : Any?, _ field : SFVec3d) -> Bool
    {
-      guard let objects = objects as? [Double] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       guard objects .count == 3 else { return false }
 
       let unit = field .unit
       
-      field .wrappedValue = Vector3d (fromUnit (unit, value: objects [0]),
-                                      fromUnit (unit, value: objects [1]),
-                                      fromUnit (unit, value: objects [2]))
+      field .wrappedValue = Vector3d (fromUnit (unit, value: double (objects [0]) ?? 0),
+                                      fromUnit (unit, value: double (objects [1]) ?? 0),
+                                      fromUnit (unit, value: double (objects [2]) ?? 0))
 
       return true
    }
    
    private final func mfvec3dValue (_ objects : Any?, _ field : MFVec3d) -> Bool
    {
-      guard let objects = objects as? [Double] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       var value = ContiguousArray <Vector3d> ()
       let unit  = field .unit
       
       for i in stride (from: 0, to: objects .count, by: 3)
       {
-         value .append (Vector3d (fromUnit (unit, value: objects [i + 0]),
-                                  fromUnit (unit, value: objects [i + 1]),
-                                  fromUnit (unit, value: objects [i + 2])))
+         value .append (Vector3d (fromUnit (unit, value: double (objects [i + 0]) ?? 0),
+                                  fromUnit (unit, value: double (objects [i + 1]) ?? 0),
+                                  fromUnit (unit, value: double (objects [i + 2]) ?? 0)))
       }
       
       field .wrappedValue .removeAll ()
@@ -730,31 +970,31 @@ internal final class JSONParser :
 
    private final func sfvec3fValue (_ objects : Any?, _ field : SFVec3f) -> Bool
    {
-      guard let objects = objects as? [Float] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       guard objects .count == 3 else { return false }
 
       let unit = field .unit
       
-      field .wrappedValue = Vector3f (fromUnit (unit, value: objects [0]),
-                                      fromUnit (unit, value: objects [1]),
-                                      fromUnit (unit, value: objects [2]))
+      field .wrappedValue = Vector3f (fromUnit (unit, value: float (objects [0]) ?? 0),
+                                      fromUnit (unit, value: float (objects [1]) ?? 0),
+                                      fromUnit (unit, value: float (objects [2]) ?? 0))
 
       return true
    }
    
    private final func mfvec3fValue (_ objects : Any?, _ field : MFVec3f) -> Bool
    {
-      guard let objects = objects as? [Float] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       var value = ContiguousArray <Vector3f> ()
       let unit  = field .unit
       
       for i in stride (from: 0, to: objects .count, by: 3)
       {
-         value .append (Vector3f (fromUnit (unit, value: objects [i + 0]),
-                                  fromUnit (unit, value: objects [i + 1]),
-                                  fromUnit (unit, value: objects [i + 2])))
+         value .append (Vector3f (fromUnit (unit, value: float (objects [i + 0]) ?? 0),
+                                  fromUnit (unit, value: float (objects [i + 1]) ?? 0),
+                                  fromUnit (unit, value: float (objects [i + 2]) ?? 0)))
       }
       
       field .wrappedValue .removeAll ()
@@ -765,33 +1005,33 @@ internal final class JSONParser :
 
    private final func sfvec4dValue (_ objects : Any?, _ field : SFVec4d) -> Bool
    {
-      guard let objects = objects as? [Double] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       guard objects .count == 4 else { return false }
 
       let unit = field .unit
       
-      field .wrappedValue = Vector4d (fromUnit (unit, value: objects [0]),
-                                      fromUnit (unit, value: objects [1]),
-                                      fromUnit (unit, value: objects [2]),
-                                      fromUnit (unit, value: objects [3]))
+      field .wrappedValue = Vector4d (fromUnit (unit, value: double (objects [0]) ?? 0),
+                                      fromUnit (unit, value: double (objects [1]) ?? 0),
+                                      fromUnit (unit, value: double (objects [2]) ?? 0),
+                                      fromUnit (unit, value: double (objects [3]) ?? 0))
 
       return true
    }
    
    private final func mfvec4dValue (_ objects : Any?, _ field : MFVec4d) -> Bool
    {
-      guard let objects = objects as? [Double] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       var value = ContiguousArray <Vector4d> ()
       let unit  = field .unit
       
       for i in stride (from: 0, to: objects .count, by: 4)
       {
-         value .append (Vector4d (fromUnit (unit, value: objects [i + 0]),
-                                  fromUnit (unit, value: objects [i + 1]),
-                                  fromUnit (unit, value: objects [i + 2]),
-                                  fromUnit (unit, value: objects [i + 3])))
+         value .append (Vector4d (fromUnit (unit, value: double (objects [i + 0]) ?? 0),
+                                  fromUnit (unit, value: double (objects [i + 1]) ?? 0),
+                                  fromUnit (unit, value: double (objects [i + 2]) ?? 0),
+                                  fromUnit (unit, value: double (objects [i + 3]) ?? 0)))
       }
       
       field .wrappedValue .removeAll ()
@@ -802,33 +1042,33 @@ internal final class JSONParser :
  
    private final func sfvec4fValue (_ objects : Any?, _ field : SFVec4f) -> Bool
    {
-      guard let objects = objects as? [Float] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       guard objects .count == 4 else { return false }
 
       let unit = field .unit
       
-      field .wrappedValue = Vector4f (fromUnit (unit, value: objects [0]),
-                                      fromUnit (unit, value: objects [1]),
-                                      fromUnit (unit, value: objects [2]),
-                                      fromUnit (unit, value: objects [3]))
+      field .wrappedValue = Vector4f (fromUnit (unit, value: float (objects [0]) ?? 0),
+                                      fromUnit (unit, value: float (objects [1]) ?? 0),
+                                      fromUnit (unit, value: float (objects [2]) ?? 0),
+                                      fromUnit (unit, value: float (objects [3]) ?? 0))
       
       return true
    }
    
    private final func mfvec4fValue (_ objects : Any?, _ field : MFVec4f) -> Bool
    {
-      guard let objects = objects as? [Float] else { return false }
+      guard let objects = objects as? [Any] else { return false }
       
       var value = ContiguousArray <Vector4f> ()
       let unit  = field .unit
       
       for i in stride (from: 0, to: objects .count, by: 4)
       {
-         value .append (Vector4f (fromUnit (unit, value: objects [i + 0]),
-                                  fromUnit (unit, value: objects [i + 1]),
-                                  fromUnit (unit, value: objects [i + 2]),
-                                  fromUnit (unit, value: objects [i + 3])))
+         value .append (Vector4f (fromUnit (unit, value: float (objects [i + 0]) ?? 0),
+                                  fromUnit (unit, value: float (objects [i + 1]) ?? 0),
+                                  fromUnit (unit, value: float (objects [i + 2]) ?? 0),
+                                  fromUnit (unit, value: float (objects [i + 3]) ?? 0)))
       }
       
       field .wrappedValue .removeAll ()

@@ -644,10 +644,8 @@ internal final class JSONParser :
       
       var i = 0
       
-      while true
+      while objects .count >= i + 3
       {
-         guard objects .count >= i + 3 else { break }
-         
          let element = SFImage ()
          let array   = element .wrappedValue .array
          let first   = i + 3

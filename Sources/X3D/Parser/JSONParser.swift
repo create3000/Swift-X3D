@@ -338,7 +338,7 @@ internal final class JSONParser :
 
          if metadata .isInitializable && metadata .getType () == .SFNode
          {
-            fieldValueValue (object ["-metadata"])
+            fieldValueValue (object ["-metadata"], metadata)
          }
          
          fieldValueArray (object ["fieldValue"], node!)
@@ -369,17 +369,23 @@ internal final class JSONParser :
       return node
    }
 
-   private final func nodeFieldsObject (_ object : Any?, _ node : X3DNode)
+   private final func nodeFieldsObject (_ object : [String : Any], _ node : X3DNode)
    {
-      guard let object = object as? [String : Any] else { return }
+      for field in node .getPreDefinedFields ()
+      {
+         guard field .isInitializable else { continue }
+
+         switch field .getType ()
+         {
+            case .SFNode, .MFNode:
+               _ = fieldValueValue (object ["-" + field .getName ()], field)
+            default:
+               _ = fieldValueValue (object ["@" + field .getName ()], field)
+         }
+      }
    }
 
    private final func fieldArray (_ object : Any?, _ node : X3DNode)
-   {
-      guard let object = object as? [Any] else { return }
-   }
-
-   private final func sourceTextArray (_ object : Any?, _ node : X3DNode)
    {
       guard let object = object as? [Any] else { return }
    }
@@ -389,13 +395,53 @@ internal final class JSONParser :
       guard let object = object as? [Any] else { return }
    }
 
-   private final func fieldValueValue (_ object : Any?)
+   private final func sourceTextArray (_ object : Any?, _ node : X3DNode)
    {
-      guard let object = object as? [String : Any] else { return }
+      guard let object = object as? [Any] else { return }
    }
    
    private final func isObject (_ object : Any?, _ node : X3DNode)
    {
       guard let object = object as? [String : Any] else { return }
+   }
+
+   private final func fieldValueValue (_ object : Any?, _ field : X3DField) -> Bool
+   {
+      if (fieldValue (object, field))
+      {
+         field .isSet = true
+         return true
+      }
+
+      return false
+   }
+
+   private final func fieldValue (_ object : Any?, _ field : X3DField) -> Bool
+   {
+      switch field .getType ()
+      {
+         case .SFBool: return sfboolValue (object, field as! SFBool)
+         case .MFBool: return mfboolValue (object, field as! MFBool)
+         default: return false
+      }
+   }
+   
+   private final func sfboolValue (_ object : Any?, _ field : SFBool) -> Bool
+   {
+      guard let object = object as? Bool else { return false }
+      
+      field .wrappedValue = object
+      
+      return true
+   }
+   
+   private final func mfboolValue (_ objects : Any?, _ field : MFBool) -> Bool
+   {
+      guard let objects = objects as? [Bool] else { return false }
+      
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: objects)
+      
+      return true
    }
 }

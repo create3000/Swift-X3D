@@ -414,11 +414,13 @@ internal final class JSONParser :
          case .SFColorRGBA: return sfcolorrgbaValue  (object, field as! SFColorRGBA)
          case .SFDouble:    return sfdoubleValue     (object, field as! SFDouble)
          case .SFFloat:     return sffloatValue      (object, field as! SFFloat)
+         case .SFImage:     return sfimageValue      (object, field as! SFImage)
          case .SFInt32:     return sfint32Value      (object, field as! SFInt32)
          case .SFMatrix3d:  return sfmatrix3dValue   (object, field as! SFMatrix3d)
          case .SFMatrix3f:  return sfmatrix3fValue   (object, field as! SFMatrix3f)
          case .SFMatrix4d:  return sfmatrix4dValue   (object, field as! SFMatrix4d)
          case .SFMatrix4f:  return sfmatrix4fValue   (object, field as! SFMatrix4f)
+         case .SFRotation:  return sfrotationValue   (object, field as! SFRotation)
          case .SFString:    return sfstringValue     (object, field as! SFString)
          case .SFTime:      return sftimeValue       (object, field as! SFTime)
          case .SFVec2d:     return sfvec2dValue      (object, field as! SFVec2d)
@@ -433,11 +435,13 @@ internal final class JSONParser :
          case .MFColorRGBA: return mfcolorrgbaValue  (object, field as! MFColorRGBA)
          case .MFDouble:    return mfdoubleValue     (object, field as! MFDouble)
          case .MFFloat:     return mffloatValue      (object, field as! MFFloat)
+         case .MFImage:     return mfimageValue      (object, field as! MFImage)
          case .MFInt32:     return mfint32Value      (object, field as! MFInt32)
          case .MFMatrix3d:  return mfmatrix3dValue   (object, field as! MFMatrix3d)
          case .MFMatrix3f:  return mfmatrix3fValue   (object, field as! MFMatrix3f)
          case .MFMatrix4d:  return mfmatrix4dValue   (object, field as! MFMatrix4d)
          case .MFMatrix4f:  return mfmatrix4fValue   (object, field as! MFMatrix4f)
+         case .MFRotation:  return mfrotationValue   (object, field as! MFRotation)
          case .MFString:    return mfstringValue     (object, field as! MFString)
          case .MFTime:      return mftimeValue       (object, field as! MFTime)
          case .MFVec2d:     return mfvec2dValue      (object, field as! MFVec2d)
@@ -612,6 +616,59 @@ internal final class JSONParser :
       return true
    }
    
+   private final func sfimageValue (_ objects : Any?, _ field : SFImage) -> Bool
+   {
+      guard let objects = objects as? [Any] else { return false }
+      
+      guard objects .count >= 3 else { return false }
+      
+      let array = field .wrappedValue .array
+      
+      field .wrappedValue .width  = int32 (objects [0]) ?? 0
+      field .wrappedValue .height = int32 (objects [1]) ?? 0
+      field .wrappedValue .comp   = int32 (objects [2]) ?? 0
+
+      for i in stride (from: 3, to: min (3 + array .count, objects .count), by: 1)
+      {
+         array [i - 3] = int32 (objects [i]) ?? 0
+      }
+      
+      return true
+   }
+   
+   private final func mfimageValue (_ objects : Any?, _ field : MFImage) -> Bool
+   {
+      guard let objects = objects as? [Any] else { return false }
+      
+      field .wrappedValue .removeAll ()
+      
+      var i = 0
+      
+      while true
+      {
+         guard objects .count >= i + 3 else { break }
+         
+         let element = SFImage ()
+         let array   = element .wrappedValue .array
+         let first   = i + 3
+
+         element .wrappedValue .width  = int32 (objects [i + 0]) ?? 0
+         element .wrappedValue .height = int32 (objects [i + 1]) ?? 0
+         element .wrappedValue .comp   = int32 (objects [i + 2]) ?? 0
+         
+         for ii in stride (from: first, to: min (first + array .count, objects .count), by: 1)
+         {
+            array [ii - first] = int32 (objects [i + ii]) ?? 0
+         }
+         
+         field .wrappedValue .append (element .wrappedValue)
+         
+         i += 3 + array .count
+      }
+      
+      return true
+   }
+
    private final func sfint32Value (_ object : Any?, _ field : SFInt32) -> Bool
    {
       field .wrappedValue = int32 (object) ?? 0
@@ -827,6 +884,40 @@ internal final class JSONParser :
                                                       float (objects [i + 15]) ?? 0))))
       }
      
+      field .wrappedValue .removeAll ()
+      field .wrappedValue .append (contentsOf: value)
+
+      return true
+   }
+   
+   private final func sfrotationValue (_ objects : Any?, _ field : SFRotation) -> Bool
+   {
+      guard let objects = objects as? [Any] else { return false }
+        
+      guard objects .count == 4 else { return false }
+        
+      field .wrappedValue = Rotation4f (float (objects [0]) ?? 0,
+                                        float (objects [1]) ?? 0,
+                                        float (objects [2]) ?? 0,
+                                        fromUnit (.angle, value: float (objects [3]) ?? 0))
+        
+      return true
+   }
+   
+   private final func mfrotationValue (_ objects : Any?, _ field : MFRotation) -> Bool
+   {
+      guard let objects = objects as? [Any] else { return false }
+        
+      var value = ContiguousArray <Rotation4f> ()
+        
+      for i in stride (from: 0, to: objects .count, by: 4)
+      {
+         value .append (Rotation4f (float (objects [i + 0]) ?? 0,
+                                    float (objects [i + 1]) ?? 0,
+                                    float (objects [i + 2]) ?? 0,
+                                    fromUnit (.angle, value: float (objects [i + 3]) ?? 0)))
+      }
+        
       field .wrappedValue .removeAll ()
       field .wrappedValue .append (contentsOf: value)
 

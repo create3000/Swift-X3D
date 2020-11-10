@@ -459,6 +459,63 @@ internal final class JSONParser :
    private final func fieldArray (_ objects : Any?, _ node : X3DNode)
    {
       guard let objects = objects as? [Any] else { return }
+      
+      for object in objects
+      {
+         fieldObject (object, node)
+      }
+   }
+
+   private final func fieldObject (_ object : Any?, _ node : X3DNode)
+   {
+      guard let object = object as? [String : Any] else { return }
+      
+      guard let accessType = X3DAccessType (string (object ["@accessType"]) ?? "") else
+      {
+         return console .warn (t("Expected @accessType property."))
+      }
+      
+      guard let type = string (object ["@type"]) else
+      {
+         return console .warn (t("Expected @type property."))
+      }
+      
+      guard let supportedField = SupportedFields .fields [type] else
+      {
+         return console .warn (t("Expected a valid field type."))
+      }
+
+      guard let name = string (object ["@name"]) else
+      {
+         return console .warn (t("Expected @name property."))
+      }
+      
+      let field = supportedField .init ()
+      
+      node .addUserDefinedField (accessType, name, field)
+      
+      guard field .isInitializable else { return }
+
+      switch field .getType ()
+      {
+         case .SFNode: do
+         {
+            let sfnode = field as! SFNode <X3DNode>
+            let value  = MFNode <X3DNode> ()
+
+            if fieldValueValue (object ["-children"], value)
+            {
+               if !value .wrappedValue .isEmpty
+               {
+                  sfnode .wrappedValue = value .wrappedValue [0]
+               }
+            }
+         }
+         case .MFNode:
+            _ = fieldValueValue (object ["-children"], field)
+         default:
+            _ = fieldValueValue (object ["@value"], field)
+      }
    }
 
    private final func isObject (_ object : Any?, _ node : X3DNode)

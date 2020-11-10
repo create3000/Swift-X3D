@@ -417,6 +417,55 @@ internal final class JSONParser :
    private final func isObject (_ object : Any?, _ node : X3DNode)
    {
       guard let object = object as? [String : Any] else { return }
+      
+      connectArray (object ["connect"], node)
+   }
+
+   private final func connectArray (_ objects : Any?, _ node : X3DNode)
+   {
+      guard let objects = objects as? [Any] else { return }
+      
+      for object in objects
+      {
+         connectObject (object, node)
+      }
+   }
+
+   private final func connectObject (_ object : Any?, _ node : X3DNode)
+   {
+      guard let object = object as? [String : Any] else { return }
+      
+      guard let nodeFieldName = string (object ["@nodeField"]) else
+      {
+         return console .warn (t("Expected @nodeField property."))
+      }
+      
+      guard let protoFieldName = string (object ["@protoField"]) else
+      {
+         return console .warn (t("Expected @protoField property."))
+      }
+      
+      do
+      {
+         let nodeField  = try node .getField (name: nodeFieldName)
+         let protoField = try executionContext .getField (name: protoFieldName)
+         
+         guard nodeField .getType () == protoField .getType () else
+         {
+            return console .warn (t("Field '%@' and '%@' in PROTO %@ have different types.", nodeField .getName (), protoField .getName (), executionContext .getName ()))
+         }
+         
+         guard protoField .isReference (for: nodeField .getAccessType ()) else
+         {
+            return console .warn (t("Field '%@' and '%@' in PROTO %@ are incompatible as an IS mapping.", nodeField .getName (), protoField .getName (), executionContext .getName ()))
+         }
+         
+         nodeField .addReference (to: protoField)
+      }
+      catch
+      {
+         console .warn (error .localizedDescription)
+      }
    }
 
    private final func fieldValueValue (_ object : Any?, _ field : X3DField) -> Bool

@@ -404,12 +404,59 @@ internal final class JSONParser :
       sourceText .wrappedValue .append (lines)
    }
 
-   private final func fieldArray (_ objects : Any?, _ node : X3DNode)
+   private final func fieldValueArray (_ objects : Any?, _ node : X3DNode)
    {
       guard let objects = objects as? [Any] else { return }
+      
+      for object in objects
+      {
+         fieldValueObject (object, node)
+      }
    }
 
-   private final func fieldValueArray (_ objects : Any?, _ node : X3DNode)
+   private final func fieldValueObject (_ object : Any?, _ node : X3DNode)
+   {
+      guard let object = object as? [String : Any] else { return }
+      
+      guard let name = string (object ["@name"]) else
+      {
+         return console .warn (t("Expected @name property."))
+      }
+      
+      do
+      {
+         let field = try node .getField (name: name)
+         
+         guard field .isInitializable else { return }
+         
+         switch field .getType ()
+         {
+            case .SFNode: do
+            {
+               let sfnode = field as! SFNode <X3DNode>
+               let value  = MFNode <X3DNode> ()
+
+               if fieldValueValue (object ["-children"], value)
+               {
+                  if !value .wrappedValue .isEmpty
+                  {
+                     sfnode .wrappedValue = value .wrappedValue [0]
+                  }
+               }
+            }
+            case .MFNode:
+               _ = fieldValueValue (object ["-children"], field)
+            default:
+               _ = fieldValueValue (object ["@value"], field)
+         }
+      }
+      catch
+      {
+         console .warn (error .localizedDescription)
+      }
+   }
+
+   private final func fieldArray (_ objects : Any?, _ node : X3DNode)
    {
       guard let objects = objects as? [Any] else { return }
    }

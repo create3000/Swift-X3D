@@ -276,14 +276,11 @@ internal final class JSONParser :
       
       protos            .append (proto)
       executionContexts .append (proto .getBody ())
-      
-      defer
-      {
-         protos            .removeLast ()
-         executionContexts .removeLast ()
-      }
 
       protoBodyObject (object ["ProtoBody"], proto)
+
+      protos            .removeLast ()
+      executionContexts .removeLast ()
 
       try? executionContext .updateProtoDeclaration (name: name, proto: proto)
       
@@ -691,7 +688,7 @@ internal final class JSONParser :
       do
       {
          let nodeField  = try node .getField (name: nodeFieldName)
-         let protoField = try executionContext .getField (name: protoFieldName)
+         let protoField = try proto .getField (name: protoFieldName)
          
          guard nodeField .getType () == protoField .getType () else
          {

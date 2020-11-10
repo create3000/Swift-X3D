@@ -99,23 +99,23 @@ public final class X3DScene :
    private final let LENGTH = 2
    private final let MASS   = 3
 
-   private final var _units : X3DUnitInfoArray = [
+   private final var units : X3DUnitInfoArray = [
       X3DUnitInfo (category: .angle,  name: "radian",   conversionFactor: 1),
       X3DUnitInfo (category: .force,  name: "newton",   conversionFactor: 1),
       X3DUnitInfo (category: .length, name: "metre",    conversionFactor: 1),
       X3DUnitInfo (category: .mass,   name: "kilogram", conversionFactor: 1),
    ]
    
-   public internal(set) override var units : X3DUnitInfoArray { get { _units } set { _units = newValue } }
+   public final override func getUnits () -> X3DUnitInfoArray { units }
 
    public final override func updateUnit (_ category : X3DUnitCategory, name : String, conversionFactor : Double)
    {
       switch category
       {
-         case .angle:  _units [ANGLE]  = X3DUnitInfo (category: category,  name: name, conversionFactor: conversionFactor)
-         case .force:  _units [FORCE]  = X3DUnitInfo (category: category,  name: name, conversionFactor: conversionFactor)
-         case .length: _units [LENGTH] = X3DUnitInfo (category: category,  name: name, conversionFactor: conversionFactor)
-         case .mass:   _units [MASS]   = X3DUnitInfo (category: category,  name: name, conversionFactor: conversionFactor)
+         case .angle:  units [ANGLE]  = X3DUnitInfo (category: category,  name: name, conversionFactor: conversionFactor)
+         case .force:  units [FORCE]  = X3DUnitInfo (category: category,  name: name, conversionFactor: conversionFactor)
+         case .length: units [LENGTH] = X3DUnitInfo (category: category,  name: name, conversionFactor: conversionFactor)
+         case .mass:   units [MASS]   = X3DUnitInfo (category: category,  name: name, conversionFactor: conversionFactor)
          default: break
       }
    }
@@ -130,18 +130,18 @@ public final class X3DScene :
          
          // Base units
 
-         case .angle:  return value * _units [ANGLE]  .conversionFactor
-         case .force:  return value * _units [FORCE]  .conversionFactor
-         case .length: return value * _units [LENGTH] .conversionFactor
-         case .mass:   return value * _units [MASS]   .conversionFactor
+         case .angle:  return value * units [ANGLE]  .conversionFactor
+         case .force:  return value * units [FORCE]  .conversionFactor
+         case .length: return value * units [LENGTH] .conversionFactor
+         case .mass:   return value * units [MASS]   .conversionFactor
 
          // Derived units
 
-         case .acceleration: return value * _units [LENGTH] .conversionFactor
-         case .angular_rate: return value * _units [ANGLE] .conversionFactor
-         case .area:         return value * pow (_units [LENGTH] .conversionFactor, 2)
-         case .speed:        return value * _units [LENGTH] .conversionFactor
-         case .volume:       return value * pow (_units [LENGTH] .conversionFactor, 3)
+         case .acceleration: return value * units [LENGTH] .conversionFactor
+         case .angular_rate: return value * units [ANGLE] .conversionFactor
+         case .area:         return value * pow (units [LENGTH] .conversionFactor, 2)
+         case .speed:        return value * units [LENGTH] .conversionFactor
+         case .volume:       return value * pow (units [LENGTH] .conversionFactor, 3)
       }
    }
    
@@ -155,18 +155,18 @@ public final class X3DScene :
          
          // Base units
 
-         case .angle:  return value / _units [ANGLE]  .conversionFactor
-         case .force:  return value / _units [FORCE]  .conversionFactor
-         case .length: return value / _units [LENGTH] .conversionFactor
-         case .mass:   return value / _units [MASS]   .conversionFactor
+         case .angle:  return value / units [ANGLE]  .conversionFactor
+         case .force:  return value / units [FORCE]  .conversionFactor
+         case .length: return value / units [LENGTH] .conversionFactor
+         case .mass:   return value / units [MASS]   .conversionFactor
 
          // Derived units
 
-         case .acceleration: return value / _units [LENGTH] .conversionFactor
-         case .angular_rate: return value / _units [ANGLE] .conversionFactor
-         case .area:         return value / pow (_units [LENGTH] .conversionFactor, 2)
-         case .speed:        return value / _units [LENGTH] .conversionFactor
-         case .volume:       return value / pow (_units [LENGTH] .conversionFactor, 3)
+         case .acceleration: return value / units [LENGTH] .conversionFactor
+         case .angular_rate: return value / units [ANGLE] .conversionFactor
+         case .area:         return value / pow (units [LENGTH] .conversionFactor, 2)
+         case .speed:        return value / units [LENGTH] .conversionFactor
+         case .volume:       return value / pow (units [LENGTH] .conversionFactor, 3)
       }
    }
    

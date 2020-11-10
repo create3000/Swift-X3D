@@ -387,6 +387,23 @@ internal final class JSONParser :
       }
    }
 
+   private final func sourceTextArray (_ objects : Any?, _ node : X3DNode)
+   {
+      guard let objects = objects as? [Any] else { return }
+      
+      guard let sourceText = node .getSourceText () else { return }
+      
+      var lines = ""
+      
+      for line in objects
+      {
+         lines += string (line) ?? "" + "\n"
+      }
+      
+      sourceText .wrappedValue .removeAll ()
+      sourceText .wrappedValue .append (lines)
+   }
+
    private final func fieldArray (_ objects : Any?, _ node : X3DNode)
    {
       guard let objects = objects as? [Any] else { return }
@@ -397,11 +414,6 @@ internal final class JSONParser :
       guard let objects = objects as? [Any] else { return }
    }
 
-   private final func sourceTextArray (_ objects : Any?, _ node : X3DNode)
-   {
-      guard let objects = objects as? [Any] else { return }
-   }
-   
    private final func isObject (_ object : Any?, _ node : X3DNode)
    {
       guard let object = object as? [String : Any] else { return }

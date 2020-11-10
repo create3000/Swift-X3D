@@ -18,7 +18,8 @@ public class X3DScriptNode :
    
    public   final override var canUserDefinedFields  : Bool { true }
    internal final override var extendedEventHandling : Bool { false }
-   internal final override var sourceText            : MFString? { $url }
+   
+   internal final override func getSourceText () ->  MFString? { $url }
 
    // X3DUrlObject
    

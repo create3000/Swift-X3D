@@ -29,7 +29,7 @@ public final class ShaderPart :
    
    // Properties
    
-   internal final override var sourceText : MFString? { $url }
+   internal final override func getSourceText () ->  MFString? { $url }
 
    // Construction
    

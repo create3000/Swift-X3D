@@ -298,7 +298,7 @@ internal final class XMLParser :
 
       guard let node = parents .last as? X3DNode else { return }
 
-      guard let field = node .sourceText else { return }
+      guard let field = node .getSourceText () else { return }
       
       guard let value = element .stringValue else { return }
       

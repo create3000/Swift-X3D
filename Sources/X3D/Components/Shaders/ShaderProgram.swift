@@ -26,8 +26,9 @@ public final class ShaderProgram :
    
    // Properties
    
-   public   final override var canUserDefinedFields : Bool { true }
-   internal final override var sourceText           : MFString? { $url }
+   public final override var canUserDefinedFields : Bool { true }
+   
+   internal final override func getSourceText () ->  MFString? { $url }
 
    // X3DUrlObject
    

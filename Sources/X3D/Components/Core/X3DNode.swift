@@ -29,7 +29,7 @@ public class X3DNode :
    
    // Properties
    
-   internal var sourceText : MFString? { nil }
+   internal func getSourceText () -> MFString? { nil }
 
    // Construction
    

@@ -15,9 +15,7 @@ public final class X3DProtoDeclaration :
    
    // Properties
    
-   @SFNode public private(set) var body : X3DExecutionContext?
-
-   public final override var proto : X3DProtoDeclaration? { self }
+   @SFNode private var body : X3DExecutionContext?
    
    // Construction
    
@@ -36,4 +34,10 @@ public final class X3DProtoDeclaration :
       
       body! .setup ()
    }
+   
+   // Property access
+   
+   public final override func getProto () -> X3DProtoDeclaration? { self }
+   
+   public final func getBody () -> X3DExecutionContext { body! }
 }

@@ -608,7 +608,7 @@ internal final class VRMLParser :
       do
       {
          protos            .append (proto)
-         executionContexts .append (proto .body!)
+         executionContexts .append (proto .getBody ())
          
          defer
          {

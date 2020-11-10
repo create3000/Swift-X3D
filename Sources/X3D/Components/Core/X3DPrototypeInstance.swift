@@ -22,8 +22,8 @@ public class X3DPrototypeInstance :
 
    // Properties
    
-   @SFNode public private(set) var protoNode : X3DProtoDeclarationNode?
-   @SFNode public private(set) var body      : X3DExecutionContext?
+   @SFNode private var protoNode : X3DProtoDeclarationNode?
+   @SFNode private var body      : X3DExecutionContext?
    
    // Construction
    
@@ -70,7 +70,7 @@ public class X3DPrototypeInstance :
    
    private func update ()
    {
-      guard let proto = protoNode! .proto else { return }
+      guard let proto = protoNode! .getProto () else { return }
       
       if protoNode! .isExternProto
       {
@@ -116,21 +116,21 @@ public class X3DPrototypeInstance :
       
       // Extern protos
       
-      for externproto in proto .body! .getExternProtoDeclarations ()
+      for externproto in proto .getBody () .getExternProtoDeclarations ()
       {
          try! body! .updateExternProtoDeclaration (name: externproto .getName (), externproto: externproto)
       }
       
       // Protos
       
-      for proto in proto .body! .getProtoDeclarations ()
+      for proto in proto .getBody () .getProtoDeclarations ()
       {
          try! body! .updateProtoDeclaration (name: proto .getName (), proto: proto)
       }
       
       // Root nodes
       
-      for rootNode in proto .body! .rootNodes
+      for rootNode in proto .getBody () .rootNodes
       {
          if rootNode == nil
          {
@@ -146,7 +146,7 @@ public class X3DPrototypeInstance :
       
       // Routes
       
-      for route in proto .body! .getRoutes ()
+      for route in proto .getBody () .getRoutes ()
       {
          let sourceNode       = try! body! .getNamedNode (name: route .sourceNode! .getName ())
          let sourceField      = route .sourceField! .getName ()
@@ -167,6 +167,8 @@ public class X3DPrototypeInstance :
    {
       update ()
    }
+   
+   internal final func getBody () -> X3DExecutionContext { body! }
 
    // Root node handling
 

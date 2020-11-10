@@ -362,14 +362,13 @@ internal final class XMLParser :
          {
             for child in children
             {
-               if child .name == "ProtoInterface"
-               {
-                  parents .append (proto)
-                  
-                  defer { parents .removeLast () }
-                  
-                  protoInterfaceElement (child as? XMLElement)
-               }
+               guard child .name == "ProtoInterface" else { continue }
+            
+               parents .append (proto)
+               
+               defer { parents .removeLast () }
+               
+               protoInterfaceElement (child as? XMLElement)
             }
          }
 
@@ -377,21 +376,20 @@ internal final class XMLParser :
          {
             for child in children
             {
-               if child .name == "ProtoBody"
+               guard child .name == "ProtoBody" else { continue }
+               
+               protos            .append (proto)
+               executionContexts .append (proto .getBody ())
+               parents           .append (proto)
+               
+               defer
                {
-                  protos            .append (proto)
-                  executionContexts .append (proto .body!)
-                  parents           .append (proto)
-                  
-                  defer
-                  {
-                     protos            .removeLast ()
-                     executionContexts .removeLast ()
-                     parents           .removeLast ()
-                  }
-
-                  protoBodyElement (child as? XMLElement)
+                  protos            .removeLast ()
+                  executionContexts .removeLast ()
+                  parents           .removeLast ()
                }
+
+               protoBodyElement (child as? XMLElement)
             }
          }
 

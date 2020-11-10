@@ -153,7 +153,7 @@ DEF P P { }
          let c = try s .getNamedNode (name: "P") as! X3DPrototypeInstance
          
          XCTAssert (c .innerNode! .getType () .contains (.Transform))
-         XCTAssert (c .body! .getRoutes () .count == 2)
+         XCTAssert (c .getBody () .getRoutes () .count == 2)
       }
    }
    
@@ -560,8 +560,8 @@ function initialize ()
       for typeName in browser .getSupportedNodes ()
       {
          let node = try browser .getExecutionContext () .createNode (typeName: typeName)
-         debugPrint (name, node .getTypeName ())
-         XCTAssert (name == node .getTypeName ())
+         debugPrint (typeName, node .getTypeName ())
+         XCTAssert (typeName == node .getTypeName ())
       }
    }
    

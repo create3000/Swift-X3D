@@ -49,7 +49,7 @@ public class X3DNode :
    /// Copies this node into prototype instance
    internal final func copy (with protoInstance : X3DPrototypeInstance) -> X3DNode
    {
-      let body = protoInstance .body!
+      let body = protoInstance .getBody ()
       
       if let namedNode = try? body .getNamedNode (name: getName ())
       {

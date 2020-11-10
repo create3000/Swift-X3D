@@ -16,29 +16,11 @@ public final class X3DExternProtoDeclaration :
    
    // Properties
    
-   @SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE
-   @MFString public final var url     : MFString .Value
-   
+   @SFEnum   public   final var loadState     : X3DLoadState = .NOT_STARTED_STATE
+   @MFString public   final var url           : MFString .Value
+   @SFNode   internal final var internalScene : X3DScene?
+
    public final override var isExternProto : Bool { true }
-   
-   public final override var proto : X3DProtoDeclaration?
-   {
-      if let internalScene = internalScene
-      {
-         if let fragment = internalScene .getWorldURL () .fragment
-         {
-            return internalScene .getProtoDeclarations () .first { $0 .getName () == fragment }
-         }
-         
-         return internalScene .getProtoDeclarations () .first
-      }
-      
-      return nil
-   }
-   
-   // Properties
-   
-   @SFNode internal final var internalScene : X3DScene?
 
    // Construction
    
@@ -83,6 +65,23 @@ public final class X3DExternProtoDeclaration :
       setLoadState (.NOT_STARTED_STATE)
 
       requestImmediateLoad ()
+   }
+   
+   // Property access
+   
+   public final override func getProto () -> X3DProtoDeclaration?
+   {
+      if let internalScene = internalScene
+      {
+         if let fragment = internalScene .getWorldURL () .fragment
+         {
+            return internalScene .getProtoDeclarations () .first { $0 .getName () == fragment }
+         }
+         
+         return internalScene .getProtoDeclarations () .first
+      }
+      
+      return nil
    }
 
    // Load handling

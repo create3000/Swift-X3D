@@ -134,7 +134,7 @@ public final class X3DBrowser :
       
       if scene != nil
       {
-         console .info (t("The browser is requested to replace the world with '%@'.", scene! .worldURL .description))
+         console .info (t("The browser is requested to replace the world with '%@'.", scene! .getWorldURL () .description))
       }
       
       // Shutdown world.
@@ -173,7 +173,7 @@ public final class X3DBrowser :
                let x3dSyntax = String (decoding: data .isGzipped ? try data .gunzipped () : data, as: UTF8 .self)
                let scene     = X3DScene (with: self)
 
-               scene .worldURL = URL .absoluteURL
+               scene .setWorldURL (URL .absoluteURL)
                
                try X3DGoldenGate .parseIntoScene (scene: scene, x3dSyntax: x3dSyntax)
                
@@ -213,7 +213,7 @@ public final class X3DBrowser :
    {
       let scene = X3DScene (with: self)
 
-      scene .worldURL = currentScene .worldURL
+      scene .setWorldURL (currentScene .getWorldURL ())
       
       try X3DGoldenGate .parseIntoScene (scene: scene, x3dSyntax: x3dSyntax)
       
@@ -241,13 +241,13 @@ public final class X3DBrowser :
             let x3dSyntax = String (decoding: data .isGzipped ? try data .gunzipped () : data, as: UTF8 .self)
             let scene     = X3DScene (with: self)
 
-            scene .worldURL = URL .absoluteURL
+            scene .setWorldURL (URL .absoluteURL)
             
             try X3DGoldenGate .parseIntoScene (scene: scene, x3dSyntax: x3dSyntax)
             
             scene .setup ()
             
-            console .info (t("Done loading scene '%@'", scene .worldURL .description))
+            console .info (t("Done loading scene '%@'", scene .getWorldURL () .description))
             
             return scene
          }

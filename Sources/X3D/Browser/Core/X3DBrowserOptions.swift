@@ -49,7 +49,7 @@ public final class X3DBrowserOptions :
       addField (.inputOutput, "StraightenHorizon",      $StraightenHorizon)
       addField (.inputOutput, "LogarithmicDepthBuffer", $LogarithmicDepthBuffer)
       
-      if executionContext .specificationVersion == "2.0"
+      if executionContext .getSpecificationVersion () == "2.0"
       {
          addFieldAlias (alias: "AntiAliased", name: "Antialiased")
       }

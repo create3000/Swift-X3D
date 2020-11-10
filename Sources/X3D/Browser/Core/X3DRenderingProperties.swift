@@ -33,7 +33,7 @@ public final class X3DRenderingProperties :
       addField (.inputOutput, "ColorDepth",      $ColorDepth)
       addField (.inputOutput, "TextureMemory",   $TextureMemory)
       
-      if executionContext .specificationVersion == "2.0"
+      if executionContext .getSpecificationVersion () == "2.0"
       {
          addFieldAlias (alias: "AntiAliased", name: "Antialiased")
       }

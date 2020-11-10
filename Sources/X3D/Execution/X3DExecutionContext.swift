@@ -33,12 +33,26 @@ public class X3DExecutionContext :
    }
    
    // Scene properties
+   
+   public func getEncoding () -> String { scene! .getEncoding () }
+   
+   internal func setEncoding (_ value : String) { scene! .setEncoding (value) }
 
-   public var encoding             : String { get { scene! .encoding } }
-   public var specificationVersion : String { get { scene! .specificationVersion } }
-   public var characterEncoding    : String { get { scene! .characterEncoding } }
-   public var comment              : String { get { scene! .comment } }
-   public var worldURL             : URL    { get { scene! .worldURL } }
+   public func getSpecificationVersion () -> String { scene! .getSpecificationVersion () }
+   
+   internal func setSpecificationVersion (_ value : String) { scene! .setSpecificationVersion (value) }
+
+   public func getCharacterEncoding () -> String { scene! .getCharacterEncoding () }
+
+   internal func setCharacterEncoding (_ value : String) { scene! .setCharacterEncoding (value) }
+
+   public func getComment () -> String { scene! .getComment () }
+
+   internal func setComment (_ value : String) { scene! .setComment (value) }
+
+   public func getWorldURL () -> URL { scene! .getWorldURL () }
+
+   internal func setWorldURL (_ value : URL) { scene! .setWorldURL (value) }
 
    // Configuration handling
    

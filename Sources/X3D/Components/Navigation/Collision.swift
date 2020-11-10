@@ -48,7 +48,7 @@ public final class Collision :
       addField (.inputOnly,      "removeChildren", $removeChildren)
       addField (.inputOutput,    "children",       $children)
       
-      if executionContext .specificationVersion == "2.0"
+      if executionContext .getSpecificationVersion () == "2.0"
       {
          addFieldAlias (alias: "collide", name: "enabled")
       }

@@ -52,9 +52,11 @@ internal final class JSONParser :
       
       defer { executionContexts .removeLast () }
       
+      scene .setEncoding ("JSON")
+      
       if let _ = string (object ["encoding"])
       {
-         
+         // Character encoding
       }
       
       if let profileString = string (object ["@profile"])
@@ -71,7 +73,7 @@ internal final class JSONParser :
       
       if let versionString = string (object ["@version"])
       {
-         scene .specificationVersion = versionString
+         scene .setSpecificationVersion (versionString)
       }
 
       headObject (object ["head"])

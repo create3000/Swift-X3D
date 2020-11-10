@@ -136,7 +136,7 @@ public final class Inline :
 
       // Start load.
 
-      let url = self .url .map { URL (string: $0, relativeTo: executionContext! .worldURL) } .compactMap { $0 }
+      let url = self .url .map { URL (string: $0, relativeTo: executionContext! .getWorldURL ()) } .compactMap { $0 }
       
       browser! .inlineQueue .async
       {

@@ -557,9 +557,9 @@ function initialize ()
    {
       let browser = X3DBrowser ()
       
-      for (name, interface) in browser .supportedNodes
+      for typeName in browser .getSupportedNodes ()
       {
-         let node = interface .init (with: browser .currentScene)
+         let node = try browser .getExecutionContext () .createNode (typeName: typeName)
          debugPrint (name, node .getTypeName ())
          XCTAssert (name == node .getTypeName ())
       }

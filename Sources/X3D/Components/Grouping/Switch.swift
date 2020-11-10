@@ -43,7 +43,7 @@ public final class Switch :
       addField (.inputOnly,      "removeChildren", $removeChildren)
       addField (.inputOutput,    "children",       $children)
       
-      if executionContext .specificationVersion == "2.0"
+      if executionContext .getSpecificationVersion () == "2.0"
       {
          addFieldAlias (alias: "choice", name: "children")
       }

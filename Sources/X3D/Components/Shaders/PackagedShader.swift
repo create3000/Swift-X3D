@@ -104,7 +104,7 @@ public final class PackagedShader :
       let url = self .url
          .map (filter_data_url)
          .compactMap { $0 }
-         .map { URL (string: $0, relativeTo: executionContext! .worldURL) }
+         .map { URL (string: $0, relativeTo: executionContext! .getWorldURL ()) }
          .compactMap { $0 }
       
       let name           = self .getName ()

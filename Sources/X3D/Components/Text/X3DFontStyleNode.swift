@@ -205,7 +205,7 @@ public class X3DFontStyleNode :
          }
          else
          {
-            return (URL (string: $0, relativeTo: executionContext! .worldURL), true)
+            return (URL (string: $0, relativeTo: executionContext! .getWorldURL ()), true)
          }
       }
       .filter { $0 .URL != nil }

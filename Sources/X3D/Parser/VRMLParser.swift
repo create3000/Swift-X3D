@@ -181,6 +181,8 @@ internal final class VRMLParser :
       defer { executionContexts .removeLast () }
 
       headerStatement ()
+      
+      scene .setEncoding ("VRML")
 
       try profileStatement ()
       try componentStatements ()
@@ -214,10 +216,9 @@ internal final class VRMLParser :
       guard let headerCharacters = scanner .scanUpToCharacters (from: Grammar .lineBreak) else { return }
       guard let matches          = Grammar .header .matches (in: headerCharacters)        else { return }
 
-      scene .encoding             = "VRML"
-      scene .specificationVersion = matches [2]
-      scene .characterEncoding    = matches [3]
-      scene .comment              = matches [4]
+      scene .setSpecificationVersion (matches [2])
+      scene .setCharacterEncoding    (matches [3])
+      scene .setComment              (matches [4])
    }
    
    private final func profileStatement () throws

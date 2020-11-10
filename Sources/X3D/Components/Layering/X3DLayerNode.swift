@@ -108,7 +108,7 @@ public class X3DLayerNode :
       traverse (.Camera, browser! .renderer)
       
       let navigationInfoNode = navigationInfoList .first ()
-      let viewpointNode      = viewpointList      .first (name: executionContext! .worldURL .fragment)
+      let viewpointNode      = viewpointList      .first (name: executionContext! .getWorldURL () .fragment)
       let backgroundNode     = backgroundList     .first ()
       let fogNode            = fogList            .first ()
       

@@ -59,6 +59,8 @@ internal final class XMLParser :
       
       guard element .name == "X3D" else { return }
       
+      scene .setEncoding ("XML")
+      
       if let profile = element .attribute (name: "profile")
       {
          do
@@ -73,7 +75,7 @@ internal final class XMLParser :
       
       if let version = element .attribute (name: "version")
       {
-         scene .specificationVersion = version
+         scene .setSpecificationVersion (version)
       }
       
       executionContexts .append (scene)

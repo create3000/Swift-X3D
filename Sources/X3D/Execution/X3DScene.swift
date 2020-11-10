@@ -58,17 +58,31 @@ public final class X3DScene :
    
    // Scene properties
    
-   private final var _encoding             : String = "SCRIPTED"
-   private final var _specificationVersion : String = "3.3"
-   private final var _characterEncoding    : String = "utf8"
-   private final var _comment              : String = ""
-   private final var _worldURL             : URL    = URLComponents () .url!
+   private final var encoding             : String = "SCRIPTED"
+   private final var specificationVersion : String = "3.3"
+   private final var characterEncoding    : String = "utf8"
+   private final var comment              : String = ""
+   private final var worldURL             : URL    = URLComponents () .url!
+   
+   public final override func getEncoding () -> String { encoding }
+   
+   internal final override func setEncoding (_ value : String) { encoding = value }
 
-   public internal(set) override var encoding             : String { get { _encoding }             set { _encoding             = newValue } }
-   public internal(set) override var specificationVersion : String { get { _specificationVersion } set { _specificationVersion = newValue } }
-   public internal(set) override var characterEncoding    : String { get { _characterEncoding }    set { _characterEncoding    = newValue } }
-   public internal(set) override var comment              : String { get { _comment }              set { _comment              = newValue } }
-   public internal(set) override var worldURL             : URL    { get { _worldURL }             set { _worldURL             = newValue } }
+   public final override func getSpecificationVersion () -> String { specificationVersion }
+   
+   internal final override func setSpecificationVersion (_ value : String) { specificationVersion = value }
+
+   public final override func getCharacterEncoding () -> String { characterEncoding }
+
+   internal final override func setCharacterEncoding (_ value : String) { characterEncoding = value }
+
+   public final override func getComment () -> String { comment }
+
+   internal final override func setComment (_ value : String) { comment = value }
+
+   public final override func getWorldURL () -> URL { worldURL }
+
+   internal final override func setWorldURL (_ value : URL) { worldURL = value }
 
    // Configuration handling
    

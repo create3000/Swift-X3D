@@ -25,7 +25,7 @@ public final class X3DExternProtoDeclaration :
    {
       if let internalScene = internalScene
       {
-         if let fragment = internalScene .worldURL .fragment
+         if let fragment = internalScene .getWorldURL () .fragment
          {
             return internalScene .protos .first { $0 .getName () == fragment }
          }
@@ -97,7 +97,7 @@ public final class X3DExternProtoDeclaration :
       
       guard let executionContext = executionContext else { return }
 
-      let url = self .url .map { URL (string: $0, relativeTo: executionContext .worldURL) } .compactMap { $0 }
+      let url = self .url .map { URL (string: $0, relativeTo: executionContext .getWorldURL ()) } .compactMap { $0 }
       
       browser! .inlineQueue .async
       {

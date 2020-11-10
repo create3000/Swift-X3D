@@ -83,7 +83,7 @@ public final class ImageTexture :
 
       // Start load.
       
-      let url             = self .url .map { URL (string: $0, relativeTo: executionContext! .worldURL) } .compactMap { $0 }
+      let url             = self .url .map { URL (string: $0, relativeTo: executionContext! .getWorldURL ()) } .compactMap { $0 }
       let generateMipMaps = self .generateMipMaps
 
       browser! .imageQueue .async

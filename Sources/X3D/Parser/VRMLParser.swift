@@ -232,19 +232,19 @@ internal final class VRMLParser :
          throw X3DError .INVALID_X3D (t("Expected a profile name."))
       }
 
-      scene .profile = try scene .browser! .getProfile (name: profileNameId)
+      scene .setProfile (try scene .browser! .getProfile (name: profileNameId))
    }
    
    private final func componentStatements () throws
    {
-      var components = X3DComponentInfoArray ()
+      var components = [X3DComponentInfo] ()
       
       while let component = try componentStatement ()
       {
          components .append (component)
       }
       
-      scene .components = components
+      scene .setComponents (components)
    }
    
    private final func componentStatement () throws -> X3DComponentInfo?

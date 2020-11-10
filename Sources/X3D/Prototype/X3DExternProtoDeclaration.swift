@@ -27,10 +27,10 @@ public final class X3DExternProtoDeclaration :
       {
          if let fragment = internalScene .getWorldURL () .fragment
          {
-            return internalScene .protos .first { $0 .getName () == fragment }
+            return internalScene .getProtoDeclarations () .first { $0 .getName () == fragment }
          }
          
-         return internalScene .protos .first
+         return internalScene .getProtoDeclarations () .first
       }
       
       return nil

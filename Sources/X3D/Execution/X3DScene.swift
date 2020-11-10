@@ -86,11 +86,18 @@ public final class X3DScene :
 
    // Configuration handling
    
-   private final var _profile    : X3DProfileInfo        = SupportedProfiles .profiles ["Full"]!
-   private final var _components : X3DComponentInfoArray = [ ]
+   private final var profile    : X3DProfileInfo     = SupportedProfiles .profiles ["Full"]!
+   private final var components : [X3DComponentInfo] = [ ]
    
-   public internal(set) override var profile    : X3DProfileInfo        { get { _profile }     set { _profile    = newValue } }
-   public internal(set) override var components : X3DComponentInfoArray { get { _components }  set { _components = newValue } }
+   public final override func getProfile () -> X3DProfileInfo { profile }
+   
+   internal final override func setProfile (_ value : X3DProfileInfo) { profile = value }
+   
+   public final override func getComponents () -> [X3DComponentInfo] { components }
+   
+   internal final override func setComponents (_ value : [X3DComponentInfo]) { components = value }
+   
+   internal final override func addComponent (_ component : X3DComponentInfo) { components .append (component) }
    
    // Unit handling
    
@@ -99,14 +106,14 @@ public final class X3DScene :
    private final let LENGTH = 2
    private final let MASS   = 3
 
-   private final var units : X3DUnitInfoArray = [
+   private final var units : [X3DUnitInfo] = [
       X3DUnitInfo (category: .angle,  name: "radian",   conversionFactor: 1),
       X3DUnitInfo (category: .force,  name: "newton",   conversionFactor: 1),
       X3DUnitInfo (category: .length, name: "metre",    conversionFactor: 1),
       X3DUnitInfo (category: .mass,   name: "kilogram", conversionFactor: 1),
    ]
    
-   public final override func getUnits () -> X3DUnitInfoArray { units }
+   public final override func getUnits () -> [X3DUnitInfo] { units }
 
    public final override func updateUnit (_ category : X3DUnitCategory, name : String, conversionFactor : Double)
    {

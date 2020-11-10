@@ -65,7 +65,7 @@ internal final class XMLParser :
       {
          do
          {
-            scene .profile = try scene .browser! .getProfile (name: profile)
+            scene .setProfile (try scene .browser! .getProfile (name: profile))
          }
          catch
          {
@@ -158,7 +158,7 @@ internal final class XMLParser :
 
          let component = try scene .browser! .getComponent (name: componentNameId, level: componentSupportLevel)
          
-         scene .components .append (component)
+         scene .addComponent (component)
       }
       catch
       {

@@ -56,12 +56,19 @@ public class X3DExecutionContext :
 
    // Configuration handling
    
-   public var profile    : X3DProfileInfo        { scene! .profile }
-   public var components : X3DComponentInfoArray { scene! .components }
+   public func getProfile () -> X3DProfileInfo { scene! .getProfile () }
    
+   internal func setProfile (_ value : X3DProfileInfo) { scene! .setProfile (value) }
+   
+   public func getComponents () -> [X3DComponentInfo] { scene! .getComponents () }
+   
+   internal func setComponents (_ value : [X3DComponentInfo]) { scene! .setComponents (value) }
+   
+   internal func addComponent (_ component : X3DComponentInfo) { scene! .addComponent (component) }
+
    // Unit handling
    
-   public func getUnits () -> X3DUnitInfoArray { scene! .getUnits () }
+   public func getUnits () -> [X3DUnitInfo] { scene! .getUnits () }
 
    public func updateUnit (_ category : X3DUnitCategory, name : String, conversionFactor : Double)
    {
@@ -285,7 +292,7 @@ public class X3DExecutionContext :
    
    // Proto handling
    
-   public private(set) final var protos = [X3DProtoDeclaration] ()
+   private final var protos = [X3DProtoDeclaration] ()
    
    public final func createProtoDeclaration (name : String, interfaceDeclarations : [X3DInterfaceDeclaration], setup : Bool = true) -> X3DProtoDeclaration
    {
@@ -357,6 +364,11 @@ public class X3DExecutionContext :
       protos .removeAll (where: { $0 .getName () == name })
    }
    
+   public final func hasProtoDeclaration (name : String) -> Bool
+   {
+      return protos .contains (where: { $0 .getName () == name })
+   }
+
    public final func getProtoDeclaration (name : String) throws -> X3DProtoDeclaration
    {
       guard let proto = protos .first (where: { $0 .getName () == name }) else
@@ -367,15 +379,12 @@ public class X3DExecutionContext :
       return proto
    }
    
-   public final func hasProtoDeclaration (name : String) -> Bool
-   {
-      return protos .contains (where: { $0 .getName () == name })
-   }
+   public final func getProtoDeclarations () -> [X3DProtoDeclaration] { protos }
    
    // Extern proto handling
    
-   public private(set) final var externprotos = [X3DExternProtoDeclaration] ()
-   
+   private final var externprotos = [X3DExternProtoDeclaration] ()
+
    public final func createExternProtoDeclaration (name : String, interfaceDeclarations : [X3DInterfaceDeclaration], url : [String], setup : Bool = true) -> X3DExternProtoDeclaration
    {
       let externproto = X3DExternProtoDeclaration (executionContext: self, url: url)
@@ -446,6 +455,11 @@ public class X3DExecutionContext :
       externprotos .removeAll (where: { $0 .getName () == name })
    }
 
+   public final func hasExternProtoDeclaration (name : String) -> Bool
+   {
+      return externprotos .contains (where: { $0 .getName () == name })
+   }
+
    public final func getExternProtoDeclaration (name : String) throws -> X3DExternProtoDeclaration
    {
       guard let externproto = externprotos .first (where: { $0 .getName () == name }) else
@@ -456,14 +470,11 @@ public class X3DExecutionContext :
       return externproto
    }
    
-   public final func hasExternProtoDeclaration (name : String) -> Bool
-   {
-      return externprotos .contains (where: { $0 .getName () == name })
-   }
+   public final func getExternProtoDeclarations () -> [X3DExternProtoDeclaration] { externprotos }
 
    // Route handling
    
-   public private(set) final var routes = X3DRouteArray ()
+   private final var routes = [X3DRoute] ()
    
    @discardableResult
    public final func addRoute (sourceNode : X3DNode,
@@ -531,4 +542,6 @@ public class X3DExecutionContext :
       
       routes .remove (at: index)
    }
+   
+   public final func getRoutes () -> [X3DRoute] { routes }
 }

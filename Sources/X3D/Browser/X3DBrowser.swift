@@ -116,13 +116,12 @@ public final class X3DBrowser :
    
    public final func getExecutionContext () -> X3DScene { currentScene }
    
-   public final func createScene (profile : X3DProfileInfo, components : X3DComponentInfoArray) -> X3DScene
+   public final func createScene (profile : X3DProfileInfo, components : [X3DComponentInfo]) -> X3DScene
    {
       let scene = X3DScene (with: self)
       
-      scene .profile    = profile
-      scene .components = components
-      
+      scene .setProfile (profile)
+      scene .setComponents (components)
       scene .setup ()
       
       return scene

@@ -116,14 +116,14 @@ public class X3DPrototypeInstance :
       
       // Extern protos
       
-      for externproto in proto .body! .externprotos
+      for externproto in proto .body! .getExternProtoDeclarations ()
       {
          try! body! .updateExternProtoDeclaration (name: externproto .getName (), externproto: externproto)
       }
       
       // Protos
       
-      for proto in proto .body! .protos
+      for proto in proto .body! .getProtoDeclarations ()
       {
          try! body! .updateProtoDeclaration (name: proto .getName (), proto: proto)
       }
@@ -146,7 +146,7 @@ public class X3DPrototypeInstance :
       
       // Routes
       
-      for route in proto .body! .routes
+      for route in proto .body! .getRoutes ()
       {
          let sourceNode       = try! body! .getNamedNode (name: route .sourceNode! .getName ())
          let sourceField      = route .sourceField! .getName ()

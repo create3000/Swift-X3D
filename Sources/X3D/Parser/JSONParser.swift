@@ -63,7 +63,7 @@ internal final class JSONParser :
       {
          do
          {
-            scene .profile = try scene .browser! .getProfile (name: profileString)
+            scene .setProfile (try scene .browser! .getProfile (name: profileString))
          }
          catch
          {
@@ -116,7 +116,7 @@ internal final class JSONParser :
 
       do
       {
-         scene .components .append (try scene .browser! .getComponent (name: componentName, level: componentLevel))
+         scene .addComponent (try scene .browser! .getComponent (name: componentName, level: componentLevel))
       }
       catch
       {

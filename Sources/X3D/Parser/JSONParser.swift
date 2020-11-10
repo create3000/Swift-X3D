@@ -254,11 +254,57 @@ internal final class JSONParser :
    private final func importObject (_ object : Any?)
    {
       guard let object = object as? [String : Any] else { return }
+      
+      guard let inlineDEF = string (object ["@inlineDEF"]) else
+      {
+         return console .warn (t("Expected @inlineDEF property."))
+      }
+      
+      guard let inlineNode = try? executionContext .getNamedNode (name: inlineDEF) as? Inline else
+      {
+         return console .warn (t("Inline node named '%@' not found.", inlineDEF))
+      }
+      
+      guard let importedDEF = string (object ["@importedDEF"]) else
+      {
+         return console .warn (t("Expected @importedDEF property."))
+      }
+      
+      let ASName = string (object ["@AS"]) ?? importedDEF
+      
+      do
+      {
+         try scene .updateImportedNode (inlineNode: inlineNode, exportedName: importedDEF, importedName: ASName)
+      }
+      catch
+      {
+         console .warn (error .localizedDescription)
+      }
    }
 
    private final func exportObject (_ object : Any?)
    {
       guard let object = object as? [String : Any] else { return }
+      
+      guard scene == executionContext else { return }
+      
+      guard let localDEF = string (object ["@localDEF"]) else
+      {
+         return console .warn (t("Expected @localDEF property."))
+      }
+      
+      let ASName = string (object ["@AS"]) ?? localDEF
+      
+      do
+      {
+         let node = try scene .getLocalNode (localName: localDEF)
+
+         try scene .updateExportedNode (exportedName: ASName, node: node)
+      }
+      catch
+      {
+         console .warn (error .localizedDescription)
+      }
    }
 
    private final func nodeObject (_ object : Any?, nodeType : String) -> X3DNode?

@@ -153,7 +153,7 @@ DEF P P { }
          let c = try s .getNamedNode (name: "P") as! X3DPrototypeInstance
          
          XCTAssert (c .innerNode! .getType () .contains (.Transform))
-         XCTAssert (c .body! .routes .count == 2)
+         XCTAssert (c .body! .getRoutes () .count == 2)
       }
    }
    

@@ -244,6 +244,44 @@ internal final class JSONParser :
    private final func protoDeclareObject (_ object : Any?)
    {
       guard let object = object as? [String : Any] else { return }
+      
+      guard let name = string (object ["@name"]) else
+      {
+         return console .warn (t("Expected @name property."))
+      }
+
+      let proto = executionContext .createProtoDeclaration (name: name, interfaceDeclarations: [ ], setup: false)
+
+      protoInterfaceObject (object ["ProtoInterface"], proto)
+      
+      protos            .append (proto)
+      executionContexts .append (proto .getBody ())
+      
+      defer
+      {
+         protos            .removeLast ()
+         executionContexts .removeLast ()
+      }
+
+      protoBodyObject (object ["ProtoBody"], proto)
+
+      try? executionContext .updateProtoDeclaration (name: name, proto: proto)
+      
+      proto .setup ()
+   }
+   
+   private final func protoInterfaceObject (_ object : Any?, _ proto : X3DProtoDeclaration)
+   {
+      guard let object = object as? [String : Any] else { return }
+      
+      fieldArray (object ["field"], proto)
+   }
+   
+   private final func protoBodyObject (_ object : Any?, _ proto : X3DProtoDeclaration)
+   {
+      guard let object = object as? [String : Any] else { return }
+      
+      childrenArray (object ["-children"], proto .getBody () .$rootNodes)
    }
 
    private final func routeObject (_ object : Any?)
@@ -537,7 +575,7 @@ internal final class JSONParser :
       }
    }
 
-   private final func fieldArray (_ objects : Any?, _ node : X3DNode)
+   private final func fieldArray (_ objects : Any?, _ node : X3DBaseNode)
    {
       guard let objects = objects as? [Any] else { return }
       
@@ -547,7 +585,7 @@ internal final class JSONParser :
       }
    }
 
-   private final func fieldObject (_ object : Any?, _ node : X3DNode)
+   private final func fieldObject (_ object : Any?, _ node : X3DBaseNode)
    {
       guard let object = object as? [String : Any] else { return }
       

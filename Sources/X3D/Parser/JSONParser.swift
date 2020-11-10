@@ -239,6 +239,26 @@ internal final class JSONParser :
    private final func externProtoDeclareObject (_ object : Any?)
    {
       guard let object = object as? [String : Any] else { return }
+      
+      guard let name = string (object ["@name"]) else
+      {
+         return console .warn (t("Expected @name property."))
+      }
+      
+      let URLList = MFString ()
+      
+      guard mfstringValue (object ["@url"], URLList) else
+      {
+         return console .warn (t("Expected @url property."))
+      }
+      
+      let externproto = executionContext .createExternProtoDeclaration (name: name, interfaceDeclarations: [ ], url: [String] (URLList .wrappedValue), setup: false)
+
+      fieldArray (object ["field"], externproto)
+
+      try? executionContext .updateExternProtoDeclaration (name: name, externproto: externproto)
+      
+      externproto .setup ()
    }
 
    private final func protoDeclareObject (_ object : Any?)

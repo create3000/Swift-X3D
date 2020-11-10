@@ -329,7 +329,7 @@ internal final class XMLParser :
 
          // Create externproto and parse fields.
          
-         let externproto = executionContext .createExternProtoDeclaration (name: name, interfaceDeclarations: [ ], url: Array <String> (field .wrappedValue))
+         let externproto = executionContext .createExternProtoDeclaration (name: name, interfaceDeclarations: [ ], url: Array <String> (field .wrappedValue), setup: false)
 
          parents .append (externproto)
          
@@ -338,6 +338,8 @@ internal final class XMLParser :
          protoInterfaceElement (element) // Parse fields.
          
          try executionContext .updateExternProtoDeclaration (name: name, externproto: externproto)
+         
+         externproto .setup ()
       }
       catch
       {

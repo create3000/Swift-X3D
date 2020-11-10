@@ -786,9 +786,11 @@ internal final class VRMLParser :
          throw X3DError .INVALID_X3D (t("Expected a URL list after EXTERNPROTO interface declaration '%@'.", nodeTypeId))
       }
       
-      let externproto = executionContext .createExternProtoDeclaration (name: nodeTypeId, interfaceDeclarations: externInterfaceDeclarations, url: URLList)
+      let externproto = executionContext .createExternProtoDeclaration (name: nodeTypeId, interfaceDeclarations: externInterfaceDeclarations, url: URLList, setup: false)
 
       try executionContext .updateExternProtoDeclaration (name: nodeTypeId, externproto: externproto)
+      
+      externproto .setup ()
 
       return true
    }

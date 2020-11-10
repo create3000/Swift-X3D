@@ -294,7 +294,12 @@ public class X3DExecutionContext :
    
    private final var protos = [X3DProtoDeclaration] ()
    
-   public final func createProtoDeclaration (name : String, interfaceDeclarations : [X3DInterfaceDeclaration], setup : Bool = true) -> X3DProtoDeclaration
+   public final func createProtoDeclaration (name : String, interfaceDeclarations : [X3DInterfaceDeclaration]) -> X3DProtoDeclaration
+   {
+      return createProtoDeclaration (name: name, interfaceDeclarations: interfaceDeclarations, setup: true)
+   }
+   
+   internal final func createProtoDeclaration (name : String, interfaceDeclarations : [X3DInterfaceDeclaration], setup : Bool) -> X3DProtoDeclaration
    {
       let proto = X3DProtoDeclaration (executionContext: self)
       
@@ -384,8 +389,13 @@ public class X3DExecutionContext :
    // Extern proto handling
    
    private final var externprotos = [X3DExternProtoDeclaration] ()
+   
+   public final func createExternProtoDeclaration (name : String, interfaceDeclarations : [X3DInterfaceDeclaration], url : [String]) -> X3DExternProtoDeclaration
+   {
+      return createExternProtoDeclaration (name: name, interfaceDeclarations: interfaceDeclarations, url: url, setup: true)
+   }
 
-   public final func createExternProtoDeclaration (name : String, interfaceDeclarations : [X3DInterfaceDeclaration], url : [String], setup : Bool = true) -> X3DExternProtoDeclaration
+   internal final func createExternProtoDeclaration (name : String, interfaceDeclarations : [X3DInterfaceDeclaration], url : [String], setup : Bool) -> X3DExternProtoDeclaration
    {
       let externproto = X3DExternProtoDeclaration (executionContext: self, url: url)
       

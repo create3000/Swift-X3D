@@ -1,12 +1,12 @@
 //
-//  X3DSupportedNodes.swift
+//  SupportedNodes.swift
 //  X3D
 //
 //  Created by Holger Seelig on 11.09.20.
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-internal final class X3DSupportedNodes
+internal final class SupportedNodes
 {
    // Public properties
 

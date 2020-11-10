@@ -605,7 +605,7 @@ internal final class XMLParser :
          return console .warn (t("XML parser error: expected type attribute."))
       }
       
-      guard let supportedField = scene .browser! .supportedFields [fieldType] else
+      guard let supportedField = SupportedFields .fields [fieldType] else
       {
          return console .warn (t("XML parser error: unknown field type '%@'.", fieldType))
       }

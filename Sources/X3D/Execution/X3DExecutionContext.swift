@@ -92,7 +92,7 @@ public class X3DExecutionContext :
    
    internal final func createNode (typeName : String, setup : Bool) throws -> X3DNode
    {
-      guard let node = browser! .supportedNodes [typeName]? .init (with: self) else
+      guard let node = SupportedNodes .nodes [typeName]? .init (with: self) else
       {
          throw X3DError .INVALID_NAME ("Unknown node type '\(typeName)'.")
       }

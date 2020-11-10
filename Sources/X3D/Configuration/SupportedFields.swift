@@ -1,12 +1,12 @@
 //
-//  X3DSupportedFields.swift
+//  SupportedFields.swift
 //  X3D
 //
 //  Created by Holger Seelig on 27.09.20.
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-internal final class X3DSupportedFields
+internal final class SupportedFields
 {
    // Public properties
 

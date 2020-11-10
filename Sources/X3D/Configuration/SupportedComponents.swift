@@ -1,12 +1,12 @@
 //
-//  X3DSupportedComponents.swift
+//  SupportedComponents.swift
 //  X3D
 //
 //  Created by Holger Seelig on 20.09.20.
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-internal final class X3DSupportedComponents
+internal final class SupportedComponents
 {
    internal static let components : [String : X3DComponentInfo] = make ()
    internal static let aliases    : [String : String] = makeAliases ()

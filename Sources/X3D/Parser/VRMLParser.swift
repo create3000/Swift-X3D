@@ -674,7 +674,7 @@ internal final class VRMLParser :
             throw X3DError .INVALID_X3D ("Expected a name for field.")
          }
 
-         let field = scene .browser! .supportedFields [fieldType]! .init ()
+         let field = SupportedFields .fields [fieldType]! .init ()
          
          return (.inputOnly, fieldId, field)
       }
@@ -691,7 +691,7 @@ internal final class VRMLParser :
             throw X3DError .INVALID_X3D ("Expected a name for field.")
          }
 
-         let field = scene .browser! .supportedFields [fieldType]! .init ()
+         let field = SupportedFields .fields [fieldType]! .init ()
          
          return (.outputOnly, fieldId, field)
       }
@@ -708,7 +708,7 @@ internal final class VRMLParser :
             throw X3DError .INVALID_X3D ("Expected a name for field.")
          }
 
-         let field = scene .browser! .supportedFields [fieldType]! .init ()
+         let field = SupportedFields .fields [fieldType]! .init ()
          
          guard try fieldValue (for: field) else
          {
@@ -740,7 +740,7 @@ internal final class VRMLParser :
             throw X3DError .INVALID_X3D ("Expected a name for field.")
          }
 
-         let field = scene .browser! .supportedFields [fieldType]! .init ()
+         let field = SupportedFields .fields [fieldType]! .init ()
          
          guard try fieldValue (for: field) else
          {
@@ -820,7 +820,7 @@ internal final class VRMLParser :
             throw X3DError .INVALID_X3D ("Expected a name for field.")
          }
 
-         let field = scene .browser! .supportedFields [fieldType]! .init ()
+         let field = SupportedFields .fields [fieldType]! .init ()
          
          return (.inputOnly, fieldId, field)
       }
@@ -837,7 +837,7 @@ internal final class VRMLParser :
             throw X3DError .INVALID_X3D ("Expected a name for field.")
          }
 
-         let field = scene .browser! .supportedFields [fieldType]! .init ()
+         let field = SupportedFields .fields [fieldType]! .init ()
          
          return (.outputOnly, fieldId, field)
       }
@@ -854,7 +854,7 @@ internal final class VRMLParser :
             throw X3DError .INVALID_X3D ("Expected a name for field.")
          }
 
-         let field = scene .browser! .supportedFields [fieldType]! .init ()
+         let field = SupportedFields .fields [fieldType]! .init ()
          
          return (.initializeOnly, fieldId, field)
       }
@@ -871,7 +871,7 @@ internal final class VRMLParser :
             throw X3DError .INVALID_X3D ("Expected a name for field.")
          }
 
-         let field = scene .browser! .supportedFields [fieldType]! .init ()
+         let field = SupportedFields .fields [fieldType]! .init ()
          
          return (.inputOutput, fieldId, field)
       }
@@ -1039,7 +1039,7 @@ internal final class VRMLParser :
                         throw X3DError .INVALID_X3D (t("No such event or field '%@' inside PROTO %@ interface declaration.", isId, proto .getName ()))
                      }
 
-                     let supportedField = scene .browser! .supportedFields [fieldType]!
+                     let supportedField = SupportedFields .fields [fieldType]!
 
                      guard supportedField .type == reference .getType () else
                      {

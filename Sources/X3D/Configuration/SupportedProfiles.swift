@@ -1,12 +1,12 @@
 //
-//  X3DSupportedProfiles.swift
+//  SupportedProfiles.swift
 //  X3D
 //
 //  Created by Holger Seelig on 20.09.20.
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-internal final class X3DSupportedProfiles
+internal final class SupportedProfiles
 {
    internal static let profiles : [String : X3DProfileInfo] = make ()
    
@@ -17,7 +17,7 @@ internal final class X3DSupportedProfiles
          profiles [name] = X3DProfileInfo (name: name,
                                            title: title,
                                            providerUrl: providerUrl,
-                                           components: components .map { name in X3DSupportedComponents .components [name]! })
+                                           components: components .map { name in SupportedComponents .components [name]! })
       }
       
       var profiles = [String : X3DProfileInfo] ()

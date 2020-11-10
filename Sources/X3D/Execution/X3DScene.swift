@@ -72,7 +72,7 @@ public final class X3DScene :
 
    // Configuration handling
    
-   private final var _profile    : X3DProfileInfo        = X3DSupportedProfiles .profiles ["Full"]!
+   private final var _profile    : X3DProfileInfo        = SupportedProfiles .profiles ["Full"]!
    private final var _components : X3DComponentInfoArray = [ ]
    
    public internal(set) override var profile    : X3DProfileInfo        { get { _profile }     set { _profile    = newValue } }

@@ -24,16 +24,16 @@ public final class X3DBrowser :
       
       replaceWorld (scene: nil)
    
-      console .info (t("Welcome to %@ v%@", name, version))
+      console .info (t("Welcome to %@ v%@", getName (), getVersion ()))
       console .info (t("\tCurrent Graphics Renderer"))
       console .info (t("\t\tName: %@", device! .name))
    }
    
    // Configuration
    
-   public final func getName () -> String { name }
+   public final func getName () -> String { "Sunrise X3D Browser" }
    
-   public final func getVersion () -> String { version }
+   public final func getVersion () -> String { "1.0" }
    
    public final func getCurrentSpeed () -> Double { currentSpeed }
    
@@ -43,7 +43,7 @@ public final class X3DBrowser :
    {
       var profiles = [X3DProfileInfo] ()
       
-      for (_, profile) in supportedProfiles
+      for (_, profile) in SupportedProfiles .profiles
       {
          profiles .append (profile)
       }
@@ -53,7 +53,7 @@ public final class X3DBrowser :
 
    public final func getProfile (name : String) throws -> X3DProfileInfo
    {
-      guard let profile = supportedProfiles [name] else
+      guard let profile = SupportedProfiles .profiles [name] else
       {
          throw X3DError .INVALID_NAME (t("Profile named '%@' does not exists.", name))
       }
@@ -65,7 +65,7 @@ public final class X3DBrowser :
    {
       var components = [X3DComponentInfo] ()
       
-      for (_, component) in supportedComponents
+      for (_, component) in SupportedComponents .components
       {
          components .append (component)
       }
@@ -75,7 +75,7 @@ public final class X3DBrowser :
    
    public final func getComponent (name : String, level : Int32) throws -> X3DComponentInfo
    {
-      guard let component = supportedComponents [supportedComponentsAliases [name] ?? name] else
+      guard let component = SupportedComponents .components [SupportedComponents .aliases [name] ?? name] else
       {
          throw X3DError .INVALID_NAME (t("Component named '%@' does not exists.", name))
       }
@@ -92,7 +92,7 @@ public final class X3DBrowser :
    {
       var nodes = [String] ()
       
-      for (name, _) in supportedNodes
+      for (name, _) in SupportedNodes .nodes
       {
          nodes .append (name)
       }
@@ -104,7 +104,7 @@ public final class X3DBrowser :
    {
       var fields = [String] ()
       
-      for (name, _) in supportedFields
+      for (name, _) in SupportedFields .fields
       {
          fields .append (name)
       }

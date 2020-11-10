@@ -249,6 +249,41 @@ internal final class JSONParser :
    private final func routeObject (_ object : Any?)
    {
       guard let object = object as? [String : Any] else { return }
+      
+      guard let fromNodeName = string (object ["@fromNode"]) else
+      {
+         return console .warn (t("Expected @fromNode property."))
+      }
+      
+      guard let fromFieldName = string (object ["@fromField"]) else
+      {
+         return console .warn (t("Expected @fromField property."))
+      }
+      
+      guard let toNodeName = string (object ["@toNode"]) else
+      {
+         return console .warn (t("Expected @toNode property."))
+      }
+      
+      guard let toFieldName = string (object ["@toField"]) else
+      {
+         return console .warn (t("Expected @toField property."))
+      }
+      
+      do
+      {
+         let fromNode = try executionContext .getLocalNode (localName: fromNodeName)
+         let toNode   = try executionContext .getLocalNode (localName: toNodeName)
+
+         try executionContext .addRoute (sourceNode: fromNode,
+                                         sourceField: fromFieldName,
+                                         destinationNode: toNode,
+                                         destinationField: toFieldName)
+      }
+      catch
+      {
+         console .warn (error .localizedDescription)
+      }
    }
 
    private final func importObject (_ object : Any?)

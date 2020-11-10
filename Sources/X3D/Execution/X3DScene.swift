@@ -112,10 +112,10 @@ public final class X3DScene :
    {
       switch category
       {
-         case .angle:  units [ANGLE]  = X3DUnitInfo (category: category,  name: name, conversionFactor: conversionFactor)
-         case .force:  units [FORCE]  = X3DUnitInfo (category: category,  name: name, conversionFactor: conversionFactor)
-         case .length: units [LENGTH] = X3DUnitInfo (category: category,  name: name, conversionFactor: conversionFactor)
-         case .mass:   units [MASS]   = X3DUnitInfo (category: category,  name: name, conversionFactor: conversionFactor)
+         case .angle:  units [ANGLE]  = X3DUnitInfo (category: category, name: name, conversionFactor: conversionFactor)
+         case .force:  units [FORCE]  = X3DUnitInfo (category: category, name: name, conversionFactor: conversionFactor)
+         case .length: units [LENGTH] = X3DUnitInfo (category: category, name: name, conversionFactor: conversionFactor)
+         case .mass:   units [MASS]   = X3DUnitInfo (category: category, name: name, conversionFactor: conversionFactor)
          default: break
       }
    }

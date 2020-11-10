@@ -175,7 +175,7 @@ public final class X3DBrowser :
 
                scene .setWorldURL (URL .absoluteURL)
                
-               try X3DGoldenGate .parseIntoScene (scene: scene, x3dSyntax: x3dSyntax)
+               try GoldenGate .parseIntoScene (scene: scene, x3dSyntax: x3dSyntax)
                
                scene .setup ()
                
@@ -215,7 +215,7 @@ public final class X3DBrowser :
 
       scene .setWorldURL (currentScene .getWorldURL ())
       
-      try X3DGoldenGate .parseIntoScene (scene: scene, x3dSyntax: x3dSyntax)
+      try GoldenGate .parseIntoScene (scene: scene, x3dSyntax: x3dSyntax)
       
       scene .setup ()
       
@@ -243,7 +243,7 @@ public final class X3DBrowser :
 
             scene .setWorldURL (URL .absoluteURL)
             
-            try X3DGoldenGate .parseIntoScene (scene: scene, x3dSyntax: x3dSyntax)
+            try GoldenGate .parseIntoScene (scene: scene, x3dSyntax: x3dSyntax)
             
             scene .setup ()
             

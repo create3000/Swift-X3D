@@ -387,19 +387,19 @@ internal final class JSONParser :
       }
    }
 
-   private final func fieldArray (_ object : Any?, _ node : X3DNode)
+   private final func fieldArray (_ objects : Any?, _ node : X3DNode)
    {
-      guard let object = object as? [Any] else { return }
+      guard let objects = objects as? [Any] else { return }
    }
 
-   private final func fieldValueArray (_ object : Any?, _ node : X3DNode)
+   private final func fieldValueArray (_ objects : Any?, _ node : X3DNode)
    {
-      guard let object = object as? [Any] else { return }
+      guard let objects = objects as? [Any] else { return }
    }
 
-   private final func sourceTextArray (_ object : Any?, _ node : X3DNode)
+   private final func sourceTextArray (_ objects : Any?, _ node : X3DNode)
    {
-      guard let object = object as? [Any] else { return }
+      guard let objects = objects as? [Any] else { return }
    }
    
    private final func isObject (_ object : Any?, _ node : X3DNode)

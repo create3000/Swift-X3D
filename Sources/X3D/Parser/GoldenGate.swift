@@ -1,5 +1,5 @@
 //
-//  X3DGoldenGate.swift
+//  GoldenGate.swift
 //  X3D
 //
 //  Created by Holger Seelig on 24.09.20.
@@ -17,7 +17,7 @@ public protocol X3DParserInterface
    func parseIntoScene () throws
 }
 
-public final class X3DGoldenGate
+public final class GoldenGate
 {
    private static var parsers : [X3DParserInterface .Type] = [
       XMLParser  .self,

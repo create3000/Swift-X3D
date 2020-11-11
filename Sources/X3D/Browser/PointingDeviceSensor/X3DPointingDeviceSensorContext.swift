@@ -19,6 +19,7 @@ internal final class X3DPointingDeviceSensorContextProperties :
    fileprivate final var pointer     = Vector2f .zero
    fileprivate final var hitRay      = Line3f (point1: .zero, point2: .zero)
    internal final var enabledSensors = [Set <PointingDeviceSensorContainer>] ()
+   fileprivate final var hits        = [Hit] ()
    
    // Construction
    
@@ -50,13 +51,13 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    internal func mouseMoved (with event : NSEvent)
    {
-      let point = browser! .convert (event .locationInWindow, from: nil)
+      pick (with: event)
       
-      pointer = Vector2f (Float (point .x), Float (point .y)) * Float (browser! .layer! .contentsScale)
+      guard let nearestHit = hits .last else { return }
       
-      browser! .world! .traverse (.Pointer, browser! .renderer)
+      browser! .console .log (nearestHit .intersection .point)
    }
-   
+
    internal func mouseDown (with event : NSEvent)
    {
       browser! .viewerNode .mouseDown (with: event)
@@ -83,6 +84,26 @@ internal final class X3DPointingDeviceSensorContextProperties :
    internal func scrollWheel (with event : NSEvent)
    {
       browser! .viewerNode .scrollWheel (with: event)
+   }
+   
+   // Picking
+   
+   private func pick (with event : NSEvent)
+   {
+      //guard !browser! .viewerNode .isActive else { return }
+      
+      let point = browser! .convert (event .locationInWindow, from: nil)
+      
+      pointer = Vector2f (Float (point .x), Float (point .y)) * Float (browser! .layer! .contentsScale)
+      
+      hits .removeAll (keepingCapacity: true)
+      
+      browser! .world! .traverse (.Pointer, browser! .renderer)
+      
+      hits .sort { $0 .intersection .point .z < $1 .intersection .point .z }
+      hits .sort { $0 .layerNumber < $1 .layerNumber }
+
+      browser! .setNeedsDisplay ()
    }
 }
 
@@ -111,8 +132,17 @@ extension X3DPointingDeviceSensorContext
    
    internal var hitRay : Line3f { pointingDeviceSensorContextProperties .hitRay }
    
-   internal func addHit (layerNode : X3DLayerNode, shapeNode : X3DShapeNode, modelMatrix : Matrix4f, intersection : Intersection)
+   internal func addHit (layerNode : X3DLayerNode, layerNumber : Int, shapeNode : X3DShapeNode, modelMatrix : Matrix4f, intersection : Intersection)
    {
-      browser .console .log (intersection .point, pointingDeviceSensorContextProperties .enabledSensors .count)
+      pointingDeviceSensorContextProperties .hits .append (Hit (
+         layerNode:    layerNode,
+         layerNumber:  layerNumber,
+         shapeNode:    shapeNode,
+         pointer:      pointer,
+         hitRay:       hitRay,
+         modelMatrix:  modelMatrix,
+         intersection: intersection,
+         sensors:      pointingDeviceSensorContextProperties .enabledSensors .last
+      ))
    }
 }

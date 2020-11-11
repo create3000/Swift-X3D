@@ -7,7 +7,6 @@
 //
 
 import LibTessSwift
-import simd
 
 public final class IndexedFaceSet :
    X3DComposedGeometryNode,

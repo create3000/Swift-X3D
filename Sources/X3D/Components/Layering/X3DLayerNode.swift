@@ -136,7 +136,7 @@ public class X3DLayerNode :
       switch type
       {
          case .Pointer:
-            break
+            pointer (type, renderer)
          case .Camera:
             camera (type, renderer)
          case .Picking:
@@ -148,6 +148,29 @@ public class X3DLayerNode :
          case .Render:
             render (type, renderer)
       }
+   }
+   
+   private final func pointer (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   {
+      guard isPickable else { return }
+      
+      let viewport  = viewportNode! .makeRectangle (with: renderer .browser)
+      let nearValue = navigationInfoNode .nearValue
+      let farValue  = navigationInfoNode .farValue (viewpointNode)
+      
+      renderer .viewport .append (viewport)
+      renderer .projectionMatrix .push (viewpointNode .makeProjectionMatrix (viewport, nearValue, farValue))
+      renderer .viewViewMatrix   .push (viewpointNode .viewMatrix)
+      renderer .modelViewMatrix  .push (viewpointNode .viewMatrix)
+      
+      renderer .browser .makeHitRay (renderer .projectionMatrix .top, renderer .viewport .last!)
+
+      groupNode! .traverse (type, renderer)
+
+      renderer .modelViewMatrix  .pop ()
+      renderer .viewViewMatrix   .pop ()
+      renderer .projectionMatrix .pop ()
+      renderer .viewport .removeLast ()
    }
    
    private final func camera (_ type : X3DTraverseType, _ renderer : X3DRenderer)
@@ -167,7 +190,7 @@ public class X3DLayerNode :
       
       viewpointNode .update ()
    }
-   
+
    private final func render (_ type : X3DTraverseType, _ renderer : X3DRenderer)
    {
       let viewport  = viewportNode! .makeRectangle (with: renderer .browser)

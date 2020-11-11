@@ -6,8 +6,6 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-import simd
-
 public typealias Quaternion4d = simd_quatd
 public typealias Quaternion4f = simd_quatf
 

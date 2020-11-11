@@ -6,8 +6,6 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-import simd
-
 public typealias Vector2d = simd_double2
 public typealias Vector2f = simd_float2
 public typealias Vector3d = simd_double3

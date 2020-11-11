@@ -6,8 +6,6 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-import simd
-
 public typealias Color3d = simd_double3
 public typealias Color3f = simd_float3
 public typealias Color4d = simd_double4

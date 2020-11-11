@@ -119,6 +119,11 @@ public class X3DBrowserContext :
       pointingDeviceSensorContextProperties .mouseEntered (with: event)
    }
    
+   public override func mouseMoved (with event: NSEvent)
+   {
+      pointingDeviceSensorContextProperties .mouseMoved (with: event)
+   }
+   
    public override func mouseDown (with event : NSEvent)
    {
       pointingDeviceSensorContextProperties .mouseDown (with: event)
@@ -150,7 +155,7 @@ public class X3DBrowserContext :
    {
       trackingAreas .forEach { removeTrackingArea ($0) }
       
-      addTrackingArea (NSTrackingArea (rect: bounds, options: [.mouseEnteredAndExited, .activeAlways], owner: self))
+      addTrackingArea (NSTrackingArea (rect: bounds, options: [.mouseEnteredAndExited, .mouseMoved, .activeAlways], owner: self))
    }
    
    // Handle key events

@@ -6,9 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-import simd
-
-public final class X3DMatrixStack
+internal final class MatrixStack
 {
    // Member types
    

@@ -8,7 +8,6 @@
 
 import Metal
 import ComplexModule
-import simd
 
 public class X3DBackgroundNode :
    X3DBindableNode
@@ -363,7 +362,7 @@ public class X3DBackgroundNode :
       guard !isHidden else { return }
       
       let viewport        = renderer .viewport .first!
-      let farValue        = X3DViewVolume .unProjectPoint (0, 0, 1, inverse (renderer .projectionMatrix .top), viewport) .z * -0.8
+      let farValue        = ViewVolume .unProjectPoint (0, 0, 1, inverse (renderer .projectionMatrix .top), viewport) .z * -0.8
       let rotation        = decompose_transformation_matrix (renderer .viewViewMatrix .top * modelMatrix) .rotation
       let modelViewMatrix = compose_transformation_matrix (rotation: rotation, scale: Vector3f (repeating: farValue))
       

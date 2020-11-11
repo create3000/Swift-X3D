@@ -6,8 +6,6 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-import simd
-
 public struct Rotation4d
 {
    // Member types

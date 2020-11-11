@@ -28,9 +28,9 @@ public final class X3DRenderer
    // Matrices
    
    internal final var              viewport         = [Vector4i] ()
-   internal private(set) final var projectionMatrix = X3DMatrixStack ()
-   internal private(set) final var viewViewMatrix   = X3DMatrixStack ()
-   internal private(set) final var modelViewMatrix  = X3DMatrixStack ()
+   internal private(set) final var projectionMatrix = MatrixStack ()
+   internal private(set) final var viewViewMatrix   = MatrixStack ()
+   internal private(set) final var modelViewMatrix  = MatrixStack ()
    
    // Stacks and arrays
    

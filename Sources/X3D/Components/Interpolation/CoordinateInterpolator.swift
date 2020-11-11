@@ -6,8 +6,6 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-import simd
-
 public final class CoordinateInterpolator :
    X3DInterpolatorNode,
    X3DNodeInterface

@@ -5,8 +5,6 @@
 //  Created by Holger Seelig on 03.11.20.
 //
 
-import simd
-
 public struct Box2f
 {
    // Member types

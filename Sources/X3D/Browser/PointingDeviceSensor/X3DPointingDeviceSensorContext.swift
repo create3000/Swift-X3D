@@ -13,7 +13,9 @@ internal final class X3DPointingDeviceSensorContextProperties :
 {
    // Properties
    
-   fileprivate final var selection = false
+   fileprivate final var selection   = false
+   fileprivate final var pointer     = Vector2f .zero
+   internal final var enabledSensors = [Set <PointingDeviceSensorContainer>] ()
    
    // Construction
    
@@ -26,7 +28,7 @@ internal final class X3DPointingDeviceSensorContextProperties :
    {
       super .initialize ()
    }
-   
+
    // Cursor handling
    
    private final func setCursor (with event : NSEvent, cursor : NSCursor)
@@ -41,6 +43,15 @@ internal final class X3DPointingDeviceSensorContextProperties :
    internal func mouseEntered (with event : NSEvent)
    {
       setCursor (with: event, cursor: selection ? .arrow : .openHand)
+   }
+   
+   internal func mouseMoved (with event : NSEvent)
+   {
+      let point = browser! .convert (event .locationInWindow, from: nil)
+      
+      pointer = Vector2f (Float (point .x), Float (point .y)) * Float (browser! .layer! .contentsScale)
+      
+      browser! .world! .traverse (.Pointer, browser! .renderer)
    }
    
    internal func mouseDown (with event : NSEvent)
@@ -84,5 +95,14 @@ extension X3DPointingDeviceSensorContext
    {
       get { pointingDeviceSensorContextProperties .selection }
       set { pointingDeviceSensorContextProperties .selection = newValue }
+   }
+   
+   internal var pointer : Vector2f { pointingDeviceSensorContextProperties .pointer }
+   
+   internal func makeHitRay (_ projectionMatrix : Matrix4f, _ viewport : Vector4i)
+   {
+      let p = ViewVolume .unProjectPoint (pointer .x, pointer .y, 0, .identity, projectionMatrix, viewport)
+      
+      browser .console .log (pointer, p)
    }
 }

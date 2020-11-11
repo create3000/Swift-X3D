@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import simd
 
 internal class X3DViewer :
    X3DBaseNode
@@ -43,7 +42,7 @@ internal class X3DViewer :
       let scale = browser! .layer! .contentsScale
       let winx  = Float (point .x * scale)
       let winy  = Float (point .y * scale)
-      let far   = X3DViewVolume .unProjectPoint (winx, winy, 0.9, ~projectionMatrix, viewport)
+      let far   = ViewVolume .unProjectPoint (winx, winy, 0.9, ~projectionMatrix, viewport)
       
       if activeViewpoint is OrthoViewpoint
       {

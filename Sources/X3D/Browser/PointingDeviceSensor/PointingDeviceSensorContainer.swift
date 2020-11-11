@@ -9,10 +9,10 @@ internal final class PointingDeviceSensorContainer
 {
    // Properties
    
-   private final unowned var pointingDeviceSensorNode : X3DPointingDeviceSensorNode
-   private final var modelViewMatrix                  : Matrix4f
-   private final var projectionMatrix                 : Matrix4f
-   private final var viewport                         : Vector4i
+   private final var pointingDeviceSensorNode : X3DPointingDeviceSensorNode
+   private final var modelViewMatrix          : Matrix4f
+   private final var projectionMatrix         : Matrix4f
+   private final var viewport                 : Vector4i
    
    // Construction
    
@@ -33,11 +33,11 @@ extension PointingDeviceSensorContainer :
 {
    public static func == (lhs : PointingDeviceSensorContainer, rhs : PointingDeviceSensorContainer) -> Bool
    {
-      return lhs === rhs
+      return lhs .pointingDeviceSensorNode === rhs .pointingDeviceSensorNode
    }
    
    public final func hash (into hasher: inout Hasher)
    {
-      hasher .combine (ObjectIdentifier (self) .hashValue)
+      hasher .combine (pointingDeviceSensorNode .hashValue)
    }
 }

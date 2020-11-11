@@ -6,8 +6,6 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-import simd
-
 public final class PositionInterpolator :
    X3DInterpolatorNode,
    X3DNodeInterface

@@ -25,12 +25,13 @@ public class X3DGroupingNode :
    @MFBool public final var visible  : MFBool .Value
    @SFBool public final var isHidden : Bool = false
 
-   @MFNode private  final var fogNodes             : MFNode <LocalFog> .Value
-   @MFNode private  final var lightNodes           : MFNode <X3DLightNode> .Value
-   @MFNode internal final var transformSensorNodes : MFNode <TransformSensor> .Value
-   @MFNode private  final var maybeCameraObjects   : MFNode <X3DChildNode> .Value
-   @MFNode private  final var cameraObjects        : MFNode <X3DChildNode> .Value
-   @MFNode private  final var childNodes           : MFNode <X3DChildNode> .Value
+   @MFNode private  final var fogNodes                  : MFNode <LocalFog> .Value
+   @MFNode private  final var lightNodes                : MFNode <X3DLightNode> .Value
+   @MFNode internal final var pointingDeviceSensorNodes : MFNode <X3DPointingDeviceSensorNode> .Value
+   @MFNode internal final var transformSensorNodes      : MFNode <TransformSensor> .Value
+   @MFNode private  final var maybeCameraObjects        : MFNode <X3DChildNode> .Value
+   @MFNode private  final var cameraObjects             : MFNode <X3DChildNode> .Value
+   @MFNode private  final var childNodes                : MFNode <X3DChildNode> .Value
 
    // Construction
    
@@ -46,6 +47,7 @@ public class X3DGroupingNode :
                        $isHidden,
                        $fogNodes,
                        $lightNodes,
+                       $pointingDeviceSensorNodes,
                        $transformSensorNodes,
                        $maybeCameraObjects,
                        $cameraObjects,
@@ -90,15 +92,14 @@ public class X3DGroupingNode :
 
    private final func clear ()
    {
-      for childNode in childNodes
-      {
-         childNode! .$isCameraObject .removeInterest (X3DGroupingNode .set_cameraObjects, self)
-      }
+      childNodes .forEach { $0! .$isCameraObject .removeInterest (X3DGroupingNode .set_cameraObjects, self) }
       
-      fogNodes           .removeAll (keepingCapacity: true)
-      lightNodes         .removeAll (keepingCapacity: true)
-      maybeCameraObjects .removeAll (keepingCapacity: true)
-      childNodes         .removeAll (keepingCapacity: true)
+      fogNodes                  .removeAll (keepingCapacity: true)
+      lightNodes                .removeAll (keepingCapacity: true)
+      pointingDeviceSensorNodes .removeAll (keepingCapacity: true)
+      transformSensorNodes      .removeAll (keepingCapacity: true)
+      maybeCameraObjects        .removeAll (keepingCapacity: true)
+      childNodes                .removeAll (keepingCapacity: true)
    }
 
    private final func add (at first : Int, contentsOf children : MFNode <X3DNode> .Value)
@@ -137,6 +138,10 @@ public class X3DGroupingNode :
                      case .X3DLightNode: do
                      {
                         lightNodes .append (innerNode as? X3DLightNode)
+                     }
+                     case .X3DPointingDeviceSensorNode: do
+                     {
+                        pointingDeviceSensorNodes .append (innerNode as? X3DPointingDeviceSensorNode)
                      }
                      case
                         .BooleanFilter,
@@ -201,6 +206,25 @@ public class X3DGroupingNode :
       {
          case .Pointer: do
          {
+            let context = renderer .browser .pointingDeviceSensorContextProperties!
+            
+            if !pointingDeviceSensorNodes .isEmpty
+            {
+               context .enabledSensors .append (Set <PointingDeviceSensorContainer> ())
+               
+               pointingDeviceSensorNodes .forEach
+               {
+                  $0! .push (renderer: renderer,
+                             sensors: &context .enabledSensors [context .enabledSensors .endIndex - 1])
+               }
+            }
+            
+            childNodes .forEach { $0! .traverse (type, renderer) }
+            
+            if !pointingDeviceSensorNodes .isEmpty
+            {
+               context .enabledSensors .removeLast ()
+            }
          }
          case .Camera: do
          {

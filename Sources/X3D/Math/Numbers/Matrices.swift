@@ -6,8 +6,6 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-import simd
-
 public typealias Matrix2d = simd_double2x2
 public typealias Matrix2f = simd_float2x2
 public typealias Matrix3d = simd_double3x3

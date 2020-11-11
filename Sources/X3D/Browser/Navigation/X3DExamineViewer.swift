@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import simd
 
 internal final class X3DExamineViewer :
    X3DViewer

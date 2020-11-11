@@ -7,7 +7,6 @@
 //
 
 import Metal
-import simd
 
 enum X3DGeometryType :
    Int

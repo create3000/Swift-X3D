@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import simd
 
 internal final class X3DTimeContextProperties :
    X3DBaseNode

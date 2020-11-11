@@ -91,7 +91,7 @@ public final class Shape :
       let invModelViewMatrix = modelViewMatrix .inverse
       let hitRay             = invModelViewMatrix * renderer .browser .hitRay
       
-      guard var intersections = geometryNode .intersects (hitRay, modelViewMatrix) else { return }
+      guard var intersections = geometryNode .intersects (line: hitRay, modelViewMatrix: modelViewMatrix) else { return }
       
       // Finally we have intersections and must now find the closest hit in front of the camera.
       

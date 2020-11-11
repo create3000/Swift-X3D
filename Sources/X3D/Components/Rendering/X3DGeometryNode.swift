@@ -470,13 +470,13 @@ extension X3DGeometryNode
    
    internal func transformMatrix (_ matrix : Matrix4f) -> Matrix4f { matrix }
    
-   internal func intersects (_ line : Line3f, _ modelViewMatrix : Matrix4f) -> [Intersection]?
+   internal func intersects (line : Line3f, modelViewMatrix : Matrix4f) -> [Intersection]?
    {
       let line            = transformLine (line)
       let modelViewMatrix = transformMatrix (modelViewMatrix)
       var intersections   = [Intersection] ()
       
-      guard bbox .intersects (line: line) else { return nil }
+      guard bbox .intersects (with: line) else { return nil }
       
       for i in stride (from: 0, to: primitives .count, by: 3)
       {

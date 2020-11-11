@@ -47,3 +47,15 @@ public func interval <Type : FloatingPoint> (_ value : Type, low : Type, high : 
 
    return value
 }
+
+extension Int
+{
+   internal var isEven : Bool { self & 1 == 0 }
+   internal var isOdd  : Bool { self & 1 == 1 }
+}
+
+extension Int32
+{
+   internal var isEven : Bool { self & 1 == 0 }
+   internal var isOdd  : Bool { self & 1 == 1 }
+}

@@ -154,7 +154,7 @@ public struct Box3f
       // left: We do not have to test for left.
    ]
    
-   public func intersects (line : Line3) -> Bool
+   public func intersects (with line : Line3) -> Bool
    {
       let extents = self .extents
       let min     = extents .min
@@ -162,7 +162,9 @@ public struct Box3f
 
       for i in 0 ..< 5
       {
-         guard let intersection = Plane3f (point: i & 1 == 1 ? min : max, normal: Self .normals [i]) .intersects (line: line) else { continue }
+         let plane = Plane3f (point: i .isOdd ? min : max, normal: Self .normals [i])
+         
+         guard let intersection = plane .intersects (with: line) else { continue }
 
          switch i
          {
@@ -189,7 +191,7 @@ public struct Box3f
                {
                   return true
                }
-           }
+            }
             default:
                break
          }

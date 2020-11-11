@@ -28,7 +28,7 @@ public struct Plane3f
    
    // Operations
    
-   public func intersects (line : Line3) -> Vector3?
+   public func intersects (with line : Line3) -> Vector3?
    {
       // Check if the line is parallel to the plane.
       let theta = dot (line .direction, normal)

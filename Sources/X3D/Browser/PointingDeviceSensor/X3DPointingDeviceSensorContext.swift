@@ -18,8 +18,10 @@ internal final class X3DPointingDeviceSensorContextProperties :
    fileprivate final var selection   = false
    fileprivate final var pointer     = Vector2f .zero
    fileprivate final var hitRay      = Line3f (point1: .zero, point2: .zero)
-   internal final var enabledSensors = [Set <PointingDeviceSensorContainer>] ()
    fileprivate final var hits        = [Hit] ()
+   internal final var enabledSensors = [Set <PointingDeviceSensorContainer>] ()
+   private final var overSensors     = Set <PointingDeviceSensorContainer> ()
+   private final var activeSensors   = Set <PointingDeviceSensorContainer> ()
    
    // Construction
    
@@ -53,13 +55,40 @@ internal final class X3DPointingDeviceSensorContextProperties :
    {
       pick (with: event)
       
-      guard let nearestHit = hits .last else { return }
+      let nearestHit = hits .last
       
-      browser! .console .log (nearestHit .intersection .point)
+      // Set isOver to FALSE for appropriate nodes
+      
+      let difference = overSensors .subtracting (nearestHit? .sensors ?? [ ])
+      
+      difference .forEach { $0 .set_over (over: false, hit: nearestHit) }
+      
+      // Set isOver to TRUE for appropriate nodes
+      
+      overSensors = nearestHit? .sensors ?? [ ]
+      
+      overSensors .forEach { $0 .set_over (over: true, hit: nearestHit) }
+      
+      // Forward motion event to active drag sensor nodes
+      
+      activeSensors .forEach { $0 .set_motion (hit: nearestHit) }
    }
 
    internal func mouseDown (with event : NSEvent)
    {
+      pick (with: event)
+
+      if let nearestHit = hits .last
+      {
+         activeSensors = nearestHit .sensors ?? [ ]
+
+         activeSensors .forEach { $0 .set_active (active: true, hit: nearestHit) }
+
+         if !(nearestHit .sensors? .isEmpty ?? true) { return }
+      }
+      
+      // Handle viewer.
+      
       browser! .viewerNode .mouseDown (with: event)
       
       setCursor (with: event, cursor: selection ? .arrow : .closedHand)
@@ -67,11 +96,19 @@ internal final class X3DPointingDeviceSensorContextProperties :
 
    internal func mouseDragged (with event : NSEvent)
    {
+      mouseMoved (with: event)
+      
       browser! .viewerNode .mouseDragged (with: event)
    }
    
    internal func mouseUp (with event : NSEvent)
    {
+      activeSensors .forEach { $0 .set_active (active: false, hit: nil) }
+
+      activeSensors = [ ]
+
+      // Handle viewer.
+      
       browser! .viewerNode .mouseUp (with: event)
       
       setCursor (with: event, cursor: selection ? .arrow : .openHand)
@@ -132,15 +169,13 @@ extension X3DPointingDeviceSensorContext
    
    internal var hitRay : Line3f { pointingDeviceSensorContextProperties .hitRay }
    
-   internal func addHit (layerNode : X3DLayerNode, layerNumber : Int, shapeNode : X3DShapeNode, modelMatrix : Matrix4f, intersection : Intersection)
+   internal func addHit (layerNumber : Int, shapeNode : X3DShapeNode, intersection : Intersection)
    {
       pointingDeviceSensorContextProperties .hits .append (Hit (
-         layerNode:    layerNode,
          layerNumber:  layerNumber,
          shapeNode:    shapeNode,
          pointer:      pointer,
          hitRay:       hitRay,
-         modelMatrix:  modelMatrix,
          intersection: intersection,
          sensors:      pointingDeviceSensorContextProperties .enabledSensors .last
       ))

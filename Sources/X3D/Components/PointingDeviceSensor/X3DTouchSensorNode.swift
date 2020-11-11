@@ -23,4 +23,19 @@ public class X3DTouchSensorNode :
 
       types .append (.X3DTouchSensorNode)
    }
+   
+   // Event handlers
+   
+   internal final override func set_active (active : Bool,
+                                            hit : Hit?,
+                                            modelViewMatrix : Matrix4f,
+                                            projectionMatrix : Matrix4f,
+                                            viewport : Vector4i)
+   {
+      super .set_active (active: active, hit: hit, modelViewMatrix: modelViewMatrix, projectionMatrix: projectionMatrix, viewport: viewport)
+      
+      guard enabled && isOver && !active else { return }
+      
+      touchTime = browser! .currentTime
+   }
 }

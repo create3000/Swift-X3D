@@ -26,6 +26,29 @@ internal final class PointingDeviceSensorContainer
       self .projectionMatrix         = projectionMatrix
       self .viewport                 = viewport
    }
+   
+   internal final func set_over (over : Bool, hit : Hit?)
+   {
+      pointingDeviceSensorNode .set_over (over: over,
+                                          hit: hit,
+                                          modelViewMatrix: modelViewMatrix,
+                                          projectionMatrix: projectionMatrix,
+                                          viewport: viewport)
+   }
+   
+   internal final func set_active (active : Bool, hit : Hit?)
+   {
+      pointingDeviceSensorNode .set_active (active: active,
+                                            hit: hit,
+                                            modelViewMatrix: modelViewMatrix,
+                                            projectionMatrix: projectionMatrix,
+                                            viewport: viewport)
+   }
+   
+   internal final func set_motion (hit : Hit?)
+   {
+      pointingDeviceSensorNode .set_motion (hit: hit)
+   }
 }
 
 extension PointingDeviceSensorContainer :

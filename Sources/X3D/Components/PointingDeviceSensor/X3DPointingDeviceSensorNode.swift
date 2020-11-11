@@ -53,20 +53,33 @@ public class X3DPointingDeviceSensorNode :
    }
    
    internal func set_over (over : Bool,
-                           hit : Hit,
+                           hit : Hit?,
                            modelViewMatrix : Matrix4f,
                            projectionMatrix : Matrix4f,
                            viewport : Vector4i)
-   { }
+   {
+      guard over != isOver else { return }
+      
+      isOver = over
+
+      // if over
+      // {
+      //    this .getBrowser () .getNotification () .string_ = this .description_
+      // }
+   }
    
    internal func set_active (active : Bool,
-                             hit : Hit,
+                             hit : Hit?,
                              modelViewMatrix : Matrix4f,
                              projectionMatrix : Matrix4f,
                              viewport : Vector4i)
-   { }
+   {
+      guard active != isActive else { return }
+      
+      isActive = active
+   }
    
-   internal func set_motion (hit : Hit)
+   internal func set_motion (hit : Hit?)
    { }
    
    // Traverse

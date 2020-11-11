@@ -48,4 +48,25 @@ public final class TouchSensor :
    {
       return TouchSensor (with: executionContext)
    }
+   
+   // Event handlers
+   
+   internal final override func set_over (over : Bool,
+                                          hit : Hit?,
+                                          modelViewMatrix : Matrix4f,
+                                          projectionMatrix : Matrix4f,
+                                          viewport : Vector4i)
+   {
+      super .set_over (over: over, hit: hit, modelViewMatrix: modelViewMatrix, projectionMatrix: projectionMatrix, viewport: viewport)
+      
+      guard isOver else { return }
+      
+      guard let intersection = hit? .intersection else { return }
+
+      let invModelViewMatrix = modelViewMatrix .inverse
+
+      hitTexCoord_changed = Vector2f (intersection .texCoord .x, intersection .texCoord .y) / intersection .texCoord .w
+      hitNormal_changed   = normalize (intersection .normal * modelViewMatrix .submatrix)
+      hitPoint_changed    = invModelViewMatrix * intersection .point
+   }
 }

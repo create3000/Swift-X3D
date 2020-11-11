@@ -111,16 +111,13 @@ public final class Shape :
       
       // Add hit.
       
-      let viewpointNode = renderer .layerNode .viewpointNode
-      var intersection  = intersections [index]
+      var intersection = intersections [index]
       
       // Transform hitNormal to absolute space.
       intersection .normal = normalize (intersection .normal * invModelViewMatrix .submatrix)
       
-      renderer .browser .addHit (layerNode: renderer .layerNode,
-                                 layerNumber: renderer .layerNumber,
+      renderer .browser .addHit (layerNumber: renderer .layerNumber,
                                  shapeNode: self,
-                                 modelMatrix: viewpointNode .cameraSpaceMatrix * modelViewMatrix,
                                  intersection: intersection)
    }
    

@@ -32,6 +32,19 @@ public class ViewVolume
       return Vector3f (vin .x * d, vin .y * d, vin .z * d)
    }
    
+   public static func unProjectRay (_ winx : Float, _ winy : Float,
+                                    _ modelViewMatrix : Matrix4f,
+                                    _ projectionMatrix : Matrix4f,
+                                    _ viewport : Vector4i) -> Line3f
+   {
+      let im = inverse (projectionMatrix * modelViewMatrix)
+      let p1 = unProjectPoint (winx, winy, 0, im, viewport)
+      let p2 = unProjectPoint (winx, winy, 1, im, viewport)
+      
+      return Line3f (point1: p1, point2: p2)
+   }
+
+
    public static func projectPoint (_ point : Vector3f, _ modelViewMatrix : Matrix4f, _ projectionMatrix : Matrix4f, _ viewport : Vector4i) -> Vector3f
    {
       return projectPoint (point, projectionMatrix * modelViewMatrix, viewport)

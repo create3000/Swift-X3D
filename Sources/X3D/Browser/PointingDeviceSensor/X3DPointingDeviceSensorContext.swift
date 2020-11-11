@@ -8,6 +8,8 @@
 
 import Cocoa
 
+typealias Intersection = (texCoord : Vector4f, normal : Vector3f, point : Vector3f)
+
 internal final class X3DPointingDeviceSensorContextProperties :
    X3DBaseNode
 {
@@ -15,6 +17,7 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    fileprivate final var selection   = false
    fileprivate final var pointer     = Vector2f .zero
+   fileprivate final var hitRay      = Line3f (point1: .zero, point2: .zero)
    internal final var enabledSensors = [Set <PointingDeviceSensorContainer>] ()
    
    // Construction
@@ -101,8 +104,15 @@ extension X3DPointingDeviceSensorContext
    
    internal func makeHitRay (_ projectionMatrix : Matrix4f, _ viewport : Vector4i)
    {
-      let p = ViewVolume .unProjectPoint (pointer .x, pointer .y, 0, .identity, projectionMatrix, viewport)
+      let hitRay = ViewVolume .unProjectRay (pointer .x, pointer .y, .identity, projectionMatrix, viewport)
       
-      browser .console .log (pointer, p)
+      pointingDeviceSensorContextProperties .hitRay = hitRay
+   }
+   
+   internal var hitRay : Line3f { pointingDeviceSensorContextProperties .hitRay }
+   
+   internal func addHit (layerNode : X3DLayerNode, shapeNode : X3DShapeNode, modelMatrix : Matrix4f, intersection : Intersection)
+   {
+      browser .console .log (intersection .point, pointingDeviceSensorContextProperties .enabledSensors .count)
    }
 }

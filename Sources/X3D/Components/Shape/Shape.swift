@@ -87,9 +87,37 @@ public final class Shape :
       
       guard geometryNode .geometryType >= 2 else { return }
       
-      let invModelViewMatrix = renderer .modelViewMatrix .top .inverse
+      let modelViewMatrix    = renderer .modelViewMatrix .top
+      let invModelViewMatrix = modelViewMatrix .inverse
+      let hitRay             = invModelViewMatrix * renderer .browser .hitRay
       
-      debugPrint (geometryNode .getTypeName ())
+      guard var intersections = geometryNode .intersects (hitRay, modelViewMatrix) else { return }
+      
+      // Finally we have intersections and must now find the closest hit in front of the camera.
+      
+      for i in 0 ..< intersections .count
+      {
+         // Transform hitPoints to absolute space.
+         intersections [i] .point = modelViewMatrix * intersections [i] .point
+      }
+      
+      // Find first point that is not greater than near plane;
+      intersections .sort { $0 .point .z > $1 .point .z }
+
+      let nearValue = -renderer .layerNode .navigationInfoNode .nearValue
+
+      guard let index = intersections .firstIndex (where: { $0 .point .z < nearValue }) else { return }
+      
+      let viewpointNode = renderer .layerNode .viewpointNode
+      var intersection  = intersections [index]
+      
+      // Transform hitNormal to absolute space.
+      intersection .normal = normalize (intersection .normal * invModelViewMatrix .submatrix)
+
+      browser! .addHit (layerNode: renderer .layerNode,
+                        shapeNode: self,
+                        modelMatrix: viewpointNode .cameraSpaceMatrix * modelViewMatrix,
+                        intersection: intersection)
    }
    
    internal final override func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder)

@@ -147,6 +147,32 @@ internal extension RangeReplaceableCollection
 
 internal extension RandomAccessCollection
 {
+   func lowerBound (value : Element, comp : (Element, Element) -> Bool) -> Int
+   {
+      var first = startIndex
+      var count = distance (from: startIndex, to: endIndex)
+
+      while count > 0
+      {
+         var it   = first
+         let step = count / 2
+
+         it = index (it, offsetBy: step)
+         
+         if comp (self [it], value)
+         {
+            first  = index (it, offsetBy: 1)
+            count -= step + 1;
+         }
+         else
+         {
+            count = step
+         }
+      }
+
+      return distance (from: startIndex, to: first)
+   }
+   
    func upperBound (value : Element, comp : (Element, Element) -> Bool) -> Int
    {
       var first = startIndex

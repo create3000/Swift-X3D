@@ -461,3 +461,53 @@ extension X3DGeometryNode
       renderer .primitives .points += primitives .count
    }
 }
+
+extension X3DGeometryNode
+{
+   internal var matrix : Matrix4f { .identity }
+   
+   internal func transformLine (_ line : Line3f) -> Line3f { line }
+   
+   internal func transformMatrix (_ matrix : Matrix4f) -> Matrix4f { matrix }
+   
+   internal func intersects (_ line : Line3f, _ modelViewMatrix : Matrix4f) -> [Intersection]?
+   {
+      let line            = transformLine (line)
+      let modelViewMatrix = transformMatrix (modelViewMatrix)
+      var intersections   = [Intersection] ()
+      
+      for i in stride (from: 0, to: primitives .count, by: 3)
+      {
+         let p0 = real (primitives [i + 0] .point)
+         let p1 = real (primitives [i + 1] .point)
+         let p2 = real (primitives [i + 2] .point)
+         
+         guard let uvt = line .intersects (p0, p1, p2) else { continue }
+         
+         let u = uvt .u
+         let v = uvt .v
+         let t = uvt .t
+         
+         let point = simd_muladd (Vector3f (repeating: u), p0, simd_muladd (Vector3f (repeating: v), p1, t * p2))
+         
+         let t0 = primitives [i + 0] .texCoords .0
+         let t1 = primitives [i + 1] .texCoords .0
+         let t2 = primitives [i + 2] .texCoords .0
+         let n0 = primitives [i + 0] .normal
+         let n1 = primitives [i + 1] .normal
+         let n2 = primitives [i + 2] .normal
+
+         let texCoord = simd_muladd (Vector4f (repeating: u), t0, simd_muladd (Vector4f (repeating: v), t1, t * t2))
+         let normal   = simd_muladd (Vector3f (repeating: u), n0, simd_muladd (Vector3f (repeating: v), n1, t * n2))
+         
+         intersections .append ((texCoord, normal, matrix * point))
+      }
+      
+      return intersections .isEmpty ? nil : intersections
+   }
+}
+
+fileprivate func real (_ vector : Vector4f) -> Vector3f
+{
+   return Vector3f (vector .x, vector .y, vector .z)
+}

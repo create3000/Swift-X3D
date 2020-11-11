@@ -14,7 +14,8 @@ public struct Box3f
    public typealias Vector3 = Vector3f
    public typealias Vector4 = Vector4f
    public typealias Matrix4 = Matrix4f
-   
+   public typealias Line3   = Line3f
+
    // Properties
    
    public private(set) var matrix : Matrix4
@@ -142,6 +143,59 @@ public struct Box3f
    public static func * (_ matrix : Matrix4, _ box : Self) -> Self
    {
       return Self (from: matrix * box .matrix)
+   }
+   
+   private static let normals = [
+      Vector3 (0,  0,  1), // front
+      Vector3 (0,  0, -1), // back
+      Vector3 (0,  1,  0), // top
+      Vector3 (0, -1,  0), // bottom
+      Vector3 (1,  0,  0)  // right
+      // left: We do not have to test for left.
+   ]
+   
+   public func intersects (line : Line3) -> Bool
+   {
+      let extents = self .extents
+      let min     = extents .min
+      let max     = extents .max
+
+      for i in 0 ..< 5
+      {
+         guard let intersection = Plane3f (point: i & 1 == 1 ? min : max, normal: Self .normals [i]) .intersects (line: line) else { continue }
+
+         switch i
+         {
+            case 0, 1: do
+            {
+               if intersection .x >= min .x && intersection .x <= max .x &&
+                  intersection .y >= min .y && intersection .y <= max .y
+               {
+                  return true
+               }
+            }
+            case 2, 3: do
+            {
+               if intersection .x >= min .x && intersection .x <= max .x &&
+                  intersection .z >= min .z && intersection .z <= max .z
+               {
+                  return true
+               }
+            }
+            case 4: do
+            {
+               if intersection .y >= min .y && intersection .y <= max .y &&
+                  intersection .z >= min .z && intersection .z <= max .z
+               {
+                  return true
+               }
+           }
+            default:
+               break
+         }
+      }
+      
+      return false
    }
 }
 

@@ -476,6 +476,8 @@ extension X3DGeometryNode
       let modelViewMatrix = transformMatrix (modelViewMatrix)
       var intersections   = [Intersection] ()
       
+      guard bbox .intersects (line: line) else { return nil }
+      
       for i in stride (from: 0, to: primitives .count, by: 3)
       {
          let p0 = real (primitives [i + 0] .point)

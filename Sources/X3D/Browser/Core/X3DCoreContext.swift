@@ -13,9 +13,9 @@ internal final class X3DCoreContextProperties :
 {
    // Properties
    
-   @SFNode fileprivate final var browserOptions      : X3DBrowserOptions?
-   @SFNode fileprivate final var browserProperties   : X3DBrowserProperties?
-   @SFNode fileprivate final var renderingProperties : X3DRenderingProperties?
+   @SFNode fileprivate final var browserOptions      : BrowserOptions?
+   @SFNode fileprivate final var browserProperties   : BrowserProperties?
+   @SFNode fileprivate final var renderingProperties : RenderingProperties?
 
    // Construction
    
@@ -32,9 +32,9 @@ internal final class X3DCoreContextProperties :
    {
       super .initialize ()
       
-      browserOptions      = X3DBrowserOptions      (with: executionContext!)
-      browserProperties   = X3DBrowserProperties   (with: executionContext!)
-      renderingProperties = X3DRenderingProperties (with: executionContext!)
+      browserOptions      = BrowserOptions      (with: executionContext!)
+      browserProperties   = BrowserProperties   (with: executionContext!)
+      renderingProperties = RenderingProperties (with: executionContext!)
    }
 }
 
@@ -46,9 +46,9 @@ internal protocol X3DCoreContext : class
 
 extension X3DCoreContext
 {
-   internal var browserOptions      : X3DBrowserOptions { coreContextProperties .browserOptions! }
-   internal var browserProperties   : X3DBrowserProperties { coreContextProperties .browserProperties! }
-   internal var renderingProperties : X3DRenderingProperties { coreContextProperties .renderingProperties! }
+   internal var browserOptions      : BrowserOptions { coreContextProperties .browserOptions! }
+   internal var browserProperties   : BrowserProperties { coreContextProperties .browserProperties! }
+   internal var renderingProperties : RenderingProperties { coreContextProperties .renderingProperties! }
    
    internal var browserQueue : DispatchQueue { DispatchQueue .global (qos: .userInteractive) }
    internal var inlineQueue  : DispatchQueue { DispatchQueue .global (qos: .userInitiated) }

@@ -14,8 +14,8 @@ internal final class X3DRenderContext
    internal final unowned var renderer   : X3DRenderer
    internal final unowned var shapeNode  : X3DShapeNode!
    internal final unowned var shaderNode : X3DShaderNode?
-   internal final var fogObject          : X3DFogContainer!
-   internal final var localLights        : [X3DLightContainer] = [ ]
+   internal final var fogObject          : FogContainer!
+   internal final var localLights        : [LightContainer] = [ ]
    internal final let isTransparent      : Bool
    internal final var distance           : Float
    internal final let uniformsBuffer     : MTLBuffer

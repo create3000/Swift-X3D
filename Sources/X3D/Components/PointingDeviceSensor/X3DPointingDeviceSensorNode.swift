@@ -53,31 +53,31 @@ public class X3DPointingDeviceSensorNode :
    }
    
    internal func set_over (over : Bool,
-                           hit : X3DHit,
+                           hit : Hit,
                            modelViewMatrix : Matrix4f,
                            projectionMatrix : Matrix4f,
                            viewport : Vector4i)
    { }
    
    internal func set_active (active : Bool,
-                             hit : X3DHit,
+                             hit : Hit,
                              modelViewMatrix : Matrix4f,
                              projectionMatrix : Matrix4f,
                              viewport : Vector4i)
    { }
    
-   internal func set_motion (hit : X3DHit)
+   internal func set_motion (hit : Hit)
    { }
    
    // Traverse
    
-   internal final func push (renderer : X3DRenderer, sensors : inout Set <X3DPointingDeviceSensorContainer>)
+   internal final func push (renderer : X3DRenderer, sensors : inout Set <PointingDeviceSensorContainer>)
    {
       guard enabled else { return }
       
-      sensors .insert (X3DPointingDeviceSensorContainer (self,
-                                                         renderer .modelViewMatrix .top,
-                                                         renderer .projectionMatrix .top,
-                                                         renderer .viewport .last!))
+      sensors .insert (PointingDeviceSensorContainer (pointingDeviceSensorNode: self,
+                                                      modelViewMatrix: renderer .modelViewMatrix .top,
+                                                      projectionMatrix: renderer .projectionMatrix .top,
+                                                      viewport: renderer .viewport .last!))
    }
 }

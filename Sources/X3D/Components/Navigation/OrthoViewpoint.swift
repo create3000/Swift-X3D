@@ -101,24 +101,24 @@ public final class OrthoViewpoint :
          let center  = (minimumX + maximumX) / 2
          let size1_2 = (sizeY * aspect) / 2
 
-         return X3DCamera .ortho (left: center - size1_2,
-                                  right: center + size1_2,
-                                  bottom: minimumY,
-                                  top: maximumY,
-                                  nearValue: nearValue,
-                                  farValue: farValue)
+         return Camera .ortho (left: center - size1_2,
+                               right: center + size1_2,
+                               bottom: minimumY,
+                               top: maximumY,
+                               nearValue: nearValue,
+                               farValue: farValue)
       }
       else
       {
          let center  = (minimumY + maximumY) / 2
          let size1_2 = (sizeX / aspect) / 2
 
-         return X3DCamera .ortho (left: minimumX,
-                                  right: maximumX,
-                                  bottom: center - size1_2,
-                                  top: center + size1_2,
-                                  nearValue: nearValue,
-                                  farValue: farValue)
+         return Camera .ortho (left: minimumX,
+                               right: maximumX,
+                               bottom: center - size1_2,
+                               top: center + size1_2,
+                               nearValue: nearValue,
+                               farValue: farValue)
       }
    }
 }

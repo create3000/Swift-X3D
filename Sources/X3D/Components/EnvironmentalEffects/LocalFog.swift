@@ -57,7 +57,7 @@ public final class LocalFog :
    {
       guard enabled else { return }
       
-      renderer .fogs .append (X3DFogContainer (fogObject: self, modelViewMatrix: renderer .modelViewMatrix .top))
+      renderer .fogs .append (FogContainer (fogObject: self, modelViewMatrix: renderer .modelViewMatrix .top))
    }
 
    internal final func pop (_ renderer : X3DRenderer)

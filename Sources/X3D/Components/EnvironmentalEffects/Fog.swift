@@ -65,7 +65,7 @@ public final class Fog :
    
    internal final func push (_ renderer : X3DRenderer)
    {
-      renderer .fogs .append (X3DFogContainer (fogObject: self, modelViewMatrix: renderer .modelViewMatrix .top))
+      renderer .fogs .append (FogContainer (fogObject: self, modelViewMatrix: renderer .modelViewMatrix .top))
    }
 
    internal final func pop (_ renderer : X3DRenderer)

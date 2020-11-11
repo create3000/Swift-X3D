@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-internal final class X3DFogContainer
+internal final class FogContainer
 {
    private final unowned var fogObject : X3DFogObject
    private final var matrix            : Matrix3f

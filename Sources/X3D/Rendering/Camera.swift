@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-internal class X3DCamera
+internal final class Camera
 {
    /// Creates an othographic projection matrix.
    /// * parameters:

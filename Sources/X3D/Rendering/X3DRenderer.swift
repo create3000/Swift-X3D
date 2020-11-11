@@ -35,9 +35,9 @@ public final class X3DRenderer
    // Stacks and arrays
    
    internal final var layerNumber   = 0
-   internal final var fogs          = [X3DFogContainer] ()
-   internal final var globalLights  = [X3DLightContainer] ()
-   internal final var localLights   = [X3DLightContainer] ()
+   internal final var fogs          = [FogContainer] ()
+   internal final var globalLights  = [LightContainer] ()
+   internal final var localLights   = [LightContainer] ()
    
    // Light sources
    

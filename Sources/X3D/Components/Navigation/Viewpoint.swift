@@ -72,10 +72,10 @@ public final class Viewpoint :
    
    internal final override func makeProjectionMatrix (_ viewport : Vector4i, _ nearValue : Float, _ farValue : Float) -> Matrix4f
    {
-      return X3DCamera .perspective (fieldOfView: getFieldOfView (),
-                                     nearValue: nearValue,
-                                     farValue: farValue,
-                                     width: Float (viewport [2]),
-                                     height: Float (viewport [3]))
+      return Camera .perspective (fieldOfView: getFieldOfView (),
+                                  nearValue: nearValue,
+                                  farValue: farValue,
+                                  width: Float (viewport [2]),
+                                  height: Float (viewport [3]))
    }
 }

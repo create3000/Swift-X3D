@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-internal final class X3DLightContainer
+internal final class LightContainer
 {
    private final unowned var lightNode : X3DLightNode
    private final var modelViewMatrix   : Matrix4f

@@ -284,11 +284,11 @@ public final class X3DBrowser :
    
    // Browser properties
    
-   public final func getRenderingProperties () -> X3DRenderingProperties { renderingProperties }
+   public final func getRenderingProperties () -> RenderingProperties { renderingProperties }
    
-   public final func getBrowserProperties () -> X3DBrowserProperties { browserProperties }
+   public final func getBrowserProperties () -> BrowserProperties { browserProperties }
    
-   public final func getBrowserOptions () -> X3DBrowserOptions { browserOptions }
+   public final func getBrowserOptions () -> BrowserOptions { browserOptions }
 
    // Viewpoint handling
    

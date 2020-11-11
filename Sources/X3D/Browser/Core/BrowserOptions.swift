@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DBrowserOptions :
+public final class BrowserOptions :
    X3DBaseNode
 {
    // Fields

@@ -18,7 +18,7 @@ internal final class X3DNavigationContextProperties :
    @SFEnum public private(set) final var viewer                   : X3DViewerType = .NONE
    @SFNode public private(set) final var viewerNode               : X3DViewer?
    @SFNode private final var headlightNode                        : DirectionalLight?
-   fileprivate final var headlightContainer                       : X3DLightContainer?
+   fileprivate final var headlightContainer                       : LightContainer?
    
    // Construction
    
@@ -42,7 +42,7 @@ internal final class X3DNavigationContextProperties :
       // Headlight
       
       headlightNode      = DirectionalLight (with: executionContext!)
-      headlightContainer = X3DLightContainer (lightNode: self .headlightNode!, modelViewMatrix: Matrix4f .identity)
+      headlightContainer = LightContainer (lightNode: self .headlightNode!, modelViewMatrix: Matrix4f .identity)
 
       headlightNode! .setup ()
       
@@ -137,5 +137,5 @@ internal protocol X3DNavigationContext : class
 extension X3DNavigationContext
 {
    public var viewerNode : X3DViewer { navigationContextProperties .viewerNode! }
-   internal var headlightContainer : X3DLightContainer { navigationContextProperties .headlightContainer! }
+   internal var headlightContainer : LightContainer { navigationContextProperties .headlightContainer! }
 }

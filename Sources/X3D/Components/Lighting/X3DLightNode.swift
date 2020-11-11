@@ -38,15 +38,15 @@ public class X3DLightNode :
 
       if global
       {
-         let lightContainer = X3DLightContainer (lightNode: self,
-                                                 modelViewMatrix: renderer .modelViewMatrix .top)
+         let lightContainer = LightContainer (lightNode: self,
+                                              modelViewMatrix: renderer .modelViewMatrix .top)
          
          renderer .globalLights .append (lightContainer)
       }
       else
       {
-         let lightContainer = X3DLightContainer (lightNode: self,
-                                                 modelViewMatrix: renderer .modelViewMatrix .top)
+         let lightContainer = LightContainer (lightNode: self,
+                                              modelViewMatrix: renderer .modelViewMatrix .top)
          
          renderer .localLights .append (lightContainer)
       }

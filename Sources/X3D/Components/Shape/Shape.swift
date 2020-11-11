@@ -102,11 +102,14 @@ public final class Shape :
       }
       
       // Find first point that is not greater than near plane;
+      
       intersections .sort { $0 .point .z > $1 .point .z }
 
       let nearValue = -renderer .layerNode .navigationInfoNode .nearValue
 
       guard let index = intersections .firstIndex (where: { $0 .point .z < nearValue }) else { return }
+      
+      // Add hit.
       
       let viewpointNode = renderer .layerNode .viewpointNode
       var intersection  = intersections [index]
@@ -114,11 +117,11 @@ public final class Shape :
       // Transform hitNormal to absolute space.
       intersection .normal = normalize (intersection .normal * invModelViewMatrix .submatrix)
       
-      browser! .addHit (layerNode: renderer .layerNode,
-                        layerNumber: renderer .layerNumber,
-                        shapeNode: self,
-                        modelMatrix: viewpointNode .cameraSpaceMatrix * modelViewMatrix,
-                        intersection: intersection)
+      renderer .browser .addHit (layerNode: renderer .layerNode,
+                                 layerNumber: renderer .layerNumber,
+                                 shapeNode: self,
+                                 modelMatrix: viewpointNode .cameraSpaceMatrix * modelViewMatrix,
+                                 intersection: intersection)
    }
    
    internal final override func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder)

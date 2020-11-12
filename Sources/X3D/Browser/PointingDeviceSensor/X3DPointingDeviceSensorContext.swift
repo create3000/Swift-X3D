@@ -16,7 +16,6 @@ internal final class X3DPointingDeviceSensorContextProperties :
    // Properties
    
    internal final var selection         = false
-   fileprivate final var alwaysPick     = false
    fileprivate final var pointer        = Vector2f .zero
    fileprivate final var hitRay         = Line3f (point1: .zero, point2: .zero)
    fileprivate final var hits           = [Hit] ()
@@ -35,6 +34,9 @@ internal final class X3DPointingDeviceSensorContextProperties :
    internal final override func initialize ()
    {
       super .initialize ()
+      
+      browser! .discardCursorRects ()
+      browser! .addCursorRect (browser! .bounds, cursor: .arrow)
    }
 
    // Cursor handling
@@ -145,8 +147,6 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    private func pick (with event : NSEvent)
    {
-      alwaysPick = selection && event .type != .mouseMoved
-      
       let point = browser! .convert (event .locationInWindow, from: nil)
       
       pointer = Vector2f (Float (point .x), Float (point .y)) * Float (browser! .layer! .contentsScale)
@@ -198,8 +198,6 @@ internal protocol X3DPointingDeviceSensorContext : class
 
 extension X3DPointingDeviceSensorContext
 {
-   internal var alwaysPick : Bool { pointingDeviceSensorContextProperties .alwaysPick }
-   
    internal var pointer : Vector2f { pointingDeviceSensorContextProperties .pointer }
 
    internal func pointerInRectangle (_ rectangle : Vector4i) -> Bool

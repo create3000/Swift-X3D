@@ -85,8 +85,6 @@ public final class Shape :
    {
       let browser = renderer .browser
       
-      guard !browser .sensors .isEmpty || browser .alwaysPick else { return }
-      
       guard let geometryNode = geometryNode else { return }
       
       guard geometryNode .geometryType >= 2 else { return }

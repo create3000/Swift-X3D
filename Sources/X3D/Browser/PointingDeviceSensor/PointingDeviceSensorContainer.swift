@@ -27,7 +27,7 @@ internal final class PointingDeviceSensorContainer
       self .viewport                 = viewport
    }
    
-   internal final func set_over (over : Bool, hit : Hit?)
+   internal final func set_over (over : Bool, hit : Hit)
    {
       pointingDeviceSensorNode .set_over (over: over,
                                           hit: hit,
@@ -36,7 +36,7 @@ internal final class PointingDeviceSensorContainer
                                           viewport: viewport)
    }
    
-   internal final func set_active (active : Bool, hit : Hit?)
+   internal final func set_active (active : Bool, hit : Hit)
    {
       pointingDeviceSensorNode .set_active (active: active,
                                             hit: hit,
@@ -45,9 +45,12 @@ internal final class PointingDeviceSensorContainer
                                             viewport: viewport)
    }
    
-   internal final func set_motion (hit : Hit?)
+   internal final func set_motion (hit : Hit)
    {
-      pointingDeviceSensorNode .set_motion (hit: hit)
+      pointingDeviceSensorNode .set_motion (hit: hit,
+                                            modelViewMatrix: modelViewMatrix,
+                                            projectionMatrix: projectionMatrix,
+                                            viewport: viewport)
    }
 }
 

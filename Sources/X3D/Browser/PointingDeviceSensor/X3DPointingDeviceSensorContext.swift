@@ -34,15 +34,18 @@ internal final class X3DPointingDeviceSensorContextProperties :
    internal final override func initialize ()
    {
       super .initialize ()
-      
-      browser! .discardCursorRects ()
-      browser! .addCursorRect (browser! .bounds, cursor: .arrow)
    }
 
    // Cursor handling
    
+   private final var currentCursor : NSCursor = .arrow
+   
    private final func setCursor (with event : NSEvent, cursor : NSCursor)
    {
+      guard cursor != currentCursor else { return }
+      
+      currentCursor = cursor
+      
       browser! .discardCursorRects ()
       browser! .addCursorRect (browser! .bounds, cursor: cursor)
       browser! .cursorUpdate (with: event)
@@ -108,6 +111,14 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    internal func mouseUp (with event : NSEvent)
    {
+      let dummy = Hit (layerNode: nil,
+                       layerNumber: 0,
+                       shapeNode: nil,
+                       pointer: pointer,
+                       hitRay: Line3f (point1: .zero, point2: .zero),
+                       intersection: Intersection (.zero, .zero, .zero),
+                       sensors: nil)
+      
       // Handle sensors.
       
       selectedLayer = nil
@@ -116,7 +127,7 @@ internal final class X3DPointingDeviceSensorContextProperties :
       
       let nearestHit = hits .last
 
-      activeSensors .forEach { $0 .set_active (active: false, hit: nil) }
+      activeSensors .forEach { $0 .set_active (active: false, hit: nearestHit ?? dummy) }
 
       activeSensors = [ ]
 
@@ -163,17 +174,23 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    private func moved (with event : NSEvent)
    {
-      let nearestHit = hits .last
+      let nearestHit = hits .last ?? Hit (layerNode: selectedLayer,
+                                          layerNumber: 0,
+                                          shapeNode: nil,
+                                          pointer: pointer,
+                                          hitRay: selectedLayer != nil ? hitRay : Line3f (point1: .zero, point2: .zero),
+                                          intersection: Intersection (.zero, .zero, .zero),
+                                          sensors: nil)
       
       // Set isOver to FALSE for appropriate nodes
       
-      let difference = overSensors .subtracting (nearestHit? .sensors ?? [ ])
+      let difference = overSensors .subtracting (nearestHit .sensors ?? [ ])
       
       difference .forEach { $0 .set_over (over: false, hit: nearestHit) }
       
       // Set isOver to TRUE for appropriate nodes
       
-      overSensors = nearestHit? .sensors ?? [ ]
+      overSensors = nearestHit .sensors ?? [ ]
       
       overSensors .forEach { $0 .set_over (over: true, hit: nearestHit) }
       
@@ -183,7 +200,13 @@ internal final class X3DPointingDeviceSensorContextProperties :
       
       // Set cursor.
       
-      setCursor (with: event, cursor: nearestHit? .sensors != nil ? .pointingHand : (selection ? .arrow : .openHand))
+      let cursor : NSCursor = selection
+         ? (event .type == .mouseMoved ? .arrow : .closedHand)
+         : (event .type == .mouseMoved
+               ? (nearestHit .sensors != nil ? .pointingHand : .openHand)
+               : .closedHand)
+      
+      setCursor (with: event, cursor: cursor)
       
       // Immediately update view.
       browser! .draw ()

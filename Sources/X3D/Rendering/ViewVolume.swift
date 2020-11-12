@@ -62,4 +62,14 @@ public class ViewVolume
                        (1 + vin .y * d) / 2 * Float (viewport [3]) + Float (viewport [1]),
                        (vin .z * d))
    }
+   
+   public static func projectLine (_ line : Line3f, _ modelViewMatrix : Matrix4f, _ projectionMatrix : Matrix4f, _ viewport : Vector4i) -> Line3f
+   {
+      let modelViewProjectionMatrix = projectionMatrix * modelViewMatrix
+
+      let point1 = projectPoint (line .point,                         modelViewProjectionMatrix, viewport);
+      let point2 = projectPoint (line .point + line .direction * 1e9, modelViewProjectionMatrix, viewport);
+
+      return Line3f (point1: point1, point2: point2)
+   }
 }

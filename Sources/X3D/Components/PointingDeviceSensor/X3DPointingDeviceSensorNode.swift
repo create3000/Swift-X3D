@@ -16,12 +16,6 @@ public class X3DPointingDeviceSensorNode :
    @SFString public final var description : String = ""
    @SFBool   public final var isActive    : Bool = false
    @SFBool   public final var isOver      : Bool = false
-   
-   // Properties
-   
-   internal final var viewport         : Vector4i = .zero
-   internal final var projectionMatrix : Matrix4f = .identity
-   internal final var modelViewMatrix  : Matrix4f = .identity
 
    // Construction
    
@@ -53,7 +47,7 @@ public class X3DPointingDeviceSensorNode :
    }
    
    internal func set_over (over : Bool,
-                           hit : Hit?,
+                           hit : Hit,
                            modelViewMatrix : Matrix4f,
                            projectionMatrix : Matrix4f,
                            viewport : Vector4i)
@@ -69,7 +63,7 @@ public class X3DPointingDeviceSensorNode :
    }
    
    internal func set_active (active : Bool,
-                             hit : Hit?,
+                             hit : Hit,
                              modelViewMatrix : Matrix4f,
                              projectionMatrix : Matrix4f,
                              viewport : Vector4i)
@@ -79,7 +73,10 @@ public class X3DPointingDeviceSensorNode :
       isActive = active
    }
    
-   internal func set_motion (hit : Hit?)
+   internal func set_motion (hit : Hit,
+                             modelViewMatrix : Matrix4f,
+                             projectionMatrix : Matrix4f,
+                             viewport : Vector4i)
    { }
    
    // Traverse

@@ -27,7 +27,7 @@ public class X3DTouchSensorNode :
    // Event handlers
    
    internal final override func set_active (active : Bool,
-                                            hit : Hit?,
+                                            hit : Hit,
                                             modelViewMatrix : Matrix4f,
                                             projectionMatrix : Matrix4f,
                                             viewport : Vector4i)

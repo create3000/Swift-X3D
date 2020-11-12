@@ -47,6 +47,35 @@ public struct Line3f
       return Self (point: point, direction: direction)
    }
    
+   public func closestPoint (to toPoint : Vector3) -> Vector3
+   {
+      let r = toPoint - point
+      let d = dot (r, direction)
+
+      return simd_muladd (direction, Vector3 (repeating: d), point)
+   }
+   
+   public func closestPoint (to line : Self) -> Vector3?
+   {
+      let p1 = point
+      let p2 = line .point
+      let d1 = direction
+      let d2 = line .direction
+
+      var t = dot (d1, d2)
+
+      if abs (t) >= 1
+      {
+         return nil // lines are parallel
+      }
+
+      let u = p2 - p1
+      
+      t = (dot (u, d1) - t * dot (u, d2)) / (1 - t * t)
+
+      return simd_muladd (d1, Vector3 (repeating: t), p1)
+   }
+
    public func intersects (_ A : Vector3, _ B : Vector3, _ C : Vector3) -> (u : Scalar, v : Scalar, t : Scalar)?
    {
       // Find vectors for two edges sharing vert0.

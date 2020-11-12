@@ -53,36 +53,10 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    internal func mouseMoved (with event : NSEvent)
    {
+      guard !browser! .viewerNode .isActive else { return }
+      
       pick  (with: event)
       moved (with: event)
-   }
-   
-   private func moved (with event : NSEvent)
-   {
-      let nearestHit = hits .last
-      
-      // Set isOver to FALSE for appropriate nodes
-      
-      let difference = overSensors .subtracting (nearestHit? .sensors ?? [ ])
-      
-      difference .forEach { $0 .set_over (over: false, hit: nearestHit) }
-      
-      // Set isOver to TRUE for appropriate nodes
-      
-      overSensors = nearestHit? .sensors ?? [ ]
-      
-      overSensors .forEach { $0 .set_over (over: true, hit: nearestHit) }
-      
-      // Forward motion event to active drag sensor nodes
-      
-      activeSensors .forEach { $0 .set_motion (hit: nearestHit) }
-      
-      // Set cursor.
-      
-      setCursor (with: event, cursor: nearestHit? .sensors != nil ? .pointingHand : .openHand)
-      
-      // Immediately update view.
-      browser! .draw ()
    }
 
    internal func mouseDown (with event : NSEvent)
@@ -112,7 +86,7 @@ internal final class X3DPointingDeviceSensorContextProperties :
    internal func mouseDragged (with event : NSEvent)
    {
       mouseMoved (with: event)
-      
+
       browser! .viewerNode .mouseDragged (with: event)
    }
    
@@ -149,8 +123,6 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    private func pick (with event : NSEvent)
    {
-      guard !browser! .viewerNode .isActive else { return }
-      
       let point = browser! .convert (event .locationInWindow, from: nil)
       
       pointer = Vector2f (Float (point .x), Float (point .y)) * Float (browser! .layer! .contentsScale)
@@ -163,6 +135,34 @@ internal final class X3DPointingDeviceSensorContextProperties :
       hits .sort { $0 .layerNumber < $1 .layerNumber }
 
       browser! .setNeedsDisplay ()
+   }
+   
+   private func moved (with event : NSEvent)
+   {
+      let nearestHit = hits .last
+      
+      // Set isOver to FALSE for appropriate nodes
+      
+      let difference = overSensors .subtracting (nearestHit? .sensors ?? [ ])
+      
+      difference .forEach { $0 .set_over (over: false, hit: nearestHit) }
+      
+      // Set isOver to TRUE for appropriate nodes
+      
+      overSensors = nearestHit? .sensors ?? [ ]
+      
+      overSensors .forEach { $0 .set_over (over: true, hit: nearestHit) }
+      
+      // Forward motion event to active drag sensor nodes
+      
+      activeSensors .forEach { $0 .set_motion (hit: nearestHit) }
+      
+      // Set cursor.
+      
+      setCursor (with: event, cursor: nearestHit? .sensors != nil ? .pointingHand : .openHand)
+      
+      // Immediately update view.
+      browser! .draw ()
    }
 }
 

@@ -43,14 +43,12 @@ public final class Shape :
    {
       if bboxSize == -.one
       {
-         if geometryNode != nil
+         if let geometryNode = geometryNode
          {
-            return geometryNode! .bbox
+            return geometryNode .bbox
          }
-         else
-         {
-            return Box3f ()
-         }
+         
+         return Box3f ()
       }
       
       return Box3f (size: bboxSize, center: bboxCenter)

@@ -57,7 +57,11 @@ public final class TouchSensor :
                                           projectionMatrix : Matrix4f,
                                           viewport : Vector4i)
    {
-      super .set_over (over: over, hit: hit, modelViewMatrix: modelViewMatrix, projectionMatrix: projectionMatrix, viewport: viewport)
+      super .set_over (over: over,
+                       hit: hit,
+                       modelViewMatrix: modelViewMatrix,
+                       projectionMatrix: projectionMatrix,
+                       viewport: viewport)
       
       guard isOver else { return }
       

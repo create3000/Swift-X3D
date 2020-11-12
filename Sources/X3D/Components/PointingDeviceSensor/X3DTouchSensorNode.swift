@@ -32,7 +32,11 @@ public class X3DTouchSensorNode :
                                             projectionMatrix : Matrix4f,
                                             viewport : Vector4i)
    {
-      super .set_active (active: active, hit: hit, modelViewMatrix: modelViewMatrix, projectionMatrix: projectionMatrix, viewport: viewport)
+      super .set_active (active: active,
+                         hit: hit,
+                         modelViewMatrix: modelViewMatrix,
+                         projectionMatrix: projectionMatrix,
+                         viewport: viewport)
       
       guard enabled && isOver && !active else { return }
       

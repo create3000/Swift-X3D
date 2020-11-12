@@ -155,7 +155,7 @@ public class X3DBrowserContext :
    {
       trackingAreas .forEach { removeTrackingArea ($0) }
       
-      addTrackingArea (NSTrackingArea (rect: bounds, options: [.mouseEnteredAndExited, .mouseMoved, .activeAlways], owner: self))
+      addTrackingArea (NSTrackingArea (rect: bounds, options: [.activeInKeyWindow, .mouseEnteredAndExited, .mouseMoved], owner: self))
    }
    
    // Handle key events
@@ -181,6 +181,8 @@ public class X3DBrowserContext :
    internal final func setNeedsDisplay ()
    {
       setNeedsDisplay (bounds)
+      
+      updateTrackingAreas ()
    }
 
    internal final override func update (_ commandBuffer : MTLCommandBuffer)

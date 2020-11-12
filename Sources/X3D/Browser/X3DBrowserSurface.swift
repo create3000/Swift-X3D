@@ -10,12 +10,13 @@ import Metal
 import MetalKit
 
 public class X3DBrowserSurface :
-   MTKView
+   MTKView,
+   MTKViewDelegate
 {
    // Properties
    
-   private final var renderer : X3DBrowserDelegate!
-   
+   private var commandQueue : MTLCommandQueue!
+
    // Construction
    
    internal init ()
@@ -50,16 +51,10 @@ public class X3DBrowserSurface :
       layer! .isOpaque        = false
       colorPixelFormat        = .bgra8Unorm
       depthStencilPixelFormat = .depth32Float
+      device                  = device ?? X3DBrowserSurface .defaultDevice
+      delegate                = self
+      commandQueue            = device! .makeCommandQueue ()
 
-      if device == nil
-      {
-         device = X3DBrowserSurface .defaultDevice
-      }
-
-      // Create renderer
-      renderer = X3DBrowserDelegate (surface: self)
-      delegate = renderer
-      
       initialize ()
    }
    
@@ -68,6 +63,34 @@ public class X3DBrowserSurface :
    private static let defaultDevice = MTLCreateSystemDefaultDevice ()
    
    // Rendering
+
+   public final func mtkView (_ mtkview : MTKView, drawableSizeWillChange size : CGSize)
+   {
+      //debugPrint (size, surface .drawableSize, surface .layer! .contentsScale, surface .bounds)
+   }
+
+   public final func draw (in mtkview : MTKView)
+   {
+      guard let commandBuffer = commandQueue .makeCommandBuffer () else { return }
+      
+      // Clear surface.
+      
+      guard let renderPassDescriptor = mtkview .currentRenderPassDescriptor else { return }
+      
+      renderPassDescriptor .colorAttachments [0] .loadAction = .clear
+      renderPassDescriptor .colorAttachments [0] .clearColor = MTLClearColor (red: 0, green: 0, blue: 0, alpha: 0)
+       
+      guard let renderEncoder = commandBuffer .makeRenderCommandEncoder (descriptor: renderPassDescriptor) else { return }
+       
+      renderEncoder .endEncoding ()
+      
+      // Update surface.
+
+      update (commandBuffer)
+
+      commandBuffer .present (mtkview .currentDrawable!)
+      commandBuffer .commit ()
+   }
 
    internal func update (_ commandBuffer : MTLCommandBuffer) { }
 }

@@ -72,6 +72,13 @@ internal final class X3DPointingDeviceSensorContextProperties :
       // Forward motion event to active drag sensor nodes
       
       activeSensors .forEach { $0 .set_motion (hit: nearestHit) }
+      
+      // Set cursor.
+      
+      setCursor (with: event, cursor: nearestHit? .sensors != nil ? .pointingHand : .openHand)
+      
+      // Immediately update view.
+      browser! .draw ()
    }
 
    internal func mouseDown (with event : NSEvent)
@@ -84,7 +91,11 @@ internal final class X3DPointingDeviceSensorContextProperties :
 
          activeSensors .forEach { $0 .set_active (active: true, hit: nearestHit) }
 
-         if !(nearestHit .sensors? .isEmpty ?? true) { return }
+         if !(nearestHit .sensors? .isEmpty ?? true)
+         {
+            setCursor (with: event, cursor: .closedHand)
+            return
+         }
       }
       
       // Handle viewer.
@@ -103,6 +114,10 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    internal func mouseUp (with event : NSEvent)
    {
+      pick (with: event)
+      
+      let nearestHit = hits .last
+
       activeSensors .forEach { $0 .set_active (active: false, hit: nil) }
 
       activeSensors = [ ]
@@ -111,7 +126,7 @@ internal final class X3DPointingDeviceSensorContextProperties :
       
       browser! .viewerNode .mouseUp (with: event)
       
-      setCursor (with: event, cursor: selection ? .arrow : .openHand)
+      setCursor (with: event, cursor: selection ? .arrow : (nearestHit? .sensors != nil ? .pointingHand : .openHand))
    }
    
    internal func mouseExited (with event : NSEvent)

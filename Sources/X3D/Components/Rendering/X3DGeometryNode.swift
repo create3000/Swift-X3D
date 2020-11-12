@@ -113,7 +113,9 @@ public class X3DGeometryNode :
          generateTexCoords (&primitives)
       }
       
-      primitivesBuffer = browser! .device! .makeBuffer (bytes: primitives, length: primitives .count * MemoryLayout <x3d_VertexIn> .stride, options: [ ])!
+      primitivesBuffer = browser! .device! .makeBuffer (bytes: primitives,
+                                                        length: primitives .count * MemoryLayout <x3d_VertexIn> .stride,
+                                                        options: [ ])!
    }
 
    /// Override to add vertices.
@@ -121,10 +123,10 @@ public class X3DGeometryNode :
 
    /// Add a vertex to the list of vertices.
    internal final func addPrimitive (fogDepth : Float = 0,
-                                     color: Vector4f = Vector4f .one,
-                                     texCoords: [Vector4f] = [ ],
-                                     normal: Vector3f = .zAxis,
-                                     point: Vector3f)
+                                     color : Vector4f = Vector4f .one,
+                                     texCoords : [Vector4f] = [ ],
+                                     normal : Vector3f = .zAxis,
+                                     point : Vector3f)
    {
       var multiTexCoords = (Vector4f .zero, Vector4f .zero)
       
@@ -480,9 +482,13 @@ extension X3DGeometryNode
       
       for i in stride (from: 0, to: primitives .count, by: 3)
       {
-         let p0 = real (primitives [i + 0] .point)
-         let p1 = real (primitives [i + 1] .point)
-         let p2 = real (primitives [i + 2] .point)
+         let v0 = primitives [i + 0]
+         let v1 = primitives [i + 1]
+         let v2 = primitives [i + 2]
+
+         let p0 = real (v0 .point)
+         let p1 = real (v1 .point)
+         let p2 = real (v2 .point)
          
          guard let uvt = line .intersects (p0, p1, p2) else { continue }
          
@@ -492,12 +498,12 @@ extension X3DGeometryNode
          
          let point = simd_muladd (Vector3f (repeating: u), p0, simd_muladd (Vector3f (repeating: v), p1, t * p2))
          
-         let t0 = primitives [i + 0] .texCoords .0
-         let t1 = primitives [i + 1] .texCoords .0
-         let t2 = primitives [i + 2] .texCoords .0
-         let n0 = primitives [i + 0] .normal
-         let n1 = primitives [i + 1] .normal
-         let n2 = primitives [i + 2] .normal
+         let t0 = v0 .texCoords .0
+         let t1 = v1 .texCoords .0
+         let t2 = v2 .texCoords .0
+         let n0 = v0 .normal
+         let n1 = v1 .normal
+         let n2 = v2 .normal
 
          let texCoord = simd_muladd (Vector4f (repeating: u), t0, simd_muladd (Vector4f (repeating: v), t1, t * t2))
          let normal   = simd_muladd (Vector3f (repeating: u), n0, simd_muladd (Vector3f (repeating: v), n1, t * n2))

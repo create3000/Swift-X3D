@@ -15,7 +15,7 @@ internal final class X3DPointingDeviceSensorContextProperties :
 {
    // Properties
    
-   fileprivate final var selection   = false
+   internal final var selection      = false
    fileprivate final var pointer     = Vector2f .zero
    fileprivate final var hitRay      = Line3f (point1: .zero, point2: .zero)
    fileprivate final var hits        = [Hit] ()
@@ -104,7 +104,7 @@ internal final class X3DPointingDeviceSensorContextProperties :
       
       browser! .viewerNode .mouseUp (with: event)
       
-      setCursor (with: event, cursor: selection ? .arrow : (nearestHit? .sensors != nil ? .pointingHand : .openHand))
+      setCursor (with: event, cursor: nearestHit? .sensors != nil ? .pointingHand : (selection ? .arrow : .openHand))
    }
    
    internal func mouseExited (with event : NSEvent)
@@ -159,7 +159,7 @@ internal final class X3DPointingDeviceSensorContextProperties :
       
       // Set cursor.
       
-      setCursor (with: event, cursor: nearestHit? .sensors != nil ? .pointingHand : .openHand)
+      setCursor (with: event, cursor: nearestHit? .sensors != nil ? .pointingHand : (selection ? .arrow : .openHand))
       
       // Immediately update view.
       browser! .draw ()
@@ -174,12 +174,6 @@ internal protocol X3DPointingDeviceSensorContext : class
 
 extension X3DPointingDeviceSensorContext
 {
-   internal var selection : Bool
-   {
-      get { pointingDeviceSensorContextProperties .selection }
-      set { pointingDeviceSensorContextProperties .selection = newValue }
-   }
-   
    internal var pointer : Vector2f { pointingDeviceSensorContextProperties .pointer }
    
    internal func makeHitRay (_ projectionMatrix : Matrix4f, _ viewport : Vector4i)

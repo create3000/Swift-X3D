@@ -83,6 +83,8 @@ public final class Shape :
    
    private final func pointer (_ renderer : X3DRenderer)
    {
+      guard !renderer .browser .pointingDeviceSensorContextProperties .enabledSensors .isEmpty || renderer .browser .selection else { return }
+      
       guard let geometryNode = geometryNode else { return }
       
       guard geometryNode .geometryType >= 2 else { return }

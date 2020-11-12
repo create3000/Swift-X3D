@@ -112,6 +112,12 @@ public class X3DBrowserContext :
       internalScene .beginUpdate ()
    }
    
+   public var selection : Bool
+   {
+      get { pointingDeviceSensorContextProperties .selection }
+      set { pointingDeviceSensorContextProperties .selection = newValue }
+   }
+   
    // Handle mouse events
    
    public override func mouseEntered (with event : NSEvent)

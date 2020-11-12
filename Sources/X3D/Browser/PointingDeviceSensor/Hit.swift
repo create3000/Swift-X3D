@@ -8,14 +8,14 @@
 internal final class Hit
 {
    internal final var layerNumber :  Int
-   internal final var shapeNode :    X3DShapeNode?
+   internal final var shapeNode :    X3DShapeNode
    internal final var pointer :      Vector2f
    internal final var hitRay :       Line3f
    internal final var intersection : Intersection
    internal final var sensors :      Set <PointingDeviceSensorContainer>?
    
    internal init (layerNumber :  Int,
-                  shapeNode :    X3DShapeNode?,
+                  shapeNode :    X3DShapeNode,
                   pointer :      Vector2f,
                   hitRay :       Line3f,
                   intersection : Intersection,

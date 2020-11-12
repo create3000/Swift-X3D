@@ -42,6 +42,8 @@ internal final class X3DExamineViewer :
       
    internal final override func mouseDown (with event : NSEvent)
    {
+      isActive = true
+      
       if event .modifierFlags .isEmpty
       {
          removeSpinning ()
@@ -113,6 +115,8 @@ internal final class X3DExamineViewer :
    
    internal final override func mouseUp (with event : NSEvent)
    {
+      isActive = false
+      
       if mouseMode == 1
       {
          if abs (rotation .angle) > SPIN_ANGLE && Date () .timeIntervalSince1970 - motionTime < SPIN_RELEASE_TIME

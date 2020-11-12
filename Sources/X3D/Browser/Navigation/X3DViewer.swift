@@ -11,10 +11,16 @@ import Cocoa
 internal class X3DViewer :
    X3DBaseNode
 {
+   // Event handlers
+   
    internal func mouseDown (with event : NSEvent) { }
    internal func mouseDragged (with event : NSEvent) { }
    internal func mouseUp (with event : NSEvent) { }
    internal func scrollWheel (with event : NSEvent) { }
+   
+   // Properties
+   
+   internal final var isActive : Bool = false
 
    private final var viewportNode : X3DViewportNode
    {
@@ -30,6 +36,8 @@ internal class X3DViewer :
    {
       browser! .world .activeLayerNode! .viewpointNode
    }
+   
+   // Operations
 
    internal final func pointOnCenterPlane (from point : NSPoint) -> Vector3f
    {

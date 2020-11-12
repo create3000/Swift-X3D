@@ -39,8 +39,6 @@ public class X3DBrowserSurface :
       
       setup ()
    }
-   
-   public final override var isOpaque : Bool { false }
 
    private final func setup ()
    {

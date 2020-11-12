@@ -142,7 +142,7 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    private func pick (with event : NSEvent)
    {
-      //guard !browser! .viewerNode .isActive else { return }
+      guard !browser! .viewerNode .isActive else { return }
       
       let point = browser! .convert (event .locationInWindow, from: nil)
       

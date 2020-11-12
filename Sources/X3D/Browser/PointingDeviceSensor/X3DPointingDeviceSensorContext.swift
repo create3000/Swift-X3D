@@ -15,15 +15,15 @@ internal final class X3DPointingDeviceSensorContextProperties :
 {
    // Properties
    
-   internal final var selection        = false
-   fileprivate final var pointerMoved  = false
-   fileprivate final var pointer       = Vector2f .zero
-   fileprivate final var hitRay        = Line3f (point1: .zero, point2: .zero)
-   fileprivate final var hits          = [Hit] ()
-   fileprivate final var selectedLayer : X3DLayerNode?
-   internal final var enabledSensors   = [Set <PointingDeviceSensorContainer>] ()
-   private final var overSensors       = Set <PointingDeviceSensorContainer> ()
-   private final var activeSensors     = Set <PointingDeviceSensorContainer> ()
+   internal final var selection         = false
+   fileprivate final var pointerMoved   = false
+   fileprivate final var pointer        = Vector2f .zero
+   fileprivate final var hitRay         = Line3f (point1: .zero, point2: .zero)
+   fileprivate final var hits           = [Hit] ()
+   fileprivate final var selectedLayer  : X3DLayerNode?
+   fileprivate final var enabledSensors = [Set <PointingDeviceSensorContainer>] ()
+   private final var overSensors        = Set <PointingDeviceSensorContainer> ()
+   private final var activeSensors      = Set <PointingDeviceSensorContainer> ()
    
    // Construction
    
@@ -201,7 +201,21 @@ extension X3DPointingDeviceSensorContext
    internal var pointerMoved : Bool { pointingDeviceSensorContextProperties .pointerMoved }
    
    internal var pointer : Vector2f { pointingDeviceSensorContextProperties .pointer }
+
+   internal func pointerInRectangle (_ rectangle : Vector4i) -> Bool
+   {
+      return pointer .x > Float (rectangle .x) &&
+             pointer .x < Float (rectangle .x) + Float (rectangle .z) &&
+             pointer .y > Float (rectangle .y) &&
+             pointer .y < Float (rectangle .y) + Float (rectangle .w)
+   }
    
+   internal var sensors : [Set <PointingDeviceSensorContainer>]
+   {
+      get { pointingDeviceSensorContextProperties .enabledSensors }
+      set { pointingDeviceSensorContextProperties .enabledSensors = newValue }
+   }
+
    internal func makeHitRay (_ projectionMatrix : Matrix4f, _ viewport : Vector4i)
    {
       let hitRay = ViewVolume .unProjectRay (pointer .x, pointer .y, .identity, projectionMatrix, viewport)
@@ -222,14 +236,6 @@ extension X3DPointingDeviceSensorContext
          intersection: intersection,
          sensors:      pointingDeviceSensorContextProperties .enabledSensors .last
       ))
-   }
-   
-   internal func pointerInRectangle (_ rectangle : Vector4i) -> Bool
-   {
-      return pointer .x > Float (rectangle .x) &&
-             pointer .x < Float (rectangle .x) + Float (rectangle .z) &&
-             pointer .y > Float (rectangle .y) &&
-             pointer .y < Float (rectangle .y) + Float (rectangle .w)
    }
    
    internal var selectedLayer : X3DLayerNode? { pointingDeviceSensorContextProperties .selectedLayer }

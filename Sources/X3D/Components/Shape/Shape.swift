@@ -85,8 +85,7 @@ public final class Shape :
    {
       let browser = renderer .browser
       
-      guard !browser .pointingDeviceSensorContextProperties .enabledSensors .isEmpty ||
-               (browser .selection && !browser .pointerMoved) else { return }
+      guard !browser .sensors .isEmpty || (browser .selection && !browser .pointerMoved) else { return }
       
       guard let geometryNode = geometryNode else { return }
       

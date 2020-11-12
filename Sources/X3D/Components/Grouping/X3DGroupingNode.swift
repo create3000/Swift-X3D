@@ -206,16 +206,16 @@ public class X3DGroupingNode :
       {
          case .Pointer: do
          {
-            let context = renderer .browser .pointingDeviceSensorContextProperties!
+            let browser = renderer .browser
             
             if !pointingDeviceSensorNodes .isEmpty
             {
-               context .enabledSensors .append (Set <PointingDeviceSensorContainer> ())
+               browser .sensors .append (Set <PointingDeviceSensorContainer> ())
                
                pointingDeviceSensorNodes .forEach
                {
                   $0! .push (renderer: renderer,
-                             sensors: &context .enabledSensors [context .enabledSensors .endIndex - 1])
+                             sensors: &browser .sensors [browser .sensors .endIndex - 1])
                }
             }
             
@@ -223,7 +223,7 @@ public class X3DGroupingNode :
             
             if !pointingDeviceSensorNodes .isEmpty
             {
-               context .enabledSensors .removeLast ()
+               browser .sensors .removeLast ()
             }
          }
          case .Camera: do

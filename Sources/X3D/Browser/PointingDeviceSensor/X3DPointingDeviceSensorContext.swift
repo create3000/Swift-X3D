@@ -15,14 +15,15 @@ internal final class X3DPointingDeviceSensorContextProperties :
 {
    // Properties
    
-   internal final var selection       = false
-   fileprivate final var pointerMoved = false
-   fileprivate final var pointer      = Vector2f .zero
-   fileprivate final var hitRay       = Line3f (point1: .zero, point2: .zero)
-   fileprivate final var hits         = [Hit] ()
-   internal final var enabledSensors  = [Set <PointingDeviceSensorContainer>] ()
-   private final var overSensors      = Set <PointingDeviceSensorContainer> ()
-   private final var activeSensors    = Set <PointingDeviceSensorContainer> ()
+   internal final var selection        = false
+   fileprivate final var pointerMoved  = false
+   fileprivate final var pointer       = Vector2f .zero
+   fileprivate final var hitRay        = Line3f (point1: .zero, point2: .zero)
+   fileprivate final var hits          = [Hit] ()
+   fileprivate final var selectedLayer : X3DLayerNode?
+   internal final var enabledSensors   = [Set <PointingDeviceSensorContainer>] ()
+   private final var overSensors       = Set <PointingDeviceSensorContainer> ()
+   private final var activeSensors     = Set <PointingDeviceSensorContainer> ()
    
    // Construction
    
@@ -66,6 +67,8 @@ internal final class X3DPointingDeviceSensorContextProperties :
 
       if let nearestHit = hits .last
       {
+         selectedLayer = nearestHit .layerNode
+         
          activeSensors = nearestHit .sensors ?? [ ]
 
          activeSensors .forEach { $0 .set_active (active: true, hit: nearestHit) }
@@ -93,6 +96,8 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    internal func mouseUp (with event : NSEvent)
    {
+      selectedLayer = nil
+      
       pick (with: event)
       
       let nearestHit = hits .last
@@ -190,9 +195,10 @@ extension X3DPointingDeviceSensorContext
    
    internal var hitRay : Line3f { pointingDeviceSensorContextProperties .hitRay }
    
-   internal func addHit (layerNumber : Int, shapeNode : X3DShapeNode, intersection : Intersection)
+   internal func addHit (layerNode : X3DLayerNode, layerNumber : Int, shapeNode : X3DShapeNode, intersection : Intersection)
    {
       pointingDeviceSensorContextProperties .hits .append (Hit (
+         layerNode:    layerNode,
          layerNumber:  layerNumber,
          shapeNode:    shapeNode,
          pointer:      pointer,
@@ -201,4 +207,14 @@ extension X3DPointingDeviceSensorContext
          sensors:      pointingDeviceSensorContextProperties .enabledSensors .last
       ))
    }
+   
+   internal func pointerInRectangle (_ rectangle : Vector4i) -> Bool
+   {
+      return pointer .x > Float (rectangle .x) &&
+             pointer .x < Float (rectangle .x) + Float (rectangle .z) &&
+             pointer .y > Float (rectangle .y) &&
+             pointer .y < Float (rectangle .y) + Float (rectangle .w)
+   }
+   
+   internal var selectedLayer : X3DLayerNode? { pointingDeviceSensorContextProperties .selectedLayer }
 }

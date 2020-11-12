@@ -121,7 +121,8 @@ public final class Shape :
       // Transform hitNormal to absolute space.
       intersection .normal = normalize (intersection .normal * invModelViewMatrix .submatrix)
       
-      browser .addHit (layerNumber: renderer .layerNumber,
+      browser .addHit (layerNode: renderer .layerNode,
+                       layerNumber: renderer .layerNumber,
                        shapeNode: self,
                        intersection: intersection)
    }

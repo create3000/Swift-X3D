@@ -158,6 +158,15 @@ public class X3DLayerNode :
       let nearValue = navigationInfoNode .nearValue
       let farValue  = navigationInfoNode .farValue (viewpointNode)
       
+      if let selectedLayer = renderer .browser .selectedLayer
+      {
+         guard selectedLayer === self else { return }
+      }
+      else
+      {
+         guard renderer .browser .pointerInRectangle (viewport) else { return }
+      }
+      
       renderer .viewport .append (viewport)
       renderer .projectionMatrix .push (viewpointNode .makeProjectionMatrix (viewport, nearValue, farValue))
       renderer .viewViewMatrix   .push (viewpointNode .viewMatrix)

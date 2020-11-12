@@ -53,8 +53,12 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    internal func mouseMoved (with event : NSEvent)
    {
-      pick (with: event)
-      
+      pick  (with: event)
+      moved (with: event)
+   }
+   
+   private func moved (with event : NSEvent)
+   {
       let nearestHit = hits .last
       
       // Set isOver to FALSE for appropriate nodes
@@ -131,6 +135,9 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    internal func mouseExited (with event : NSEvent)
    {
+      hits .removeAll (keepingCapacity: true)
+      
+      moved (with: event)
    }
    
    internal func scrollWheel (with event : NSEvent)

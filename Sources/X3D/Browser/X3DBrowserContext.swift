@@ -181,8 +181,6 @@ public class X3DBrowserContext :
    internal final func setNeedsDisplay ()
    {
       setNeedsDisplay (bounds)
-      
-      updateTrackingAreas ()
    }
 
    internal final override func update (_ commandBuffer : MTLCommandBuffer)

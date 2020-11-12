@@ -83,7 +83,10 @@ public final class Shape :
    
    private final func pointer (_ renderer : X3DRenderer)
    {
-      guard !renderer .browser .pointingDeviceSensorContextProperties .enabledSensors .isEmpty || renderer .browser .selection else { return }
+      let browser = renderer .browser
+      
+      guard !browser .pointingDeviceSensorContextProperties .enabledSensors .isEmpty ||
+               (browser .selection && !browser .pointerMoved) else { return }
       
       guard let geometryNode = geometryNode else { return }
       
@@ -118,9 +121,9 @@ public final class Shape :
       // Transform hitNormal to absolute space.
       intersection .normal = normalize (intersection .normal * invModelViewMatrix .submatrix)
       
-      renderer .browser .addHit (layerNumber: renderer .layerNumber,
-                                 shapeNode: self,
-                                 intersection: intersection)
+      browser .addHit (layerNumber: renderer .layerNumber,
+                       shapeNode: self,
+                       intersection: intersection)
    }
    
    internal final override func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder)

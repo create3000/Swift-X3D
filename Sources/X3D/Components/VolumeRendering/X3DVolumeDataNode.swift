@@ -29,5 +29,5 @@ public class X3DVolumeDataNode :
    
    // Bounded object
    
-   public final var bbox : Box3f { Box3f () }
+   public final var bbox : Box3f { .empty }
 }

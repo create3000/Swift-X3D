@@ -77,7 +77,7 @@ public final class Cylinder :
 
       if !top && !side && !bottom
       {
-         return Box3f ()
+         return .empty
       }
 
       else if !top && !side

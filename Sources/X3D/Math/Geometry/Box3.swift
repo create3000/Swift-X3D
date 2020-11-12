@@ -20,6 +20,10 @@ public struct Box3f
    
    public private(set) var matrix : Matrix4
    
+   // Static properties
+   
+   public static let empty = Self ()
+   
    /// Constructs an empty box.
    public init ()
    {

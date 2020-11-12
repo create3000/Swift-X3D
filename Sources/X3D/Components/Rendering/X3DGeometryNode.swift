@@ -22,7 +22,7 @@ public class X3DGeometryNode :
    
    @SFBool internal final var isTransparent : Bool = false
 
-   public internal(set) final var bbox = Box3f ()
+   public private(set) final var bbox : Box3f = .empty
    
    internal final var geometryType       : Int = 3
    internal final var isCounterClockwise : Bool = true
@@ -152,7 +152,7 @@ public class X3DGeometryNode :
    /// Override to make a bbox.
    internal func makeBBox () -> Box3f
    {
-      guard !primitives .isEmpty else { return Box3f () }
+      guard !primitives .isEmpty else { return .empty }
       
       let (min, max) = primitives .reduce ((min: Vector4f (repeating:  Float .infinity),
                                             max: Vector4f (repeating: -Float .infinity)))

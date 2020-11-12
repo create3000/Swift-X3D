@@ -75,7 +75,7 @@ public final class Cone :
 
       if !side && !bottom
       {
-         return Box3f ()
+         return .empty
       }
 
       else if !side

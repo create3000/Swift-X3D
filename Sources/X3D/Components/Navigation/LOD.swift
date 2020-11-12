@@ -89,7 +89,7 @@ public final class LOD :
             return boundedObject .bbox
          }
 
-         return Box3f ()
+         return .empty
       }
 
       return Box3f (size: bboxSize, center: bboxCenter)

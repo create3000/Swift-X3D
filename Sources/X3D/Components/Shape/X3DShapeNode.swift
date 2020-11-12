@@ -53,7 +53,7 @@ public class X3DShapeNode :
    
    // Bounded object
    
-   public var bbox : Box3f { Box3f () }
+   public var bbox : Box3f { .empty }
 
    // Member accsess
    

@@ -48,7 +48,7 @@ public final class Shape :
             return geometryNode .bbox
          }
          
-         return Box3f ()
+         return .empty
       }
       
       return Box3f (size: bboxSize, center: bboxCenter)

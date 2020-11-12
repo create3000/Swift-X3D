@@ -68,7 +68,7 @@ public class X3DGroupingNode :
    
    // Bounded object
    
-   public var bbox : Box3f { Box3f () }
+   public var bbox : Box3f { .empty }
 
    // Event handlers
    

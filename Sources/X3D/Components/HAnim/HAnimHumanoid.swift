@@ -84,5 +84,5 @@ public final class HAnimHumanoid :
    
    // Bounded object
    
-   public final var bbox : Box3f { Box3f () }
+   public final var bbox : Box3f { .empty }
 }

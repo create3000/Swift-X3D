@@ -83,8 +83,6 @@ public final class Shape :
    
    private final func pointer (_ renderer : X3DRenderer)
    {
-      let browser = renderer .browser
-      
       guard let geometryNode = geometryNode else { return }
       
       guard geometryNode .geometryType >= 2 else { return }
@@ -118,10 +116,10 @@ public final class Shape :
       // Transform hitNormal to absolute space.
       intersection .normal = normalize (intersection .normal * invModelViewMatrix .submatrix)
       
-      browser .addHit (layerNode: renderer .layerNode,
-                       layerNumber: renderer .layerNumber,
-                       shapeNode: self,
-                       intersection: intersection)
+      renderer .browser .addHit (layerNode: renderer .layerNode,
+                                 layerNumber: renderer .layerNumber,
+                                 shapeNode: self,
+                                 intersection: intersection)
    }
    
    internal final override func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder)

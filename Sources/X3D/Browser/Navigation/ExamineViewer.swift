@@ -8,7 +8,7 @@
 
 import Cocoa
 
-internal final class X3DExamineViewer :
+internal final class ExamineViewer :
    X3DViewer
 {
    // Constants
@@ -149,13 +149,13 @@ internal final class X3DExamineViewer :
    
    private final func addSpinning ()
    {
-      browser! .addBrowserInterest (event: .Browser_Event, method: X3DExamineViewer .spin, object: self)
+      browser! .addBrowserInterest (event: .Browser_Event, method: ExamineViewer .spin, object: self)
       browser! .setNeedsDisplay ()
    }
    
    private final func removeSpinning ()
    {
-      browser! .removeBrowserInterest (event: .Browser_Event, method: X3DExamineViewer .spin, object: self)
+      browser! .removeBrowserInterest (event: .Browser_Event, method: ExamineViewer .spin, object: self)
    }
    
    private final func spin ()

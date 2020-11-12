@@ -73,10 +73,13 @@ internal final class X3DPointingDeviceSensorContextProperties :
 
          activeSensors .forEach { $0 .set_active (active: true, hit: nearestHit) }
 
-         if !(nearestHit .sensors? .isEmpty ?? true)
+         if let sensors = nearestHit .sensors
          {
-            setCursor (with: event, cursor: .closedHand)
-            return
+            if !sensors .isEmpty
+            {
+               setCursor (with: event, cursor: .closedHand)
+               return
+            }
          }
       }
       

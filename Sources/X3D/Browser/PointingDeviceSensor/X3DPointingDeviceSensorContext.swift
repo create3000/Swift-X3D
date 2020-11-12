@@ -57,18 +57,21 @@ internal final class X3DPointingDeviceSensorContextProperties :
    {
       guard !browser! .viewerNode .isActive else { return }
       
+      // Handle sensors.
+      
       pick  (with: event)
       moved (with: event)
    }
 
    internal func mouseDown (with event : NSEvent)
    {
+      // Handle sensors.
+      
       pick (with: event)
 
       if let nearestHit = hits .last
       {
          selectedLayer = nearestHit .layerNode
-         
          activeSensors = nearestHit .sensors ?? [ ]
 
          activeSensors .forEach { $0 .set_active (active: true, hit: nearestHit) }
@@ -92,13 +95,19 @@ internal final class X3DPointingDeviceSensorContextProperties :
 
    internal func mouseDragged (with event : NSEvent)
    {
+      // Handle sensors.
+      
       mouseMoved (with: event)
 
+      // Handle viewer.
+      
       browser! .viewerNode .mouseDragged (with: event)
    }
    
    internal func mouseUp (with event : NSEvent)
    {
+      // Handle sensors.
+      
       selectedLayer = nil
       
       pick (with: event)
@@ -118,6 +127,8 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    internal func mouseExited (with event : NSEvent)
    {
+      // Handle sensors.
+      
       hits .removeAll (keepingCapacity: true)
       
       moved (with: event)
@@ -125,6 +136,8 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    internal func scrollWheel (with event : NSEvent)
    {
+      // Handle viewer.
+      
       browser! .viewerNode .scrollWheel (with: event)
    }
    

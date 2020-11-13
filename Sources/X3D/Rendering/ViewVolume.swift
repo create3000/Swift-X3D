@@ -67,9 +67,109 @@ public class ViewVolume
    {
       let modelViewProjectionMatrix = projectionMatrix * modelViewMatrix
 
-      let point1 = projectPoint (line .point,                         modelViewProjectionMatrix, viewport);
-      let point2 = projectPoint (line .point + line .direction * 1e9, modelViewProjectionMatrix, viewport);
+      let point1 = projectPoint (line .point,                         modelViewProjectionMatrix, viewport)
+      let point2 = projectPoint (line .point + line .direction * 1e9, modelViewProjectionMatrix, viewport)
 
       return Line3f (point1: point1, point2: point2)
+   }
+   
+   public static func intersects (with box : Box3f, _ projectionMatrix : Matrix4f, _ viewport : Vector4i) -> Bool
+   {
+      let points1 = box .points
+      let points2 = points (projectionMatrix, viewport)
+      
+      // Test the three planes spanned by the normal vectors of the faces of the box.
+
+      let normals1 = box .normals
+
+      if Sat .separated (normals1, points1, points2)
+      {
+         return false
+      }
+      
+      // Test the six planes spanned by the normal vectors of the faces of the view volume.
+
+      let normals2 = normals (points2)
+      
+      if Sat .separated (normals2, points1, points2)
+      {
+         return false
+      }
+
+      // Test the planes spanned by the edges of each object.
+
+      var axes = [Vector3f] ()
+
+      for axis1 in box .axes
+      {
+         for axis2 in edges (points2)
+         {
+            axes .append (cross (axis1, axis2))
+         }
+      }
+
+      if Sat .separated (axes, points1, points2)
+      {
+         return false
+      }
+
+      // Both boxes intersect.
+
+      return true
+   }
+   
+   private static func points (_ projectionMatrix : Matrix4f, _ viewport : Vector4i) -> [Vector3f]
+   {
+      var points = [Vector3f] ()
+      
+      let x1     = Float (viewport [0])
+      let x2     = Float (viewport [0] + viewport [2])
+      let y1     = Float (viewport [1])
+      let y2     = Float (viewport [1] + viewport [3])
+      let matrix = projectionMatrix .inverse
+
+      points .append (unProjectPoint (x1, y1, 0, matrix, viewport))
+      points .append (unProjectPoint (x2, y1, 0, matrix, viewport))
+      points .append (unProjectPoint (x2, y2, 0, matrix, viewport))
+      points .append (unProjectPoint (x1, y2, 0, matrix, viewport))
+      points .append (unProjectPoint (x1, y1, 1, matrix, viewport))
+      points .append (unProjectPoint (x2, y1, 1, matrix, viewport))
+      points .append (unProjectPoint (x2, y2, 1, matrix, viewport))
+      points .append (unProjectPoint (x1, y2, 1, matrix, viewport))
+
+      return points
+   }
+   
+   // Return normals for SAT theorem.
+   private static func normals (_ points : [Vector3f]) -> [Vector3f]
+   {
+      var normals = [Vector3f] ()
+      
+      normals .append (normal (points [0], points [1], points [2]))  // front
+      normals .append (normal (points [7], points [4], points [0]))  // left
+      normals .append (normal (points [6], points [2], points [1]))  // right
+      normals .append (normal (points [2], points [6], points [7]))  // top
+      normals .append (normal (points [1], points [0], points [4]))  // bottom
+      normals .append (normal (points [4], points [7], points [6]))  // back
+
+      return normals
+   }
+   
+   // Return edges for SAT theorem.
+   private static func edges (_ points : [Vector3f]) -> [Vector3f]
+   {
+      var edges = [Vector3f] ()
+      
+      edges .append (points [0] - points [1])
+      edges .append (points [1] - points [2])
+      edges .append (points [2] - points [3])
+      edges .append (points [3] - points [0])
+
+      edges .append (points [0] - points [4])
+      edges .append (points [1] - points [5])
+      edges .append (points [2] - points [6])
+      edges .append (points [3] - points [7])
+
+      return edges
    }
 }

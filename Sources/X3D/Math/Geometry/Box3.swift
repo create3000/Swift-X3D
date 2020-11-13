@@ -104,6 +104,72 @@ public struct Box3f
 
       return (min, max)
    }
+   
+   public var points : [Vector3]
+   {
+      /*
+       * p6 ---------- p5
+       * | \           | \
+       * | p2------------ p1
+       * |  |          |  |
+       * |  |          |  |
+       * p7 |_________ p8 |
+       *  \ |           \ |
+       *   \|            \|
+       *    p3 ---------- p4
+       */
+
+      var points = [Vector3] ()
+
+      let x = matrix .xAxis
+      let y = matrix .yAxis
+      let z = matrix .zAxis
+
+      let r1 = y + z
+      let r2 = z - y
+
+      points .append (x + r1)
+      points .append (r1 - x)
+      points .append (r2 - x)
+      points .append (x + r2)
+
+      points .append (-points [2])
+      points .append (-points [3])
+      points .append (-points [0])
+      points .append (-points [1])
+
+      for i in 0 ..< 8
+      {
+         points [i] += center
+      }
+
+      return points
+   }
+
+   public var normals : [Vector3]
+   {
+      var normals = [Vector3] ()
+
+      let n = normalize (matrix)
+      let x = n .xAxis
+      let y = n .yAxis
+      let z = n .zAxis
+
+      normals .append (normalize (cross (y, z)))
+      normals .append (normalize (cross (z, x)))
+      normals .append (normalize (cross (x, y)))
+
+      return normals
+   }
+   
+   public var axes : [Vector3]
+   {
+      [
+         matrix .xAxis,
+         matrix .yAxis,
+         matrix .zAxis,
+      ]
+   }
 
    // Operations
    
@@ -211,4 +277,161 @@ extension Box3f :
 {
    public var description      : String { "Box3f(size: \(size), center: \(center))" }
    public var debugDescription : String { description }
+}
+
+fileprivate func normalize (_ matrix : Matrix4f) -> Matrix4f
+{
+   var x = matrix .xAxis
+   var y = matrix .yAxis
+   var z = matrix .zAxis
+
+   if norm (x) == 0 && norm (y) == 0 && norm (z) == 0
+   {
+      x = .xAxis
+      y = .yAxis
+      z = .zAxis
+   }
+   else
+   {
+      let axes : [Vector3f] = [.xAxis, .yAxis, .zAxis]
+
+      if norm (x) == 0
+      {
+         x = cross (y, z)
+   
+         if norm (x) == 0
+         {
+            for a in axes
+            {
+               x = cross (a, y)
+   
+               if norm (x) == 0
+               {
+                  continue
+               }
+   
+               break
+            }
+         }
+   
+         if norm (x) == 0
+         {
+            for a in axes
+            {
+               x = cross (a, z)
+   
+               if norm (x) == 0
+               {
+                  continue
+               }
+   
+               break
+            }
+         }
+   
+         if norm (x) == 0
+         {
+            x = .xAxis
+         }
+         else
+         {
+            x = normalize (x)
+         }
+      }
+   
+      if (norm (y) == 0)
+      {
+         y = cross (z, x);
+   
+         if (norm (y) == 0)
+         {
+            for  a in axes
+            {
+               y = cross (a, z)
+   
+               if norm (y) == 0
+               {
+                  continue
+               }
+   
+               break
+            }
+         }
+   
+         if norm (y) == 0
+         {
+            for a in axes
+            {
+               y = cross (a, x)
+   
+               if norm (y) == 0
+               {
+                  continue
+               }
+   
+               break
+            }
+         }
+   
+         if norm (y) == 0
+         {
+            y = .yAxis
+         }
+         else
+         {
+            y = normalize (y)
+         }
+      }
+   
+      if norm (z) == 0
+      {
+         z = cross (x, y)
+   
+         if norm (z) == 0
+         {
+            for a in axes
+            {
+               z = cross (a, x)
+   
+               if norm (z) == 0
+               {
+                  continue
+               }
+   
+               break
+            }
+         }
+   
+         if norm (z) == 0
+         {
+            for a in axes
+            {
+               z = cross (a, y)
+   
+               if norm (z) == 0
+               {
+                  continue
+               }
+   
+               break
+            }
+         }
+   
+         if norm (z) == 0
+         {
+            z = .zAxis
+         }
+         else
+         {
+            z = normalize (z)
+         }
+      }
+   }
+
+   let o = matrix .origin
+
+   return Matrix4f (columns: (Vector4f (x, 0),
+                              Vector4f (y, 0),
+                              Vector4f (z, 0),
+                              Vector4f (o, 1)))
 }

@@ -16,6 +16,11 @@ public final class VisibilitySensor :
    internal final override class var component      : String { "EnvironmentalSensor" }
    internal final override class var componentLevel : Int32 { 2 }
    internal final override class var containerField : String { "children" }
+   
+   // Properties
+   
+   private final var visible   : Bool = false
+   private final var traversed : Bool = true
 
    // Construction
    
@@ -37,5 +42,83 @@ public final class VisibilitySensor :
    internal final override func create (with executionContext : X3DExecutionContext) -> VisibilitySensor
    {
       return VisibilitySensor (with: executionContext)
+   }
+   
+   internal final override func initialize ()
+   {
+      super .initialize ()
+      
+      scene! .$isLive .addInterest (VisibilitySensor .set_enabled, self)
+      
+      $enabled .addInterest (VisibilitySensor .set_enabled, self)
+      
+      set_enabled ()
+   }
+   
+   // Event handlers
+   
+   private final func set_enabled ()
+   {
+      if enabled && scene! .isLive
+      {
+         browser! .addBrowserInterest (event: .Browser_Sensors, method: VisibilitySensor .update, object: self)
+      }
+      else
+      {
+         browser! .removeBrowserInterest (event: .Browser_Sensors, method: VisibilitySensor .update, object: self)
+
+         if isActive
+         {
+            isActive = false
+            exitTime = browser! .currentTime
+         }
+      }
+   }
+   
+   private final func update ()
+   {
+      if visible && traversed
+      {
+         if !isActive
+         {
+            isActive  = true
+            enterTime = browser! .currentTime
+         }
+      }
+      else
+      {
+         if isActive
+         {
+            isActive = false
+            exitTime = browser! .currentTime
+         }
+      }
+
+      visible   = false
+      traversed = false
+   }
+   
+   // Rendering
+   
+   internal final override func traverse (_ type: X3DTraverseType, _ renderer: X3DRenderer)
+   {
+      guard enabled else { return }
+
+      guard type == .Render else { return }
+
+      traversed = true
+
+      guard !visible else { return }
+
+      if size == -.one
+      {
+         visible = true
+      }
+      else
+      {
+         let bbox = renderer .modelViewMatrix .top * Box3f (size: size, center: center)
+
+         visible = ViewVolume .intersects (with: bbox, renderer .projectionMatrix .top, renderer .viewport .last!)
+      }
    }
 }

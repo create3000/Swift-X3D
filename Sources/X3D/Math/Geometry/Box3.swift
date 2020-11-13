@@ -215,7 +215,7 @@ public struct Box3f
       return Self (from: matrix * box .matrix)
    }
    
-   public func intersects (with point : Vector3) -> Bool
+   public func contains (point : Vector3) -> Bool
    {
       let extents = self .extents
       let min     = extents .min

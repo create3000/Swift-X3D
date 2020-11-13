@@ -185,7 +185,7 @@ public final class ProximitySensor :
             {
                let bbox = Box3f (size: size, center: center)
 
-               inside = bbox .intersects (with: renderer .modelViewMatrix .top .inverse .origin)
+               inside = bbox .contains (point: renderer .modelViewMatrix .top .inverse .origin)
             }
          }
          default:

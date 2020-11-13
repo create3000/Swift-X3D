@@ -117,14 +117,14 @@ public final class SphereSensor :
       }
       else
       {
-         // Find trackPoint on the plane with sphere
+         // Find trackPoint on the plane with sphere.
 
          let tangentPoint = zPlane .intersects (with: hitRay)!
 
-         hitRay     = Line3f (point: tangentPoint, direction: normalize (sphere .center - tangentPoint))
+         hitRay     = Line3f (point1: tangentPoint, point2: sphere .center)
          trackPoint = getTrackPoint (hitRay, behind: false)!
 
-         // Find trackPoint behind sphere
+         // Find trackPoint behind sphere.
 
          let triNormal     = normal (sphere .center, trackPoint, startPoint)
          let dirFromCenter = normalize (trackPoint - sphere .center)

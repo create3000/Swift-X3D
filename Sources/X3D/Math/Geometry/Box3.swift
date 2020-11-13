@@ -215,6 +215,21 @@ public struct Box3f
       return Self (from: matrix * box .matrix)
    }
    
+   public func intersects (with point : Vector3) -> Bool
+   {
+      let extents = self .extents
+      let min     = extents .min
+      let max     = extents .max
+
+      return min .x <= point .x &&
+             max .x >= point .x &&
+             min .y <= point .y &&
+             max .y >= point .y &&
+             min .z <= point .z &&
+             max .z >= point .z
+   }
+
+   
    private static let normals = [
       Vector3 (0,  0,  1), // front
       Vector3 (0,  0, -1), // back

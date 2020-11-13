@@ -22,6 +22,13 @@ public final class ProximitySensor :
    @SFVec3f    public final var centerOfRotation_changed : Vector3f = .zero
    @SFRotation public final var orientation_changed      : Rotation4f = .identity
    @SFVec3f    public final var position_changed         : Vector3f = .zero
+   
+   // Properties
+   
+   private final var inside        : Bool = false
+   private final var traversed     : Bool = true
+   private final var viewpointNode : X3DViewpointNode? = nil
+   private final var modelMatrix   : Matrix4f = .identity
 
    // Construction
    
@@ -44,10 +51,145 @@ public final class ProximitySensor :
 
       $centerOfRotation_changed .unit = .length
       $position_changed         .unit = .length
+      
+      setCameraObject (true)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> ProximitySensor
    {
       return ProximitySensor (with: executionContext)
+   }
+   
+   internal final override func initialize ()
+   {
+      super .initialize ()
+      
+      scene! .$isLive .addInterest (ProximitySensor .set_enabled, self)
+      
+      $enabled        .addInterest (ProximitySensor .set_enabled, self)
+      $size           .addInterest (ProximitySensor .set_enabled, self)
+      $isCameraObject .addInterest (ProximitySensor .set_enabled, self)
+
+      set_enabled ()
+   }
+   
+   // Event handlers
+
+   private final func setTraversed (_ value : Bool)
+   {
+      setCameraObject (value ? true : traversed)
+
+      traversed = value
+   }
+   
+   private final func set_enabled ()
+   {
+      if isCameraObject && enabled && size != .zero && scene! .isLive
+      {
+         browser! .addBrowserInterest (event: .Browser_Sensors, method: ProximitySensor .update, object: self)
+      }
+      else
+      {
+         browser! .removeBrowserInterest (event: .Browser_Sensors, method: ProximitySensor .update, object: self)
+
+         if isActive
+         {
+            isActive = false
+            exitTime = browser! .currentTime
+         }
+      }
+   }
+   
+   private final func update ()
+   {
+      if inside && traversed
+      {
+         if let viewpointNode = viewpointNode
+         {
+            var centerOfRotationMatrix = viewpointNode .modelMatrix
+            centerOfRotationMatrix  = centerOfRotationMatrix .translate (viewpointNode .userCenterOfRotation)
+            centerOfRotationMatrix *= modelMatrix .inverse
+
+            modelMatrix *= viewpointNode .viewMatrix
+            
+            let transform        = decompose_transformation_matrix (modelMatrix)
+            let position         = modelMatrix .inverse .origin
+            let orientation      = transform .rotation .inverse
+            let centerOfRotation = centerOfRotationMatrix .origin
+
+            if isActive
+            {
+               if position_changed != position
+               {
+                  position_changed = position
+               }
+
+               if orientation_changed != orientation
+               {
+                  orientation_changed = orientation
+               }
+
+               if centerOfRotation_changed != centerOfRotation
+               {
+                  centerOfRotation_changed = centerOfRotation
+               }
+            }
+            else
+            {
+               isActive  = true
+               enterTime = browser! .currentTime
+
+               position_changed         = position
+               orientation_changed      = orientation
+               centerOfRotation_changed = centerOfRotation
+            }
+         }
+      }
+      else
+      {
+         if isActive
+         {
+            isActive = false
+            exitTime = browser! .currentTime
+         }
+      }
+
+      inside        = false
+      viewpointNode = nil
+
+      setTraversed (false)
+   }
+   
+   internal final override func traverse (_ type: X3DTraverseType, _ renderer: X3DRenderer)
+   {
+      guard enabled else { return }
+
+      switch type
+      {
+         case .Camera: do
+         {
+            viewpointNode = renderer .layerNode .viewpointNode
+            modelMatrix   = renderer .modelViewMatrix .top
+         }
+         case .Render: do
+         {
+            setTraversed (true)
+
+            guard !inside else { return }
+
+            if size == -.one
+            {
+               inside = true
+            }
+            else
+            {
+               let bbox = Box3f (size: size, center: center)
+
+               inside = bbox .intersects (with: renderer .modelViewMatrix .top .inverse .origin)
+            }
+         }
+         default:
+            break
+      }
    }
 }

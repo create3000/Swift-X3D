@@ -47,6 +47,42 @@ public struct Line3f
       return Self (point: point, direction: direction)
    }
    
+   /// Returns the perpendicular distance from the point to this line.
+   public func distance (from point : Vector3) -> Scalar
+   {
+      return length (perpendicularVector (from: point))
+   }
+
+   /// Returns the perpendicular distance from the line to this line.
+   public func distance (from line : Self) -> Scalar
+   {
+      return length (perpendicularVector (from: line))
+   }
+
+   /// Returns the perpendicular vector from point to this line.
+   public func perpendicularVector (from point : Vector3) -> Vector3
+   {
+      let d = self .point - point
+      return d - dot (d, direction) * direction
+   }
+
+   /// Returns the perpendicular vector from line to this line.
+   public func perpendicularVector (from line : Self) -> Vector3
+   {
+      let d = point - line .point
+
+      let re1 = dot (d, direction)
+      let re2 = dot (d, line .direction)
+      let e12 = dot (direction, line .direction)
+      let E12 = pow (e12, 2);
+
+      let a =  (re1 - re2 * e12) / (1 - E12)
+      let b = -(re2 - re1 * e12) / (1 - E12)
+
+      return d + b * line .direction - a * direction
+   }
+
+   /// Returns the closest point from @a point to this line on this line.
    public func closestPoint (to toPoint : Vector3) -> Vector3
    {
       let r = toPoint - point
@@ -55,6 +91,8 @@ public struct Line3f
       return simd_muladd (direction, Vector3 (repeating: d), point)
    }
    
+   /// Returns the closest point from line to this line on this line,
+   /// or nil denoting whether both lines are parallel.
    public func closestPoint (to line : Self) -> Vector3?
    {
       let p1 = point
@@ -76,6 +114,8 @@ public struct Line3f
       return simd_muladd (d1, Vector3 (repeating: t), p1)
    }
 
+   /// Returns the barycentric intersection coordinates for the triangle,
+   /// or nil denoting whether the intersection was successful.
    public func intersects (_ A : Vector3, _ B : Vector3, _ C : Vector3) -> (u : Scalar, v : Scalar, t : Scalar)?
    {
       // Find vectors for two edges sharing vert0.

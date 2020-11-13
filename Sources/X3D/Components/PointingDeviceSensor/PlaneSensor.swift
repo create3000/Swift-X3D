@@ -25,6 +25,14 @@ public final class PlaneSensor :
    @SFVec2f    public final var maxPosition         : Vector2f = -.one
    @SFVec3f    public final var translation_changed : Vector3f = .zero
 
+   // Properties
+   
+   private final var planeSensor : Bool = false
+   private final var line        : Line3f = Line3f (point: .zero, direction: .zero)
+   private final var plane       : Plane3f = Plane3f (point: .zero, normal: .zero)
+   private final var startPoint  : Vector3f = .zero
+   private final var startOffset : Vector3f = .zero
+
    // Construction
    
    internal init (with executionContext : X3DExecutionContext)
@@ -59,12 +67,6 @@ public final class PlaneSensor :
    
    // Event handlers
    
-   private final var planeSensor : Bool = false
-   private final var line        : Line3f = Line3f (point: .zero, direction: .zero)
-   private final var plane       : Plane3f = Plane3f (point: .zero, normal: .zero)
-   private final var startPoint  : Vector3f = .zero
-   private final var startOffset : Vector3f = .zero
-
    internal final override func set_active (active : Bool,
                                             hit : Hit,
                                             modelViewMatrix : Matrix4f,

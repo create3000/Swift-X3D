@@ -28,6 +28,26 @@ public struct Plane3f
    
    // Operations
    
+   /// Returns the distance from point.
+   public func distance (to point : Vector3) -> Scalar
+   {
+      return dot (point, normal) - distanceFromOrigin
+   }
+
+   /// Returns the perpendicular vector from point to this plane.
+   public func perpendicularVector (from point : Vector3) -> Vector3
+   {
+      return normal * -distance (to: point)
+   }
+
+   ///  Returns the closest point on the plane to a given point @a point.
+   public func closestPoint (to point : Vector3) -> Vector3
+   {
+      return point + perpendicularVector (from: point)
+   }
+
+   /// Returns the intersection with line point or nil denoting whether
+   /// the intersection was successful.
    public func intersects (with line : Line3) -> Vector3?
    {
       // Check if the line is parallel to the plane.

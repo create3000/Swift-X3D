@@ -47,6 +47,13 @@ public final class SphereSensor :
    }
    
    // Event handlers
+   
+   private final var sphere      : Sphere3f = Sphere3f (center: .zero, radius: 0)
+   private final var zPlane      : Plane3f = Plane3f (point: .zero, normal: .zero)
+   private final var behind      : Bool = false
+   private final var fromVector  : Vector3f = .zero
+   private final var startPoint  : Vector3f = .zero
+   private final var startOffset : Rotation4f = .identity
 
    internal final override func set_active (active : Bool,
                                             hit : Hit,
@@ -63,12 +70,26 @@ public final class SphereSensor :
       if isActive
       {
          let invModelViewMatrix = modelViewMatrix .inverse
-         let hitRay             = invModelViewMatrix * hit .hitRay
          let hitPoint           = invModelViewMatrix * hit .intersection .point
+         let center             = Vector3f .zero
+
+         sphere = Sphere3f (center: center, radius: length (hitPoint - center))
+         zPlane = Plane3f (point: center, normal: normalize (invModelViewMatrix .submatrix * Vector3f .zAxis)) // Screen aligned Z-plane
+         behind = zPlane .distance (to: hitPoint) < 0
+
+         fromVector  = hitPoint - sphere .center
+         startPoint  = hit .intersection .point
+         startOffset = offset
+
+         trackPoint_changed = hitPoint
+         rotation_changed   = offset
       }
       else
       {
-         
+         if autoOffset
+         {
+            offset = rotation_changed
+         }
       }
    }
    
@@ -83,6 +104,66 @@ public final class SphereSensor :
                          viewport: viewport)
       
       let invModelViewMatrix = modelViewMatrix .inverse
-      let hitRay             = invModelViewMatrix * hit .hitRay
+      var hitRay             = invModelViewMatrix * hit .hitRay
+      let startPoint         = invModelViewMatrix * self .startPoint
+      
+      var trackPoint = Vector3f .zero
+
+      if let intersection = getTrackPoint (hitRay)
+      {
+         let zAxis = normalize (invModelViewMatrix .submatrix * Vector3f .zAxis) // Camera direction
+
+         trackPoint = intersection
+         zPlane     = Plane3f (point: trackPoint, normal: zAxis) // Screen aligned Z-plane
+      }
+      else
+      {
+         // Find trackPoint on the plane with sphere
+
+         let tangentPoint = zPlane .intersects (with: hitRay)!
+
+         hitRay = Line3f (point1: tangentPoint, point2: sphere .center)
+
+         let trackPoint1 = getTrackPoint (hitRay)!
+
+         // Find trackPoint behind sphere
+
+         let triNormal     = normal (sphere .center, trackPoint1, startPoint)
+         let dirFromCenter = normalize (trackPoint1 - sphere .center)
+         let normal        = normalize (cross (triNormal, dirFromCenter))
+
+         hitRay     = Line3f (point1: trackPoint1 - normal * length (tangentPoint - trackPoint1), point2: sphere .center)
+         trackPoint = getTrackPoint (hitRay)!
+      }
+
+      let toVector = trackPoint - sphere .center
+      var rotation = Rotation4f (from: fromVector, to: toVector)
+
+      if behind
+      {
+         rotation = rotation .inverse
+      }
+      
+      trackPoint_changed = trackPoint
+      rotation_changed   = rotation * startOffset
+   }
+   
+   private final func getTrackPoint (_ hitRay : Line3f) -> Vector3f?
+   {
+      if let (enter, exit) = sphere .intersects (with: hitRay)
+      {
+         if (length (hitRay .point - exit) < length (hitRay .point - enter)) == behind
+         {
+            return enter
+         }
+         else
+         {
+            return exit
+         }
+      }
+      else
+      {
+         return nil
+      }
    }
 }

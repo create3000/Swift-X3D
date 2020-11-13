@@ -73,12 +73,12 @@ public final class SphereSensor :
          let hitPoint           = invModelViewMatrix * hit .intersection .point
          let center             = Vector3f .zero
 
-         sphere = Sphere3f (center: center, radius: length (hitPoint - center))
+         sphere = Sphere3f (center: center, radius: length (hitPoint))
          zPlane = Plane3f (point: center, normal: normalize (invModelViewMatrix .submatrix * Vector3f .zAxis)) // Screen aligned Z-plane
          behind = zPlane .distance (to: hitPoint) < 0
 
-         fromVector  = hitPoint - sphere .center
-         startPoint  = hit .intersection .point
+         fromVector  = hitPoint
+         startPoint  = hitPoint
          startOffset = offset
 
          trackPoint_changed = hitPoint
@@ -105,11 +105,10 @@ public final class SphereSensor :
       
       let invModelViewMatrix = modelViewMatrix .inverse
       var hitRay             = invModelViewMatrix * hit .hitRay
-      let startPoint         = invModelViewMatrix * self .startPoint
       
       var trackPoint = Vector3f .zero
 
-      if let intersection = getTrackPoint (hitRay)
+      if let intersection = getTrackPoint (hitRay, behind: behind)
       {
          let zAxis = normalize (invModelViewMatrix .submatrix * Vector3f .zAxis) // Camera direction
 
@@ -122,18 +121,18 @@ public final class SphereSensor :
 
          let tangentPoint = zPlane .intersects (with: hitRay)!
 
-         hitRay = Line3f (point1: tangentPoint, point2: sphere .center)
-
-         let trackPoint1 = getTrackPoint (hitRay)!
+         hitRay     = Line3f (point: tangentPoint, direction: normalize (sphere .center - tangentPoint))
+         trackPoint = getTrackPoint (hitRay, behind: false)!
 
          // Find trackPoint behind sphere
 
-         let triNormal     = normal (sphere .center, trackPoint1, startPoint)
-         let dirFromCenter = normalize (trackPoint1 - sphere .center)
+         let triNormal     = normal (sphere .center, trackPoint, startPoint)
+         let dirFromCenter = normalize (trackPoint - sphere .center)
          let normal        = normalize (cross (triNormal, dirFromCenter))
+         let point1        = trackPoint - normal * length (tangentPoint - trackPoint)
 
-         hitRay     = Line3f (point1: trackPoint1 - normal * length (tangentPoint - trackPoint1), point2: sphere .center)
-         trackPoint = getTrackPoint (hitRay)!
+         hitRay     = Line3f (point1: point1, point2: sphere .center)
+         trackPoint = getTrackPoint (hitRay, behind: false)!
       }
 
       let toVector = trackPoint - sphere .center
@@ -148,7 +147,7 @@ public final class SphereSensor :
       rotation_changed   = rotation * startOffset
    }
    
-   private final func getTrackPoint (_ hitRay : Line3f) -> Vector3f?
+   private final func getTrackPoint (_ hitRay : Line3f, behind : Bool) -> Vector3f?
    {
       if let (enter, exit) = sphere .intersects (with: hitRay)
       {

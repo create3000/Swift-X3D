@@ -18,8 +18,7 @@ public final class SFColor :
    // Property wrapper handling
    
    public final var projectedValue : SFColor { self }
-   public final var wrappedValue : Value { get { value } set { value = newValue; addEvent () } }
-   private final var value : Value
+   public final var wrappedValue : Value { didSet { addEvent () } }
 
    // Common properties
    
@@ -30,15 +29,15 @@ public final class SFColor :
    
    public override init ()
    {
-      value = Color3f .zero
+      self .wrappedValue = Color3f .zero
    }
 
    public init (wrappedValue : Value)
    {
-      value = wrappedValue
+      self .wrappedValue = wrappedValue
    }
    
-   public final override func copy () -> SFColor { SFColor (wrappedValue: value) }
+   public final override func copy () -> SFColor { SFColor (wrappedValue: wrappedValue) }
 
    // Value handling
    
@@ -46,6 +45,6 @@ public final class SFColor :
    {
       guard let field = field as? SFColor else { return }
       
-      value = field .value
+      wrappedValue = field .wrappedValue
    }
 }

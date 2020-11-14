@@ -14,13 +14,12 @@ public final class MFMatrix4f :
    // Member types
    
    public typealias Element = Matrix4f
-   public typealias Value   = X3DArray <Element>
+   public typealias Value   = [Element]
 
    // Property wrapper handling
    
    public final var projectedValue : MFMatrix4f { self }
-   public final var wrappedValue : Value { value }
-   private final let value = Value ()
+   public final var wrappedValue : Value { didSet { addEvent () } }
 
    // Common properties
    
@@ -31,20 +30,15 @@ public final class MFMatrix4f :
    
    public override init ()
    {
-      super .init ()
-
-      value .field = self
+      self .wrappedValue = Value ()
    }
    
-   public convenience init <S> (wrappedValue : S)
-      where Element == S .Element, S : Sequence
+   public init (wrappedValue : Value)
    {
-      self .init ()
-
-      value .append (contentsOf: wrappedValue)
+      self .wrappedValue = wrappedValue
    }
    
-   public final override func copy () -> MFMatrix4f { MFMatrix4f (wrappedValue: value) }
+   public final override func copy () -> MFMatrix4f { MFMatrix4f (wrappedValue: wrappedValue) }
 
    // Value handling
    
@@ -52,6 +46,6 @@ public final class MFMatrix4f :
    {
       guard let field = field as? MFMatrix4f else { return }
 
-      value .set (field .value)
+      wrappedValue = field .wrappedValue
    }
 }

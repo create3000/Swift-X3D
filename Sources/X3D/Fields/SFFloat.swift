@@ -18,8 +18,7 @@ public final class SFFloat :
    // Property wrapper handling
    
    public final var projectedValue : SFFloat { self }
-   public final var wrappedValue : Value { get { value } set { value = newValue; addEvent () } }
-   private final var value : Value
+   public final var wrappedValue : Value { didSet { addEvent () } }
 
    // Common properties
    
@@ -30,15 +29,15 @@ public final class SFFloat :
    
    public override init ()
    {
-      value = 0
+      self .wrappedValue = 0
    }
 
    public init (wrappedValue : Value)
    {
-      value = wrappedValue
+      self .wrappedValue = wrappedValue
    }
    
-   public final override func copy () -> SFFloat { SFFloat (wrappedValue: value) }
+   public final override func copy () -> SFFloat { SFFloat (wrappedValue: wrappedValue) }
 
    // Value handling
    
@@ -46,6 +45,6 @@ public final class SFFloat :
    {
       guard let field = field as? SFFloat else { return }
       
-      value = field .value
+      wrappedValue = field .wrappedValue
    }
 }

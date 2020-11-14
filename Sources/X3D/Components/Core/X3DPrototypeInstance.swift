@@ -98,7 +98,6 @@ public class X3DPrototypeInstance :
                
                // If default value of protoField is different from field update default value for field.
                field .set (value: protoField)
-               field .addEvent ()
             }
             else
             {

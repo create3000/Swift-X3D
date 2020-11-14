@@ -22,7 +22,10 @@ public class X3DField :
    internal func set (value field : X3DField) { }
    
    /// Deep copies value from field and set this value without generating an event.
-   internal func set (with protoInstance : X3DPrototypeInstance, value field : X3DField) { set (value: field) }
+   internal func set (with protoInstance : X3DPrototypeInstance, value field : X3DField)
+   {
+      set (value: field)
+   }
    
    // Reference handling
    
@@ -48,7 +51,7 @@ public class X3DField :
             set (value: reference)
             
          case X3DAccessType .inputOnly .rawValue:
-            reference.addFieldInterest (to: self)
+            reference .addFieldInterest (to: self)
             
          case X3DAccessType .outputOnly .rawValue:
             addFieldInterest (to: reference)
@@ -60,8 +63,6 @@ public class X3DField :
             
          default: break
       }
-
-//      updateReference (reference)
    }
    
    public final func removeReference (to reference : X3DField)
@@ -76,7 +77,7 @@ public class X3DField :
             reference .removeFieldInterest (to: self)
             
          case X3DAccessType .inputOnly .rawValue:
-            reference.removeFieldInterest (to: self)
+            reference .removeFieldInterest (to: self)
             
          case X3DAccessType .outputOnly .rawValue:
             removeFieldInterest (to: reference)
@@ -88,34 +89,6 @@ public class X3DField :
          default: break
       }
    }
-   
-//   public final func updateReferences ()
-//   {
-//      for reference in references
-//      {
-//         updateReference (reference .object!)
-//      }
-//   }
-//
-//   private final func updateReference (_ reference : X3DField)
-//   {
-//      switch accessType .rawValue & reference .accessType .rawValue
-//      {
-//         case X3DAccessType .initializeOnly .rawValue:
-//            set (value: reference)
-//
-//         case X3DAccessType .inputOnly .rawValue:
-//            break
-//
-//         case X3DAccessType .outputOnly .rawValue:
-//            break
-//
-//         case X3DAccessType .inputOutput .rawValue:
-//            set (value: reference)
-//
-//         default: break
-//      }
-//   }
 
    // Route handling
 
@@ -154,8 +127,6 @@ public class X3DField :
    internal final func processEvent (_ event : X3DEvent)
    {
       guard event .sources .insert (self) .0 else { return }
-
-      isTainted = false
       
       // Set value.
 
@@ -164,6 +135,8 @@ public class X3DField :
          set (value: event .field)
       }
       
+      isTainted = false
+
       // Process interests.
 
       processInterests ()

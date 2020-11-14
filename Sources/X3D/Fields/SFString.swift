@@ -18,8 +18,7 @@ public final class SFString :
    // Property wrapper handling
    
    public final var projectedValue : SFString { self }
-   public final var wrappedValue : Value { get { value } set { value = newValue; addEvent () } }
-   private final var value : Value
+   public final var wrappedValue : Value { didSet { addEvent () } }
 
    // Common properties
    
@@ -30,15 +29,15 @@ public final class SFString :
    
    public override init ()
    {
-      value = ""
+      self .wrappedValue = ""
    }
 
    public init (wrappedValue : Value)
    {
-      value = wrappedValue
+      self .wrappedValue = wrappedValue
    }
    
-   public final override func copy () -> SFString { SFString (wrappedValue: value) }
+   public final override func copy () -> SFString { SFString (wrappedValue: wrappedValue) }
 
    // Value handling
    
@@ -46,6 +45,6 @@ public final class SFString :
    {
       guard let field = field as? SFString else { return }
       
-      value = field .value
+      wrappedValue = field .wrappedValue
    }
 }

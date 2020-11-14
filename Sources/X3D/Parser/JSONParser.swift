@@ -927,15 +927,15 @@ internal final class JSONParser :
       
       guard objects .count >= 3 else { return false }
       
-      let array = field .wrappedValue .array
+      let array = field .wrappedValue .$array
       
       field .wrappedValue .width  = int32 (objects [0]) ?? 0
       field .wrappedValue .height = int32 (objects [1]) ?? 0
       field .wrappedValue .comp   = int32 (objects [2]) ?? 0
 
-      for i in stride (from: 3, to: min (3 + array .count, objects .count), by: 1)
+      for i in stride (from: 3, to: min (3 + array .wrappedValue .count, objects .count), by: 1)
       {
-         array [i - 3] = int32 (objects [i]) ?? 0
+         array .wrappedValue [i - 3] = int32 (objects [i]) ?? 0
       }
       
       return true
@@ -952,21 +952,21 @@ internal final class JSONParser :
       while objects .count >= i + 3
       {
          let element = SFImage ()
-         let array   = element .wrappedValue .array
+         let array   = element .wrappedValue .$array
          let first   = i + 3
 
          element .wrappedValue .width  = int32 (objects [i + 0]) ?? 0
          element .wrappedValue .height = int32 (objects [i + 1]) ?? 0
          element .wrappedValue .comp   = int32 (objects [i + 2]) ?? 0
          
-         for ii in stride (from: first, to: min (first + array .count, objects .count), by: 1)
+         for ii in stride (from: first, to: min (first + array .wrappedValue .count, objects .count), by: 1)
          {
-            array [ii - first] = int32 (objects [i + ii]) ?? 0
+            array .wrappedValue [ii - first] = int32 (objects [i + ii]) ?? 0
          }
          
          field .wrappedValue .append (element .wrappedValue)
          
-         i += 3 + array .count
+         i += 3 + array .wrappedValue .count
       }
       
       return true

@@ -32,7 +32,7 @@ public class X3DBackgroundNode :
    
    // Cube properties
    
-   @MFNode private final var textureNodes : MFNode <X3DTextureNode> .Value = [nil, nil, nil, nil, nil, nil]
+   @MFNode private final var textureNodes : MFNode <X3DTextureNode> .Value
    
    private final var cubePrimitives = [x3d_VertexIn] ()
    private final var cubePrimitivesBuffer : MTLBuffer?
@@ -56,6 +56,8 @@ public class X3DBackgroundNode :
    internal override init (_ browser : X3DBrowser, _ executionContext : X3DExecutionContext?)
    {
       super .init (browser, executionContext)
+      
+      textureNodes .append (contentsOf: [nil, nil, nil, nil, nil, nil])
 
       types .append (.X3DBackgroundNode)
       

@@ -13,13 +13,12 @@ public final class MFEnum <Type> :
    // Member types
    
    public typealias Element = Type
-   public typealias Value   = X3DArray <Element>
+   public typealias Value   = [Element]
 
    // Property wrapper handling
    
    public final var projectedValue : MFEnum { self }
-   public final var wrappedValue : Value { value }
-   private final let value = Value ()
+   public final var wrappedValue : Value { didSet { addEvent () } }
 
    // Common properties
    
@@ -30,20 +29,15 @@ public final class MFEnum <Type> :
    
    public override init ()
    {
-      super .init ()
-
-      value .field = self
+      self .wrappedValue = Value ()
    }
    
-   public convenience init <S> (wrappedValue : S)
-      where Element == S .Element, S : Sequence
+   public init (wrappedValue : Value)
    {
-      self .init ()
-
-      value .append (contentsOf: wrappedValue)
+      self .wrappedValue = wrappedValue
    }
    
-   public final override func copy () -> MFEnum { MFEnum (wrappedValue: value) }
+   public final override func copy () -> MFEnum { MFEnum (wrappedValue: wrappedValue) }
 
    // Value handling
    
@@ -51,6 +45,6 @@ public final class MFEnum <Type> :
    {
       guard let field = field as? MFEnum else { return }
 
-      value .set (field .value)
+      wrappedValue = field .wrappedValue
    }
 }

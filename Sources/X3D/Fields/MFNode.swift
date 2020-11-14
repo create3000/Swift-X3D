@@ -14,7 +14,7 @@ public final class MFNode <Element : X3DBaseNode> :
    // Member types
    
    public typealias Element = Element
-   public typealias Value   = X3DObjectArray <Element>
+   public typealias Value   = X3DArray <Element>
 
    // Property wrapper handling
    
@@ -36,8 +36,7 @@ public final class MFNode <Element : X3DBaseNode> :
       value .field = self
    }
    
-   public convenience init <S> (wrappedValue : S)
-      where Element? == S .Element, S : Sequence
+   public convenience init (wrappedValue : Value)
    {
       self .init ()
 

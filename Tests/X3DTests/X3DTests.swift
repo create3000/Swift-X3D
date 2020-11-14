@@ -2,6 +2,20 @@
 import XCTest
 @testable import X3D
 
+@propertyWrapper
+struct Test <Value: StringProtocol>
+{
+   var projectedValue : Self { self }
+   var wrappedValue : [Value] { didSet { debugPrint ("didSet") } }
+}
+
+class TestTest
+{
+   @Test var name : [String] = ["bah", "foo"]
+
+   init () { }
+}
+
 final class X3DTests :
    XCTestCase
 {
@@ -19,6 +33,13 @@ final class X3DTests :
    {
       // This is an example of a functional test case.
       // Use XCTAssert and related functions to verify your tests produce the correct results.
+      
+      let o = TestTest ()
+      
+      o .name [0] = "foobah"
+      o .name = ["foobah"]
+      o .name .append ("foo")
+      o .name .removeLast ()
    }
    
    func testMatrixComposition () throws

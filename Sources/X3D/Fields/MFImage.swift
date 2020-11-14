@@ -14,8 +14,8 @@ public final class MFImage :
    // Member types
    
    public typealias Element = X3DImage
-   public typealias Value   = X3DObjectArray <Element>
-
+   public typealias Value   = X3DArray <Element>
+   
    // Property wrapper handling
    
    public final var projectedValue : MFImage { self }
@@ -51,20 +51,7 @@ public final class MFImage :
    internal final override func set (value field : X3DField)
    {
       guard let field = field as? MFImage else { return }
-
-      value .set (field .value .map
-      {
-         (image) -> Element? in
-         
-         if let image = image
-         {
-            return image .copy ()
-         }
-         else
-         {
-            return nil
-         }
-      }
-      .compactMap { $0 })
+      
+      value .set (field .value .map { $0! .copy () })
    }
 }

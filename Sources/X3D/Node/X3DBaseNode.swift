@@ -172,15 +172,15 @@ public class X3DBaseNode :
 
 //      debugPrint (#file, #function, typeName, field .identifier)
 
-      field .isTainted = true
-
       addEventObject (for: field, event: X3DEvent (field))
    }
 
    internal final override func addEventObject (for field : X3DField, event : X3DEvent)
    {
       // Register field for processEvent.
-      
+
+      field .isTainted = true
+
       browser? .addTaintedField (field: field, event: event)
 
       guard field .isInput || (extendedEventHandling && !field .isOutput) else { return }

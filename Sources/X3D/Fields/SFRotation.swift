@@ -18,8 +18,7 @@ public final class SFRotation :
    // Property wrapper handling
    
    public final var projectedValue : SFRotation { self }
-   public final var wrappedValue : Value { get { value } set { value = newValue; addEvent () } }
-   private final var value : Value
+   public final var wrappedValue : Value { didSet { addEvent () } }
 
    // Common properties
    
@@ -30,15 +29,15 @@ public final class SFRotation :
    
    public override init ()
    {
-      value = Rotation4f .identity
+      self .wrappedValue = Rotation4f .identity
    }
 
    public init (wrappedValue : Value)
    {
-      value = wrappedValue
+      self .wrappedValue = wrappedValue
    }
    
-   public final override func copy () -> SFRotation { SFRotation (wrappedValue: value) }
+   public final override func copy () -> SFRotation { SFRotation (wrappedValue: wrappedValue) }
 
    // Value handling
    
@@ -46,6 +45,6 @@ public final class SFRotation :
    {
       guard let field = field as? SFRotation else { return }
       
-      value = field .value
+      wrappedValue = field .wrappedValue
    }
 }

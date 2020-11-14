@@ -58,6 +58,6 @@ public final class SFImage :
       value .height = field .value .height
       value .comp   = field .value .comp
       
-      value .array .set (field .value .array)
+      value .$array .set (value: field .value .$array)
    }
 }

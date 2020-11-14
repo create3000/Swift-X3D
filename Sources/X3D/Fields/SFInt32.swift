@@ -18,8 +18,7 @@ public final class SFInt32 :
    // Property wrapper handling
    
    public final var projectedValue : SFInt32 { self }
-   public final var wrappedValue : Value { get { value } set { value = newValue; addEvent () } }
-   private final var value : Value
+   public final var wrappedValue : Value { didSet { addEvent () } }
 
    // Common properties
    
@@ -30,15 +29,15 @@ public final class SFInt32 :
    
    public override init ()
    {
-      value = 0
+      self .wrappedValue = 0
    }
 
    public init (wrappedValue : Value)
    {
-      value = wrappedValue
+      self .wrappedValue = wrappedValue
    }
    
-   public final override func copy () -> SFInt32 { SFInt32 (wrappedValue: value) }
+   public final override func copy () -> SFInt32 { SFInt32 (wrappedValue: wrappedValue) }
 
    // Value handling
    
@@ -46,6 +45,6 @@ public final class SFInt32 :
    {
       guard let field = field as? SFInt32 else { return }
       
-      value = field .value
+      wrappedValue = field .wrappedValue
    }
 }

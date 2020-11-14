@@ -18,9 +18,8 @@ public final class SFBool :
    // Property wrapper handling
    
    public final var projectedValue : SFBool { self }
-   public final var wrappedValue : Value { get { value } set { value = newValue; addEvent () } }
-   private final var value : Value
-   
+   public final var wrappedValue : Value { didSet { addEvent () } }
+
    // Common properties
    
    internal final override class var typeName : String { "SFBool" }
@@ -30,15 +29,15 @@ public final class SFBool :
    
    public override init ()
    {
-      value = false
+      self .wrappedValue = false
    }
    
    public init (wrappedValue : Value)
    {
-      value = wrappedValue
+      self .wrappedValue = wrappedValue
    }
    
-   public final override func copy () -> SFBool { SFBool (wrappedValue: value) }
+   public final override func copy () -> SFBool { SFBool (wrappedValue: wrappedValue) }
    
    // Value handling
    
@@ -46,6 +45,6 @@ public final class SFBool :
    {
       guard let field = field as? SFBool else { return }
       
-      value = field .value
+      wrappedValue = field .wrappedValue
    }
 }

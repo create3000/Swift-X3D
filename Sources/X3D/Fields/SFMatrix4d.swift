@@ -18,8 +18,7 @@ public final class SFMatrix4d :
    // Property wrapper handling
    
    public final var projectedValue : SFMatrix4d { self }
-   public final var wrappedValue : Value { get { value } set { value = newValue; addEvent () } }
-   private final var value : Value
+   public final var wrappedValue : Value { didSet { addEvent () } }
 
    // Common properties
    
@@ -30,15 +29,15 @@ public final class SFMatrix4d :
    
    public override init ()
    {
-      value = Matrix4d .identity
+      self .wrappedValue = Matrix4d .identity
    }
 
    public init (wrappedValue : Value)
    {
-      value = wrappedValue
+      self .wrappedValue = wrappedValue
    }
    
-   public final override func copy () -> SFMatrix4d { SFMatrix4d (wrappedValue: value) }
+   public final override func copy () -> SFMatrix4d { SFMatrix4d (wrappedValue: wrappedValue) }
 
    // Value handling
    
@@ -46,6 +45,6 @@ public final class SFMatrix4d :
    {
       guard let field = field as? SFMatrix4d else { return }
       
-      value = field .value
+      wrappedValue = field .wrappedValue
    }
 }

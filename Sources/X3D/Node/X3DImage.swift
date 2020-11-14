@@ -40,8 +40,6 @@ public final class X3DImage :
    {
       didSet
       {
-         let array = $array .wrappedValue
-         
          array .resize (Int (width * height), fillWith: 0)
          
          addEvent ()
@@ -52,8 +50,6 @@ public final class X3DImage :
    {
       didSet
       {
-         let array = $array .wrappedValue
-         
          array .resize (Int (width * height), fillWith: 0)
          
          addEvent ()

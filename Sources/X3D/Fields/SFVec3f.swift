@@ -18,8 +18,7 @@ public final class SFVec3f :
    // Property wrapper handling
    
    public final var projectedValue : SFVec3f { self }
-   public final var wrappedValue : Value { get { value } set { value = newValue; addEvent () } }
-   private final var value : Value
+   public final var wrappedValue : Value { didSet { addEvent () } }
 
    // Common properties
    
@@ -30,15 +29,15 @@ public final class SFVec3f :
    
    public override init ()
    {
-      value = Vector3f .zero
+      self .wrappedValue = Vector3f .zero
    }
 
    public init (wrappedValue : Value)
    {
-      value = wrappedValue
+      self .wrappedValue = wrappedValue
    }
    
-   public final override func copy () -> SFVec3f { SFVec3f (wrappedValue: value) }
+   public final override func copy () -> SFVec3f { SFVec3f (wrappedValue: wrappedValue) }
 
    // Value handling
    
@@ -46,6 +45,6 @@ public final class SFVec3f :
    {
       guard let field = field as? SFVec3f else { return }
       
-      value = field .value
+      wrappedValue = field .wrappedValue
    }
 }

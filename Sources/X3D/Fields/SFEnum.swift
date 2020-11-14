@@ -17,8 +17,7 @@ public final class SFEnum <Type> :
    // Property wrapper handling
    
    public final var projectedValue : SFEnum { self }
-   public final var wrappedValue : Value { get { value } set { value = newValue; addEvent () } }
-   private final var value : Value
+   public final var wrappedValue : Value { didSet { addEvent () } }
 
    // Common properties
    
@@ -29,10 +28,10 @@ public final class SFEnum <Type> :
 
    public init (wrappedValue : Value)
    {
-      value = wrappedValue
+      self .wrappedValue = wrappedValue
    }
    
-   public final override func copy () -> SFEnum { SFEnum (wrappedValue: value) }
+   public final override func copy () -> SFEnum { SFEnum (wrappedValue: wrappedValue) }
 
    // Value handling
    
@@ -40,6 +39,6 @@ public final class SFEnum <Type> :
    {
       guard let field = field as? SFEnum else { return }
       
-      value = field .value
+      wrappedValue = field .wrappedValue
    }
 }

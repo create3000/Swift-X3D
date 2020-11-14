@@ -18,24 +18,16 @@ public final class SFNode <Type : X3DBaseNode> :
    // Property wrapper handling
    
    public final var projectedValue : SFNode { self }
-   public final var wrappedValue : Value! { get { value } set { value = newValue; addEvent () } }
-
-   private final var value : Value!
+   public final var wrappedValue : Value!
    {
       willSet
       {
-         guard newValue !== value else { return }
+         guard newValue !== wrappedValue else { return }
          
-         if (newValue != nil)
-         {
-            newValue .addParent (self)
-         }
-         
-         if (value != nil)
-         {
-            value .removeParent (self)
-         }
+         newValue? .addParent (self)
+         wrappedValue? .removeParent (self)
       }
+      didSet { addEvent () }
    }
    
    // Common properties
@@ -50,16 +42,14 @@ public final class SFNode <Type : X3DBaseNode> :
 
    public init (wrappedValue : Value!)
    {
-      value = wrappedValue
+      self .wrappedValue = wrappedValue
       
       super .init ()
       
-      guard value != nil else { return }
-
-      value .addParent (self)
+      wrappedValue? .addParent (self)
    }
    
-   public final override func copy () -> SFNode { SFNode (wrappedValue: value) }
+   public final override func copy () -> SFNode { SFNode (wrappedValue: wrappedValue) }
 
    // Value handling
    
@@ -67,7 +57,7 @@ public final class SFNode <Type : X3DBaseNode> :
    {
       guard let field = field as? SFNode else { return }
       
-      value = field .value
+      wrappedValue = field .wrappedValue
    }
    
    internal final override func set (with protoInstance : X3DPrototypeInstance, value field : X3DField)
@@ -75,6 +65,6 @@ public final class SFNode <Type : X3DBaseNode> :
    {
       guard let field = field as? SFNode else { return }
       
-      value = field .value? .copy (with: protoInstance)
+      wrappedValue = field .wrappedValue? .copy (with: protoInstance)
    }
 }

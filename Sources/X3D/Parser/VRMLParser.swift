@@ -1801,16 +1801,16 @@ internal final class VRMLParser :
       field .wrappedValue .height = height
       field .wrappedValue .comp   = comp
       
-      let array = field .wrappedValue .array
+      let array = field .wrappedValue .$array
 
-      for i in 0 ..< width * height
+      for i in 0 ..< Int (width * height)
       {
          guard let pixel = int32 () else
          {
             throw X3DError .INVALID_URL (t("Expected more pixel values."))
          }
 
-         array [i] = pixel
+         array .wrappedValue [i] = pixel
       }
    
       return true

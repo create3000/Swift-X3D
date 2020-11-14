@@ -195,15 +195,12 @@ public class X3DBrowserContext :
       renderer .commandBuffer = commandBuffer
       
       advanceTime ()
-      
       callBrowserInterests (event: .Browser_Event)
-      
       processEvents ()
 
       world! .traverse (.Camera, renderer)
       
       callBrowserInterests (event: .Browser_Sensors)
-      
       processEvents ()
 
       renderer .beginRender ()

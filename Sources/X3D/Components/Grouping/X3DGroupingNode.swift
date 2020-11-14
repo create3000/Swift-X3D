@@ -27,7 +27,7 @@ public class X3DGroupingNode :
 
    @MFNode private  final var fogNodes                  : [LocalFog?]
    @MFNode private  final var lightNodes                : [X3DLightNode?]
-   @MFNode internal final var pointingDeviceSensorNodes : [X3DPointingDeviceSensorNode?]
+   @MFNode private  final var pointingDeviceSensorNodes : [X3DPointingDeviceSensorNode?]
    @MFNode internal final var transformSensorNodes      : [TransformSensor?]
    @MFNode private  final var maybeCameraObjects        : [X3DChildNode?]
    @MFNode private  final var cameraObjects             : [X3DChildNode?]

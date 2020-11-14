@@ -19,7 +19,7 @@ public class X3DExecutionContext :
    
    public override var scene : X3DScene? { super .scene }
    
-   @MFNode public final var rootNodes : MFNode <X3DNode> .Value
+   @MFNode public final var rootNodes : [X3DNode?]
    
    // Construction
    

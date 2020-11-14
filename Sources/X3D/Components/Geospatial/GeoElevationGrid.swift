@@ -20,7 +20,7 @@ public final class GeoElevationGrid :
 
    // Fields
 
-   @MFString public final var geoSystem       : MFString .Value = ["GD", "WE"]
+   @MFString public final var geoSystem       : [String] = ["GD", "WE"]
    @SFNode   public final var geoOrigin       : X3DNode?
    @SFVec3d  public final var geoGridOrigin   : Vector3d = Vector3d .zero
    @SFFloat  public final var yScale          : Float = 1
@@ -36,7 +36,7 @@ public final class GeoElevationGrid :
    @SFNode   public final var color           : X3DNode?
    @SFNode   public final var texCoord        : X3DNode?
    @SFNode   public final var normal          : X3DNode?
-   @MFDouble public final var height          : MFDouble .Value = [0, 0]
+   @MFDouble public final var height          : [Double] = [0, 0]
 
    // Construction
    

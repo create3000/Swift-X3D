@@ -19,7 +19,7 @@ public final class PixelTexture3D :
 
    // Fields
 
-   @MFInt32 public final var image : MFInt32 .Value = [0, 0, 0, 0]
+   @MFInt32 public final var image : [Int32] = [0, 0, 0, 0]
 
    // Construction
    

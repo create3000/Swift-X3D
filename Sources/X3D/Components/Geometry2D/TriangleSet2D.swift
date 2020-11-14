@@ -19,7 +19,7 @@ public final class TriangleSet2D :
 
    // Fields
 
-   @MFVec2f public final var vertices : MFVec2f .Value
+   @MFVec2f public final var vertices : [Vector2f]
    @SFBool  public final var solid    : Bool = false
 
    // Construction

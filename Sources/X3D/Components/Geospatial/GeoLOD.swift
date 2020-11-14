@@ -21,20 +21,20 @@ public final class GeoLOD :
 
    // Fields
 
-   @MFString public final var geoSystem     : MFString .Value = ["GD", "WE"]
+   @MFString public final var geoSystem     : [String] = ["GD", "WE"]
    @SFNode   public final var geoOrigin     : X3DNode?
-   @MFString public final var rootUrl       : MFString .Value
-   @MFString public final var child1Url     : MFString .Value
-   @MFString public final var child2Url     : MFString .Value
-   @MFString public final var child3Url     : MFString .Value
-   @MFString public final var child4Url     : MFString .Value
+   @MFString public final var rootUrl       : [String]
+   @MFString public final var child1Url     : [String]
+   @MFString public final var child2Url     : [String]
+   @MFString public final var child3Url     : [String]
+   @MFString public final var child4Url     : [String]
    @SFVec3d  public final var center        : Vector3d = Vector3d .zero
    @SFFloat  public final var range         : Float = 10
    @SFInt32  public final var level_changed : Int32 = -1
    @SFVec3f  public final var bboxSize      : Vector3f = -.one
    @SFVec3f  public final var bboxCenter    : Vector3f = .zero
-   @MFNode   public final var rootNode      : MFNode <X3DNode> .Value
-   @MFNode   public final var children      : MFNode <X3DNode> .Value
+   @MFNode   public final var rootNode      : [X3DNode?]
+   @MFNode   public final var children      : [X3DNode?]
 
    // Construction
    

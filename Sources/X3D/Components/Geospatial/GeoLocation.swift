@@ -20,7 +20,7 @@ public final class GeoLocation :
 
    // Fields
 
-   @MFString public final var geoSystem : MFString .Value = ["GD", "WE"]
+   @MFString public final var geoSystem : [String] = ["GD", "WE"]
    @SFNode   public final var geoOrigin : X3DNode?
    @SFVec3d  public final var geoCoords : Vector3d = Vector3d .zero
 

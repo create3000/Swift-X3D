@@ -19,7 +19,7 @@ public final class PointPickSensor :
 
    // Fields
 
-   @MFVec3f public final var pickedPoint : MFVec3f .Value
+   @MFVec3f public final var pickedPoint : [Vector3f]
 
    // Construction
    

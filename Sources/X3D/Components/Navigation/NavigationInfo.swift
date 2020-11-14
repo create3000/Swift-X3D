@@ -21,18 +21,18 @@ public final class NavigationInfo :
 
    // Fields
 
-   @MFString public final var type               : MFString .Value = ["EXAMINE", "ANY"]
-   @MFFloat  public final var avatarSize         : MFFloat .Value = [0.25, 1.6, 0.75]
+   @MFString public final var type               : [String] = ["EXAMINE", "ANY"]
+   @MFFloat  public final var avatarSize         : [Float] = [0.25, 1.6, 0.75]
    @SFFloat  public final var speed              : Float = 1
    @SFBool   public final var headlight          : Bool = true
    @SFFloat  public final var visibilityLimit    : Float = 0
-   @MFString public final var transitionType     : MFString .Value = ["LINEAR"]
+   @MFString public final var transitionType     : [String] = ["LINEAR"]
    @SFTime   public final var transitionTime     : TimeInterval = 1
    @SFBool   public final var transitionComplete : Bool = false
    
    // Properties
    
-   @MFEnum public final var availableViewers   : MFEnum <X3DViewerType> .Value
+   @MFEnum public final var availableViewers   : [X3DViewerType]
    @SFEnum public final var viewer             : X3DViewerType = .EXAMINE
    @SFBool public final var transitionStart    : Bool = false
    @SFBool public final var transitionActive   : Bool = false

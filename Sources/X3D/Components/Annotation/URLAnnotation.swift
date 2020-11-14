@@ -23,7 +23,7 @@ public final class URLAnnotation :
    @SFBool   public final var enabled           : Bool = true
    @SFString public final var annotationGroupID : String = ""
    @SFString public final var displayPolicy     : String = "NEVER"
-   @MFString public final var url               : MFString .Value
+   @MFString public final var url               : [String]
 
    // Construction
    

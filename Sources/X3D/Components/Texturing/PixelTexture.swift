@@ -23,7 +23,7 @@ public final class PixelTexture :
 
    // Fields
 
-   @SFImage public final var image : SFImage .Value
+   @SFImage public final var image : X3DImage
 
    // Construction
    

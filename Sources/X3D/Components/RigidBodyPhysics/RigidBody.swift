@@ -34,14 +34,14 @@ public final class RigidBody :
    @SFVec3f    public final var centerOfMass         : Vector3f = .zero
    @SFNode     public final var massDensityModel     : X3DNode?
    @SFBool     public final var useGlobalGravity     : Bool = true
-   @MFVec3f    public final var forces               : MFVec3f .Value
-   @MFVec3f    public final var torques              : MFVec3f .Value
+   @MFVec3f    public final var forces               : [Vector3f]
+   @MFVec3f    public final var torques              : [Vector3f]
    @SFMatrix3f public final var inertia              : Matrix3f = .identity
    @SFBool     public final var autoDisable          : Bool = false
    @SFFloat    public final var disableTime          : Float = 0
    @SFFloat    public final var disableLinearSpeed   : Float = 0
    @SFFloat    public final var disableAngularSpeed  : Float = 0
-   @MFNode     public final var geometry             : MFNode <X3DNode> .Value
+   @MFNode     public final var geometry             : [X3DNode?]
 
    // Construction
    

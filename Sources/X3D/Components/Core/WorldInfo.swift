@@ -20,7 +20,7 @@ public final class WorldInfo :
    // Fields
 
    @SFString public final var title : String = ""
-   @MFString public final var info  : MFString .Value
+   @MFString public final var info  : [String]
 
    // Construction
    

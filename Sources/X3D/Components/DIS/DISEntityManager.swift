@@ -21,11 +21,11 @@ public final class DISEntityManager :
 
    @SFString public final var address         : String = "localhost"
    @SFInt32  public final var applicationID   : Int32 = 1
-   @MFNode   public final var mapping         : MFNode <X3DNode> .Value
+   @MFNode   public final var mapping         : [X3DNode?]
    @SFInt32  public final var port            : Int32 = 0
    @SFInt32  public final var siteID          : Int32 = 0
-   @MFNode   public final var addedEntities   : MFNode <X3DNode> .Value
-   @MFNode   public final var removedEntities : MFNode <X3DNode> .Value
+   @MFNode   public final var addedEntities   : [X3DNode?]
+   @MFNode   public final var removedEntities : [X3DNode?]
 
    // Construction
    

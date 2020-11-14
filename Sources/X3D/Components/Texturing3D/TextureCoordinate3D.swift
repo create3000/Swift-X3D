@@ -19,7 +19,7 @@ public final class TextureCoordinate3D :
 
    // Fields
 
-   @MFVec3f public final var point : MFVec3f .Value
+   @MFVec3f public final var point : [Vector3f]
 
    // Construction
    

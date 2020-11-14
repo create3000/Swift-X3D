@@ -20,9 +20,9 @@ public final class GeoPositionInterpolator :
 
    // Fields
 
-   @MFString public final var geoSystem        : MFString .Value = ["GD", "WE"]
+   @MFString public final var geoSystem        : [String] = ["GD", "WE"]
    @SFNode   public final var geoOrigin        : X3DNode?
-   @MFVec3d  public final var keyValue         : MFVec3d .Value
+   @MFVec3d  public final var keyValue         : [Vector3d]
    @SFVec3d  public final var value_changed    : Vector3d = Vector3d .zero
    @SFVec3d  public final var geovalue_changed : Vector3d = Vector3d .zero
 

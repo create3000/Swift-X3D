@@ -22,7 +22,7 @@ public final class MetadataDouble :
 
    @SFString public final var name      : String = ""
    @SFString public final var reference : String = ""
-   @MFDouble public final var value     : MFDouble .Value
+   @MFDouble public final var value     : [Double]
 
    // Construction
    

@@ -19,9 +19,9 @@ public final class LinePickSensor :
 
    // Fields
 
-   @MFVec3f public final var pickedTextureCoordinate : MFVec3f .Value
-   @MFVec3f public final var pickedNormal            : MFVec3f .Value
-   @MFVec3f public final var pickedPoint             : MFVec3f .Value
+   @MFVec3f public final var pickedTextureCoordinate : [Vector3f]
+   @MFVec3f public final var pickedNormal            : [Vector3f]
+   @MFVec3f public final var pickedPoint             : [Vector3f]
 
    // Construction
    

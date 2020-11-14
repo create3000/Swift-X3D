@@ -19,9 +19,9 @@ public final class SegmentedVolumeData :
 
    // Fields
 
-   @MFBool public final var segmentEnabled     : MFBool .Value
+   @MFBool public final var segmentEnabled     : [Bool]
    @SFNode public final var segmentIdentifiers : X3DNode?
-   @MFNode public final var renderStyle        : MFNode <X3DNode> .Value
+   @MFNode public final var renderStyle        : [X3DNode?]
    @SFNode public final var voxels             : X3DNode?
 
    // Construction

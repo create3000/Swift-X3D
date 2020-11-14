@@ -17,7 +17,7 @@ public final class X3DExternProtoDeclaration :
    // Properties
    
    @SFEnum   public   final var loadState     : X3DLoadState = .NOT_STARTED_STATE
-   @MFString public   final var url           : MFString .Value
+   @MFString public   final var url           : [String]
    @SFNode   internal final var internalScene : X3DScene?
 
    public final override var isExternProto : Bool { true }

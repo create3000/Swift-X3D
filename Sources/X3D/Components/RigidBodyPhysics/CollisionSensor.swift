@@ -22,8 +22,8 @@ public final class CollisionSensor :
 
    @SFBool public final var enabled       : Bool = true
    @SFBool public final var isActive      : Bool = false
-   @MFNode public final var intersections : MFNode <X3DNode> .Value
-   @MFNode public final var contacts      : MFNode <X3DNode> .Value
+   @MFNode public final var intersections : [X3DNode?]
+   @MFNode public final var contacts      : [X3DNode?]
    @SFNode public final var collider      : X3DNode?
 
    // Construction

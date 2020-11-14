@@ -20,8 +20,8 @@ public final class SplineScalarInterpolator :
    // Fields
 
    @SFBool  public final var closed            : Bool = false
-   @MFFloat public final var keyValue          : MFFloat .Value
-   @MFFloat public final var keyVelocity       : MFFloat .Value
+   @MFFloat public final var keyValue          : [Float]
+   @MFFloat public final var keyVelocity       : [Float]
    @SFBool  public final var normalizeVelocity : Bool = false
    @SFFloat public final var value_changed     : Float = 0
 

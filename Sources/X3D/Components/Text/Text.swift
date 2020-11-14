@@ -21,13 +21,13 @@ public final class Text :
 
    // Fields
 
-   @MFString public final var string     : MFString .Value
-   @MFFloat  public final var length     : MFFloat .Value
+   @MFString public final var string     : [String]
+   @MFFloat  public final var length     : [Float]
    @SFFloat  public final var maxExtent  : Float = 0
    @SFBool   public final var solid      : Bool = false
    @SFVec3f  public final var origin     : Vector3f = .zero
    @SFVec2f  public final var textBounds : Vector2f = .zero
-   @MFVec2f  public final var lineBounds : MFVec2f .Value
+   @MFVec2f  public final var lineBounds : [Vector2f]
    @SFNode   public final var fontStyle  : X3DNode?
    
    // Properties

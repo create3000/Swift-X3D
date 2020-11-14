@@ -19,7 +19,7 @@ public final class PositionInterpolator :
 
    // Fields
 
-   @MFVec3f public final var keyValue      : MFVec3f .Value
+   @MFVec3f public final var keyValue      : [Vector3f]
    @SFVec3f public final var value_changed : Vector3f = .zero
 
    // Construction

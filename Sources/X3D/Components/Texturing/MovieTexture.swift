@@ -26,7 +26,7 @@ public final class MovieTexture :
    @SFBool   public final var isLive           : Bool = false
    @SFBool   public final var enabled          : Bool = true
    @SFString public final var description      : String = ""
-   @MFString public final var url              : MFString .Value
+   @MFString public final var url              : [String]
    @SFFloat  public final var speed            : Float = 1
    @SFFloat  public final var pitch            : Float = 1
    @SFBool   public final var loop             : Bool = false

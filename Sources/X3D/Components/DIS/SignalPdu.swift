@@ -25,7 +25,7 @@ public final class SignalPdu :
 
    @SFString public final var address            : String = "localhost"
    @SFInt32  public final var applicationID      : Int32 = 1
-   @MFInt32  public final var data               : MFInt32 .Value
+   @MFInt32  public final var data               : [Int32]
    @SFInt32  public final var dataLength         : Int32 = 0
    @SFInt32  public final var encodingScheme     : Int32 = 0
    @SFInt32  public final var entityID           : Int32 = 0

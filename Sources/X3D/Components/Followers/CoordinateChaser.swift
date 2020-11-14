@@ -19,11 +19,11 @@ public final class CoordinateChaser :
 
    // Fields
 
-   @MFVec3f public final var set_value          : MFVec3f .Value
-   @MFVec3f public final var set_destination    : MFVec3f .Value
-   @MFVec3f public final var initialValue       : MFVec3f .Value = [Vector3f ()]
-   @MFVec3f public final var initialDestination : MFVec3f .Value = [Vector3f ()]
-   @MFVec3f public final var value_changed      : MFVec3f .Value
+   @MFVec3f public final var set_value          : [Vector3f]
+   @MFVec3f public final var set_destination    : [Vector3f]
+   @MFVec3f public final var initialValue       : [Vector3f] = [Vector3f ()]
+   @MFVec3f public final var initialDestination : [Vector3f] = [Vector3f ()]
+   @MFVec3f public final var value_changed      : [Vector3f]
 
    // Construction
    

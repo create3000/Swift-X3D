@@ -19,7 +19,7 @@ public final class TriangleFanSet :
 
    // Fields
 
-   @MFInt32 public final var fanCount : MFInt32 .Value
+   @MFInt32 public final var fanCount : [Int32]
 
    // Construction
    

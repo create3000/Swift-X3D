@@ -22,7 +22,7 @@ public final class MetadataString :
 
    @SFString public final var name      : String = ""
    @SFString public final var reference : String = ""
-   @MFString public final var value     : MFString .Value
+   @MFString public final var value     : [String]
 
    // Construction
    

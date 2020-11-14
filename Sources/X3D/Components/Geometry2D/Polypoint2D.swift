@@ -21,7 +21,7 @@ public final class Polypoint2D :
 
    // Fields
 
-   @MFVec2f public final var point : MFVec2f .Value
+   @MFVec2f public final var point : [Vector2f]
 
    // Construction
    

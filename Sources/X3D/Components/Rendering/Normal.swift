@@ -19,7 +19,7 @@ public final class Normal :
 
    // Fields
 
-   @MFVec3f public final var vector : MFVec3f .Value
+   @MFVec3f public final var vector : [Vector3f]
 
    // Construction
    

@@ -33,11 +33,11 @@ public final class EspduTransform :
    @SFString   public final var address                                    : String = "localhost"
    @SFInt32    public final var applicationID                              : Int32 = 1
    @SFInt32    public final var articulationParameterCount                 : Int32 = 0
-   @MFInt32    public final var articulationParameterDesignatorArray       : MFInt32 .Value
-   @MFInt32    public final var articulationParameterChangeIndicatorArray  : MFInt32 .Value
-   @MFInt32    public final var articulationParameterIdPartAttachedToArray : MFInt32 .Value
-   @MFInt32    public final var articulationParameterTypeArray             : MFInt32 .Value
-   @MFFloat    public final var articulationParameterArray                 : MFFloat .Value
+   @MFInt32    public final var articulationParameterDesignatorArray       : [Int32]
+   @MFInt32    public final var articulationParameterChangeIndicatorArray  : [Int32]
+   @MFInt32    public final var articulationParameterIdPartAttachedToArray : [Int32]
+   @MFInt32    public final var articulationParameterTypeArray             : [Int32]
+   @MFFloat    public final var articulationParameterArray                 : [Float]
    @SFVec3f    public final var center                                     : Vector3f = .zero
    @SFInt32    public final var collisionType                              : Int32 = 0
    @SFInt32    public final var deadReckoning                              : Int32 = 0

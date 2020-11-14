@@ -20,9 +20,9 @@ public final class IsoSurfaceVolumeData :
    // Fields
 
    @SFFloat public final var contourStepSize  : Float = 0
-   @MFFloat public final var surfaceValues    : MFFloat .Value
+   @MFFloat public final var surfaceValues    : [Float]
    @SFFloat public final var surfaceTolerance : Float = 0
-   @MFNode  public final var renderStyle      : MFNode <X3DNode> .Value
+   @MFNode  public final var renderStyle      : [X3DNode?]
    @SFNode  public final var gradients        : X3DNode?
    @SFNode  public final var voxels           : X3DNode?
 

@@ -19,7 +19,7 @@ public final class CoordinateDouble :
 
    // Fields
 
-   @MFVec3d public final var point : MFVec3d .Value
+   @MFVec3d public final var point : [Vector3d]
 
    // Construction
    

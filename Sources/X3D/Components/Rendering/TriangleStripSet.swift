@@ -19,7 +19,7 @@ public final class TriangleStripSet :
 
    // Fields
 
-   @MFInt32 public final var stripCount : MFInt32 .Value
+   @MFInt32 public final var stripCount : [Int32]
 
    // Construction
    

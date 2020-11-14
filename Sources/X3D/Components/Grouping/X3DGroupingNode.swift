@@ -16,22 +16,22 @@ public class X3DGroupingNode :
 
    @SFVec3f public final var bboxSize       : Vector3f = -.one
    @SFVec3f public final var bboxCenter     : Vector3f = .zero
-   @MFNode  public final var addChildren    : MFNode <X3DNode> .Value
-   @MFNode  public final var removeChildren : MFNode <X3DNode> .Value
-   @MFNode  public final var children       : MFNode <X3DNode> .Value
+   @MFNode  public final var addChildren    : [X3DNode?]
+   @MFNode  public final var removeChildren : [X3DNode?]
+   @MFNode  public final var children       : [X3DNode?]
    
    // Properties
    
-   @MFBool public final var visible  : MFBool .Value
+   @MFBool public final var visible  : [Bool]
    @SFBool public final var isHidden : Bool = false
 
-   @MFNode private  final var fogNodes                  : MFNode <LocalFog> .Value
-   @MFNode private  final var lightNodes                : MFNode <X3DLightNode> .Value
-   @MFNode internal final var pointingDeviceSensorNodes : MFNode <X3DPointingDeviceSensorNode> .Value
-   @MFNode internal final var transformSensorNodes      : MFNode <TransformSensor> .Value
-   @MFNode private  final var maybeCameraObjects        : MFNode <X3DChildNode> .Value
-   @MFNode private  final var cameraObjects             : MFNode <X3DChildNode> .Value
-   @MFNode private  final var childNodes                : MFNode <X3DChildNode> .Value
+   @MFNode private  final var fogNodes                  : [LocalFog?]
+   @MFNode private  final var lightNodes                : [X3DLightNode?]
+   @MFNode internal final var pointingDeviceSensorNodes : [X3DPointingDeviceSensorNode?]
+   @MFNode internal final var transformSensorNodes      : [TransformSensor?]
+   @MFNode private  final var maybeCameraObjects        : [X3DChildNode?]
+   @MFNode private  final var cameraObjects             : [X3DChildNode?]
+   @MFNode private  final var childNodes                : [X3DChildNode?]
 
    // Construction
    
@@ -102,7 +102,7 @@ public class X3DGroupingNode :
       childNodes                .removeAll (keepingCapacity: true)
    }
 
-   private final func add (at first : Int, contentsOf children : MFNode <X3DNode> .Value)
+   private final func add (at first : Int, contentsOf children : [X3DNode?])
    {
       guard !isHidden else { return }
       

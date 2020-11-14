@@ -19,7 +19,7 @@ public final class TextureProjectorParallel :
 
    // Fields
 
-   @MFFloat public final var fieldOfView : MFFloat .Value = [-1, -1, 1, 1]
+   @MFFloat public final var fieldOfView : [Float] = [-1, -1, 1, 1]
 
    // Construction
    

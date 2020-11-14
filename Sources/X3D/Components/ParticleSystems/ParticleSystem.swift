@@ -28,13 +28,13 @@ public final class ParticleSystem :
    @SFFloat  public final var particleLifetime  : Float = 5
    @SFFloat  public final var lifetimeVariation : Float = 0.25
    @SFVec2f  public final var particleSize      : Vector2f = Vector2f (0.02, 0.02)
-   @MFFloat  public final var colorKey          : MFFloat .Value
-   @MFFloat  public final var texCoordKey       : MFFloat .Value
+   @MFFloat  public final var colorKey          : [Float]
+   @MFFloat  public final var texCoordKey       : [Float]
    @SFBool   public final var isActive          : Bool = false
    @SFNode   public final var emitter           : X3DNode?
    @SFNode   public final var colorRamp         : X3DNode?
    @SFNode   public final var texCoordRamp      : X3DNode?
-   @MFNode   public final var physics           : MFNode <X3DNode> .Value
+   @MFNode   public final var physics           : [X3DNode?]
 
    // Construction
    

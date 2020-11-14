@@ -22,7 +22,7 @@ public final class HAnimMotion :
    // Fields
 
    @SFString public final var channels        : String = ""
-   @MFBool   public final var channelsEnabled : MFBool .Value
+   @MFBool   public final var channelsEnabled : [Bool]
    @SFTime   public final var cycleTime       : TimeInterval = 0
    @SFString public final var description     : String = ""
    @SFTime   public final var elapsedTime     : TimeInterval = 0
@@ -31,12 +31,12 @@ public final class HAnimMotion :
    @SFTime   public final var frameDuration   : TimeInterval = 0.1
    @SFInt32  public final var frameIncrement  : Int32 = 1
    @SFInt32  public final var frameIndex      : Int32 = 0
-   @MFString public final var joints          : MFString .Value
+   @MFString public final var joints          : [String]
    @SFInt32  public final var loa             : Int32 = -1
    @SFBool   public final var loop            : Bool = false
    @SFBool   public final var next            : Bool = false
    @SFBool   public final var previous        : Bool = false
-   @MFFloat  public final var values          : MFFloat .Value
+   @MFFloat  public final var values          : [Float]
 
    // Construction
    

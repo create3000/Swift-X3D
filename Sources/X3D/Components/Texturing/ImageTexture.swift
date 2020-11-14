@@ -23,7 +23,7 @@ public final class ImageTexture :
    
    // Fields
    
-   @MFString public final var url : MFString .Value
+   @MFString public final var url : [String]
    
    // X3DUrlObject
    

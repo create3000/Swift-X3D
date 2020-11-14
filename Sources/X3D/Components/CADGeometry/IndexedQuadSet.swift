@@ -19,8 +19,8 @@ public final class IndexedQuadSet :
 
    // Fields
 
-   @MFInt32 public final var set_index : MFInt32 .Value
-   @MFInt32 public final var index     : MFInt32 .Value
+   @MFInt32 public final var set_index : [Int32]
+   @MFInt32 public final var index     : [Int32]
 
    // Construction
    

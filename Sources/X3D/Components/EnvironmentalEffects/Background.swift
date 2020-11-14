@@ -19,12 +19,12 @@ public final class Background :
 
    // Fields
 
-   @MFString public final var frontUrl  : MFString .Value
-   @MFString public final var backUrl   : MFString .Value
-   @MFString public final var leftUrl   : MFString .Value
-   @MFString public final var rightUrl  : MFString .Value
-   @MFString public final var topUrl    : MFString .Value
-   @MFString public final var bottomUrl : MFString .Value
+   @MFString public final var frontUrl  : [String]
+   @MFString public final var backUrl   : [String]
+   @MFString public final var leftUrl   : [String]
+   @MFString public final var rightUrl  : [String]
+   @MFString public final var topUrl    : [String]
+   @MFString public final var bottomUrl : [String]
 
    // Construction
    

@@ -19,11 +19,11 @@ public final class TexCoordChaser2D :
 
    // Fields
 
-   @MFVec2f public final var set_value          : MFVec2f .Value
-   @MFVec2f public final var set_destination    : MFVec2f .Value
-   @MFVec2f public final var initialValue       : MFVec2f .Value
-   @MFVec2f public final var initialDestination : MFVec2f .Value
-   @MFVec2f public final var value_changed      : MFVec2f .Value
+   @MFVec2f public final var set_value          : [Vector2f]
+   @MFVec2f public final var set_destination    : [Vector2f]
+   @MFVec2f public final var initialValue       : [Vector2f]
+   @MFVec2f public final var initialDestination : [Vector2f]
+   @MFVec2f public final var value_changed      : [Vector2f]
 
    // Construction
    

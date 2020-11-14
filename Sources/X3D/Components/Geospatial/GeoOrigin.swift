@@ -20,7 +20,7 @@ public final class GeoOrigin :
    // Fields
 
    @SFBool   public final var rotateYUp : Bool = false
-   @MFString public final var geoSystem : MFString .Value = ["GD", "WE"]
+   @MFString public final var geoSystem : [String] = ["GD", "WE"]
    @SFVec3d  public final var geoCoords : Vector3d = Vector3d .zero
 
    // Construction

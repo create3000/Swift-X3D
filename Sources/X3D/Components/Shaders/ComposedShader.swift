@@ -20,7 +20,7 @@ public final class ComposedShader :
 
    // Fields
 
-   @MFNode public final var parts : MFNode <X3DNode> .Value
+   @MFNode public final var parts : [X3DNode?]
    
    // Properties
    

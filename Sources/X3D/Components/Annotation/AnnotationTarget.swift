@@ -22,7 +22,7 @@ public final class AnnotationTarget :
    @SFVec3f public final var referencePoint : Vector3f = Vector3f (0, 0, 0)
    @SFNode  public final var leadLineStyle  : X3DNode?
    @SFNode  public final var marker         : X3DNode?
-   @MFNode  public final var annotations    : MFNode <X3DNode> .Value
+   @MFNode  public final var annotations    : [X3DNode?]
 
    // Construction
    

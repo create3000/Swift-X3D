@@ -19,12 +19,12 @@ public final class Layout :
 
    // Fields
 
-   @MFString public final var align       : MFString .Value = ["CENTER", "CENTER"]
-   @MFString public final var offsetUnits : MFString .Value = ["WORLD", "WORLD"]
-   @MFFloat  public final var offset      : MFFloat .Value = [0, 0]
-   @MFString public final var sizeUnits   : MFString .Value = ["WORLD", "WORLD"]
-   @MFFloat  public final var size        : MFFloat .Value = [1, 1]
-   @MFString public final var scaleMode   : MFString .Value = ["NONE", "NONE"]
+   @MFString public final var align       : [String] = ["CENTER", "CENTER"]
+   @MFString public final var offsetUnits : [String] = ["WORLD", "WORLD"]
+   @MFFloat  public final var offset      : [Float] = [0, 0]
+   @MFString public final var sizeUnits   : [String] = ["WORLD", "WORLD"]
+   @MFFloat  public final var size        : [Float] = [1, 1]
+   @MFString public final var scaleMode   : [String] = ["NONE", "NONE"]
 
    // Construction
    

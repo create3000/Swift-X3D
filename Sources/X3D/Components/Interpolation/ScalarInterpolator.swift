@@ -19,7 +19,7 @@ public final class ScalarInterpolator :
 
    // Fields
 
-   @MFFloat public final var keyValue      : MFFloat .Value
+   @MFFloat public final var keyValue      : [Float]
    @SFFloat public final var value_changed : Float = 0
 
    // Construction

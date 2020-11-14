@@ -19,7 +19,7 @@ public final class Color :
 
    // Fields
 
-   @MFColor public final var color : MFColor .Value
+   @MFColor public final var color : [Color3f]
 
    // Construction
    

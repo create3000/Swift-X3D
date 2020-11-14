@@ -11,7 +11,7 @@ public class X3DNurbsControlCurveNode :
 {
    // Fields
 
-   @MFVec2d public final var controlPoint : MFVec2d .Value
+   @MFVec2d public final var controlPoint : [Vector2d]
 
    // Construction
    

@@ -20,7 +20,7 @@ public final class FloatVertexAttribute :
    // Fields
 
    @SFInt32 public final var numComponents : Int32 = 4
-   @MFFloat public final var value         : MFFloat .Value
+   @MFFloat public final var value         : [Float]
 
    // Construction
    

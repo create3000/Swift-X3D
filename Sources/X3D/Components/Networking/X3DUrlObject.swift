@@ -11,9 +11,9 @@ public protocol X3DUrlObject :
 {
    // Fields
 
-   //@MFString public final var url : MFString .Value
+   //@MFString public final var url : [String]
 
-   var url : MFString .Value { get }
+   var url : [String] { get }
    
    // Properties
    

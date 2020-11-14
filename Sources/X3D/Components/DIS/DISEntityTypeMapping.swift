@@ -19,7 +19,7 @@ public final class DISEntityTypeMapping :
 
    // Fields
 
-   @MFString public final var url         : MFString .Value
+   @MFString public final var url         : [String]
    @SFInt32  public final var category    : Int32 = 0
    @SFInt32  public final var country     : Int32 = 0
    @SFInt32  public final var domain      : Int32 = 0

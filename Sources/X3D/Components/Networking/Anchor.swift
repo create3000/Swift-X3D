@@ -21,8 +21,8 @@ public final class Anchor :
    // Fields
 
    @SFString public final var description : String = ""
-   @MFString public final var url         : MFString .Value
-   @MFString public final var parameter   : MFString .Value
+   @MFString public final var url         : [String]
+   @MFString public final var parameter   : [String]
    
    // X3DUrlObject
    

@@ -21,7 +21,7 @@ public final class Polyline2D :
 
    // Fields
 
-   @MFVec2f public final var lineSegments : MFVec2f .Value
+   @MFVec2f public final var lineSegments : [Vector2f]
 
    // Construction
    

@@ -20,13 +20,13 @@ public final class GeoViewpoint :
 
    // Fields
 
-   @MFString public final var geoSystem        : MFString .Value = ["GD", "WE"]
+   @MFString public final var geoSystem        : [String] = ["GD", "WE"]
    @SFNode   public final var geoOrigin        : X3DNode?
    @SFVec3d  public final var position         : Vector3d = Vector3d (0, 0, 100000)
    @SFVec3d  public final var centerOfRotation : Vector3d = Vector3d .zero
    @SFFloat  public final var fieldOfView      : Float = 0.7854
    @SFFloat  public final var speedFactor      : Float = 1
-   @MFString public final var navType          : MFString .Value = ["EXAMINE", "ANY"]
+   @MFString public final var navType          : [String] = ["EXAMINE", "ANY"]
    @SFBool   public final var headlight        : Bool = true
 
    // Construction

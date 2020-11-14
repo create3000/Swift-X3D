@@ -19,8 +19,8 @@ public final class NormalInterpolator :
 
    // Fields
 
-   @MFVec3f public final var keyValue      : MFVec3f .Value
-   @MFVec3f public final var value_changed : MFVec3f .Value
+   @MFVec3f public final var keyValue      : [Vector3f]
+   @MFVec3f public final var value_changed : [Vector3f]
 
    // Construction
    

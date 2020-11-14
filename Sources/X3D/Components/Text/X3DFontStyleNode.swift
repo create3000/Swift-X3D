@@ -12,13 +12,13 @@ public class X3DFontStyleNode :
    // Fields
 
    @SFString public final var language    : String = ""
-   @MFString public final var family      : MFString .Value = ["SERIF"]
+   @MFString public final var family      : [String] = ["SERIF"]
    @SFString public final var style       : String = "PLAIN"
    @SFFloat  public final var spacing     : Float = 1
    @SFBool   public final var horizontal  : Bool = true
    @SFBool   public final var leftToRight : Bool = true
    @SFBool   public final var topToBottom : Bool = true
-   @MFString public final var justify     : MFString .Value = ["BEGIN"]
+   @MFString public final var justify     : [String] = ["BEGIN"]
    
    // Properties
    

@@ -22,7 +22,7 @@ public final class MetadataSet :
 
    @SFString public final var name      : String = ""
    @SFString public final var reference : String = ""
-   @MFNode   public final var value     : MFNode <X3DNode> .Value
+   @MFNode   public final var value     : [X3DNode?]
 
    // Construction
    

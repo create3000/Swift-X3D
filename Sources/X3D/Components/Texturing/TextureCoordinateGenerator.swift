@@ -20,7 +20,7 @@ public final class TextureCoordinateGenerator :
    // Fields
 
    @SFString public final var mode      : String = "SPHERE"
-   @MFFloat  public final var parameter : MFFloat .Value
+   @MFFloat  public final var parameter : [Float]
 
    // Construction
    

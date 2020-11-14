@@ -20,9 +20,9 @@ public final class LayoutLayer :
    // Fields
 
    @SFNode public final var layout         : X3DNode?
-   @MFNode public final var addChildren    : MFNode <X3DNode> .Value
-   @MFNode public final var removeChildren : MFNode <X3DNode> .Value
-   @MFNode public final var children       : MFNode <X3DNode> .Value
+   @MFNode public final var addChildren    : [X3DNode?]
+   @MFNode public final var removeChildren : [X3DNode?]
+   @MFNode public final var children       : [X3DNode?]
 
    // Construction
    

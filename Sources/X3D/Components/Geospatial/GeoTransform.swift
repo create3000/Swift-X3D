@@ -20,7 +20,7 @@ public final class GeoTransform :
 
    // Fields
 
-   @MFString   public final var geoSystem        : MFString .Value = ["GD", "WE"]
+   @MFString   public final var geoSystem        : [String] = ["GD", "WE"]
    @SFNode     public final var geoOrigin        : X3DNode?
    @SFVec3f    public final var translation      : Vector3f = .zero
    @SFRotation public final var rotation         : Rotation4f = .identity

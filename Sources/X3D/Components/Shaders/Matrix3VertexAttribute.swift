@@ -19,7 +19,7 @@ public final class Matrix3VertexAttribute :
 
    // Fields
 
-   @MFMatrix3f public final var value : MFMatrix3f .Value
+   @MFMatrix3f public final var value : [Matrix3f]
 
    // Construction
    

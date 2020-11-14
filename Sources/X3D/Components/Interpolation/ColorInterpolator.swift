@@ -19,7 +19,7 @@ public final class ColorInterpolator :
 
    // Fields
 
-   @MFColor public final var keyValue      : MFColor .Value
+   @MFColor public final var keyValue      : [Color3f]
    @SFColor public final var value_changed : Color3f = .zero
 
    // Construction

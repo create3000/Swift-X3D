@@ -20,7 +20,7 @@ public final class GeoProximitySensor :
 
    // Fields
 
-   @MFString   public final var geoSystem                : MFString .Value = ["GD", "WE"]
+   @MFString   public final var geoSystem                : [String] = ["GD", "WE"]
    @SFNode     public final var geoOrigin                : X3DNode?
    @SFVec3d    public final var geoCoord_changed         : Vector3d = Vector3d .zero
    @SFVec3f    public final var position_changed         : Vector3f = .zero

@@ -15,7 +15,7 @@ public class X3DComposedGeometryNode :
    @SFBool public final var normalPerVertex : Bool = true
    @SFBool public final var solid           : Bool = true
    @SFBool public final var ccw             : Bool = true
-   @MFNode public final var attrib          : MFNode <X3DNode> .Value
+   @MFNode public final var attrib          : [X3DNode?]
    @SFNode public final var fogCoord        : X3DNode?
    @SFNode public final var color           : X3DNode?
    @SFNode public final var texCoord        : X3DNode?
@@ -24,7 +24,7 @@ public class X3DComposedGeometryNode :
 
    // Properties
    
-   @MFNode internal final var attribNodes  : MFNode <X3DVertexAttributeNode> .Value
+   @MFNode internal final var attribNodes  : [X3DVertexAttributeNode?]
    @SFNode internal final var fogCoordNode : FogCoordinate?
    @SFNode internal final var colorNode    : X3DColorNode?
    @SFNode internal final var texCoordNode : X3DTextureCoordinateNode?

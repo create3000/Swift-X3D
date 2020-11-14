@@ -14,10 +14,10 @@ public class X3DBackgroundNode :
 {
    // Fields
 
-   @MFFloat public final var groundAngle  : MFFloat .Value
-   @MFColor public final var groundColor  : MFColor .Value
-   @MFFloat public final var skyAngle     : MFFloat .Value
-   @MFColor public final var skyColor     : MFColor .Value = [Color3f ()]
+   @MFFloat public final var groundAngle  : [Float]
+   @MFColor public final var groundColor  : [Color3f]
+   @MFFloat public final var skyAngle     : [Float]
+   @MFColor public final var skyColor     : [Color3f] = [Color3f ()]
    @SFFloat public final var transparency : Float = 0
    
    // Properties
@@ -32,7 +32,7 @@ public class X3DBackgroundNode :
    
    // Cube properties
    
-   @MFNode private final var textureNodes : MFNode <X3DTextureNode> .Value
+   @MFNode private final var textureNodes : [X3DTextureNode?] = [nil, nil, nil, nil, nil, nil]
    
    private final var cubePrimitives = [x3d_VertexIn] ()
    private final var cubePrimitivesBuffer : MTLBuffer?
@@ -56,8 +56,6 @@ public class X3DBackgroundNode :
    internal override init (_ browser : X3DBrowser, _ executionContext : X3DExecutionContext?)
    {
       super .init (browser, executionContext)
-      
-      textureNodes .append (contentsOf: [nil, nil, nil, nil, nil, nil])
 
       types .append (.X3DBackgroundNode)
       
@@ -211,7 +209,7 @@ public class X3DBackgroundNode :
       spherePrimitivesBuffer = browser! .device! .makeBuffer (bytes: spherePrimitives, length: spherePrimitives .count * MemoryLayout <x3d_VertexIn> .stride, options: [ ])!
    }
    
-   private final func buildSphere (radius : Float, vAngle : [Float], angle : MFFloat .Value, color : MFColor .Value, alpha : Float, bottom : Bool)
+   private final func buildSphere (radius : Float, vAngle : [Float], angle : [Float], color : [Color3f], alpha : Float, bottom : Bool)
    {
       let vAngleMax  = bottom ? Float .pi / 2 : Float .pi
       let vDimension = vAngle .count - 1
@@ -266,7 +264,7 @@ public class X3DBackgroundNode :
       }
    }
    
-   private final func getColor (theta : Float, color : MFColor .Value, angle: MFFloat .Value) -> Color3f
+   private final func getColor (theta : Float, color : [Color3f], angle: [Float]) -> Color3f
    {
       return color [angle .upperBound (value: theta, comp: <)]
    }

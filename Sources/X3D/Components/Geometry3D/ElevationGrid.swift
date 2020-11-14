@@ -19,7 +19,7 @@ public final class ElevationGrid :
 
    // Fields
 
-   @MFFloat public final var set_height      : MFFloat .Value
+   @MFFloat public final var set_height      : [Float]
    @SFInt32 public final var xDimension      : Int32 = 0
    @SFInt32 public final var zDimension      : Int32 = 0
    @SFFloat public final var xSpacing        : Float = 1
@@ -29,16 +29,16 @@ public final class ElevationGrid :
    @SFFloat public final var creaseAngle     : Float = 0
    @SFBool  public final var colorPerVertex  : Bool = true
    @SFBool  public final var normalPerVertex : Bool = true
-   @MFNode  public final var attrib          : MFNode <X3DNode> .Value
+   @MFNode  public final var attrib          : [X3DNode?]
    @SFNode  public final var fogCoord        : X3DNode?
    @SFNode  public final var color           : X3DNode?
    @SFNode  public final var texCoord        : X3DNode?
    @SFNode  public final var normal          : X3DNode?
-   @MFFloat public final var height          : MFFloat .Value
+   @MFFloat public final var height          : [Float]
 
    // Properties
    
-   @MFNode private final var attribNodes  : MFNode <X3DVertexAttributeNode> .Value
+   @MFNode private final var attribNodes  : [X3DVertexAttributeNode?]
    @SFNode private final var fogCoordNode : FogCoordinate?
    @SFNode private final var colorNode    : X3DColorNode?
    @SFNode private final var texCoordNode : X3DTextureCoordinateNode?

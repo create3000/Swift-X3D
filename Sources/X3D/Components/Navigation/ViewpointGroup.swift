@@ -24,13 +24,13 @@ public final class ViewpointGroup :
    @SFBool   public final var retainUserOffsets : Bool = false
    @SFVec3f  public final var size              : Vector3f = .zero
    @SFVec3f  public final var center            : Vector3f = .zero
-   @MFNode   public final var children          : MFNode <X3DNode> .Value
+   @MFNode   public final var children          : [X3DNode?]
    
    // Properties
    
    @SFNode private final var proximitySensorNode : ProximitySensor!
-   @MFNode private final var cameraObjects       : MFNode <X3DChildNode> .Value
-   @MFNode private final var viewpointGroupNodes : MFNode <ViewpointGroup> .Value
+   @MFNode private final var cameraObjects       : [X3DChildNode?]
+   @MFNode private final var viewpointGroupNodes : [ViewpointGroup?]
 
    // Construction
    

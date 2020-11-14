@@ -11,7 +11,7 @@ public class X3DRigidJointNode :
 {
    // Fields
 
-   @MFString public final var forceOutput : MFString .Value = ["NONE"]
+   @MFString public final var forceOutput : [String] = ["NONE"]
    @SFNode   public final var body1       : X3DNode?
    @SFNode   public final var body2       : X3DNode?
 

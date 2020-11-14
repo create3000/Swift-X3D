@@ -19,7 +19,7 @@ public final class ColorRGBA :
 
    // Fields
 
-   @MFColorRGBA public final var color : MFColorRGBA .Value
+   @MFColorRGBA public final var color : [Color4f]
 
    // Construction
    

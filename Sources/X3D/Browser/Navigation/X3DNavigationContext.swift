@@ -14,7 +14,7 @@ internal final class X3DNavigationContextProperties :
    @SFNode public private(set) final var activeLayerNode          : X3DLayerNode?
    @SFNode public private(set) final var activeNavigationInfoNode : NavigationInfo?
    @SFNode public private(set) final var activeViewpointNode      : X3DViewpointNode?
-   @MFEnum public final var availableViewers                      : MFEnum <X3DViewerType> .Value = [.NONE]
+   @MFEnum public final var availableViewers                      : [X3DViewerType] = [.NONE]
    @SFEnum public private(set) final var viewer                   : X3DViewerType = .NONE
    @SFNode public private(set) final var viewerNode               : X3DViewer?
    @SFNode private final var headlightNode                        : DirectionalLight?

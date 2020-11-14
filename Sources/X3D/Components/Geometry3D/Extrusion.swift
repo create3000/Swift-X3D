@@ -21,20 +21,20 @@ public final class Extrusion :
 
    // Fields
 
-   @MFVec2f    public final var set_crossSection : MFVec2f .Value
-   @MFRotation public final var set_orientation  : MFRotation .Value
-   @MFVec2f    public final var set_scale        : MFVec2f .Value
-   @MFVec3f    public final var set_spine        : MFVec3f .Value
+   @MFVec2f    public final var set_crossSection : [Vector2f]
+   @MFRotation public final var set_orientation  : [Rotation4f]
+   @MFVec2f    public final var set_scale        : [Vector2f]
+   @MFVec3f    public final var set_spine        : [Vector3f]
    @SFBool     public final var beginCap         : Bool = true
    @SFBool     public final var endCap           : Bool = true
    @SFBool     public final var solid            : Bool = true
    @SFBool     public final var ccw              : Bool = true
    @SFBool     public final var convex           : Bool = true
    @SFFloat    public final var creaseAngle      : Float = 0
-   @MFVec2f    public final var crossSection     : MFVec2f .Value = [Vector2f (1, 1), Vector2f (1, -1), Vector2f (-1, -1), Vector2f (-1, 1), Vector2f (1, 1)]
-   @MFRotation public final var orientation      : MFRotation .Value = [.identity]
-   @MFVec2f    public final var scale            : MFVec2f .Value = [Vector2f (1, 1)]
-   @MFVec3f    public final var spine            : MFVec3f .Value = [Vector3f (0, 0, 0), Vector3f (0, 1, 0)]
+   @MFVec2f    public final var crossSection     : [Vector2f] = [Vector2f (1, 1), Vector2f (1, -1), Vector2f (-1, -1), Vector2f (-1, 1), Vector2f (1, 1)]
+   @MFRotation public final var orientation      : [Rotation4f] = [.identity]
+   @MFVec2f    public final var scale            : [Vector2f] = [Vector2f (1, 1)]
+   @MFVec3f    public final var spine            : [Vector3f] = [Vector3f (0, 0, 0), Vector3f (0, 1, 0)]
 
    // Construction
    

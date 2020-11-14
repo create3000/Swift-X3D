@@ -19,7 +19,7 @@ public final class MultiTextureCoordinate :
 
    // Fields
 
-   @MFNode public final var texCoord : MFNode <X3DNode> .Value
+   @MFNode public final var texCoord : [X3DNode?]
 
    // Construction
    

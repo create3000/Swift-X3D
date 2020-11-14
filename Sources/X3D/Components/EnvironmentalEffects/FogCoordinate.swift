@@ -19,7 +19,7 @@ public final class FogCoordinate :
 
    // Fields
 
-   @MFFloat public final var depth : MFFloat .Value
+   @MFFloat public final var depth : [Float]
 
    // Construction
    

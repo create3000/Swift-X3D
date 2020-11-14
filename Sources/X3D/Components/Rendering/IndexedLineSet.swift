@@ -21,12 +21,12 @@ public final class IndexedLineSet :
 
    // Fields
 
-   @MFInt32 public final var set_colorIndex : MFInt32 .Value
-   @MFInt32 public final var set_coordIndex : MFInt32 .Value
+   @MFInt32 public final var set_colorIndex : [Int32]
+   @MFInt32 public final var set_coordIndex : [Int32]
    @SFBool  public final var colorPerVertex : Bool = true
-   @MFInt32 public final var colorIndex     : MFInt32 .Value
-   @MFInt32 public final var coordIndex     : MFInt32 .Value
-   @MFNode  public final var attrib         : MFNode <X3DNode> .Value
+   @MFInt32 public final var colorIndex     : [Int32]
+   @MFInt32 public final var coordIndex     : [Int32]
+   @MFNode  public final var attrib         : [X3DNode?]
    @SFNode  public final var fogCoord       : X3DNode?
    @SFNode  public final var color          : X3DNode?
    @SFNode  public final var coord          : X3DNode?
@@ -34,7 +34,7 @@ public final class IndexedLineSet :
 
    // Properties
    
-   @MFNode private final var attribNodes  : MFNode <X3DVertexAttributeNode> .Value
+   @MFNode private final var attribNodes  : [X3DVertexAttributeNode?]
    @SFNode private final var fogCoordNode : FogCoordinate?
    @SFNode private final var colorNode    : X3DColorNode?
    @SFNode private final var coordNode    : X3DCoordinateNode?

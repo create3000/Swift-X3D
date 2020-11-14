@@ -11,10 +11,10 @@ public protocol X3DGeospatialObject :
 {
    // Fields
 
-   //@MFString public final var geoSystem : MFString .Value = ["GD", "WE"]
+   //@MFString public final var geoSystem : [String] = ["GD", "WE"]
    //@SFNode   public final var geoOrigin : X3DNode?
 
-   var geoSystem : MFString .Value { get }
+   var geoSystem : [String] { get }
    var geoOrigin : X3DNode? { get set }
 }
 

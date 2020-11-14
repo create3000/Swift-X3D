@@ -22,8 +22,8 @@ public final class NurbsCurve2D :
    @SFInt32  public final var tessellation : Int32 = 0
    @SFBool   public final var closed       : Bool = false
    @SFInt32  public final var order        : Int32 = 3
-   @MFDouble public final var knot         : MFDouble .Value
-   @MFDouble public final var weight       : MFDouble .Value
+   @MFDouble public final var knot         : [Double]
+   @MFDouble public final var weight       : [Double]
 
    // Construction
    

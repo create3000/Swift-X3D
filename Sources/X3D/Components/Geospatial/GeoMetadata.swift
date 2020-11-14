@@ -19,9 +19,9 @@ public final class GeoMetadata :
 
    // Fields
 
-   @MFString public final var url     : MFString .Value
-   @MFString public final var summary : MFString .Value
-   @MFNode   public final var data    : MFNode <X3DNode> .Value
+   @MFString public final var url     : [String]
+   @MFString public final var summary : [String]
+   @MFNode   public final var data    : [X3DNode?]
 
    // Construction
    

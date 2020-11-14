@@ -21,7 +21,7 @@ public final class VolumeEmitter :
 
    @SFBool  public final var `internal` : Bool = true
    @SFVec3f public final var direction  : Vector3f = Vector3f (0, 1, 0)
-   @MFInt32 public final var coordIndex : MFInt32 .Value = [-1]
+   @MFInt32 public final var coordIndex : [Int32] = [-1]
    @SFNode  public final var coord      : X3DNode?
 
    // Construction

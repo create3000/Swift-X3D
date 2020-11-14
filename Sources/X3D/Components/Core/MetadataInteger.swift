@@ -22,7 +22,7 @@ public final class MetadataInteger :
 
    @SFString public final var name      : String = ""
    @SFString public final var reference : String = ""
-   @MFInt32  public final var value     : MFInt32 .Value
+   @MFInt32  public final var value     : [Int32]
 
    // Construction
    

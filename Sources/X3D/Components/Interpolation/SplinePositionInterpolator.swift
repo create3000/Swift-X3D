@@ -20,8 +20,8 @@ public final class SplinePositionInterpolator :
    // Fields
 
    @SFBool  public final var closed            : Bool = false
-   @MFVec3f public final var keyValue          : MFVec3f .Value
-   @MFVec3f public final var keyVelocity       : MFVec3f .Value
+   @MFVec3f public final var keyValue          : [Vector3f]
+   @MFVec3f public final var keyVelocity       : [Vector3f]
    @SFBool  public final var normalizeVelocity : Bool = false
    @SFVec3f public final var value_changed     : Vector3f = .zero
 

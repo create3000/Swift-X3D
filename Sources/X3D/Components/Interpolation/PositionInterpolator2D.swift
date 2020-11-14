@@ -20,7 +20,7 @@ public final class PositionInterpolator2D :
 
    // Fields
 
-   @MFVec2f public final var keyValue      : MFVec2f .Value
+   @MFVec2f public final var keyValue      : [Vector2f]
    @SFVec2f public final var value_changed : Vector2f = .zero
 
    // Construction

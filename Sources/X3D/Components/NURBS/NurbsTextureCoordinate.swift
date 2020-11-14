@@ -23,10 +23,10 @@ public final class NurbsTextureCoordinate :
    @SFInt32  public final var vOrder       : Int32 = 3
    @SFInt32  public final var uDimension   : Int32 = 0
    @SFInt32  public final var vDimension   : Int32 = 0
-   @MFDouble public final var uKnot        : MFDouble .Value
-   @MFDouble public final var vKnot        : MFDouble .Value
-   @MFFloat  public final var weight       : MFFloat .Value
-   @MFVec2f  public final var controlPoint : MFVec2f .Value
+   @MFDouble public final var uKnot        : [Double]
+   @MFDouble public final var vKnot        : [Double]
+   @MFFloat  public final var weight       : [Float]
+   @MFVec2f  public final var controlPoint : [Vector2f]
 
    // Construction
    

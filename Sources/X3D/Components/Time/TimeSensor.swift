@@ -26,7 +26,7 @@ public final class TimeSensor :
    @SFBool  public final var isLive           : Bool = false
    @SFBool  public final var enabled          : Bool = true
    @SFTime  public final var cycleInterval    : TimeInterval = 1
-   @MFFloat public final var range            : MFFloat .Value = [0, 0, 1] // [current, from, to] in fractions
+   @MFFloat public final var range            : [Float] = [0, 0, 1] // [current, from, to] in fractions
    @SFBool  public final var loop             : Bool = false
    @SFTime  public final var startTime        : TimeInterval = 0
    @SFTime  public final var resumeTime       : TimeInterval = 0

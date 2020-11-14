@@ -21,7 +21,7 @@ public final class ShaderPart :
    // Fields
 
    @SFString public final var type : String = "VERTEX"
-   @MFString public final var url  : MFString .Value
+   @MFString public final var url  : [String]
    
    // X3DUrlObject
    

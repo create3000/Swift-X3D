@@ -19,7 +19,7 @@ public final class EaseInEaseOut :
 
    // Fields
 
-   @MFVec2f public final var easeInEaseOut            : MFVec2f .Value
+   @MFVec2f public final var easeInEaseOut            : [Vector2f]
    @SFFloat public final var modifiedFraction_changed : Float = 0
 
    // Construction

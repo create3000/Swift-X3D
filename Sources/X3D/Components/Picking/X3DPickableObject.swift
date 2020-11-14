@@ -12,10 +12,10 @@ public protocol X3DPickableObject :
    // Fields
 
    //@SFBool   public final var pickable   : Bool = true
-   //@MFString public final var objectType : MFString .Value = ["ALL"]
+   //@MFString public final var objectType : [String] = ["ALL"]
    
    var pickable   : Bool { get set }
-   var objectType : MFString .Value { get }
+   var objectType : [String] { get }
 }
 
 extension X3DPickableObject

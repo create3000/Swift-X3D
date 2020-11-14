@@ -20,9 +20,9 @@ public final class HAnimDisplacer :
    // Fields
 
    @SFString public final var name          : String = ""
-   @MFInt32  public final var coordIndex    : MFInt32 .Value
+   @MFInt32  public final var coordIndex    : [Int32]
    @SFFloat  public final var weight        : Float = 0
-   @MFVec3f  public final var displacements : MFVec3f .Value
+   @MFVec3f  public final var displacements : [Vector3f]
 
    // Construction
    

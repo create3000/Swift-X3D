@@ -27,7 +27,7 @@ public final class Appearance :
    @SFNode public final var material         : X3DNode?
    @SFNode public final var texture          : X3DNode?
    @SFNode public final var textureTransform : X3DNode?
-   @MFNode public final var shaders          : MFNode <X3DNode> .Value
+   @MFNode public final var shaders          : [X3DNode?]
    @SFNode public final var blendMode        : X3DNode?
    
    // Properties
@@ -38,7 +38,7 @@ public final class Appearance :
    @SFNode private final var materialNode         : X3DMaterialNode?
    @SFNode private final var textureNode          : X3DTextureNode?
    @SFNode private final var textureTransformNode : X3DTextureTransformNode?
-   @MFNode private final var shaderNodes          : MFNode <X3DShaderNode> .Value
+   @MFNode private final var shaderNodes          : [X3DShaderNode?]
    @SFNode private final var shaderNode           : X3DShaderNode?
 
    // Construction

@@ -20,7 +20,7 @@ public final class CollisionSpace :
    // Fields
 
    @SFBool public final var useGeometry : Bool = false
-   @MFNode public final var collidables : MFNode <X3DNode> .Value
+   @MFNode public final var collidables : [X3DNode?]
 
    // Construction
    

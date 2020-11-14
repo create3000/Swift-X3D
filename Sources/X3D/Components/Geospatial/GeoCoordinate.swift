@@ -20,9 +20,9 @@ public final class GeoCoordinate :
 
    // Fields
 
-   @MFString public final var geoSystem : MFString .Value = ["GD", "WE"]
+   @MFString public final var geoSystem : [String] = ["GD", "WE"]
    @SFNode   public final var geoOrigin : X3DNode?
-   @MFVec3d  public final var point     : MFVec3d .Value
+   @MFVec3d  public final var point     : [Vector3d]
 
    // Construction
    

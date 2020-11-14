@@ -19,7 +19,7 @@ public final class Viewport :
 
    // Fields
 
-   @MFFloat public final var clipBoundary : MFFloat .Value = [0, 1, 0, 1]
+   @MFFloat public final var clipBoundary : [Float] = [0, 1, 0, 1]
 
    // Construction
    

@@ -61,5 +61,5 @@ public final class X3DImage :
       didSet { addEvent () }
    }
 
-   @MFInt32 public var array : MFInt32 .Value
+   @MFInt32 public var array : [Int32]
 }

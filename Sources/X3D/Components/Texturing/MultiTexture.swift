@@ -21,10 +21,10 @@ public final class MultiTexture :
 
    @SFColor  public final var color    : Color3f = .one
    @SFFloat  public final var alpha    : Float = 1
-   @MFString public final var mode     : MFString .Value
-   @MFString public final var source   : MFString .Value
-   @MFString public final var function : MFString .Value
-   @MFNode   public final var texture  : MFNode <X3DNode> .Value
+   @MFString public final var mode     : [String]
+   @MFString public final var source   : [String]
+   @MFString public final var function : [String]
+   @MFNode   public final var texture  : [X3DNode?]
 
    // Construction
    

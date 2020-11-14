@@ -21,7 +21,7 @@ public final class PickableGroup :
    // Fields
    
    @SFBool   public final var pickable   : Bool = true
-   @MFString public final var objectType : MFString .Value = ["ALL"]
+   @MFString public final var objectType : [String] = ["ALL"]
 
    // Construction
    

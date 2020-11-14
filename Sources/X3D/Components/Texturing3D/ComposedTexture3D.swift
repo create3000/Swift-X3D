@@ -19,7 +19,7 @@ public final class ComposedTexture3D :
 
    // Fields
 
-   @MFNode public final var texture : MFNode <X3DNode> .Value
+   @MFNode public final var texture : [X3DNode?]
 
    // Construction
    

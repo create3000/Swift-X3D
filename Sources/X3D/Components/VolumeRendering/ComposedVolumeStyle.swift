@@ -19,7 +19,7 @@ public final class ComposedVolumeStyle :
 
    // Fields
 
-   @MFNode public final var renderStyle : MFNode <X3DNode> .Value
+   @MFNode public final var renderStyle : [X3DNode?]
 
    // Construction
    

@@ -12,7 +12,7 @@ public class X3DInterpolatorNode :
    // Fields
 
    @SFFloat public final var set_fraction : Float = 0
-   @MFFloat public final var key          : MFFloat .Value
+   @MFFloat public final var key          : [Float]
 
    // Construction
    

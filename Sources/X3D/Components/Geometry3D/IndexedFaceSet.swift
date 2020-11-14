@@ -21,16 +21,16 @@ public final class IndexedFaceSet :
 
    // Fields
 
-   @MFInt32 public final var set_colorIndex    : MFInt32 .Value
-   @MFInt32 public final var set_texCoordIndex : MFInt32 .Value
-   @MFInt32 public final var set_normalIndex   : MFInt32 .Value
-   @MFInt32 public final var set_coordIndex    : MFInt32 .Value
+   @MFInt32 public final var set_colorIndex    : [Int32]
+   @MFInt32 public final var set_texCoordIndex : [Int32]
+   @MFInt32 public final var set_normalIndex   : [Int32]
+   @MFInt32 public final var set_coordIndex    : [Int32]
    @SFBool  public final var convex            : Bool = true
    @SFFloat public final var creaseAngle       : Float = 0
-   @MFInt32 public final var colorIndex        : MFInt32 .Value
-   @MFInt32 public final var texCoordIndex     : MFInt32 .Value
-   @MFInt32 public final var normalIndex       : MFInt32 .Value
-   @MFInt32 public final var coordIndex        : MFInt32 .Value
+   @MFInt32 public final var colorIndex        : [Int32]
+   @MFInt32 public final var texCoordIndex     : [Int32]
+   @MFInt32 public final var normalIndex       : [Int32]
+   @MFInt32 public final var coordIndex        : [Int32]
 
    // Construction
    

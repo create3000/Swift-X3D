@@ -19,8 +19,8 @@ public final class AnnotationLayer :
 
    // Fields
 
-   @MFString public final var layoutPolicy : MFString .Value
-   @MFString public final var shownGroupID : MFString .Value
+   @MFString public final var layoutPolicy : [String]
+   @MFString public final var shownGroupID : [String]
 
    // Construction
    

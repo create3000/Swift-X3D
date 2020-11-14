@@ -14,7 +14,7 @@ public class X3DSequencerNode :
    @SFFloat public final var set_fraction : Float = 0
    @SFBool  public final var previous     : Bool = false
    @SFBool  public final var next         : Bool = false
-   @MFFloat public final var key          : MFFloat .Value
+   @MFFloat public final var key          : [Float]
    
    // Properties
    

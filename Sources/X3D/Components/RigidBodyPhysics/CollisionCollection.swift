@@ -20,7 +20,7 @@ public final class CollisionCollection :
    // Fields
 
    @SFBool   public final var enabled                  : Bool = true
-   @MFString public final var appliedParameters        : MFString .Value = ["BOUNCE"]
+   @MFString public final var appliedParameters        : [String] = ["BOUNCE"]
    @SFFloat  public final var bounce                   : Float = 0
    @SFFloat  public final var minBounceSpeed           : Float = 0.1
    @SFVec2f  public final var frictionCoefficients     : Vector2f = .zero
@@ -28,7 +28,7 @@ public final class CollisionCollection :
    @SFVec2f  public final var slipFactors              : Vector2f = .zero
    @SFFloat  public final var softnessConstantForceMix : Float = 0.0001
    @SFFloat  public final var softnessErrorCorrection  : Float = 0.8
-   @MFNode   public final var collidables              : MFNode <X3DNode> .Value
+   @MFNode   public final var collidables              : [X3DNode?]
 
    // Construction
    

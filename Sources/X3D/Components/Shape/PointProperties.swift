@@ -22,7 +22,7 @@ public final class PointProperties :
    @SFFloat  public final var pointSizeScaleFactor : Float = 1
    @SFFloat  public final var pointSizeMinValue    : Float = 1
    @SFFloat  public final var pointSizeMaxValue    : Float = 1
-   @MFFloat  public final var pointSizeAttenuation : MFFloat .Value = [1, 0, 0]
+   @MFFloat  public final var pointSizeAttenuation : [Float] = [1, 0, 0]
    @SFString public final var colorMode            : String = "TEXTURE_AND_POINT_COLOR"
 
    // Construction

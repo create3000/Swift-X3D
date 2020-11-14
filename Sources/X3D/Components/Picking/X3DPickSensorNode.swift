@@ -13,14 +13,14 @@ public class X3DPickSensorNode :
    // Fields
 
    @SFBool   public final var enabled          : Bool = true
-   @MFString public final var objectType       : MFString .Value = ["ALL"]
+   @MFString public final var objectType       : [String] = ["ALL"]
    @SFString public final var matchCriterion   : String = "MATCH_ANY"
    @SFString public final var intersectionType : String = "BOUNDS"
    @SFString public final var sortOrder        : String = "CLOSEST"
    @SFBool   public final var isActive         : Bool = false
    @SFNode   public final var pickingGeometry  : X3DNode?
-   @MFNode   public final var pickTarget       : MFNode <X3DNode> .Value
-   @MFNode   public final var pickedGeometry   : MFNode <X3DNode> .Value
+   @MFNode   public final var pickTarget       : [X3DNode?]
+   @MFNode   public final var pickedGeometry   : [X3DNode?]
 
    // Construction
    

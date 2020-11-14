@@ -22,14 +22,14 @@ public final class LayerSet :
    // Fields
 
    @SFInt32 public final var activeLayer : Int32 = 0
-   @MFInt32 public final var order       : MFInt32 .Value = [0]
-   @MFNode  public final var layers      : MFNode <X3DNode> .Value
+   @MFInt32 public final var order       : [Int32] = [0]
+   @MFNode  public final var layers      : [X3DNode?]
    
    // Properties
    
    @SFNode internal private(set) final var activeLayerNode : X3DLayerNode?
    @SFNode internal private(set) final var layerNode0 : Layer?
-   @MFNode private final var layerNodes : MFNode <X3DLayerNode> .Value
+   @MFNode private final var layerNodes : [X3DLayerNode?]
 
    // Construction
    

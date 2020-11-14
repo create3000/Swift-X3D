@@ -19,7 +19,7 @@ public final class ProgramShader :
 
    // Fields
 
-   @MFNode public final var programs : MFNode <X3DNode> .Value
+   @MFNode public final var programs : [X3DNode?]
 
    // Construction
    

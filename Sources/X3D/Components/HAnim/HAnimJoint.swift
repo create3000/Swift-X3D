@@ -25,13 +25,13 @@ public final class HAnimJoint :
    @SFVec3f    public final var scale            : Vector3f = Vector3f (1, 1, 1)
    @SFRotation public final var scaleOrientation : Rotation4f = .identity
    @SFVec3f    public final var center           : Vector3f = .zero
-   @MFFloat    public final var llimit           : MFFloat .Value
-   @MFFloat    public final var ulimit           : MFFloat .Value
+   @MFFloat    public final var llimit           : [Float]
+   @MFFloat    public final var ulimit           : [Float]
    @SFRotation public final var limitOrientation : Rotation4f = .identity
-   @MFFloat    public final var stiffness        : MFFloat .Value = [0, 0, 0]
-   @MFInt32    public final var skinCoordIndex   : MFInt32 .Value
-   @MFFloat    public final var skinCoordWeight  : MFFloat .Value
-   @MFNode     public final var displacers       : MFNode <X3DNode> .Value
+   @MFFloat    public final var stiffness        : [Float] = [0, 0, 0]
+   @MFInt32    public final var skinCoordIndex   : [Int32]
+   @MFFloat    public final var skinCoordWeight  : [Float]
+   @MFNode     public final var displacers       : [X3DNode?]
 
    // Construction
    

@@ -19,7 +19,7 @@ public final class IntegerSequencer :
 
    // Fields
 
-   @MFInt32 public final var keyValue      : MFInt32 .Value
+   @MFInt32 public final var keyValue      : [Int32]
    @SFInt32 public final var value_changed : Int32 = 0
 
    // Construction

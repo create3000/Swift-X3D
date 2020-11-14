@@ -21,7 +21,7 @@ public final class OrthoViewpoint :
 
    @SFVec3f public final var position         : Vector3f = Vector3f (0, 0, 10)
    @SFVec3f public final var centerOfRotation : Vector3f = .zero
-   @MFFloat public final var fieldOfView      : MFFloat .Value = [-1, -1, 1, 1]
+   @MFFloat public final var fieldOfView      : [Float] = [-1, -1, 1, 1]
 
    // Construction
    

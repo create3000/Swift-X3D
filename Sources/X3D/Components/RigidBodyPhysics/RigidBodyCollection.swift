@@ -20,7 +20,7 @@ public final class RigidBodyCollection :
    // Fields
 
    @SFBool  public final var enabled                 : Bool = true
-   @MFNode  public final var set_contacts            : MFNode <X3DNode> .Value
+   @MFNode  public final var set_contacts            : [X3DNode?]
    @SFVec3f public final var gravity                 : Vector3f = Vector3f (0, -9.8, 0)
    @SFBool  public final var preferAccuracy          : Bool = false
    @SFFloat public final var errorCorrection         : Float = 0.8
@@ -33,8 +33,8 @@ public final class RigidBodyCollection :
    @SFFloat public final var disableLinearSpeed      : Float = 0
    @SFFloat public final var disableAngularSpeed     : Float = 0
    @SFNode  public final var collider                : X3DNode?
-   @MFNode  public final var bodies                  : MFNode <X3DNode> .Value
-   @MFNode  public final var joints                  : MFNode <X3DNode> .Value
+   @MFNode  public final var bodies                  : [X3DNode?]
+   @MFNode  public final var joints                  : [X3DNode?]
 
    // Construction
    

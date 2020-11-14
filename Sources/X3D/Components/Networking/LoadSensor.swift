@@ -25,7 +25,7 @@ public final class LoadSensor :
    @SFBool  public final var isLoaded  : Bool = false
    @SFFloat public final var progress  : Float = 0
    @SFTime  public final var loadTime  : TimeInterval = 0
-   @MFNode  public final var watchList : MFNode <X3DNode> .Value
+   @MFNode  public final var watchList : [X3DNode?]
 
    // Construction
    

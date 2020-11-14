@@ -19,7 +19,7 @@ public final class MultiTextureTransform :
 
    // Fields
 
-   @MFNode public final var textureTransform : MFNode <X3DNode> .Value
+   @MFNode public final var textureTransform : [X3DNode?]
 
    // Construction
    

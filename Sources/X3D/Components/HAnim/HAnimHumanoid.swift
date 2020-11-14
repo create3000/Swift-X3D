@@ -22,7 +22,7 @@ public final class HAnimHumanoid :
 
    @SFString   public final var name             : String = ""
    @SFString   public final var version          : String = ""
-   @MFString   public final var info             : MFString .Value
+   @MFString   public final var info             : [String]
    @SFVec3f    public final var translation      : Vector3f = .zero
    @SFRotation public final var rotation         : Rotation4f = .identity
    @SFVec3f    public final var scale            : Vector3f = Vector3f (1, 1, 1)
@@ -30,15 +30,15 @@ public final class HAnimHumanoid :
    @SFVec3f    public final var center           : Vector3f = .zero
    @SFVec3f    public final var bboxSize         : Vector3f = -.one
    @SFVec3f    public final var bboxCenter       : Vector3f = .zero
-   @MFNode     public final var viewpoints       : MFNode <X3DNode> .Value
-   @MFNode     public final var sites            : MFNode <X3DNode> .Value
-   @MFNode     public final var joints           : MFNode <X3DNode> .Value
-   @MFNode     public final var segments         : MFNode <X3DNode> .Value
-   @MFNode     public final var motions          : MFNode <X3DNode> .Value
-   @MFNode     public final var skeleton         : MFNode <X3DNode> .Value
+   @MFNode     public final var viewpoints       : [X3DNode?]
+   @MFNode     public final var sites            : [X3DNode?]
+   @MFNode     public final var joints           : [X3DNode?]
+   @MFNode     public final var segments         : [X3DNode?]
+   @MFNode     public final var motions          : [X3DNode?]
+   @MFNode     public final var skeleton         : [X3DNode?]
    @SFNode     public final var skinNormal       : X3DNode?
    @SFNode     public final var skinCoord        : X3DNode?
-   @MFNode     public final var skin             : MFNode <X3DNode> .Value
+   @MFNode     public final var skin             : [X3DNode?]
 
    // Construction
    

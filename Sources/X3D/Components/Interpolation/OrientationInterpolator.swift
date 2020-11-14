@@ -19,7 +19,7 @@ public final class OrientationInterpolator :
 
    // Fields
 
-   @MFRotation public final var keyValue      : MFRotation .Value
+   @MFRotation public final var keyValue      : [Rotation4f]
    @SFRotation public final var value_changed : Rotation4f = .identity
 
    // Construction

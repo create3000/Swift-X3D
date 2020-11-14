@@ -20,9 +20,9 @@ public class X3DNurbsSurfaceGeometryNode :
    @SFInt32  public final var vOrder        : Int32 = 3
    @SFInt32  public final var uDimension    : Int32 = 0
    @SFInt32  public final var vDimension    : Int32 = 0
-   @MFDouble public final var uKnot         : MFDouble .Value
-   @MFDouble public final var vKnot         : MFDouble .Value
-   @MFDouble public final var weight        : MFDouble .Value
+   @MFDouble public final var uKnot         : [Double]
+   @MFDouble public final var vKnot         : [Double]
+   @MFDouble public final var weight        : [Double]
    @SFNode   public final var texCoord      : X3DNode?
    @SFNode   public final var controlPoint  : X3DNode?
 

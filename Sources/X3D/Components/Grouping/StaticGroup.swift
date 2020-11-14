@@ -22,7 +22,7 @@ public final class StaticGroup :
    
    @SFVec3f public final var bboxSize   : Vector3f = -.one
    @SFVec3f public final var bboxCenter : Vector3f = .zero
-   @MFNode  public final var children   : MFNode <X3DNode> .Value
+   @MFNode  public final var children   : [X3DNode?]
    
    // Properties
    

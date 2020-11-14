@@ -19,7 +19,7 @@ public final class BooleanSequencer :
 
    // Fields
 
-   @MFBool public final var keyValue      : MFBool .Value
+   @MFBool public final var keyValue      : [Bool]
    @SFBool public final var value_changed : Bool = false
 
    // Construction

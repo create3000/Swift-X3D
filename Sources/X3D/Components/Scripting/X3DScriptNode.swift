@@ -12,7 +12,7 @@ public class X3DScriptNode :
 {
    // Fields
    
-   @MFString public final var url : MFString .Value
+   @MFString public final var url : [String]
    
    // Properties
    

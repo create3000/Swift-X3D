@@ -23,7 +23,7 @@ public final class Contact :
    @SFVec3f  public final var contactNormal            : Vector3f = Vector3f (0, 1, 0)
    @SFFloat  public final var depth                    : Float = 0
    @SFVec3f  public final var frictionDirection        : Vector3f = Vector3f (0, 1, 0)
-   @MFString public final var appliedParameters        : MFString .Value = ["BOUNCE"]
+   @MFString public final var appliedParameters        : [String] = ["BOUNCE"]
    @SFFloat  public final var bounce                   : Float = 0
    @SFFloat  public final var minBounceSpeed           : Float = 0
    @SFVec2f  public final var frictionCoefficients     : Vector2f = .zero

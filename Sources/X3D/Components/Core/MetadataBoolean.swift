@@ -22,7 +22,7 @@ public final class MetadataBoolean :
 
    @SFString public final var name      : String = ""
    @SFString public final var reference : String = ""
-   @MFBool   public final var value     : MFBool .Value
+   @MFBool   public final var value     : [Bool]
 
    // Construction
    

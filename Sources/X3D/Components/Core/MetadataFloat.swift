@@ -22,7 +22,7 @@ public final class MetadataFloat :
 
    @SFString public final var name      : String = ""
    @SFString public final var reference : String = ""
-   @MFFloat  public final var value     : MFFloat .Value
+   @MFFloat  public final var value     : [Float]
 
    // Construction
    

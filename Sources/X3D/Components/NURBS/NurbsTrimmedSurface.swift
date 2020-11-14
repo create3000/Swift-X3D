@@ -19,9 +19,9 @@ public final class NurbsTrimmedSurface :
 
    // Fields
 
-   @MFNode public final var addTrimmingContour    : MFNode <X3DNode> .Value
-   @MFNode public final var removeTrimmingContour : MFNode <X3DNode> .Value
-   @MFNode public final var trimmingContour       : MFNode <X3DNode> .Value
+   @MFNode public final var addTrimmingContour    : [X3DNode?]
+   @MFNode public final var removeTrimmingContour : [X3DNode?]
+   @MFNode public final var trimmingContour       : [X3DNode?]
 
    // Construction
    

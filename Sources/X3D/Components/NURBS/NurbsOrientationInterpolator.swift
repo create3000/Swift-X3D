@@ -21,8 +21,8 @@ public final class NurbsOrientationInterpolator :
 
    @SFFloat    public final var set_fraction  : Float = 0
    @SFInt32    public final var order         : Int32 = 3
-   @MFDouble   public final var knot          : MFDouble .Value
-   @MFDouble   public final var weight        : MFDouble .Value
+   @MFDouble   public final var knot          : [Double]
+   @MFDouble   public final var weight        : [Double]
    @SFNode     public final var controlPoint  : X3DNode?
    @SFRotation public final var value_changed : Rotation4f = .identity
 

@@ -132,6 +132,8 @@ public class X3DField :
 
       if event .field !== self
       {
+         isTainted = true
+         
          set (value: event .field)
       }
       

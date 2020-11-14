@@ -20,7 +20,7 @@ public final class SFTime :
    // Property wrapper handling
    
    public final var projectedValue : SFTime { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

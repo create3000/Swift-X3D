@@ -19,7 +19,7 @@ public final class MFMatrix3d :
    // Property wrapper handling
    
    public final var projectedValue : MFMatrix3d { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

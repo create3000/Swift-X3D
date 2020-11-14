@@ -17,7 +17,7 @@ public final class SFEnum <Type> :
    // Property wrapper handling
    
    public final var projectedValue : SFEnum { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

@@ -19,7 +19,7 @@ public final class MFString :
    // Property wrapper handling
    
    public final var projectedValue : MFString { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

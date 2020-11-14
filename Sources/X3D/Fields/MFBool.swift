@@ -19,7 +19,7 @@ public final class MFBool :
    // Property wrapper handling
    
    public final var projectedValue : MFBool { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

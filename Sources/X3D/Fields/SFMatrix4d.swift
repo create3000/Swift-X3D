@@ -18,7 +18,7 @@ public final class SFMatrix4d :
    // Property wrapper handling
    
    public final var projectedValue : SFMatrix4d { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

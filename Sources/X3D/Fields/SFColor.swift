@@ -18,7 +18,7 @@ public final class SFColor :
    // Property wrapper handling
    
    public final var projectedValue : SFColor { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

@@ -19,7 +19,7 @@ public final class MFRotation :
    // Property wrapper handling
    
    public final var projectedValue : MFRotation { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

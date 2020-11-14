@@ -19,7 +19,7 @@ public final class MFColor :
    // Property wrapper handling
    
    public final var projectedValue : MFColor { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

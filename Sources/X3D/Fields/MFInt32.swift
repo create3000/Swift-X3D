@@ -19,7 +19,7 @@ public final class MFInt32 :
    // Property wrapper handling
    
    public final var projectedValue : MFInt32 { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

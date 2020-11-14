@@ -18,7 +18,7 @@ public final class SFVec4f :
    // Property wrapper handling
    
    public final var projectedValue : SFVec4f { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

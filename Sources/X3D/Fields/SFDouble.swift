@@ -18,7 +18,7 @@ public final class SFDouble :
    // Property wrapper handling
    
    public final var projectedValue : SFDouble { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

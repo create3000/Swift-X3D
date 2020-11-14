@@ -18,7 +18,7 @@ public final class SFRotation :
    // Property wrapper handling
    
    public final var projectedValue : SFRotation { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

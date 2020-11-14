@@ -18,7 +18,7 @@ public final class SFInt32 :
    // Property wrapper handling
    
    public final var projectedValue : SFInt32 { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

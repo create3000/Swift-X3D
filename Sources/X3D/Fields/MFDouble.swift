@@ -19,7 +19,7 @@ public final class MFDouble :
    // Property wrapper handling
    
    public final var projectedValue : MFDouble { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

@@ -18,7 +18,7 @@ public final class SFString :
    // Property wrapper handling
    
    public final var projectedValue : SFString { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

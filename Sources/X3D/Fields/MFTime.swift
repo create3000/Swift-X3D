@@ -21,7 +21,7 @@ public final class MFTime :
    // Property wrapper handling
    
    public final var projectedValue : MFTime { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

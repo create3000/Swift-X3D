@@ -18,7 +18,7 @@ public final class SFFloat :
    // Property wrapper handling
    
    public final var projectedValue : SFFloat { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

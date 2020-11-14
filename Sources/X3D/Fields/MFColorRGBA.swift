@@ -19,7 +19,7 @@ public final class MFColorRGBA :
    // Property wrapper handling
    
    public final var projectedValue : MFColorRGBA { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

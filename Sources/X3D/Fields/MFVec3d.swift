@@ -19,7 +19,7 @@ public final class MFVec3d :
    // Property wrapper handling
    
    public final var projectedValue : MFVec3d { self }
-   public final var wrappedValue : Value { didSet { addEvent () } }
+   public final var wrappedValue   : Value { didSet { addEvent () } }
 
    // Common properties
    

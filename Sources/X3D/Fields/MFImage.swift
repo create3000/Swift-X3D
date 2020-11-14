@@ -14,13 +14,43 @@ public final class MFImage :
    // Member types
    
    public typealias Element = X3DImage
-   public typealias Value   = X3DArray <Element>
+   public typealias Value   = [Element]
    
    // Property wrapper handling
    
    public final var projectedValue : MFImage { self }
-   public final var wrappedValue : Value { value }
-   private final let value = Value ()
+   public final var wrappedValue   : Value
+   {
+      willSet
+      {
+         let difference = newValue .difference (from: wrappedValue)
+         
+         for change in difference
+         {
+            switch change
+            {
+               case let .insert (_, newElement, _):
+                  newElement .addParent (self)
+               default:
+                  break
+            }
+         }
+
+         for change in difference
+         {
+            switch change
+            {
+              case let .remove (_, oldElement, _):
+                  oldElement .removeParent (self)
+               default:
+                  break
+            }
+         }
+      }
+      
+      didSet { addEvent () }
+   }
+
 
    // Common properties
    
@@ -31,20 +61,19 @@ public final class MFImage :
    
    public override init ()
    {
+      self .wrappedValue = [ ]
+      
       super .init ()
-
-      value .field = self
    }
    
-   public convenience init <S> (wrappedValue : S)
-      where Element? == S .Element, S : Sequence
+   public convenience init (wrappedValue : Value)
    {
       self .init ()
 
-      value .append (contentsOf: wrappedValue)
+      self .wrappedValue = wrappedValue
    }
 
-   public final override func copy () -> MFImage { MFImage (wrappedValue: value .map { $0! .copy () }) }
+   public final override func copy () -> MFImage { MFImage (wrappedValue: wrappedValue .map { $0 .copy () }) }
 
    // Value handling
    
@@ -52,6 +81,6 @@ public final class MFImage :
    {
       guard let field = field as? MFImage else { return }
       
-      value .set (field .value .map { $0! .copy () })
+      wrappedValue = field .wrappedValue .map { $0 .copy () }
    }
 }

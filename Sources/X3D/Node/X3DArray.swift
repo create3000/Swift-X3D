@@ -6,6 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
+/*
 public final class X3DArray <ElementT : X3DChildObject> :
    BidirectionalCollection,
    RandomAccessCollection,
@@ -196,6 +197,7 @@ public final class X3DArray <ElementT : X3DChildObject> :
    public final var startIndex : Int { get { array .startIndex } }
    public final var endIndex   : Int { get { array .endIndex } }
 }
+*/
 
 internal extension RangeReplaceableCollection
 {

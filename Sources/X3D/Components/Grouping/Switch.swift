@@ -89,7 +89,7 @@ public final class Switch :
    {
       if children .indices .contains (Int (whichChoice))
       {
-         childNode = children [whichChoice]? .innerNode as? X3DChildNode
+         childNode = children [Int (whichChoice)]? .innerNode as? X3DChildNode
       }
       else
       {

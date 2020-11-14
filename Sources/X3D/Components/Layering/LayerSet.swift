@@ -94,7 +94,7 @@ public final class LayerSet :
       }
       else
       {
-         let index = activeLayer - 1
+         let index = Int (activeLayer - 1)
 
          if index >= 0 && index < layers .count
          {
@@ -123,7 +123,7 @@ public final class LayerSet :
 
             if index >= 0 && index < layers .count
             {
-               guard let layerNode = layers [index]? .innerNode as? X3DLayerNode else { continue }
+               guard let layerNode = layers [Int (index)]? .innerNode as? X3DLayerNode else { continue }
 
                layerNodes .append (layerNode)
             }

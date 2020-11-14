@@ -38,10 +38,6 @@ public final class AudioClip :
    @SFTime   public final var elapsedTime      : TimeInterval = 0
    @SFTime   public final var duration_changed : TimeInterval = -1
    
-   // X3DTimeDependendNode
-   
-   public final let timeDependentProperties = X3DTimeDependentProperties ()
-   
    // X3DUrlObject
    
    @SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE
@@ -84,10 +80,10 @@ public final class AudioClip :
    {
       super .initialize ()
       
-      initializeTimeDependentNode ()
+      initializeSoundSourceNode ()
       
-      $isLive  .addInterest (X3DTimeDependentNode .set_live,    self)
-      $enabled .addInterest (X3DTimeDependentNode .set_enabled, self)
+      $isLive  .addInterest (AudioClip .set_live,    self)
+      $enabled .addInterest (AudioClip .set_enabled, self)
    }
    
    public final func requestImmediateLoad ()

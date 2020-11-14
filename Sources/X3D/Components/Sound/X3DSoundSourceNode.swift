@@ -34,4 +34,9 @@ extension X3DSoundSourceNode
       
       types .append (.X3DSoundSourceNode)
    }
+   
+   internal func initializeSoundSourceNode ()
+   {
+      initializeTimeDependentNode ()
+   }
 }

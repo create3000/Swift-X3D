@@ -39,10 +39,6 @@ public final class TimeSensor :
    @SFFloat public final var fraction_changed : Float = 0
    @SFTime  public final var time             : TimeInterval = 0
    
-   // X3DTimeDependendNode
-   
-   public final let timeDependentProperties = X3DTimeDependentProperties ()
-   
    // Properties
 
    private final var cycle    : TimeInterval = 0
@@ -93,10 +89,10 @@ public final class TimeSensor :
       
       initializeTimeDependentNode ()
       
-      $isLive        .addInterest (X3DTimeDependentNode .set_live,    self)
-      $enabled       .addInterest (X3DTimeDependentNode .set_enabled, self)
-      $cycleInterval .addInterest (TimeSensor .set_cycleInterval,     self)
-      $range         .addInterest (TimeSensor .set_range,             self)
+      $isLive        .addInterest (TimeSensor .set_live,          self)
+      $enabled       .addInterest (TimeSensor .set_enabled,       self)
+      $cycleInterval .addInterest (TimeSensor .set_cycleInterval, self)
+      $range         .addInterest (TimeSensor .set_range,         self)
    }
    
    private final func setRange (_ currentFraction : Double, _ firstFraction : Double, _ lastFraction : Double)

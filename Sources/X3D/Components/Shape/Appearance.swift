@@ -109,34 +109,34 @@ public final class Appearance :
 
    private final func set_fillProperties ()
    {
-      fillPropertiesNode? .removeInterest (Appearance .set_transparent, self)
+      fillPropertiesNode? .$isTransparent .removeInterest (Appearance .set_transparent, self)
       
       fillPropertiesNode = fillProperties? .innerNode as? FillProperties
       
-      fillPropertiesNode? .addInterest (Appearance .set_transparent, self)
+      fillPropertiesNode? .$isTransparent .addInterest (Appearance .set_transparent, self)
       
       set_transparent ()
    }
 
    private final func set_material ()
    {
-      materialNode? .removeInterest (Appearance .set_transparent, self)
+      materialNode? .$isTransparent .removeInterest (Appearance .set_transparent, self)
       
       materialNode = material? .innerNode as? X3DMaterialNode
       
-      materialNode? .addInterest (Appearance .set_transparent, self)
+      materialNode? .$isTransparent .addInterest (Appearance .set_transparent, self)
       
       set_transparent ()
    }
 
    private final func set_texture ()
    {
-      textureNode? .removeInterest (Appearance .set_transparent, self)
+      textureNode? .$isTransparent .removeInterest (Appearance .set_transparent, self)
       
       textureNode = texture? .innerNode as? X3DTextureNode
       
-      textureNode? .addInterest (Appearance .set_transparent, self)
-      
+      textureNode? .$isTransparent .addInterest (Appearance .set_transparent, self)
+
       set_transparent ()
    }
 
@@ -204,9 +204,9 @@ public final class Appearance :
    
    private final func set_transparent ()
    {
-      setTransparent (fillPropertiesNode? .isTransparent ?? false ||
-                      materialNode?       .isTransparent ?? false ||
-                      textureNode?        .isTransparent ?? false)
+      setTransparent ((fillPropertiesNode? .isTransparent ?? false) ||
+                      (materialNode?       .isTransparent ?? false) ||
+                      (textureNode?        .isTransparent ?? false))
    }
    
    // Rendering
@@ -273,7 +273,7 @@ public final class Appearance :
    
    deinit
    {
-      guard let _ = browser else { return }
+      guard browser != nil else { return }
       
       shaderNode? .deselect ()
    }

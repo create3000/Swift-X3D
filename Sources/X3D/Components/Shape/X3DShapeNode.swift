@@ -90,7 +90,7 @@ public class X3DShapeNode :
    
    private final func set_transparent ()
    {
-      setTransparent (geometryNode? .isTransparent ?? false || appearanceNode! .isTransparent)
+      setTransparent ((geometryNode? .isTransparent ?? false) || appearanceNode! .isTransparent)
    }
  
    // Rendering

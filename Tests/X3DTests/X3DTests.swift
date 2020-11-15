@@ -34,12 +34,9 @@ final class X3DTests :
       // This is an example of a functional test case.
       // Use XCTAssert and related functions to verify your tests produce the correct results.
       
-      let o = TestTest ()
+      let ob : Bool? = false
       
-      o .name [0] = "foobah"
-      o .name = ["foobah"]
-      o .name .append ("foo")
-      o .name .removeLast ()
+      debugPrint (ob ?? false || true)
    }
    
    func testMatrixComposition () throws

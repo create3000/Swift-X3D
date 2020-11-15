@@ -18,49 +18,38 @@ extension X3DInputOutput
 {
    public func addInterest <Object : X3DInputOutput> (_ method : @escaping (Object) -> X3DRequester, _ object : Object)
    {
+      interestsSemaphore .wait ()
+
       let id        = peekFunc (method)
       let requester = { [weak object] in method (object!) () }
-
-      if Thread .isMainThread
-      {
-         self .interests .outputInterests .removeAll (where: { $0 .id == id && $0 .input === object })
-         self .interests .outputInterests .append (X3DOutputInterest (id: id, input: object, requester: requester))
-      }
-      else
-      {
-         DispatchQueue .main .async
-         {
-            self .interests .outputInterests .removeAll (where: { $0 .id == id && $0 .input === object })
-            self .interests .outputInterests .append (X3DOutputInterest (id: id, input: object, requester: requester))
-         }
-      }
+      
+      interests .outputInterests .removeAll (where: { $0 .id == id && $0 .input === object })
+      interests .outputInterests .append (X3DOutputInterest (id: id, input: object, requester: requester))
+      
+      interestsSemaphore .signal ()
    }
 
    public func removeInterest <Object : X3DInputOutput> (_ method : @escaping (Object) -> X3DRequester, _ object : Object)
    {
+      interestsSemaphore .wait ()
+
       let id = peekFunc (method)
 
-      if Thread .isMainThread
-      {
-         self .interests .outputInterests .removeAll (where: { $0 .id == id && $0 .input === object })
-      }
-      else
-      {
-         DispatchQueue .main .async
-         {
-            self .interests .outputInterests .removeAll (where: { $0 .id == id && $0 .input === object })
-         }
-      }
+      interests .outputInterests .removeAll (where: { $0 .id == id && $0 .input === object })
+      
+      interestsSemaphore .signal ()
    }
 
    internal func processInterests ()
    {
+      interestsSemaphore .wait ()
+
       let interests = self .interests
       var index     = 0
       
       for outputInterest in interests .outputInterests
       {
-         if let _ = outputInterest .input
+         if outputInterest .input != nil
          {
             outputInterest .requester ()
             index += 1
@@ -70,6 +59,8 @@ extension X3DInputOutput
             interests .outputInterests .remove (at: index)
          }
       }
+      
+      interestsSemaphore .signal ()
    }
 
    private var interests : X3DInterests
@@ -85,9 +76,27 @@ extension X3DInputOutput
       
       return interests
    }
+   
+   internal var outputInterests : Int { interests .outputInterests .count }
 }
 
-fileprivate var interestsIndex = X3DInterestIndices (keyOptions: .weakMemory, valueOptions: .strongMemory)
+// Function id peeker
+
+internal func peekFunc <Arguments, Result> (_ f : @escaping (Arguments) -> Result) -> Int
+{
+   typealias IntInt = (Int, Int)
+   
+   let (_, lo) = unsafeBitCast (f, to: IntInt .self)
+   let offset  = MemoryLayout <Int> .size == 8 ? 16 : 12
+   let ptr     = UnsafePointer <Int> (bitPattern: lo + offset)!
+
+   return ptr .pointee
+}
+
+// Static interests
+
+fileprivate let interestsSemaphore = RecursiveDispatchSemaphore ()
+fileprivate var interestsIndex     = X3DInterestIndices (keyOptions: .weakMemory, valueOptions: .strongMemory)
 
 fileprivate typealias X3DInterestIndices = NSMapTable <AnyObject, X3DInterests>
 
@@ -103,13 +112,53 @@ fileprivate struct X3DOutputInterest
    fileprivate var requester  : X3DRequester
 }
 
-internal func peekFunc <Arguments, Result> (_ f : @escaping (Arguments) -> Result) -> Int
-{
-   typealias IntInt = (Int, Int)
-   
-   let (_, lo) = unsafeBitCast (f, to: IntInt .self)
-   let offset  = MemoryLayout <Int> .size == 8 ? 16 : 12
-   let ptr     = UnsafePointer <Int> (bitPattern: lo + offset)!
+// Semaphore
 
-   return ptr .pointee
+fileprivate final class Atomic <A>
+{
+   private let queue = DispatchQueue(label: "Atomic serial queue")
+   private var _value : A
+   
+   init (_ value : A)
+   {
+      self ._value = value
+   }
+
+   var value : A { queue .sync { self ._value } }
+
+   func mutate (_ transform : (inout A) -> ())
+   {
+      queue .sync { transform (&self ._value) }
+   }
+}
+
+fileprivate final class RecursiveDispatchSemaphore
+{
+   private let semaphore = DispatchSemaphore (value: 1)
+   private var thread    = Atomic <Thread?> (nil)
+   private var count     = 0
+
+   public func wait ()
+   {
+      if thread .value !== Thread .current
+      {
+         semaphore .wait ()
+         
+         thread .mutate { $0 = Thread .current }
+      }
+      
+      count += 1
+   }
+   
+   public func signal ()
+   {
+      count -= 1
+      
+      if count == 0
+      {
+         thread .mutate { $0 = nil }
+
+         semaphore .signal ()
+      }
+   }
 }

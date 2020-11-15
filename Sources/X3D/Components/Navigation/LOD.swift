@@ -104,7 +104,7 @@ public final class LOD :
 
    internal final override func set_pickableObjects ()
    {
-      setPickableObject (childNode? .isPickableObject ?? false || !transformSensorNodes .isEmpty)
+      setPickableObject ((childNode? .isPickableObject ?? false) || !transformSensorNodes .isEmpty)
    }
 
    private final func set_childNode (_ level : Int)

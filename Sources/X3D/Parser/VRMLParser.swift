@@ -147,7 +147,7 @@ internal final class VRMLParser :
       if scanner .scanString (Grammar .USE)         != nil { return true }
       if scanner .scanString (Grammar .NULL)        != nil { return true }
       
-      if let _ = nodeTypeId ()
+      if nodeTypeId () != nil
       {
          comments ()
          

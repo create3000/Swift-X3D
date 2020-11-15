@@ -111,17 +111,7 @@ internal extension MTLTexture
       {
          case .a8Unorm: do
          {
-            let bytes = toUInt8Array (channels: 1)
-            
-            for i in 0 ..< width * height
-            {
-               if bytes [i] < 255
-               {
-                  return true
-               }
-            }
-            
-            return false
+            return toUInt8Array (channels: 1) .contains { $0 < 255 }
          }
          case .r8Sint: fallthrough
          case .r8Uint: fallthrough

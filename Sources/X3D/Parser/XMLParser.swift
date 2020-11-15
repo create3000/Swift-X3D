@@ -924,7 +924,7 @@ internal final class XMLParser :
          case .SFMatrix4f:
             _ = makeParser (value)? .sfmatrix4fValue (for: field as! SFMatrix4f)
          case .SFNode:
-            if let _ = value { (field as! SFNode <X3DNode>) .wrappedValue = nil }
+            if value != nil { (field as! SFNode <X3DNode>) .wrappedValue = nil }
          case .SFRotation:
             _ = makeParser (value)? .sfrotationValue (for: field as! SFRotation)
          case .SFTime:

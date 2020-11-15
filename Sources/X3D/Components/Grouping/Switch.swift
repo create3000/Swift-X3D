@@ -107,7 +107,7 @@ public final class Switch :
 
    internal final override func set_pickableObjects ()
    {
-      setPickableObject (childNode? .isPickableObject ?? false || !transformSensorNodes .isEmpty)
+      setPickableObject ((childNode? .isPickableObject ?? false) || !transformSensorNodes .isEmpty)
    }
    
    // Rendering

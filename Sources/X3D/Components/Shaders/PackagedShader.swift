@@ -111,7 +111,7 @@ public final class PackagedShader :
       let name           = self .getName ()
       let constantValues = self .makeConstantValues ()
 
-      browser! .inlineQueue .async
+      browser! .shaderQueue .sync
       {
          guard let browser = self .browser else { return }
          

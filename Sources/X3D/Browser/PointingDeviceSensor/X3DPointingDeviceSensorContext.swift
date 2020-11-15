@@ -208,8 +208,8 @@ internal final class X3DPointingDeviceSensorContextProperties :
       
       setCursor (with: event, cursor: cursor)
       
-      // Immediately update view.
-      browser! .draw ()
+      // Update view.
+      browser! .setNeedsDisplay ()
    }
 }
 

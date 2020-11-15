@@ -54,4 +54,5 @@ extension X3DCoreContext
    internal var inlineQueue  : DispatchQueue { DispatchQueue .global (qos: .userInitiated) }
    internal var imageQueue   : DispatchQueue { DispatchQueue .global (qos: .utility) }
    internal var fontQueue    : DispatchQueue { DispatchQueue .global (qos: .utility) }
+   internal var shaderQueue  : DispatchQueue { DispatchQueue .global (qos: .utility) }
 }

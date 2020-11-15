@@ -213,7 +213,7 @@ public class X3DFontStyleNode :
       let defaultFonts = X3DFontStyleNode .defaultFonts ["SERIF"]!
       let defaultFont  = defaultFonts [style] ?? defaultFonts ["PLAIN"]!
       
-      browser! .fontQueue .async
+      browser! .fontQueue .sync
       {
          guard let browser = self .browser else { return }
          

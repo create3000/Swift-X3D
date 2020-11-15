@@ -121,6 +121,8 @@ public final class Collision :
             
             renderer .collisions .append (self)
             
+            defer { renderer .collisions .removeLast () }
+            
             if let proxyNode = proxyNode
             {
                proxyNode .traverse (type, renderer)
@@ -129,8 +131,6 @@ public final class Collision :
             {
                super .traverse (type, renderer)
             }
-            
-            renderer .collisions .removeLast ()
          }
          default: do
          {

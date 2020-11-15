@@ -86,7 +86,7 @@ public final class ImageTexture :
       let url             = self .url .map { URL (string: $0, relativeTo: executionContext! .getWorldURL ()) } .compactMap { $0 }
       let generateMipMaps = self .generateMipMaps
 
-      browser! .imageQueue .async
+      browser! .imageQueue .sync
       {
          guard let browser = self .browser else { return }
          

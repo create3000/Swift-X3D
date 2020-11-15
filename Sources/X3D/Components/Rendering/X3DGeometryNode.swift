@@ -89,14 +89,22 @@ public class X3DGeometryNode :
 
    // Build
    
+   private final var buildRequested = Atomic <Bool> (false)
+   
    internal final func requestRebuild ()
    {
-      rebuild ()
+      guard !buildRequested .load else { return }
+      
+      buildRequested .store (true)
+      
+      DispatchQueue .main .async { self .rebuild () }
    }
    
    /// Updates geometry.
    internal final func rebuild ()
    {
+      buildRequested .store (false)
+      
       primitives .removeAll (keepingCapacity: true)
       
       build ()

@@ -96,7 +96,7 @@ public final class Text :
       
       textGeometry = fontStyleNode! .makeTextGeometry (textNode: self)
       
-      rebuild ()
+      requestRebuild ()
    }
    
    // Build

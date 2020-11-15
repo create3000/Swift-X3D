@@ -128,6 +128,6 @@ public class X3DViewpointNode :
                                                   scaleOrientation: scaleOrientationOffset)
       
       cameraSpaceMatrix = modelMatrix * matrix
-      viewMatrix        = ~cameraSpaceMatrix
+      viewMatrix        = cameraSpaceMatrix .inverse
    }
 }

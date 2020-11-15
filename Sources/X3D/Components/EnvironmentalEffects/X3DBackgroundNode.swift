@@ -17,7 +17,7 @@ public class X3DBackgroundNode :
    @MFFloat public final var groundAngle  : [Float]
    @MFColor public final var groundColor  : [Color3f]
    @MFFloat public final var skyAngle     : [Float]
-   @MFColor public final var skyColor     : [Color3f] = [Color3f ()]
+   @MFColor public final var skyColor     : [Color3f] = [.zero]
    @SFFloat public final var transparency : Float = 0
    
    // Properties

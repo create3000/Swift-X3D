@@ -9,7 +9,7 @@
 internal final class X3DNavigationContextProperties :
    X3DBaseNode
 {
-   // Properties
+   // Navigation properties
    
    @SFNode public private(set) final var activeLayerNode          : X3DLayerNode?
    @SFNode public private(set) final var activeNavigationInfoNode : NavigationInfo?
@@ -19,6 +19,10 @@ internal final class X3DNavigationContextProperties :
    @SFNode public private(set) final var viewerNode               : X3DViewer?
    @SFNode private final var headlightNode                        : DirectionalLight?
    fileprivate final var headlightContainer                       : LightContainer?
+   
+   // Collision properties
+   
+   fileprivate final var collisions =  NSHashTable <X3DBaseNode> (options: .weakMemory)
    
    // Construction
    
@@ -138,4 +142,8 @@ extension X3DNavigationContext
 {
    public var viewerNode : X3DViewer { navigationContextProperties .viewerNode! }
    internal var headlightContainer : LightContainer { navigationContextProperties .headlightContainer! }
+   
+   internal func addCollision (object : X3DBaseNode) { navigationContextProperties .collisions .add (object) }
+   internal func removeCollision (object : X3DBaseNode) { navigationContextProperties .collisions .remove (object) }
+   internal var hasCollisions : Bool { navigationContextProperties .collisions .count != 0 }
 }

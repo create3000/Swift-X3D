@@ -38,7 +38,8 @@ public final class X3DRenderer
    internal final var fogs          = [FogContainer] ()
    internal final var globalLights  = [LightContainer] ()
    internal final var localLights   = [LightContainer] ()
-   
+   internal final var collisions    = [Collision] ()
+
    // Light sources
    
    private final var lightSourcesArray = [X3DLightSources] ()

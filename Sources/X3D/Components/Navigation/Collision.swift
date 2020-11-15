@@ -26,6 +26,10 @@ public final class Collision :
    @SFTime public final var collideTime : TimeInterval = 0
    @SFBool public final var isActive    : Bool = false
    @SFNode public final var proxy       : X3DNode?
+   
+   // Properties
+   
+   @SFNode private final var proxyNode : X3DChildNode?
 
    // Construction
    
@@ -48,6 +52,8 @@ public final class Collision :
       addField (.inputOnly,      "removeChildren", $removeChildren)
       addField (.inputOutput,    "children",       $children)
       
+      addChildObjects ($proxyNode)
+      
       if executionContext .getSpecificationVersion () == "2.0"
       {
          addFieldAlias (alias: "collide", name: "enabled")
@@ -57,5 +63,79 @@ public final class Collision :
    internal final override func create (with executionContext : X3DExecutionContext) -> Collision
    {
       return Collision (with: executionContext)
+   }
+   
+   internal final override func initialize ()
+   {
+      super .initialize ()
+      
+      scene! .$isLive .addInterest (Collision .set_live, self)
+      
+      $enabled .addInterest (Collision .set_live,  self)
+      $proxy   .addInterest (Collision .set_proxy, self)
+      
+      DispatchQueue .main .async { [weak self] in self? .set_live () }
+      set_proxy ()
+   }
+   
+   // Event handlers
+   
+   private final func set_live ()
+   {
+      if scene! .isLive && enabled
+      {
+         browser! .addCollision (object: self)
+      }
+      else
+      {
+         browser! .removeCollision (object: self)
+      }
+   }
+   
+   private final func set_proxy ()
+   {
+      proxyNode = proxy? .innerNode as? X3DChildNode
+   }
+   
+   internal final func set_active (value : Bool)
+   {
+      guard value != isActive else { return }
+      
+      isActive = value
+      
+      if isActive
+      {
+         collideTime = browser! .currentTime
+      }
+   }
+   
+   // Rendering
+   
+   internal final override func traverse (_ type: X3DTraverseType, _ renderer: X3DRenderer)
+   {
+      switch type
+      {
+         case .Collision: do
+         {
+            guard enabled else { break }
+            
+            renderer .collisions .append (self)
+            
+            if let proxyNode = proxyNode
+            {
+               proxyNode .traverse (type, renderer)
+            }
+            else
+            {
+               super .traverse (type, renderer)
+            }
+            
+            renderer .collisions .removeLast ()
+         }
+         default: do
+         {
+            super .traverse (type, renderer)
+         }
+      }
    }
 }

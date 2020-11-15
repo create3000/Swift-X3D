@@ -133,18 +133,35 @@ fileprivate final class RecursiveDispatchSemaphore
 
 fileprivate final class Atomic <Type>
 {
-   private let queue = DispatchQueue (label: "Atomic serial queue")
+   private let queue = DispatchQueue (label: "create3000.atomic")
    private var value : Type
    
-   init (_ value : Type)
+   public init (_ value : Type)
    {
       self .value = value
    }
-
-   var load : Type { queue .sync { self .value } }
-
-   func store (_ value : Type)
+   
+   public var load : Type { queue .sync { self .value } }
+   
+   public func store (_ value : Type)
    {
       queue .sync { self .value = value }
+   }
+   
+   public func exchange (_ value : Type) -> Type
+   {
+      queue .sync
+      {
+         let oldValue = self .value
+         
+         self .value = value
+
+         return oldValue
+      }
+   }
+   
+   public func mutate (_ transform : (inout Type) -> ())
+   {
+      queue .sync { transform (&self .value) }
    }
 }

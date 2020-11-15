@@ -17,7 +17,6 @@ let package = Package (
    dependencies: [
       // Dependencies declare other packages that this package depends on.
       // .package(url: /* package url */, from: "1.0.0"),
-      .package (name: "swift-atomics",  url: "https://github.com/apple/swift-atomics.git",         from: ("0.0.1")),
       .package (name: "CoreTextSwift",  url: "https://github.com/krzyzanowskim/CoreTextSwift.git", .branch ("master")),
       .package (name: "Gzip",           url: "https://github.com/1024jp/GzipSwift.git",            from: "5.1.1"),
       .package (name: "LibTessSwift",   url: "https://github.com/LuizZak/LibTessSwift.git",        from: "0.8.2"),
@@ -33,7 +32,6 @@ let package = Package (
          name: "X3D",
          dependencies: [
             "_X3D",
-            .product (name: "Atomics",       package: "swift-atomics"),
             .product (name: "CoreTextSwift", package: "CoreTextSwift"),
             .product (name: "Gzip",          package: "Gzip"),
             .product (name: "LibTessSwift",  package: "LibTessSwift"),

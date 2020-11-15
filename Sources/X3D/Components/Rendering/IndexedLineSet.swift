@@ -79,10 +79,10 @@ public final class IndexedLineSet :
       $set_colorIndex .addFieldInterest (to: $colorIndex)
       $set_coordIndex .addFieldInterest (to: $coordIndex)
 
-      $attrib   .addInterest (IndexedLineSet .set_attrib,   self)
-      $fogCoord .addInterest (IndexedLineSet .set_fogCoord, self)
-      $color    .addInterest (IndexedLineSet .set_color,    self)
-      $coord    .addInterest (IndexedLineSet .set_coord,    self)
+      $attrib   .addInterest ("set_attrib",   IndexedLineSet .set_attrib,   self)
+      $fogCoord .addInterest ("set_fogCoord", IndexedLineSet .set_fogCoord, self)
+      $color    .addInterest ("set_color",    IndexedLineSet .set_color,    self)
+      $coord    .addInterest ("set_coord",    IndexedLineSet .set_coord,    self)
 
       set_attrib ()
       set_fogCoord ()
@@ -101,18 +101,18 @@ public final class IndexedLineSet :
 
    private final func set_fogCoord ()
    {
-      fogCoordNode? .removeInterest (IndexedLineSet .requestRebuild, self)
+      fogCoordNode? .removeInterest ("requestRebuild", IndexedLineSet .requestRebuild, self)
       
       fogCoordNode = fogCoord? .innerNode as? FogCoordinate
       
-      fogCoordNode? .addInterest (IndexedLineSet .requestRebuild, self)
+      fogCoordNode? .addInterest ("requestRebuild", IndexedLineSet .requestRebuild, self)
    }
    
    private final func set_color ()
    {
       if colorNode != nil
       {
-         colorNode! .removeInterest (IndexedLineSet .requestRebuild, self)
+         colorNode! .removeInterest ("requestRebuild", IndexedLineSet .requestRebuild, self)
          colorNode! .$isTransparent .removeFieldInterest (to: $isTransparent)
       }
 
@@ -120,7 +120,7 @@ public final class IndexedLineSet :
 
       if colorNode != nil
       {
-         colorNode! .addInterest (IndexedLineSet .requestRebuild, self)
+         colorNode! .addInterest ("requestRebuild", IndexedLineSet .requestRebuild, self)
          colorNode! .$isTransparent .addFieldInterest (to: $isTransparent)
          
          setTransparent (colorNode! .isTransparent)
@@ -133,11 +133,11 @@ public final class IndexedLineSet :
    
    private final func set_coord ()
    {
-      coordNode? .removeInterest (IndexedLineSet .requestRebuild, self)
+      coordNode? .removeInterest ("requestRebuild", IndexedLineSet .requestRebuild, self)
       
       coordNode = coord? .innerNode as? X3DCoordinateNode
       
-      coordNode? .addInterest (IndexedLineSet .requestRebuild, self)
+      coordNode? .addInterest ("requestRebuild", IndexedLineSet .requestRebuild, self)
    }
 
    // Build

@@ -64,11 +64,11 @@ public final class ProximitySensor :
    {
       super .initialize ()
       
-      scene! .$isLive .addInterest (ProximitySensor .set_enabled, self)
+      scene! .$isLive .addInterest ("set_enabled", ProximitySensor .set_enabled, self)
       
-      $enabled        .addInterest (ProximitySensor .set_enabled, self)
-      $size           .addInterest (ProximitySensor .set_enabled, self)
-      $isCameraObject .addInterest (ProximitySensor .set_enabled, self)
+      $enabled        .addInterest ("set_enabled", ProximitySensor .set_enabled, self)
+      $size           .addInterest ("set_enabled", ProximitySensor .set_enabled, self)
+      $isCameraObject .addInterest ("set_enabled", ProximitySensor .set_enabled, self)
 
       set_enabled ()
    }
@@ -86,11 +86,11 @@ public final class ProximitySensor :
    {
       if isCameraObject && enabled && size != .zero && scene! .isLive
       {
-         browser! .addBrowserInterest (event: .Browser_Sensors, method: ProximitySensor .update, object: self)
+         browser! .addBrowserInterest (event: .Browser_Sensors, id: "update", method: ProximitySensor .update, object: self)
       }
       else
       {
-         browser! .removeBrowserInterest (event: .Browser_Sensors, method: ProximitySensor .update, object: self)
+         browser! .removeBrowserInterest (event: .Browser_Sensors, id: "update", method: ProximitySensor .update, object: self)
 
          if isActive
          {

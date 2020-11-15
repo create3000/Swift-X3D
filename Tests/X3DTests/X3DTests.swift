@@ -617,11 +617,11 @@ function initialize ()
             debugPrint ("-------")
             var a : A? = A ()
             
-            a! .addInterest (B .foo, b!)
-            b! .addInterest (A .foo, a!)
+            a! .addInterest ("foo", B .foo, b!)
+            b! .addInterest ("foo", A .foo, a!)
             b! .processInterests ()
             
-            b! .addInterest (A .bah, a!)
+            b! .addInterest ("bah", A .bah, a!)
             a = nil
          }
          
@@ -635,9 +635,9 @@ function initialize ()
          var b : B? = B ()
          var a : A? = A ()
          
-         a! .addInterest (B .foo, b!)
-         a! .addInterest (A .foo, a!)
-         b! .addInterest (A .foo, a!)
+         a! .addInterest ("foo", B .foo, b!)
+         a! .addInterest ("foo", A .foo, a!)
+         b! .addInterest ("foo", A .foo, a!)
          a! .processInterests ()
          
          b = nil
@@ -650,9 +650,9 @@ function initialize ()
          debugPrint ("-------")
          let a : A = A ()
          let b : B = B ()
-         b .addInterest (A .foo, a)
-         b .addInterest (A .bah, a)
-         b .removeInterest (A .bah, a)
+         b .addInterest ("foo", A .foo, a)
+         b .addInterest ("bah", A .bah, a)
+         b .removeInterest ("bah", A .bah, a)
          b .processInterests ()
       }
    }

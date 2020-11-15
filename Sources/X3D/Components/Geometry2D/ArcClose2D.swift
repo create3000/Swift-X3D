@@ -63,7 +63,7 @@ public final class ArcClose2D :
       {
          guard let browser = self .browser else { return }
          
-         browser .arcClose2DOptions .addInterest (ArcClose2D .requestRebuild, self)
+         browser .arcClose2DOptions .addInterest ("requestRebuild", ArcClose2D .requestRebuild, self)
          
          self .rebuild ()
       }

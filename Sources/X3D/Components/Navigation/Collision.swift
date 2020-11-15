@@ -69,10 +69,10 @@ public final class Collision :
    {
       super .initialize ()
       
-      scene! .$isLive .addInterest (Collision .set_live, self)
+      scene! .$isLive .addInterest ("set_live", Collision .set_live, self)
       
-      $enabled .addInterest (Collision .set_live,  self)
-      $proxy   .addInterest (Collision .set_proxy, self)
+      $enabled .addInterest ("set_live",  Collision .set_live,  self)
+      $proxy   .addInterest ("set_proxy", Collision .set_proxy, self)
       
       DispatchQueue .main .async { [weak self] in self? .set_live () }
       set_proxy ()

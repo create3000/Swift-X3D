@@ -73,9 +73,9 @@ public final class ViewpointGroup :
       proximitySensorNode .size   = size
       proximitySensorNode .center = center
       
-      $displayed .addInterest (ViewpointGroup .set_displayed, self)
-      $size      .addInterest (ViewpointGroup .set_displayed, self)
-      $children  .addInterest (ViewpointGroup .set_children,  self)
+      $displayed .addInterest ("set_displayed", ViewpointGroup .set_displayed, self)
+      $size      .addInterest ("set_displayed", ViewpointGroup .set_displayed, self)
+      $children  .addInterest ("set_children",  ViewpointGroup .set_children,  self)
       
       set_displayed ()
       set_children ()

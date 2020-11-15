@@ -52,7 +52,7 @@ public final class TriangleFanSet :
    {
       super .initialize ()
       
-      $fanCount .addInterest (TriangleFanSet .set_fanCount, self)
+      $fanCount .addInterest ("set_fanCount", TriangleFanSet .set_fanCount, self)
       
       set_fanCount ()
       

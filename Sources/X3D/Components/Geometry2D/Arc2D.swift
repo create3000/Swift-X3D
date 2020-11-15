@@ -61,7 +61,7 @@ public final class Arc2D :
       {
          guard let browser = self .browser else { return }
          
-         browser .arc2DOptions .addInterest (Arc2D .requestRebuild, self)
+         browser .arc2DOptions .addInterest ("requestRebuild", Arc2D .requestRebuild, self)
          
          self .rebuild ()
       }

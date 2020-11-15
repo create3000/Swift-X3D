@@ -46,7 +46,7 @@ public final class PositionInterpolator :
    {
       super .initialize ()
       
-      $keyValue .addInterest (PositionInterpolator .set_keyValue, self)
+      $keyValue .addInterest ("set_keyValue", PositionInterpolator .set_keyValue, self)
    }
    
    // Event handlers

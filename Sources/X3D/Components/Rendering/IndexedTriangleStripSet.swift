@@ -56,7 +56,7 @@ public final class IndexedTriangleStripSet :
       
       $set_index .addFieldInterest (to: $index)
       
-      $index .addInterest (IndexedTriangleStripSet .set_index_, self)
+      $index .addInterest ("set_index_", IndexedTriangleStripSet .set_index_, self)
       
       set_index_ ()
       

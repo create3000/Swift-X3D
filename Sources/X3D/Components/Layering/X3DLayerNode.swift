@@ -82,7 +82,7 @@ public class X3DLayerNode :
    {
       super .initialize ()
       
-      $viewport .addInterest (X3DLayerNode .set_viewport, self)
+      $viewport .addInterest ("set_viewport", X3DLayerNode .set_viewport, self)
       
       defaultBackgroundNode! .isHidden = !isLayer0
       defaultFogNode!        .isHidden = true

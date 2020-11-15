@@ -46,7 +46,7 @@ public final class BooleanTrigger :
    {
       super .initialize ()
 
-      $set_triggerTime .addInterest (BooleanTrigger .set_triggerTime_, self)
+      $set_triggerTime .addInterest ("set_triggerTime_", BooleanTrigger .set_triggerTime_, self)
    }
    
    // Event handlers

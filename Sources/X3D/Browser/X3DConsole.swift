@@ -22,20 +22,17 @@ public final class X3DConsole
 {
    // Intercept console.
    
-   private final var interests = [(id : Int, object : AnyObject, requester : X3DConsoleInterest)] ()
+   private final var interests = [(id : String, object : AnyObject, requester : X3DConsoleInterest)] ()
    
-   public func addInterest <Object : AnyObject> (_ method : @escaping (Object) -> (X3DConsoleInterest), _ object : Object)
+   public func addInterest <Object : AnyObject> (_ id : String, _ method : @escaping (Object) -> (X3DConsoleInterest), _ object : Object)
    {
-      let id        = peekFunc (method)
       let requester = { [weak object] in method (object!) ($0, $1) }
       
       interests .append ((id, object, requester))
    }
    
-   public func removeInterest <Object : AnyObject> (_ method : @escaping (Object) -> (X3DConsoleInterest), _ object : Object)
+   public func removeInterest <Object : AnyObject> (_ id : String, _ method : @escaping (Object) -> (X3DConsoleInterest), _ object : Object)
    {
-      let id = peekFunc (method)
-      
       interests .removeAll (where: { $0 .id == id && $0 .object === object })
    }
 

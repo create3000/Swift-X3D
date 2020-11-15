@@ -82,8 +82,8 @@ public final class AudioClip :
       
       initializeSoundSourceNode ()
       
-      $isLive  .addInterest (AudioClip .set_live,    self)
-      $enabled .addInterest (AudioClip .set_enabled, self)
+      $isLive  .addInterest ("set_live",    AudioClip .set_live,    self)
+      $enabled .addInterest ("set_enabled", AudioClip .set_enabled, self)
    }
    
    public final func requestImmediateLoad ()

@@ -48,7 +48,7 @@ public final class IntegerSequencer :
    {
       super .initialize ()
 
-      $keyValue .addInterest (IntegerSequencer .set_index, self)
+      $keyValue .addInterest ("set_index", IntegerSequencer .set_index, self)
    }
    
    // Property access

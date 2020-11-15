@@ -46,7 +46,7 @@ public final class ScalarInterpolator :
    {
       super .initialize ()
       
-      $keyValue .addInterest (ScalarInterpolator .set_keyValue, self)
+      $keyValue .addInterest ("set_keyValue", ScalarInterpolator .set_keyValue, self)
    }
    
    // Event handlers

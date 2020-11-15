@@ -65,10 +65,10 @@ public final class PointSet :
    {
       super .initialize ()
       
-      $attrib   .addInterest (PointSet .set_attrib,   self)
-      $fogCoord .addInterest (PointSet .set_fogCoord, self)
-      $color    .addInterest (PointSet .set_color,    self)
-      $coord    .addInterest (PointSet .set_coord,    self)
+      $attrib   .addInterest ("set_attrib",   PointSet .set_attrib,   self)
+      $fogCoord .addInterest ("set_fogCoord", PointSet .set_fogCoord, self)
+      $color    .addInterest ("set_color",    PointSet .set_color,    self)
+      $coord    .addInterest ("set_coord",    PointSet .set_coord,    self)
 
       set_attrib ()
       set_fogCoord ()
@@ -87,18 +87,18 @@ public final class PointSet :
 
    private final func set_fogCoord ()
    {
-      fogCoordNode? .removeInterest (PointSet .requestRebuild, self)
+      fogCoordNode? .removeInterest ("requestRebuild", PointSet .requestRebuild, self)
       
       fogCoordNode = fogCoord? .innerNode as? FogCoordinate
       
-      fogCoordNode? .addInterest (PointSet .requestRebuild, self)
+      fogCoordNode? .addInterest ("requestRebuild", PointSet .requestRebuild, self)
    }
    
    private final func set_color ()
    {
       if colorNode != nil
       {
-         colorNode! .removeInterest (PointSet .requestRebuild, self)
+         colorNode! .removeInterest ("requestRebuild", PointSet .requestRebuild, self)
          colorNode! .$isTransparent .removeFieldInterest (to: $isTransparent)
       }
 
@@ -106,7 +106,7 @@ public final class PointSet :
 
       if colorNode != nil
       {
-         colorNode! .addInterest (PointSet .requestRebuild, self)
+         colorNode! .addInterest ("requestRebuild", PointSet .requestRebuild, self)
          colorNode! .$isTransparent .addFieldInterest (to: $isTransparent)
          
          setTransparent (colorNode! .isTransparent)
@@ -119,11 +119,11 @@ public final class PointSet :
    
    private final func set_coord ()
    {
-      coordNode? .removeInterest (PointSet .requestRebuild, self)
+      coordNode? .removeInterest ("requestRebuild", PointSet .requestRebuild, self)
       
       coordNode = coord? .innerNode as? X3DCoordinateNode
       
-      coordNode? .addInterest (PointSet .requestRebuild, self)
+      coordNode? .addInterest ("requestRebuild", PointSet .requestRebuild, self)
    }
 
    // Build

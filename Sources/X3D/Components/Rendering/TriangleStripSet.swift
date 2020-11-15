@@ -52,7 +52,7 @@ public final class TriangleStripSet :
    {
       super .initialize ()
       
-      $stripCount .addInterest (TriangleStripSet .set_stripCount, self)
+      $stripCount .addInterest ("set_stripCount", TriangleStripSet .set_stripCount, self)
       
       set_stripCount ()
       

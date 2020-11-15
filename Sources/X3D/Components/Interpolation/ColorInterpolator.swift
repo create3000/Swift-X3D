@@ -46,7 +46,7 @@ public final class ColorInterpolator :
    {
       super .initialize ()
       
-      $keyValue .addInterest (ColorInterpolator .set_keyValue, self)
+      $keyValue .addInterest ("set_keyValue", ColorInterpolator .set_keyValue, self)
    }
    
    // Event handlers

@@ -75,7 +75,7 @@ public class X3DGeometryNode :
    {
       super .initialize ()
       
-      addInterest (X3DGeometryNode .rebuild, self)
+      addInterest ("rebuild", X3DGeometryNode .rebuild, self)
    }
    
    // Transparent handling

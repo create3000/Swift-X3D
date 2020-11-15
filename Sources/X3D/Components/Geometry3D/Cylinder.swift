@@ -62,7 +62,7 @@ public final class Cylinder :
       {
          guard let browser = self .browser else { return }
          
-         browser .cylinderOptions .addInterest (Cylinder .requestRebuild, self)
+         browser .cylinderOptions .addInterest ("requestRebuild", Cylinder .requestRebuild, self)
          
          self .rebuild ()
       }

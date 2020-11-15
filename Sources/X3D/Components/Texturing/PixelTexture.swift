@@ -49,7 +49,7 @@ public final class PixelTexture :
    {
       super .initialize ()
       
-      $image .addInterest (PixelTexture .set_image, self)
+      $image .addInterest ("set_image", PixelTexture .set_image, self)
       
       DispatchQueue .main .async
       {

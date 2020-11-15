@@ -77,9 +77,9 @@ public final class NavigationInfo :
    {
       super .initialize ()
       
-      $type               .addInterest (NavigationInfo .set_type,               self)
-      $transitionStart    .addInterest (NavigationInfo .set_transitionStart,    self)
-      $transitionComplete .addInterest (NavigationInfo .set_transitionComplete, self)
+      $type               .addInterest ("set_type",               NavigationInfo .set_type,               self)
+      $transitionStart    .addInterest ("set_transitionStart",    NavigationInfo .set_transitionStart,    self)
+      $transitionComplete .addInterest ("set_transitionComplete", NavigationInfo .set_transitionComplete, self)
       
       set_type ()
    }

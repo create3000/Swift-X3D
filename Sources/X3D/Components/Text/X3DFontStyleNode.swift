@@ -55,12 +55,12 @@ public class X3DFontStyleNode :
    {
       super .initialize ()
       
-      $family      .addInterest (X3DFontStyleNode .set_family,  self)
-      $style       .addInterest (X3DFontStyleNode .set_style,   self)
-      $horizontal  .addInterest (X3DFontStyleNode .set_justify, self)
-      $leftToRight .addInterest (X3DFontStyleNode .set_justify, self)
-      $topToBottom .addInterest (X3DFontStyleNode .set_justify, self)
-      $justify     .addInterest (X3DFontStyleNode .set_justify, self)
+      $family      .addInterest ("set_family",  X3DFontStyleNode .set_family,  self)
+      $style       .addInterest ("set_style",   X3DFontStyleNode .set_style,   self)
+      $horizontal  .addInterest ("set_justify", X3DFontStyleNode .set_justify, self)
+      $leftToRight .addInterest ("set_justify", X3DFontStyleNode .set_justify, self)
+      $topToBottom .addInterest ("set_justify", X3DFontStyleNode .set_justify, self)
+      $justify     .addInterest ("set_justify", X3DFontStyleNode .set_justify, self)
 
       set_style ()
       set_justify ()

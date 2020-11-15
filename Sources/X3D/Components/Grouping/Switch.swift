@@ -60,8 +60,8 @@ public final class Switch :
    {
       super .initialize ()
       
-      $whichChoice .addInterest (Switch .set_whichChoice, self)
-      $children    .addInterest (Switch .set_whichChoice, self)
+      $whichChoice .addInterest ("set_whichChoice", Switch .set_whichChoice, self)
+      $children    .addInterest ("set_whichChoice", Switch .set_whichChoice, self)
       
       set_whichChoice ()
    }

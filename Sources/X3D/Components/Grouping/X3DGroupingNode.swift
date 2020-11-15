@@ -58,10 +58,10 @@ public class X3DGroupingNode :
    {
       super .initialize ()
       
-      $addChildren    .addInterest (X3DGroupingNode .set_addChildren,    self)
-      $removeChildren .addInterest (X3DGroupingNode .set_removeChildren, self)
-      $children       .addInterest (X3DGroupingNode .set_children,       self)
-      $isHidden       .addInterest (X3DGroupingNode .set_children,       self)
+      $addChildren    .addInterest ("set_addChildren",    X3DGroupingNode .set_addChildren,    self)
+      $removeChildren .addInterest ("set_removeChildren", X3DGroupingNode .set_removeChildren, self)
+      $children       .addInterest ("set_children",       X3DGroupingNode .set_children,       self)
+      $isHidden       .addInterest ("set_children",       X3DGroupingNode .set_children,       self)
       
       set_children ()
    }
@@ -92,7 +92,7 @@ public class X3DGroupingNode :
 
    private final func clear ()
    {
-      childNodes .forEach { $0! .$isCameraObject .removeInterest (X3DGroupingNode .set_cameraObjects, self) }
+      childNodes .forEach { $0! .$isCameraObject .removeInterest ("set_cameraObjects", X3DGroupingNode .set_cameraObjects, self) }
       
       fogNodes                  .removeAll (keepingCapacity: true)
       lightNodes                .removeAll (keepingCapacity: true)
@@ -130,7 +130,7 @@ public class X3DGroupingNode :
                      {
                         let childNode = innerNode as! X3DChildNode
                         
-                        childNode .$isCameraObject .addInterest (X3DGroupingNode .set_cameraObjects, self)
+                        childNode .$isCameraObject .addInterest ("set_cameraObjects", X3DGroupingNode .set_cameraObjects, self)
                         
                         maybeCameraObjects .append (childNode)
                         childNodes .append (childNode)

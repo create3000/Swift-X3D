@@ -53,7 +53,7 @@ public final class Circle2D :
       {
          guard let browser = self .browser else { return }
          
-         browser .circle2DOptions .addInterest (Circle2D .requestRebuild, self)
+         browser .circle2DOptions .addInterest ("requestRebuild", Circle2D .requestRebuild, self)
          
          self .rebuild ()
       }

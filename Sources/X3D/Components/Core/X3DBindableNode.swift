@@ -32,7 +32,7 @@ public class X3DBindableNode :
    {
       super .initialize ()
       
-      $set_bind .addInterest (X3DBindableNode .set_bind_, self)
+      $set_bind .addInterest ("set_bind_", X3DBindableNode .set_bind_, self)
    }
    
    // Event handlers

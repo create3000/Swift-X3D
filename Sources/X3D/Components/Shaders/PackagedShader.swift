@@ -72,9 +72,9 @@ public final class PackagedShader :
    {
       super .initialize ()
       
-      addInterest (PackagedShader .set_fields, self)
+      addInterest ("set_fields", PackagedShader .set_fields, self)
 
-      $url .addInterest (PackagedShader .set_url,  self)
+      $url .addInterest ("set_url",  PackagedShader .set_url,  self)
       
       requestImmediateLoad ()
    }

@@ -40,7 +40,7 @@ public final class X3DWorld :
    {
       super .initialize ()
 
-      executionContext! .$rootNodes .addInterest (X3DWorld .set_rootNodes, self)
+      executionContext! .$rootNodes .addInterest ("set_rootNodes", X3DWorld .set_rootNodes, self)
 
       set_rootNodes ()
 

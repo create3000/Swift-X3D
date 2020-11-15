@@ -48,7 +48,7 @@ public final class BooleanFilter :
    {
       super .initialize ()
 
-      $set_boolean .addInterest (BooleanFilter .set_boolean_, self)
+      $set_boolean .addInterest ("set_boolean_", BooleanFilter .set_boolean_, self)
    }
    
    // Event handlers

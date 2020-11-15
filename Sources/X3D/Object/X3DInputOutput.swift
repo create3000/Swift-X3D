@@ -16,24 +16,21 @@ public protocol X3DInputOutput :
 
 extension X3DInputOutput
 {
-   public func addInterest <Object : X3DInputOutput> (_ method : @escaping (Object) -> X3DRequester, _ object : Object)
+   public func addInterest <Object : X3DInputOutput> (_ id : String, _ method : @escaping (Object) -> X3DRequester, _ object : Object)
    {
-      interestsSemaphore .wait ()
-
-      let id        = peekFunc (method)
       let requester = { [weak object] in method (object!) () }
       
+      interestsSemaphore .wait ()
+
       interests .outputInterests .removeAll (where: { $0 .id == id && $0 .input === object })
       interests .outputInterests .append (X3DOutputInterest (id: id, input: object, requester: requester))
       
       interestsSemaphore .signal ()
    }
 
-   public func removeInterest <Object : X3DInputOutput> (_ method : @escaping (Object) -> X3DRequester, _ object : Object)
+   public func removeInterest <Object : X3DInputOutput> (_ id : String, _ method : @escaping (Object) -> X3DRequester, _ object : Object)
    {
       interestsSemaphore .wait ()
-
-      let id = peekFunc (method)
 
       interests .outputInterests .removeAll (where: { $0 .id == id && $0 .input === object })
       
@@ -82,17 +79,6 @@ extension X3DInputOutput
 
 // Function id peeker
 
-internal func peekFunc <Arguments, Result> (_ f : @escaping (Arguments) -> Result) -> Int
-{
-   typealias IntInt = (Int, Int)
-   
-   let (_, lo) = unsafeBitCast (f, to: IntInt .self)
-   let offset  = MemoryLayout <Int> .size == 8 ? 16 : 12
-   let ptr     = UnsafePointer <Int> (bitPattern: lo + offset)!
-
-   return ptr .pointee
-}
-
 // Static interests
 
 fileprivate let interestsSemaphore = RecursiveDispatchSemaphore ()
@@ -107,30 +93,12 @@ fileprivate class X3DInterests
 
 fileprivate struct X3DOutputInterest
 {
-   fileprivate var id         : Int
+   fileprivate var id         : String
    fileprivate weak var input : X3DInputOutput?
    fileprivate var requester  : X3DRequester
 }
 
 // Semaphore
-
-fileprivate final class Atomic <A>
-{
-   private let queue = DispatchQueue(label: "Atomic serial queue")
-   private var _value : A
-   
-   init (_ value : A)
-   {
-      self ._value = value
-   }
-
-   var value : A { queue .sync { self ._value } }
-
-   func mutate (_ transform : (inout A) -> ())
-   {
-      queue .sync { transform (&self ._value) }
-   }
-}
 
 fileprivate final class RecursiveDispatchSemaphore
 {
@@ -140,11 +108,11 @@ fileprivate final class RecursiveDispatchSemaphore
 
    public func wait ()
    {
-      if thread .value !== Thread .current
+      if thread .load !== Thread .current
       {
          semaphore .wait ()
          
-         thread .mutate { $0 = Thread .current }
+         thread .store (Thread .current)
       }
       
       count += 1
@@ -156,9 +124,27 @@ fileprivate final class RecursiveDispatchSemaphore
       
       if count == 0
       {
-         thread .mutate { $0 = nil }
+         thread .store (nil)
 
          semaphore .signal ()
       }
+   }
+}
+
+fileprivate final class Atomic <Type>
+{
+   private let queue = DispatchQueue (label: "Atomic serial queue")
+   private var value : Type
+   
+   init (_ value : Type)
+   {
+      self .value = value
+   }
+
+   var load : Type { queue .sync { self .value } }
+
+   func store (_ value : Type)
+   {
+      queue .sync { self .value = value }
    }
 }

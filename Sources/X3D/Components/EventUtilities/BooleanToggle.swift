@@ -44,7 +44,7 @@ public final class BooleanToggle :
    {
       super .initialize ()
 
-      $set_boolean .addInterest (BooleanToggle .set_boolean_, self)
+      $set_boolean .addInterest ("set_boolean_", BooleanToggle .set_boolean_, self)
    }
    
    // Event handlers

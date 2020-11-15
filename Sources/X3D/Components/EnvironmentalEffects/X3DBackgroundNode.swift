@@ -78,7 +78,7 @@ public class X3DBackgroundNode :
          cubeContexts .append (X3DRenderContext (renderer: browser! .renderer, isTransparent: true))
       }
       
-      addInterest (X3DBackgroundNode .buildRectangleOrSphere, self)
+      addInterest ("buildRectangleOrSphere", X3DBackgroundNode .buildRectangleOrSphere, self)
       
       buildRectangleOrSphere ()
       buildCube ()

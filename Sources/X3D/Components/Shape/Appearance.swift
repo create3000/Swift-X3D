@@ -78,13 +78,13 @@ public final class Appearance :
    {
       super .initialize ()
       
-      $pointProperties  .addInterest (Appearance .set_pointProperties,  self)
-      $lineProperties   .addInterest (Appearance .set_lineProperties,   self)
-      $fillProperties   .addInterest (Appearance .set_fillProperties,   self)
-      $material         .addInterest (Appearance .set_material,         self)
-      $texture          .addInterest (Appearance .set_texture,          self)
-      $textureTransform .addInterest (Appearance .set_textureTransform, self)
-      $shaders          .addInterest (Appearance .set_shaders,          self)
+      $pointProperties  .addInterest ("set_pointProperties",  Appearance .set_pointProperties,  self)
+      $lineProperties   .addInterest ("set_lineProperties",   Appearance .set_lineProperties,   self)
+      $fillProperties   .addInterest ("set_fillProperties",   Appearance .set_fillProperties,   self)
+      $material         .addInterest ("set_material",         Appearance .set_material,         self)
+      $texture          .addInterest ("set_texture",          Appearance .set_texture,          self)
+      $textureTransform .addInterest ("set_textureTransform", Appearance .set_textureTransform, self)
+      $shaders          .addInterest ("set_shaders",          Appearance .set_shaders,          self)
       
       set_pointProperties ()
       set_lineProperties ()
@@ -109,33 +109,33 @@ public final class Appearance :
 
    private final func set_fillProperties ()
    {
-      fillPropertiesNode? .$isTransparent .removeInterest (Appearance .set_transparent, self)
+      fillPropertiesNode? .$isTransparent .removeInterest ("set_transparent", Appearance .set_transparent, self)
       
       fillPropertiesNode = fillProperties? .innerNode as? FillProperties
       
-      fillPropertiesNode? .$isTransparent .addInterest (Appearance .set_transparent, self)
+      fillPropertiesNode? .$isTransparent .addInterest ("set_transparent", Appearance .set_transparent, self)
       
       set_transparent ()
    }
 
    private final func set_material ()
    {
-      materialNode? .$isTransparent .removeInterest (Appearance .set_transparent, self)
+      materialNode? .$isTransparent .removeInterest ("set_transparent", Appearance .set_transparent, self)
       
       materialNode = material? .innerNode as? X3DMaterialNode
       
-      materialNode? .$isTransparent .addInterest (Appearance .set_transparent, self)
+      materialNode? .$isTransparent .addInterest ("set_transparent", Appearance .set_transparent, self)
       
       set_transparent ()
    }
 
    private final func set_texture ()
    {
-      textureNode? .$isTransparent .removeInterest (Appearance .set_transparent, self)
+      textureNode? .$isTransparent .removeInterest ("set_transparent", Appearance .set_transparent, self)
       
       textureNode = texture? .innerNode as? X3DTextureNode
       
-      textureNode? .$isTransparent .addInterest (Appearance .set_transparent, self)
+      textureNode? .$isTransparent .addInterest ("set_transparent", Appearance .set_transparent, self)
 
       set_transparent ()
    }
@@ -149,8 +149,8 @@ public final class Appearance :
    {
       for shaderNode in shaderNodes
       {
-         shaderNode! .$isValid        .removeInterest (Appearance .set_shader, self)
-         shaderNode! .$activationTime .removeInterest (Appearance .set_shader, self)
+         shaderNode! .$isValid        .removeInterest ("set_shader", Appearance .set_shader, self)
+         shaderNode! .$activationTime .removeInterest ("set_shader", Appearance .set_shader, self)
       }
       
       shaderNodes .removeAll (keepingCapacity: true)
@@ -165,8 +165,8 @@ public final class Appearance :
       
       for shaderNode in shaderNodes
       {
-         shaderNode! .$isValid        .addInterest (Appearance .set_shader, self)
-         shaderNode! .$activationTime .addInterest (Appearance .set_shader, self)
+         shaderNode! .$isValid        .addInterest ("set_shader", Appearance .set_shader, self)
+         shaderNode! .$activationTime .addInterest ("set_shader", Appearance .set_shader, self)
       }
 
       set_shader ()

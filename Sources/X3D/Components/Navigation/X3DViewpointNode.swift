@@ -52,11 +52,6 @@ public class X3DViewpointNode :
                        $fieldOfViewScale)
    }
    
-   internal override func initialize ()
-   {
-      super .initialize ()
-   }
-   
    // Property access
    
    internal var maxFarValue : Float { 100_000 }

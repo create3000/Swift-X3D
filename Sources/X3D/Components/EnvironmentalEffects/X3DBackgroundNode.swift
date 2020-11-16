@@ -41,6 +41,7 @@ public class X3DBackgroundNode :
    
    private final var modelMatrix : Matrix4f = .identity
    
+   private final var renderer      : X3DRenderer!
    private final var sphereContext : X3DRenderContext!
    private final var cubeContexts  : [X3DRenderContext] = [ ]
    private final var lightSources  : X3DLightSources!
@@ -70,12 +71,13 @@ public class X3DBackgroundNode :
    {
       super .initialize ()
       
-      sphereContext = X3DRenderContext (renderer: browser! .renderer, isTransparent: true)
+      renderer      = browser! .popRenderer ()
+      sphereContext = X3DRenderContext (renderer: renderer, isTransparent: true)
       lightSources  = X3DLightSources (browser: browser!)
       
       for _ in 0 ..< 6
       {
-         cubeContexts .append (X3DRenderContext (renderer: browser! .renderer, isTransparent: true))
+         cubeContexts .append (X3DRenderContext (renderer: renderer, isTransparent: true))
       }
       
       addInterest ("buildRectangleOrSphere", X3DBackgroundNode .buildRectangleOrSphere, self)

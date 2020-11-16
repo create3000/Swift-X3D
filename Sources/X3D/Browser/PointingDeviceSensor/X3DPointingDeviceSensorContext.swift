@@ -164,7 +164,10 @@ internal final class X3DPointingDeviceSensorContextProperties :
       
       hits .removeAll (keepingCapacity: true)
       
-      browser! .world! .traverse (.Pointer, browser! .renderer)
+      let renderer = browser! .popRenderer ()
+      
+      browser! .world! .traverse (.Pointer, renderer)
+      browser! .pushRenderer (renderer)
       
       hits .sort { $0 .intersection .point .z < $1 .intersection .point .z }
       hits .sort { $0 .layerNumber < $1 .layerNumber }

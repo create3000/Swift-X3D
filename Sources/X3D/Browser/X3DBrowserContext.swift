@@ -191,6 +191,10 @@ public class X3DBrowserContext :
 
    internal final override func update (_ commandBuffer : MTLCommandBuffer)
    {
+      let renderer = popRenderer ()
+      
+      commandBuffer .addCompletedHandler { _ in self .pushRenderer (renderer) }
+      
       renderer .primitives    = (0, 0, 0, 0, 0)
       renderer .commandBuffer = commandBuffer
       

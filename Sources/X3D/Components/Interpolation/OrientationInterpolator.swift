@@ -63,3 +63,36 @@ public final class OrientationInterpolator :
       value_changed = slerp (keyValue [index0], keyValue [index1], t: weight)
    }
 }
+
+/*
+fileprivate func slerp (_ source : Quaternion4f, _ destination : Quaternion4f, t : Float) -> Quaternion4f?
+{
+   var dest  = destination
+   var cosom = dot (source, dest)
+
+   if cosom <= -1
+   {
+      return nil
+   }
+
+   if cosom >= 1 // both normal vectors are equal
+   {
+      return dest
+   }
+
+   if cosom < 0
+   {
+      // Reverse signs so we travel the short way round
+      cosom = -cosom
+      dest  = -dest
+   }
+
+   let omega = acos (cosom)
+   let sinom = sin  (omega)
+
+   let scale0 = sin ((1 - t) * omega)
+   let scale1 = sin (t * omega)
+
+   return (scale0 * source + scale1 * dest) / sinom
+}
+*/

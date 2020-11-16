@@ -134,7 +134,7 @@ public final class X3DRenderer
       uniforms .pointee .viewport         = viewport .last!
       uniforms .pointee .projectionMatrix = projectionMatrix .top
       uniforms .pointee .modelViewMatrix  = modelViewMatrix .top
-      uniforms .pointee .normalMatrix     = ~(!modelViewMatrix .top .submatrix)
+      uniforms .pointee .normalMatrix     = modelViewMatrix .top .submatrix .transpose .inverse
    }
    
    internal final func beginRender ()

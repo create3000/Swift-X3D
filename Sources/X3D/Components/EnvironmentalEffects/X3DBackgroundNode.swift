@@ -71,7 +71,7 @@ public class X3DBackgroundNode :
    {
       super .initialize ()
       
-      renderer      = browser! .popRenderer ()
+      renderer      = browser! .renderer .pop ()
       sphereContext = X3DRenderContext (renderer: renderer, isTransparent: true)
       lightSources  = X3DLightSources (browser: browser!)
       

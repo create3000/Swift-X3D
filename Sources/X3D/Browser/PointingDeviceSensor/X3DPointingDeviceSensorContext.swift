@@ -158,20 +158,30 @@ internal final class X3DPointingDeviceSensorContextProperties :
    
    private func pick (with event : NSEvent)
    {
+      // Make pointer coordinates.
+      
       let point = browser! .convert (event .locationInWindow, from: nil)
       
       pointer = Vector2f (Float (point .x), Float (point .y)) * Float (browser! .layer! .contentsScale)
       
+      // Make hits empty now.
+      
       hits .removeAll (keepingCapacity: true)
       
-      let renderer = browser! .popRenderer ()
+      // Traverse for pointer pick.
+      
+      let renderer = browser! .renderer .pop ()
       
       browser! .world! .traverse (.Pointer, renderer)
-      browser! .pushRenderer (renderer)
+      browser! .renderer .push (renderer)
+      
+      // Sort hits to determine nearest hit, which is then the last one.
       
       hits .sort { $0 .intersection .point .z < $1 .intersection .point .z }
       hits .sort { $0 .layerNumber < $1 .layerNumber }
 
+      // Refresh surface.
+      
       browser! .setNeedsDisplay ()
    }
    

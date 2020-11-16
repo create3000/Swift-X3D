@@ -25,7 +25,7 @@ internal final class X3DRenderingContextProperties :
 {
    // Properties
    
-   fileprivate final var renderers                  : [X3DRenderer] = [ ]
+   fileprivate final var rendererStack              : RendererStack
    fileprivate final var depthStencilState          : [Bool : MTLDepthStencilState] = [:]
    fileprivate final var renderPipelineState        : [X3DRenderPipelineState : MTLRenderPipelineState] = [:]
    fileprivate final var defaultRenderPipelineState : [Bool : MTLRenderPipelineState] = [:]
@@ -35,6 +35,8 @@ internal final class X3DRenderingContextProperties :
    
    internal init (with executionContext : X3DExecutionContext)
    {
+      self .rendererStack = RendererStack (for: executionContext .browser!)
+      
       super .init (executionContext .browser!, executionContext)
    }
    
@@ -125,22 +127,7 @@ internal protocol X3DRenderingContext : class
 
 extension X3DRenderingContext
 {
-   internal func popRenderer () -> X3DRenderer
-   {
-      if renderingContextProperties .renderers .isEmpty
-      {
-         return X3DRenderer (for: browser)
-      }
-      else
-      {
-         return renderingContextProperties .renderers .removeLast ()
-      }
-   }
-   
-   internal func pushRenderer (_ renderer : X3DRenderer)
-   {
-      renderingContextProperties .renderers .append (renderer)
-   }
+   internal var renderer : RendererStack { renderingContextProperties .rendererStack }
    
    internal var viewport : Vector4i { Vector4i (0, 0, Int32 (browser .drawableSize .width), Int32 (browser .drawableSize .height)) }
    

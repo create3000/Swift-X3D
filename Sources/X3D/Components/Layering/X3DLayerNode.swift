@@ -105,10 +105,10 @@ public class X3DLayerNode :
 
    internal final func bindFirstBindables ()
    {
-      let renderer = browser! .popRenderer ()
+      let renderer = browser! .renderer .pop ()
       
       traverse (.Camera, renderer)
-      browser! .pushRenderer (renderer)
+      browser! .renderer .push (renderer)
       
       let navigationInfoNode = navigationInfoList .first ()
       let viewpointNode      = viewpointList      .first (name: executionContext! .getWorldURL () .fragment)

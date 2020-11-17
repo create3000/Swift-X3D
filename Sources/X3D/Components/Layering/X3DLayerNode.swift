@@ -105,10 +105,10 @@ public class X3DLayerNode :
 
    internal final func bindFirstBindables ()
    {
-      let renderer = browser! .renderer .pop ()
+      let renderer = browser! .renderers .pop ()
       
       traverse (.Camera, renderer)
-      browser! .renderer .push (renderer)
+      browser! .renderers .push (renderer)
       
       let navigationInfoNode = navigationInfoList .first ()
       let viewpointNode      = viewpointList      .first (name: executionContext! .getWorldURL () .fragment)
@@ -132,7 +132,7 @@ public class X3DLayerNode :
    
    // Rendering
 
-   internal final func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   internal final func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       renderer .layerNode = self
       
@@ -153,7 +153,7 @@ public class X3DLayerNode :
       }
    }
    
-   private final func pointer (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   private final func pointer (_ type : TraverseType, _ renderer : Renderer)
    {
       guard isPickable else { return }
       
@@ -185,7 +185,7 @@ public class X3DLayerNode :
       renderer .viewport .removeLast ()
    }
    
-   private final func camera (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   private final func camera (_ type : TraverseType, _ renderer : Renderer)
    {
       renderer .modelViewMatrix .push (.identity)
 
@@ -203,7 +203,7 @@ public class X3DLayerNode :
       viewpointNode .update ()
    }
 
-   private final func render (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   private final func render (_ type : TraverseType, _ renderer : Renderer)
    {
       let viewport  = viewportNode! .makeRectangle (with: renderer .browser)
       let nearValue = navigationInfoNode .nearValue

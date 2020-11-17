@@ -170,10 +170,10 @@ internal final class X3DPointingDeviceSensorContextProperties :
       
       // Traverse for pointer pick.
       
-      let renderer = browser! .renderer .pop ()
+      let renderer = browser! .renderers .pop ()
       
       browser! .world! .traverse (.Pointer, renderer)
-      browser! .renderer .push (renderer)
+      browser! .renderers .push (renderer)
       
       // Sort hits to determine nearest hit, which is then the last one.
       

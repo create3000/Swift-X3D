@@ -438,9 +438,9 @@ internal class X3DTextGeometry
    
    // Rendering preparations
    
-   internal func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer) { }
+   internal func traverse (_ type : TraverseType, _ renderer : Renderer) { }
    
-   internal func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder) { }
+   internal func render (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder) { }
 }
 
 fileprivate extension CTFont

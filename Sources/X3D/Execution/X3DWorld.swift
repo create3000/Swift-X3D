@@ -93,7 +93,7 @@ public final class X3DWorld :
 
    // Rendering
    
-   internal final func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   internal final func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       layerSetNode! .traverse (type, renderer)
    }

@@ -8,10 +8,10 @@
 
 import Metal
 
-internal final class X3DRenderContext
+internal final class RenderContext
 {
    internal final unowned var browser    : X3DBrowser!
-   internal final unowned var renderer   : X3DRenderer
+   internal final unowned var renderer   : Renderer
    internal final unowned var shapeNode  : X3DShapeNode!
    internal final unowned var shaderNode : X3DShaderNode?
    internal final var fogObject          : FogContainer!
@@ -21,7 +21,7 @@ internal final class X3DRenderContext
    internal final let uniformsBuffer     : MTLBuffer
    internal final let uniforms           : UnsafeMutablePointer <x3d_Uniforms>
    
-   internal init (renderer : X3DRenderer, isTransparent : Bool)
+   internal init (renderer : Renderer, isTransparent : Bool)
    {
       self .browser       = renderer .browser
       self .renderer      = renderer

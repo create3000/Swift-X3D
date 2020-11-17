@@ -1,5 +1,5 @@
 //
-//  X3DRenderer.swift
+//  Renderer.swift
 //  X3D
 //
 //  Created by Holger Seelig on 08.09.20.
@@ -8,11 +8,11 @@
 
 import Metal
 
-public final class X3DRenderer
+public final class Renderer
 {
    // Public properties
    
-   public internal(set) final var primitives = (points: 0, lines: 0, triangles: 0, opaqueShapes: 0, transparentShapes: 0)
+   internal final var primitives = (points: 0, lines: 0, triangles: 0, opaqueShapes: 0, transparentShapes: 0)
    
    // Properties
    
@@ -62,8 +62,8 @@ public final class X3DRenderer
 
    // Render context objects handling
    
-   private final var opaqueShapes           = [X3DRenderContext] ()
-   private final var transparentShapes      = [X3DRenderContext] ()
+   private final var opaqueShapes           = [RenderContext] ()
+   private final var transparentShapes      = [RenderContext] ()
    private final var firstOpaqueShape       = 0
    private final var firstTransparentShape  = 0
    private final var numOpaqueShapes        = 0
@@ -90,7 +90,7 @@ public final class X3DRenderer
       
       // Select render context.
       
-      var renderContext : X3DRenderContext!
+      var renderContext : RenderContext!
 
       if shapeNode .isTransparent
       {
@@ -100,7 +100,7 @@ public final class X3DRenderer
          }
          else
          {
-            renderContext = X3DRenderContext (renderer: self, isTransparent: true)
+            renderContext = RenderContext (renderer: self, isTransparent: true)
             
             transparentShapes .append (renderContext!)
          }
@@ -115,7 +115,7 @@ public final class X3DRenderer
          }
          else
          {
-            renderContext = X3DRenderContext (renderer: self, isTransparent: false)
+            renderContext = RenderContext (renderer: self, isTransparent: false)
             
             opaqueShapes .append (renderContext!)
          }
@@ -143,6 +143,7 @@ public final class X3DRenderer
       firstTransparentShape = 0
       numOpaqueShapes       = 0
       numTransparentShapes  = 0
+      primitives            = (0, 0, 0, 0,  0)
    }
    
    internal final func endRender ()

@@ -188,14 +188,15 @@ public class X3DBrowserContext :
    {
       setNeedsDisplay (bounds)
    }
+   
+   public private(set) final var primitives = (points: 0, lines: 0, triangles: 0, opaqueShapes: 0, transparentShapes: 0)
 
    internal final override func update (_ commandBuffer : MTLCommandBuffer)
    {
-      let renderer = self .renderer .pop ()
+      let renderer = renderers .pop ()
       
-      commandBuffer .addCompletedHandler { _ in self .renderer .push (renderer) }
+      commandBuffer .addCompletedHandler { _ in self .renderers .push (renderer) }
       
-      renderer .primitives    = (0, 0, 0, 0, 0)
       renderer .commandBuffer = commandBuffer
       
       advanceTime ()
@@ -210,6 +211,8 @@ public class X3DBrowserContext :
       renderer .beginRender ()
       world! .traverse (.Render, renderer)
       renderer .endRender ()
+      
+      primitives = renderer .primitives
       
       callBrowserInterests (event: .Browser_Done)
    }

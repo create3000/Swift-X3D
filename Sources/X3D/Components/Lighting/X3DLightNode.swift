@@ -32,7 +32,7 @@ public class X3DLightNode :
    
    // Traverse
    
-   internal final func push (_ renderer : X3DRenderer, _ group : X3DGroupingNode)
+   internal final func push (_ renderer : Renderer, _ group : X3DGroupingNode)
    {
       guard on else { return }
 
@@ -52,7 +52,7 @@ public class X3DLightNode :
       }
    }
    
-   internal final func pop (_ renderer : X3DRenderer)
+   internal final func pop (_ renderer : Renderer)
    {
       guard on && !global else { return }
       

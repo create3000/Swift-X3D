@@ -81,7 +81,7 @@ public class X3DPointingDeviceSensorNode :
    
    // Traverse
    
-   internal final func push (renderer : X3DRenderer, sensors : inout Set <PointingDeviceSensorContainer>)
+   internal final func push (renderer : Renderer, sensors : inout Set <PointingDeviceSensorContainer>)
    {
       guard enabled else { return }
       

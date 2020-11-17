@@ -187,7 +187,7 @@ public final class Inline :
    
    // Rendering
    
-   internal final override func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   internal final override func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       groupNode .traverse (type, renderer)
    }

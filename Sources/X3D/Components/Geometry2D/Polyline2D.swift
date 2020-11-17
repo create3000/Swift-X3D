@@ -66,7 +66,7 @@ public final class Polyline2D :
    
    // Rendering
    
-   internal final override func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder)
+   internal final override func render (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder)
    {
       renderLines (context, renderEncoder)
    }

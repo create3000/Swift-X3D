@@ -42,5 +42,5 @@ public class X3DChildNode :
 
    // Rendering
 
-   internal func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer) { }
+   internal func traverse (_ type : TraverseType, _ renderer : Renderer) { }
 }

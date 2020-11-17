@@ -41,9 +41,9 @@ public class X3DBackgroundNode :
    
    private final var modelMatrix : Matrix4f = .identity
    
-   private final var renderer      : X3DRenderer!
-   private final var sphereContext : X3DRenderContext!
-   private final var cubeContexts  : [X3DRenderContext] = [ ]
+   private final var renderer      : Renderer!
+   private final var sphereContext : RenderContext!
+   private final var cubeContexts  : [RenderContext] = [ ]
    private final var lightSources  : X3DLightSources!
 
    // Constants
@@ -71,13 +71,13 @@ public class X3DBackgroundNode :
    {
       super .initialize ()
       
-      renderer      = browser! .renderer .pop ()
-      sphereContext = X3DRenderContext (renderer: renderer, isTransparent: true)
+      renderer      = browser! .renderers .pop ()
+      sphereContext = RenderContext (renderer: renderer, isTransparent: true)
       lightSources  = X3DLightSources (browser: browser!)
       
       for _ in 0 ..< 6
       {
-         cubeContexts .append (X3DRenderContext (renderer: renderer, isTransparent: true))
+         cubeContexts .append (RenderContext (renderer: renderer, isTransparent: true))
       }
       
       addInterest ("buildRectangleOrSphere", X3DBackgroundNode .buildRectangleOrSphere, self)
@@ -350,7 +350,7 @@ public class X3DBackgroundNode :
    
    // Traverse camera
 
-   internal final override func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   internal final override func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       renderer .layerNode! .backgroundList .append (node: self)
       
@@ -359,7 +359,7 @@ public class X3DBackgroundNode :
    
    // Rendering
 
-   internal final func render (renderer : X3DRenderer, renderEncoder : MTLRenderCommandEncoder)
+   internal final func render (renderer : Renderer, renderEncoder : MTLRenderCommandEncoder)
    {
       guard !isHidden else { return }
       
@@ -372,7 +372,7 @@ public class X3DBackgroundNode :
       renderCube   (renderer, renderEncoder, modelViewMatrix)
    }
    
-   private final func renderSphere (_ renderer : X3DRenderer,
+   private final func renderSphere (_ renderer : Renderer,
                                     _ renderEncoder : MTLRenderCommandEncoder,
                                     _ modelViewMatrix : Matrix4f)
    {
@@ -407,7 +407,7 @@ public class X3DBackgroundNode :
       renderEncoder .drawPrimitives (type: .triangle, vertexStart: 0, vertexCount: spherePrimitives .count)
    }
    
-   private final func renderCube (_ renderer : X3DRenderer,
+   private final func renderCube (_ renderer : Renderer,
                                   _ renderEncoder : MTLRenderCommandEncoder,
                                   _ modelViewMatrix : Matrix4f)
    {

@@ -53,14 +53,14 @@ public final class LocalFog :
    
    // Traverse
    
-   internal final func push (_ renderer : X3DRenderer)
+   internal final func push (_ renderer : Renderer)
    {
       guard enabled else { return }
       
       renderer .fogs .append (FogContainer (fogObject: self, modelViewMatrix: renderer .modelViewMatrix .top))
    }
 
-   internal final func pop (_ renderer : X3DRenderer)
+   internal final func pop (_ renderer : Renderer)
    {
       guard enabled else { return }
       

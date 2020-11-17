@@ -200,7 +200,7 @@ public class X3DGroupingNode :
 
    // Rendering
    
-   internal override func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   internal override func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       switch type
       {

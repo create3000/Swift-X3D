@@ -112,7 +112,7 @@ public final class Switch :
    
    // Rendering
    
-   internal final override func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   internal final override func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       guard let childNode = childNode else { return }
       

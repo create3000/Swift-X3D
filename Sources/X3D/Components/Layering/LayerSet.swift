@@ -135,7 +135,7 @@ public final class LayerSet :
    
    // Rendering
    
-   internal final func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   internal final func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       renderer .layerNumber = 0
 

@@ -8,18 +8,18 @@
 internal final class RendererStack
 {
    private final unowned let browser : X3DBrowser
-   private final var renderers       : [X3DRenderer] = [ ]
+   private final var renderers       : [Renderer] = [ ]
    
    public init (for browser : X3DBrowser)
    {
       self .browser = browser
    }
    
-   internal final func pop () -> X3DRenderer
+   internal final func pop () -> Renderer
    {
       if renderers .isEmpty
       {
-         return X3DRenderer (for: browser)
+         return Renderer (for: browser)
       }
       else
       {
@@ -27,7 +27,7 @@ internal final class RendererStack
       }
    }
    
-   internal final func push (_ renderer : X3DRenderer)
+   internal final func push (_ renderer : Renderer)
    {
       renderers .append (renderer)
    }

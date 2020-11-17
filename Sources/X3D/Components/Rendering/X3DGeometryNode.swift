@@ -298,10 +298,10 @@ public class X3DGeometryNode :
 
    // Rendering
    
-   internal func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer) { }
+   internal func traverse (_ type : TraverseType, _ renderer : Renderer) { }
    
    /// Renders geometry to surface with selected shader.
-   internal func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder)
+   internal func render (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder)
    {
       guard !primitives .isEmpty else { return }
       
@@ -380,7 +380,7 @@ public class X3DGeometryNode :
 extension X3DGeometryNode
 {
    /// Renders geometry to surface with selected shader.
-   internal func renderLines (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder)
+   internal func renderLines (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder)
    {
       guard !primitives .isEmpty else { return }
       
@@ -431,7 +431,7 @@ extension X3DGeometryNode
 extension X3DGeometryNode
 {
    /// Renders geometry to surface with selected shader.
-   internal func renderPoints (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder)
+   internal func renderPoints (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder)
    {
       guard !primitives .isEmpty else { return }
       

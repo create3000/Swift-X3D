@@ -233,17 +233,17 @@ public final class NavigationInfo :
    
    // Traverse camera
 
-   internal final override func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   internal final override func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       renderer .layerNode! .navigationInfoList .append (node: self)
    }
    
-   internal final func push (_ renderer : X3DRenderer)
+   internal final func push (_ renderer : Renderer)
    {
       guard headlight else { return }
       
       renderer .globalLights .append (renderer .browser .headlightContainer)
    }
    
-   internal final func pop (_ renderer : X3DRenderer) { }
+   internal final func pop (_ renderer : Renderer) { }
 }

@@ -78,7 +78,7 @@ public final class Transform :
    
    // Rendering
    
-   internal final override func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   internal final override func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       renderer .modelViewMatrix .push ()
       renderer .modelViewMatrix .mult (matrix)

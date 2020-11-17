@@ -37,5 +37,5 @@ public class X3DAppearanceNode :
    
    // Rendering
    
-   internal func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder) { }
+   internal func render (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder) { }
 }

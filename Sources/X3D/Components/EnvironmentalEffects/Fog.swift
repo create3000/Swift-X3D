@@ -56,19 +56,19 @@ public final class Fog :
    
    // Traverse camera
 
-   internal final override func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   internal final override func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       renderer .layerNode! .fogList .append (node: self)
    }
    
    // Traverse
    
-   internal final func push (_ renderer : X3DRenderer)
+   internal final func push (_ renderer : Renderer)
    {
       renderer .fogs .append (FogContainer (fogObject: self, modelViewMatrix: renderer .modelViewMatrix .top))
    }
 
-   internal final func pop (_ renderer : X3DRenderer)
+   internal final func pop (_ renderer : Renderer)
    {
       renderer .fogs .removeLast ()
    }

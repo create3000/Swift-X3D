@@ -111,12 +111,12 @@ public final class Text :
    
    // Rendering
    
-   internal final override func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   internal final override func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       textGeometry! .traverse (type, renderer)
    }
    
-   internal final override func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder)
+   internal final override func render (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder)
    {
       textGeometry! .render (context, renderEncoder)
       

@@ -127,7 +127,7 @@ internal protocol X3DRenderingContext : class
 
 extension X3DRenderingContext
 {
-   internal var renderer : RendererStack { renderingContextProperties .rendererStack }
+   internal var renderers : RendererStack { renderingContextProperties .rendererStack }
    
    internal var viewport : Vector4i { Vector4i (0, 0, Int32 (browser .drawableSize .width), Int32 (browser .drawableSize .height)) }
    

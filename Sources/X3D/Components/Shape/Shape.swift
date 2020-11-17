@@ -56,7 +56,7 @@ public final class Shape :
    
    // Rendering
    
-   internal final override func traverse (_ type : X3DTraverseType, _ renderer : X3DRenderer)
+   internal final override func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       guard let geometryNode = geometryNode else { return }
 
@@ -79,7 +79,7 @@ public final class Shape :
       geometryNode .traverse (type, renderer)
    }
    
-   private final func pointer (_ renderer : X3DRenderer)
+   private final func pointer (_ renderer : Renderer)
    {
       guard let geometryNode = geometryNode else { return }
       
@@ -120,7 +120,7 @@ public final class Shape :
                                  intersection: intersection)
    }
    
-   internal final override func render (_ context : X3DRenderContext, _ renderEncoder : MTLRenderCommandEncoder)
+   internal final override func render (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder)
    {
       appearanceNode! .render (context, renderEncoder)
       geometryNode!   .render (context, renderEncoder)

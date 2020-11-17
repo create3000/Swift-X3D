@@ -8,7 +8,7 @@
 
 import Metal
 
-public final class Renderer
+internal final class Renderer
 {
    // Public properties
    

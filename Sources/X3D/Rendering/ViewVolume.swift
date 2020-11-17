@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public class ViewVolume
+public final class ViewVolume
 {
    public static func unProjectPoint (_ winx : Float, _ winy : Float, _ winz : Float,
                                       _ modelViewMatrix : Matrix4f,

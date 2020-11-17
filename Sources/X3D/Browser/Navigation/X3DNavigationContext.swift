@@ -117,9 +117,9 @@ internal final class X3DNavigationContextProperties :
          case .EXAMINE:
             viewerNode = ExamineViewer (with: executionContext!)
          case .WALK:
-            viewerNode = NoneViewer (with: executionContext!)
+            viewerNode = WalkViewer (with: executionContext!)
          case .FLY:
-            viewerNode = NoneViewer (with: executionContext!)
+            viewerNode = FlyViewer (with: executionContext!)
          case .PLANE:
             viewerNode = NoneViewer (with: executionContext!)
          case .LOOKAT:

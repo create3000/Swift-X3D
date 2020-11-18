@@ -105,7 +105,7 @@ internal class X3DFlyViewer :
    private final func fly ()
    {
       let now      = browser! .currentTime
-      let dt       = now - startTime
+      let dt       = Float (now - startTime)
       let upVector = activeViewpoint .upVector
 
       // Rubberband values
@@ -125,7 +125,7 @@ internal class X3DFlyViewer :
       speedFactor *= activeNavigationInfo .speed
       speedFactor *= activeViewpoint .getSpeedFactor ()
       speedFactor *= shift ? X3DFlyViewer .SHIFT_SPEED_FACTOR : X3DFlyViewer .SPEED_FACTOR
-      speedFactor *= Float (dt)
+      speedFactor *= dt
 
       let translation = getTranslationOffset (speedFactor * direction)
 
@@ -134,7 +134,7 @@ internal class X3DFlyViewer :
 
       // Rotation
 
-      var weight = X3DFlyViewer .ROTATION_SPEED_FACTOR * Float (dt)
+      var weight = X3DFlyViewer .ROTATION_SPEED_FACTOR * dt
 
       weight *= pow (rubberBandLength / (rubberBandLength + X3DFlyViewer .ROTATION_LIMIT), 2)
 

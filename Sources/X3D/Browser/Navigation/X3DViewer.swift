@@ -27,7 +27,7 @@ internal class X3DViewer :
       browser! .world .activeLayerNode! .viewportNode!
    }
 
-   private final var activeNavigationInfo : NavigationInfo
+   internal final var activeNavigationInfo : NavigationInfo
    {
       browser! .world .activeLayerNode! .navigationInfoNode
    }

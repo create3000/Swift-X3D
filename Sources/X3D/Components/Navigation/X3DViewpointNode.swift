@@ -59,7 +59,8 @@ public class X3DViewpointNode :
    internal func getPosition () -> Vector3f { .zero }
    internal final func getOrientation () -> Rotation4f { orientation }
    internal func getCenterOfRotation () -> Vector3f { .zero }
-   
+   internal func getSpeedFactor () -> Float { 1 }
+
    // Operations
    
    internal final override func transitionStart (with layer : X3DLayerNode, from node : X3DBindableNode)

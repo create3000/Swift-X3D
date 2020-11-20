@@ -71,7 +71,7 @@ internal class X3DFlyViewer :
          orientation = orientation * Rotation4f (from: toVector, to: fromVector)
          orientation = activeViewpoint .straightenHorizon (orientation) * orientation
 
-         activeViewpoint .orientationOffset = orientation * ~activeViewpoint .orientation
+         activeViewpoint .orientationOffset = orientation * activeViewpoint .getOrientation () .inverse
 
          fromVector = toVector
       }

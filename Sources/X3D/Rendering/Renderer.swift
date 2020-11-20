@@ -164,8 +164,6 @@ internal final class Renderer
       var distance = -depth (projectionMatrix)
 
       self .projectionMatrix .pop ()
-      
-      browser .console .log (distance)
 
       // Gravite or step up
 
@@ -207,9 +205,85 @@ internal final class Renderer
       }
    }
    
-   internal final func constrain (_ translation : Vector3f, _ b : Bool) -> Vector3f
+   internal final func constrain (_ translation : Vector3f, _ stepBack : Bool) -> Vector3f
    {
-      return translation
+      var distance = self .distance (translation)
+
+      // Constrain translation when the viewer collides with an obstacle.
+
+      distance -= layerNode .navigationInfoNode .collisionRadius
+
+      if distance > 0
+      {
+         // Move.
+
+         let length = simd_length (translation)
+
+         if length > distance
+         {
+            // Collision, the avatar would intersect with the obstacle.
+
+            return normalize (translation) * distance
+         }
+
+         // Everything is fine.
+
+         return translation
+      }
+
+      // Collision, the avatar is already within an obstacle.
+
+      if stepBack
+      {
+         return constrain (normalize (translation) * distance, false)
+      }
+
+      return .zero
+   }
+   
+   private final func distance (_ direction : Vector3f) -> Float
+   {
+      // Determine width and height of camera.
+
+      let viewpointNode      = layerNode .viewpointNode
+      let navigationInfoNode = layerNode .navigationInfoNode
+      let collisionRadius    = navigationInfoNode .collisionRadius
+      let bottom             = navigationInfoNode .stepHeight - navigationInfoNode .avatarHeight
+      let nearValue          = navigationInfoNode .nearValue
+      let avatarHeight       = navigationInfoNode .avatarHeight
+
+      // Reshape camera.
+
+      let projectionMatrix = Camera .ortho (left: -collisionRadius,
+                                            right: collisionRadius,
+                                            bottom: min (bottom, -collisionRadius),
+                                            top: collisionRadius, nearValue: nearValue,
+                                            farValue: max (collisionRadius * 2, avatarHeight * 2))
+
+      // Translate camera to user position and to look in the direction of the @a direction.
+
+      let localOrientation = viewpointNode .getOrientation () * viewpointNode .orientation .inverse
+      var rotation         = localOrientation * Rotation4f (from: .zAxis, to: -direction)
+
+      // The viewer is alway a straight box depending on the upVector.
+      rotation = viewpointNode .straightenHorizon (rotation) * rotation
+
+      var cameraSpaceProjectionMatrix = viewpointNode .modelMatrix
+      
+      cameraSpaceProjectionMatrix = cameraSpaceProjectionMatrix .translate (viewpointNode .userPosition)
+      cameraSpaceProjectionMatrix = cameraSpaceProjectionMatrix .rotate (rotation)
+      cameraSpaceProjectionMatrix = cameraSpaceProjectionMatrix .inverse
+      cameraSpaceProjectionMatrix = projectionMatrix * cameraSpaceProjectionMatrix * viewpointNode .cameraSpaceMatrix
+
+      // Render depth.
+
+      self .projectionMatrix .push (cameraSpaceProjectionMatrix)
+
+      let distance = depth (projectionMatrix)
+
+      self .projectionMatrix .pop ()
+
+      return -distance
    }
    
    private final lazy var depthBuffer : DepthBuffer = { DepthBuffer (browser, width: 16, height: 16) }()

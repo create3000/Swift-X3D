@@ -205,6 +205,13 @@ public class X3DBrowserContext :
 
       world! .traverse (.Camera, renderer)
       
+      if hasCollisions
+      {
+         collider .beginCollision ()
+         world! .traverse (.Collision, collider)
+         collider .endCollision ()
+      }
+      
       callBrowserInterests (event: .Browser_Sensors)
       processEvents ()
 

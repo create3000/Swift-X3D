@@ -26,6 +26,7 @@ internal final class X3DRenderingContextProperties :
    // Properties
    
    fileprivate final var rendererStack              : RendererStack
+   fileprivate final var collider                   : Renderer
    fileprivate final var depthStencilState          : [Bool : MTLDepthStencilState] = [:]
    fileprivate final var renderPipelineState        : [X3DRenderPipelineState : MTLRenderPipelineState] = [:]
    fileprivate final var defaultRenderPipelineState : [Bool : MTLRenderPipelineState] = [:]
@@ -36,6 +37,7 @@ internal final class X3DRenderingContextProperties :
    internal init (with executionContext : X3DExecutionContext)
    {
       self .rendererStack = RendererStack (for: executionContext .browser!)
+      self .collider      = self .rendererStack .pop ()
       
       super .init (executionContext .browser!, executionContext)
    }
@@ -128,7 +130,8 @@ internal protocol X3DRenderingContext : class
 extension X3DRenderingContext
 {
    internal var renderers : RendererStack { renderingContextProperties .rendererStack }
-   
+   internal var collider  : Renderer { renderingContextProperties .collider }
+
    internal var viewport : Vector4i { Vector4i (0, 0, Int32 (browser .drawableSize .width), Int32 (browser .drawableSize .height)) }
    
    internal var depthStencilState          : [Bool : MTLDepthStencilState] { renderingContextProperties .depthStencilState }

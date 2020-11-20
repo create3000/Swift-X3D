@@ -131,7 +131,7 @@ public class X3DLayerNode :
    }
    
    // Rendering
-
+   
    internal final func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       renderer .layerNode = self
@@ -147,7 +147,7 @@ public class X3DLayerNode :
          case .Collision:
             break
          case .Depth:
-            break
+            depth (type, renderer)
          case .Render:
             render (type, renderer)
       }
@@ -203,6 +203,30 @@ public class X3DLayerNode :
       viewpointNode .update ()
    }
 
+   private final func depth (_ type : TraverseType, _ renderer : Renderer)
+   {
+      guard !navigationInfoNode .transitionActive else { return }
+
+      let viewport         = viewportNode! .makeRectangle (with: renderer .browser)
+      let collisionRadius  = navigationInfoNode .collisionRadius
+      let avatarHeight     = navigationInfoNode .avatarHeight
+      let size             = max (collisionRadius * 2, avatarHeight * 2)
+      let projectionMatrix = Camera .ortho (left: -size, right: size, bottom: -size, top: size, nearValue: -size, farValue: size)
+      
+      renderer .viewport .append (viewport)
+      renderer .projectionMatrix .push (projectionMatrix)
+      renderer .viewViewMatrix   .push (viewpointNode .viewMatrix)
+      renderer .modelViewMatrix  .push (viewpointNode .viewMatrix)
+
+      groupNode! .traverse (.Collision, renderer)
+      renderer .collision ()
+      
+      renderer .modelViewMatrix  .pop ()
+      renderer .viewViewMatrix   .pop ()
+      renderer .projectionMatrix .pop ()
+      renderer .viewport .removeLast ()
+   }
+   
    private final func render (_ type : TraverseType, _ renderer : Renderer)
    {
       let viewport  = viewportNode! .makeRectangle (with: renderer .browser)

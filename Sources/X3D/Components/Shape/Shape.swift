@@ -65,7 +65,7 @@ public final class Shape :
          case .Pointer:
             pointer (renderer)
          case .Camera:
-            break
+            renderer .addCollisionShape (self)
          case .Picking:
             break
          case .Collision:

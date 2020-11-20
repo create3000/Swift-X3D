@@ -59,6 +59,81 @@ internal final class Renderer
          return lightSources
       }
    }
+   
+   // Collision context object handling
+   
+   private final var collisionShapes     = [CollisionContext] ()
+   private final var numCollsionShapes   = 0
+
+   internal final func addCollisionShape (_ shapeNode : X3DShapeNode)
+   {
+      let bbox  = modelViewMatrix .top * shapeNode .bbox
+      let depth = bbox .size .z / 2
+      let min   = bbox .center .z - depth
+      
+      // Return if the model is completely behind the front plane.
+      
+      guard min < 0 else { return }
+      
+      // Select collision context.
+
+      var collisionContext : CollisionContext!
+
+      do
+      {
+         if numCollsionShapes < collisionShapes .count
+         {
+            collisionContext = collisionShapes [numCollsionShapes]
+         }
+         else
+         {
+            collisionContext = CollisionContext (renderer: self)
+            
+            collisionShapes .append (collisionContext!)
+         }
+         
+         numCollsionShapes += 1
+      }
+      
+      // Set collision context properties.
+      
+      let uniforms = collisionContext .uniforms
+
+      collisionContext .shapeNode        = shapeNode
+      collisionContext .collisions       = collisions
+      uniforms .pointee .modelViewMatrix = modelViewMatrix .top
+   }
+   
+   internal final func beginCollision ()
+   {
+      numCollsionShapes = 0
+   }
+   
+   internal final func endCollision ()
+   {
+
+   }
+
+   internal final func collision ()
+   {
+      collide ()
+      gravite ()
+   }
+   
+   private final func collide ()
+   {
+      
+   }
+   
+   private final func gravite ()
+   {
+      
+   }
+   
+   internal final func constrain (_ translation : Vector3f) -> Vector3f
+   {
+      return translation
+   }
 
    // Render context objects handling
    

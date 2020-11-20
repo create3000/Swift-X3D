@@ -121,7 +121,7 @@ public final class LayerSet :
          {
             index -= 1
 
-            if index >= 0 && index < layers .count
+            if layers .indices .contains (Int (index))
             {
                guard let layerNode = layers [Int (index)]? .innerNode as? X3DLayerNode else { continue }
 
@@ -137,13 +137,23 @@ public final class LayerSet :
    
    internal final func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
-      renderer .layerNumber = 0
-
-      for layerNode in layerNodes
+      switch type
       {
-         layerNode! .traverse (type, renderer)
-         
-         renderer .layerNumber += 1
+         case .Collision: do
+         {
+            activeLayerNode? .traverse (type, renderer)
+         }
+         default: do
+         {
+            renderer .layerNumber = 0
+
+            for layerNode in layerNodes
+            {
+               layerNode! .traverse (type, renderer)
+               
+               renderer .layerNumber += 1
+            }
+         }
       }
    }
 }

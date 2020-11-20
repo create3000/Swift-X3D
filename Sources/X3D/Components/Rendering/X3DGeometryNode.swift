@@ -301,6 +301,22 @@ public class X3DGeometryNode :
    internal func traverse (_ type : TraverseType, _ renderer : Renderer) { }
    
    /// Renders geometry to surface with selected shader.
+   internal func render (_ context : CollisionContext, _ renderEncoder : MTLRenderCommandEncoder)
+   {
+      guard geometryType >= 2 else { return }
+      
+      guard !primitives .isEmpty else { return }
+      
+      // Set uniforms and vertex buffer.
+      renderEncoder .setVertexBuffer   (primitivesBuffer,        offset: 0, index: 0)
+      renderEncoder .setVertexBuffer   (context .uniformsBuffer, offset: 0, index: 1)
+      renderEncoder .setFragmentBuffer (context .uniformsBuffer, offset: 0, index: 1)
+      
+      // Draw triangles.
+      renderEncoder .drawPrimitives (type: primitiveType, vertexStart: 0, vertexCount: primitives .count)
+   }
+   
+   /// Renders geometry to surface with selected shader.
    internal func render (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder)
    {
       guard !primitives .isEmpty else { return }

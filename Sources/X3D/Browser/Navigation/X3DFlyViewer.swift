@@ -129,7 +129,7 @@ internal class X3DFlyViewer :
 
       let translation = getTranslationOffset (speedFactor * direction)
 
-      activeViewpoint .positionOffset += browser! .collider .constrain (translation)
+      activeViewpoint .positionOffset += browser! .collider .constrain (translation, true)
       
       // Rotation
 

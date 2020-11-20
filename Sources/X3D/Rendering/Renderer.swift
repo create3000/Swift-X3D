@@ -62,8 +62,8 @@ internal final class Renderer
    
    // Collision context object handling
    
-   private final var collisionShapes     = [CollisionContext] ()
-   private final var numCollsionShapes   = 0
+   private final var collisionShapes   = [CollisionContext] ()
+   private final var numCollsionShapes = 0
 
    internal final func addCollisionShape (_ shapeNode : X3DShapeNode)
    {
@@ -101,6 +101,7 @@ internal final class Renderer
 
       collisionContext .shapeNode        = shapeNode
       collisionContext .collisions       = collisions
+      uniforms .pointee .viewport        = viewport .last!
       uniforms .pointee .modelViewMatrix = modelViewMatrix .top
    }
    
@@ -125,14 +126,148 @@ internal final class Renderer
       
    }
    
+   private final var speed : Float = 0
+   
    private final func gravite ()
    {
+      guard browser .viewerNode is WalkViewer else { return }
       
+      let navigationInfoNode  = layerNode .navigationInfoNode
+      let viewpointNode       = layerNode .viewpointNode
+      let collisionRadius     = navigationInfoNode .collisionRadius
+      let nearValue           = navigationInfoNode .nearValue
+      let avatarHeight        = navigationInfoNode .avatarHeight
+      let stepHeight          = navigationInfoNode .stepHeight
+
+      // Reshape viewpoint for gravite.
+
+      let projectionMatrix = Camera .ortho (left: -collisionRadius,
+                                            right: collisionRadius,
+                                            bottom: -collisionRadius,
+                                            top: collisionRadius,
+                                            nearValue: nearValue,
+                                            farValue: max (collisionRadius * 2, avatarHeight * 2))
+      
+      // Transform viewpoint to look down the up vector
+
+      let upVector                    = viewpointNode .upVector
+      let down                        = Rotation4f (from: .zAxis, to: upVector)
+      var cameraSpaceProjectionMatrix = viewpointNode .modelMatrix
+
+      cameraSpaceProjectionMatrix = cameraSpaceProjectionMatrix .translate (viewpointNode .userPosition)
+      cameraSpaceProjectionMatrix = cameraSpaceProjectionMatrix .rotate (down)
+      cameraSpaceProjectionMatrix = cameraSpaceProjectionMatrix .inverse
+      cameraSpaceProjectionMatrix = projectionMatrix * cameraSpaceProjectionMatrix * viewpointNode .cameraSpaceMatrix
+ 
+      self .projectionMatrix .push (cameraSpaceProjectionMatrix)
+
+      var distance = -depth (projectionMatrix)
+
+      self .projectionMatrix .pop ()
+      
+      browser .console .log (distance)
+
+      // Gravite or step up
+
+      let up = Rotation4f (from: .yAxis, to: upVector)
+
+      distance -= avatarHeight
+
+      if distance > 0
+      {
+         // Gravite and fall down to the floor.
+
+         let currentFrameRate = Float (speed != 0 ? browser .currentFrameRate : 1000000)
+
+         speed -= browser .getBrowserOptions () .Gravity / currentFrameRate
+
+         var translation = speed / currentFrameRate
+
+         if translation < -distance
+         {
+            // The ground is reached.
+            translation = -distance
+            speed       = 0
+         }
+
+         layerNode .viewpointNode .positionOffset += up * Vector3f (0, translation, 0)
+      }
+      else
+      {
+         speed    = 0
+         distance = -distance
+
+         if distance > 0.01 && distance < stepHeight
+         {
+            // Step up
+            let translation = constrain (up * Vector3f (0, distance, 0), false)
+
+            layerNode .viewpointNode .positionOffset += translation
+         }
+      }
    }
    
-   internal final func constrain (_ translation : Vector3f) -> Vector3f
+   internal final func constrain (_ translation : Vector3f, _ b : Bool) -> Vector3f
    {
       return translation
+   }
+   
+   private final lazy var depthBuffer : DepthBuffer = { DepthBuffer (browser, width: 16, height: 16) }()
+  
+   private final func depth (_ projectionMatrix : Matrix4f) -> Float
+   {
+      depth ()
+      
+      return depthBuffer .depth (projectionMatrix)
+   }
+   
+   private final func depth ()
+   {
+      guard let commandBuffer = browser .commandQueue .makeCommandBuffer () else { return }
+      
+      // Prepare render pass, ie. create render encoder with appropriate settings.
+      
+      let renderPassDescriptor = MTLRenderPassDescriptor ()
+      
+      renderPassDescriptor .colorAttachments [0] .texture    = depthBuffer .colorTexture
+      renderPassDescriptor .colorAttachments [0] .loadAction = .clear
+      renderPassDescriptor .colorAttachments [0] .clearColor = MTLClearColor (red: 0, green: 0, blue: 0, alpha: 0)
+
+      renderPassDescriptor .depthAttachment .texture     = depthBuffer .depthTexture
+      renderPassDescriptor .depthAttachment .clearDepth  = 1
+      renderPassDescriptor .depthAttachment .loadAction  = .clear
+      renderPassDescriptor .depthAttachment .storeAction = .store
+ 
+      guard let renderEncoder = commandBuffer .makeRenderCommandEncoder (descriptor: renderPassDescriptor) else { return }
+      
+      renderEncoder .setDepthStencilState   (browser .depthStencilState [true])
+      renderEncoder .setRenderPipelineState (browser .depthPipelineState)
+      renderEncoder .setCullMode (.none)
+
+//      let surface = browser .viewport
+
+      for collisionContext in collisionShapes [..<numCollsionShapes]
+      {
+//         let rectangle = collisionContext .uniforms .pointee .viewport
+//
+//         renderEncoder .setViewport (MTLViewport (originX: Double (rectangle [0]),
+//                                                  originY: Double (surface [3] - rectangle [1] - rectangle [3]),
+//                                                  width:   Double (rectangle [2]),
+//                                                  height:  Double (rectangle [3]),
+//                                                  znear:   0,
+//                                                  zfar:    1))
+         
+         collisionContext .uniforms .pointee .projectionMatrix = projectionMatrix .top
+
+         collisionContext .shapeNode .render (collisionContext, renderEncoder)
+      }
+      
+      renderEncoder .endEncoding ()
+      
+      depthBuffer .blit (commandBuffer)
+
+      commandBuffer .commit ()
+      commandBuffer .waitUntilCompleted ()
    }
 
    // Render context objects handling

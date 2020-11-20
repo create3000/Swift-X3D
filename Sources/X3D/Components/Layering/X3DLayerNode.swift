@@ -145,9 +145,9 @@ public class X3DLayerNode :
          case .Picking:
             break
          case .Collision:
-            break
+            collision (type, renderer)
          case .Depth:
-            depth (type, renderer)
+            break
          case .Render:
             render (type, renderer)
       }
@@ -203,7 +203,7 @@ public class X3DLayerNode :
       viewpointNode .update ()
    }
 
-   private final func depth (_ type : TraverseType, _ renderer : Renderer)
+   private final func collision (_ type : TraverseType, _ renderer : Renderer)
    {
       guard !navigationInfoNode .transitionActive else { return }
 

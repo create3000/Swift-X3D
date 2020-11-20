@@ -235,6 +235,7 @@ public class X3DGroupingNode :
          }
          case .Collision: do
          {
+            childNodes .forEach { $0! .traverse (type, renderer) }
          }
          case .Depth: do
          {

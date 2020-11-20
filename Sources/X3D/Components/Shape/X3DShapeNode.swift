@@ -95,6 +95,8 @@ public class X3DShapeNode :
  
    // Rendering
    
+   internal func render (_ context : CollisionContext, _ renderEncoder : MTLRenderCommandEncoder) { }
+
    /// Renders geometry to surface with appearance applied.
    internal func render (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder) { }
    

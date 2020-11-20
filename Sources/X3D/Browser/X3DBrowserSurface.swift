@@ -15,7 +15,7 @@ public class X3DBrowserSurface :
 {
    // Properties
    
-   private var commandQueue : MTLCommandQueue!
+   internal private(set) var commandQueue : MTLCommandQueue!
 
    // Construction
    

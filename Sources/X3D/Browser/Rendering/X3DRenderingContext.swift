@@ -31,6 +31,7 @@ internal final class X3DRenderingContextProperties :
    fileprivate final var renderPipelineState        : [X3DRenderPipelineState : MTLRenderPipelineState] = [:]
    fileprivate final var defaultRenderPipelineState : [Bool : MTLRenderPipelineState] = [:]
    fileprivate final var defaultSampler             : MTLSamplerState?
+   fileprivate final var depthPipelineState         : MTLRenderPipelineState!
 
    // Construction
    
@@ -62,6 +63,8 @@ internal final class X3DRenderingContextProperties :
       defaultRenderPipelineState [true]  = renderPipelineState [.GouraudTransparent]
 
       defaultSampler = buildDefaultSampler ()
+      
+      depthPipelineState = buildRenderPipelineState (shader: "depth", blending: false)
    }
    
    private final func buildRenderPipelineState (shader : String, blending : Bool) -> MTLRenderPipelineState
@@ -138,4 +141,5 @@ extension X3DRenderingContext
    internal var renderPipelineState        : [X3DRenderPipelineState : MTLRenderPipelineState] { renderingContextProperties .renderPipelineState }
    internal var defaultRenderPipelineState : [Bool : MTLRenderPipelineState] { renderingContextProperties .defaultRenderPipelineState }
    internal var defaultSampler             : MTLSamplerState { renderingContextProperties .defaultSampler! }
+   internal var depthPipelineState         : MTLRenderPipelineState { renderingContextProperties .depthPipelineState }
 }

@@ -65,11 +65,11 @@ public final class Shape :
          case .Pointer:
             pointer (renderer)
          case .Camera:
-            renderer .addCollisionShape (self)
+            break
          case .Picking:
             break
          case .Collision:
-            break
+            renderer .addCollisionShape (self)
          case .Depth:
             break
          case .Render:
@@ -118,6 +118,11 @@ public final class Shape :
                                  layerNumber: renderer .layerNumber,
                                  shapeNode: self,
                                  intersection: intersection)
+   }
+   
+   internal final override func render (_ context : CollisionContext, _ renderEncoder : MTLRenderCommandEncoder)
+   {
+      geometryNode! .render (context, renderEncoder)
    }
    
    internal final override func render (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder)

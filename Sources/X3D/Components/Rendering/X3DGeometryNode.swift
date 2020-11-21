@@ -97,7 +97,7 @@ public class X3DGeometryNode :
       
       buildRequested .store (true)
       
-      DispatchQueue .main .async { self .rebuild () }
+      DispatchQueue .main .async { [weak self] in self? .rebuild () }
    }
    
    /// Updates geometry.
@@ -114,9 +114,9 @@ public class X3DGeometryNode :
       guard !primitives .isEmpty else { return }
 
       // Trim vertices to multiple of primitive count.
-      primitives .removeSubrange ((primitives .count - primitives .count % primitiveCount)...)
+      primitives .removeLast (primitives .count % primitiveCount)
       
-      if (geometryType == 2 || geometryType == 3) && !hasTexCoord
+      if geometryType >= 2 && !hasTexCoord
       {
          generateTexCoords (&primitives)
       }

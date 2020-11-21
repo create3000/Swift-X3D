@@ -97,7 +97,7 @@ public final class Collision :
       proxyNode = proxy? .innerNode as? X3DChildNode
    }
    
-   internal final func set_active (value : Bool)
+   internal final func set_active (_ value : Bool)
    {
       guard value != isActive else { return }
       

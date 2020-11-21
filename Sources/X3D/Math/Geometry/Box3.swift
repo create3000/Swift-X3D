@@ -284,6 +284,114 @@ public struct Box3f
       
       return false
    }
+   
+   public func intersects (with box : Self) -> Bool
+   {
+      // Test special cases.
+
+      guard !isEmpty else { return false }
+
+      guard !box .isEmpty else { return false }
+
+      // Get points.
+
+      let points1 = points
+      let points2 = box .points
+
+      // Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
+
+      let normals1 = normals
+
+      if Sat .separated (normals1, points1, points2)
+      {
+         return false
+      }
+
+      // Test the three planes spanned by the normal vectors of the faces of the second parallelepiped.
+
+      let normals2 = box .normals
+
+      if Sat .separated (normals2, points1, points2)
+      {
+         return false
+      }
+
+      // Test the nine other planes spanned by the edges of each parallelepiped.
+
+      var axes9 = [Vector3] ()
+
+      for axis1 in axes
+      {
+         for axis2 in box .axes
+         {
+            axes9 .append (cross (axis1, axis2))
+         }
+      }
+
+      if Sat .separated (axes9, points1, points2)
+      {
+         return false
+      }
+
+      // Both boxes intersect.
+
+      return true
+   }
+   
+   public func intersects (_ A : Vector3, _ B : Vector3, _ C : Vector3) -> Bool
+   {
+      // Test special cases.
+
+      guard !isEmpty else { return false }
+
+      // Get points.
+
+      let points1 = points
+      let points2 = [A, B, C]
+
+      // Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
+
+      let normals1 = normals
+
+      if Sat .separated (normals1, points1, points2)
+      {
+         return false
+      }
+
+      // Test the normal of the triangle.
+
+      if Sat .separated ([normal (A, B, C)], points1, points2)
+      {
+         return false
+      }
+
+      // Test the nine other planes spanned by the edges of the parallelepiped and the edges of the triangle.
+
+      let triangleEdges = [
+         A - B,
+         B - C,
+         C - A,
+      ]
+
+      var axes9 = [Vector3] ()
+
+      for axis1 in axes
+      {
+         for axis2 in triangleEdges
+         {
+            axes9 .append (cross (axis1, axis2))
+         }
+      }
+
+      if Sat .separated (axes9, points1, points2)
+      {
+         return false
+      }
+
+      // Box and triangle intersect.
+
+      return true
+   }
 }
 
 extension Box3f :

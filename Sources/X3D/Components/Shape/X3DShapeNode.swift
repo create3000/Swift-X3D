@@ -92,6 +92,10 @@ public class X3DShapeNode :
    {
       setTransparent ((geometryNode? .isTransparent ?? false) || appearanceNode! .isTransparent)
    }
+   
+   // Intersection
+   
+   internal func intersects (_ box : Box3f, _ modelViewMatrix : Matrix4f) -> Bool { return false }
  
    // Rendering
    

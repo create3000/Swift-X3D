@@ -537,6 +537,31 @@ extension X3DGeometryNode
       
       return intersections .isEmpty ? nil : intersections
    }
+   
+   internal func intersects (_ box : Box3f, _ modelViewMatrix : Matrix4f) -> Bool
+   {
+      guard bbox .intersects (with: box) else { return false }
+      
+      let box = matrix .inverse * box
+      
+      for i in stride (from: 0, to: primitives .count, by: 3)
+      {
+         let v0 = primitives [i + 0]
+         let v1 = primitives [i + 1]
+         let v2 = primitives [i + 2]
+
+         let p0 = real (v0 .point)
+         let p1 = real (v1 .point)
+         let p2 = real (v2 .point)
+         
+         if box .intersects (p0, p1, p2)
+         {
+            return true
+         }
+      }
+      
+      return false
+   }
 }
 
 fileprivate func real (_ vector : Vector4f) -> Vector3f

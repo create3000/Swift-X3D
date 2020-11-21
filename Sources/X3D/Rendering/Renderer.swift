@@ -64,6 +64,7 @@ internal final class Renderer
    
    private final var collisionShapes   = [CollisionContext] ()
    private final var numCollsionShapes = 0
+   private final var speed             = Float (0)
 
    internal final func addCollisionShape (_ shapeNode : X3DShapeNode)
    {
@@ -121,12 +122,40 @@ internal final class Renderer
       gravite ()
    }
    
+   private final var activeCollisions = Set <Collision> ()
+   
    private final func collide ()
    {
+      let navigationInfoNode = layerNode .navigationInfoNode
+      let collisionRadius2   = 2.2 * navigationInfoNode .collisionRadius // Make the radius a little bit larger.
+      let collisionSize      = Vector3f (collisionRadius2, collisionRadius2, collisionRadius2)
+      var activeCollisions   = Set <Collision> ()
       
+      for collisionContext in collisionShapes [..<numCollsionShapes]
+      {
+         let collisions = collisionContext .collisions
+
+         guard !collisions .isEmpty else { continue }
+         
+         let modelViewMatrix = collisionContext .uniforms .pointee .modelViewMatrix
+         let collisionBox    = modelViewMatrix .inverse * Box3f (size: collisionSize, center: .zero)
+
+         if collisionContext .shapeNode .intersects (collisionBox, modelViewMatrix)
+         {
+            collisions .forEach { activeCollisions .insert ($0) }
+         }
+      }
+
+      // Set isActive to FALSE for affected nodes.
+
+      self .activeCollisions .subtracting (activeCollisions) .forEach { $0 .set_active (false) }
+
+      // Set isActive to TRUE for affected nodes.
+
+      activeCollisions .forEach { $0 .set_active (true) }
+
+      self .activeCollisions = activeCollisions
    }
-   
-   private final var speed : Float = 0
    
    private final func gravite ()
    {

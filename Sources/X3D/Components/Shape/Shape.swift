@@ -120,6 +120,15 @@ public final class Shape :
                                  intersection: intersection)
    }
    
+   // Intersection
+   
+   internal final override func intersects (_ box : Box3f, _ modelViewMatrix : Matrix4f) -> Bool
+   {
+      return geometryNode! .intersects (box, modelViewMatrix)
+   }
+   
+   // Rendering
+
    internal final override func render (_ context : CollisionContext, _ renderEncoder : MTLRenderCommandEncoder)
    {
       geometryNode! .render (context, renderEncoder)

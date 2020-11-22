@@ -99,11 +99,13 @@ public final class ArcClose2D :
 
    internal final override func build ()
    {
+      guard let browser = browser else { return }
+      
       isSolid     = solid
       hasTexCoord = true
       
       let sweepAngle = self .sweepAngle
-      let steps      = Int (sweepAngle * Float (browser! .arcClose2DOptions .dimension) / (Float .pi * 2))
+      let steps      = Int (sweepAngle * Float (browser .arcClose2DOptions .dimension) / (Float .pi * 2))
       let radius     = abs (self .radius)
       let chord      = closureType == "CHORD"
       var texCoords  = [Complex <Float>] ()

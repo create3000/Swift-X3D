@@ -69,18 +69,20 @@ public final class Circle2D :
    
    internal final override func build ()
    {
+      guard let browser = browser else { return }
+      
       let radius = abs (self .radius)
       
       if radius == 1
       {
-         for vertex in browser! .circle2DOptions .primitives
+         for vertex in browser .circle2DOptions .primitives
          {
             addPrimitive (point: vertex)
          }
       }
       else
       {
-         for vertex in browser! .circle2DOptions .primitives
+         for vertex in browser .circle2DOptions .primitives
          {
             addPrimitive (point: vertex * radius)
          }

@@ -68,10 +68,12 @@ public final class Sphere :
    
    internal final override func build ()
    {
+      guard let browser = browser else { return }
+      
       isSolid     = solid
       hasTexCoord = true
       
-      for vertex in browser! .sphereOptions .primitives
+      for vertex in browser .sphereOptions .primitives
       {
          addPrimitive (texCoords: [vertex .texCoord],
                        normal: vertex .point,

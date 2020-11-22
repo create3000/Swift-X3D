@@ -76,6 +76,8 @@ public final class Disk2D :
 
    internal final override func build ()
    {
+      guard let browser = browser else { return }
+      
       if innerRadius == outerRadius
       {
          let radius = abs (outerRadius)
@@ -98,14 +100,14 @@ public final class Disk2D :
          
          if radius == 1
          {
-            for vertex in browser! .disk2DOptions .circlePrimitives
+            for vertex in browser .disk2DOptions .circlePrimitives
             {
                addPrimitive (point: vertex)
             }
          }
          else
          {
-            for vertex in browser! .disk2DOptions .circlePrimitives
+            for vertex in browser .disk2DOptions .circlePrimitives
             {
                addPrimitive (point: vertex * radius)
             }
@@ -127,7 +129,7 @@ public final class Disk2D :
 
          if radius == 1
          {
-            for vertex in browser! .disk2DOptions .diskPrimitives
+            for vertex in browser .disk2DOptions .diskPrimitives
             {
                addPrimitive (texCoords: [vertex .texCoord],
                              normal: .zAxis,
@@ -136,7 +138,7 @@ public final class Disk2D :
          }
          else
          {
-            for vertex in browser! .disk2DOptions .diskPrimitives
+            for vertex in browser .disk2DOptions .diskPrimitives
             {
                addPrimitive (texCoords: [vertex .texCoord],
                              normal: .zAxis,
@@ -158,7 +160,7 @@ public final class Disk2D :
       let minRadius        = abs (min (innerRadius, outerRadius))
       let scale            = minRadius / maxRadius
       let offset           = (1 - scale) / 2
-      let primitives       = browser! .disk2DOptions .diskPrimitives
+      let primitives       = browser .disk2DOptions .diskPrimitives
 
       for i in stride (from: 0, to: primitives .count, by: 3)
       {

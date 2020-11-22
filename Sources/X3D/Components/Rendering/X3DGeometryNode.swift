@@ -97,12 +97,14 @@ public class X3DGeometryNode :
       
       buildRequested .store (true)
       
-      DispatchQueue .main .async { [weak self] in self? .rebuild () }
+      DispatchQueue .main .async { self .rebuild () }
    }
    
    /// Updates geometry.
    internal final func rebuild ()
    {
+      guard let browser = browser else { return }
+      
       buildRequested .store (false)
       
       primitives .removeAll (keepingCapacity: true)
@@ -121,9 +123,9 @@ public class X3DGeometryNode :
          generateTexCoords (&primitives)
       }
       
-      primitivesBuffer = browser! .device! .makeBuffer (bytes: primitives,
-                                                        length: primitives .count * MemoryLayout <x3d_VertexIn> .stride,
-                                                        options: [ ])!
+      primitivesBuffer = browser .device! .makeBuffer (bytes: primitives,
+                                                       length: primitives .count * MemoryLayout <x3d_VertexIn> .stride,
+                                                       options: [ ])!
    }
 
    /// Override to add vertices.

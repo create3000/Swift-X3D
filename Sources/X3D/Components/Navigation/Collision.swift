@@ -74,7 +74,7 @@ public final class Collision :
       $enabled .addInterest ("set_live",  Collision .set_live,  self)
       $proxy   .addInterest ("set_proxy", Collision .set_proxy, self)
       
-      DispatchQueue .main .async { [weak self] in self? .set_live () }
+      DispatchQueue .main .async { self .set_live () }
       set_proxy ()
    }
    
@@ -82,13 +82,15 @@ public final class Collision :
    
    private final func set_live ()
    {
-      if scene! .isLive && enabled
+      guard let browser = browser, let scene = scene else { return }
+      
+      if scene .isLive && enabled
       {
-         browser! .addCollision (object: self)
+         browser .addCollision (object: self)
       }
       else
       {
-         browser! .removeCollision (object: self)
+         browser .removeCollision (object: self)
       }
    }
    

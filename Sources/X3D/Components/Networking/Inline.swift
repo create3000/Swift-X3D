@@ -91,7 +91,9 @@ public final class Inline :
    
    private final func set_live ()
    {
-      if scene! .isLive
+      guard let scene = scene else { return }
+      
+      if scene .isLive
       {
          internalScene? .beginUpdate ()
       }
@@ -163,25 +165,27 @@ public final class Inline :
    
    private final func replaceScene (scene : X3DScene?)
    {
+      guard let executionContext = executionContext else { return }
+      
       internalScene? .endUpdate ()
       internalScene? .$rootNodes .removeFieldInterest (to: groupNode .$children)
-      groupNode .children .removeAll ()
       
       if let scene = scene
       {
          internalScene = scene
          
-         internalScene! .executionContext = executionContext!
-         internalScene! .isPrivate        = executionContext! .isPrivate
+         internalScene! .executionContext = executionContext
+         internalScene! .isPrivate        = executionContext .isPrivate
+         groupNode .children              = internalScene! .rootNodes
 
          internalScene! .$rootNodes .addFieldInterest (to: groupNode .$children)
-         groupNode .children .append (contentsOf: internalScene! .rootNodes)
 
          set_live ()
       }
       else
       {
-         internalScene = nil
+         internalScene       = nil
+         groupNode .children = [ ]
       }
    }
    

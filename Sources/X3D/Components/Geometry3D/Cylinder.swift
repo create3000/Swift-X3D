@@ -101,10 +101,12 @@ public final class Cylinder :
 
    internal final override func build ()
    {
+      guard let browser = browser else { return }
+      
       isSolid     = solid
       hasTexCoord = true
 
-      let uDimension = browser! .cylinderOptions .uDimension
+      let uDimension = browser .cylinderOptions .uDimension
 
       let y1 = height / 2
       let y2 = -y1

@@ -97,9 +97,11 @@ public final class Arc2D :
 
    internal final override func build ()
    {
+      guard let browser = browser else { return }
+      
       let sweepAngle = self .sweepAngle
       let circle     = sweepAngle == Float .pi * 2
-      var steps      = Int (sweepAngle * Float (browser! .arc2DOptions .dimension) / (Float .pi * 2))
+      var steps      = Int (sweepAngle * Float (browser .arc2DOptions .dimension) / (Float .pi * 2))
       let radius     = abs (self .radius)
 
       steps = max (3, steps)

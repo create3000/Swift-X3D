@@ -78,8 +78,6 @@ extension X3DTimeDependentNode
       
       DispatchQueue .main .async
       {
-         [weak self] in guard let self = self else { return }
-         
          self .timeDependentProperties .startTime  = self .startTime
          self .timeDependentProperties .resumeTime = self .resumeTime
          self .timeDependentProperties .pauseTime  = self .pauseTime
@@ -93,7 +91,9 @@ extension X3DTimeDependentNode
    
    internal func set_live ()
    {
-      if scene! .isPrivate || scene! .isLive || isLive
+      guard let scene = scene else { return }
+      
+      if scene .isPrivate || scene .isLive || isLive
       {
          if timeDependentProperties .disabled
          {
@@ -130,13 +130,15 @@ extension X3DTimeDependentNode
 
    private func set_loop ()
    {
+      guard let browser = browser else { return }
+      
       if enabled
       {
          if loop
          {
             if timeDependentProperties .stopTime <= timeDependentProperties .startTime
             {
-               if timeDependentProperties .startTime <= browser! .currentTime
+               if timeDependentProperties .startTime <= browser .currentTime
                {
                   do_start ()
                }
@@ -147,13 +149,15 @@ extension X3DTimeDependentNode
 
    private func set_startTime ()
    {
+      guard let browser = browser else { return }
+      
       timeDependentProperties .startTime = startTime
 
       if enabled
       {
          timeDependentProperties .startTask? .cancel ()
 
-         if timeDependentProperties .startTime <= browser! .currentTime
+         if timeDependentProperties .startTime <= browser .currentTime
          {
             do_start ()
          }
@@ -166,6 +170,8 @@ extension X3DTimeDependentNode
    
    private func set_resumeTime ()
    {
+      guard let browser = browser else { return }
+      
       timeDependentProperties .resumeTime = resumeTime
 
       if enabled
@@ -177,7 +183,7 @@ extension X3DTimeDependentNode
             return
          }
 
-         if timeDependentProperties .resumeTime <= browser! .currentTime
+         if timeDependentProperties .resumeTime <= browser .currentTime
          {
             do_resume ()
          }
@@ -190,6 +196,8 @@ extension X3DTimeDependentNode
    
    private func set_pauseTime ()
    {
+      guard let browser = browser else { return }
+      
       timeDependentProperties .pauseTime = pauseTime
 
       if enabled
@@ -201,7 +209,7 @@ extension X3DTimeDependentNode
             return
          }
 
-         if timeDependentProperties .pauseTime <= browser! .currentTime
+         if timeDependentProperties .pauseTime <= browser .currentTime
          {
             do_pause ()
          }
@@ -214,6 +222,8 @@ extension X3DTimeDependentNode
    
    private func set_stopTime ()
    {
+      guard let browser = browser else { return }
+      
       timeDependentProperties .stopTime = stopTime
 
       if enabled
@@ -225,7 +235,7 @@ extension X3DTimeDependentNode
             return
          }
 
-         if timeDependentProperties .stopTime <= browser! .currentTime
+         if timeDependentProperties .stopTime <= browser .currentTime
          {
             do_stop ()
          }
@@ -240,6 +250,8 @@ extension X3DTimeDependentNode
    
    private func do_start ()
    {
+      guard let browser = browser, let scene = scene else { return }
+      
       if !isActive
       {
          resetElapsedTime ()
@@ -250,9 +262,9 @@ extension X3DTimeDependentNode
 
          set_start ()
 
-         if scene! .isLive || isLive
+         if scene .isLive || isLive
          {
-            browser! .addBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .set_time, object: self)
+            browser .addBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .set_time, object: self)
          }
          else
          {
@@ -267,16 +279,15 @@ extension X3DTimeDependentNode
    
    private func do_pause ()
    {
+      guard let browser = browser, let scene = scene else { return }
+      
       if isActive && !isPaused
       {
          isPaused = true
 
-         if timeDependentProperties .pauseTime != browser! .currentTime
-         {
-            timeDependentProperties .pauseTime = browser! .currentTime
-         }
+         timeDependentProperties .pauseTime = browser .currentTime
 
-         if scene! .isLive || isLive
+         if scene .isLive || isLive
          {
             real_pause ()
          }
@@ -285,25 +296,26 @@ extension X3DTimeDependentNode
 
    private func real_pause ()
    {
-      timeDependentProperties .pause = browser! .currentTime
+      guard let browser = browser else { return }
+      
+      timeDependentProperties .pause = browser .currentTime
 
       set_pause ()
 
-      browser! .removeBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .set_time, object: self)
+      browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .set_time, object: self)
    }
 
    private func do_resume ()
    {
+      guard let browser = browser, let scene = scene else { return }
+      
       if isActive && isPaused
       {
          isPaused = false
 
-         if timeDependentProperties .resumeTime != browser! .currentTime
-         {
-            timeDependentProperties .resumeTime = browser! .currentTime
-         }
+         timeDependentProperties .resumeTime = browser .currentTime
 
-         if scene! .isLive || isLive
+         if scene .isLive || isLive
          {
             real_resume ()
          }
@@ -312,14 +324,16 @@ extension X3DTimeDependentNode
    
    private func real_resume ()
    {
-      let interval = browser! .currentTime - timeDependentProperties .pause
+      guard let browser = browser else { return }
+      
+      let interval = browser .currentTime - timeDependentProperties .pause
 
       timeDependentProperties .pauseInterval += interval
 
       set_resume ()
 
-      browser! .addBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .set_time, object: self)
-      browser! .setNeedsDisplay ()
+      browser .addBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .set_time, object: self)
+      browser .setNeedsDisplay ()
    }
 
    private func do_stop ()
@@ -329,6 +343,8 @@ extension X3DTimeDependentNode
 
    internal func stop ()
    {
+      guard let browser = browser, let scene = scene else { return }
+      
       if isActive
       {
          // The event order below is very important.
@@ -344,9 +360,9 @@ extension X3DTimeDependentNode
 
          isActive = false
 
-         if scene! .isLive || isLive
+         if scene .isLive || isLive
          {
-            browser! .removeBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .set_time, object: self)
+            browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .set_time, object: self)
          }
       }
    }
@@ -355,7 +371,9 @@ extension X3DTimeDependentNode
    
    internal func getElapsedTime () -> TimeInterval
    {
-      return browser! .currentTime - timeDependentProperties .start - timeDependentProperties .pauseInterval
+      guard let browser = browser else { return 0 }
+      
+      return browser .currentTime - timeDependentProperties .start - timeDependentProperties .pauseInterval
    }
 
    private func resetElapsedTime ()

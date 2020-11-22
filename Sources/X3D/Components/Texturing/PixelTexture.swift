@@ -61,6 +61,8 @@ public final class PixelTexture :
    
    private final func set_image ()
    {
+      guard let browser = browser else { return }
+      
       let width  = Int (image .width)
       let height = Int (image .height)
       let comp   = Int (image .comp)
@@ -68,7 +70,7 @@ public final class PixelTexture :
       
       guard width > 0 && height > 0 && comp >= 1 && comp <= 4 else
       {
-         self .texture = browser! .defaultTexture
+         self .texture = browser .defaultTexture
          self .setTransparent (false)
          
          return
@@ -151,7 +153,7 @@ public final class PixelTexture :
       
       // Create texture.
       
-      let textureLoader = MTKTextureLoader (device: self .browser! .device!)
+      let textureLoader = MTKTextureLoader (device: browser .device!)
       
       let options : [MTKTextureLoader .Option : Any] = [
          .generateMipmaps : generateMipMaps,
@@ -160,9 +162,9 @@ public final class PixelTexture :
       
       guard let texture = try? textureLoader .newTexture (cgImage: swifty .cgImage, options: options) else
       {
-         self .browser! .console .warn (t("Couldn't load pixel texture. Couldn't make texture from image."))
+         browser .console .warn (t("Couldn't load pixel texture. Couldn't make texture from image."))
          
-         self .texture = browser! .defaultTexture
+         self .texture = browser .defaultTexture
          self .setTransparent (false)
          
          return
@@ -171,7 +173,6 @@ public final class PixelTexture :
       // Set texture.
       
       self .texture = texture
-      
       self .setTransparent (comp & 1 == 0 && swifty .isTransparent)
    }
 }

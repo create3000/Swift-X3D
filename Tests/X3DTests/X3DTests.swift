@@ -34,11 +34,20 @@ final class X3DTests :
       // This is an example of a functional test case.
       // Use XCTAssert and related functions to verify your tests produce the correct results.
       
-      let ob : Bool? = false
+      func peek (_ r1 : Selector, _ r2 : Selector)
+      {
+         debugPrint (r1 == r1)
+         debugPrint (r2 == r1)
+         debugPrint (r2 == r2)
+         self .perform (r1)
+      }
       
-      debugPrint (ob ?? false || true)
+      peek (#selector (X3DTests .test1), #selector (X3DTests .test2))
    }
    
+   func test1 () { debugPrint ("t1") }
+   func test2 () { debugPrint ("t2") }
+
    func testMatrixComposition () throws
    {
       let t  = Vector3f (1, 2, 3)

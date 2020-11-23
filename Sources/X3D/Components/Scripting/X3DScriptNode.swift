@@ -19,7 +19,7 @@ public class X3DScriptNode :
    public   final override var canUserDefinedFields  : Bool { true }
    internal final override var extendedEventHandling : Bool { false }
    
-   internal final override func getSourceText () ->  MFString? { $url }
+   internal final override func getSourceText () -> MFString? { $url }
 
    // X3DUrlObject
    
@@ -38,8 +38,5 @@ public class X3DScriptNode :
       addChildObjects ($loadState)
    }
    
-   public final func requestImmediateLoad ()
-   {
-      guard checkLoadState != .COMPLETE_STATE && checkLoadState != .IN_PROGRESS_STATE else { return }
-   }
+   public func requestImmediateLoad () { }
 }

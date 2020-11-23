@@ -24,7 +24,7 @@ public final class Script :
    
    // Properties
    
-   private final var context : JavaSciptContext?
+   private final var context : JavaScript .Context?
    
    // Static properties
    
@@ -110,7 +110,7 @@ public final class Script :
                continue
             }
             
-            let context = JavaSciptContext (browser: browser, script: source)
+            let context = JavaScript .Context (browser: browser, script: source)
 
             DispatchQueue .main .async
             {

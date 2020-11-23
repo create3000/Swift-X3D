@@ -75,11 +75,14 @@ extension JavaScript
                browser .println (args .map { $0 .toString () } .joined (separator: " "))
             }
          }
-
-         context .setObject (JSValue (nullIn: context), forKeyedSubscript: "NULL"  as NSString)
-         context .setObject (false,                     forKeyedSubscript: "FALSE" as NSString)
-         context .setObject (true,                      forKeyedSubscript: "TRUE"  as NSString)
-         context .setObject (print,                     forKeyedSubscript: "print" as NSString)
+         
+         let null = JSValue (nullIn: context)
+         
+         context .setObject (null,  forKeyedSubscript: "NULL"  as NSString)
+         context .setObject (false, forKeyedSubscript: "FALSE" as NSString)
+         context .setObject (true,  forKeyedSubscript: "TRUE"  as NSString)
+         context .setObject (print, forKeyedSubscript: "print" as NSString)
+         context .setObject (print, forKeyedSubscript: "trace" as NSString)
       }
    }
 }

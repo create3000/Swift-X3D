@@ -86,31 +86,33 @@ public final class Script :
          
          for URL in url
          {
-            var source = ""
+            var sourceText = ""
             
             if let matches = Script .ecmascript .matches (in: URL)
             {
                let index = URL .index (URL .startIndex, offsetBy: matches [1] .count)
                
-               source = String (URL .suffix (from: index))
+               sourceText = String (URL .suffix (from: index))
             }
             else if let URL = Foundation .URL (string: URL, relativeTo: worldURL)
             {
                if let string = try? String (contentsOf: URL)
                {
-                  source = string
+                  sourceText = string
                }
                else
                {
+                  browser .console .warn (t("Couldn't read ECMAScript source text from URL."))
                   continue
                }
             }
             else
             {
+               browser .console .warn (t("Couldn't read ECMAScript source text."))
                continue
             }
             
-            let context = JavaScript .Context (browser: browser, script: source)
+            let context = JavaScript .Context (scriptNode: self, sourceText: sourceText)
 
             DispatchQueue .main .async
             {

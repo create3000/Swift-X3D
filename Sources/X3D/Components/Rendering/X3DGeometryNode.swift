@@ -501,7 +501,7 @@ extension X3DGeometryNode
    internal func intersects (line : Line3f, modelViewMatrix : Matrix4f) -> [Intersection]?
    {
       let line            = transformLine (line)
-      let modelViewMatrix = transformMatrix (modelViewMatrix)
+      //let modelViewMatrix = transformMatrix (modelViewMatrix)
       var intersections   = [Intersection] ()
       
       guard bbox .intersects (with: line) else { return nil }

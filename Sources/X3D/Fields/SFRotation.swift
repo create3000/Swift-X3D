@@ -47,4 +47,14 @@ public final class SFRotation :
       
       wrappedValue = field .wrappedValue
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      let axis  = wrappedValue .axis
+      let angle = wrappedValue .angle
+
+      stream += "\(axis .x) \(axis .y) \(axis .z) \(angle)"
+   }
 }

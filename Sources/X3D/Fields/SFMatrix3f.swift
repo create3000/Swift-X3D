@@ -47,4 +47,19 @@ public final class SFMatrix3f :
       
       wrappedValue = field .wrappedValue
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      let c0 = wrappedValue [0]
+      let c1 = wrappedValue [1]
+      let c2 = wrappedValue [2]
+
+      stream += "\(c0.x) \(c0.y) \(c0.z)"
+      stream += " "
+      stream += "\(c1.x) \(c1.y) \(c1.z)"
+      stream += " "
+      stream += "\(c2.x) \(c2.y) \(c2.z)"
+   }
 }

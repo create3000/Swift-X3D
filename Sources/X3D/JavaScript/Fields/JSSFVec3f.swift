@@ -16,6 +16,7 @@ import JavaScriptCore
    
    init ()
    
+   func add (_ vector : JavaScript .SFVec3f) -> JavaScript .SFVec3f
    func length () -> Float
    func multiply (_ scalar : Float) -> JavaScript .SFVec3f
 
@@ -30,9 +31,9 @@ extension JavaScript
    {
       // Properties
       
-      dynamic public var x : Float { get { object .wrappedValue .x } set { object .wrappedValue .x = newValue } }
-      dynamic public var y : Float { get { object .wrappedValue .y } set { object .wrappedValue .y = newValue } }
-      dynamic public var z : Float { get { object .wrappedValue .z } set { object .wrappedValue .z = newValue } }
+      public var x : Float { get { object .wrappedValue .x } set { object .wrappedValue .x = newValue } }
+      public var y : Float { get { object .wrappedValue .y } set { object .wrappedValue .y = newValue } }
+      public var z : Float { get { object .wrappedValue .z } set { object .wrappedValue .z = newValue } }
 
       // Private properties
       
@@ -89,12 +90,17 @@ Object .defineProperty (SFVec3f .prototype, "2", {
       
       // Functions
       
-      public func length () -> Float
+      public final func add (_ vector : SFVec3f) -> SFVec3f
+      {
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue + vector .object .wrappedValue))
+      }
+
+      public final func length () -> Float
       {
          return simd_length (object .wrappedValue)
       }
       
-      func multiply (_ scalar : Float) -> SFVec3f
+      public final func multiply (_ scalar : Float) -> SFVec3f
       {
          return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue * scalar))
       }
@@ -103,9 +109,7 @@ Object .defineProperty (SFVec3f .prototype, "2", {
       
       public final func toString () -> String
       {
-         let value = object .wrappedValue
-         
-         return "\(value .x) \(value .y) \(value .z)"
+         return object .toString ()
       }
    }
 }

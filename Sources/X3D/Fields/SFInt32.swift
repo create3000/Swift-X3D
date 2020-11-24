@@ -47,4 +47,11 @@ public final class SFInt32 :
       
       wrappedValue = field .wrappedValue
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      stream += String (wrappedValue)
+   }
 }

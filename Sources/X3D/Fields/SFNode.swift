@@ -67,4 +67,11 @@ public final class SFNode <Type : X3DBaseNode> :
       
       wrappedValue = field .wrappedValue? .copy (with: protoInstance)
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      stream += wrappedValue != nil ? wrappedValue .toString () : "NULL"
+   }
 }

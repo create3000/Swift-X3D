@@ -47,4 +47,11 @@ public final class SFColorRGBA :
       
       wrappedValue = field .wrappedValue
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      stream += "\(wrappedValue .r) \(wrappedValue .g) \(wrappedValue .b) \(wrappedValue .a)"
+   }
 }

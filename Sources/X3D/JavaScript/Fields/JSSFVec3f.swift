@@ -44,6 +44,7 @@ extension JavaScript
       typealias Scalar   = Float
       typealias SFVec    = JavaScript .SFVec3f
       typealias Internal = X3D .SFVec3f
+      typealias Inner    = Internal .Value
 
       // Properties
       
@@ -62,23 +63,23 @@ extension JavaScript
          context .setObject (Self .self, forKeyedSubscript: "SFVec3f" as NSString)
          
          context .evaluateScript ("""
-Object .defineProperty (SFVec3f .prototype, "0", {
+Object .defineProperty (SFVec3f .prototype, 0, {
    get: function () { return this .x; },
    set: function (newValue) { this .x = newValue; },
    enumerable: true,
-   configurable: false
+   configurable: false,
 });
-Object .defineProperty (SFVec3f .prototype, "1", {
+Object .defineProperty (SFVec3f .prototype, 1, {
    get: function () { return this .y; },
    set: function (newValue) { this .y = newValue; },
    enumerable: true,
-   configurable: false
+   configurable: false,
 });
-Object .defineProperty (SFVec3f .prototype, "2", {
+Object .defineProperty (SFVec3f .prototype, 2, {
    get: function () { return this .z; },
    set: function (newValue) { this .z = newValue; },
    enumerable: true,
-   configurable: false
+   configurable: false,
 });
 """)
       }
@@ -89,9 +90,9 @@ Object .defineProperty (SFVec3f .prototype, "2", {
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 3
          {
-            self .object = Internal (wrappedValue: Vector3f (args [0] .toFloat (),
-                                                             args [1] .toFloat (),
-                                                             args [2] .toFloat ()))
+            self .object = Internal (wrappedValue: Inner (args [0] .toFloat (),
+                                                          args [1] .toFloat (),
+                                                          args [2] .toFloat ()))
          }
          else
          {

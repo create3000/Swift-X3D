@@ -17,8 +17,12 @@ import JavaScriptCore
    init ()
    
    func add (_ vector : JavaScript .SFVec3f) -> JavaScript .SFVec3f
+   func cross (_ vector : JavaScript .SFVec3f) -> JavaScript .SFVec3f
+   func divide (_ scalar : Float) -> JavaScript .SFVec3f
    func length () -> Float
    func multiply (_ scalar : Float) -> JavaScript .SFVec3f
+   func normalize () -> JavaScript .SFVec3f
+   func subtract (_ vector : JavaScript .SFVec3f) -> JavaScript .SFVec3f
 
    func toString () -> String
 }
@@ -95,6 +99,16 @@ Object .defineProperty (SFVec3f .prototype, "2", {
          return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue + vector .object .wrappedValue))
       }
 
+      public final func cross (_ vector : SFVec3f) -> SFVec3f
+      {
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: simd_cross (object .wrappedValue, vector .object .wrappedValue)))
+      }
+
+      public final func divide (_ scalar : Float) -> SFVec3f
+      {
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue / scalar))
+      }
+      
       public final func length () -> Float
       {
          return simd_length (object .wrappedValue)
@@ -103,6 +117,16 @@ Object .defineProperty (SFVec3f .prototype, "2", {
       public final func multiply (_ scalar : Float) -> SFVec3f
       {
          return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue * scalar))
+      }
+      
+      public final func normalize () -> SFVec3f
+      {
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: simd_normalize (object .wrappedValue)))
+      }
+      
+      public final func subtract (_ vector : SFVec3f) -> SFVec3f
+      {
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue - vector .object .wrappedValue))
       }
 
       // Input/Output

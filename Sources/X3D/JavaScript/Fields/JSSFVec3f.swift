@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  JSSFVec3f.swift
 //  
 //
 //  Created by Holger Seelig on 24.11.20.
@@ -10,24 +10,27 @@ import JavaScriptCore
 @objc internal protocol SFVec3fExports :
    JSExport
 {
-   var x : Float { get set }
-   var y : Float { get set }
-   var z : Float { get set }
+   typealias Scalar = Float
+   typealias SFVec  = JavaScript .SFVec3f
+
+   var x : Scalar { get set }
+   var y : Scalar { get set }
+   var z : Scalar { get set }
    
    init ()
    
-   func add (_ vector : JavaScript .SFVec3f) -> JavaScript .SFVec3f
-   func cross (_ vector : JavaScript .SFVec3f) -> JavaScript .SFVec3f
-   func distance (_ vector : JavaScript .SFVec3f) -> Float
-   func divide (_ scalar : Float) -> JavaScript .SFVec3f
-   func divVec (_ vector : JavaScript .SFVec3f) -> JavaScript .SFVec3f
-   func length () -> Float
-   func lerp (_ vector : JavaScript .SFVec3f, _ t : Float) -> JavaScript .SFVec3f
-   func multiply (_ scalar : Float) -> JavaScript .SFVec3f
-   func multVec (_ vector : JavaScript .SFVec3f) -> JavaScript .SFVec3f
-   func negate () -> JavaScript .SFVec3f
-   func normalize () -> JavaScript .SFVec3f
-   func subtract (_ vector : JavaScript .SFVec3f) -> JavaScript .SFVec3f
+   func add (_ vector : SFVec) -> SFVec
+   func cross (_ vector : SFVec) -> SFVec
+   func distance (_ vector : SFVec) -> Scalar
+   func divide (_ scalar : Scalar) -> SFVec
+   func divVec (_ vector : SFVec) -> SFVec
+   func length () -> Scalar
+   func lerp (_ vector : SFVec, _ t : Scalar) -> SFVec
+   func multiply (_ scalar : Scalar) -> SFVec
+   func multVec (_ vector : SFVec) -> SFVec
+   func negate () -> SFVec
+   func normalize () -> SFVec
+   func subtract (_ vector : SFVec) -> SFVec
 
    func toString () -> String
 }
@@ -38,15 +41,19 @@ extension JavaScript
       NSObject,
       SFVec3fExports
    {
+      typealias Scalar   = Float
+      typealias SFVec    = JavaScript .SFVec3f
+      typealias Internal = X3D .SFVec3f
+
       // Properties
       
-      public var x : Float { get { object .wrappedValue .x } set { object .wrappedValue .x = newValue } }
-      public var y : Float { get { object .wrappedValue .y } set { object .wrappedValue .y = newValue } }
-      public var z : Float { get { object .wrappedValue .z } set { object .wrappedValue .z = newValue } }
+      public var x : Scalar { get { object .wrappedValue .x } set { object .wrappedValue .x = newValue } }
+      public var y : Scalar { get { object .wrappedValue .y } set { object .wrappedValue .y = newValue } }
+      public var z : Scalar { get { object .wrappedValue .z } set { object .wrappedValue .z = newValue } }
 
       // Private properties
       
-      private final var object : X3D .SFVec3f
+      private final var object : Internal
       
       // Registration
       
@@ -82,81 +89,81 @@ Object .defineProperty (SFVec3f .prototype, "2", {
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 3
          {
-            self .object = X3D .SFVec3f (wrappedValue: Vector3f (args [0] .toFloat (),
-                                                                 args [1] .toFloat (),
-                                                                 args [2] .toFloat ()))
+            self .object = Internal (wrappedValue: Vector3f (args [0] .toFloat (),
+                                                             args [1] .toFloat (),
+                                                             args [2] .toFloat ()))
          }
          else
          {
-            self .object = X3D .SFVec3f ()
+            self .object = Internal ()
          }
       }
       
-      required internal init (object : X3D .SFVec3f)
+      required internal init (object : Internal)
       {
          self .object = object
       }
       
       // Functions
       
-      public final func add (_ vector : SFVec3f) -> SFVec3f
+      public final func add (_ vector : SFVec) -> SFVec
       {
-         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue + vector .object .wrappedValue))
+         return SFVec (object: Internal (wrappedValue: object .wrappedValue + vector .object .wrappedValue))
       }
 
-      public final func cross (_ vector : SFVec3f) -> SFVec3f
+      public final func cross (_ vector : SFVec) -> SFVec
       {
-         return SFVec3f (object: X3D .SFVec3f (wrappedValue: simd_cross (object .wrappedValue, vector .object .wrappedValue)))
+         return SFVec (object: Internal (wrappedValue: simd_cross (object .wrappedValue, vector .object .wrappedValue)))
       }
 
-      public final func distance (_ vector : SFVec3f) -> Float
+      public final func distance (_ vector : SFVec) -> Scalar
       {
          return simd_distance (object .wrappedValue, vector .object .wrappedValue)
       }
 
-      public final func divide (_ scalar : Float) -> SFVec3f
+      public final func divide (_ scalar : Scalar) -> SFVec
       {
-         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue / scalar))
+         return SFVec (object: Internal (wrappedValue: object .wrappedValue / scalar))
       }
       
-      public final func divVec (_ vector : SFVec3f) -> SFVec3f
+      public final func divVec (_ vector : SFVec) -> SFVec
       {
-         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue / vector .object .wrappedValue))
+         return SFVec (object: Internal (wrappedValue: object .wrappedValue / vector .object .wrappedValue))
       }
 
-      public final func length () -> Float
+      public final func length () -> Scalar
       {
          return simd_length (object .wrappedValue)
       }
       
-      public final func lerp (_ vector : SFVec3f, _ t : Float) -> SFVec3f
+      public final func lerp (_ vector : SFVec, _ t : Scalar) -> SFVec
       {
-         return SFVec3f (object: X3D .SFVec3f (wrappedValue: mix (object .wrappedValue, vector .object .wrappedValue, t: t)))
+         return SFVec (object: Internal (wrappedValue: mix (object .wrappedValue, vector .object .wrappedValue, t: t)))
       }
 
-      public final func multiply (_ scalar : Float) -> SFVec3f
+      public final func multiply (_ scalar : Scalar) -> SFVec
       {
-         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue * scalar))
+         return SFVec (object: Internal (wrappedValue: object .wrappedValue * scalar))
       }
       
-      public final func multVec (_ vector : SFVec3f) -> SFVec3f
+      public final func multVec (_ vector : SFVec) -> SFVec
       {
-         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue * vector .object .wrappedValue))
+         return SFVec (object: Internal (wrappedValue: object .wrappedValue * vector .object .wrappedValue))
       }
 
-      public final func negate () -> SFVec3f
+      public final func negate () -> SFVec
       {
-         return SFVec3f (object: X3D .SFVec3f (wrappedValue: -object .wrappedValue))
+         return SFVec (object: Internal (wrappedValue: -object .wrappedValue))
       }
 
-      public final func normalize () -> SFVec3f
+      public final func normalize () -> SFVec
       {
-         return SFVec3f (object: X3D .SFVec3f (wrappedValue: simd_normalize (object .wrappedValue)))
+         return SFVec (object: Internal (wrappedValue: simd_normalize (object .wrappedValue)))
       }
 
-      public final func subtract (_ vector : SFVec3f) -> SFVec3f
+      public final func subtract (_ vector : SFVec) -> SFVec
       {
-         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue - vector .object .wrappedValue))
+         return SFVec (object: Internal (wrappedValue: object .wrappedValue - vector .object .wrappedValue))
       }
 
       // Input/Output

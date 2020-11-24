@@ -49,6 +49,7 @@ extension JavaScript
 
          Global .register (context, browser)
          
+         SFVec3d .register (context)
          SFVec3f .register (context)
       }
       

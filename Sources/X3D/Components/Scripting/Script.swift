@@ -117,11 +117,16 @@ public final class Script :
             DispatchQueue .main .async
             {
                self .context = context
-               
+
                context .initialize ()
             }
             
             return
+         }
+         
+         DispatchQueue .main .async
+         {
+            self .context = nil
          }
       }
    }

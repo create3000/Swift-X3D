@@ -15,9 +15,11 @@ extension JavaScript
       {
          let print : @convention(block) () -> Void =
          {
+            [weak browser] in
+            
             if let args = JSContext .currentArguments () as? [JSValue]
             {
-               browser .println (args .map { $0 .toString () ?? "" } .joined (separator: " "))
+               browser? .println (args .map { $0 .toString () ?? "" } .joined (separator: " "))
             }
          }
          

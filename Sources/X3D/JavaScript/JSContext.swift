@@ -34,13 +34,13 @@ extension JavaScript
          self .context    = JSContext (virtualMachine: Context .vm)!
          
          context .exceptionHandler = { [weak self] in self? .exception ($1) }
-         
+
          // Register objects and functions.
 
          register ()
-         
+
          // Evaluate script source.
-         
+
          context .evaluateScript (sourceText)
       }
       
@@ -75,14 +75,14 @@ extension JavaScript
          if context .evaluateScript ("typeof prepareEvents == 'function'")! .toBool ()
          {
             prepareEventsFunction = context ["prepareEvents"]
-            
+
             browser .addBrowserInterest (event: .Browser_Event, id: "prepareEvents", method: Context .prepareEvents, object: self)
          }
-         
+
          if context .evaluateScript ("typeof eventsProcessed == 'function'")! .toBool ()
          {
             eventsProcessedFunction = context ["eventsProcessed"]
-            
+
             scriptNode .addInterest ("eventsProcessed", Context .eventsProcessed, self)
          }
       }

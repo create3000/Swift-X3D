@@ -79,12 +79,12 @@ public struct Rotation4d
    
    public var axis : Vector3
    {
-      didSet { quat = Quaternion4 (angle: angle, axis: axis) }
+      didSet { quat = Quaternion4 (angle: angle, axis: normalize (axis)) }
    }
    
    public var angle : Scalar
    {
-      didSet { quat = Quaternion4 (angle: angle, axis: axis) }
+      didSet { quat = Quaternion4 (angle: angle, axis: normalize (axis)) }
    }
 
    public var inverse : Self
@@ -210,14 +210,14 @@ public struct Rotation4f
    
    public var axis : Vector3
    {
-      didSet { quat = Quaternion4 (angle: angle, axis: axis) }
+      didSet { quat = Quaternion4 (angle: angle, axis: normalize (axis)) }
    }
    
    public var angle : Scalar
    {
-      didSet { quat = Quaternion4 (angle: angle, axis: axis) }
+      didSet { quat = Quaternion4 (angle: angle, axis: normalize (axis)) }
    }
-   
+
    public var inverse : Self
    {
       return Self (quat .inverse)

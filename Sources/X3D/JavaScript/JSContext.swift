@@ -73,18 +73,64 @@ extension JavaScript
             context ["initialize"]! .call (withArguments: nil)
          }
          
-         if context .evaluateScript ("typeof prepareEvents == 'function'")! .toBool ()
+         scriptNode .scene! .$isLive .addInterest ("set_live", Context .set_live, self)
+         
+         set_live ()
+      }
+      
+      private final func set_live ()
+      {
+         if scriptNode .scene! .isLive || scriptNode .executionContext! .getType () .contains (.X3DPrototypeInstance)
          {
-            prepareEventsFunction = context ["prepareEvents"]
+            if context .evaluateScript ("typeof prepareEvents == 'function'")! .toBool ()
+            {
+               prepareEventsFunction = context ["prepareEvents"]
 
-            browser .addBrowserInterest (event: .Browser_Event, id: "prepareEvents", method: Context .prepareEvents, object: self)
+               browser .addBrowserInterest (event: .Browser_Event, id: "prepareEvents", method: Context .prepareEvents, object: self)
+            }
+
+            if context .evaluateScript ("typeof eventsProcessed == 'function'")! .toBool ()
+            {
+               eventsProcessedFunction = context ["eventsProcessed"]
+
+               scriptNode .addInterest ("eventsProcessed", Context .eventsProcessed, self)
+            }
+            
+            for field in scriptNode .getUserDefinedFields ()
+            {
+               switch field .getAccessType ()
+               {
+                  case .inputOnly: do
+                  {
+                     guard context .evaluateScript ("typeof \(field .getName ()) == 'function'")! .toBool () else { break }
+                     
+                     let function : JSValue? = self .context [field .getName ()]
+                     
+                     field .addInterest ("set_file", { _ in { [weak self] in self? .set_field (field, function) } }, self)
+                  }
+                  case .inputOutput: do
+                  {
+                     guard context .evaluateScript ("typeof set_\(field .getName ()) == 'function'")! .toBool () else { break }
+                     
+                     let function : JSValue? = self .context ["set_" + field .getName ()]
+                     
+                     field .addInterest ("set_file", { _ in { [weak self] in self? .set_field (field, function) } }, self)
+                  }
+                  default:
+                     break
+               }
+            }
          }
-
-         if context .evaluateScript ("typeof eventsProcessed == 'function'")! .toBool ()
+         else
          {
-            eventsProcessedFunction = context ["eventsProcessed"]
-
-            scriptNode .addInterest ("eventsProcessed", Context .eventsProcessed, self)
+            browser .removeBrowserInterest (event: .Browser_Event, id: "prepareEvents", method: Context .prepareEvents, object: self)
+            
+            scriptNode .removeInterest ("eventsProcessed", Context .eventsProcessed, self)
+            
+            for field in scriptNode .getUserDefinedFields ()
+            {
+               field .removeInterest ("set_file", { _ in { } }, self)
+            }
          }
       }
       
@@ -93,6 +139,15 @@ extension JavaScript
       private final func prepareEvents ()
       {
          prepareEventsFunction! .call (withArguments: nil)
+      }
+      
+      private final func set_field (_ field : X3D .X3DField, _ function : JSValue?)
+      {
+         field .isTainted = true
+         
+         function? .call (withArguments: [toValue (field), browser .currentTime])
+         
+         field .isTainted = false
       }
       
       private final var eventsProcessedFunction : JSValue?
@@ -114,14 +169,14 @@ extension JavaScript
 
 extension JSContext
 {
-   internal subscript (_ key : NSString) -> JSValue?
+   internal subscript (_ key : String) -> JSValue?
    {
-      get { return objectForKeyedSubscript (key) }
+      get { return objectForKeyedSubscript (key as NSString) }
    }
 
-   internal subscript(_ key : NSString) -> Any?
+   internal subscript (_ key : String) -> Any?
    {
       get { return objectForKeyedSubscript (key) }
-      set { setObject (newValue, forKeyedSubscript: key) }
+      set { setObject (newValue, forKeyedSubscript: key as NSString) }
    }
 }

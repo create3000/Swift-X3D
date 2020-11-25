@@ -27,6 +27,7 @@ import JavaScriptCore
    func getAxis () -> SFVec3
    func setAxis (_ axis : SFVec3)
    
+   func inverse () -> SFRotation
    func multiply (_ rotation : SFRotation) -> SFRotation
    func multVec (_ vector : SFVec3) -> SFVec3
    func slerp (_ rotation : SFRotation, _ t : Scalar) -> SFRotation
@@ -126,7 +127,7 @@ Object .defineProperty (SFRotation .prototype, 3, {
          object .wrappedValue = rotation .object .wrappedValue
       }
 
-      // Functions
+      // Property access
       
       public final func getAxis () -> SFVec3
       {
@@ -136,6 +137,13 @@ Object .defineProperty (SFRotation .prototype, 3, {
       public final func setAxis (_ axis : SFVec3)
       {
          object .wrappedValue .axis = axis .object .wrappedValue
+      }
+
+      // Functions
+      
+      public final func inverse () -> SFRotation
+      {
+         return SFRotation (object: Internal (wrappedValue: object .wrappedValue .inverse))
       }
 
       public final func multiply (_ rotation : SFRotation) -> SFRotation

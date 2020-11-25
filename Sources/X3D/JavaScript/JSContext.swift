@@ -61,9 +61,10 @@ extension JavaScript
       
       internal final func initialize ()
       {
-         let initialize = context .objectForKeyedSubscript ("initialize")
-         
-         initialize? .call (withArguments: nil)
+         if context .evaluateScript ("typeof initialize == 'function'")! .toBool ()
+         {
+            context .objectForKeyedSubscript ("initialize")! .call (withArguments: nil)
+         }
       }
       
       private final func exception (_ exception : JSValue?)

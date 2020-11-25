@@ -26,8 +26,10 @@ import JavaScriptCore
 
    func getAxis () -> SFVec3
    func setAxis (_ axis : SFVec3)
+   
    func multiply (_ rotation : SFRotation) -> SFRotation
    func multVec (_ vector : SFVec3) -> SFVec3
+   func slerp (_ rotation : SFRotation, _ t : Scalar) -> SFRotation
 }
 
 extension JavaScript
@@ -144,6 +146,11 @@ Object .defineProperty (SFRotation .prototype, 3, {
       public final func multVec (_ vector : SFVec3) -> SFVec3
       {
          return SFVec3 (object: SFVec3 .Internal (wrappedValue: object .wrappedValue * vector .object .wrappedValue))
+      }
+      
+      public final func slerp (_ rotation : SFRotation, _ t : Scalar) -> SFRotation
+      {
+         return SFRotation (object: Internal (wrappedValue: X3D .slerp (object .wrappedValue, rotation .object .wrappedValue, t: t)))
       }
    }
 }

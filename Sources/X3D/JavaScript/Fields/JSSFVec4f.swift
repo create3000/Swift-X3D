@@ -20,7 +20,7 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ vector : SFVec) -> Bool
+   func equals (_ vector : SFVec) -> JSValue
 
    func add (_ vector : SFVec) -> SFVec
    func distance (_ vector : SFVec) -> Scalar
@@ -117,9 +117,9 @@ Object .defineProperty (SFVec4f .prototype, 3, {
       
       // Comparision operators
       
-      public final func equals (_ vector : SFVec) -> Bool
+      public final func equals (_ vector : SFVec) -> JSValue
       {
-         return object .wrappedValue == vector .object .wrappedValue
+         return JSValue (bool: object .wrappedValue == vector .object .wrappedValue, in: JSContext .current ())
       }
 
       // Functions

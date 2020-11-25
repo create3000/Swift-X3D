@@ -20,6 +20,8 @@ import JavaScriptCore
 
    init ()
    
+   func equals (_ vector : SFVec) -> Bool
+
    func add (_ vector : SFVec) -> SFVec
    func distance (_ vector : SFVec) -> Scalar
    func divide (_ scalar : Scalar) -> SFVec
@@ -113,6 +115,13 @@ Object .defineProperty (SFVec4f .prototype, 3, {
          self .object = object
       }
       
+      // Comparision operators
+      
+      public final func equals (_ vector : SFVec) -> Bool
+      {
+         return object .wrappedValue == vector .object .wrappedValue
+      }
+
       // Functions
       
       public final func add (_ vector : SFVec) -> SFVec

@@ -35,14 +35,14 @@ public struct Rotation4d
    
    public init (_ x : Scalar, _ y : Scalar, _ z : Scalar, _ angle : Scalar)
    {
-      self .quat  = Quaternion4 (angle: angle, axis: Vector3 (x, y, z)) .normalized
+      self .quat  = Quaternion4 (angle: angle, axis: normalize (Vector3 (x, y, z)))
       self .axis  = Vector3 (x, y, z)
       self .angle = angle
    }
    
    public init (axis : Vector3, angle : Scalar)
    {
-      self .quat  = Quaternion4 (angle: angle, axis: axis) .normalized
+      self .quat  = Quaternion4 (angle: angle, axis: normalize (axis))
       self .axis  = axis
       self .angle = angle
    }
@@ -166,14 +166,14 @@ public struct Rotation4f
    
    public init (_ x : Scalar, _ y : Scalar, _ z : Scalar, _ angle : Scalar)
    {
-      self .quat  = Quaternion4 (angle: angle, axis: Vector3 (x, y, z)) .normalized
+      self .quat  = Quaternion4 (angle: angle, axis: normalize (Vector3 (x, y, z)))
       self .axis  = Vector3 (x, y, z)
       self .angle = angle
    }
    
    public init (axis : Vector3, angle : Scalar)
    {
-      self .quat  = Quaternion4 (angle: angle, axis: axis) .normalized
+      self .quat  = Quaternion4 (angle: angle, axis: normalize (axis))
       self .axis  = axis
       self .angle = angle
    }

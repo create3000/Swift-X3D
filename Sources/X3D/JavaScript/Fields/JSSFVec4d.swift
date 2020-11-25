@@ -34,8 +34,6 @@ import JavaScriptCore
    func negate () -> SFVec
    func normalize () -> SFVec
    func subtract (_ vector : SFVec) -> SFVec
-
-   func toString () -> String
 }
 
 extension JavaScript
@@ -187,13 +185,6 @@ Object .defineProperty (SFVec4d .prototype, 3, {
       public final func subtract (_ vector : SFVec) -> SFVec
       {
          return SFVec (object: Internal (wrappedValue: object .wrappedValue - vector .object .wrappedValue))
-      }
-
-      // Input/Output
-      
-      public final func toString () -> String
-      {
-         return object .toString ()
       }
    }
 }

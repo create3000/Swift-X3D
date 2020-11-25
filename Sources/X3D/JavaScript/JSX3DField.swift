@@ -15,6 +15,8 @@ import JavaScriptCore
    func getType () -> Int32
    func isReadable () -> JSValue
    func isWritable () -> JSValue
+
+   func toString () -> String
 }
 
 extension JavaScript
@@ -55,6 +57,13 @@ extension JavaScript
       public final func isWritable () -> JSValue
       {
          return JSValue (bool: object .getAccessType () != .initializeOnly, in: JSContext .current ())
+      }
+
+      // Input/Output
+      
+      public final func toString () -> String
+      {
+         return object .toString ()
       }
    }
 }

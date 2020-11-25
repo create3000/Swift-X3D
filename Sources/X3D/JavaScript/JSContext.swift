@@ -11,7 +11,8 @@ internal class JavaScript { }
 
 extension JavaScript
 {
-   internal final class Context
+   internal final class Context :
+      X3D .X3DInputOutput
    {
       // Properties
       
@@ -59,17 +60,53 @@ extension JavaScript
          SFVec4f .register (context)
       }
       
+      private final func exception (_ exception : JSValue?)
+      {
+         browser .console .error (exception! .toString ())
+      }
+      
       internal final func initialize ()
       {
          if context .evaluateScript ("typeof initialize == 'function'")! .toBool ()
          {
             context ["initialize"]! .call (withArguments: nil)
          }
+         
+         if context .evaluateScript ("typeof prepareEvents == 'function'")! .toBool ()
+         {
+            prepareEventsFunction = context ["prepareEvents"]
+            
+            browser .addBrowserInterest (event: .Browser_Event, id: "prepareEvents", method: Context .prepareEvents, object: self)
+         }
+         
+         if context .evaluateScript ("typeof eventsProcessed == 'function'")! .toBool ()
+         {
+            eventsProcessedFunction = context ["eventsProcessed"]
+            
+            scriptNode .addInterest ("eventsProcessed", Context .eventsProcessed, self)
+         }
       }
       
-      private final func exception (_ exception : JSValue?)
+      private final var prepareEventsFunction : JSValue?
+      
+      private final func prepareEvents ()
       {
-         browser .console .error (exception! .toString ())
+         prepareEventsFunction! .call (withArguments: nil)
+      }
+      
+      private final var eventsProcessedFunction : JSValue?
+
+      private final func eventsProcessed ()
+      {
+         eventsProcessedFunction! .call (withArguments: nil)
+      }
+
+      deinit
+      {
+         if context .evaluateScript ("typeof shutdown == 'function'")! .toBool ()
+         {
+            context ["shutdown"]! .call (withArguments: nil)
+         }
       }
    }
 }

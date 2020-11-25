@@ -49,6 +49,8 @@ extension JavaScript
 
          Global .register (context, browser)
          
+         X3DField .register (context)
+         
          SFVec2d .register (context)
          SFVec2f .register (context)
          SFVec3d .register (context)

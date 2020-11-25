@@ -75,7 +75,8 @@ public enum X3DAccessType :
    }
 }
 
-public enum X3DFieldType
+public enum X3DFieldType :
+   Int32
 {
    case SFBool
    case SFColor

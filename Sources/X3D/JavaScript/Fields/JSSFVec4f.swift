@@ -21,6 +21,7 @@ import JavaScriptCore
    init ()
    
    func equals (_ vector : SFVec) -> JSValue
+   func assign (_ vector : SFVec)
 
    func add (_ vector : SFVec) -> SFVec
    func distance (_ vector : SFVec) -> Scalar
@@ -40,7 +41,7 @@ import JavaScriptCore
 extension JavaScript
 {
    @objc internal final class SFVec4f :
-      NSObject,
+      X3DField,
       SFVec4fExports
    {
       typealias Scalar   = Float
@@ -61,7 +62,7 @@ extension JavaScript
       
       // Registration
       
-      public static func register (_ context : JSContext)
+      public final override class func register (_ context : JSContext)
       {
          context .setObject (Self .self, forKeyedSubscript: "SFVec4f" as NSString)
          
@@ -95,7 +96,7 @@ Object .defineProperty (SFVec4f .prototype, 3, {
       
       // Construction
       
-      required public override init ()
+      required public init ()
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 4
          {
@@ -108,18 +109,27 @@ Object .defineProperty (SFVec4f .prototype, 3, {
          {
             self .object = Internal ()
          }
+         
+         super .init (self .object)
       }
       
       required internal init (object : Internal)
       {
          self .object = object
+         
+         super .init (self .object)
       }
-      
-      // Comparision operators
+
+      // Common operators
       
       public final func equals (_ vector : SFVec) -> JSValue
       {
          return JSValue (bool: object .wrappedValue == vector .object .wrappedValue, in: JSContext .current ())
+      }
+
+      public final func assign (_ vector : SFVec)
+      {
+         object .wrappedValue = vector .object .wrappedValue
       }
 
       // Functions

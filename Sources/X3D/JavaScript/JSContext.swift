@@ -106,7 +106,7 @@ extension JavaScript
                      
                      let function : JSValue? = self .context [field .getName ()]
                      
-                     field .addInterest ("set_file", { _ in { [weak self] in self? .set_field (field, function) } }, self)
+                     field .addInterest ("set_field", { _ in { [weak self, weak field] in self? .set_field (field, function) } }, self)
                   }
                   case .inputOutput: do
                   {
@@ -114,7 +114,7 @@ extension JavaScript
                      
                      let function : JSValue? = self .context ["set_" + field .getName ()]
                      
-                     field .addInterest ("set_file", { _ in { [weak self] in self? .set_field (field, function) } }, self)
+                     field .addInterest ("set_field", { _ in { [weak self, weak field] in self? .set_field (field, function) } }, self)
                   }
                   default:
                      break
@@ -129,7 +129,7 @@ extension JavaScript
             
             for field in scriptNode .getUserDefinedFields ()
             {
-               field .removeInterest ("set_file", { _ in { } }, self)
+               field .removeInterest ("set_field", { _ in { } }, self)
             }
          }
       }
@@ -141,11 +141,13 @@ extension JavaScript
          prepareEventsFunction! .call (withArguments: nil)
       }
       
-      private final func set_field (_ field : X3D .X3DField, _ function : JSValue?)
+      private final func set_field (_ field : X3D .X3DField?, _ function : JSValue?)
       {
+         guard let field = field, let function = function else { return }
+         
          field .isTainted = true
          
-         function? .call (withArguments: [toValue (field), browser .currentTime])
+         function .call (withArguments: [toValue (field), browser .currentTime])
          
          field .isTainted = false
       }

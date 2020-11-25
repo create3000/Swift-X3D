@@ -56,7 +56,7 @@ extension JavaScript
 
       // Private properties
       
-      private final var object : Internal
+      internal private(set) final var object : Internal
       
       // Registration
       

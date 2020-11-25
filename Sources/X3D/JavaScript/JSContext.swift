@@ -49,8 +49,12 @@ extension JavaScript
 
          Global .register (context, browser)
          
+         SFVec2d .register (context)
+         SFVec2f .register (context)
          SFVec3d .register (context)
          SFVec3f .register (context)
+         SFVec4d .register (context)
+         SFVec4f .register (context)
       }
       
       internal final func initialize ()

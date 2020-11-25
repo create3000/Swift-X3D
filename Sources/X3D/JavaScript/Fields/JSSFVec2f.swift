@@ -1,26 +1,24 @@
 //
-//  JSSFVec3f.swift
-//  
+//  JSSFVec2f.swift
+//
 //
 //  Created by Holger Seelig on 24.11.20.
 //
 
 import JavaScriptCore
 
-@objc internal protocol SFVec3fExports :
+@objc internal protocol SFVec2fExports :
    JSExport
 {
    typealias Scalar = Float
-   typealias SFVec  = JavaScript .SFVec3f
+   typealias SFVec  = JavaScript .SFVec2f
 
    var x : Scalar { get set }
    var y : Scalar { get set }
-   var z : Scalar { get set }
    
    init ()
    
    func add (_ vector : SFVec) -> SFVec
-   func cross (_ vector : SFVec) -> SFVec
    func distance (_ vector : SFVec) -> Scalar
    func divide (_ scalar : Scalar) -> SFVec
    func divVec (_ vector : SFVec) -> SFVec
@@ -37,20 +35,19 @@ import JavaScriptCore
 
 extension JavaScript
 {
-   @objc internal final class SFVec3f :
+   @objc internal final class SFVec2f :
       NSObject,
-      SFVec3fExports
+      SFVec2fExports
    {
       typealias Scalar   = Float
-      typealias SFVec    = JavaScript .SFVec3f
-      typealias Internal = X3D .SFVec3f
+      typealias SFVec    = JavaScript .SFVec2f
+      typealias Internal = X3D .SFVec2f
       typealias Inner    = Internal .Value
 
       // Properties
       
       dynamic public var x : Scalar { get { object .wrappedValue .x } set { object .wrappedValue .x = newValue } }
       dynamic public var y : Scalar { get { object .wrappedValue .y } set { object .wrappedValue .y = newValue } }
-      dynamic public var z : Scalar { get { object .wrappedValue .z } set { object .wrappedValue .z = newValue } }
 
       // Private properties
       
@@ -60,24 +57,18 @@ extension JavaScript
       
       public static func register (_ context : JSContext)
       {
-         context .setObject (Self .self, forKeyedSubscript: "SFVec3f" as NSString)
+         context .setObject (Self .self, forKeyedSubscript: "SFVec2f" as NSString)
          
          context .evaluateScript ("""
-Object .defineProperty (SFVec3f .prototype, 0, {
+Object .defineProperty (SFVec2f .prototype, 0, {
    get: function () { return this .x; },
    set: function (newValue) { this .x = newValue; },
    enumerable: true,
    configurable: false,
 });
-Object .defineProperty (SFVec3f .prototype, 1, {
+Object .defineProperty (SFVec2f .prototype, 1, {
    get: function () { return this .y; },
    set: function (newValue) { this .y = newValue; },
-   enumerable: true,
-   configurable: false,
-});
-Object .defineProperty (SFVec3f .prototype, 2, {
-   get: function () { return this .z; },
-   set: function (newValue) { this .z = newValue; },
    enumerable: true,
    configurable: false,
 });
@@ -88,11 +79,10 @@ Object .defineProperty (SFVec3f .prototype, 2, {
       
       required public override init ()
       {
-         if let args = JSContext .currentArguments () as? [JSValue], args .count == 3
+         if let args = JSContext .currentArguments () as? [JSValue], args .count == 2
          {
             self .object = Internal (wrappedValue: Inner (args [0] .toFloat (),
-                                                          args [1] .toFloat (),
-                                                          args [2] .toFloat ()))
+                                                          args [1] .toFloat ()))
          }
          else
          {
@@ -110,11 +100,6 @@ Object .defineProperty (SFVec3f .prototype, 2, {
       public final func add (_ vector : SFVec) -> SFVec
       {
          return SFVec (object: Internal (wrappedValue: object .wrappedValue + vector .object .wrappedValue))
-      }
-
-      public final func cross (_ vector : SFVec) -> SFVec
-      {
-         return SFVec (object: Internal (wrappedValue: simd_cross (object .wrappedValue, vector .object .wrappedValue)))
       }
 
       public final func distance (_ vector : SFVec) -> Scalar

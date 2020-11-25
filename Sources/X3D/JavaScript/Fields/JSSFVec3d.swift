@@ -48,9 +48,9 @@ extension JavaScript
 
       // Properties
       
-      public var x : Scalar { get { object .wrappedValue .x } set { object .wrappedValue .x = newValue } }
-      public var y : Scalar { get { object .wrappedValue .y } set { object .wrappedValue .y = newValue } }
-      public var z : Scalar { get { object .wrappedValue .z } set { object .wrappedValue .z = newValue } }
+      dynamic public var x : Scalar { get { object .wrappedValue .x } set { object .wrappedValue .x = newValue } }
+      dynamic public var y : Scalar { get { object .wrappedValue .y } set { object .wrappedValue .y = newValue } }
+      dynamic public var z : Scalar { get { object .wrappedValue .z } set { object .wrappedValue .z = newValue } }
 
       // Private properties
       

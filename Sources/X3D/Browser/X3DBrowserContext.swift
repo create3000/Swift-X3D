@@ -195,7 +195,7 @@ public class X3DBrowserContext :
    {
       let renderer = renderers .pop ()
       
-      commandBuffer .addCompletedHandler { _ in self .renderers .push (renderer) }
+      commandBuffer .addCompletedHandler { _ in DispatchQueue .main .async { self .renderers .push (renderer) } }
       
       renderer .commandBuffer = commandBuffer
       

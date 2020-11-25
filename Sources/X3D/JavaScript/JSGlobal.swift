@@ -13,7 +13,7 @@ extension JavaScript
    {
       internal static func register (_ context : JSContext, _ browser : X3DBrowser)
       {
-         let print: @convention(block) () -> Void =
+         let print : @convention(block) () -> Void =
          {
             if let args = JSContext .currentArguments () as? [JSValue]
             {

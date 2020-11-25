@@ -29,7 +29,7 @@ extension JavaScript
       
       public class func register (_ context : JSContext)
       {
-         context .setObject (Self .self, forKeyedSubscript: "X3DField" as NSString)
+         context ["X3DField"] = Self .self
       }
       
       // Construction

@@ -21,13 +21,11 @@ extension JavaScript
             }
          }
          
-         let null = JSValue (nullIn: context)
-         
-         context .setObject (null,  forKeyedSubscript: "NULL"  as NSString)
-         context .setObject (false, forKeyedSubscript: "FALSE" as NSString)
-         context .setObject (true,  forKeyedSubscript: "TRUE"  as NSString)
-         context .setObject (print, forKeyedSubscript: "print" as NSString)
-         context .setObject (print, forKeyedSubscript: "trace" as NSString)
+         context ["NULL"]  = JSValue (nullIn: context)
+         context ["FALSE"] = false
+         context ["TRUE"]  = true
+         context ["print"] = print
+         context ["trace"] = print
       }
    }
 }

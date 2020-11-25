@@ -58,8 +58,8 @@ extension JavaScript
       
       public final override class func register (_ context : JSContext)
       {
-         context .setObject (Self .self, forKeyedSubscript: "SFVec2f" as NSString)
-         
+         context ["SFVec2f"] = Self .self
+
          context .evaluateScript ("""
 Object .defineProperty (SFVec2f .prototype, 0, {
    get: function () { return this .x; },

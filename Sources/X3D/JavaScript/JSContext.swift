@@ -63,7 +63,7 @@ extension JavaScript
       {
          if context .evaluateScript ("typeof initialize == 'function'")! .toBool ()
          {
-            context .objectForKeyedSubscript ("initialize")! .call (withArguments: nil)
+            context ["initialize"]! .call (withArguments: nil)
          }
       }
       
@@ -71,5 +71,19 @@ extension JavaScript
       {
          browser .console .error (exception! .toString ())
       }
+   }
+}
+
+extension JSContext
+{
+   internal subscript (_ key : NSString) -> JSValue?
+   {
+      get { return objectForKeyedSubscript (key) }
+   }
+
+   internal subscript(_ key : NSString) -> Any?
+   {
+      get { return objectForKeyedSubscript (key) }
+      set { setObject (newValue, forKeyedSubscript: key) }
    }
 }

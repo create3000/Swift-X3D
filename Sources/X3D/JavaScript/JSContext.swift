@@ -190,12 +190,10 @@ extension JSContext
       // Workaround to fix a bug with indexed properties,
       // where the first accessed indexed property has no setter.
       
-      let key   : NSString = "create3000_temp_key_foobah"
       let index : NSString = "9999"
+      let value = JSValue (object: object, in: self)
       
-      setObject (object, forKeyedSubscript: key)
-      objectForKeyedSubscript (key) .setObject (nil, forKeyedSubscript: index)
-      objectForKeyedSubscript (key) .deleteProperty (index)
-      globalObject .deleteProperty (key)
+      value! .setObject (nil, forKeyedSubscript: index)
+      value! .deleteProperty (index)
    }
 }

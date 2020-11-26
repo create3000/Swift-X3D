@@ -10,7 +10,7 @@ import JavaScriptCore
 @objc internal protocol SFColorRGBAExports :
    JSExport
 {
-   typealias Scalar = Float
+   typealias Scalar      = Float
    typealias SFColorRGBA = JavaScript .SFColorRGBA
 
    var r : Scalar { get set }
@@ -101,6 +101,8 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
          }
          
          super .init (self .object)
+         
+         JSContext .current () .fix (self)
       }
       
       required internal init (object : Internal)
@@ -108,6 +110,8 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
          self .object = object
          
          super .init (self .object)
+         
+         JSContext .current () .fix (self)
       }
 
       // Common operators

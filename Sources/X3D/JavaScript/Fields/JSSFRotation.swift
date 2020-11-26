@@ -106,6 +106,8 @@ Object .defineProperty (SFRotation .prototype, 3, {
          }
          
          super .init (self .object)
+         
+         JSContext .current () .fix (self)
       }
       
       required internal init (object : Internal)
@@ -113,6 +115,8 @@ Object .defineProperty (SFRotation .prototype, 3, {
          self .object = object
          
          super .init (self .object)
+         
+         JSContext .current () .fix (self)
       }
 
       // Common operators

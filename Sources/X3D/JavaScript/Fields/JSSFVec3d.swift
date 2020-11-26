@@ -101,6 +101,8 @@ Object .defineProperty (SFVec3d .prototype, 2, {
          }
          
          super .init (self .object)
+         
+         JSContext .current () .fix (self)
       }
       
       required internal init (object : Internal)
@@ -108,6 +110,8 @@ Object .defineProperty (SFVec3d .prototype, 2, {
          self .object = object
          
          super .init (self .object)
+         
+         JSContext .current () .fix (self)
       }
       
       // Common operators

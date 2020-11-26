@@ -109,13 +109,17 @@ Object .defineProperty (SFVec4f .prototype, 3, {
          }
          
          super .init (self .object)
-      }
+         
+         JSContext .current () .fix (self)
+     }
       
       required internal init (object : Internal)
       {
          self .object = object
          
          super .init (self .object)
+         
+         JSContext .current () .fix (self)
       }
 
       // Common operators

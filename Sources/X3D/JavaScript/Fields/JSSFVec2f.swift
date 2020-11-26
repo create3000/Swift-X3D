@@ -91,6 +91,8 @@ Object .defineProperty (SFVec2f .prototype, 1, {
          }
          
          super .init (self .object)
+         
+         JSContext .current () .fix (self)
       }
       
       required internal init (object : Internal)
@@ -98,6 +100,8 @@ Object .defineProperty (SFVec2f .prototype, 1, {
          self .object = object
          
          super .init (self .object)
+         
+         JSContext .current () .fix (self)
       }
       
       // Common operators

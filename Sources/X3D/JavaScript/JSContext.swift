@@ -54,6 +54,7 @@ extension JavaScript
          
          SFColor     .register (context)
          SFColorRGBA .register (context)
+         SFMatrix4f  .register (context)
          SFRotation  .register (context)
          SFVec2d     .register (context)
          SFVec2f     .register (context)
@@ -182,5 +183,19 @@ extension JSContext
    {
       get { return objectForKeyedSubscript (key) }
       set { setObject (newValue, forKeyedSubscript: key as NSString) }
+   }
+   
+   internal func fix (_ object : Any)
+   {
+      // Workaround to fix a bug with indexed properties,
+      // where the first accessed indexed property has no setter.
+      
+      let key   : NSString = "create3000_temp_key_foobah"
+      let index : NSString = "9999"
+      
+      setObject (object, forKeyedSubscript: key)
+      objectForKeyedSubscript (key) .setObject (nil, forKeyedSubscript: index)
+      objectForKeyedSubscript (key) .deleteProperty (index)
+      globalObject .deleteProperty (key)
    }
 }

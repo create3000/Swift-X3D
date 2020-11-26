@@ -10,7 +10,7 @@ import JavaScriptCore
 @objc internal protocol SFColorExports :
    JSExport
 {
-   typealias Scalar = Float
+   typealias Scalar  = Float
    typealias SFColor = JavaScript .SFColor
 
    var r : Scalar { get set }
@@ -92,6 +92,8 @@ Object .defineProperty (SFColor .prototype, 2, {
          }
          
          super .init (self .object)
+         
+         JSContext .current () .fix (self)
       }
       
       required internal init (object : Internal)
@@ -99,6 +101,8 @@ Object .defineProperty (SFColor .prototype, 2, {
          self .object = object
          
          super .init (self .object)
+         
+         JSContext .current () .fix (self)
       }
 
       // Common operators

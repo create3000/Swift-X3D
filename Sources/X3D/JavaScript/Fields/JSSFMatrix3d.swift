@@ -78,9 +78,9 @@ extension JavaScript
       });
    }
 
-   for (var column = 0; column < 4; ++ column)
+   for (var column = 0; column < 3; ++ column)
    {
-      for (var row = 0; row < 4; ++ row)
+      for (var row = 0; row < 3; ++ row)
       {
          defineProperty (column, row);
       }

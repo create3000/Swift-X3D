@@ -17,7 +17,7 @@ extension JSValue
 
 extension JavaScript
 {
-   static func toValue (_ context : JSContext, _ field : X3D .X3DField) -> Any
+   static func getValue (_ context : JSContext, _ field : X3D .X3DField) -> Any
    {
       switch field .getType ()
       {
@@ -44,6 +44,36 @@ extension JavaScript
          
          default:
             return 0
+      }
+   }
+   
+   static func setValue (_ field : X3D .X3DField, _ value : Any)
+   {
+      switch field .getType ()
+      {
+         case .SFBool:      if let value = value as? Bool   { (field as! X3D .SFBool)   .wrappedValue = value }
+         case .SFDouble:    if let value = value as? Double { (field as! X3D .SFDouble) .wrappedValue = value }
+         case .SFFloat:     if let value = value as? Double { (field as! X3D .SFFloat)  .wrappedValue = Float (value) }
+         case .SFInt32:     if let value = value as? Int32  { (field as! X3D .SFInt32)  .wrappedValue = value }
+         case .SFString:    if let value = value as? String { (field as! X3D .SFString) .wrappedValue = value }
+         case .SFTime:      if let value = value as? Double { (field as! X3D .SFTime)   .wrappedValue = value }
+         
+         case .SFColor:     if let value = value as? SFColor     { (field as! X3D .SFColor)     .wrappedValue = value .object .wrappedValue }
+         case .SFColorRGBA: if let value = value as? SFColorRGBA { (field as! X3D .SFColorRGBA) .wrappedValue = value .object .wrappedValue }
+         case .SFMatrix3d:  if let value = value as? SFMatrix3d  { (field as! X3D .SFMatrix3d)  .wrappedValue = value .object .wrappedValue }
+         case .SFMatrix3f:  if let value = value as? SFMatrix3f  { (field as! X3D .SFMatrix3f)  .wrappedValue = value .object .wrappedValue }
+         case .SFMatrix4d:  if let value = value as? SFMatrix4d  { (field as! X3D .SFMatrix4d)  .wrappedValue = value .object .wrappedValue }
+         case .SFMatrix4f:  if let value = value as? SFMatrix4f  { (field as! X3D .SFMatrix4f)  .wrappedValue = value .object .wrappedValue }
+         case .SFRotation:  if let value = value as? SFRotation  { (field as! X3D .SFRotation)  .wrappedValue = value .object .wrappedValue }
+         case .SFVec2d:     if let value = value as? SFVec2d     { (field as! X3D .SFVec2d)     .wrappedValue = value .object .wrappedValue }
+         case .SFVec2f:     if let value = value as? SFVec2f     { (field as! X3D .SFVec2f)     .wrappedValue = value .object .wrappedValue }
+         case .SFVec3d:     if let value = value as? SFVec3d     { (field as! X3D .SFVec3d)     .wrappedValue = value .object .wrappedValue }
+         case .SFVec3f:     if let value = value as? SFVec3f     { (field as! X3D .SFVec3f)     .wrappedValue = value .object .wrappedValue }
+         case .SFVec4d:     if let value = value as? SFVec4d     { (field as! X3D .SFVec4d)     .wrappedValue = value .object .wrappedValue }
+         case .SFVec4f:     if let value = value as? SFVec4f     { (field as! X3D .SFVec4f)     .wrappedValue = value .object .wrappedValue }
+
+         default:
+            break
       }
    }
 }

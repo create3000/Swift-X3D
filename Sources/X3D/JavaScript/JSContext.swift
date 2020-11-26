@@ -65,6 +65,58 @@ extension JavaScript
          SFVec3f     .register (context)
          SFVec4d     .register (context)
          SFVec4f     .register (context)
+         
+         let getProperty : @convention(block) (String) -> Any =
+         {
+            [weak self] in getValue (self! .context, try! self! .scriptNode .getField (name: $0))
+         }
+         
+         let setProperty : @convention(block) (String, Any) -> Any =
+         {
+            [weak self] in setValue (try! self! .scriptNode .getField (name: $0), $1)
+         }
+
+         context ["getProperty"] = getProperty
+         context ["setProperty"] = setProperty
+         
+         var fields = [String] ()
+         
+         for field in scriptNode .getUserDefinedFields ()
+         {
+            switch field .getAccessType ()
+            {
+               case .initializeOnly:
+                  fields .append (field .getName ())
+               case .inputOnly:
+                  break
+               case .outputOnly:
+                  fields .append (field .getName ())
+               case .inputOutput:
+                  fields .append (field .getName ())
+                  fields .append (field .getName () + "_changed")
+            }
+         }
+         
+         context .evaluateScript ("""
+(function (global)
+{
+   var getProperty = global .getProperty;
+   var setProperty = global .setProperty;
+
+   delete global .getProperty;
+   delete global .setProperty;
+
+   ["\(fields .joined (separator: "\",\""))"] .forEach (function (name)
+   {
+      Object .defineProperty (global, name, {
+         get: function () { return getProperty (name); },
+         set: function (newValue) { setProperty (name, newValue); },
+         enumerable: true,
+         configurable: false,
+      });
+   })
+})(this)
+""")
       }
       
       private final func exception (_ exception : JSValue?)
@@ -153,7 +205,7 @@ extension JavaScript
          
          field .isTainted = true
          
-         function .call (withArguments: [toValue (context, field), browser .currentTime])
+         function .call (withArguments: [getValue (context, field), browser .currentTime])
          
          field .isTainted = false
       }

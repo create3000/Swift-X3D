@@ -68,9 +68,11 @@ extension JavaScript
    delete SFMatrix3d .prototype .get1Value;
    delete SFMatrix3d .prototype .set1Value;
 
+   const order = 3;
+
    function defineProperty (column, row)
    {
-      Object .defineProperty (SFMatrix3d .prototype, column * 4 + row, {
+      Object .defineProperty (SFMatrix3d .prototype, column * order + row, {
          get: function () { return get1Value .call (this, column, row); },
          set: function (newValue) { set1Value .call (this, column, row, newValue); },
          enumerable: true,
@@ -78,9 +80,9 @@ extension JavaScript
       });
    }
 
-   for (var column = 0; column < 3; ++ column)
+   for (var column = 0; column < order; ++ column)
    {
-      for (var row = 0; row < 3; ++ row)
+      for (var row = 0; row < order; ++ row)
       {
          defineProperty (column, row);
       }

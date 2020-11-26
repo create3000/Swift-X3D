@@ -66,9 +66,11 @@ extension JavaScript
    delete SFMatrix4d .prototype .get1Value;
    delete SFMatrix4d .prototype .set1Value;
 
+   const order = 4;
+
    function defineProperty (column, row)
    {
-      Object .defineProperty (SFMatrix4d .prototype, column * 4 + row, {
+      Object .defineProperty (SFMatrix4d .prototype, column * order + row, {
          get: function () { return get1Value .call (this, column, row); },
          set: function (newValue) { set1Value .call (this, column, row, newValue); },
          enumerable: true,
@@ -76,9 +78,9 @@ extension JavaScript
       });
    }
 
-   for (var column = 0; column < 4; ++ column)
+   for (var column = 0; column < order; ++ column)
    {
-      for (var row = 0; row < 4; ++ row)
+      for (var row = 0; row < order; ++ row)
       {
          defineProperty (column, row);
       }

@@ -52,13 +52,15 @@ extension JavaScript
          
          X3DField .register (context)
          
-         SFRotation .register (context)
-         SFVec2d    .register (context)
-         SFVec2f    .register (context)
-         SFVec3d    .register (context)
-         SFVec3f    .register (context)
-         SFVec4d    .register (context)
-         SFVec4f    .register (context)
+         SFColor     .register (context)
+         SFColorRGBA .register (context)
+         SFRotation  .register (context)
+         SFVec2d     .register (context)
+         SFVec2f     .register (context)
+         SFVec3d     .register (context)
+         SFVec3f     .register (context)
+         SFVec4d     .register (context)
+         SFVec4f     .register (context)
       }
       
       private final func exception (_ exception : JSValue?)

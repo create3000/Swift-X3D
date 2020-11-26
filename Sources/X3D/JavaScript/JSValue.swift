@@ -30,6 +30,7 @@ extension JavaScript
          
          case .SFColor:     return SFColor     (context, object: (field as! X3D .SFColor))
          case .SFColorRGBA: return SFColorRGBA (context, object: (field as! X3D .SFColorRGBA))
+         case .SFImage:     return SFImage     (context, object: (field as! X3D .SFImage))
          case .SFMatrix3d:  return SFMatrix3d  (context, object: (field as! X3D .SFMatrix3d))
          case .SFMatrix3f:  return SFMatrix3f  (context, object: (field as! X3D .SFMatrix3f))
          case .SFMatrix4d:  return SFMatrix4d  (context, object: (field as! X3D .SFMatrix4d))
@@ -60,6 +61,7 @@ extension JavaScript
          
          case .SFColor:     if let value = value as? SFColor     { (field as! X3D .SFColor)     .wrappedValue = value .object .wrappedValue }
          case .SFColorRGBA: if let value = value as? SFColorRGBA { (field as! X3D .SFColorRGBA) .wrappedValue = value .object .wrappedValue }
+         case .SFImage:     if let value = value as? SFImage     { (field as! X3D .SFImage)     .set (value: value .object) }
          case .SFMatrix3d:  if let value = value as? SFMatrix3d  { (field as! X3D .SFMatrix3d)  .wrappedValue = value .object .wrappedValue }
          case .SFMatrix3f:  if let value = value as? SFMatrix3f  { (field as! X3D .SFMatrix3f)  .wrappedValue = value .object .wrappedValue }
          case .SFMatrix4d:  if let value = value as? SFMatrix4d  { (field as! X3D .SFMatrix4d)  .wrappedValue = value .object .wrappedValue }

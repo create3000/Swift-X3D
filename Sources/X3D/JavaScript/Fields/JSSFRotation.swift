@@ -93,12 +93,30 @@ Object .defineProperty (SFRotation .prototype, 3, {
       
       required public init ()
       {
-         if let args = JSContext .currentArguments () as? [JSValue], args .count == 4
+         if let args = JSContext .currentArguments () as? [JSValue]
          {
-            self .object = Internal (wrappedValue: Inner (args [0] .toFloat (),
-                                                          args [1] .toFloat (),
-                                                          args [2] .toFloat (),
-                                                          args [3] .toFloat ()))
+            if args .count == 4
+            {
+               self .object = Internal (wrappedValue: Inner (args [0] .toFloat (),
+                                                             args [1] .toFloat (),
+                                                             args [2] .toFloat (),
+                                                             args [3] .toFloat ()))
+            }
+            else if args .count == 2,
+                    let from = args [0] .toObjectOf (SFVec3f .self) as? SFVec3f,
+                    let to = args [1] .toObjectOf (SFVec3f .self) as? SFVec3f
+            {
+               self .object = Internal (wrappedValue: Inner (from: from .object .wrappedValue, to: to .object .wrappedValue))
+            }
+            else if args .count == 2,
+                    let axis = args [0] .toObjectOf (SFVec3f .self) as? SFVec3f
+            {
+               self .object = Internal (wrappedValue: Inner (axis: axis .object .wrappedValue, angle: args [1] .toFloat ()))
+            }
+            else
+            {
+               self .object = Internal ()
+            }
          }
          else
          {

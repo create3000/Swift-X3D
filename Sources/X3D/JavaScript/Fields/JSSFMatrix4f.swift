@@ -26,6 +26,7 @@ import JavaScriptCore
    func getTransform (_ translation : SFVec3f?, _ rotation : SFRotation?, _ scale : SFVec3f?, _ scaleOrientation : SFRotation?, _ center : SFVec3f?)
    func setTransform (_ translation : SFVec3f?, _ rotation : SFRotation?, _ scale : SFVec3f?, _ scaleOrientation : SFRotation?, _ center : SFVec3f?)
 
+   func determinant () -> Float
    func transpose () -> SFMatrix4f
    func inverse () -> SFMatrix4f
    func multLeft (_ matrix : SFMatrix4f) -> SFMatrix4f
@@ -175,6 +176,11 @@ extension JavaScript
       
       // Functions
 
+      public final func determinant () -> Float
+      {
+         return object .wrappedValue .determinant
+      }
+      
       public final func transpose () -> SFMatrix4f
       {
          return SFMatrix4f (JSContext .current (), object: Internal (wrappedValue: object .wrappedValue .transpose))

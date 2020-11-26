@@ -59,4 +59,20 @@ public final class SFImage :
       value .comp   = field .value .comp
       value .array  = field .value .array
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      stream += String (wrappedValue .width)
+      stream += " "
+      stream += String (wrappedValue .height)
+      stream += " "
+      stream += String (wrappedValue .comp)
+      
+      if !wrappedValue .array .isEmpty
+      {
+         stream += " "
+      }
+   }
 }

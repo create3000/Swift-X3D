@@ -54,6 +54,7 @@ extension JavaScript
          
          SFColor     .register (context)
          SFColorRGBA .register (context)
+         SFImage     .register (context)
          SFMatrix3d  .register (context)
          SFMatrix3f  .register (context)
          SFMatrix4d  .register (context)

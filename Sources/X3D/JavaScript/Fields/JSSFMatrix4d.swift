@@ -147,12 +147,12 @@ extension JavaScript
       
       public final func get1Value (_ column : Int, _ row : Int) -> Scalar
       {
-         return object .wrappedValue [column] [row]
+         return object .wrappedValue [column, row]
       }
       
       public final func set1Value (_ column : Int, _ row : Int, _ value : Scalar)
       {
-         object .wrappedValue [column] [row] = value
+         object .wrappedValue [column, row] = value
       }
       
       public final func getTransform (_ translation : SFVec3d?, _ rotation : SFRotation?, _ scale : SFVec3d?, _ scaleOrientation : SFRotation?, _ center : SFVec3d?)

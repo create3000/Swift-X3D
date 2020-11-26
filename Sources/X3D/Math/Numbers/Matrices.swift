@@ -476,69 +476,6 @@ public func submatrix (_ matrix : Matrix4f) -> Matrix3f
 
 // Operations
 
-public func compose_transformation_matrix (translation : Vector3f = Vector3f .zero,
-                                           rotation : Rotation4f = Rotation4f .identity,
-                                           scale : Vector3f = Vector3f .one,
-                                           scaleOrientation : Rotation4f = Rotation4f .identity,
-                                           center : Vector3f = Vector3f .zero) -> Matrix4f
-{
-   var matrix = Matrix4f .identity
-
-   matrix [3, 0] = translation .x
-   matrix [3, 1] = translation .y
-   matrix [3, 2] = translation .z
-
-   var centerMatrix = Matrix4f .identity
-
-   if center != Vector3f .zero
-   {
-      centerMatrix [3, 0] = center .x
-      centerMatrix [3, 1] = center .y
-      centerMatrix [3, 2] = center .z
-
-      matrix *= centerMatrix
-   }
-
-   if rotation != Rotation4f .identity
-   {
-      matrix *= Matrix4f (rotation)
-   }
-
-   if scale != Vector3f .one
-   {
-      var scaleMatrix = Matrix4f .identity
-
-      scaleMatrix [0, 0] = scale .x
-      scaleMatrix [1, 1] = scale .y
-      scaleMatrix [2, 2] = scale .z
-      
-      if scaleOrientation != Rotation4f .identity
-      {
-         let scaleOrientaionMatrix1 = Matrix4f (scaleOrientation)
-         let scaleOrientaionMatrix2 = Matrix4f (scaleOrientation .inverse)
-
-         matrix *= scaleOrientaionMatrix1
-         matrix *= scaleMatrix
-         matrix *= scaleOrientaionMatrix2
-      }
-      else
-      {
-         matrix *= scaleMatrix
-      }
-   }
-   
-   if center != Vector3f .zero
-   {
-      centerMatrix [3, 0] = -center .x
-      centerMatrix [3, 1] = -center .y
-      centerMatrix [3, 2] = -center .z
-
-      matrix *= centerMatrix
-   }
-
-   return matrix
-}
-
 public func compose_transformation_matrix (translation : Vector3d = Vector3d .zero,
                                            rotation : Rotation4d = Rotation4d .identity,
                                            scale : Vector3d = Vector3d .one,
@@ -602,6 +539,144 @@ public func compose_transformation_matrix (translation : Vector3d = Vector3d .ze
    return matrix
 }
 
+public func compose_transformation_matrix (translation : Vector3f = Vector3f .zero,
+                                           rotation : Rotation4f = Rotation4f .identity,
+                                           scale : Vector3f = Vector3f .one,
+                                           scaleOrientation : Rotation4f = Rotation4f .identity,
+                                           center : Vector3f = Vector3f .zero) -> Matrix4f
+{
+   var matrix = Matrix4f .identity
+
+   matrix [3, 0] = translation .x
+   matrix [3, 1] = translation .y
+   matrix [3, 2] = translation .z
+
+   var centerMatrix = Matrix4f .identity
+
+   if center != Vector3f .zero
+   {
+      centerMatrix [3, 0] = center .x
+      centerMatrix [3, 1] = center .y
+      centerMatrix [3, 2] = center .z
+
+      matrix *= centerMatrix
+   }
+
+   if rotation != Rotation4f .identity
+   {
+      matrix *= Matrix4f (rotation)
+   }
+
+   if scale != Vector3f .one
+   {
+      var scaleMatrix = Matrix4f .identity
+
+      scaleMatrix [0, 0] = scale .x
+      scaleMatrix [1, 1] = scale .y
+      scaleMatrix [2, 2] = scale .z
+      
+      if scaleOrientation != Rotation4f .identity
+      {
+         let scaleOrientaionMatrix1 = Matrix4f (scaleOrientation)
+         let scaleOrientaionMatrix2 = Matrix4f (scaleOrientation .inverse)
+
+         matrix *= scaleOrientaionMatrix1
+         matrix *= scaleMatrix
+         matrix *= scaleOrientaionMatrix2
+      }
+      else
+      {
+         matrix *= scaleMatrix
+      }
+   }
+   
+   if center != Vector3f .zero
+   {
+      centerMatrix [3, 0] = -center .x
+      centerMatrix [3, 1] = -center .y
+      centerMatrix [3, 2] = -center .z
+
+      matrix *= centerMatrix
+   }
+
+   return matrix
+}
+
+public func decompose_transformation_matrix (_ matrix : Matrix4d, center : Vector3d) -> (translation : Vector3d, rotation : Rotation4d, scale : Vector3d, scaleOrientation : Rotation4d)
+{
+   var centerMatrix1 = Matrix4d .identity
+   var centerMatrix2 = Matrix4d .identity
+
+   centerMatrix1 [3, 0] = -center .x
+   centerMatrix1 [3, 1] = -center .y
+   centerMatrix1 [3, 2] = -center .z
+
+   centerMatrix2 [3, 0] = center .x
+   centerMatrix2 [3, 1] = center .y
+   centerMatrix2 [3, 2] = center .z
+
+   return decompose_transformation_matrix (centerMatrix1 * matrix * centerMatrix2)
+}
+
+public func decompose_transformation_matrix (_ matrix : Matrix4d) -> (translation : Vector3d, rotation : Rotation4d, scale : Vector3d, scaleOrientation : Rotation4d)
+{
+   // (1) Get translation.
+   let translation = Vector3d (matrix [3] [0], matrix [3] [1], matrix [3] [2])
+   
+   // (2) Create 3x3 matrix. Transpose column base matrix to row based matrix.
+   let a = !matrix .submatrix
+
+   // (3) Compute det A. If negative, set sign = -1, else sign = 1
+   let det      = a .determinant
+   let det_sign = Double (det < 0 ? -1 : 1)
+
+   if det == 0
+   {
+      return (.zero, .identity, .one, .identity) // singular
+   }
+
+   // (4) B = A * !A  (here !A means A transpose)
+   let b = a * !a
+   var m =  [[Double]] ()
+   
+   for c in 0 ..< 3
+   {
+      m .append ([Double] (repeating: 0, count: 3))
+      
+      for r in 0 ..< 3
+      {
+         m [c] [r] = b [c] [r]
+      }
+   }
+
+   var evalues  : [Double]   = []
+   var evectors : [[Double]] = []
+
+   eigen_decomposition (order: 3, matrix: m, values: &evalues, vectors: &evectors)
+   
+   // find min / max eigenvalues and do ratio test to determine singularity
+
+   let scaleOrientation = Matrix3d (columns: (Vector3d (evectors [0] [0], evectors [0] [1], evectors [0] [2]),
+                                              Vector3d (evectors [1] [0], evectors [1] [1], evectors [1] [2]),
+                                              Vector3d (evectors [2] [0], evectors [2] [1], evectors [2] [2])))
+
+   // Compute s = sqrt(evalues), with sign. Set si = s-inverse
+   var si    = Matrix3d ()
+   var scale = Vector3d ()
+
+   for i in 0 ..< 3
+   {
+      scale [i]  = det_sign * sqrt (evalues [i])
+      si [i] [i] = 1 / scale [i]
+   }
+
+   // (5) Compute U = !R ~S R A.
+   let rotation = scaleOrientation * si * !scaleOrientation * a
+
+   // Transpose rotation and scale-orientation to column based matrix.
+   return (translation, Rotation4d (!rotation), scale, Rotation4d (scaleOrientation))
+}
+
 public func decompose_transformation_matrix (_ matrix : Matrix4f, center : Vector3f) -> (translation : Vector3f, rotation : Rotation4f, scale : Vector3f, scaleOrientation : Rotation4f)
 {
    var centerMatrix1 = Matrix4f .identity
@@ -628,20 +703,31 @@ public func decompose_transformation_matrix (_ matrix : Matrix4f) -> (translatio
 
    // (3) Compute det A. If negative, set sign = -1, else sign = 1
    let det      = a .determinant
-   let det_sign = Float (det < 0 ? -1.0 : 1.0)
+   let det_sign = Float (det < 0 ? -1 : 1)
 
    if det == 0
    {
-      return (Vector3f (), Rotation4f (), Vector3f (), Rotation4f ()) // singular
+      return (.zero, .identity, .one, .identity) // singular
    }
 
    // (4) B = A * !A  (here !A means A transpose)
    let b = a * !a
+   var m =  [[Float]] ()
+   
+   for c in 0 ..< 3
+   {
+      m .append ([Float] (repeating: 0, count: 3))
+      
+      for r in 0 ..< 3
+      {
+         m [c] [r] = b [c] [r]
+      }
+   }
 
    var evalues  : [Float]   = []
    var evectors : [[Float]] = []
 
-   eigen_decomposition (order: 3, matrix: b, values: &evalues, vectors: &evectors)
+   eigen_decomposition (order: 3, matrix: m, values: &evalues, vectors: &evectors)
    
    // find min / max eigenvalues and do ratio test to determine singularity
 
@@ -666,45 +752,45 @@ public func decompose_transformation_matrix (_ matrix : Matrix4f) -> (translatio
    return (translation, Rotation4f (!rotation), scale, Rotation4f (scaleOrientation))
 }
 
-fileprivate func eigen_decomposition (order : Int, matrix : Matrix3f, values : inout [Float], vectors : inout [[Float]])
+fileprivate func eigen_decomposition <T : FloatingPoint> (order : Int, matrix : [[T]], values : inout [T], vectors : inout [[T]])
 {
-   var a : [[Float]] = [ ] // more scratch
-   var b : [Float]   = [ ] // more scratch
-   var z : [Float]   = [ ] // more scratch
+   var a : [[T]] = [ ] // more scratch
+   var b : [T]   = [ ] // more scratch
+   var z : [T]   = [ ] // more scratch
    
-   var sm     : Float = 0.0 // smallest entry
-   var theta  : Float = 0.0 // angle for Jacobi rotation
-   var c      : Float = 0.0
-   var s      : Float = 0.0
-   var t      : Float = 0.0 // cosine, sine, tangent of theta
-   var tau    : Float = 0.0 // sine / (1 + cos)
-   var h      : Float = 0.0
-   var g      : Float = 0.0 // two scrap values
-   var thresh : Float = 0.0 // threshold below which no rotation done
+   var sm     : T = 0 // smallest entry
+   var theta  : T = 0 // angle for Jacobi rotation
+   var c      : T = 0
+   var s      : T = 0
+   var t      : T = 0 // cosine, sine, tangent of theta
+   var tau    : T = 0 // sine / (1 + cos)
+   var h      : T = 0
+   var g      : T = 0 // two scrap values
+   var thresh : T = 0 // threshold below which no rotation done
    
    let size = order * order
 
    // initializations
    for _ in 0 ..< order
    {
-      a .append (Array <Float> (repeating: 0, count: order))
-      vectors .append (Array <Float> (repeating: 0, count: order))
+      a .append ([T] (repeating: 0, count: order))
+      vectors .append ([T] (repeating: 0, count: order))
    }
    
-   b .append (contentsOf: Array <Float> (repeating: 0, count: order))
-   z .append (contentsOf: Array <Float> (repeating: 0, count: order))
-   values .append (contentsOf: Array <Float> (repeating: 0, count: order))
+   b .append (contentsOf: [T] (repeating: 0, count: order))
+   z .append (contentsOf: [T] (repeating: 0, count: order))
+   values .append (contentsOf: [T] (repeating: 0, count: order))
 
    for i in 0 ..< order
    {
-      values [i] = matrix [i, i]
-      b [i]      = matrix [i, i]
+      values [i] = matrix [i] [i]
+      b [i]      = matrix [i] [i]
       z [i]      = 0
 
       for j in 0 ..< order
       {
          vectors [i] [j] = i == j ? 1 : 0
-         a [i] [j] = matrix [j, i]
+         a [i] [j] = matrix [j] [i]
       }
    }
 
@@ -727,7 +813,7 @@ fileprivate func eigen_decomposition (order : Int, matrix : Matrix3f, values : i
          break
       }
 
-      thresh = i < 3 ? 0.2 * sm / Float (size) : 0
+      thresh = i < 3 ? (sm / T (size)) / 5 : 0
 
       for p in 0 ..<  order - 1
       {
@@ -752,7 +838,7 @@ fileprivate func eigen_decomposition (order : Int, matrix : Matrix3f, values : i
                }
                else
                {
-                  theta = 0.5 * h / a [p] [q]
+                  theta = (h / a [p] [q]) / 2
                   t     = 1 / (abs (theta) + sqrt (1 + theta * theta))
 
                   if theta < 0 { t = -t }

@@ -105,13 +105,13 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
          JSContext .current () .fix (self)
       }
       
-      required internal init (object : Internal)
+      required internal init (_ context : JSContext, object : Internal)
       {
          self .object = object
          
          super .init (self .object)
          
-         JSContext .current () .fix (self)
+         context .fix (self)
       }
 
       // Common operators
@@ -146,7 +146,7 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
       {
          let color = hsva_mix (object .wrappedValue .hsva, color .object .wrappedValue .hsva, t: t) .rgba
          
-         return SFColorRGBA (object: Internal (wrappedValue: color))
+         return SFColorRGBA (JSContext .current (), object: Internal (wrappedValue: color))
       }
    }
 }

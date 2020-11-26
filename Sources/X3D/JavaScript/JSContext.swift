@@ -150,7 +150,7 @@ extension JavaScript
          
          field .isTainted = true
          
-         function .call (withArguments: [toValue (field), browser .currentTime])
+         function .call (withArguments: [toValue (context, field), browser .currentTime])
          
          field .isTainted = false
       }

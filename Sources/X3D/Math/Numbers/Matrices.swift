@@ -475,22 +475,47 @@ public func submatrix (_ matrix : Matrix4f) -> Matrix3f
 }
 
 // Operations
-
 public func compose_transformation_matrix (translation : Vector3f = Vector3f .zero,
                                            rotation : Rotation4f = Rotation4f .identity,
                                            scale : Vector3f = Vector3f .one,
                                            scaleOrientation : Rotation4f = Rotation4f .identity,
                                            center : Vector3f = Vector3f .zero) -> Matrix4f
 {
-   var matrix = Matrix4f .identity
+   let t  = Vector3d (Double (translation .x), Double (translation .y), Double (translation .z))
+   let ra = rotation .axis
+   let r  = Rotation4d (Double (ra .x), Double (ra .y), Double (ra .z), Double (rotation .angle))
+   let s  = Vector3d (Double (scale .x), Double (scale .y), Double (scale .z))
+   let sa = scaleOrientation .axis
+   let so = Rotation4d (Double (sa .x), Double (sa .y), Double (sa .z), Double (scaleOrientation .angle))
+   let c  = Vector3d (Double (center .x), Double (center .y), Double (center .z))
+
+   let m = compose_transformation_matrix (translation: t,
+                                          rotation: r,
+                                          scale: s,
+                                          scaleOrientation: so,
+                                          center: c)
+   
+   return Matrix4f (columns: (Vector4f (Float (m [0] [0]), Float (m [0] [1]), Float (m [0] [2]), Float (m [0] [3])),
+                              Vector4f (Float (m [1] [0]), Float (m [1] [1]), Float (m [1] [2]), Float (m [1] [3])),
+                              Vector4f (Float (m [2] [0]), Float (m [2] [1]), Float (m [2] [2]), Float (m [2] [3])),
+                              Vector4f (Float (m [3] [0]), Float (m [3] [1]), Float (m [3] [2]), Float (m [3] [3]))))
+}
+
+public func compose_transformation_matrix (translation : Vector3d = Vector3d .zero,
+                                           rotation : Rotation4d = Rotation4d .identity,
+                                           scale : Vector3d = Vector3d .one,
+                                           scaleOrientation : Rotation4d = Rotation4d .identity,
+                                           center : Vector3d = Vector3d .zero) -> Matrix4d
+{
+   var matrix = Matrix4d .identity
 
    matrix [3, 0] = translation .x
    matrix [3, 1] = translation .y
    matrix [3, 2] = translation .z
 
-   var centerMatrix = Matrix4f .identity
+   var centerMatrix = Matrix4d .identity
 
-   if center != Vector3f .zero
+   if center != Vector3d .zero
    {
       centerMatrix [3, 0] = center .x
       centerMatrix [3, 1] = center .y
@@ -499,23 +524,23 @@ public func compose_transformation_matrix (translation : Vector3f = Vector3f .ze
       matrix *= centerMatrix
    }
 
-   if rotation != Rotation4f .identity
+   if rotation != Rotation4d .identity
    {
-      matrix *= Matrix4f (rotation)
+      matrix *= Matrix4d (rotation)
    }
 
-   if scale != Vector3f .one
+   if scale != Vector3d .one
    {
-      var scaleMatrix = Matrix4f .identity
+      var scaleMatrix = Matrix4d .identity
 
       scaleMatrix [0, 0] = scale .x
       scaleMatrix [1, 1] = scale .y
       scaleMatrix [2, 2] = scale .z
       
-      if scaleOrientation != Rotation4f .identity
+      if scaleOrientation != Rotation4d .identity
       {
-         let scaleOrientaionMatrix1 = Matrix4f (scaleOrientation)
-         let scaleOrientaionMatrix2 = Matrix4f (scaleOrientation .inverse)
+         let scaleOrientaionMatrix1 = Matrix4d (scaleOrientation)
+         let scaleOrientaionMatrix2 = Matrix4d (scaleOrientation .inverse)
 
          matrix *= scaleOrientaionMatrix1
          matrix *= scaleMatrix
@@ -527,7 +552,7 @@ public func compose_transformation_matrix (translation : Vector3f = Vector3f .ze
       }
    }
    
-   if center != Vector3f .zero
+   if center != Vector3d .zero
    {
       centerMatrix [3, 0] = -center .x
       centerMatrix [3, 1] = -center .y

@@ -66,6 +66,8 @@ extension JavaScript
          SFVec4d     .register (context)
          SFVec4f     .register (context)
          
+         // Add user-defined fields to global object.
+         
          let getProperty : @convention(block) (String) -> Any =
          {
             [weak self] in getValue (self! .context, try! self! .scriptNode .getField (name: $0))
@@ -79,34 +81,56 @@ extension JavaScript
          context ["getProperty"] = getProperty
          context ["setProperty"] = setProperty
          
+         var native = [String] ()
          var fields = [String] ()
-         
+
          for field in scriptNode .getUserDefinedFields ()
          {
-            switch field .getAccessType ()
+            switch field .getType ()
             {
-               case .initializeOnly:
-                  fields .append (field .getName ())
-               case .inputOnly:
-                  break
-               case .outputOnly:
-                  fields .append (field .getName ())
-               case .inputOutput:
-                  fields .append (field .getName ())
-                  fields .append (field .getName () + "_changed")
+               case .SFBool, .SFDouble, .SFFloat, .SFInt32, .SFString, .SFTime: do
+               {
+                  switch field .getAccessType ()
+                  {
+                     case .initializeOnly:
+                        native .append (field .getName ())
+                     case .inputOnly:
+                        break
+                     case .outputOnly:
+                        native .append (field .getName ())
+                     case .inputOutput:
+                        native .append (field .getName ())
+                        native .append (field .getName () + "_changed")
+                  }
+               }
+               default: do
+               {
+                  switch field .getAccessType ()
+                  {
+                     case .initializeOnly:
+                        fields .append (field .getName ())
+                     case .inputOnly:
+                        break
+                     case .outputOnly:
+                        fields .append (field .getName ())
+                     case .inputOutput:
+                        fields .append (field .getName ())
+                        fields .append (field .getName () + "_changed")
+                  }
+               }
             }
          }
          
          context .evaluateScript ("""
 (function (global)
 {
-   var getProperty = global .getProperty;
-   var setProperty = global .setProperty;
+   const getProperty = global .getProperty;
+   const setProperty = global .setProperty;
 
    delete global .getProperty;
    delete global .setProperty;
 
-   ["\(fields .joined (separator: "\",\""))"] .forEach (function (name)
+   ["\(native .joined (separator: "\",\""))"] .forEach (function (name)
    {
       Object .defineProperty (global, name, {
          get: function () { return getProperty (name); },
@@ -114,7 +138,19 @@ extension JavaScript
          enumerable: true,
          configurable: false,
       });
-   })
+   });
+
+   ["\(fields .joined (separator: "\",\""))"] .forEach (function (name)
+   {
+      const value = getProperty (name);
+
+      Object .defineProperty (global, name, {
+         get: function () { return value; },
+         set: function (newValue) { setProperty (name, newValue); },
+         enumerable: true,
+         configurable: false,
+      });
+   });
 })(this)
 """)
       }

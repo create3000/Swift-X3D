@@ -62,8 +62,8 @@ extension JavaScript
          context .evaluateScript ("""
 (function ()
 {
-   var get1Value = SFMatrix3d .prototype .get1Value;
-   var set1Value = SFMatrix3d .prototype .set1Value;
+   const get1Value = SFMatrix3d .prototype .get1Value;
+   const set1Value = SFMatrix3d .prototype .set1Value;
 
    delete SFMatrix3d .prototype .get1Value;
    delete SFMatrix3d .prototype .set1Value;

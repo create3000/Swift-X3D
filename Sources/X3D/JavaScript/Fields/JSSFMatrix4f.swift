@@ -12,6 +12,8 @@ import JavaScriptCore
 {
    typealias Scalar     = Float
    typealias SFMatrix4f = JavaScript .SFMatrix4f
+   typealias SFVec3f    = JavaScript .SFVec3f
+   typealias SFRotation = JavaScript .SFRotation
 
    init ()
    
@@ -21,8 +23,17 @@ import JavaScriptCore
    func get1Value (_ column : Int, _ row : Int) -> Float
    func set1Value (_ column : Int, _ row : Int, _ value : Float)
    
-   func inverse () -> SFMatrix4f
+   func getTransform (_ translation : SFVec3f?, _ rotation : SFRotation?, _ scale : SFVec3f?, _ scaleOrientation : SFRotation?, _ center : SFVec3f?)
+   func setTransform (_ translation : SFVec3f?, _ rotation : SFRotation?, _ scale : SFVec3f?, _ scaleOrientation : SFRotation?, _ center : SFVec3f?)
+
    func transpose () -> SFMatrix4f
+   func inverse () -> SFMatrix4f
+   func multLeft (_ matrix : SFMatrix4f) -> SFMatrix4f
+   func multRight (_ matrix : SFMatrix4f) -> SFMatrix4f
+   func multVecMatrix (_ vector : SFVec3f) -> SFVec3f
+   func multMatrixVec (_ vector : SFVec3f) -> SFVec3f
+   func multDirMatrix (_ vector : SFVec3f) -> SFVec3f
+   func multMatrixDir (_ vector : SFVec3f) -> SFVec3f
 }
 
 extension JavaScript
@@ -141,16 +152,67 @@ extension JavaScript
          object .wrappedValue [column] [row] = value
       }
       
-      // Functions
+      public final func getTransform (_ translation : SFVec3f?, _ rotation : SFRotation?, _ scale : SFVec3f?, _ scaleOrientation : SFRotation?, _ center : SFVec3f?)
+      {
+         let m = decompose_transformation_matrix (object .wrappedValue, center: center? .object .wrappedValue ?? .zero)
+         
+         translation?      .object .wrappedValue = m .translation
+         rotation?         .object .wrappedValue = m .rotation
+         scale?            .object .wrappedValue = m .scale
+         scaleOrientation? .object .wrappedValue = m .scaleOrientation
+      }
       
+      public final func setTransform (_ translation : SFVec3f?, _ rotation : SFRotation?, _ scale : SFVec3f?, _ scaleOrientation : SFRotation?, _ center : SFVec3f?)
+      {
+         let m = compose_transformation_matrix (translation: translation? .object .wrappedValue ?? .zero,
+                                                rotation: rotation? .object .wrappedValue ?? .identity,
+                                                scale: scale? .object .wrappedValue ?? .one,
+                                                scaleOrientation: scaleOrientation? .object .wrappedValue ?? .identity,
+                                                center: center? .object .wrappedValue ?? .zero)
+         
+         object .wrappedValue = m
+      }
+      
+      // Functions
+
+      public final func transpose () -> SFMatrix4f
+      {
+         return SFMatrix4f (object: Internal (wrappedValue: object .wrappedValue .transpose))
+      }
+
       public final func inverse () -> SFMatrix4f
       {
          return SFMatrix4f (object: Internal (wrappedValue: object .wrappedValue .inverse))
       }
       
-      public final func transpose () -> SFMatrix4f
+      public final func multLeft (_ matrix : SFMatrix4f) -> SFMatrix4f
       {
-         return SFMatrix4f (object: Internal (wrappedValue: object .wrappedValue .transpose))
+         return SFMatrix4f (object: Internal (wrappedValue: object .wrappedValue * matrix .object .wrappedValue))
+      }
+      
+      public final func multRight (_ matrix : SFMatrix4f) -> SFMatrix4f
+      {
+         return SFMatrix4f (object: Internal (wrappedValue: matrix .object .wrappedValue * object .wrappedValue))
+      }
+      
+      public final func multVecMatrix (_ vector : SFVec3f) -> SFVec3f
+      {
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue * vector .object .wrappedValue))
+      }
+      
+      public final func multMatrixVec (_ vector : SFVec3f) -> SFVec3f
+      {
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: vector .object .wrappedValue * object .wrappedValue))
+      }
+      
+      public final func multDirMatrix (_ vector : SFVec3f) -> SFVec3f
+      {
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue .submatrix * vector .object .wrappedValue))
+      }
+      
+      public final func multMatrixDir (_ vector : SFVec3f) -> SFVec3f
+      {
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: vector .object .wrappedValue * object .wrappedValue .submatrix))
       }
    }
 }

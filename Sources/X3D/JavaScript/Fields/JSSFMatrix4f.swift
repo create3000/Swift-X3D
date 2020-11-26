@@ -20,13 +20,13 @@ import JavaScriptCore
    func equals (_ color : SFMatrix4f) -> JSValue
    func assign (_ color : SFMatrix4f)
    
-   func get1Value (_ column : Int, _ row : Int) -> Float
-   func set1Value (_ column : Int, _ row : Int, _ value : Float)
+   func get1Value (_ column : Int, _ row : Int) -> Scalar
+   func set1Value (_ column : Int, _ row : Int, _ value : Scalar)
    
    func getTransform (_ translation : SFVec3f?, _ rotation : SFRotation?, _ scale : SFVec3f?, _ scaleOrientation : SFRotation?, _ center : SFVec3f?)
    func setTransform (_ translation : SFVec3f?, _ rotation : SFRotation?, _ scale : SFVec3f?, _ scaleOrientation : SFRotation?, _ center : SFVec3f?)
 
-   func determinant () -> Float
+   func determinant () -> Scalar
    func transpose () -> SFMatrix4f
    func inverse () -> SFMatrix4f
    func multLeft (_ matrix : SFMatrix4f) -> SFMatrix4f
@@ -143,12 +143,12 @@ extension JavaScript
       
       // Property access
       
-      public final func get1Value (_ column : Int, _ row : Int) -> Float
+      public final func get1Value (_ column : Int, _ row : Int) -> Scalar
       {
          return object .wrappedValue [column] [row]
       }
       
-      public final func set1Value (_ column : Int, _ row : Int, _ value : Float)
+      public final func set1Value (_ column : Int, _ row : Int, _ value : Scalar)
       {
          object .wrappedValue [column] [row] = value
       }
@@ -176,7 +176,7 @@ extension JavaScript
       
       // Functions
 
-      public final func determinant () -> Float
+      public final func determinant () -> Scalar
       {
          return object .wrappedValue .determinant
       }

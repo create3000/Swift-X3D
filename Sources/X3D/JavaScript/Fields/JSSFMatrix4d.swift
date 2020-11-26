@@ -20,13 +20,13 @@ import JavaScriptCore
    func equals (_ color : SFMatrix4d) -> JSValue
    func assign (_ color : SFMatrix4d)
    
-   func get1Value (_ column : Int, _ row : Int) -> Double
-   func set1Value (_ column : Int, _ row : Int, _ value : Double)
+   func get1Value (_ column : Int, _ row : Int) -> Scalar
+   func set1Value (_ column : Int, _ row : Int, _ value : Scalar)
    
    func getTransform (_ translation : SFVec3d?, _ rotation : SFRotation?, _ scale : SFVec3d?, _ scaleOrientation : SFRotation?, _ center : SFVec3d?)
    func setTransform (_ translation : SFVec3d?, _ rotation : SFRotation?, _ scale : SFVec3d?, _ scaleOrientation : SFRotation?, _ center : SFVec3d?)
 
-   func determinant () -> Double
+   func determinant () -> Scalar
    func transpose () -> SFMatrix4d
    func inverse () -> SFMatrix4d
    func multLeft (_ matrix : SFMatrix4d) -> SFMatrix4d
@@ -143,12 +143,12 @@ extension JavaScript
       
       // Property access
       
-      public final func get1Value (_ column : Int, _ row : Int) -> Double
+      public final func get1Value (_ column : Int, _ row : Int) -> Scalar
       {
          return object .wrappedValue [column] [row]
       }
       
-      public final func set1Value (_ column : Int, _ row : Int, _ value : Double)
+      public final func set1Value (_ column : Int, _ row : Int, _ value : Scalar)
       {
          object .wrappedValue [column] [row] = value
       }
@@ -171,9 +171,9 @@ extension JavaScript
       public final func setTransform (_ translation : SFVec3d?, _ rotation : SFRotation?, _ scale : SFVec3d?, _ scaleOrientation : SFRotation?, _ center : SFVec3d?)
       {
          let ra = rotation? .object .wrappedValue .axis ?? .zAxis
-         let r  = Rotation4d (Double (ra .x), Double (ra .y), Double (ra .z), Double (rotation? .object .wrappedValue .angle ?? 0))
+         let r  = Rotation4d (Scalar (ra .x), Scalar (ra .y), Scalar (ra .z), Scalar (rotation? .object .wrappedValue .angle ?? 0))
          let sa = scaleOrientation? .object .wrappedValue .axis ?? .zAxis
-         let so = Rotation4d (Double (sa .x), Double (sa .y), Double (sa .z), Double (scaleOrientation? .object .wrappedValue .angle ?? 0))
+         let so = Rotation4d (Scalar (sa .x), Scalar (sa .y), Scalar (sa .z), Scalar (scaleOrientation? .object .wrappedValue .angle ?? 0))
 
          let m = compose_transformation_matrix (translation: translation? .object .wrappedValue ?? .zero,
                                                 rotation: r,
@@ -186,7 +186,7 @@ extension JavaScript
       
       // Functions
 
-      public final func determinant () -> Double
+      public final func determinant () -> Scalar
       {
          return object .wrappedValue .determinant
       }

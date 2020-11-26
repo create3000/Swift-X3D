@@ -30,6 +30,8 @@ extension JavaScript
          
          case .SFColor:     return SFColor     (context, object: (field as! X3D .SFColor))
          case .SFColorRGBA: return SFColorRGBA (context, object: (field as! X3D .SFColorRGBA))
+         case .SFMatrix3d:  return SFMatrix3d  (context, object: (field as! X3D .SFMatrix3d))
+         case .SFMatrix3f:  return SFMatrix3f  (context, object: (field as! X3D .SFMatrix3f))
          case .SFMatrix4d:  return SFMatrix4d  (context, object: (field as! X3D .SFMatrix4d))
          case .SFMatrix4f:  return SFMatrix4f  (context, object: (field as! X3D .SFMatrix4f))
          case .SFRotation:  return SFRotation  (context, object: (field as! X3D .SFRotation))

@@ -95,15 +95,15 @@ Object .defineProperty (SFVec2f .prototype, 1, {
          JSContext .current () .fix (self)
       }
       
-      required internal init (_ context : JSContext, object : Internal)
+      required internal init (_ context : JSContext? = nil, object : Internal)
       {
          self .object = object
          
          super .init (self .object)
          
-         context .fix (self)
+         (context ?? JSContext .current ()) .fix (self)
       }
-      
+
       // Common operators
       
       public final func equals (_ vector : SFVec) -> JSValue
@@ -120,7 +120,7 @@ Object .defineProperty (SFVec2f .prototype, 1, {
       
       public final func add (_ vector : SFVec) -> SFVec
       {
-         return SFVec (JSContext .current (), object: Internal (wrappedValue: object .wrappedValue + vector .object .wrappedValue))
+         return SFVec (object: Internal (wrappedValue: object .wrappedValue + vector .object .wrappedValue))
       }
 
       public final func distance (_ vector : SFVec) -> Scalar
@@ -130,12 +130,12 @@ Object .defineProperty (SFVec2f .prototype, 1, {
 
       public final func divide (_ scalar : Scalar) -> SFVec
       {
-         return SFVec (JSContext .current (), object: Internal (wrappedValue: object .wrappedValue / scalar))
+         return SFVec (object: Internal (wrappedValue: object .wrappedValue / scalar))
       }
       
       public final func divVec (_ vector : SFVec) -> SFVec
       {
-         return SFVec (JSContext .current (), object: Internal (wrappedValue: object .wrappedValue / vector .object .wrappedValue))
+         return SFVec (object: Internal (wrappedValue: object .wrappedValue / vector .object .wrappedValue))
       }
 
       public final func length () -> Scalar
@@ -145,32 +145,32 @@ Object .defineProperty (SFVec2f .prototype, 1, {
       
       public final func lerp (_ vector : SFVec, _ t : Scalar) -> SFVec
       {
-         return SFVec (JSContext .current (), object: Internal (wrappedValue: mix (object .wrappedValue, vector .object .wrappedValue, t: t)))
+         return SFVec (object: Internal (wrappedValue: mix (object .wrappedValue, vector .object .wrappedValue, t: t)))
       }
 
       public final func multiply (_ scalar : Scalar) -> SFVec
       {
-         return SFVec (JSContext .current (), object: Internal (wrappedValue: object .wrappedValue * scalar))
+         return SFVec (object: Internal (wrappedValue: object .wrappedValue * scalar))
       }
       
       public final func multVec (_ vector : SFVec) -> SFVec
       {
-         return SFVec (JSContext .current (), object: Internal (wrappedValue: object .wrappedValue * vector .object .wrappedValue))
+         return SFVec (object: Internal (wrappedValue: object .wrappedValue * vector .object .wrappedValue))
       }
 
       public final func negate () -> SFVec
       {
-         return SFVec (JSContext .current (), object: Internal (wrappedValue: -object .wrappedValue))
+         return SFVec (object: Internal (wrappedValue: -object .wrappedValue))
       }
 
       public final func normalize () -> SFVec
       {
-         return SFVec (JSContext .current (), object: Internal (wrappedValue: simd_normalize (object .wrappedValue)))
+         return SFVec (object: Internal (wrappedValue: simd_normalize (object .wrappedValue)))
       }
 
       public final func subtract (_ vector : SFVec) -> SFVec
       {
-         return SFVec (JSContext .current (), object: Internal (wrappedValue: object .wrappedValue - vector .object .wrappedValue))
+         return SFVec (object: Internal (wrappedValue: object .wrappedValue - vector .object .wrappedValue))
       }
    }
 }

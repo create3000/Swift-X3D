@@ -96,13 +96,13 @@ Object .defineProperty (SFColor .prototype, 2, {
          JSContext .current () .fix (self)
       }
       
-      required internal init (_ context : JSContext, object : Internal)
+      required internal init (_ context : JSContext? = nil, object : Internal)
       {
          self .object = object
          
          super .init (self .object)
          
-         context .fix (self)
+         (context ?? JSContext .current ()) .fix (self)
       }
 
       // Common operators
@@ -137,7 +137,7 @@ Object .defineProperty (SFColor .prototype, 2, {
       {
          let color = hsv_mix (object .wrappedValue .hsv, color .object .wrappedValue .hsv, t: t) .rgb
          
-         return SFColor (JSContext .current (), object: Internal (wrappedValue: color))
+         return SFColor (object: Internal (wrappedValue: color))
       }
    }
 }

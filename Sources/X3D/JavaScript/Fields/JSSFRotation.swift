@@ -110,13 +110,13 @@ Object .defineProperty (SFRotation .prototype, 3, {
          JSContext .current () .fix (self)
       }
       
-      required internal init (_ context : JSContext, object : Internal)
+      required internal init (_ context : JSContext? = nil, object : Internal)
       {
          self .object = object
          
          super .init (self .object)
          
-         context .fix (self)
+         (context ?? JSContext .current ()) .fix (self)
       }
 
       // Common operators
@@ -135,7 +135,7 @@ Object .defineProperty (SFRotation .prototype, 3, {
       
       public final func getAxis () -> SFVec3
       {
-         return SFVec3 (JSContext .current (), object: X3D .SFVec3f (wrappedValue: object .wrappedValue .axis))
+         return SFVec3 (object: X3D .SFVec3f (wrappedValue: object .wrappedValue .axis))
       }
       
       public final func setAxis (_ axis : SFVec3)
@@ -147,22 +147,22 @@ Object .defineProperty (SFRotation .prototype, 3, {
       
       public final func inverse () -> SFRotation
       {
-         return SFRotation (JSContext .current (), object: Internal (wrappedValue: object .wrappedValue .inverse))
+         return SFRotation (object: Internal (wrappedValue: object .wrappedValue .inverse))
       }
 
       public final func multiply (_ rotation : SFRotation) -> SFRotation
       {
-         return SFRotation (JSContext .current (), object: Internal (wrappedValue: rotation .object .wrappedValue * object .wrappedValue))
+         return SFRotation (object: Internal (wrappedValue: rotation .object .wrappedValue * object .wrappedValue))
       }
 
       public final func multVec (_ vector : SFVec3) -> SFVec3
       {
-         return SFVec3 (JSContext .current (), object: SFVec3 .Internal (wrappedValue: object .wrappedValue * vector .object .wrappedValue))
+         return SFVec3 (object: SFVec3 .Internal (wrappedValue: object .wrappedValue * vector .object .wrappedValue))
       }
       
       public final func slerp (_ rotation : SFRotation, _ t : Scalar) -> SFRotation
       {
-         return SFRotation (JSContext .current (), object: Internal (wrappedValue: X3D .slerp (object .wrappedValue, rotation .object .wrappedValue, t: t)))
+         return SFRotation (object: Internal (wrappedValue: X3D .slerp (object .wrappedValue, rotation .object .wrappedValue, t: t)))
       }
    }
 }

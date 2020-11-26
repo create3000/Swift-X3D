@@ -120,13 +120,13 @@ extension JavaScript
          JSContext .current () .fix (self)
       }
       
-      required internal init (_ context : JSContext, object : Internal)
+      required internal init (_ context : JSContext? = nil, object : Internal)
       {
          self .object = object
          
          super .init (self .object)
          
-         context .fix (self)
+         (context ?? JSContext .current ()) .fix (self)
       }
 
       // Common operators
@@ -183,42 +183,42 @@ extension JavaScript
       
       public final func transpose () -> SFMatrix4f
       {
-         return SFMatrix4f (JSContext .current (), object: Internal (wrappedValue: object .wrappedValue .transpose))
+         return SFMatrix4f (object: Internal (wrappedValue: object .wrappedValue .transpose))
       }
 
       public final func inverse () -> SFMatrix4f
       {
-         return SFMatrix4f (JSContext .current (), object: Internal (wrappedValue: object .wrappedValue .inverse))
+         return SFMatrix4f (object: Internal (wrappedValue: object .wrappedValue .inverse))
       }
       
       public final func multLeft (_ matrix : SFMatrix4f) -> SFMatrix4f
       {
-         return SFMatrix4f (JSContext .current (), object: Internal (wrappedValue: object .wrappedValue * matrix .object .wrappedValue))
+         return SFMatrix4f (object: Internal (wrappedValue: object .wrappedValue * matrix .object .wrappedValue))
       }
       
       public final func multRight (_ matrix : SFMatrix4f) -> SFMatrix4f
       {
-         return SFMatrix4f (JSContext .current (), object: Internal (wrappedValue: matrix .object .wrappedValue * object .wrappedValue))
+         return SFMatrix4f (object: Internal (wrappedValue: matrix .object .wrappedValue * object .wrappedValue))
       }
       
       public final func multVecMatrix (_ vector : SFVec3f) -> SFVec3f
       {
-         return SFVec3f (JSContext .current (), object: X3D .SFVec3f (wrappedValue: object .wrappedValue * vector .object .wrappedValue))
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue * vector .object .wrappedValue))
       }
       
       public final func multMatrixVec (_ vector : SFVec3f) -> SFVec3f
       {
-         return SFVec3f (JSContext .current (), object: X3D .SFVec3f (wrappedValue: vector .object .wrappedValue * object .wrappedValue))
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: vector .object .wrappedValue * object .wrappedValue))
       }
       
       public final func multDirMatrix (_ vector : SFVec3f) -> SFVec3f
       {
-         return SFVec3f (JSContext .current (), object: X3D .SFVec3f (wrappedValue: object .wrappedValue .submatrix * vector .object .wrappedValue))
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: object .wrappedValue .submatrix * vector .object .wrappedValue))
       }
       
       public final func multMatrixDir (_ vector : SFVec3f) -> SFVec3f
       {
-         return SFVec3f (JSContext .current (), object: X3D .SFVec3f (wrappedValue: vector .object .wrappedValue * object .wrappedValue .submatrix))
+         return SFVec3f (object: X3D .SFVec3f (wrappedValue: vector .object .wrappedValue * object .wrappedValue .submatrix))
       }
    }
 }

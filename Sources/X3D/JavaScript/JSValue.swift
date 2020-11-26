@@ -22,7 +22,7 @@ extension JavaScript
       switch field .getType ()
       {
          case .SFBool:      return (field as! X3D .SFBool) .wrappedValue
-         case .SFColor:     return SFColor (context, object: (field as! X3D .SFColor))
+         case .SFColor:     return SFColor     (context, object: (field as! X3D .SFColor))
          case .SFColorRGBA: return SFColorRGBA (context, object: (field as! X3D .SFColorRGBA))
          case .SFDouble:    return (field as! X3D .SFDouble) .wrappedValue
          case .SFFloat:     return (field as! X3D .SFFloat) .wrappedValue

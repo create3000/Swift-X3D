@@ -69,7 +69,11 @@ extension JavaScript
          SFVec4f     .register (context)
          
          MFBool      .register (context)
+         MFDouble    .register (context)
+         MFFloat     .register (context)
          MFInt32     .register (context)
+         MFString    .register (context)
+         MFTime      .register (context)
 
          X3DArrayField .cleanup (context)
          

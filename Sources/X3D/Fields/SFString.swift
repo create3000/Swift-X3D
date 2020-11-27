@@ -52,6 +52,28 @@ public final class SFString :
    
    internal final override func toStream (_ stream : X3DOutputStream)
    {
-      stream += String (wrappedValue)
+      stream += wrappedValue
+   }
+}
+
+extension String
+{
+   var escaped : String
+   {
+      var escaped = "";
+   
+      for c in self
+      {
+         switch c
+         {
+            case "\"", "\\":
+               escaped += "\\"
+               fallthrough
+            default:
+               escaped += String (c)
+         }
+      }
+      
+      return escaped
    }
 }

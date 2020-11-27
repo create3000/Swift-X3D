@@ -50,4 +50,19 @@ public final class MFTime :
 
       wrappedValue = field .wrappedValue
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      switch wrappedValue .count
+      {
+         case 0:
+            stream += "[ ]"
+         case 1:
+            stream += String (wrappedValue .first!)
+         default:
+            stream += "[\(wrappedValue .map { String ($0) } .joined (separator: ", "))]"
+      }
+   }
 }

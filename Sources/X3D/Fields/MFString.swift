@@ -48,4 +48,19 @@ public final class MFString :
 
       wrappedValue = field .wrappedValue
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      switch wrappedValue .count
+      {
+         case 0:
+            stream += "[ ]"
+         case 1:
+            stream += "\"\(wrappedValue .first! .escaped)\""
+         default:
+            stream += "[\"\(wrappedValue .map { $0 .escaped } .joined (separator: "\", \""))\"]"
+      }
+   }
 }

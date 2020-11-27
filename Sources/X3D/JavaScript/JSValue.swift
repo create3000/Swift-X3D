@@ -43,8 +43,12 @@ extension JavaScript
          case .SFVec4d:     return SFVec4d     (context, object: (field as! X3D .SFVec4d))
          case .SFVec4f:     return SFVec4f     (context, object: (field as! X3D .SFVec4f))
          
-         case .MFBool:      return MFBool  .initWithProxy (object: (field as! X3D .MFBool))!
-         case .MFInt32:     return MFInt32 .initWithProxy (object: (field as! X3D .MFInt32))!
+         case .MFBool:      return MFBool   .initWithProxy (object: (field as! X3D .MFBool))!
+         case .MFDouble:    return MFDouble .initWithProxy (object: (field as! X3D .MFDouble))!
+         case .MFFloat:     return MFFloat  .initWithProxy (object: (field as! X3D .MFFloat))!
+         case .MFInt32:     return MFInt32  .initWithProxy (object: (field as! X3D .MFInt32))!
+         case .MFString:    return MFString .initWithProxy (object: (field as! X3D .MFString))!
+         case .MFTime:      return MFTime   .initWithProxy (object: (field as! X3D .MFTime))!
 
          default:
             return 0
@@ -78,7 +82,11 @@ extension JavaScript
          case .SFVec4f:     if let value = value as? SFVec4f     { (field as! X3D .SFVec4f)     .wrappedValue = value .object .wrappedValue }
 
          case .MFBool:      if let value = value as? MFBool      { (field as! X3D .MFBool)      .wrappedValue = value .object .wrappedValue }
+         case .MFDouble:    if let value = value as? MFDouble    { (field as! X3D .MFDouble)    .wrappedValue = value .object .wrappedValue }
+         case .MFFloat:     if let value = value as? MFFloat     { (field as! X3D .MFFloat)     .wrappedValue = value .object .wrappedValue }
          case .MFInt32:     if let value = value as? MFInt32     { (field as! X3D .MFInt32)     .wrappedValue = value .object .wrappedValue }
+         case .MFString:    if let value = value as? MFString    { (field as! X3D .MFString)    .wrappedValue = value .object .wrappedValue }
+         case .MFTime:      if let value = value as? MFTime      { (field as! X3D .MFTime)      .wrappedValue = value .object .wrappedValue }
 
          default:
             break

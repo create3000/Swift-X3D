@@ -123,9 +123,9 @@ this .X3DNativeArray = function (global, CLASS)
 
    function MFArray (object)
    {
-      if (object instanceof Target)
+      if (object instanceof Target && !object .self)
       {
-         var target = object .self ? new Target () : object;
+         var target = object;
       }
       else
       {

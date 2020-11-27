@@ -50,8 +50,9 @@ extension JavaScript
 
          Global .register (context, browser)
          
-         X3DField .register (context)
-         
+         X3DField      .register (context)
+         X3DArrayField .register (context)
+
          SFColor     .register (context)
          SFColorRGBA .register (context)
          SFImage     .register (context)
@@ -66,6 +67,8 @@ extension JavaScript
          SFVec3f     .register (context)
          SFVec4d     .register (context)
          SFVec4f     .register (context)
+         
+         MFBool      .register (context)
          
          // Add user-defined fields to global object.
          

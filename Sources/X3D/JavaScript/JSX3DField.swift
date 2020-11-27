@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  JSX3DField.swift
 //  
 //
 //  Created by Holger Seelig on 25.11.20.
@@ -27,7 +27,7 @@ extension JavaScript
    {
       // Registration
       
-      public class func register (_ context : JSContext)
+      internal class func register (_ context : JSContext)
       {
          context ["X3DField"] = Self .self
       }
@@ -36,7 +36,7 @@ extension JavaScript
       
       private final var object : X3D .X3DField
       
-      public init (_ object : X3D .X3DField)
+      internal init (_ object : X3D .X3DField)
       {
          self .object = object
       }

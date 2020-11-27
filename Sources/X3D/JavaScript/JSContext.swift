@@ -150,12 +150,24 @@ extension JavaScript
    {
       const value = getProperty (name);
 
-      Object .defineProperty (global, name, {
-         get: function () { return value; },
-         set: function (newValue) { setProperty (name, newValue); },
-         enumerable: true,
-         configurable: false,
-      });
+      if (value instanceof X3DArrayField)
+      {
+         Object .defineProperty (global, name, {
+            get: function () { return value; },
+            set: function (newValue) { setProperty (name, newValue .self); },
+            enumerable: true,
+            configurable: false,
+         });
+      }
+      else
+      {
+         Object .defineProperty (global, name, {
+            get: function () { return value; },
+            set: function (newValue) { setProperty (name, newValue); },
+            enumerable: true,
+            configurable: false,
+         });
+      }
    });
 })(this)
 """)

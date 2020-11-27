@@ -53,7 +53,7 @@ extension JavaScript
       {
          context ["MFBool"] = Self .self
          
-         proxy = context .evaluateScript ("NativeArray (this, \"MFBool\");")
+         proxy = context .evaluateScript ("X3DNativeArray (this, \"MFBool\");")
       }
       
       // Construction

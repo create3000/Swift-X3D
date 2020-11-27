@@ -24,7 +24,7 @@ extension JavaScript
          context ["X3DArrayField"] = Self .self
          
          context .evaluateScript ("""
-this .NativeArray = function (global, CLASS)
+this .X3DNativeArray = function (global, CLASS)
 {
    const Target = global [CLASS];
 

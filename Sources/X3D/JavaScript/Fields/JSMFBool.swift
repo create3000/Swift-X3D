@@ -47,11 +47,13 @@ extension JavaScript
       
       // Registration
       
+      private static var proxy : JSValue!
+      
       internal override class func register (_ context : JSContext)
       {
          context ["MFBool"] = Self .self
          
-         context .evaluateScript ("NativeArray (this, \"MFBool\");")
+         proxy = context .evaluateScript ("NativeArray (this, \"MFBool\");")
       }
       
       // Construction
@@ -75,6 +77,11 @@ extension JavaScript
          self .object = object
          
          super .init (self .object)
+      }
+      
+      internal static func initWithProxy (object : Internal) -> JSValue!
+      {
+         return proxy .construct (withArguments: [Self (object: object)])
       }
       
       // Common operators

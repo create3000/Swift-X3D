@@ -43,7 +43,7 @@ extension JavaScript
          case .SFVec4d:     return SFVec4d     (context, object: (field as! X3D .SFVec4d))
          case .SFVec4f:     return SFVec4f     (context, object: (field as! X3D .SFVec4f))
          
-         case .MFBool:      return MFBool      (object: (field as! X3D .MFBool))
+         case .MFBool:      return MFBool .initWithProxy (object: (field as! X3D .MFBool))!
 
          default:
             return 0

@@ -131,6 +131,8 @@ this .NativeArray = function (global, CLASS)
    }
 
    global [CLASS] = MFArray;
+
+   return MFArray;
 }
 """)
       }

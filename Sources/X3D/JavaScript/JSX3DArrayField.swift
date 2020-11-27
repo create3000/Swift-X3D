@@ -123,7 +123,14 @@ this .X3DNativeArray = function (global, CLASS)
 
    function MFArray (object)
    {
-      const target = object instanceof Target ? object : new Target (...arguments);
+      if (object instanceof Target)
+      {
+         var target = object .self ? new Target () : object;
+      }
+      else
+      {
+         var target = new Target (...arguments);
+      }
 
       target .self = target;
 

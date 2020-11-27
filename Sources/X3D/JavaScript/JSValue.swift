@@ -42,8 +42,8 @@ extension JavaScript
          case .SFVec3f:     return SFVec3f     (context, object: (field as! X3D .SFVec3f))
          case .SFVec4d:     return SFVec4d     (context, object: (field as! X3D .SFVec4d))
          case .SFVec4f:     return SFVec4f     (context, object: (field as! X3D .SFVec4f))
-            
-         case .MFBool:      return MFBool      (context, object: (field as! X3D .MFBool))
+         
+         case .MFBool:      return MFBool      (object: (field as! X3D .MFBool))
 
          default:
             return 0

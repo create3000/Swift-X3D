@@ -70,6 +70,8 @@ extension JavaScript
          
          MFBool      .register (context)
          
+         X3DArrayField .cleanup (context)
+         
          // Add user-defined fields to global object.
          
          let getProperty : @convention(block) (String) -> Any =

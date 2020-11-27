@@ -148,7 +148,12 @@ extension JavaScript
 
    ["\(fields .joined (separator: "\",\""))"] .forEach (function (name)
    {
-      const value = getProperty (name);
+      var value = getProperty (name);
+
+      if (value instanceof X3DArrayField)
+      {
+         value = global [value .getTypeName ()] (value);
+      }
 
       Object .defineProperty (global, name, {
          get: function () { return value; },

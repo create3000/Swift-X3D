@@ -121,9 +121,9 @@ this .NativeArray = function (global, CLASS)
       },
    };
 
-   function MFArray ()
+   function MFArray (object)
    {
-      const target = new Target (...arguments);
+      const target = object instanceof Target ? object : new Target (...arguments);
 
       target .self = target;
 

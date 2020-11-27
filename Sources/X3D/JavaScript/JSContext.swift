@@ -169,7 +169,7 @@ extension JavaScript
          });
       }
    });
-})(this)
+})(this);
 """)
       }
       

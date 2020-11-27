@@ -43,7 +43,8 @@ extension JavaScript
          case .SFVec4d:     return SFVec4d     (context, object: (field as! X3D .SFVec4d))
          case .SFVec4f:     return SFVec4f     (context, object: (field as! X3D .SFVec4f))
          
-         case .MFBool:      return MFBool .initWithProxy (object: (field as! X3D .MFBool))!
+         case .MFBool:      return MFBool  .initWithProxy (object: (field as! X3D .MFBool))!
+         case .MFInt32:     return MFInt32 .initWithProxy (object: (field as! X3D .MFInt32))!
 
          default:
             return 0
@@ -77,6 +78,7 @@ extension JavaScript
          case .SFVec4f:     if let value = value as? SFVec4f     { (field as! X3D .SFVec4f)     .wrappedValue = value .object .wrappedValue }
 
          case .MFBool:      if let value = value as? MFBool      { (field as! X3D .MFBool)      .wrappedValue = value .object .wrappedValue }
+         case .MFInt32:     if let value = value as? MFInt32     { (field as! X3D .MFInt32)     .wrappedValue = value .object .wrappedValue }
 
          default:
             break

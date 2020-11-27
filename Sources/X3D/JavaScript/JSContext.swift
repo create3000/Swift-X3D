@@ -69,7 +69,8 @@ extension JavaScript
          SFVec4f     .register (context)
          
          MFBool      .register (context)
-         
+         MFInt32     .register (context)
+
          X3DArrayField .cleanup (context)
          
          // Add user-defined fields to global object.

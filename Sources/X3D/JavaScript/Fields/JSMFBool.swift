@@ -13,8 +13,6 @@ import JavaScriptCore
    typealias Scalar = Bool
    typealias MFBool = JavaScript .MFBool
    
-   var length : Int { get set }
-   
    init ()
    
    func equals (_ array : MFBool) -> JSValue
@@ -22,6 +20,8 @@ import JavaScriptCore
 
    func get1Value (_ index : Int) -> JSValue
    func set1Value (_ index : Int, _ value : Scalar)
+   
+   var length : Int { get set }
 }
 
 extension JavaScript
@@ -32,14 +32,6 @@ extension JavaScript
    {
       typealias Scalar   = Bool
       typealias Internal = X3D .MFBool
-      
-      // Properties
-      
-      dynamic public var length : Int
-      {
-         get { object .wrappedValue .count }
-         set { object .wrappedValue .resize (newValue, fillWith: Scalar ()) }
-      }
 
       // Private properties
       
@@ -116,6 +108,14 @@ extension JavaScript
          }
          
          object .wrappedValue [index] = value
+      }
+      
+      // Properties
+      
+      dynamic public var length : Int
+      {
+         get { object .wrappedValue .count }
+         set { object .wrappedValue .resize (newValue, fillWith: Scalar ()) }
       }
    }
 }

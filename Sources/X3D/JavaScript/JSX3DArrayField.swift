@@ -125,7 +125,11 @@ this .X3DArrayFieldWrapper = function (global, CLASS)
          var target = new Target (...arguments);
       }
 
-      this .self = target;
+      Object .defineProperty (this, "self", {
+         value: target,
+         enumerable: false,
+         configurable: false,
+      });
 
       return new Proxy (this, handler);
    }

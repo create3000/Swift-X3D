@@ -119,7 +119,11 @@ extension JavaScript
 
    function SFNode ()
    {
-      this .self = new Target (...arguments);
+      Object .defineProperty (this, "self", {
+         value: new Target (...arguments),
+         enumerable: false,
+         configurable: false,
+      });
 
       return new Proxy (this, handler);
    }

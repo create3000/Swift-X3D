@@ -15,6 +15,14 @@ public typealias Color4f = simd_float4
 
 extension Color3d
 {
+   @inlinable
+   public init (r : Double, g : Double, b : Double)
+   {
+      self .init (X3D .clamp (r, min: 0, max: 1),
+                  X3D .clamp (g, min: 0, max: 1),
+                  X3D .clamp (b, min: 0, max: 1))
+   }
+   
    @inlinable public var r : Double { get  { x } set { x = X3D .clamp (newValue, min: 0, max: 1) } }
    @inlinable public var g : Double { get  { y } set { y = X3D .clamp (newValue, min: 0, max: 1) } }
    @inlinable public var b : Double { get  { z } set { z = X3D .clamp (newValue, min: 0, max: 1) } }
@@ -22,6 +30,14 @@ extension Color3d
 
 extension Color3f
 {
+   @inlinable
+   public init (r : Float, g : Float, b : Float)
+   {
+      self .init (X3D .clamp (r, min: 0, max: 1),
+                  X3D .clamp (g, min: 0, max: 1),
+                  X3D .clamp (b, min: 0, max: 1))
+   }
+   
    @inlinable public var r : Float { get  { x } set { x = X3D .clamp (newValue, min: 0, max: 1) } }
    @inlinable public var g : Float { get  { y } set { y = X3D .clamp (newValue, min: 0, max: 1) } }
    @inlinable public var b : Float { get  { z } set { z = X3D .clamp (newValue, min: 0, max: 1) } }
@@ -29,6 +45,15 @@ extension Color3f
 
 extension Color4d
 {
+   @inlinable
+   public init (r : Double, g : Double, b : Double, a : Double)
+   {
+      self .init (X3D .clamp (r, min: 0, max: 1),
+                  X3D .clamp (g, min: 0, max: 1),
+                  X3D .clamp (b, min: 0, max: 1),
+                  X3D .clamp (a, min: 0, max: 1))
+   }
+   
    @inlinable public var r : Double { get  { x } set { x = X3D .clamp (newValue, min: 0, max: 1) } }
    @inlinable public var g : Double { get  { y } set { y = X3D .clamp (newValue, min: 0, max: 1) } }
    @inlinable public var b : Double { get  { z } set { z = X3D .clamp (newValue, min: 0, max: 1) } }
@@ -37,6 +62,15 @@ extension Color4d
 
 extension Color4f
 {
+   @inlinable
+   public init (r : Float, g : Float, b : Float, a : Float)
+   {
+      self .init (X3D .clamp (r, min: 0, max: 1),
+                  X3D .clamp (g, min: 0, max: 1),
+                  X3D .clamp (b, min: 0, max: 1),
+                  X3D .clamp (a, min: 0, max: 1))
+   }
+   
    @inlinable public var r : Float { get  { x } set { x = X3D .clamp (newValue, min: 0, max: 1) } }
    @inlinable public var g : Float { get  { y } set { y = X3D .clamp (newValue, min: 0, max: 1) } }
    @inlinable public var b : Float { get  { z } set { z = X3D .clamp (newValue, min: 0, max: 1) } }

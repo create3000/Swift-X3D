@@ -24,9 +24,14 @@ extension JavaScript
          context ["X3DArrayField"] = Self .self
          
          context .evaluateScript ("""
-this .X3DNativeArray = function (global, CLASS)
+this .X3DArrayFieldWrapper = function (global, CLASS)
 {
-   const Target = global [CLASS];
+   const Target    = global [CLASS];
+   const get1Value = Target .prototype .get1Value;
+   const set1Value = Target .prototype .set1Value;
+
+   delete Target .prototype .get1Value;
+   delete Target .prototype .set1Value;
 
    function getMethod (target, method)
    {
@@ -54,7 +59,7 @@ this .X3DNativeArray = function (global, CLASS)
 
             if (Number .isInteger (index) && index >= 0)
             {
-               return target .get1Value (index);
+               return get1Value .call (target, index);
             }
             else
             {
@@ -86,7 +91,7 @@ this .X3DNativeArray = function (global, CLASS)
 
             if (Number .isInteger (index) && index >= 0)
             {
-               target .set1Value (index, value);
+               set1Value .call (target, index, value);
             }
             else
             {
@@ -146,16 +151,7 @@ this .X3DNativeArray = function (global, CLASS)
       
       internal final class func cleanup (_ context : JSContext)
       {
-         context ["X3DArrayField"] = Self .self
-         
-         context .evaluateScript ("delete this .NativeArray;")
-      }
-
-      // Construction
-      
-      internal init (_ object : X3D .X3DArrayField)
-      {
-         super .init (object)
+         context .evaluateScript ("delete this .X3DArrayFieldWrapper;")
       }
    }
 }

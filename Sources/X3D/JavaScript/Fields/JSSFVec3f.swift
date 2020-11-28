@@ -38,7 +38,7 @@ import JavaScriptCore
 
 extension JavaScript
 {
-   @objc internal final class SFVec3f :
+   @objc internal class SFVec3f :
       X3DField,
       SFVec3fExports
    {
@@ -55,7 +55,8 @@ extension JavaScript
 
       // Private properties
       
-      internal private(set) final var object : Internal
+      internal private(set) var object : Internal
+      internal final override func getObject () -> X3D .X3DField! { object }
       
       // Registration
       
@@ -87,7 +88,7 @@ Object .defineProperty (SFVec3f .prototype, 2, {
       
       // Construction
       
-      required public init ()
+      required override public init ()
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 3
          {
@@ -100,16 +101,16 @@ Object .defineProperty (SFVec3f .prototype, 2, {
             self .object = Internal ()
          }
          
-         super .init (self .object)
+         super .init ()
          
          JSContext .current () .fix (self)
       }
       
-      required internal init (_ context : JSContext? = nil, object : Internal)
+      internal init (_ context : JSContext? = nil, object : Internal)
       {
          self .object = object
          
-         super .init (self .object)
+         super .init ()
          
          (context ?? JSContext .current ()) .fix (self)
       }

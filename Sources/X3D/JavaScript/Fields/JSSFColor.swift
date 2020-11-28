@@ -46,8 +46,9 @@ extension JavaScript
 
       // Private properties
       
-      internal private(set) final var object : Internal
-      
+      internal private(set) var object : Internal
+      internal final override func getObject () -> X3D .X3DField! { object }
+
       // Registration
       
       public final override class func register (_ context : JSContext)
@@ -78,7 +79,7 @@ Object .defineProperty (SFColor .prototype, 2, {
       
       // Construction
       
-      required public init ()
+      public override init ()
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 3
          {
@@ -91,16 +92,16 @@ Object .defineProperty (SFColor .prototype, 2, {
             self .object = Internal ()
          }
          
-         super .init (self .object)
+         super .init ()
          
          JSContext .current () .fix (self)
       }
       
-      required internal init (_ context : JSContext? = nil, object : Internal)
+      internal init (_ context : JSContext? = nil, object : Internal)
       {
          self .object = object
          
-         super .init (self .object)
+         super .init ()
          
          (context ?? JSContext .current ()) .fix (self)
       }

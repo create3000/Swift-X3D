@@ -49,6 +49,8 @@ extension JavaScript
          case .MFInt32:     return MFInt32  .initWithProxy (object: (field as! X3D .MFInt32))!
          case .MFString:    return MFString .initWithProxy (object: (field as! X3D .MFString))!
          case .MFTime:      return MFTime   .initWithProxy (object: (field as! X3D .MFTime))!
+            
+         case .MFVec3f:     return MFVec3f  .initWithProxy (object: (field as! X3D .MFVec3f))!
 
          default:
             return 0
@@ -87,6 +89,8 @@ extension JavaScript
          case .MFInt32:     if let value = value as? MFInt32     { (field as! X3D .MFInt32)     .wrappedValue = value .object .wrappedValue }
          case .MFString:    if let value = value as? MFString    { (field as! X3D .MFString)    .wrappedValue = value .object .wrappedValue }
          case .MFTime:      if let value = value as? MFTime      { (field as! X3D .MFTime)      .wrappedValue = value .object .wrappedValue }
+            
+         case .MFVec3f:     if let value = value as? MFVec3f     { (field as! X3D .MFVec3f)     .wrappedValue = value .object .wrappedValue }
 
          default:
             break

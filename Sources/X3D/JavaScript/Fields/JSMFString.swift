@@ -36,7 +36,8 @@ extension JavaScript
       // Private properties
       
       internal private(set) final var object : Internal
-      
+      internal final override func getObject () -> X3D .X3DField! { object }
+
       // Registration
       
       private static var proxy : JSValue!
@@ -45,12 +46,12 @@ extension JavaScript
       {
          context ["MFString"] = Self .self
          
-         proxy = context .evaluateScript ("X3DNativeArray (this, \"MFString\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, \"MFString\");")
       }
       
       // Construction
       
-      required public init ()
+      required public override init ()
       {
          if let args = JSContext .currentArguments () as? [JSValue]
          {
@@ -61,19 +62,19 @@ extension JavaScript
             self .object = Internal ()
          }
          
-         super .init (self .object)
+         super .init ()
       }
 
-      required internal init (object : Internal)
+      internal init (object : Internal)
       {
          self .object = object
          
-         super .init (self .object)
+         super .init ()
       }
       
       internal static func initWithProxy (object : Internal) -> JSValue!
       {
-         return proxy .construct (withArguments: [Self (object: object)])
+         return proxy .construct (withArguments: [MFString (object: object)])
       }
       
       // Common operators

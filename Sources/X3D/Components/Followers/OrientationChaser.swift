@@ -27,7 +27,7 @@ public final class OrientationChaser :
 
    // Construction
    
-   internal init (with executionContext : X3DExecutionContext)
+   required internal init (with executionContext : X3DExecutionContext)
    {
       super .init (executionContext .browser!, executionContext)
 

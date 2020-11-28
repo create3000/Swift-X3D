@@ -33,7 +33,7 @@ public final class LayerSet :
 
    // Construction
    
-   internal init (with executionContext : X3DExecutionContext)
+   required internal init (with executionContext : X3DExecutionContext)
    {
       layerNode0 = Layer (with: executionContext)
       

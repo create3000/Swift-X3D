@@ -23,7 +23,7 @@ public final class DirectionalLight :
 
    // Construction
    
-   internal init (with executionContext : X3DExecutionContext)
+   required internal init (with executionContext : X3DExecutionContext)
    {
       super .init (executionContext .browser!, executionContext)
 

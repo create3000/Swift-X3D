@@ -25,7 +25,7 @@ public final class Layer :
 
    // Construction
    
-   internal init (with executionContext : X3DExecutionContext)
+   required internal init (with executionContext : X3DExecutionContext)
    {
       let group = Group (with: executionContext)
       

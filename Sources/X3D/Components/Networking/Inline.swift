@@ -39,7 +39,7 @@ public final class Inline :
 
    // Construction
    
-   internal init (with executionContext : X3DExecutionContext)
+   required internal init (with executionContext : X3DExecutionContext)
    {
       self .groupNode = Group (with: executionContext)
       

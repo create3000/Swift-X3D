@@ -24,7 +24,7 @@ public final class AnnotationLayer :
 
    // Construction
    
-   internal init (with executionContext : X3DExecutionContext)
+   required internal init (with executionContext : X3DExecutionContext)
    {
       let viewpoint = Viewpoint (with: executionContext)
       let group     = Group (with: executionContext)

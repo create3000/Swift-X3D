@@ -42,7 +42,7 @@ extension JavaScript
       
       required public init ()
       {
-         if let args = JSContext .currentArguments () as? [JSValue], args .count == 4
+         if let args = JSContext .currentArguments () as? [JSValue], args .count == 1
          {
             self .object = Internal ()
          }
@@ -52,19 +52,15 @@ extension JavaScript
          }
          
          super .init (object)
-         
-         JSContext .current () .fix (self)
       }
       
-      internal init (_ context : JSContext? = nil, object : Internal)
+      internal init (object : Internal)
       {
          self .object = object
          
          super .init (object)
-         
-         (context ?? JSContext .current ()) .fix (self)
       }
-
+      
       // Common operators
       
       public final func equals (_ node : SFNode) -> JSValue

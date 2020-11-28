@@ -68,6 +68,8 @@ extension JavaScript
          SFVec4d     .register (context)
          SFVec4f     .register (context)
          
+         SFNode      .register (context)
+
          MFBool      .register (context)
          MFDouble    .register (context)
          MFFloat     .register (context)

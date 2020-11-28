@@ -83,4 +83,49 @@ public final class MFImage :
       
       wrappedValue = field .wrappedValue .map { $0 .copy () }
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      switch wrappedValue .count
+      {
+         case 0:
+            stream += "[ ]"
+         case 1:
+            stream += String (wrappedValue .first! .width)
+            stream += " "
+            stream += String (wrappedValue .first! .height)
+            stream += " "
+            stream += String (wrappedValue .first! .comp)
+            
+            if !wrappedValue .first! .array .isEmpty
+            {
+               stream += " "
+               stream += wrappedValue .first! .array .map { String (format: "0x%x", $0) } .joined (separator: " ")
+            }
+         default:
+            stream += """
+[\(wrappedValue .map
+{
+   var string = ""
+   
+   string += String ($0 .width)
+   string += " "
+   string += String ($0 .height)
+   string += " "
+   string += String ($0 .comp)
+   
+   if !$0 .array .isEmpty
+   {
+      string += " "
+      string += $0 .array .map { String (format: "0x%x", $0) } .joined (separator: " ")
+   }
+   
+   return string
+}
+.joined (separator: ", "))]
+"""
+      }
+   }
 }

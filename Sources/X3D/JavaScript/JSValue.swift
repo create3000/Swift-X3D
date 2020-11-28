@@ -42,7 +42,9 @@ extension JavaScript
          case .SFVec3f:     return SFVec3f     (context, object: (field as! X3D .SFVec3f))
          case .SFVec4d:     return SFVec4d     (context, object: (field as! X3D .SFVec4d))
          case .SFVec4f:     return SFVec4f     (context, object: (field as! X3D .SFVec4f))
-         
+            
+         case .SFNode:      return SFNode      (object: (field as! X3D .SFNode))
+
          case .MFBool:      return MFBool      .initWithProxy (object: (field as! X3D .MFBool))!
          case .MFDouble:    return MFDouble    .initWithProxy (object: (field as! X3D .MFDouble))!
          case .MFFloat:     return MFFloat     .initWithProxy (object: (field as! X3D .MFFloat))!
@@ -95,6 +97,8 @@ extension JavaScript
          case .SFVec3f:     if let value = value as? SFVec3f     { (field as! X3D .SFVec3f)     .wrappedValue = value .object .wrappedValue }
          case .SFVec4d:     if let value = value as? SFVec4d     { (field as! X3D .SFVec4d)     .wrappedValue = value .object .wrappedValue }
          case .SFVec4f:     if let value = value as? SFVec4f     { (field as! X3D .SFVec4f)     .wrappedValue = value .object .wrappedValue }
+         
+         case .SFNode:      if let value = value as? SFNode      { (field as! X3D .SFNode)      .wrappedValue = value .object .wrappedValue }
 
          case .MFBool:      if let value = value as? MFBool      { (field as! X3D .MFBool)      .wrappedValue = value .object .wrappedValue }
          case .MFDouble:    if let value = value as? MFDouble    { (field as! X3D .MFDouble)    .wrappedValue = value .object .wrappedValue }

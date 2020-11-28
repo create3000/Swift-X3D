@@ -42,9 +42,21 @@ extension JavaScript
          case .SFVec3f:     return SFVec3f     (context, object: (field as! X3D .SFVec3f))
          case .SFVec4d:     return SFVec4d     (context, object: (field as! X3D .SFVec4d))
          case .SFVec4f:     return SFVec4f     (context, object: (field as! X3D .SFVec4f))
+         
+         case .SFNode: do
+         {
+            let field = field as! X3D .SFNode <X3D .X3DNode>
             
-         case .SFNode:      return SFNode      (object: (field as! X3D .SFNode))
-
+            if field .wrappedValue == nil
+            {
+               return JSValue (nullIn: context)!
+            }
+            else
+            {
+               return SFNode (object: (field))
+            }
+         }
+         
          case .MFBool:      return MFBool      .initWithProxy (object: (field as! X3D .MFBool))!
          case .MFDouble:    return MFDouble    .initWithProxy (object: (field as! X3D .MFDouble))!
          case .MFFloat:     return MFFloat     .initWithProxy (object: (field as! X3D .MFFloat))!
@@ -98,8 +110,12 @@ extension JavaScript
          case .SFVec4d:     if let value = value as? SFVec4d     { (field as! X3D .SFVec4d)     .wrappedValue = value .object .wrappedValue }
          case .SFVec4f:     if let value = value as? SFVec4f     { (field as! X3D .SFVec4f)     .wrappedValue = value .object .wrappedValue }
          
-         case .SFNode:      if let value = value as? SFNode      { (field as! X3D .SFNode)      .wrappedValue = value .object .wrappedValue }
-
+         case .SFNode: do
+         {
+            if let value = value as? SFNode { (field as! X3D .SFNode <X3D .X3DNode>) .wrappedValue = value .object .wrappedValue }
+            else { (field as! X3D .SFNode <X3D .X3DNode>) .wrappedValue = nil }
+         }
+            
          case .MFBool:      if let value = value as? MFBool      { (field as! X3D .MFBool)      .wrappedValue = value .object .wrappedValue }
          case .MFDouble:    if let value = value as? MFDouble    { (field as! X3D .MFDouble)    .wrappedValue = value .object .wrappedValue }
          case .MFFloat:     if let value = value as? MFFloat     { (field as! X3D .MFFloat)     .wrappedValue = value .object .wrappedValue }

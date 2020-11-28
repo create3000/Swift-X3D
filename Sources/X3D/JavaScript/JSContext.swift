@@ -116,7 +116,7 @@ extension JavaScript
          {
             switch field .getType ()
             {
-               case .SFBool, .SFDouble, .SFFloat, .SFInt32, .SFString, .SFTime: do
+               case .SFBool, .SFDouble, .SFFloat, .SFInt32, .SFString, .SFTime, .SFNode: do
                {
                   switch field .getAccessType ()
                   {

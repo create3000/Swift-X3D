@@ -16,6 +16,17 @@ import JavaScriptCore
    
    func equals (_ color : SFNode) -> JSValue
    func assign (_ color : SFNode)
+   
+   func getProperty (_ name : String) -> Any
+   func setProperty (_ name : String, _ value : Any)
+   
+   func getNodeTypeName () -> String
+   func getNodeName () -> String
+   func getNodeType () -> [Int32]
+   //func getFieldDefinitions () -> FieldDefinitionArray
+
+   func toVRMLString () -> String
+   func toXMLString () -> String
 }
 
 extension JavaScript
@@ -71,6 +82,55 @@ extension JavaScript
       public final func assign (_ node : SFNode)
       {
          object .wrappedValue = node .object .wrappedValue
+      }
+      
+      // Properties
+      
+      public final func getProperty (_ name : String) -> Any
+      {
+         if let node = object .wrappedValue
+         {
+            return JavaScript .getValue (JSContext .current (), try! node .getField (name: name))
+         }
+         else
+         {
+            return JSValue (nullIn: JSContext .current ())!
+         }
+      }
+      
+      public final func setProperty (_ name : String, _ value : Any)
+      {
+         if let node = object .wrappedValue
+         {
+            JavaScript .setValue (try! node .getField (name: name), value)
+         }
+      }
+      
+      public final func getNodeTypeName () -> String
+      {
+         return object .wrappedValue? .getTypeName () ?? "X3DNode"
+      }
+      
+      public final func getNodeName () -> String
+      {
+         return object .wrappedValue? .getName () ?? ""
+      }
+      
+      public final func getNodeType () -> [Int32]
+      {
+         return object .wrappedValue? .getType () .map { $0 .rawValue } ?? [ ]
+      }
+      
+      // public final func getFieldDefinitions () -> FieldDefinitionArray
+
+      public final func toVRMLString () -> String
+      {
+         return object .wrappedValue? .toString () ?? ""
+      }
+      
+      public final func toXMLString () -> String
+      {
+         return object .wrappedValue? .toString () ?? ""
       }
    }
 }

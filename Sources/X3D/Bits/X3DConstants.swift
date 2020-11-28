@@ -123,7 +123,8 @@ public enum X3DFieldType :
    case MFVec4f
 }
 
-public enum X3DNodeType
+public enum X3DNodeType :
+   Int32
 {
    // Node types
    

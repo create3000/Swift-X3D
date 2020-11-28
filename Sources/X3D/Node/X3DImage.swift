@@ -17,8 +17,6 @@ public final class X3DImage :
       
       $array .addParent (self)
    }
-   
-   // Properties
 
    public final func copy () -> X3DImage
    {
@@ -35,7 +33,21 @@ public final class X3DImage :
       
       return copy
    }
-    
+   
+   // Equatable
+   
+   public static func == (lhs : X3DImage, rhs : X3DImage) -> Bool
+   {
+      return (
+         lhs .width  == rhs .width  &&
+         lhs .height == rhs .height &&
+         lhs .comp   == rhs .comp   &&
+         lhs .array  == rhs .array
+      )
+   }
+   
+   // Properties
+   
    public var width : Int32 = 0
    {
       didSet

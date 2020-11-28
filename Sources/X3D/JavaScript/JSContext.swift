@@ -111,39 +111,49 @@ extension JavaScript
          
          var native = [String] ()
          var fields = [String] ()
+         var nodes  = [String] ()
 
          for field in scriptNode .getUserDefinedFields ()
          {
             switch field .getType ()
             {
-               case .SFBool, .SFDouble, .SFFloat, .SFInt32, .SFString, .SFTime, .SFNode: do
+               case .SFBool, .SFDouble, .SFFloat, .SFInt32, .SFString, .SFTime: do
                {
                   switch field .getAccessType ()
                   {
-                     case .initializeOnly:
-                        native .append (field .getName ())
                      case .inputOnly:
                         break
-                     case .outputOnly:
-                        native .append (field .getName ())
                      case .inputOutput:
+                        fields .append (field .getName () + "_changed")
+                        fallthrough
+                     case .initializeOnly, .outputOnly:
                         native .append (field .getName ())
-                        native .append (field .getName () + "_changed")
+                  }
+               }
+               case .SFNode: do
+               {
+                  switch field .getAccessType ()
+                  {
+                     case .inputOnly:
+                        break
+                     case .inputOutput:
+                        fields .append (field .getName () + "_changed")
+                        fallthrough
+                     case .initializeOnly, .outputOnly:
+                        nodes .append (field .getName ())
                   }
                }
                default: do
                {
                   switch field .getAccessType ()
                   {
-                     case .initializeOnly:
-                        fields .append (field .getName ())
                      case .inputOnly:
                         break
-                     case .outputOnly:
-                        fields .append (field .getName ())
                      case .inputOutput:
-                        fields .append (field .getName ())
                         fields .append (field .getName () + "_changed")
+                        fallthrough
+                     case .initializeOnly, .outputOnly:
+                        fields .append (field .getName ())
                   }
                }
             }
@@ -165,6 +175,18 @@ extension JavaScript
       Object .defineProperty (global, name, {
          get: function () { return getProperty (name); },
          set: function (newValue) { setProperty (name, newValue); },
+         enumerable: true,
+         configurable: false,
+      });
+   });
+
+   ["\(nodes .joined (separator: "\",\""))"] .forEach (function (name)
+   {
+      if (!name) return;
+
+      Object .defineProperty (global, name, {
+         get: function () { return getProperty (name); },
+         set: function (newValue) { setProperty (name, newValue .self || newValue); },
          enumerable: true,
          configurable: false,
       });
@@ -320,15 +342,16 @@ extension JSContext
       set { setObject (newValue, forKeyedSubscript: key as NSString) }
    }
    
+   private static let fixindex : NSString = "9999"
+   
    internal func fix (_ object : Any)
    {
       // Workaround to fix a bug with indexed properties,
       // where the first accessed indexed property has no setter.
       
-      let index : NSString = "9999"
       let value = JSValue (object: object, in: self)
       
-      value! .setObject (nil, forKeyedSubscript: index)
-      value! .deleteProperty (index)
+      value! .setObject (nil, forKeyedSubscript: JSContext .fixindex)
+      value! .deleteProperty (JSContext .fixindex)
    }
 }

@@ -39,10 +39,7 @@ this .X3DArrayFieldWrapper = function (global, CLASS)
       {
          for (var i = 0, length = arguments .length; i < length; ++ i)
          {
-            if (arguments [i] instanceof X3DArrayField)
-            {
-               arguments [i] = arguments [i] .self;
-            }
+            arguments [i] = arguments [i] .self || arguments [i];
          }
 
          return method .apply (target, arguments);
@@ -59,14 +56,14 @@ this .X3DArrayFieldWrapper = function (global, CLASS)
 
             if (Number .isInteger (index) && index >= 0)
             {
-               return get1Value .call (target, index);
+               return get1Value .call (target .self, index);
             }
             else
             {
                const value = target [key];
 
                if (typeof value == "function")
-                  return getMethod (target, value);
+                  return getMethod (target .self, value);
 
                return value;
             }
@@ -78,7 +75,7 @@ this .X3DArrayFieldWrapper = function (global, CLASS)
             const value = target [key];
 
             if (typeof value == "function")
-               return getMethod (target, value);
+               return getMethod (target .self, value);
 
             return value;
          }
@@ -91,7 +88,7 @@ this .X3DArrayFieldWrapper = function (global, CLASS)
 
             if (Number .isInteger (index) && index >= 0)
             {
-               set1Value .call (target, index, value);
+               set1Value .call (target .self, index, value);
             }
             else
             {
@@ -115,15 +112,6 @@ this .X3DArrayFieldWrapper = function (global, CLASS)
 
          return key in target;
       },
-      enumerate: function (target)
-      {
-         const indices = [ ];
-
-         for (var i = 0, length = target .length; i < length; ++ i)
-            array .push (i);
-
-         return indices [Symbol .iterator] ();
-      },
    };
 
    function MFArray (object)
@@ -137,10 +125,12 @@ this .X3DArrayFieldWrapper = function (global, CLASS)
          var target = new Target (...arguments);
       }
 
-      target .self = target;
+      this .self = target;
 
-      return new Proxy (target, handler);
+      return new Proxy (this, handler);
    }
+
+   MFArray .prototype = Target .prototype;
 
    global [CLASS] = MFArray;
 

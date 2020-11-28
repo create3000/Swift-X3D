@@ -53,7 +53,7 @@ extension JavaScript
             }
             else
             {
-               return SFNode (object: (field))
+               return SFNode .initWithProxy (object: field)!
             }
          }
          

@@ -73,6 +73,7 @@ public class SFImage :
       if !wrappedValue .array .isEmpty
       {
          stream += " "
+         stream += wrappedValue .array .map { String (format: "0x%x", $0) } .joined (separator: " ")
       }
    }
 }

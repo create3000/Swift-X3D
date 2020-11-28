@@ -127,20 +127,20 @@ extension JavaScript
    {
       dynamic public final override var x : Scalar
       {
-         get { array .wrappedValue .indices .contains (index) ? array .wrappedValue [index] .x : 0 }
-         set { if array .wrappedValue .indices .contains (index) { array .wrappedValue [index] .x = newValue } }
+         get { resizeIfNeeded (); return array .wrappedValue [index] .x }
+         set { resizeIfNeeded (); array .wrappedValue [index] .x = newValue }
       }
       
       dynamic public final override var y : Scalar
       {
-         get { array .wrappedValue .indices .contains (index) ? array .wrappedValue [index] .y : 0 }
-         set { if array .wrappedValue .indices .contains (index) { array .wrappedValue [index] .y = newValue } }
+         get { resizeIfNeeded (); return array .wrappedValue [index] .y }
+         set { resizeIfNeeded (); array .wrappedValue [index] .y = newValue }
       }
       
       dynamic public final override var z : Scalar
       {
-         get { array .wrappedValue .indices .contains (index) ? array .wrappedValue [index] .z : 0 }
-         set { if array .wrappedValue .indices .contains (index) { array .wrappedValue [index] .z = newValue } }
+         get { resizeIfNeeded (); return array .wrappedValue [index] .z }
+         set { resizeIfNeeded (); array .wrappedValue [index] .z = newValue }
       }
       
       private final let array : X3D .MFVec3f
@@ -166,6 +166,14 @@ extension JavaScript
          self .index = 0
          
          super .init ()
+      }
+      
+      private final func resizeIfNeeded ()
+      {
+         if !array .wrappedValue .indices .contains (index)
+         {
+            array .wrappedValue .resize (index, fillWith: .zero)
+         }
       }
    }
 }

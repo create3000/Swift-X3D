@@ -172,7 +172,7 @@ extension JavaScript
       {
          if !array .wrappedValue .indices .contains (index)
          {
-            array .wrappedValue .resize (index, fillWith: .zero)
+            array .wrappedValue .resize (index + 1, fillWith: .zero)
          }
       }
    }

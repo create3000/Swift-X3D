@@ -46,7 +46,7 @@ public class SFImage :
       value .addParent (self)
    }
 
-   public final override func copy () -> SFImage { SFImage (wrappedValue: value .copy ()) }
+   public final override func copy () -> SFImage { SFImage (wrappedValue: wrappedValue .copy ()) }
 
    // Value handling
    
@@ -54,10 +54,10 @@ public class SFImage :
    {
       guard let field = field as? SFImage else { return }
       
-      value .width  = field .value .width
-      value .height = field .value .height
-      value .comp   = field .value .comp
-      value .array  = field .value .array
+      wrappedValue .width  = field .wrappedValue .width
+      wrappedValue .height = field .wrappedValue .height
+      wrappedValue .comp   = field .wrappedValue .comp
+      wrappedValue .array  = field .wrappedValue .array
    }
    
    // Input/Output

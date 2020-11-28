@@ -158,6 +158,8 @@ extension JavaScript
 
    ["\(native .joined (separator: "\",\""))"] .forEach (function (name)
    {
+      if (!name) return;
+
       Object .defineProperty (global, name, {
          get: function () { return getProperty (name); },
          set: function (newValue) { setProperty (name, newValue); },
@@ -168,6 +170,8 @@ extension JavaScript
 
    ["\(fields .joined (separator: "\",\""))"] .forEach (function (name)
    {
+      if (!name) return;
+
       const value = getProperty (name);
 
       if (value instanceof X3DArrayField)

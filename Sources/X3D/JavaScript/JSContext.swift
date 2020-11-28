@@ -74,8 +74,12 @@ extension JavaScript
          MFInt32     .register (context)
          MFString    .register (context)
          MFTime      .register (context)
+         MFVec2d     .register (context)
+         MFVec2f     .register (context)
          MFVec3d     .register (context)
          MFVec3f     .register (context)
+         MFVec4d     .register (context)
+         MFVec4f     .register (context)
 
          X3DArrayField .cleanup (context)
          

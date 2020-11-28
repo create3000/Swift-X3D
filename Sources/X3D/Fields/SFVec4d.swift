@@ -7,7 +7,7 @@
 //
 
 @propertyWrapper
-public final class SFVec4d :
+public class SFVec4d :
    X3DField,
    X3DFieldInterface
 {
@@ -18,7 +18,7 @@ public final class SFVec4d :
    // Property wrapper handling
    
    public final var projectedValue : SFVec4d { self }
-   public final var wrappedValue   : Value { didSet { addEvent () } }
+   public var wrappedValue         : Value { didSet { addEvent () } }
 
    // Common properties
    

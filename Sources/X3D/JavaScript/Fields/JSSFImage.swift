@@ -35,16 +35,15 @@ extension JavaScript
 
       // Properties
       
-      dynamic public var width  : Int32 { get { object .wrappedValue .width }  set { object .wrappedValue .width  = newValue } }
-      dynamic public var x      : Int32 { get { object .wrappedValue .width }  set { object .wrappedValue .width  = newValue } }
-      dynamic public var height : Int32 { get { object .wrappedValue .height } set { object .wrappedValue .height = newValue } }
-      dynamic public var y      : Int32 { get { object .wrappedValue .height } set { object .wrappedValue .height = newValue } }
-      dynamic public var comp   : Int32 { get { object .wrappedValue .comp }   set { object .wrappedValue .comp   = newValue } }
+      dynamic public final var width  : Int32 { get { object .wrappedValue .width }  set { object .wrappedValue .width  = newValue } }
+      dynamic public final var x      : Int32 { get { object .wrappedValue .width }  set { object .wrappedValue .width  = newValue } }
+      dynamic public final var height : Int32 { get { object .wrappedValue .height } set { object .wrappedValue .height = newValue } }
+      dynamic public final var y      : Int32 { get { object .wrappedValue .height } set { object .wrappedValue .height = newValue } }
+      dynamic public final var comp   : Int32 { get { object .wrappedValue .comp }   set { object .wrappedValue .comp   = newValue } }
 
       // Private properties
       
-      internal private(set) var object : Internal
-      internal final override func getObject () -> X3D .X3DField! { object }
+      internal private(set) final var object : Internal
 
       // Registration
       
@@ -55,7 +54,7 @@ extension JavaScript
       
       // Construction
       
-      public override init ()
+      required public init ()
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 4
          {
@@ -70,7 +69,7 @@ extension JavaScript
             self .object = Internal ()
          }
          
-         super .init ()
+         super .init (object)
          
          JSContext .current () .fix (self)
       }
@@ -79,7 +78,7 @@ extension JavaScript
       {
          self .object = object
          
-         super .init ()
+         super .init (object)
          
          (context ?? JSContext .current ()) .fix (self)
       }

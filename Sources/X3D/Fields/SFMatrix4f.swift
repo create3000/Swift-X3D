@@ -27,7 +27,7 @@ public final class SFMatrix4f :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = Matrix4f .identity
    }

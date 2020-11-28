@@ -27,7 +27,7 @@ public final class SFRotation :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = Rotation4f .identity
    }

@@ -27,7 +27,7 @@ public final class SFInt32 :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = 0
    }

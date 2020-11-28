@@ -46,15 +46,14 @@ extension JavaScript
 
       // Properties
       
-      dynamic public var x     : Scalar { get { object .wrappedValue .axis .x } set { object .wrappedValue .axis .x = newValue } }
-      dynamic public var y     : Scalar { get { object .wrappedValue .axis .y } set { object .wrappedValue .axis .y = newValue } }
-      dynamic public var z     : Scalar { get { object .wrappedValue .axis .z } set { object .wrappedValue .axis .z = newValue } }
-      dynamic public var angle : Scalar { get { object .wrappedValue .angle }   set { object .wrappedValue .angle   = newValue } }
+      dynamic public final var x     : Scalar { get { object .wrappedValue .axis .x } set { object .wrappedValue .axis .x = newValue } }
+      dynamic public final var y     : Scalar { get { object .wrappedValue .axis .y } set { object .wrappedValue .axis .y = newValue } }
+      dynamic public final var z     : Scalar { get { object .wrappedValue .axis .z } set { object .wrappedValue .axis .z = newValue } }
+      dynamic public final var angle : Scalar { get { object .wrappedValue .angle }   set { object .wrappedValue .angle   = newValue } }
       
       // Private properties
       
-      internal private(set) var object : Internal
-      internal final override func getObject () -> X3D .X3DField! { object }
+      internal private(set) final var object : Internal
 
       // Registration
       
@@ -92,7 +91,7 @@ Object .defineProperty (SFRotation .prototype, 3, {
       
       // Construction
       
-      public override init ()
+      required public init ()
       {
          if let args = JSContext .currentArguments () as? [JSValue]
          {
@@ -124,7 +123,7 @@ Object .defineProperty (SFRotation .prototype, 3, {
             self .object = Internal ()
          }
          
-         super .init ()
+         super .init (object)
          
          JSContext .current () .fix (self)
       }
@@ -133,7 +132,7 @@ Object .defineProperty (SFRotation .prototype, 3, {
       {
          self .object = object
          
-         super .init ()
+         super .init (object)
          
          (context ?? JSContext .current ()) .fix (self)
       }

@@ -28,7 +28,7 @@ public final class MFMatrix4d :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = Value ()
    }

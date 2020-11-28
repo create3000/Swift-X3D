@@ -27,7 +27,7 @@ public final class MFEnum <Type> :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = Value ()
    }

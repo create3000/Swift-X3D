@@ -34,31 +34,36 @@ extension JavaScript
       
       // Construction
       
-      internal func getObject () -> X3D .X3DField! { nil }
+      private final var object : X3D .X3DField
       
+      internal init (_ object : X3D .X3DField)
+      {
+         self .object = object
+      }
+
       // Common functions
       
-      public final func getName () -> String { return getObject () .getName () }
+      public final func getName () -> String { return object .getName () }
       
-      public final func getTypeName () -> String { return getObject () .getTypeName () }
+      public final func getTypeName () -> String { return object .getTypeName () }
       
-      public final func getType () -> Int32 { return getObject () .getType () .rawValue }
+      public final func getType () -> Int32 { return object .getType () .rawValue }
       
       public final func isReadable () -> JSValue
       {
-         return JSValue (bool: getObject () .getAccessType () != .inputOnly, in: JSContext .current ())
+         return JSValue (bool: object .getAccessType () != .inputOnly, in: JSContext .current ())
       }
       
       public final func isWritable () -> JSValue
       {
-         return JSValue (bool: getObject () .getAccessType () != .initializeOnly, in: JSContext .current ())
+         return JSValue (bool: object .getAccessType () != .initializeOnly, in: JSContext .current ())
       }
 
       // Input/Output
       
       public final func toString () -> String
       {
-         return getObject () .toString ()
+         return object .toString ()
       }
    }
 }

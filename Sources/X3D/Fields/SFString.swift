@@ -27,7 +27,7 @@ public final class SFString :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = ""
    }

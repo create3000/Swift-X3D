@@ -37,7 +37,7 @@ public final class SFNode <Type : X3DBaseNode> :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    { }
 
    public init (wrappedValue : Value!)

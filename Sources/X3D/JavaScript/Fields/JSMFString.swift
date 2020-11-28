@@ -36,7 +36,6 @@ extension JavaScript
       // Private properties
       
       internal private(set) final var object : Internal
-      internal final override func getObject () -> X3D .X3DField! { object }
 
       // Registration
       
@@ -51,7 +50,7 @@ extension JavaScript
       
       // Construction
       
-      required public override init ()
+      required public init ()
       {
          if let args = JSContext .currentArguments () as? [JSValue]
          {
@@ -62,14 +61,14 @@ extension JavaScript
             self .object = Internal ()
          }
          
-         super .init ()
+         super .init (object)
       }
 
       internal init (object : Internal)
       {
          self .object = object
          
-         super .init ()
+         super .init (object)
       }
       
       internal static func initWithProxy (object : Internal) -> JSValue!
@@ -113,7 +112,7 @@ extension JavaScript
       
       // Properties
       
-      dynamic public var length : Int
+      dynamic public final var length : Int
       {
          get { object .wrappedValue .count }
          set { object .wrappedValue .resize (newValue, fillWith: Scalar ()) }

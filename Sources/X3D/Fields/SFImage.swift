@@ -28,7 +28,7 @@ public final class SFImage :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       value = Value ()
       

@@ -1,5 +1,5 @@
 //
-//  JSMFVec3f.swift
+//  JSMFVec3d.swift
 //
 //
 //  Created by Holger Seelig on 25.11.20.
@@ -7,30 +7,30 @@
 
 import JavaScriptCore
 
-@objc internal protocol MFVec3fExports :
+@objc internal protocol MFVec3dExports :
    JSExport
 {
-   typealias SFVec3f = JavaScript .SFVec3f
-   typealias MFVec3f = JavaScript .MFVec3f
+   typealias SFVec3d = JavaScript .SFVec3d
+   typealias MFVec3d = JavaScript .MFVec3d
    
    init ()
    
-   func equals (_ array : MFVec3f) -> JSValue
-   func assign (_ array : MFVec3f)
+   func equals (_ array : MFVec3d) -> JSValue
+   func assign (_ array : MFVec3d)
 
-   func get1Value (_ index : Int) -> SFVec3f
-   func set1Value (_ index : Int, _ value : SFVec3f)
+   func get1Value (_ index : Int) -> SFVec3d
+   func set1Value (_ index : Int, _ value : SFVec3d)
    
    var length : Int { get set }
 }
 
 extension JavaScript
 {
-   @objc internal class MFVec3f :
+   @objc internal class MFVec3d :
       X3DArrayField,
-      MFVec3fExports
+      MFVec3dExports
    {
-      typealias Internal = X3D .MFVec3f
+      typealias Internal = X3D .MFVec3d
 
       // Private properties
       
@@ -42,9 +42,9 @@ extension JavaScript
       
       internal override class func register (_ context : JSContext)
       {
-         context ["MFVec3f"] = Self .self
+         context ["MFVec3d"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, \"MFVec3f\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, \"MFVec3d\");")
       }
       
       // Construction
@@ -53,7 +53,7 @@ extension JavaScript
       {
          if let args = JSContext .currentArguments () as? [JSValue]
          {
-            self .object = Internal (wrappedValue: args .map { ($0 .toObjectOf (SFVec3f .self) as? SFVec3f)? .object .wrappedValue ?? .zero })
+            self .object = Internal (wrappedValue: args .map { ($0 .toObjectOf (SFVec3d .self) as? SFVec3d)? .object .wrappedValue ?? .zero })
          }
          else
          {
@@ -72,34 +72,34 @@ extension JavaScript
       
       internal static func initWithProxy (object : Internal) -> JSValue!
       {
-         return proxy .construct (withArguments: [MFVec3f (object: object)])
+         return proxy .construct (withArguments: [MFVec3d (object: object)])
       }
       
       // Common operators
       
-      public final func equals (_ array : MFVec3f) -> JSValue
+      public final func equals (_ array : MFVec3d) -> JSValue
       {
          return JSValue (bool: object .wrappedValue == array .object .wrappedValue, in: JSContext .current ())
       }
 
-      public final func assign (_ array : MFVec3f)
+      public final func assign (_ array : MFVec3d)
       {
          object .wrappedValue = array .object .wrappedValue
       }
 
       // Property access
       
-      public final func get1Value (_ index : Int) -> SFVec3f
+      public final func get1Value (_ index : Int) -> SFVec3d
       {
          if index >= object .wrappedValue .count
          {
             object .wrappedValue .resize (index + 1, fillWith: .zero)
          }
 
-         return SFVec3f (object: SFVec3fReference (object, index))
+         return SFVec3d (object: SFVec3dReference (object, index))
       }
       
-      public final func set1Value (_ index : Int, _ value : SFVec3f)
+      public final func set1Value (_ index : Int, _ value : SFVec3d)
       {
          if index >= object .wrappedValue .count
          {
@@ -121,8 +121,8 @@ extension JavaScript
 
 extension JavaScript
 {
-   internal final class SFVec3fReference :
-      X3D .SFVec3f
+   internal final class SFVec3dReference :
+      X3D .SFVec3d
    {
       public final override var wrappedValue : Value
       {
@@ -130,10 +130,10 @@ extension JavaScript
          set { resizeIfNeeded (); array .wrappedValue [index] = newValue }
       }
       
-      private final let array : X3D .MFVec3f
+      private final let array : X3D .MFVec3d
       private final let index : Int
 
-      internal init (_ array : X3D .MFVec3f, _ index : Int)
+      internal init (_ array : X3D .MFVec3d, _ index : Int)
       {
          self .array = array
          self .index = index

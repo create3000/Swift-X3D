@@ -47,13 +47,12 @@ extension JavaScript
 
       // Properties
       
-      dynamic public var x : Scalar { get { object .wrappedValue .x } set { object .wrappedValue .x = newValue } }
-      dynamic public var y : Scalar { get { object .wrappedValue .y } set { object .wrappedValue .y = newValue } }
+      dynamic public final var x : Scalar { get { object .wrappedValue .x } set { object .wrappedValue .x = newValue } }
+      dynamic public final var y : Scalar { get { object .wrappedValue .y } set { object .wrappedValue .y = newValue } }
 
       // Private properties
       
-      internal private(set) var object : Internal
-      internal final override func getObject () -> X3D .X3DField! { object }
+      internal private(set) final var object : Internal
 
       // Registration
       
@@ -79,7 +78,7 @@ Object .defineProperty (SFVec2d .prototype, 1, {
       
       // Construction
       
-      public override init ()
+      required public init ()
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 2
          {
@@ -91,7 +90,7 @@ Object .defineProperty (SFVec2d .prototype, 1, {
             self .object = Internal ()
          }
          
-         super .init ()
+         super .init (object)
          
          JSContext .current () .fix (self)
       }
@@ -100,7 +99,7 @@ Object .defineProperty (SFVec2d .prototype, 1, {
       {
          self .object = object
          
-         super .init ()
+         super .init (object)
          
          (context ?? JSContext .current ()) .fix (self)
       }

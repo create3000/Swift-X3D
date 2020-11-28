@@ -41,15 +41,14 @@ extension JavaScript
 
       // Properties
       
-      dynamic public var r : Scalar { get { object .wrappedValue .r } set { object .wrappedValue .r = newValue } }
-      dynamic public var g : Scalar { get { object .wrappedValue .g } set { object .wrappedValue .g = newValue } }
-      dynamic public var b : Scalar { get { object .wrappedValue .b } set { object .wrappedValue .b = newValue } }
-      dynamic public var a : Scalar { get { object .wrappedValue .a } set { object .wrappedValue .a = newValue } }
+      dynamic public final var r : Scalar { get { object .wrappedValue .r } set { object .wrappedValue .r = newValue } }
+      dynamic public final var g : Scalar { get { object .wrappedValue .g } set { object .wrappedValue .g = newValue } }
+      dynamic public final var b : Scalar { get { object .wrappedValue .b } set { object .wrappedValue .b = newValue } }
+      dynamic public final var a : Scalar { get { object .wrappedValue .a } set { object .wrappedValue .a = newValue } }
 
       // Private properties
       
-      internal private(set) var object : Internal
-      internal final override func getObject () -> X3D .X3DField! { object }
+      internal private(set) final var object : Internal
 
       // Registration
       
@@ -87,7 +86,7 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
       
       // Construction
       
-      public override init ()
+      required public init ()
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 4
          {
@@ -101,7 +100,7 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
             self .object = Internal ()
          }
          
-         super .init ()
+         super .init (object)
 
          JSContext .current () .fix (self)
       }
@@ -110,7 +109,7 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
       {
          self .object = object
          
-         super .init ()
+         super .init (object)
 
          (context ?? JSContext .current ()) .fix (self)
       }

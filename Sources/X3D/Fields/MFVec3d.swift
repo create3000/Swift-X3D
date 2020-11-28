@@ -28,7 +28,7 @@ public final class MFVec3d :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = Value ()
    }

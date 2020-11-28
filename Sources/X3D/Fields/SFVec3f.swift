@@ -7,7 +7,7 @@
 //
 
 @propertyWrapper
-public final class SFVec3f :
+public class SFVec3f :
    X3DField,
    X3DFieldInterface
 {
@@ -18,7 +18,7 @@ public final class SFVec3f :
    // Property wrapper handling
    
    public final var projectedValue : SFVec3f { self }
-   public final var wrappedValue   : Value { didSet { addEvent () } }
+   public var wrappedValue         : Value { didSet { addEvent () } }
 
    // Common properties
    
@@ -27,7 +27,7 @@ public final class SFVec3f :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = Vector3f .zero
    }

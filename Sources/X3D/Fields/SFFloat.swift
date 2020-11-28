@@ -27,7 +27,7 @@ public final class SFFloat :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = 0
    }

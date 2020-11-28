@@ -27,7 +27,7 @@ public final class SFVec2d :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = Vector2d .zero
    }

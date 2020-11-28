@@ -29,7 +29,7 @@ public final class SFTime :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = 0
    }

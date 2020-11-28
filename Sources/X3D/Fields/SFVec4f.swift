@@ -27,7 +27,7 @@ public final class SFVec4f :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = Vector4f .zero
    }

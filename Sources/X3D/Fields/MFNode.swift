@@ -58,7 +58,7 @@ public final class MFNode <Element : X3DBaseNode> :
 
    // Construction
 
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = [ ]
       

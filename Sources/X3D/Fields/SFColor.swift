@@ -27,7 +27,7 @@ public final class SFColor :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = Color3f .zero
    }

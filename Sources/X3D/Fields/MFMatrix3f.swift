@@ -28,7 +28,7 @@ public final class MFMatrix3f :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = Value ()
    }

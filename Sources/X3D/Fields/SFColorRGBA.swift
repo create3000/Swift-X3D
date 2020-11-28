@@ -27,7 +27,7 @@ public final class SFColorRGBA :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = Color4f .zero
    }

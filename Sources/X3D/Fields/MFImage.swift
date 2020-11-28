@@ -59,7 +59,7 @@ public final class MFImage :
 
    // Construction
    
-   public override init ()
+   required public override init ()
    {
       self .wrappedValue = [ ]
       

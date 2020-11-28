@@ -148,7 +148,7 @@ extension JavaScript
       
       private final func resizeIfNeeded ()
       {
-         if !array .wrappedValue .indices .contains (index)
+         if index >= array .wrappedValue .count
          {
             array .wrappedValue .resize (index + 1, fillWith: .zero)
          }

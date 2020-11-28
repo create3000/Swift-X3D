@@ -70,7 +70,7 @@ public final class MFImage :
    {
       self .init ()
 
-      self .wrappedValue = wrappedValue
+      self .wrappedValue = wrappedValue .map { $0 .copy () }
    }
 
    public final override func copy () -> MFImage { MFImage (wrappedValue: wrappedValue .map { $0 .copy () }) }

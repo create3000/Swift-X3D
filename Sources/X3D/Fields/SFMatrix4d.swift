@@ -7,7 +7,7 @@
 //
 
 @propertyWrapper
-public final class SFMatrix4d :
+public class SFMatrix4d :
    X3DField,
    X3DFieldInterface
 {
@@ -18,7 +18,7 @@ public final class SFMatrix4d :
    // Property wrapper handling
    
    public final var projectedValue : SFMatrix4d { self }
-   public final var wrappedValue   : Value { didSet { addEvent () } }
+   public var wrappedValue         : Value { didSet { addEvent () } }
 
    // Common properties
    

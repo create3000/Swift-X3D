@@ -50,6 +50,11 @@ extension JavaScript
          case .MFString:    return MFString   .initWithProxy (object: (field as! X3D .MFString))!
          case .MFTime:      return MFTime     .initWithProxy (object: (field as! X3D .MFTime))!
          
+         case .MFImage:     return MFImage    .initWithProxy (object: (field as! X3D .MFImage))!
+         case .MFMatrix3d:  return MFMatrix3d .initWithProxy (object: (field as! X3D .MFMatrix3d))!
+         case .MFMatrix3f:  return MFMatrix3f .initWithProxy (object: (field as! X3D .MFMatrix3f))!
+         case .MFMatrix4d:  return MFMatrix4d .initWithProxy (object: (field as! X3D .MFMatrix4d))!
+         case .MFMatrix4f:  return MFMatrix4f .initWithProxy (object: (field as! X3D .MFMatrix4f))!
          case .MFRotation:  return MFRotation .initWithProxy (object: (field as! X3D .MFRotation))!
          case .MFVec2d:     return MFVec2d    .initWithProxy (object: (field as! X3D .MFVec2d))!
          case .MFVec2f:     return MFVec2f    .initWithProxy (object: (field as! X3D .MFVec2f))!
@@ -96,6 +101,11 @@ extension JavaScript
          case .MFString:    if let value = value as? MFString    { (field as! X3D .MFString)    .wrappedValue = value .object .wrappedValue }
          case .MFTime:      if let value = value as? MFTime      { (field as! X3D .MFTime)      .wrappedValue = value .object .wrappedValue }
          
+         case .MFImage:     if let value = value as? MFImage     { (field as! X3D .MFImage)     .wrappedValue = value .object .wrappedValue }
+         case .MFMatrix3d:  if let value = value as? MFMatrix3d  { (field as! X3D .MFMatrix3d)  .wrappedValue = value .object .wrappedValue }
+         case .MFMatrix3f:  if let value = value as? MFMatrix3f  { (field as! X3D .MFMatrix3f)  .wrappedValue = value .object .wrappedValue }
+         case .MFMatrix4d:  if let value = value as? MFMatrix4d  { (field as! X3D .MFMatrix4d)  .wrappedValue = value .object .wrappedValue }
+         case .MFMatrix4f:  if let value = value as? MFMatrix4f  { (field as! X3D .MFMatrix4f)  .wrappedValue = value .object .wrappedValue }
          case .MFRotation:  if let value = value as? MFRotation  { (field as! X3D .MFRotation)  .wrappedValue = value .object .wrappedValue }
          case .MFVec2d:     if let value = value as? MFVec2d     { (field as! X3D .MFVec2d)     .wrappedValue = value .object .wrappedValue }
          case .MFVec2f:     if let value = value as? MFVec2f     { (field as! X3D .MFVec2f)     .wrappedValue = value .object .wrappedValue }

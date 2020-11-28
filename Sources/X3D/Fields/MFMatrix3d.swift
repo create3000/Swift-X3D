@@ -48,4 +48,45 @@ public final class MFMatrix3d :
 
       wrappedValue = field .wrappedValue
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      switch wrappedValue .count
+      {
+         case 0:
+            stream += "[ ]"
+         case 1:
+            let c0 = wrappedValue .first! [0]
+            let c1 = wrappedValue .first! [1]
+            let c2 = wrappedValue .first! [2]
+
+            stream += "\(c0.x) \(c0.y) \(c0.z)"
+            stream += " "
+            stream += "\(c1.x) \(c1.y) \(c1.z)"
+            stream += " "
+            stream += "\(c2.x) \(c2.y) \(c2.z)"
+         default:
+            stream += """
+[\(wrappedValue .map
+{
+   let c0 = $0 [0]
+   let c1 = $0 [1]
+   let c2 = $0 [2]
+   
+   var string = ""
+   
+   string += "\(c0.x) \(c0.y) \(c0.z)"
+   string += " "
+   string += "\(c1.x) \(c1.y) \(c1.z)"
+   string += " "
+   string += "\(c2.x) \(c2.y) \(c2.z)"
+
+   return string
+}
+.joined (separator: ", "))]
+"""
+      }
+   }
 }

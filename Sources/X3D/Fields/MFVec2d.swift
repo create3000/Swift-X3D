@@ -48,4 +48,19 @@ public final class MFVec2d :
 
       wrappedValue = field .wrappedValue
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      switch wrappedValue .count
+      {
+         case 0:
+            stream += "[ ]"
+         case 1:
+            stream += "\(wrappedValue .first! .x) \(wrappedValue .first! .y)"
+         default:
+            stream += "[\(wrappedValue .map { "\($0 .x) \($0 .y)" } .joined (separator: ", "))]"
+      }
+   }
 }

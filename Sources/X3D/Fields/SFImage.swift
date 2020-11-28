@@ -7,7 +7,7 @@
 //
 
 @propertyWrapper
-public final class SFImage :
+public class SFImage :
    X3DField,
    X3DFieldInterface
 {
@@ -18,7 +18,7 @@ public final class SFImage :
    // Property wrapper handling
    
    public final var projectedValue : SFImage { self }
-   public final var wrappedValue : Value { value }
+   public var wrappedValue : Value { value }
    private final let value : Value
 
    // Common properties

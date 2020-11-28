@@ -7,7 +7,7 @@
 //
 
 @propertyWrapper
-public final class SFRotation :
+public class SFRotation :
    X3DField,
    X3DFieldInterface
 {
@@ -18,7 +18,7 @@ public final class SFRotation :
    // Property wrapper handling
    
    public final var projectedValue : SFRotation { self }
-   public final var wrappedValue   : Value { didSet { addEvent () } }
+   public var wrappedValue         : Value { didSet { addEvent () } }
 
    // Common properties
    

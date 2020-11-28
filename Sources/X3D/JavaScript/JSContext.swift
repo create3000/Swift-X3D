@@ -74,6 +74,8 @@ extension JavaScript
          MFInt32     .register (context)
          MFString    .register (context)
          MFTime      .register (context)
+         
+         MFRotation  .register (context)
          MFVec2d     .register (context)
          MFVec2f     .register (context)
          MFVec3d     .register (context)

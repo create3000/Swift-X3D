@@ -1,5 +1,5 @@
 //
-//  JSMFVec3d.swift
+//  JSMFRotation.swift
 //
 //
 //  Created by Holger Seelig on 25.11.20.
@@ -7,30 +7,30 @@
 
 import JavaScriptCore
 
-@objc internal protocol MFVec3dExports :
+@objc internal protocol MFRotationExports :
    JSExport
 {
-   typealias SFVec3d = JavaScript .SFVec3d
-   typealias MFVec3d = JavaScript .MFVec3d
+   typealias SFRotation = JavaScript .SFRotation
+   typealias MFRotation = JavaScript .MFRotation
    
    init ()
    
-   func equals (_ array : MFVec3d) -> JSValue
-   func assign (_ array : MFVec3d)
+   func equals (_ array : MFRotation) -> JSValue
+   func assign (_ array : MFRotation)
 
-   func get1Value (_ index : Int) -> SFVec3d
-   func set1Value (_ index : Int, _ value : SFVec3d)
+   func get1Value (_ index : Int) -> SFRotation
+   func set1Value (_ index : Int, _ value : SFRotation)
    
    var length : Int { get set }
 }
 
 extension JavaScript
 {
-   @objc internal class MFVec3d :
+   @objc internal class MFRotation :
       X3DArrayField,
-      MFVec3dExports
+      MFRotationExports
    {
-      typealias Internal = X3D .MFVec3d
+      typealias Internal = X3D .MFRotation
 
       // Private properties
       
@@ -42,9 +42,9 @@ extension JavaScript
       
       internal override class func register (_ context : JSContext)
       {
-         context ["MFVec3d"] = Self .self
+         context ["MFRotation"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, \"MFVec3d\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, \"MFRotation\");")
       }
       
       // Construction
@@ -55,7 +55,7 @@ extension JavaScript
          {
             self .object = Internal (wrappedValue: args .map
             {
-               ($0 .toObjectOf (SFVec3d .self) as? SFVec3d)? .object .wrappedValue ?? .zero
+               ($0 .toObjectOf (SFRotation .self) as? SFRotation)? .object .wrappedValue ?? .identity
             })
          }
          else
@@ -75,38 +75,38 @@ extension JavaScript
       
       internal static func initWithProxy (object : Internal) -> JSValue!
       {
-         return proxy .construct (withArguments: [MFVec3d (object: object)])
+         return proxy .construct (withArguments: [MFRotation (object: object)])
       }
       
       // Common operators
       
-      public final func equals (_ array : MFVec3d) -> JSValue
+      public final func equals (_ array : MFRotation) -> JSValue
       {
          return JSValue (bool: object .wrappedValue == array .object .wrappedValue, in: JSContext .current ())
       }
 
-      public final func assign (_ array : MFVec3d)
+      public final func assign (_ array : MFRotation)
       {
          object .wrappedValue = array .object .wrappedValue
       }
 
       // Property access
       
-      public final func get1Value (_ index : Int) -> SFVec3d
+      public final func get1Value (_ index : Int) -> SFRotation
       {
          if index >= object .wrappedValue .count
          {
-            object .wrappedValue .resize (index + 1, fillWith: .zero)
+            object .wrappedValue .resize (index + 1, fillWith: .identity)
          }
 
-         return SFVec3d (object: SFVec3dReference (object, index))
+         return SFRotation (object: SFRotationReference (object, index))
       }
       
-      public final func set1Value (_ index : Int, _ value : SFVec3d)
+      public final func set1Value (_ index : Int, _ value : SFRotation)
       {
          if index >= object .wrappedValue .count
          {
-            object .wrappedValue .resize (index + 1, fillWith: .zero)
+            object .wrappedValue .resize (index + 1, fillWith: .identity)
          }
          
          object .wrappedValue [index] = value .object .wrappedValue
@@ -117,15 +117,15 @@ extension JavaScript
       dynamic public final var length : Int
       {
          get { object .wrappedValue .count }
-         set { object .wrappedValue .resize (newValue, fillWith: .zero) }
+         set { object .wrappedValue .resize (newValue, fillWith: .identity) }
       }
    }
 }
 
 extension JavaScript
 {
-   internal final class SFVec3dReference :
-      X3D .SFVec3d
+   internal final class SFRotationReference :
+      X3D .SFRotation
    {
       public final override var wrappedValue : Value
       {
@@ -133,10 +133,10 @@ extension JavaScript
          set { resizeIfNeeded (); array .wrappedValue [index] = newValue }
       }
       
-      private final let array : X3D .MFVec3d
+      private final let array : X3D .MFRotation
       private final let index : Int
 
-      internal init (_ array : X3D .MFVec3d, _ index : Int)
+      internal init (_ array : X3D .MFRotation, _ index : Int)
       {
          self .array = array
          self .index = index
@@ -153,7 +153,7 @@ extension JavaScript
       {
          if index >= array .wrappedValue .count
          {
-            array .wrappedValue .resize (index + 1, fillWith: .zero)
+            array .wrappedValue .resize (index + 1, fillWith: .identity)
          }
       }
    }

@@ -100,16 +100,6 @@ public struct Rotation4d
    }
    
    // Operations
-   
-   public static func == (_ lhs : Self, _ rhs : Self) -> Bool
-   {
-      return lhs .quat == rhs .quat
-   }
-   
-   public static func != (_ lhs : Self, _ rhs : Self) -> Bool
-   {
-      return lhs .quat != rhs .quat
-   }
 
    public static prefix func ~ (_ rotation : Self) -> Self
    {
@@ -232,16 +222,6 @@ public struct Rotation4f
    
    // Operations
    
-   public static func == (_ lhs : Self, _ rhs : Self) -> Bool
-   {
-      return lhs .quat == rhs .quat
-   }
-   
-   public static func != (_ lhs : Self, _ rhs : Self) -> Bool
-   {
-      return lhs .quat != rhs .quat
-   }
-   
    public static prefix func ~ (_ rotation : Self) -> Self
    {
       return rotation .inverse
@@ -265,6 +245,24 @@ public struct Rotation4f
    public static func * (_ rotation: Self, vector: Vector3) -> Vector3
    {
       return rotation .quat .act (vector)
+   }
+}
+
+extension Rotation4d :
+   Equatable
+{
+   public static func == (_ lhs : Self, _ rhs : Self) -> Bool
+   {
+      return lhs .quat == rhs .quat
+   }
+}
+
+extension Rotation4f :
+   Equatable
+{
+   public static func == (_ lhs : Self, _ rhs : Self) -> Bool
+   {
+      return lhs .quat == rhs .quat
    }
 }
 

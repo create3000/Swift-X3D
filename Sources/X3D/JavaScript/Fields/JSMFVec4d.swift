@@ -53,7 +53,10 @@ extension JavaScript
       {
          if let args = JSContext .currentArguments () as? [JSValue]
          {
-            self .object = Internal (wrappedValue: args .map { ($0 .toObjectOf (SFVec4d .self) as? SFVec4d)? .object .wrappedValue ?? .zero })
+            self .object = Internal (wrappedValue: args .map
+            {
+               ($0 .toObjectOf (SFVec4d .self) as? SFVec4d)? .object .wrappedValue ?? .zero
+            })
          }
          else
          {

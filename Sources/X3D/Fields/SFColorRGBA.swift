@@ -7,7 +7,7 @@
 //
 
 @propertyWrapper
-public final class SFColorRGBA :
+public class SFColorRGBA :
    X3DField,
    X3DFieldInterface
 {
@@ -18,7 +18,7 @@ public final class SFColorRGBA :
    // Property wrapper handling
    
    public final var projectedValue : SFColorRGBA { self }
-   public final var wrappedValue   : Value { didSet { addEvent () } }
+   public var wrappedValue         : Value { didSet { addEvent () } }
 
    // Common properties
    

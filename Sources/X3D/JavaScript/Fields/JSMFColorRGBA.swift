@@ -1,0 +1,160 @@
+//
+//  JSMFColorRGBA.swift
+//
+//
+//  Created by Holger Seelig on 25.11.20.
+//
+
+import JavaScriptCore
+
+@objc internal protocol MFColorRGBAExports :
+   JSExport
+{
+   typealias SFColorRGBA = JavaScript .SFColorRGBA
+   typealias MFColorRGBA = JavaScript .MFColorRGBA
+   
+   init ()
+   
+   func equals (_ array : MFColorRGBA) -> JSValue
+   func assign (_ array : MFColorRGBA)
+
+   func get1Value (_ index : Int) -> SFColorRGBA
+   func set1Value (_ index : Int, _ value : SFColorRGBA)
+   
+   var length : Int { get set }
+}
+
+extension JavaScript
+{
+   @objc internal class MFColorRGBA :
+      X3DArrayField,
+      MFColorRGBAExports
+   {
+      typealias Internal = X3D .MFColorRGBA
+
+      // Private properties
+      
+      internal private(set) final var object : Internal
+
+      // Registration
+      
+      private static var proxy : JSValue!
+      
+      internal override class func register (_ context : JSContext)
+      {
+         context ["MFColorRGBA"] = Self .self
+         
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, \"MFColorRGBA\");")
+      }
+      
+      // Construction
+      
+      required public init ()
+      {
+         if let args = JSContext .currentArguments () as? [JSValue]
+         {
+            self .object = Internal (wrappedValue: args .map
+            {
+               ($0 .toObjectOf (SFColorRGBA .self) as? SFColorRGBA)? .object .wrappedValue ?? .zero
+            })
+         }
+         else
+         {
+            self .object = Internal ()
+         }
+         
+         super .init (object)
+      }
+
+      internal init (object : Internal)
+      {
+         self .object = object
+         
+         super .init (object)
+      }
+      
+      internal static func initWithProxy (object : Internal) -> JSValue!
+      {
+         return proxy .construct (withArguments: [MFColorRGBA (object: object)])
+      }
+      
+      // Common operators
+      
+      public final func equals (_ array : MFColorRGBA) -> JSValue
+      {
+         return JSValue (bool: object .wrappedValue == array .object .wrappedValue, in: JSContext .current ())
+      }
+
+      public final func assign (_ array : MFColorRGBA)
+      {
+         object .wrappedValue = array .object .wrappedValue
+      }
+
+      // Property access
+      
+      public final func get1Value (_ index : Int) -> SFColorRGBA
+      {
+         if index >= object .wrappedValue .count
+         {
+            object .wrappedValue .resize (index + 1, fillWith: .zero)
+         }
+
+         return SFColorRGBA (object: SFColorRGBAReference (object, index))
+      }
+      
+      public final func set1Value (_ index : Int, _ value : SFColorRGBA)
+      {
+         if index >= object .wrappedValue .count
+         {
+            object .wrappedValue .resize (index + 1, fillWith: .zero)
+         }
+         
+         object .wrappedValue [index] = value .object .wrappedValue
+      }
+      
+      // Properties
+      
+      dynamic public final var length : Int
+      {
+         get { object .wrappedValue .count }
+         set { object .wrappedValue .resize (newValue, fillWith: .zero) }
+      }
+   }
+}
+
+extension JavaScript
+{
+   internal final class SFColorRGBAReference :
+      X3D .SFColorRGBA
+   {
+      public final override var wrappedValue : Value
+      {
+         get { resizeIfNeeded (); return array .wrappedValue [index] }
+         set { resizeIfNeeded (); array .wrappedValue [index] = newValue }
+      }
+      
+      private final let array : X3D .MFColorRGBA
+      private final let index : Int
+
+      internal init (_ array : X3D .MFColorRGBA, _ index : Int)
+      {
+         self .array = array
+         self .index = index
+         
+         super .init ()
+      }
+      
+      required public init ()
+      {
+         fatalError ("init() has not been implemented")
+      }
+      
+      private final func resizeIfNeeded ()
+      {
+         if index >= array .wrappedValue .count
+         {
+            array .wrappedValue .resize (index + 1, fillWith: .zero)
+         }
+      }
+   }
+}

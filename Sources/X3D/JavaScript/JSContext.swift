@@ -75,6 +75,8 @@ extension JavaScript
          MFString    .register (context)
          MFTime      .register (context)
          
+         MFColor     .register (context)
+         MFColorRGBA .register (context)
          MFImage     .register (context)
          MFMatrix3d  .register (context)
          MFMatrix3f  .register (context)

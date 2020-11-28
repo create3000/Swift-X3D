@@ -43,25 +43,27 @@ extension JavaScript
          case .SFVec4d:     return SFVec4d     (context, object: (field as! X3D .SFVec4d))
          case .SFVec4f:     return SFVec4f     (context, object: (field as! X3D .SFVec4f))
          
-         case .MFBool:      return MFBool     .initWithProxy (object: (field as! X3D .MFBool))!
-         case .MFDouble:    return MFDouble   .initWithProxy (object: (field as! X3D .MFDouble))!
-         case .MFFloat:     return MFFloat    .initWithProxy (object: (field as! X3D .MFFloat))!
-         case .MFInt32:     return MFInt32    .initWithProxy (object: (field as! X3D .MFInt32))!
-         case .MFString:    return MFString   .initWithProxy (object: (field as! X3D .MFString))!
-         case .MFTime:      return MFTime     .initWithProxy (object: (field as! X3D .MFTime))!
+         case .MFBool:      return MFBool      .initWithProxy (object: (field as! X3D .MFBool))!
+         case .MFDouble:    return MFDouble    .initWithProxy (object: (field as! X3D .MFDouble))!
+         case .MFFloat:     return MFFloat     .initWithProxy (object: (field as! X3D .MFFloat))!
+         case .MFInt32:     return MFInt32     .initWithProxy (object: (field as! X3D .MFInt32))!
+         case .MFString:    return MFString    .initWithProxy (object: (field as! X3D .MFString))!
+         case .MFTime:      return MFTime      .initWithProxy (object: (field as! X3D .MFTime))!
          
-         case .MFImage:     return MFImage    .initWithProxy (object: (field as! X3D .MFImage))!
-         case .MFMatrix3d:  return MFMatrix3d .initWithProxy (object: (field as! X3D .MFMatrix3d))!
-         case .MFMatrix3f:  return MFMatrix3f .initWithProxy (object: (field as! X3D .MFMatrix3f))!
-         case .MFMatrix4d:  return MFMatrix4d .initWithProxy (object: (field as! X3D .MFMatrix4d))!
-         case .MFMatrix4f:  return MFMatrix4f .initWithProxy (object: (field as! X3D .MFMatrix4f))!
-         case .MFRotation:  return MFRotation .initWithProxy (object: (field as! X3D .MFRotation))!
-         case .MFVec2d:     return MFVec2d    .initWithProxy (object: (field as! X3D .MFVec2d))!
-         case .MFVec2f:     return MFVec2f    .initWithProxy (object: (field as! X3D .MFVec2f))!
-         case .MFVec3d:     return MFVec3d    .initWithProxy (object: (field as! X3D .MFVec3d))!
-         case .MFVec3f:     return MFVec3f    .initWithProxy (object: (field as! X3D .MFVec3f))!
-         case .MFVec4d:     return MFVec4d    .initWithProxy (object: (field as! X3D .MFVec4d))!
-         case .MFVec4f:     return MFVec4f    .initWithProxy (object: (field as! X3D .MFVec4f))!
+         case .MFColor:     return MFColor     .initWithProxy (object: (field as! X3D .MFColor))!
+         case .MFColorRGBA: return MFColorRGBA .initWithProxy (object: (field as! X3D .MFColorRGBA))!
+         case .MFImage:     return MFImage     .initWithProxy (object: (field as! X3D .MFImage))!
+         case .MFMatrix3d:  return MFMatrix3d  .initWithProxy (object: (field as! X3D .MFMatrix3d))!
+         case .MFMatrix3f:  return MFMatrix3f  .initWithProxy (object: (field as! X3D .MFMatrix3f))!
+         case .MFMatrix4d:  return MFMatrix4d  .initWithProxy (object: (field as! X3D .MFMatrix4d))!
+         case .MFMatrix4f:  return MFMatrix4f  .initWithProxy (object: (field as! X3D .MFMatrix4f))!
+         case .MFRotation:  return MFRotation  .initWithProxy (object: (field as! X3D .MFRotation))!
+         case .MFVec2d:     return MFVec2d     .initWithProxy (object: (field as! X3D .MFVec2d))!
+         case .MFVec2f:     return MFVec2f     .initWithProxy (object: (field as! X3D .MFVec2f))!
+         case .MFVec3d:     return MFVec3d     .initWithProxy (object: (field as! X3D .MFVec3d))!
+         case .MFVec3f:     return MFVec3f     .initWithProxy (object: (field as! X3D .MFVec3f))!
+         case .MFVec4d:     return MFVec4d     .initWithProxy (object: (field as! X3D .MFVec4d))!
+         case .MFVec4f:     return MFVec4f     .initWithProxy (object: (field as! X3D .MFVec4f))!
 
          default:
             return 0
@@ -101,6 +103,8 @@ extension JavaScript
          case .MFString:    if let value = value as? MFString    { (field as! X3D .MFString)    .wrappedValue = value .object .wrappedValue }
          case .MFTime:      if let value = value as? MFTime      { (field as! X3D .MFTime)      .wrappedValue = value .object .wrappedValue }
          
+         case .MFColor:     if let value = value as? MFColor     { (field as! X3D .MFColor)     .wrappedValue = value .object .wrappedValue }
+         case .MFColorRGBA: if let value = value as? MFColorRGBA { (field as! X3D .MFColorRGBA) .wrappedValue = value .object .wrappedValue }
          case .MFImage:     if let value = value as? MFImage     { (field as! X3D .MFImage)     .wrappedValue = value .object .wrappedValue }
          case .MFMatrix3d:  if let value = value as? MFMatrix3d  { (field as! X3D .MFMatrix3d)  .wrappedValue = value .object .wrappedValue }
          case .MFMatrix3f:  if let value = value as? MFMatrix3f  { (field as! X3D .MFMatrix3f)  .wrappedValue = value .object .wrappedValue }

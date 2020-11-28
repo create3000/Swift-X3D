@@ -90,10 +90,10 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 4
          {
-            self .object = Internal (wrappedValue: Inner (args [0] .toFloat (),
-                                                          args [1] .toFloat (),
-                                                          args [2] .toFloat (),
-                                                          args [3] .toFloat ()))
+            self .object = Internal (wrappedValue: Inner (clamp (args [0] .toFloat (), min: 0, max: 1),
+                                                          clamp (args [1] .toFloat (), min: 0, max: 1),
+                                                          clamp (args [2] .toFloat (), min: 0, max: 1),
+                                                          clamp (args [3] .toFloat (), min: 0, max: 1)))
          }
          else
          {

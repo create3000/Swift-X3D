@@ -82,9 +82,9 @@ Object .defineProperty (SFColor .prototype, 2, {
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 3
          {
-            self .object = Internal (wrappedValue: Inner (args [0] .toFloat (),
-                                                          args [1] .toFloat (),
-                                                          args [2] .toFloat ()))
+            self .object = Internal (wrappedValue: Inner (clamp (args [0] .toFloat (), min: 0, max: 1),
+                                                          clamp (args [1] .toFloat (), min: 0, max: 1),
+                                                          clamp (args [2] .toFloat (), min: 0, max: 1)))
          }
          else
          {

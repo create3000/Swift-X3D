@@ -7,7 +7,7 @@
 //
 
 @propertyWrapper
-public final class SFColor :
+public class SFColor :
    X3DField,
    X3DFieldInterface
 {
@@ -18,7 +18,7 @@ public final class SFColor :
    // Property wrapper handling
    
    public final var projectedValue : SFColor { self }
-   public final var wrappedValue   : Value { didSet { addEvent () } }
+   public var wrappedValue         : Value { didSet { addEvent () } }
 
    // Common properties
    

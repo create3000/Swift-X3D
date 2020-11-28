@@ -48,4 +48,19 @@ public final class MFColorRGBA :
 
       wrappedValue = field .wrappedValue
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      switch wrappedValue .count
+      {
+         case 0:
+            stream += "[ ]"
+         case 1:
+            stream += "\(wrappedValue .first! .r) \(wrappedValue .first! .g) \(wrappedValue .first! .b) \(wrappedValue .first! .a)"
+         default:
+            stream += "[\(wrappedValue .map { "\($0 .r) \($0 .g) \($0 .b) \($0 .a)" } .joined (separator: ", "))]"
+      }
+   }
 }

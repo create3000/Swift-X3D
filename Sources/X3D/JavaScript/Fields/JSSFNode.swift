@@ -18,7 +18,7 @@ import JavaScriptCore
    func assign (_ color : SFNode)
    
    func getProperty (_ name : String) -> Any
-   func setProperty (_ name : String, _ value : Any)
+   func setProperty (_ name : String, _ value : Any) -> Bool
    
    func getNodeTypeName () -> String
    func getNodeName () -> String
@@ -77,48 +77,48 @@ extension JavaScript
    {
       get: function (target, key)
       {
+         const self = targets .get (target);
+
          try
          {
-            const value = target [key];
+            const value = self [key];
 
             if (value !== undefined)
             {
                if (typeof value == "function")
-                  return getMethod (targets .get (target), value);
+                  return getMethod (self, value);
 
                return value;
             }
 
-            return getProperty .call (targets .get (target), key);
+            return getProperty .call (self, key);
          }
          catch (error)
          {
             // Catch symbol error.
 
-            const value = target [key];
+            const value = self [key];
 
             if (typeof value == "function")
-               return getMethod (targets .get (target), value);
+               return getMethod (self, value);
 
             return value;
          }
       },
       set: function (target, key, value)
       {
-         try
+         const self = targets .get (target);
+
+         if (!setProperty .call (self, key, targets .get (value) || value))
          {
-            setProperty .call (targets .get (target), key, targets .get (value) || value);
-         }
-         catch (error)
-         {
-            target [key] = value;
+            self [key] = value;
          }
 
          return true;
       },
       has: function (target, key)
       {
-         return key in target;
+         return key in targets .get (target);
       },
    };
 
@@ -212,7 +212,7 @@ extension JavaScript
          }
       }
       
-      public final func setProperty (_ name : String, _ value : Any)
+      public final func setProperty (_ name : String, _ value : Any) -> Bool
       {
          if let node = object .wrappedValue
          {
@@ -220,8 +220,11 @@ extension JavaScript
                field .getAccessType () != .outputOnly
             {
                JavaScript .setValue (field, value)
+               return true
             }
          }
+         
+         return false
       }
       
       public final func getNodeTypeName () -> String

@@ -50,20 +50,22 @@ this .X3DArrayFieldWrapper = function (global, targets, CLASS)
    {
       get: function (target, key)
       {
+         const self = targets .get (target);
+
          try
          {
             const index = key * 1;
 
             if (Number .isInteger (index) && index >= 0)
             {
-               return get1Value .call (targets .get (target), index);
+               return get1Value .call (self, index);
             }
             else
             {
-               const value = target [key];
+               const value = self [key];
 
                if (typeof value == "function")
-                  return getMethod (targets .get (target), value);
+                  return getMethod (self, value);
 
                return value;
             }
@@ -72,27 +74,29 @@ this .X3DArrayFieldWrapper = function (global, targets, CLASS)
          {
             // Catch symbol error.
 
-            const value = target [key];
+            const value = self [key];
 
             if (typeof value == "function")
-               return getMethod (targets .get (target), value);
+               return getMethod (self, value);
 
             return value;
          }
       },
       set: function (target, key, value)
       {
+         const self = targets .get (target);
+
          try
          {
             const index = key * 1;
 
             if (Number .isInteger (index) && index >= 0)
             {
-               set1Value .call (targets .get (target), index, targets .get (value) || value);
+               set1Value .call (self, index, targets .get (value) || value);
             }
             else
             {
-               target [key] = value;
+               self [key] = value;
             }
 
             return true;
@@ -101,7 +105,7 @@ this .X3DArrayFieldWrapper = function (global, targets, CLASS)
          {
             // Catch symbol error.
 
-            target [key] = value;
+            self [key] = value;
             return true;
          }
       },
@@ -110,7 +114,7 @@ this .X3DArrayFieldWrapper = function (global, targets, CLASS)
          if (Number .isInteger (key * 1))
             return key < target .length;
 
-         return key in target;
+         return key in targets .get (target);
       },
    };
 

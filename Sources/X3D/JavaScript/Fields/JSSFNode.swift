@@ -10,7 +10,8 @@ import JavaScriptCore
 @objc internal protocol SFNodeExports :
    JSExport
 {
-   typealias SFNode = JavaScript .SFNode
+   typealias SFNode             = JavaScript .SFNode
+   typealias X3DFieldDefinition = JavaScript .X3DFieldDefinition
 
    init ()
    
@@ -23,7 +24,7 @@ import JavaScriptCore
    func getNodeTypeName () -> String
    func getNodeName () -> String
    func getNodeType () -> [Int32]
-   //func getFieldDefinitions () -> FieldDefinitionArray
+   func getFieldDefinitions () -> [X3DFieldDefinition]
 
    func toVRMLString () -> String
    func toXMLString () -> String
@@ -242,7 +243,19 @@ extension JavaScript
          return object .wrappedValue? .getType () .map { $0 .rawValue } ?? [ ]
       }
       
-      // public final func getFieldDefinitions () -> FieldDefinitionArray
+      public final func getFieldDefinitions () -> [X3DFieldDefinition]
+      {
+         var fieldDefinitions = [X3DFieldDefinition] ()
+         
+         for field in object .wrappedValue .getFieldDefinitions ()
+         {
+            fieldDefinitions .append (X3DFieldDefinition (accessType: Int32 (field .getAccessType() .rawValue),
+                                                          dataType: field .getType() .rawValue,
+                                                          name: field .getName ()))
+         }
+         
+         return fieldDefinitions
+      }
 
       public final func toVRMLString () -> String
       {

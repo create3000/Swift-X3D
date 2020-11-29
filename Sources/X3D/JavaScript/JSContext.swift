@@ -33,6 +33,8 @@ extension JavaScript
          self .scriptNode = scriptNode
          self .context    = JSContext (virtualMachine: Context .vm)!
          
+         // Add exception handler.
+         
          context .exceptionHandler = { [weak self] in self? .exception ($1) }
 
          // Register objects and functions.
@@ -46,9 +48,15 @@ extension JavaScript
       
       private final func register ()
       {
-         // Register objects and functions.
+         // Add hidden objects.
+         
+         context .evaluateScript ("this .targets = new WeakMap ();")
 
+         // Register objects and functions.
+         
          Globals .register (context, browser)
+         
+         X3DFieldDefinition .register (context)
          
          X3DField      .register (context)
          X3DArrayField .register (context)
@@ -100,12 +108,12 @@ extension JavaScript
          
          let getProperty : @convention(block) (String) -> Any =
          {
-            [weak self] in getValue (self! .context, try! self! .scriptNode .getField (name: $0))
+            [weak self] in JavaScript .getValue (self! .context, try! self! .scriptNode .getField (name: $0))
          }
          
          let setProperty : @convention(block) (String, Any) -> Any =
          {
-            [weak self] in setValue (try! self! .scriptNode .getField (name: $0), $1)
+            [weak self] in JavaScript .setValue (try! self! .scriptNode .getField (name: $0), $1)
          }
 
          context ["getProperty"] = getProperty

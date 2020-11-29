@@ -28,8 +28,6 @@ extension JavaScript
          context ["TRUE"]  = true
          context ["print"] = print
          context ["trace"] = print
-         
-         context .evaluateScript ("this .targets = new WeakMap ();")
-      }
+     }
    }
 }

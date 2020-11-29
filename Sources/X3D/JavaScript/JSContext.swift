@@ -11,14 +11,17 @@ internal class JavaScript { }
 
 extension JavaScript
 {
-   internal final class Context :
+   @objc internal final class Context :
+      NSObject,
       X3D .X3DInputOutput
    {
       // Properties
       
       private unowned let browser    : X3DBrowser
       private unowned let scriptNode : Script
-      private let context            : JSContext
+      internal let context           : JSContext
+      
+      internal let cache = NSMapTable <X3D .X3DNode, JSValue> (keyOptions: .weakMemory, valueOptions: .strongMemory)
       
       // Static properties
       
@@ -32,6 +35,8 @@ extension JavaScript
          self .browser    = scriptNode .browser!
          self .scriptNode = scriptNode
          self .context    = JSContext (virtualMachine: Context .vm)!
+         
+         super .init ()
          
          // Add exception handler.
          
@@ -50,6 +55,7 @@ extension JavaScript
       {
          // Add hidden objects.
          
+         context ["context"] = self
          context .evaluateScript ("this .targets = new WeakMap ();")
 
          // Register objects and functions.
@@ -109,7 +115,7 @@ extension JavaScript
          
          let getProperty : @convention(block) (String) -> Any =
          {
-            [weak self] in JavaScript .getValue (self! .context, try! self! .scriptNode .getField (name: $0))
+            [weak self] in JavaScript .getValue (self!, try! self! .scriptNode .getField (name: $0))
          }
          
          let setProperty : @convention(block) (String, Any) -> Any =
@@ -173,6 +179,7 @@ extension JavaScript
          context .evaluateScript ("""
 (function (global, targets)
 {
+   delete global .context;
    delete global .targets;
 
    const getProperty = global .getProperty;
@@ -320,7 +327,7 @@ extension JavaScript
          
          field .isTainted = true
          
-         function .call (withArguments: [getValue (context, field), browser .currentTime])
+         function .call (withArguments: [getValue (self, field), browser .currentTime])
          
          field .isTainted = false
       }

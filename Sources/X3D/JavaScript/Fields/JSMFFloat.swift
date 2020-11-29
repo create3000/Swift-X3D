@@ -12,13 +12,14 @@ import JavaScriptCore
 {
    typealias Scalar  = Float
    typealias MFFloat = JavaScript .MFFloat
-   
+   typealias Context = JavaScript .Context
+
    init ()
    
    func equals (_ array : MFFloat) -> JSValue
    func assign (_ array : MFFloat)
 
-   func get1Value (_ index : Int) -> Scalar
+   func get1Value (_ context : Context, _ index : Int) -> Scalar
    func set1Value (_ index : Int, _ value : Scalar)
    
    var length : Int { get set }
@@ -45,7 +46,7 @@ extension JavaScript
       {
          context ["MFFloat"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFFloat\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFFloat\");")
       }
       
       // Construction
@@ -90,7 +91,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ index : Int) -> Scalar
+      public final func get1Value (_ context : Context, _ index : Int) -> Scalar
       {
          if index >= object .wrappedValue .count
          {

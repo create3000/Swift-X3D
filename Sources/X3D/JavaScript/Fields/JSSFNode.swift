@@ -12,13 +12,14 @@ import JavaScriptCore
 {
    typealias SFNode             = JavaScript .SFNode
    typealias X3DFieldDefinition = JavaScript .X3DFieldDefinition
+   typealias Context            = JavaScript .Context
 
    init ()
    
    func equals (_ color : SFNode) -> JSValue
    func assign (_ color : SFNode)
    
-   func getProperty (_ name : String) -> Any
+   func getProperty (_ context : Context, _ name : String) -> Any
    func setProperty (_ name : String, _ value : Any)
    
    func getNodeTypeName () -> String
@@ -52,7 +53,7 @@ extension JavaScript
          context ["SFNode"] = Self .self
          
          context .evaluateScript ("""
-(function (global, targets)
+(function (global, context, targets)
 {
    const Target      = global .SFNode;
    const getProperty = Target .prototype .getProperty;
@@ -160,7 +161,7 @@ extension JavaScript
       native .forEach (function (name)
       {
          Object .defineProperty (self, name, {
-            get: function () { return getProperty .call (self, name); },
+            get: function () { return getProperty .call (self, context, name); },
             set: function (newValue) { setProperty .call (self, name, newValue); },
             enumerable: true,
             configurable: false,
@@ -170,7 +171,7 @@ extension JavaScript
       nodes .forEach (function (name)
       {
          Object .defineProperty (self, name, {
-            get: function () { return getProperty .call (self, name); },
+            get: function () { return getProperty .call (self, context, name); },
             set: function (newValue) { setProperty .call (self, name, targets .get (newValue)); },
             enumerable: true,
             configurable: false,
@@ -179,7 +180,7 @@ extension JavaScript
 
       fields .forEach (function (name)
       {
-         const value = getProperty .call (self, name);
+         const value = getProperty .call (self, context, name);
 
          if (value instanceof X3DArrayField)
          {
@@ -219,7 +220,7 @@ extension JavaScript
 
    global .SFNode = SFNode;
 })
-(this, targets)
+(this, context, targets)
 """)
          
          proxy = context .evaluateScript ("SFNode;")
@@ -274,21 +275,21 @@ extension JavaScript
       
       // Properties
       
-      public final func getProperty (_ name : String) -> Any
+      public final func getProperty (_ context : Context, _ name : String) -> Any
       {
          guard let node = object .wrappedValue else
          {
-            return JSValue (nullIn: JSContext .current ())!
+            return JSValue (nullIn: context .context)!
          }
          
          if let field = try? node .getField (name: name),
             field .getAccessType () != .inputOnly
          {
-            return JavaScript .getValue (JSContext .current (), field)
+            return JavaScript .getValue (context, field)
          }
          else
          {
-            return JSValue (undefinedIn: JSContext .current ())!
+            return JSValue (undefinedIn: context .context)!
          }
       }
       

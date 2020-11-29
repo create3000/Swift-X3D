@@ -10,15 +10,16 @@ import JavaScriptCore
 @objc internal protocol MFNodeExports :
    JSExport
 {
-   typealias SFNode = JavaScript .SFNode
-   typealias MFNode = JavaScript .MFNode
+   typealias SFNode  = JavaScript .SFNode
+   typealias MFNode  = JavaScript .MFNode
+   typealias Context = JavaScript .Context
    
    init ()
    
    func equals (_ array : MFNode) -> JSValue
    func assign (_ array : MFNode)
 
-   func get1Value (_ index : Int) -> JSValue
+   func get1Value (_ context : Context, _ index : Int) -> JSValue
    func set1Value (_ index : Int, _ value : SFNode?)
    
    var length : Int { get set }
@@ -44,7 +45,7 @@ extension JavaScript
       {
          context ["MFNode"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFNode\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFNode\");")
       }
       
       // Construction
@@ -92,21 +93,30 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ index : Int) -> JSValue
+      public final func get1Value (_ context : Context, _ index : Int) -> JSValue
       {
          if index >= object .wrappedValue .count
          {
             object .wrappedValue .resize (index + 1, fillWith: nil)
          }
          
-         if object .wrappedValue [index] == nil
+         let node = object .wrappedValue [index]
+         
+         guard node != nil else
          {
             return JSValue (nullIn: JSContext .current ())
          }
-         else
+                  
+         if let object = context .cache .object (forKey: node)
          {
-            return JSValue (object: SFNode (object: SFNodeReference (object, index)), in: JSContext .current ())
+            return object
          }
+         
+         let object = SFNode .initWithProxy (object: X3D .SFNode (wrappedValue: node))!
+
+         context .cache .setObject (object, forKey: node)
+         
+         return object
       }
       
       public final func set1Value (_ index : Int, _ value : SFNode?)
@@ -125,43 +135,6 @@ extension JavaScript
       {
          get { object .wrappedValue .count }
          set { object .wrappedValue .resize (newValue, fillWith: nil) }
-      }
-   }
-}
-
-extension JavaScript
-{
-   internal final class SFNodeReference :
-      X3D .SFNode <X3D .X3DNode>
-   {
-      public final override var wrappedValue : Value!
-      {
-         get { resizeIfNeeded (); return array .wrappedValue [index] }
-         set { resizeIfNeeded (); array .wrappedValue [index] = newValue }
-      }
-      
-      private final let array : X3D .MFNode <X3D .X3DNode>
-      private final let index : Int
-
-      internal init (_ array : X3D .MFNode <X3D .X3DNode>, _ index : Int)
-      {
-         self .array = array
-         self .index = index
-         
-         super .init ()
-      }
-      
-      required public init ()
-      {
-         fatalError ("init() has not been implemented")
-      }
-      
-      private final func resizeIfNeeded ()
-      {
-         if index >= array .wrappedValue .count
-         {
-            array .wrappedValue .resize (index + 1, fillWith: nil)
-         }
       }
    }
 }

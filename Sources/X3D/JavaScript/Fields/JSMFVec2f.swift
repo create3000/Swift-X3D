@@ -12,13 +12,14 @@ import JavaScriptCore
 {
    typealias SFVec2f = JavaScript .SFVec2f
    typealias MFVec2f = JavaScript .MFVec2f
-   
+   typealias Context = JavaScript .Context
+
    init ()
    
    func equals (_ array : MFVec2f) -> JSValue
    func assign (_ array : MFVec2f)
 
-   func get1Value (_ index : Int) -> SFVec2f
+   func get1Value (_ context : Context, _ index : Int) -> SFVec2f
    func set1Value (_ index : Int, _ value : SFVec2f)
    
    var length : Int { get set }
@@ -44,7 +45,7 @@ extension JavaScript
       {
          context ["MFVec2f"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFVec2f\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFVec2f\");")
       }
       
       // Construction
@@ -92,7 +93,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ index : Int) -> SFVec2f
+      public final func get1Value (_ context : Context, _ index : Int) -> SFVec2f
       {
          if index >= object .wrappedValue .count
          {

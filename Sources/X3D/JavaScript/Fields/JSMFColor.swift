@@ -12,13 +12,14 @@ import JavaScriptCore
 {
    typealias SFColor = JavaScript .SFColor
    typealias MFColor = JavaScript .MFColor
-   
+   typealias Context = JavaScript .Context
+
    init ()
    
    func equals (_ array : MFColor) -> JSValue
    func assign (_ array : MFColor)
 
-   func get1Value (_ index : Int) -> SFColor
+   func get1Value (_ context : Context, _ index : Int) -> SFColor
    func set1Value (_ index : Int, _ value : SFColor)
    
    var length : Int { get set }
@@ -44,7 +45,7 @@ extension JavaScript
       {
          context ["MFColor"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFColor\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFColor\");")
       }
       
       // Construction
@@ -92,7 +93,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ index : Int) -> SFColor
+      public final func get1Value (_ context : Context, _ index : Int) -> SFColor
       {
          if index >= object .wrappedValue .count
          {

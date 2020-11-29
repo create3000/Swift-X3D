@@ -12,13 +12,14 @@ import JavaScriptCore
 {
    typealias SFImage = JavaScript .SFImage
    typealias MFImage = JavaScript .MFImage
-   
+   typealias Context = JavaScript .Context
+
    init ()
    
    func equals (_ array : MFImage) -> JSValue
    func assign (_ array : MFImage)
 
-   func get1Value (_ index : Int) -> SFImage
+   func get1Value (_ context : Context, _ index : Int) -> SFImage
    func set1Value (_ index : Int, _ value : SFImage)
    
    var length : Int { get set }
@@ -44,7 +45,7 @@ extension JavaScript
       {
          context ["MFImage"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFImage\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFImage\");")
       }
       
       // Construction
@@ -92,7 +93,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ index : Int) -> SFImage
+      public final func get1Value (_ context : Context, _ index : Int) -> SFImage
       {
          if index >= object .wrappedValue .count
          {

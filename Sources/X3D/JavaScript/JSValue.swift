@@ -17,7 +17,7 @@ extension JSValue
 
 extension JavaScript
 {
-   static func getValue (_ context : JSContext, _ field : X3D .X3DField) -> Any
+   static func getValue (_ context : Context, _ field : X3D .X3DField) -> Any
    {
       switch field .getType ()
       {
@@ -28,33 +28,41 @@ extension JavaScript
          case .SFString:    return (field as! X3D .SFString) .wrappedValue
          case .SFTime:      return (field as! X3D .SFTime)   .wrappedValue
          
-         case .SFColor:     return SFColor     (context, object: (field as! X3D .SFColor))
-         case .SFColorRGBA: return SFColorRGBA (context, object: (field as! X3D .SFColorRGBA))
-         case .SFImage:     return SFImage     (context, object: (field as! X3D .SFImage))
-         case .SFMatrix3d:  return SFMatrix3d  (context, object: (field as! X3D .SFMatrix3d))
-         case .SFMatrix3f:  return SFMatrix3f  (context, object: (field as! X3D .SFMatrix3f))
-         case .SFMatrix4d:  return SFMatrix4d  (context, object: (field as! X3D .SFMatrix4d))
-         case .SFMatrix4f:  return SFMatrix4f  (context, object: (field as! X3D .SFMatrix4f))
-         case .SFRotation:  return SFRotation  (context, object: (field as! X3D .SFRotation))
-         case .SFVec2d:     return SFVec2d     (context, object: (field as! X3D .SFVec2d))
-         case .SFVec2f:     return SFVec2f     (context, object: (field as! X3D .SFVec2f))
-         case .SFVec3d:     return SFVec3d     (context, object: (field as! X3D .SFVec3d))
-         case .SFVec3f:     return SFVec3f     (context, object: (field as! X3D .SFVec3f))
-         case .SFVec4d:     return SFVec4d     (context, object: (field as! X3D .SFVec4d))
-         case .SFVec4f:     return SFVec4f     (context, object: (field as! X3D .SFVec4f))
+         case .SFColor:     return SFColor     (context .context, object: (field as! X3D .SFColor))
+         case .SFColorRGBA: return SFColorRGBA (context .context, object: (field as! X3D .SFColorRGBA))
+         case .SFImage:     return SFImage     (context .context, object: (field as! X3D .SFImage))
+         case .SFMatrix3d:  return SFMatrix3d  (context .context, object: (field as! X3D .SFMatrix3d))
+         case .SFMatrix3f:  return SFMatrix3f  (context .context, object: (field as! X3D .SFMatrix3f))
+         case .SFMatrix4d:  return SFMatrix4d  (context .context, object: (field as! X3D .SFMatrix4d))
+         case .SFMatrix4f:  return SFMatrix4f  (context .context, object: (field as! X3D .SFMatrix4f))
+         case .SFRotation:  return SFRotation  (context .context, object: (field as! X3D .SFRotation))
+         case .SFVec2d:     return SFVec2d     (context .context, object: (field as! X3D .SFVec2d))
+         case .SFVec2f:     return SFVec2f     (context .context, object: (field as! X3D .SFVec2f))
+         case .SFVec3d:     return SFVec3d     (context .context, object: (field as! X3D .SFVec3d))
+         case .SFVec3f:     return SFVec3f     (context .context, object: (field as! X3D .SFVec3f))
+         case .SFVec4d:     return SFVec4d     (context .context, object: (field as! X3D .SFVec4d))
+         case .SFVec4f:     return SFVec4f     (context .context, object: (field as! X3D .SFVec4f))
          
          case .SFNode: do
          {
             let field = field as! X3D .SFNode <X3D .X3DNode>
+            let node  = field .wrappedValue
             
-            if field .wrappedValue == nil
+            guard node != nil else
             {
-               return JSValue (nullIn: context)!
+               return JSValue (nullIn: context .context)!
             }
-            else
+            
+            if let object = context .cache .object (forKey: node)
             {
-               return SFNode .initWithProxy (object: field)!
+               return object
             }
+            
+            let object = SFNode .initWithProxy (object: field)!
+
+            context .cache .setObject (object, forKey: node)
+            
+            return object
          }
          
          case .MFBool:      return MFBool      .initWithProxy (object: (field as! X3D .MFBool))!

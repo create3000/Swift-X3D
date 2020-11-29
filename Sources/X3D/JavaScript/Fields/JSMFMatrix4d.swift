@@ -12,13 +12,14 @@ import JavaScriptCore
 {
    typealias SFMatrix4d = JavaScript .SFMatrix4d
    typealias MFMatrix4d = JavaScript .MFMatrix4d
-   
+   typealias Context    = JavaScript .Context
+
    init ()
    
    func equals (_ array : MFMatrix4d) -> JSValue
    func assign (_ array : MFMatrix4d)
 
-   func get1Value (_ index : Int) -> SFMatrix4d
+   func get1Value (_ context : Context, _ index : Int) -> SFMatrix4d
    func set1Value (_ index : Int, _ value : SFMatrix4d)
    
    var length : Int { get set }
@@ -44,7 +45,7 @@ extension JavaScript
       {
          context ["MFMatrix4d"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFMatrix4d\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFMatrix4d\");")
       }
       
       // Construction
@@ -92,7 +93,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ index : Int) -> SFMatrix4d
+      public final func get1Value (_ context : Context, _ index : Int) -> SFMatrix4d
       {
          if index >= object .wrappedValue .count
          {

@@ -19,7 +19,7 @@ import JavaScriptCore
    func assign (_ color : SFNode)
    
    func getProperty (_ name : String) -> Any
-   func setProperty (_ name : String, _ value : Any) -> Bool
+   func setProperty (_ name : String, _ value : Any)
    
    func getNodeTypeName () -> String
    func getNodeName () -> String
@@ -78,43 +78,17 @@ extension JavaScript
    {
       get: function (target, key)
       {
-         const self = targets .get (target);
+         const self  = targets .get (target);
+         const value = self [key];
 
-         try
-         {
-            const value = self [key];
+         if (typeof value == "function")
+            return getMethod (self, value);
 
-            if (value !== undefined)
-            {
-               if (typeof value == "function")
-                  return getMethod (self, value);
-
-               return value;
-            }
-
-            return getProperty .call (self, key);
-         }
-         catch (error)
-         {
-            // Catch symbol error.
-
-            const value = self [key];
-
-            if (typeof value == "function")
-               return getMethod (self, value);
-
-            return value;
-         }
+         return value;
       },
       set: function (target, key, value)
       {
-         const self = targets .get (target);
-
-         if (!setProperty .call (self, key, targets .get (value) || value))
-         {
-            self [key] = value;
-         }
-
+         targets .get (target) [key] = value;
          return true;
       },
       has: function (target, key)
@@ -123,15 +97,122 @@ extension JavaScript
       },
    };
 
+   function addFields (self)
+   {
+      const native = [ ];
+      const nodes  = [ ];
+      const fields = [ ];
+
+      self .getFieldDefinitions () .forEach (function (fieldDefinition)
+      {
+         switch (fieldDefinition .dataType)
+         {
+            case X3DConstants .SFBool:
+            case X3DConstants .SFDouble:
+            case X3DConstants .SFFloat:
+            case X3DConstants .SFInt32:
+            case X3DConstants .SFString:
+            case X3DConstants .SFTime:
+            {
+               switch (fieldDefinition .accessType)
+               {
+                  case X3DConstants .inputOutput:
+                     native .push (fieldDefinition .name + "_changed")
+                  case X3DConstants .initializeOnly:
+                  case X3DConstants .inputOnly:
+                  case X3DConstants .outputOnly:
+                     native .push (fieldDefinition .name)
+               }
+
+               break;
+            }
+            case X3DConstants .SFNode:
+            {
+               switch (fieldDefinition .accessType)
+               {
+                  case X3DConstants .inputOutput:
+                     nodes .push (fieldDefinition .name + "_changed")
+                  case X3DConstants .initializeOnly:
+                  case X3DConstants .inputOnly:
+                  case X3DConstants .outputOnly:
+                     nodes .push (fieldDefinition .name)
+               }
+
+               break;
+            }
+            default:
+            {
+               switch (fieldDefinition .accessType)
+               {
+                  case X3DConstants .inputOutput:
+                     fields .push (fieldDefinition .name + "_changed")
+                  case X3DConstants .initializeOnly:
+                  case X3DConstants .inputOnly:
+                  case X3DConstants .outputOnly:
+                     fields .push (fieldDefinition .name)
+               }
+
+               break;
+            }
+         }
+      });
+
+      native .forEach (function (name)
+      {
+         Object .defineProperty (self, name, {
+            get: function () { return getProperty .call (self, name); },
+            set: function (newValue) { setProperty .call (self, name, newValue); },
+            enumerable: true,
+            configurable: false,
+         });
+      });
+
+      nodes .forEach (function (name)
+      {
+         Object .defineProperty (self, name, {
+            get: function () { return getProperty .call (self, name); },
+            set: function (newValue) { setProperty .call (self, name, targets .get (newValue)); },
+            enumerable: true,
+            configurable: false,
+         });
+      });
+
+      fields .forEach (function (name)
+      {
+         const value = getProperty .call (self, name);
+
+         if (value instanceof X3DArrayField)
+         {
+            Object .defineProperty (self, name, {
+               get: function () { return value; },
+               set: function (newValue) { setProperty .call (self, name, targets .get (newValue)); },
+               enumerable: true,
+               configurable: false,
+            });
+         }
+         else
+         {
+            Object .defineProperty (self, name, {
+               get: function () { return value; },
+               set: function (newValue) { setProperty .call (self, name, newValue); },
+               enumerable: true,
+               configurable: false,
+            });
+         }
+      });
+   }
+
    function SFNode ()
    {
-      const target = new Target (...arguments);
-      const self   = new Proxy (this, handler);
+      const self  = new Target (...arguments);
+      const proxy = new Proxy (this, handler);
 
-      targets .set (this, target);
-      targets .set (self, target);
+      addFields (self);
 
-      return self;
+      targets .set (this,  self);
+      targets .set (proxy, self);
+
+      return proxy;
    }
 
    SFNode .prototype = Target .prototype;
@@ -195,37 +276,31 @@ extension JavaScript
       
       public final func getProperty (_ name : String) -> Any
       {
-         if let node = object .wrappedValue
-         {
-            if let field = try? node .getField (name: name),
-               field .getAccessType () != .inputOnly
-            {
-               return JavaScript .getValue (JSContext .current (), field)
-            }
-            else
-            {
-               return JSValue (undefinedIn: JSContext .current ())!
-            }
-         }
-         else
+         guard let node = object .wrappedValue else
          {
             return JSValue (nullIn: JSContext .current ())!
          }
+         
+         if let field = try? node .getField (name: name),
+            field .getAccessType () != .inputOnly
+         {
+            return JavaScript .getValue (JSContext .current (), field)
+         }
+         else
+         {
+            return JSValue (undefinedIn: JSContext .current ())!
+         }
       }
       
-      public final func setProperty (_ name : String, _ value : Any) -> Bool
+      public final func setProperty (_ name : String, _ value : Any)
       {
-         if let node = object .wrappedValue
-         {
-            if let field = try? node .getField (name: name),
-               field .getAccessType () != .outputOnly
-            {
-               JavaScript .setValue (field, value)
-               return true
-            }
-         }
+         guard let node = object .wrappedValue else { return }
          
-         return false
+         if let field = try? node .getField (name: name),
+            field .getAccessType () != .outputOnly
+         {
+            JavaScript .setValue (field, value)
+         }
       }
       
       public final func getNodeTypeName () -> String

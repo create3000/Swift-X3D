@@ -121,8 +121,8 @@ extension JavaScript
          context ["setProperty"] = setProperty
          
          var native = [String] ()
-         var fields = [String] ()
          var nodes  = [String] ()
+         var fields = [String] ()
 
          for field in scriptNode .getUserDefinedFields ()
          {
@@ -135,7 +135,7 @@ extension JavaScript
                      case .inputOnly:
                         break
                      case .inputOutput:
-                        fields .append (field .getName () + "_changed")
+                        native .append (field .getName () + "_changed")
                         fallthrough
                      case .initializeOnly, .outputOnly:
                         native .append (field .getName ())
@@ -148,7 +148,7 @@ extension JavaScript
                      case .inputOnly:
                         break
                      case .inputOutput:
-                        fields .append (field .getName () + "_changed")
+                        nodes .append (field .getName () + "_changed")
                         fallthrough
                      case .initializeOnly, .outputOnly:
                         nodes .append (field .getName ())

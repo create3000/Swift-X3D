@@ -91,9 +91,10 @@ extension JavaScript
          MFVec3f     .register (context)
          MFVec4d     .register (context)
          MFVec4f     .register (context)
+         
+         MFNode      .register (context)
 
          X3DArrayField .cleanup (context)
-         Globals .cleanup (context)
 
          // Add user-defined fields to global object.
          
@@ -161,8 +162,10 @@ extension JavaScript
          }
          
          context .evaluateScript ("""
-(function (global)
+(function (global, targets)
 {
+   delete global .targets;
+
    const getProperty = global .getProperty;
    const setProperty = global .setProperty;
 
@@ -187,7 +190,7 @@ extension JavaScript
 
       Object .defineProperty (global, name, {
          get: function () { return getProperty (name); },
-         set: function (newValue) { setProperty (name, newValue .self || newValue); },
+         set: function (newValue) { setProperty (name, targets .get (newValue)); },
          enumerable: true,
          configurable: false,
       });
@@ -203,7 +206,7 @@ extension JavaScript
       {
          Object .defineProperty (global, name, {
             get: function () { return value; },
-            set: function (newValue) { setProperty (name, newValue .self); },
+            set: function (newValue) { setProperty (name, targets .get (newValue)); },
             enumerable: true,
             configurable: false,
          });
@@ -218,7 +221,7 @@ extension JavaScript
          });
       }
    });
-})(this);
+})(this, targets);
 """)
       }
       

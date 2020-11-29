@@ -78,9 +78,8 @@ extension JavaScript
          case .MFVec3f:     return MFVec3f     .initWithProxy (object: (field as! X3D .MFVec3f))!
          case .MFVec4d:     return MFVec4d     .initWithProxy (object: (field as! X3D .MFVec4d))!
          case .MFVec4f:     return MFVec4f     .initWithProxy (object: (field as! X3D .MFVec4f))!
-
-         default:
-            return 0
+            
+         case .MFNode:      return MFNode      .initWithProxy (object: (field as! X3D .MFNode))!
       }
    }
    
@@ -138,8 +137,7 @@ extension JavaScript
          case .MFVec4d:     if let value = value as? MFVec4d     { (field as! X3D .MFVec4d)     .wrappedValue = value .object .wrappedValue }
          case .MFVec4f:     if let value = value as? MFVec4f     { (field as! X3D .MFVec4f)     .wrappedValue = value .object .wrappedValue }
 
-         default:
-            break
+         case .MFNode: if let value = value as? MFNode { (field as! X3D .MFNode <X3D .X3DNode>) .wrappedValue = value .object .wrappedValue }
       }
    }
 }

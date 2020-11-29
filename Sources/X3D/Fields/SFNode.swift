@@ -7,7 +7,7 @@
 //
 
 @propertyWrapper
-public final class SFNode <Type : X3DBaseNode> :
+public class SFNode <Type : X3DBaseNode> :
    X3DField,
    X3DFieldInterface
 {
@@ -18,7 +18,7 @@ public final class SFNode <Type : X3DBaseNode> :
    // Property wrapper handling
    
    public final var projectedValue : SFNode { self }
-   public final var wrappedValue : Value!
+   public var wrappedValue         : Value!
    {
       willSet
       {

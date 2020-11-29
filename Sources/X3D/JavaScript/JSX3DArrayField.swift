@@ -116,12 +116,17 @@ this .X3DArrayFieldWrapper = function (global, targets, CLASS)
 
    function MFArray (object)
    {
-      if (object instanceof Target && !object .self)
+      if (object instanceof Target && !targets .get (object))
       {
          var target = object;
       }
       else
       {
+         for (var i = 0, length = arguments .length; i < length; ++ i)
+         {
+            arguments [i] = targets .get (arguments [i]) || arguments [i];
+         }
+
          var target = new Target (...arguments);
       }
 

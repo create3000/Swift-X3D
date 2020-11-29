@@ -31,10 +31,5 @@ extension JavaScript
          
          context .evaluateScript ("this .targets = new WeakMap ();")
       }
-      
-      internal static func cleanup (_ context : JSContext)
-      {
-         context .evaluateScript ("delete this .targets;")
-      }
    }
 }

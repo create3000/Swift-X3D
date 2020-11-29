@@ -93,4 +93,19 @@ public final class MFNode <Element : X3DBaseNode> :
          $0? .copy (with: protoInstance)
       }
    }
+   
+   // Input/Output
+   
+   internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      switch wrappedValue .count
+      {
+         case 0:
+            stream += "[ ]"
+         case 1:
+            stream += wrappedValue .first!? .toString () ?? "NULL"
+         default:
+            stream += "[\(wrappedValue .map { $0? .toString () ?? "NULL" } .joined (separator: ", "))]"
+      }
+   }
 }

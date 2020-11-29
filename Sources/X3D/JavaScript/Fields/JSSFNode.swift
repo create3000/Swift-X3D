@@ -16,8 +16,8 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ color : SFNode) -> JSValue
-   func assign (_ color : SFNode)
+   func equals (_ node : SFNode) -> JSValue
+   //func assign (_ node : SFNode)
    
    func getProperty (_ context : Context, _ name : String) -> Any
    func setProperty (_ name : String, _ value : Any)
@@ -173,7 +173,7 @@ extension JavaScript
       {
          Object .defineProperty (self, name, {
             get: function () { return getProperty .call (self, context, name); },
-            set: function (newValue) { setProperty .call (self, name, targets .get (newValue)); },
+            set: function (newValue) { setProperty .call (self, name, targets .get (newValue) || null); },
             enumerable: true,
             configurable: false,
          });
@@ -280,10 +280,10 @@ extension JavaScript
          return JSValue (bool: field .wrappedValue === node .field .wrappedValue, in: JSContext .current ())
       }
       
-      public final func assign (_ node : SFNode)
-      {
-         field .wrappedValue = node .field .wrappedValue
-      }
+      //public final func assign (_ node : SFNode)
+      //{
+      //   field .wrappedValue = node .field .wrappedValue
+      //}
       
       // Properties
       

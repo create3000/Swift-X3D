@@ -206,7 +206,7 @@ extension JavaScript
 
       Object .defineProperty (global, name, {
          get: function () { return getProperty (name); },
-         set: function (newValue) { setProperty (name, targets .get (newValue)); },
+         set: function (newValue) { setProperty (name, targets .get (newValue) || null); },
          enumerable: true,
          configurable: false,
       });

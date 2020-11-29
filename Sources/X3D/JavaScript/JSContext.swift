@@ -56,8 +56,9 @@ extension JavaScript
          
          Globals .register (context, browser)
          
+         X3DConstants       .register (context)
          X3DFieldDefinition .register (context)
-         
+
          X3DField      .register (context)
          X3DArrayField .register (context)
 

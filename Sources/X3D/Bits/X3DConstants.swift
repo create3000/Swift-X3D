@@ -7,6 +7,8 @@
 //
 
 public enum X3DBrowserEvent :
+   Int,
+   CaseIterable,
    Hashable
 {
    case Browser_Connection_Error
@@ -18,7 +20,9 @@ public enum X3DBrowserEvent :
    case Browser_URL_Error
 }
 
-public enum X3DLoadState
+public enum X3DLoadState :
+   Int,
+   CaseIterable
 {
    case NOT_STARTED_STATE
    case IN_PROGRESS_STATE
@@ -28,6 +32,7 @@ public enum X3DLoadState
 
 public enum X3DAccessType :
    UInt8,
+   CaseIterable,
    CustomStringConvertible
 {
    case initializeOnly = 0b0001
@@ -76,7 +81,8 @@ public enum X3DAccessType :
 }
 
 public enum X3DFieldType :
-   Int32
+   Int32,
+   CaseIterable
 {
    case SFBool
    case SFColor
@@ -124,7 +130,8 @@ public enum X3DFieldType :
 }
 
 public enum X3DNodeType :
-   Int32
+   Int32,
+   CaseIterable
 {
    // Node types
    

@@ -40,13 +40,13 @@ extension JavaScript
 
       // Properties
       
-      dynamic public final var r : Scalar { get { object .wrappedValue .r } set { object .wrappedValue .r = newValue } }
-      dynamic public final var g : Scalar { get { object .wrappedValue .g } set { object .wrappedValue .g = newValue } }
-      dynamic public final var b : Scalar { get { object .wrappedValue .b } set { object .wrappedValue .b = newValue } }
+      dynamic public final var r : Scalar { get { field .wrappedValue .r } set { field .wrappedValue .r = newValue } }
+      dynamic public final var g : Scalar { get { field .wrappedValue .g } set { field .wrappedValue .g = newValue } }
+      dynamic public final var b : Scalar { get { field .wrappedValue .b } set { field .wrappedValue .b = newValue } }
 
       // Private properties
       
-      internal private(set) final var object : Internal
+      internal private(set) final var field : Internal
 
       // Registration
       
@@ -82,25 +82,25 @@ Object .defineProperty (SFColor .prototype, 2, {
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 3
          {
-            self .object = Internal (wrappedValue: Inner (r: args [0] .toFloat (),
+            self .field = Internal (wrappedValue: Inner (r: args [0] .toFloat (),
                                                           g: args [1] .toFloat (),
                                                           b: args [2] .toFloat ()))
          }
          else
          {
-            self .object = Internal ()
+            self .field = Internal ()
          }
          
-         super .init (object)
+         super .init (field)
          
          JSContext .current () .fix (self)
       }
       
-      internal init (_ context : JSContext? = nil, object : Internal)
+      internal init (_ context : JSContext? = nil, field : Internal)
       {
-         self .object = object
+         self .field = field
          
-         super .init (object)
+         super .init (field)
          
          (context ?? JSContext .current ()) .fix (self)
       }
@@ -109,35 +109,35 @@ Object .defineProperty (SFColor .prototype, 2, {
       
       public final func equals (_ color : SFColor) -> JSValue
       {
-         return JSValue (bool: object .wrappedValue == color .object .wrappedValue, in: JSContext .current ())
+         return JSValue (bool: field .wrappedValue == color .field .wrappedValue, in: JSContext .current ())
       }
 
       public final func assign (_ color : SFColor)
       {
-         object .wrappedValue = color .object .wrappedValue
+         field .wrappedValue = color .field .wrappedValue
       }
 
       // Property access
       
       public final func getHSV () -> [Float]
       {
-         let hsv = object .wrappedValue .hsv
+         let hsv = field .wrappedValue .hsv
          
          return [hsv [0], hsv [1], hsv [2], hsv [3]]
       }
       
       public final func setHSV (_ h : Float, _ s : Float, _ v : Float)
       {
-         object .wrappedValue = Inner (h, s, v) .rgb
+         field .wrappedValue = Inner (h, s, v) .rgb
       }
  
       // Functions
 
       public final func lerp (_ color : SFColor, _ t : Float) -> SFColor
       {
-         let color = hsv_mix (object .wrappedValue .hsv, color .object .wrappedValue .hsv, t: t) .rgb
+         let color = hsv_mix (field .wrappedValue .hsv, color .field .wrappedValue .hsv, t: t) .rgb
          
-         return SFColor (object: Internal (wrappedValue: color))
+         return SFColor (field: Internal (wrappedValue: color))
       }
    }
 }

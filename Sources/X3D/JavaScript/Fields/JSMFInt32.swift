@@ -36,7 +36,7 @@ extension JavaScript
 
       // Private properties
       
-      internal private(set) final var object : Internal
+      internal private(set) final var field : Internal
 
       // Registration
       
@@ -55,68 +55,68 @@ extension JavaScript
       {
          if let args = JSContext .currentArguments () as? [JSValue]
          {
-            self .object = Internal (wrappedValue: args .map { $0 .toInt32 () })
+            self .field = Internal (wrappedValue: args .map { $0 .toInt32 () })
          }
          else
          {
-            self .object = Internal ()
+            self .field = Internal ()
          }
          
-         super .init (object)
+         super .init (field)
       }
 
-      internal init (object : Internal)
+      internal init (field : Internal)
       {
-         self .object = object
+         self .field = field
          
-         super .init (object)
+         super .init (field)
       }
       
-      internal static func initWithProxy (object : Internal) -> JSValue!
+      internal static func initWithProxy (field : Internal) -> JSValue!
       {
-         return proxy .construct (withArguments: [MFInt32 (object: object)])
+         return proxy .construct (withArguments: [MFInt32 (field: field)])
       }
       
       // Common operators
       
       public final func equals (_ array : MFInt32) -> JSValue
       {
-         return JSValue (bool: object .wrappedValue == array .object .wrappedValue, in: JSContext .current ())
+         return JSValue (bool: field .wrappedValue == array .field .wrappedValue, in: JSContext .current ())
       }
 
       public final func assign (_ array : MFInt32)
       {
-         object .wrappedValue = array .object .wrappedValue
+         field .wrappedValue = array .field .wrappedValue
       }
 
       // Property access
       
       public final func get1Value (_ context : Context, _ index : Int) -> Scalar
       {
-         if index >= object .wrappedValue .count
+         if index >= field .wrappedValue .count
          {
-            object .wrappedValue .resize (index + 1, fillWith: Scalar ())
+            field .wrappedValue .resize (index + 1, fillWith: Scalar ())
          }
          
-         return object .wrappedValue [index]
+         return field .wrappedValue [index]
       }
       
       public final func set1Value (_ index : Int, _ value : Scalar)
       {
-         if index >= object .wrappedValue .count
+         if index >= field .wrappedValue .count
          {
-            object .wrappedValue .resize (index + 1, fillWith: Scalar ())
+            field .wrappedValue .resize (index + 1, fillWith: Scalar ())
          }
          
-         object .wrappedValue [index] = value
+         field .wrappedValue [index] = value
       }
       
       // Properties
       
       dynamic public final var length : Int
       {
-         get { object .wrappedValue .count }
-         set { object .wrappedValue .resize (newValue, fillWith: Scalar ()) }
+         get { field .wrappedValue .count }
+         set { field .wrappedValue .resize (newValue, fillWith: Scalar ()) }
       }
    }
 }

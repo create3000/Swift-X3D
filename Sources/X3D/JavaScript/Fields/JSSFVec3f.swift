@@ -49,13 +49,13 @@ extension JavaScript
 
       // Properties
       
-      dynamic public final var x : Scalar { get { object .wrappedValue .x } set { object .wrappedValue .x = newValue } }
-      dynamic public final var y : Scalar { get { object .wrappedValue .y } set { object .wrappedValue .y = newValue } }
-      dynamic public final var z : Scalar { get { object .wrappedValue .z } set { object .wrappedValue .z = newValue } }
+      dynamic public final var x : Scalar { get { field .wrappedValue .x } set { field .wrappedValue .x = newValue } }
+      dynamic public final var y : Scalar { get { field .wrappedValue .y } set { field .wrappedValue .y = newValue } }
+      dynamic public final var z : Scalar { get { field .wrappedValue .z } set { field .wrappedValue .z = newValue } }
 
       // Private properties
       
-      internal private(set) final var object : Internal
+      internal private(set) final var field : Internal
       
       // Registration
       
@@ -91,25 +91,25 @@ Object .defineProperty (SFVec3f .prototype, 2, {
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 3
          {
-            self .object = Internal (wrappedValue: Inner (args [0] .toFloat (),
+            self .field = Internal (wrappedValue: Inner (args [0] .toFloat (),
                                                           args [1] .toFloat (),
                                                           args [2] .toFloat ()))
          }
          else
          {
-            self .object = Internal ()
+            self .field = Internal ()
          }
          
-         super .init (object)
+         super .init (field)
          
          JSContext .current () .fix (self)
       }
       
-      internal init (_ context : JSContext? = nil, object : Internal)
+      internal init (_ context : JSContext? = nil, field : Internal)
       {
-         self .object = object
+         self .field = field
          
-         super .init (object)
+         super .init (field)
          
          (context ?? JSContext .current ()) .fix (self)
       }
@@ -118,74 +118,74 @@ Object .defineProperty (SFVec3f .prototype, 2, {
       
       public final func equals (_ vector : SFVec) -> JSValue
       {
-         return JSValue (bool: object .wrappedValue == vector .object .wrappedValue, in: JSContext .current ())
+         return JSValue (bool: field .wrappedValue == vector .field .wrappedValue, in: JSContext .current ())
       }
 
       public final func assign (_ vector : SFVec)
       {
-         object .wrappedValue = vector .object .wrappedValue
+         field .wrappedValue = vector .field .wrappedValue
       }
 
       // Functions
       
       public final func add (_ vector : SFVec) -> SFVec
       {
-         return SFVec (object: Internal (wrappedValue: object .wrappedValue + vector .object .wrappedValue))
+         return SFVec (field: Internal (wrappedValue: field .wrappedValue + vector .field .wrappedValue))
       }
 
       public final func cross (_ vector : SFVec) -> SFVec
       {
-         return SFVec (object: Internal (wrappedValue: simd_cross (object .wrappedValue, vector .object .wrappedValue)))
+         return SFVec (field: Internal (wrappedValue: simd_cross (field .wrappedValue, vector .field .wrappedValue)))
       }
 
       public final func distance (_ vector : SFVec) -> Scalar
       {
-         return simd_distance (object .wrappedValue, vector .object .wrappedValue)
+         return simd_distance (field .wrappedValue, vector .field .wrappedValue)
       }
 
       public final func divide (_ scalar : Scalar) -> SFVec
       {
-         return SFVec (object: Internal (wrappedValue: object .wrappedValue / scalar))
+         return SFVec (field: Internal (wrappedValue: field .wrappedValue / scalar))
       }
       
       public final func divVec (_ vector : SFVec) -> SFVec
       {
-         return SFVec (object: Internal (wrappedValue: object .wrappedValue / vector .object .wrappedValue))
+         return SFVec (field: Internal (wrappedValue: field .wrappedValue / vector .field .wrappedValue))
       }
 
       public final func length () -> Scalar
       {
-         return simd_length (object .wrappedValue)
+         return simd_length (field .wrappedValue)
       }
       
       public final func lerp (_ vector : SFVec, _ t : Scalar) -> SFVec
       {
-         return SFVec (object: Internal (wrappedValue: mix (object .wrappedValue, vector .object .wrappedValue, t: t)))
+         return SFVec (field: Internal (wrappedValue: mix (field .wrappedValue, vector .field .wrappedValue, t: t)))
       }
 
       public final func multiply (_ scalar : Scalar) -> SFVec
       {
-         return SFVec (object: Internal (wrappedValue: object .wrappedValue * scalar))
+         return SFVec (field: Internal (wrappedValue: field .wrappedValue * scalar))
       }
       
       public final func multVec (_ vector : SFVec) -> SFVec
       {
-         return SFVec (object: Internal (wrappedValue: object .wrappedValue * vector .object .wrappedValue))
+         return SFVec (field: Internal (wrappedValue: field .wrappedValue * vector .field .wrappedValue))
       }
 
       public final func negate () -> SFVec
       {
-         return SFVec (object: Internal (wrappedValue: -object .wrappedValue))
+         return SFVec (field: Internal (wrappedValue: -field .wrappedValue))
       }
 
       public final func normalize () -> SFVec
       {
-         return SFVec (object: Internal (wrappedValue: simd_normalize (object .wrappedValue)))
+         return SFVec (field: Internal (wrappedValue: simd_normalize (field .wrappedValue)))
       }
 
       public final func subtract (_ vector : SFVec) -> SFVec
       {
-         return SFVec (object: Internal (wrappedValue: object .wrappedValue - vector .object .wrappedValue))
+         return SFVec (field: Internal (wrappedValue: field .wrappedValue - vector .field .wrappedValue))
       }
    }
 }

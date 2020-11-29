@@ -35,7 +35,7 @@ extension JavaScript
 
       // Private properties
       
-      internal private(set) final var object : Internal
+      internal private(set) final var field : Internal
 
       // Registration
       
@@ -54,87 +54,87 @@ extension JavaScript
       {
          if let args = JSContext .currentArguments () as? [JSValue]
          {
-            self .object = Internal (wrappedValue: args .map
+            self .field = Internal (wrappedValue: args .map
             {
-               ($0 .toObjectOf (SFNode .self) as? SFNode)? .object .wrappedValue
+               ($0 .toObjectOf (SFNode .self) as? SFNode)? .field .wrappedValue
             })
          }
          else
          {
-            self .object = Internal ()
+            self .field = Internal ()
          }
          
-         super .init (object)
+         super .init (field)
       }
 
-      internal init (object : Internal)
+      internal init (field : Internal)
       {
-         self .object = object
+         self .field = field
          
-         super .init (object)
+         super .init (field)
       }
       
-      internal static func initWithProxy (object : Internal) -> JSValue!
+      internal static func initWithProxy (field : Internal) -> JSValue!
       {
-         return proxy .construct (withArguments: [MFNode (object: object)])
+         return proxy .construct (withArguments: [MFNode (field: field)])
       }
       
       // Common operators
       
       public final func equals (_ array : MFNode) -> JSValue
       {
-         return JSValue (bool: object .wrappedValue == array .object .wrappedValue, in: JSContext .current ())
+         return JSValue (bool: field .wrappedValue == array .field .wrappedValue, in: JSContext .current ())
       }
 
       public final func assign (_ array : MFNode)
       {
-         object .wrappedValue = array .object .wrappedValue
+         field .wrappedValue = array .field .wrappedValue
       }
 
       // Property access
       
       public final func get1Value (_ context : Context, _ index : Int) -> JSValue
       {
-         if index >= object .wrappedValue .count
+         if index >= field .wrappedValue .count
          {
-            object .wrappedValue .resize (index + 1, fillWith: nil)
+            field .wrappedValue .resize (index + 1, fillWith: nil)
          }
          
-         let node = object .wrappedValue [index]
+         let node = field .wrappedValue [index]
          
          guard node != nil else
          {
             return JSValue (nullIn: JSContext .current ())
          }
-                  
-         if let object = context .cache .object (forKey: node)
+         
+         if let field = context .cache .object (forKey: node)
          {
-            return object
+            return field
          }
          
-         let object = SFNode .initWithProxy (object: X3D .SFNode (wrappedValue: node))!
+         let field = SFNode .initWithProxy (field: X3D .SFNode (wrappedValue: node))!
 
-         context .cache .setObject (object, forKey: node)
+         context .cache .setObject (field, forKey: node)
          
-         return object
+         return field
       }
       
       public final func set1Value (_ index : Int, _ value : SFNode?)
       {
-         if index >= object .wrappedValue .count
+         if index >= field .wrappedValue .count
          {
-            object .wrappedValue .resize (index + 1, fillWith: nil)
+            field .wrappedValue .resize (index + 1, fillWith: nil)
          }
 
-         object .wrappedValue [index] = value? .object .wrappedValue
+         field .wrappedValue [index] = value? .field .wrappedValue
       }
       
       // Properties
       
       dynamic public final var length : Int
       {
-         get { object .wrappedValue .count }
-         set { object .wrappedValue .resize (newValue, fillWith: nil) }
+         get { field .wrappedValue .count }
+         set { field .wrappedValue .resize (newValue, fillWith: nil) }
       }
    }
 }

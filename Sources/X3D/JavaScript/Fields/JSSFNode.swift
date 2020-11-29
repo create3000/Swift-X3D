@@ -42,7 +42,8 @@ extension JavaScript
       
       // Private properties
       
-      internal private(set) final var object : Internal
+      internal private(set) final var field : Internal
+      private final var scene : X3DScene?
 
       // Registration
       
@@ -205,7 +206,7 @@ extension JavaScript
 
    function SFNode ()
    {
-      const self  = new Target (...arguments);
+      const self  = new Target (context, ...arguments);
       const proxy = new Proxy (this, handler);
 
       addFields (self);
@@ -230,54 +231,62 @@ extension JavaScript
       
       required public init ()
       {
-         if let args = JSContext .currentArguments () as? [JSValue], args .count == 1
+         if var args = JSContext .currentArguments () as? [JSValue],
+            args .count == 2
          {
+            let context = args .removeFirst () .toObjectOf (Context .self) as! Context
+            
             if let node = args .first! .toObjectOf (SFNode .self) as? SFNode
             {
-               self .object = Internal (wrappedValue: node .object .wrappedValue)
+               self .field = Internal (wrappedValue: node .field .wrappedValue)
+            }
+            else if let x3dSyntax = args .first! .toString ()
+            {
+               self .scene = try? context .browser .createX3DFromString (x3dSyntax: x3dSyntax)
+               self .field = Internal (wrappedValue: scene? .rootNodes .first ?? nil)
             }
             else
             {
-               self .object = Internal ()
+               self .field = Internal ()
             }
          }
          else
          {
-            self .object = Internal ()
+            self .field = Internal ()
          }
          
-         super .init (object)
+         super .init (field)
       }
       
-      internal init (object : Internal)
+      internal init (field : Internal)
       {
-         self .object = object
+         self .field = field
          
-         super .init (object)
+         super .init (field)
       }
       
-      internal static func initWithProxy (object : Internal) -> JSValue!
+      internal static func initWithProxy (field : Internal) -> JSValue!
       {
-         return proxy .construct (withArguments: [SFNode (object: object)])
+         return proxy .construct (withArguments: [SFNode (field: field)])
       }
 
       // Common operators
       
       public final func equals (_ node : SFNode) -> JSValue
       {
-         return JSValue (bool: object .wrappedValue === node .object .wrappedValue, in: JSContext .current ())
+         return JSValue (bool: field .wrappedValue === node .field .wrappedValue, in: JSContext .current ())
       }
       
       public final func assign (_ node : SFNode)
       {
-         object .wrappedValue = node .object .wrappedValue
+         field .wrappedValue = node .field .wrappedValue
       }
       
       // Properties
       
       public final func getProperty (_ context : Context, _ name : String) -> Any
       {
-         guard let node = object .wrappedValue else
+         guard let node = field .wrappedValue else
          {
             return JSValue (nullIn: context .context)!
          }
@@ -285,7 +294,7 @@ extension JavaScript
          if let field = try? node .getField (name: name),
             field .getAccessType () != .inputOnly
          {
-            return JavaScript .getValue (context, field)
+             return JavaScript .getValue (context, field)
          }
          else
          {
@@ -295,7 +304,7 @@ extension JavaScript
       
       public final func setProperty (_ name : String, _ value : Any)
       {
-         guard let node = object .wrappedValue else { return }
+         guard let node = field .wrappedValue else { return }
          
          if let field = try? node .getField (name: name),
             field .getAccessType () != .outputOnly
@@ -306,28 +315,31 @@ extension JavaScript
       
       public final func getNodeTypeName () -> String
       {
-         return object .wrappedValue? .getTypeName () ?? "X3DNode"
+         return field .wrappedValue? .getTypeName () ?? "X3DNode"
       }
       
       public final func getNodeName () -> String
       {
-         return object .wrappedValue? .getName () ?? ""
+         return field .wrappedValue? .getName () ?? ""
       }
       
       public final func getNodeType () -> [Int32]
       {
-         return object .wrappedValue? .getType () .map { $0 .rawValue } ?? [ ]
+         return field .wrappedValue? .getType () .map { $0 .rawValue } ?? [ ]
       }
       
       public final func getFieldDefinitions () -> [X3DFieldDefinition]
       {
          var fieldDefinitions = [X3DFieldDefinition] ()
          
-         for field in object .wrappedValue .getFieldDefinitions ()
+         if let node = field .wrappedValue
          {
-            fieldDefinitions .append (X3DFieldDefinition (accessType: Int32 (field .getAccessType() .rawValue),
-                                                          dataType: field .getType() .rawValue,
-                                                          name: field .getName ()))
+            for field in node .getFieldDefinitions ()
+            {
+               fieldDefinitions .append (X3DFieldDefinition (accessType: Int32 (field .getAccessType () .rawValue),
+                                                             dataType: field .getType () .rawValue,
+                                                             name: field .getName ()))
+            }
          }
          
          return fieldDefinitions
@@ -335,12 +347,12 @@ extension JavaScript
 
       public final func toVRMLString () -> String
       {
-         return object .wrappedValue? .toString () ?? ""
+         return field .wrappedValue? .toString () ?? ""
       }
       
       public final func toXMLString () -> String
       {
-         return object .wrappedValue? .toString () ?? ""
+         return field .wrappedValue? .toString () ?? ""
       }
    }
 }

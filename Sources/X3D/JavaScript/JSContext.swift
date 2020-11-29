@@ -17,8 +17,8 @@ extension JavaScript
    {
       // Properties
       
-      private unowned let browser    : X3DBrowser
       private unowned let scriptNode : Script
+      internal unowned let browser   : X3DBrowser
       internal let context           : JSContext
       
       internal let cache = NSMapTable <X3D .X3DNode, JSValue> (keyOptions: .weakMemory, valueOptions: .strongMemory)
@@ -32,8 +32,8 @@ extension JavaScript
       
       internal init (scriptNode : Script, sourceText : String)
       {
-         self .browser    = scriptNode .browser!
          self .scriptNode = scriptNode
+         self .browser    = scriptNode .browser!
          self .context    = JSContext (virtualMachine: Context .vm)!
          
          super .init ()

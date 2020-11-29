@@ -35,7 +35,7 @@ extension JavaScript
 
       // Private properties
       
-      internal private(set) final var object : Internal
+      internal private(set) final var field : Internal
 
       // Registration
       
@@ -54,88 +54,88 @@ extension JavaScript
       {
          if let args = JSContext .currentArguments () as? [JSValue]
          {
-            self .object = Internal (wrappedValue: args .map
+            self .field = Internal (wrappedValue: args .map
             {
-               ($0 .toObjectOf (SFImage .self) as? SFImage)? .object .wrappedValue ?? X3DImage ()
+               ($0 .toObjectOf (SFImage .self) as? SFImage)? .field .wrappedValue ?? X3DImage ()
             })
          }
          else
          {
-            self .object = Internal ()
+            self .field = Internal ()
          }
          
-         super .init (object)
+         super .init (field)
       }
 
-      internal init (object : Internal)
+      internal init (field : Internal)
       {
-         self .object = object
+         self .field = field
          
-         super .init (object)
+         super .init (field)
       }
       
-      internal static func initWithProxy (object : Internal) -> JSValue!
+      internal static func initWithProxy (field : Internal) -> JSValue!
       {
-         return proxy .construct (withArguments: [MFImage (object: object)])
+         return proxy .construct (withArguments: [MFImage (field: field)])
       }
       
       // Common operators
       
       public final func equals (_ array : MFImage) -> JSValue
       {
-         return JSValue (bool: object .wrappedValue == array .object .wrappedValue, in: JSContext .current ())
+         return JSValue (bool: field .wrappedValue == array .field .wrappedValue, in: JSContext .current ())
       }
 
       public final func assign (_ array : MFImage)
       {
-         object .wrappedValue = array .object .wrappedValue
+         field .wrappedValue = array .field .wrappedValue
       }
 
       // Property access
       
       public final func get1Value (_ context : Context, _ index : Int) -> SFImage
       {
-         if index >= object .wrappedValue .count
+         if index >= field .wrappedValue .count
          {
-            for _ in object .wrappedValue .count ... index
+            for _ in field .wrappedValue .count ... index
             {
-               object .wrappedValue .append (X3DImage ())
+               field .wrappedValue .append (X3DImage ())
             }
          }
 
-         return SFImage (object: SFImageReference (object, index))
+         return SFImage (field: SFImageReference (field, index))
       }
       
       public final func set1Value (_ index : Int, _ value : SFImage)
       {
-         if index >= object .wrappedValue .count
+         if index >= field .wrappedValue .count
          {
-            for _ in object .wrappedValue .count ... index
+            for _ in field .wrappedValue .count ... index
             {
-               object .wrappedValue .append (X3DImage ())
+               field .wrappedValue .append (X3DImage ())
             }
          }
 
-         object .wrappedValue [index] = value .object .wrappedValue
+         field .wrappedValue [index] = value .field .wrappedValue
       }
       
       // Properties
       
       dynamic public final var length : Int
       {
-         get { object .wrappedValue .count }
+         get { field .wrappedValue .count }
          
          set
          {
-            if newValue < object .wrappedValue .count
+            if newValue < field .wrappedValue .count
             {
-               object .wrappedValue .removeLast (object .wrappedValue .count - newValue)
+               field .wrappedValue .removeLast (field .wrappedValue .count - newValue)
             }
             else
             {
-               for _ in object .wrappedValue .count ..< newValue
+               for _ in field .wrappedValue .count ..< newValue
                {
-                  object .wrappedValue .append (X3DImage ())
+                  field .wrappedValue .append (X3DImage ())
                }
             }
          }

@@ -35,15 +35,15 @@ extension JavaScript
 
       // Properties
       
-      dynamic public final var width  : Int32 { get { object .wrappedValue .width }  set { object .wrappedValue .width  = newValue } }
-      dynamic public final var x      : Int32 { get { object .wrappedValue .width }  set { object .wrappedValue .width  = newValue } }
-      dynamic public final var height : Int32 { get { object .wrappedValue .height } set { object .wrappedValue .height = newValue } }
-      dynamic public final var y      : Int32 { get { object .wrappedValue .height } set { object .wrappedValue .height = newValue } }
-      dynamic public final var comp   : Int32 { get { object .wrappedValue .comp }   set { object .wrappedValue .comp   = newValue } }
+      dynamic public final var width  : Int32 { get { field .wrappedValue .width }  set { field .wrappedValue .width  = newValue } }
+      dynamic public final var x      : Int32 { get { field .wrappedValue .width }  set { field .wrappedValue .width  = newValue } }
+      dynamic public final var height : Int32 { get { field .wrappedValue .height } set { field .wrappedValue .height = newValue } }
+      dynamic public final var y      : Int32 { get { field .wrappedValue .height } set { field .wrappedValue .height = newValue } }
+      dynamic public final var comp   : Int32 { get { field .wrappedValue .comp }   set { field .wrappedValue .comp   = newValue } }
 
       // Private properties
       
-      internal private(set) final var object : Internal
+      internal private(set) final var field : Internal
 
       // Registration
       
@@ -58,27 +58,27 @@ extension JavaScript
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 4
          {
-            self .object = Internal ()
+            self .field = Internal ()
             
-            self .object .wrappedValue .width  = args [0] .toInt32 ()
-            self .object .wrappedValue .height = args [1] .toInt32 ()
-            self .object .wrappedValue .comp   = args [2] .toInt32 ()
+            self .field .wrappedValue .width  = args [0] .toInt32 ()
+            self .field .wrappedValue .height = args [1] .toInt32 ()
+            self .field .wrappedValue .comp   = args [2] .toInt32 ()
          }
          else
          {
-            self .object = Internal ()
+            self .field = Internal ()
          }
          
-         super .init (object)
+         super .init (field)
          
          JSContext .current () .fix (self)
       }
       
-      internal init (_ context : JSContext? = nil, object : Internal)
+      internal init (_ context : JSContext? = nil, field : Internal)
       {
-         self .object = object
+         self .field = field
          
-         super .init (object)
+         super .init (field)
          
          (context ?? JSContext .current ()) .fix (self)
       }
@@ -87,12 +87,12 @@ extension JavaScript
       
       public final func equals (_ image : SFImage) -> JSValue
       {
-         return JSValue (bool: object .wrappedValue == image .object .wrappedValue, in: JSContext .current ())
+         return JSValue (bool: field .wrappedValue == image .field .wrappedValue, in: JSContext .current ())
       }
 
       public final func assign (_ image : SFImage)
       {
-         object .set (value: image .object)
+         field .set (value: image .field)
       }
    }
 }

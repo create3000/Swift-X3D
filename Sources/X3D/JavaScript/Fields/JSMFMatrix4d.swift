@@ -35,7 +35,7 @@ extension JavaScript
 
       // Private properties
       
-      internal private(set) final var object : Internal
+      internal private(set) final var field : Internal
 
       // Registration
       
@@ -54,71 +54,71 @@ extension JavaScript
       {
          if let args = JSContext .currentArguments () as? [JSValue]
          {
-            self .object = Internal (wrappedValue: args .map
+            self .field = Internal (wrappedValue: args .map
             {
-               ($0 .toObjectOf (SFMatrix4d .self) as? SFMatrix4d)? .object .wrappedValue ?? .identity
+               ($0 .toObjectOf (SFMatrix4d .self) as? SFMatrix4d)? .field .wrappedValue ?? .identity
             })
          }
          else
          {
-            self .object = Internal ()
+            self .field = Internal ()
          }
          
-         super .init (object)
+         super .init (field)
       }
 
-      internal init (object : Internal)
+      internal init (field : Internal)
       {
-         self .object = object
+         self .field = field
          
-         super .init (object)
+         super .init (field)
       }
       
-      internal static func initWithProxy (object : Internal) -> JSValue!
+      internal static func initWithProxy (field : Internal) -> JSValue!
       {
-         return proxy .construct (withArguments: [MFMatrix4d (object: object)])
+         return proxy .construct (withArguments: [MFMatrix4d (field: field)])
       }
       
       // Common operators
       
       public final func equals (_ array : MFMatrix4d) -> JSValue
       {
-         return JSValue (bool: object .wrappedValue == array .object .wrappedValue, in: JSContext .current ())
+         return JSValue (bool: field .wrappedValue == array .field .wrappedValue, in: JSContext .current ())
       }
 
       public final func assign (_ array : MFMatrix4d)
       {
-         object .wrappedValue = array .object .wrappedValue
+         field .wrappedValue = array .field .wrappedValue
       }
 
       // Property access
       
       public final func get1Value (_ context : Context, _ index : Int) -> SFMatrix4d
       {
-         if index >= object .wrappedValue .count
+         if index >= field .wrappedValue .count
          {
-            object .wrappedValue .resize (index + 1, fillWith: .identity)
+            field .wrappedValue .resize (index + 1, fillWith: .identity)
          }
 
-         return SFMatrix4d (object: SFMatrix4dReference (object, index))
+         return SFMatrix4d (field: SFMatrix4dReference (field, index))
       }
       
       public final func set1Value (_ index : Int, _ value : SFMatrix4d)
       {
-         if index >= object .wrappedValue .count
+         if index >= field .wrappedValue .count
          {
-            object .wrappedValue .resize (index + 1, fillWith: .identity)
+            field .wrappedValue .resize (index + 1, fillWith: .identity)
          }
          
-         object .wrappedValue [index] = value .object .wrappedValue
+         field .wrappedValue [index] = value .field .wrappedValue
       }
       
       // Properties
       
       dynamic public final var length : Int
       {
-         get { object .wrappedValue .count }
-         set { object .wrappedValue .resize (newValue, fillWith: .identity) }
+         get { field .wrappedValue .count }
+         set { field .wrappedValue .resize (newValue, fillWith: .identity) }
       }
    }
 }

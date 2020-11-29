@@ -49,7 +49,7 @@ extension JavaScript
 
       // Private properties
       
-      internal private(set) final var object : Internal
+      internal private(set) final var field : Internal
 
       // Registration
       
@@ -95,7 +95,7 @@ extension JavaScript
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 16
          {
-            self .object = Internal (wrappedValue: Inner (columns: (Vector4d (args [ 0] .toDouble (),
+            self .field = Internal (wrappedValue: Inner (columns: (Vector4d (args [ 0] .toDouble (),
                                                                               args [ 1] .toDouble (),
                                                                               args [ 2] .toDouble (),
                                                                               args [ 3] .toDouble ()),
@@ -114,19 +114,19 @@ extension JavaScript
          }
          else
          {
-            self .object = Internal ()
+            self .field = Internal ()
          }
          
-         super .init (object)
+         super .init (field)
          
          JSContext .current () .fix (self)
       }
       
-      internal init (_ context : JSContext? = nil, object : Internal)
+      internal init (_ context : JSContext? = nil, field : Internal)
       {
-         self .object = object
+         self .field = field
          
-         super .init (object)
+         super .init (field)
          
          (context ?? JSContext .current ()) .fix (self)
       }
@@ -135,102 +135,102 @@ extension JavaScript
       
       public final func equals (_ color : SFMatrix4d) -> JSValue
       {
-         return JSValue (bool: object .wrappedValue == color .object .wrappedValue, in: JSContext .current ())
+         return JSValue (bool: field .wrappedValue == color .field .wrappedValue, in: JSContext .current ())
       }
 
       public final func assign (_ color : SFMatrix4d)
       {
-         object .wrappedValue = color .object .wrappedValue
+         field .wrappedValue = color .field .wrappedValue
       }
       
       // Property access
       
       public final func get1Value (_ column : Int, _ row : Int) -> Scalar
       {
-         return object .wrappedValue [column, row]
+         return field .wrappedValue [column, row]
       }
       
       public final func set1Value (_ column : Int, _ row : Int, _ value : Scalar)
       {
-         object .wrappedValue [column, row] = value
+         field .wrappedValue [column, row] = value
       }
       
       public final func getTransform (_ translation : SFVec3d?, _ rotation : SFRotation?, _ scale : SFVec3d?, _ scaleOrientation : SFRotation?, _ center : SFVec3d?)
       {
-         let m = decompose_transformation_matrix (object .wrappedValue, center: center? .object .wrappedValue ?? .zero)
+         let m = decompose_transformation_matrix (field .wrappedValue, center: center? .field .wrappedValue ?? .zero)
          
          let ra = m .rotation .axis
          let r  = Rotation4f (Float (ra .x), Float (ra .y), Float (ra .z), Float (m .rotation .angle))
          let sa = m .scaleOrientation .axis
          let so = Rotation4f (Float (sa .x), Float (sa .y), Float (sa .z), Float (m .scaleOrientation .angle))
 
-         translation?      .object .wrappedValue = m .translation
-         rotation?         .object .wrappedValue = r
-         scale?            .object .wrappedValue = m .scale
-         scaleOrientation? .object .wrappedValue = so
+         translation?      .field .wrappedValue = m .translation
+         rotation?         .field .wrappedValue = r
+         scale?            .field .wrappedValue = m .scale
+         scaleOrientation? .field .wrappedValue = so
       }
       
       public final func setTransform (_ translation : SFVec3d?, _ rotation : SFRotation?, _ scale : SFVec3d?, _ scaleOrientation : SFRotation?, _ center : SFVec3d?)
       {
-         let ra = rotation? .object .wrappedValue .axis ?? .zAxis
-         let r  = Rotation4d (Scalar (ra .x), Scalar (ra .y), Scalar (ra .z), Scalar (rotation? .object .wrappedValue .angle ?? 0))
-         let sa = scaleOrientation? .object .wrappedValue .axis ?? .zAxis
-         let so = Rotation4d (Scalar (sa .x), Scalar (sa .y), Scalar (sa .z), Scalar (scaleOrientation? .object .wrappedValue .angle ?? 0))
+         let ra = rotation? .field .wrappedValue .axis ?? .zAxis
+         let r  = Rotation4d (Scalar (ra .x), Scalar (ra .y), Scalar (ra .z), Scalar (rotation? .field .wrappedValue .angle ?? 0))
+         let sa = scaleOrientation? .field .wrappedValue .axis ?? .zAxis
+         let so = Rotation4d (Scalar (sa .x), Scalar (sa .y), Scalar (sa .z), Scalar (scaleOrientation? .field .wrappedValue .angle ?? 0))
 
-         let m = compose_transformation_matrix (translation: translation? .object .wrappedValue ?? .zero,
+         let m = compose_transformation_matrix (translation: translation? .field .wrappedValue ?? .zero,
                                                 rotation: r,
-                                                scale: scale? .object .wrappedValue ?? .one,
+                                                scale: scale? .field .wrappedValue ?? .one,
                                                 scaleOrientation: so,
-                                                center: center? .object .wrappedValue ?? .zero)
+                                                center: center? .field .wrappedValue ?? .zero)
          
-         object .wrappedValue = m
+         field .wrappedValue = m
       }
       
       // Functions
 
       public final func determinant () -> Scalar
       {
-         return object .wrappedValue .determinant
+         return field .wrappedValue .determinant
       }
       
       public final func transpose () -> SFMatrix4d
       {
-         return SFMatrix4d (object: Internal (wrappedValue: object .wrappedValue .transpose))
+         return SFMatrix4d (field: Internal (wrappedValue: field .wrappedValue .transpose))
       }
 
       public final func inverse () -> SFMatrix4d
       {
-         return SFMatrix4d (object: Internal (wrappedValue: object .wrappedValue .inverse))
+         return SFMatrix4d (field: Internal (wrappedValue: field .wrappedValue .inverse))
       }
       
       public final func multLeft (_ matrix : SFMatrix4d) -> SFMatrix4d
       {
-         return SFMatrix4d (object: Internal (wrappedValue: object .wrappedValue * matrix .object .wrappedValue))
+         return SFMatrix4d (field: Internal (wrappedValue: field .wrappedValue * matrix .field .wrappedValue))
       }
       
       public final func multRight (_ matrix : SFMatrix4d) -> SFMatrix4d
       {
-         return SFMatrix4d (object: Internal (wrappedValue: matrix .object .wrappedValue * object .wrappedValue))
+         return SFMatrix4d (field: Internal (wrappedValue: matrix .field .wrappedValue * field .wrappedValue))
       }
       
       public final func multVecMatrix (_ vector : SFVec3d) -> SFVec3d
       {
-         return SFVec3d (object: X3D .SFVec3d (wrappedValue: object .wrappedValue * vector .object .wrappedValue))
+         return SFVec3d (field: X3D .SFVec3d (wrappedValue: field .wrappedValue * vector .field .wrappedValue))
       }
       
       public final func multMatrixVec (_ vector : SFVec3d) -> SFVec3d
       {
-         return SFVec3d (object: X3D .SFVec3d (wrappedValue: vector .object .wrappedValue * object .wrappedValue))
+         return SFVec3d (field: X3D .SFVec3d (wrappedValue: vector .field .wrappedValue * field .wrappedValue))
       }
       
       public final func multDirMatrix (_ vector : SFVec3d) -> SFVec3d
       {
-         return SFVec3d (object: X3D .SFVec3d (wrappedValue: object .wrappedValue .submatrix * vector .object .wrappedValue))
+         return SFVec3d (field: X3D .SFVec3d (wrappedValue: field .wrappedValue .submatrix * vector .field .wrappedValue))
       }
       
       public final func multMatrixDir (_ vector : SFVec3d) -> SFVec3d
       {
-         return SFVec3d (object: X3D .SFVec3d (wrappedValue: vector .object .wrappedValue * object .wrappedValue .submatrix))
+         return SFVec3d (field: X3D .SFVec3d (wrappedValue: vector .field .wrappedValue * field .wrappedValue .submatrix))
       }
    }
 }

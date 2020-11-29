@@ -41,14 +41,14 @@ extension JavaScript
 
       // Properties
       
-      dynamic public final var r : Scalar { get { object .wrappedValue .r } set { object .wrappedValue .r = newValue } }
-      dynamic public final var g : Scalar { get { object .wrappedValue .g } set { object .wrappedValue .g = newValue } }
-      dynamic public final var b : Scalar { get { object .wrappedValue .b } set { object .wrappedValue .b = newValue } }
-      dynamic public final var a : Scalar { get { object .wrappedValue .a } set { object .wrappedValue .a = newValue } }
+      dynamic public final var r : Scalar { get { field .wrappedValue .r } set { field .wrappedValue .r = newValue } }
+      dynamic public final var g : Scalar { get { field .wrappedValue .g } set { field .wrappedValue .g = newValue } }
+      dynamic public final var b : Scalar { get { field .wrappedValue .b } set { field .wrappedValue .b = newValue } }
+      dynamic public final var a : Scalar { get { field .wrappedValue .a } set { field .wrappedValue .a = newValue } }
 
       // Private properties
       
-      internal private(set) final var object : Internal
+      internal private(set) final var field : Internal
 
       // Registration
       
@@ -90,26 +90,26 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
       {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 4
          {
-            self .object = Internal (wrappedValue: Inner (r: args [0] .toFloat (),
+            self .field = Internal (wrappedValue: Inner (r: args [0] .toFloat (),
                                                           g: args [1] .toFloat (),
                                                           b: args [2] .toFloat (),
                                                           a: args [3] .toFloat ()))
          }
          else
          {
-            self .object = Internal ()
+            self .field = Internal ()
          }
          
-         super .init (object)
+         super .init (field)
 
          JSContext .current () .fix (self)
       }
       
-      internal init (_ context : JSContext? = nil, object : Internal)
+      internal init (_ context : JSContext? = nil, field : Internal)
       {
-         self .object = object
+         self .field = field
          
-         super .init (object)
+         super .init (field)
 
          (context ?? JSContext .current ()) .fix (self)
       }
@@ -118,35 +118,35 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
       
       public final func equals (_ color : SFColorRGBA) -> JSValue
       {
-         return JSValue (bool: object .wrappedValue == color .object .wrappedValue, in: JSContext .current ())
+         return JSValue (bool: field .wrappedValue == color .field .wrappedValue, in: JSContext .current ())
       }
 
       public final func assign (_ color : SFColorRGBA)
       {
-         object .wrappedValue = color .object .wrappedValue
+         field .wrappedValue = color .field .wrappedValue
       }
 
       // Property access
       
       public final func getHSVA () -> [Float]
       {
-         let hsva = object .wrappedValue .hsva
+         let hsva = field .wrappedValue .hsva
          
          return [hsva [0], hsva [1], hsva [2], hsva [3]]
       }
       
       public final func setHSVA (_ h : Float, _ s : Float, _ v : Float, _ a : Float)
       {
-         object .wrappedValue = Inner (h, s, v, a) .rgba
+         field .wrappedValue = Inner (h, s, v, a) .rgba
       }
  
       // Functions
 
       public final func lerp (_ color : SFColorRGBA, _ t : Float) -> SFColorRGBA
       {
-         let color = hsva_mix (object .wrappedValue .hsva, color .object .wrappedValue .hsva, t: t) .rgba
+         let color = hsva_mix (field .wrappedValue .hsva, color .field .wrappedValue .hsva, t: t) .rgba
          
-         return SFColorRGBA (object: Internal (wrappedValue: color))
+         return SFColorRGBA (field: Internal (wrappedValue: color))
       }
    }
 }

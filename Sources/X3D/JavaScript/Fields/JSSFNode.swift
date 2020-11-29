@@ -206,8 +206,8 @@ extension JavaScript
 
    function SFNode ()
    {
-      const self  = new Target (context, ...arguments);
       const proxy = new Proxy (this, handler);
+      const self  = new Target (context, proxy, ...arguments);
 
       addFields (self);
 
@@ -232,9 +232,10 @@ extension JavaScript
       required public init ()
       {
          if var args = JSContext .currentArguments () as? [JSValue],
-            args .count == 2
+            args .count == 3
          {
             let context = args .removeFirst () .toObjectOf (Context .self) as! Context
+            let proxy   = args .removeFirst ()
             
             if let node = args .first! .toObjectOf (SFNode .self) as? SFNode
             {
@@ -244,6 +245,8 @@ extension JavaScript
             {
                self .scene = try? context .browser .createX3DFromString (x3dSyntax: x3dSyntax)
                self .field = Internal (wrappedValue: scene? .rootNodes .first ?? nil)
+               
+               context .cache .setObject (proxy, forKey: field .wrappedValue)
             }
             else
             {

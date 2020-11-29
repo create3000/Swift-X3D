@@ -48,7 +48,7 @@ extension JavaScript
       {
          // Register objects and functions.
 
-         Global .register (context, browser)
+         Globals .register (context, browser)
          
          X3DField      .register (context)
          X3DArrayField .register (context)
@@ -93,7 +93,8 @@ extension JavaScript
          MFVec4f     .register (context)
 
          X3DArrayField .cleanup (context)
-         
+         Globals .cleanup (context)
+
          // Add user-defined fields to global object.
          
          let getProperty : @convention(block) (String) -> Any =

@@ -24,7 +24,7 @@ extension JavaScript
          context ["X3DArrayField"] = Self .self
          
          context .evaluateScript ("""
-this .X3DArrayFieldWrapper = function (global, CLASS)
+this .X3DArrayFieldWrapper = function (global, targets, CLASS)
 {
    const Target    = global [CLASS];
    const get1Value = Target .prototype .get1Value;
@@ -39,7 +39,7 @@ this .X3DArrayFieldWrapper = function (global, CLASS)
       {
          for (var i = 0, length = arguments .length; i < length; ++ i)
          {
-            arguments [i] = arguments [i] .self || arguments [i];
+            arguments [i] = targets .get (arguments [i]) || arguments [i];
          }
 
          return method .apply (target, arguments);
@@ -56,14 +56,14 @@ this .X3DArrayFieldWrapper = function (global, CLASS)
 
             if (Number .isInteger (index) && index >= 0)
             {
-               return get1Value .call (target .self, index);
+               return get1Value .call (targets .get (target), index);
             }
             else
             {
                const value = target [key];
 
                if (typeof value == "function")
-                  return getMethod (target .self, value);
+                  return getMethod (targets .get (target), value);
 
                return value;
             }
@@ -75,7 +75,7 @@ this .X3DArrayFieldWrapper = function (global, CLASS)
             const value = target [key];
 
             if (typeof value == "function")
-               return getMethod (target .self, value);
+               return getMethod (targets .get (target), value);
 
             return value;
          }
@@ -88,7 +88,7 @@ this .X3DArrayFieldWrapper = function (global, CLASS)
 
             if (Number .isInteger (index) && index >= 0)
             {
-               set1Value .call (target .self, index, value);
+               set1Value .call (targets .get (target), index, targets .get (value) || value);
             }
             else
             {
@@ -125,13 +125,12 @@ this .X3DArrayFieldWrapper = function (global, CLASS)
          var target = new Target (...arguments);
       }
 
-      Object .defineProperty (this, "self", {
-         value: target,
-         enumerable: false,
-         configurable: false,
-      });
+      const self = new Proxy (this, handler);
 
-      return new Proxy (this, handler);
+      targets .set (this, target);
+      targets .set (self, target);
+
+      return self;
    }
 
    MFArray .prototype = Target .prototype;

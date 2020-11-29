@@ -45,7 +45,7 @@ extension JavaScript
       {
          context ["MFBool"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, \"MFBool\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFBool\");")
       }
       
       // Construction

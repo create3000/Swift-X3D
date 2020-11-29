@@ -51,7 +51,7 @@ extension JavaScript
          context ["SFNode"] = Self .self
          
          context .evaluateScript ("""
-(function (global)
+(function (global, targets)
 {
    const Target      = global .SFNode;
    const getProperty = Target .prototype .getProperty;
@@ -64,6 +64,11 @@ extension JavaScript
    {
       return function ()
       {
+         for (var i = 0, length = arguments .length; i < length; ++ i)
+         {
+            arguments [i] = targets .get (arguments [i]) || arguments [i];
+         }
+
          return method .apply (target, arguments);
       };
    }
@@ -79,12 +84,12 @@ extension JavaScript
             if (value !== undefined)
             {
                if (typeof value == "function")
-                  return getMethod (target .self, value);
+                  return getMethod (targets .get (target), value);
 
                return value;
             }
 
-            return getProperty .call (target .self, key);
+            return getProperty .call (targets .get (target), key);
          }
          catch (error)
          {
@@ -93,7 +98,7 @@ extension JavaScript
             const value = target [key];
 
             if (typeof value == "function")
-               return getMethod (target .self, value);
+               return getMethod (targets .get (target), value);
 
             return value;
          }
@@ -102,7 +107,7 @@ extension JavaScript
       {
          try
          {
-            setProperty .call (target .self, key, value .self || value);
+            setProperty .call (targets .get (target), key, targets .get (value) || value);
          }
          catch (error)
          {
@@ -119,20 +124,20 @@ extension JavaScript
 
    function SFNode ()
    {
-      Object .defineProperty (this, "self", {
-         value: new Target (...arguments),
-         enumerable: false,
-         configurable: false,
-      });
+      const target = new Target (...arguments);
+      const self   = new Proxy (this, handler);
 
-      return new Proxy (this, handler);
+      targets .set (this, target);
+      targets .set (self, target);
+
+      return self;
    }
 
    SFNode .prototype = Target .prototype;
 
    global .SFNode = SFNode;
 })
-(this)
+(this, targets)
 """)
          
          proxy = context .evaluateScript ("SFNode;")

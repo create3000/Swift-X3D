@@ -9,7 +9,7 @@ import JavaScriptCore
 
 extension JavaScript
 {
-   internal final class Global
+   internal final class Globals
    {
       internal static func register (_ context : JSContext, _ browser : X3DBrowser)
       {
@@ -28,6 +28,13 @@ extension JavaScript
          context ["TRUE"]  = true
          context ["print"] = print
          context ["trace"] = print
+         
+         context .evaluateScript ("this .targets = new WeakMap ();")
+      }
+      
+      internal static func cleanup (_ context : JSContext)
+      {
+         context .evaluateScript ("delete this .targets;")
       }
    }
 }

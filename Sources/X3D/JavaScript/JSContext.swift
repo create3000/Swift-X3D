@@ -118,7 +118,7 @@ extension JavaScript
             [weak self] in JavaScript .getValue (self!, try! self! .scriptNode .getField (name: $0))
          }
          
-         let setProperty : @convention(block) (String, Any) -> Any =
+         let setProperty : @convention(block) (String, Any) -> Void =
          {
             [weak self] in JavaScript .setValue (try! self! .scriptNode .getField (name: $0), $1)
          }

@@ -10,6 +10,8 @@ import JavaScriptCore
 @objc internal protocol X3DBrowserFieldExports :
    JSExport
 {
+   typealias SFNode = JavaScript .SFNode
+   
    var name             : String { get }
    var version          : String { get }
    var currentSpeed     : Double { get }
@@ -29,6 +31,16 @@ import JavaScriptCore
    func getCurrentSpeed () -> Double
    func getCurrentFrameRate () -> Double
    func getWorldURL () -> String
+   
+   func addRoute (_ sourceNode : SFNode,
+                  _ sourceField : String,
+                  _ destinationNode : SFNode,
+                  _ destinationField : String)
+   func deleteRoute (_ sourceNode : SFNode,
+                     _ sourceField : String,
+                     _ destinationNode : SFNode,
+                     _ destinationField : String)
+
 
    func toString () -> String
 }
@@ -161,7 +173,36 @@ X3DBrowser .prototype .setDescription = function (newValue) { this .description 
       {
          return executionContext .getWorldURL () .absoluteURL .description
       }
-
+      
+      public final func addRoute (_ sourceNode : SFNode,
+                                  _ sourceField : String,
+                                  _ destinationNode : SFNode,
+                                  _ destinationField : String)
+      {
+         do
+         {
+            try executionContext .addRoute (sourceNode: sourceNode .field .wrappedValue,
+                                            sourceField: sourceField,
+                                            destinationNode: destinationNode .field .wrappedValue,
+                                            destinationField: destinationField)
+         }
+         catch
+         {
+            browser .console .error (error .localizedDescription)
+         }
+      }
+      
+      public final func deleteRoute (_ sourceNode : SFNode,
+                                     _ sourceField : String,
+                                     _ destinationNode : SFNode,
+                                     _ destinationField : String)
+      {
+         executionContext .deleteRoute (sourceNode: sourceNode .field .wrappedValue,
+                                        sourceField: sourceField,
+                                        destinationNode: destinationNode .field .wrappedValue,
+                                        destinationField: destinationField)
+      }
+      
       // Input/Output
       
       public final func toString () -> String

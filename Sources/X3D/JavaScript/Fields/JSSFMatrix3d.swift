@@ -98,14 +98,14 @@ extension JavaScript
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 9
          {
             self .field = Internal (wrappedValue: Inner (columns: (Vector3d (args [0] .toDouble (),
-                                                                              args [1] .toDouble (),
-                                                                              args [2] .toDouble ()),
-                                                                    Vector3d (args [3] .toDouble (),
-                                                                              args [4] .toDouble (),
-                                                                              args [5] .toDouble ()),
-                                                                    Vector3d (args [6] .toDouble (),
-                                                                              args [7] .toDouble (),
-                                                                              args [8] .toDouble ()))))
+                                                                             args [1] .toDouble (),
+                                                                             args [2] .toDouble ()),
+                                                                   Vector3d (args [3] .toDouble (),
+                                                                             args [4] .toDouble (),
+                                                                             args [5] .toDouble ()),
+                                                                   Vector3d (args [6] .toDouble (),
+                                                                             args [7] .toDouble (),
+                                                                             args [8] .toDouble ()))))
          }
          else
          {

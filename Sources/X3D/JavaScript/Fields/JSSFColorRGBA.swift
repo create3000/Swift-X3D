@@ -91,9 +91,9 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 4
          {
             self .field = Internal (wrappedValue: Inner (r: args [0] .toFloat (),
-                                                          g: args [1] .toFloat (),
-                                                          b: args [2] .toFloat (),
-                                                          a: args [3] .toFloat ()))
+                                                         g: args [1] .toFloat (),
+                                                         b: args [2] .toFloat (),
+                                                         a: args [3] .toFloat ()))
          }
          else
          {

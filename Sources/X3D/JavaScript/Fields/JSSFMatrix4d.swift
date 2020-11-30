@@ -96,21 +96,21 @@ extension JavaScript
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 16
          {
             self .field = Internal (wrappedValue: Inner (columns: (Vector4d (args [ 0] .toDouble (),
-                                                                              args [ 1] .toDouble (),
-                                                                              args [ 2] .toDouble (),
-                                                                              args [ 3] .toDouble ()),
-                                                                    Vector4d (args [ 4] .toDouble (),
-                                                                              args [ 5] .toDouble (),
-                                                                              args [ 6] .toDouble (),
-                                                                              args [ 7] .toDouble ()),
-                                                                    Vector4d (args [ 8] .toDouble (),
-                                                                              args [ 9] .toDouble (),
-                                                                              args [10] .toDouble (),
-                                                                              args [11] .toDouble ()),
-                                                                    Vector4d (args [12] .toDouble (),
-                                                                              args [13] .toDouble (),
-                                                                              args [14] .toDouble (),
-                                                                              args [15] .toDouble ()))))
+                                                                             args [ 1] .toDouble (),
+                                                                             args [ 2] .toDouble (),
+                                                                             args [ 3] .toDouble ()),
+                                                                   Vector4d (args [ 4] .toDouble (),
+                                                                             args [ 5] .toDouble (),
+                                                                             args [ 6] .toDouble (),
+                                                                             args [ 7] .toDouble ()),
+                                                                   Vector4d (args [ 8] .toDouble (),
+                                                                             args [ 9] .toDouble (),
+                                                                             args [10] .toDouble (),
+                                                                             args [11] .toDouble ()),
+                                                                   Vector4d (args [12] .toDouble (),
+                                                                             args [13] .toDouble (),
+                                                                             args [14] .toDouble (),
+                                                                             args [15] .toDouble ()))))
          }
          else
          {

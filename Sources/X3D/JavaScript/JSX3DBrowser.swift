@@ -48,7 +48,7 @@ extension JavaScript
          context ["X3DBrowser"] = Self .self
          context ["Browser"]    = browser
          
-         context .evaluateScript("""
+         context .evaluateScript ("""
 X3DBrowser .prototype .setDescription = function (newValue) { this .description = newValue; };
 """)
       }

@@ -83,7 +83,7 @@ Object .defineProperty (SFVec2d .prototype, 1, {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 2
          {
             self .field = Internal (wrappedValue: Inner (args [0] .toDouble (),
-                                                          args [1] .toDouble ()))
+                                                         args [1] .toDouble ()))
          }
          else
          {

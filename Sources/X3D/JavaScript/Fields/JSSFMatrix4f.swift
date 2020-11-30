@@ -96,21 +96,21 @@ extension JavaScript
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 16
          {
             self .field = Internal (wrappedValue: Inner (columns: (Vector4f (args [ 0] .toFloat (),
-                                                                              args [ 1] .toFloat (),
-                                                                              args [ 2] .toFloat (),
-                                                                              args [ 3] .toFloat ()),
-                                                                    Vector4f (args [ 4] .toFloat (),
-                                                                              args [ 5] .toFloat (),
-                                                                              args [ 6] .toFloat (),
-                                                                              args [ 7] .toFloat ()),
-                                                                    Vector4f (args [ 8] .toFloat (),
-                                                                              args [ 9] .toFloat (),
-                                                                              args [10] .toFloat (),
-                                                                              args [11] .toFloat ()),
-                                                                    Vector4f (args [12] .toFloat (),
-                                                                              args [13] .toFloat (),
-                                                                              args [14] .toFloat (),
-                                                                              args [15] .toFloat ()))))
+                                                                             args [ 1] .toFloat (),
+                                                                             args [ 2] .toFloat (),
+                                                                             args [ 3] .toFloat ()),
+                                                                   Vector4f (args [ 4] .toFloat (),
+                                                                             args [ 5] .toFloat (),
+                                                                             args [ 6] .toFloat (),
+                                                                             args [ 7] .toFloat ()),
+                                                                   Vector4f (args [ 8] .toFloat (),
+                                                                             args [ 9] .toFloat (),
+                                                                             args [10] .toFloat (),
+                                                                             args [11] .toFloat ()),
+                                                                   Vector4f (args [12] .toFloat (),
+                                                                             args [13] .toFloat (),
+                                                                             args [14] .toFloat (),
+                                                                             args [15] .toFloat ()))))
          }
          else
          {

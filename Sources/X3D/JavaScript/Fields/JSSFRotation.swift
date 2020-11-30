@@ -98,9 +98,9 @@ Object .defineProperty (SFRotation .prototype, 3, {
             if args .count == 4
             {
                self .field = Internal (wrappedValue: Inner (args [0] .toFloat (),
-                                                             args [1] .toFloat (),
-                                                             args [2] .toFloat (),
-                                                             args [3] .toFloat ()))
+                                                            args [1] .toFloat (),
+                                                            args [2] .toFloat (),
+                                                            args [3] .toFloat ()))
             }
             else if args .count == 2,
                     let from = args [0] .toObjectOf (SFVec3f .self) as? SFVec3f,

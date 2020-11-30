@@ -99,9 +99,9 @@ Object .defineProperty (SFVec4d .prototype, 3, {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 4
          {
             self .field = Internal (wrappedValue: Inner (args [0] .toDouble (),
-                                                          args [1] .toDouble (),
-                                                          args [2] .toDouble (),
-                                                          args [3] .toDouble ()))
+                                                         args [1] .toDouble (),
+                                                         args [2] .toDouble (),
+                                                         args [3] .toDouble ()))
          }
          else
          {

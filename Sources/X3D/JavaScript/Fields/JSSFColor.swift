@@ -83,8 +83,8 @@ Object .defineProperty (SFColor .prototype, 2, {
          if let args = JSContext .currentArguments () as? [JSValue], args .count == 3
          {
             self .field = Internal (wrappedValue: Inner (r: args [0] .toFloat (),
-                                                          g: args [1] .toFloat (),
-                                                          b: args [2] .toFloat ()))
+                                                         g: args [1] .toFloat (),
+                                                         b: args [2] .toFloat ()))
          }
          else
          {

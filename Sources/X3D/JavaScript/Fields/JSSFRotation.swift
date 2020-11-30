@@ -29,7 +29,7 @@ import JavaScriptCore
    
    func inverse () -> SFRotation
    func multiply (_ rotation : SFRotation) -> SFRotation
-   func multVec (_ vector : SFVec3) -> SFVec3
+   func multVec (_ vector : Any?) -> Any?
    func slerp (_ rotation : SFRotation, _ t : Scalar) -> SFRotation
 }
 
@@ -173,9 +173,24 @@ Object .defineProperty (SFRotation .prototype, 3, {
          return SFRotation (field: Internal (wrappedValue: rotation .field .wrappedValue * field .wrappedValue))
       }
 
-      public final func multVec (_ vector : SFVec3) -> SFVec3
+      public final func multVec (_ vector : Any?) -> Any?
       {
-         return SFVec3 (field: SFVec3 .Internal (wrappedValue: field .wrappedValue * vector .field .wrappedValue))
+         if let vector = vector as? SFVec3f
+         {
+            return SFVec3f (field: SFVec3f .Internal (wrappedValue: field .wrappedValue * vector .field .wrappedValue))
+         }
+         
+         if let vector = vector as? SFVec3d
+         {
+            let v  = vector .field .wrappedValue
+            let vf = Vector3f (Float (v.x), Float (v.y), Float (v.z))
+            let r  = field .wrappedValue * vf
+            let rd = Vector3d (Double (r.x), Double (r.y), Double (r.z))
+
+            return SFVec3d (field: SFVec3d .Internal (wrappedValue: rd))
+         }
+         
+         return nil
       }
       
       public final func slerp (_ rotation : SFRotation, _ t : Scalar) -> SFRotation

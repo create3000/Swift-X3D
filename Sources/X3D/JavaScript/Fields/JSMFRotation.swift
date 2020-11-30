@@ -12,14 +12,14 @@ import JavaScriptCore
 {
    typealias SFRotation = JavaScript .SFRotation
    typealias MFRotation = JavaScript .MFRotation
-   typealias Context    = JavaScript .Context
+   typealias X3DBrowser = JavaScript .X3DBrowser
 
    init ()
    
    func equals (_ array : MFRotation) -> JSValue
    func assign (_ array : MFRotation)
 
-   func get1Value (_ context : Context, _ index : Int) -> SFRotation
+   func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFRotation
    func set1Value (_ index : Int, _ value : SFRotation)
    
    var length : Int { get set }
@@ -45,7 +45,7 @@ extension JavaScript
       {
          context ["MFRotation"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFRotation\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFRotation\");")
       }
       
       // Construction
@@ -93,7 +93,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ context : Context, _ index : Int) -> SFRotation
+      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFRotation
       {
          if index >= field .wrappedValue .count
          {

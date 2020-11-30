@@ -10,16 +10,16 @@ import JavaScriptCore
 @objc internal protocol MFBoolExports :
    JSExport
 {
-   typealias Scalar  = Bool
-   typealias MFBool  = JavaScript .MFBool
-   typealias Context = JavaScript .Context
+   typealias Scalar     = Bool
+   typealias MFBool     = JavaScript .MFBool
+   typealias X3DBrowser = JavaScript .X3DBrowser
 
    init ()
    
    func equals (_ array : MFBool) -> JSValue
    func assign (_ array : MFBool)
 
-   func get1Value (_ context : Context, _ index : Int) -> JSValue
+   func get1Value (_ browser : X3DBrowser, _ index : Int) -> JSValue
    func set1Value (_ index : Int, _ value : Scalar)
    
    var length : Int { get set }
@@ -46,7 +46,7 @@ extension JavaScript
       {
          context ["MFBool"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFBool\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFBool\");")
       }
       
       // Construction
@@ -91,14 +91,14 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ context : Context, _ index : Int) -> JSValue
+      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> JSValue
       {
          if index >= field .wrappedValue .count
          {
             field .wrappedValue .resize (index + 1, fillWith: Scalar ())
          }
          
-         return JSValue (bool: field .wrappedValue [index], in: context .context)
+         return JSValue (bool: field .wrappedValue [index], in: JSContext .current ())
       }
       
       public final func set1Value (_ index : Int, _ value : Scalar)

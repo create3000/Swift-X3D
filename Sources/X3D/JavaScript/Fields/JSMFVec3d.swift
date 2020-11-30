@@ -10,16 +10,16 @@ import JavaScriptCore
 @objc internal protocol MFVec3dExports :
    JSExport
 {
-   typealias SFVec3d = JavaScript .SFVec3d
-   typealias MFVec3d = JavaScript .MFVec3d
-   typealias Context = JavaScript .Context
+   typealias SFVec3d    = JavaScript .SFVec3d
+   typealias MFVec3d    = JavaScript .MFVec3d
+   typealias X3DBrowser = JavaScript .X3DBrowser
 
    init ()
    
    func equals (_ array : MFVec3d) -> JSValue
    func assign (_ array : MFVec3d)
 
-   func get1Value (_ context : Context, _ index : Int) -> SFVec3d
+   func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFVec3d
    func set1Value (_ index : Int, _ value : SFVec3d)
    
    var length : Int { get set }
@@ -45,7 +45,7 @@ extension JavaScript
       {
          context ["MFVec3d"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFVec3d\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFVec3d\");")
       }
       
       // Construction
@@ -93,7 +93,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ context : Context, _ index : Int) -> SFVec3d
+      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFVec3d
       {
          if index >= field .wrappedValue .count
          {

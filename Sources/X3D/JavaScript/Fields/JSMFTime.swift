@@ -10,16 +10,16 @@ import JavaScriptCore
 @objc internal protocol MFTimeExports :
    JSExport
 {
-   typealias Scalar  = TimeInterval
-   typealias MFTime  = JavaScript .MFTime
-   typealias Context = JavaScript .Context
+   typealias Scalar    = TimeInterval
+   typealias MFTime     = JavaScript .MFTime
+   typealias X3DBrowser = JavaScript .X3DBrowser
 
    init ()
    
    func equals (_ array : MFTime) -> JSValue
    func assign (_ array : MFTime)
 
-   func get1Value (_ context : Context, _ index : Int) -> Scalar
+   func get1Value (_ browser : X3DBrowser, _ index : Int) -> Scalar
    func set1Value (_ index : Int, _ value : Scalar)
    
    var length : Int { get set }
@@ -46,7 +46,7 @@ extension JavaScript
       {
          context ["MFTime"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFTime\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFTime\");")
       }
       
       // Construction
@@ -91,7 +91,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ context : Context, _ index : Int) -> Scalar
+      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> Scalar
       {
          if index >= field .wrappedValue .count
          {

@@ -10,16 +10,16 @@ import JavaScriptCore
 @objc internal protocol MFInt32Exports :
    JSExport
 {
-   typealias Scalar  = Int32
-   typealias MFInt32 = JavaScript .MFInt32
-   typealias Context = JavaScript .Context
+   typealias Scalar     = Int32
+   typealias MFInt32    = JavaScript .MFInt32
+   typealias X3DBrowser = JavaScript .X3DBrowser
 
    init ()
    
    func equals (_ array : MFInt32) -> JSValue
    func assign (_ array : MFInt32)
 
-   func get1Value (_ context : Context, _ index : Int) -> Scalar
+   func get1Value (_ browser : X3DBrowser, _ index : Int) -> Scalar
    func set1Value (_ index : Int, _ value : Scalar)
    
    var length : Int { get set }
@@ -46,7 +46,7 @@ extension JavaScript
       {
          context ["MFInt32"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFInt32\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFInt32\");")
       }
       
       // Construction
@@ -91,7 +91,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ context : Context, _ index : Int) -> Scalar
+      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> Scalar
       {
          if index >= field .wrappedValue .count
          {

@@ -11,7 +11,7 @@ extension JavaScript
 {
    internal final class Globals
    {
-      internal static func register (_ context : JSContext, _ browser : X3DBrowser)
+      internal static func register (_ context : JSContext, _ browser : X3D .X3DBrowser)
       {
          let print : @convention(block) () -> Void =
          {

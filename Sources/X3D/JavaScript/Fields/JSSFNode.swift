@@ -12,14 +12,14 @@ import JavaScriptCore
 {
    typealias SFNode             = JavaScript .SFNode
    typealias X3DFieldDefinition = JavaScript .X3DFieldDefinition
-   typealias Context            = JavaScript .Context
+   typealias X3DBrowser         = JavaScript .X3DBrowser
 
    init ()
    
    func equals (_ node : SFNode) -> JSValue
    //func assign (_ node : SFNode)
    
-   func getProperty (_ context : Context, _ name : String) -> Any
+   func getProperty (_ browser : X3DBrowser, _ name : String) -> Any
    func setProperty (_ name : String, _ value : Any)
    
    func getNodeTypeName () -> String
@@ -54,7 +54,7 @@ extension JavaScript
          context ["SFNode"] = Self .self
          
          context .evaluateScript ("""
-(function (global, context, targets)
+(function (global, targets)
 {
    const Target      = global .SFNode;
    const getProperty = Target .prototype .getProperty;
@@ -162,7 +162,7 @@ extension JavaScript
       native .forEach (function (name)
       {
          Object .defineProperty (self, name, {
-            get: function () { return getProperty .call (self, context, name); },
+            get: function () { return getProperty .call (self, Browser, name); },
             set: function (newValue) { setProperty .call (self, name, newValue); },
             enumerable: true,
             configurable: false,
@@ -172,7 +172,7 @@ extension JavaScript
       nodes .forEach (function (name)
       {
          Object .defineProperty (self, name, {
-            get: function () { return getProperty .call (self, context, name); },
+            get: function () { return getProperty .call (self, Browser, name); },
             set: function (newValue) { setProperty .call (self, name, targets .get (newValue) || null); },
             enumerable: true,
             configurable: false,
@@ -181,7 +181,7 @@ extension JavaScript
 
       fields .forEach (function (name)
       {
-         const value = getProperty .call (self, context, name);
+         const value = getProperty .call (self, Browser, name);
 
          if (value instanceof X3DArrayField)
          {
@@ -207,7 +207,7 @@ extension JavaScript
    function SFNode ()
    {
       const proxy = new Proxy (this, handler);
-      const self  = new Target (context, proxy, ...arguments);
+      const self  = new Target (Browser, proxy, ...arguments);
 
       addFields (self);
 
@@ -221,7 +221,7 @@ extension JavaScript
 
    global .SFNode = SFNode;
 })
-(this, context, targets)
+(this, targets)
 """)
          
          proxy = context .evaluateScript ("SFNode;")
@@ -234,7 +234,7 @@ extension JavaScript
          if var args = JSContext .currentArguments () as? [JSValue],
             args .count == 3
          {
-            let context = args .removeFirst () .toObjectOf (Context .self) as! Context
+            let browser = args .removeFirst () .toObjectOf (X3DBrowser .self) as! X3DBrowser
             let proxy   = args .removeFirst ()
             
             if let node = args .first! .toObjectOf (SFNode .self) as? SFNode
@@ -243,10 +243,10 @@ extension JavaScript
             }
             else if let x3dSyntax = args .first! .toString ()
             {
-               self .scene = try? context .browser .createX3DFromString (x3dSyntax: x3dSyntax)
+               self .scene = try? browser .browser .createX3DFromString (x3dSyntax: x3dSyntax)
                self .field = Internal (wrappedValue: scene? .rootNodes .first ?? nil)
                
-               context .cache .setObject (proxy, forKey: field .wrappedValue)
+               browser .cache .setObject (proxy, forKey: field .wrappedValue)
             }
             else
             {
@@ -287,21 +287,21 @@ extension JavaScript
       
       // Properties
       
-      public final func getProperty (_ context : Context, _ name : String) -> Any
+      public final func getProperty (_ browser : X3DBrowser, _ name : String) -> Any
       {
          guard let node = field .wrappedValue else
          {
-            return JSValue (nullIn: context .context)!
+            return JSValue (nullIn: JSContext .current ())!
          }
          
          if let field = try? node .getField (name: name),
             field .getAccessType () != .inputOnly
          {
-             return JavaScript .getValue (context, field)
+             return JavaScript .getValue (JSContext .current (), browser, field)
          }
          else
          {
-            return JSValue (undefinedIn: context .context)!
+            return JSValue (undefinedIn: JSContext .current ())!
          }
       }
       

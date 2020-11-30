@@ -10,18 +10,15 @@ import JavaScriptCore
 internal class JavaScript { }
 
 extension JavaScript
-{
-   @objc internal final class Context :
-      NSObject,
+{   
+   internal final class Context :
       X3D .X3DInputOutput
    {
       // Properties
       
-      private unowned let scriptNode : Script
-      internal unowned let browser   : X3DBrowser
-      internal let context           : JSContext
-      
-      internal let cache = NSMapTable <X3D .X3DNode, JSValue> (keyOptions: .weakMemory, valueOptions: .strongMemory)
+      private unowned let scriptNode : X3D .Script
+      private let browser            : X3DBrowser
+      private let context            : JSContext
       
       // Static properties
       
@@ -30,13 +27,11 @@ extension JavaScript
 
       // Construction
       
-      internal init (scriptNode : Script, sourceText : String)
+      internal init (scriptNode : X3D .Script, sourceText : String)
       {
          self .scriptNode = scriptNode
-         self .browser    = scriptNode .browser!
+         self .browser    = X3DBrowser (for: scriptNode .browser!)
          self .context    = JSContext (virtualMachine: Context .vm)!
-         
-         super .init ()
          
          // Add exception handler.
          
@@ -55,12 +50,12 @@ extension JavaScript
       {
          // Add hidden objects.
          
-         context ["context"] = self
          context .evaluateScript ("this .targets = new WeakMap ();")
 
          // Register objects and functions.
          
-         Globals .register (context, browser)
+         Globals    .register (context, scriptNode .browser!)
+         X3DBrowser .register (context, browser)
          
          X3DConstants       .register (context)
          X3DFieldDefinition .register (context)
@@ -113,9 +108,9 @@ extension JavaScript
 
          // Add user-defined fields to global object.
          
-         let getProperty : @convention(block) (String) -> Any =
+         let getProperty : @convention(block) (X3DBrowser, String) -> Any =
          {
-            [weak self] in JavaScript .getValue (self!, try! self! .scriptNode .getField (name: $0))
+            [weak self] in JavaScript .getValue (self! .context, $0, try! self! .scriptNode .getField (name: $1))
          }
          
          let setProperty : @convention(block) (String, Any) -> Void =
@@ -179,7 +174,6 @@ extension JavaScript
          context .evaluateScript ("""
 (function (global, targets)
 {
-   delete global .context;
    delete global .targets;
 
    const getProperty = global .getProperty;
@@ -193,7 +187,7 @@ extension JavaScript
       if (!name) return;
 
       Object .defineProperty (global, name, {
-         get: function () { return getProperty (name); },
+         get: function () { return getProperty (Browser, name); },
          set: function (newValue) { setProperty (name, newValue); },
          enumerable: true,
          configurable: false,
@@ -205,7 +199,7 @@ extension JavaScript
       if (!name) return;
 
       Object .defineProperty (global, name, {
-         get: function () { return getProperty (name); },
+         get: function () { return getProperty (Browser, name); },
          set: function (newValue) { setProperty (name, targets .get (newValue) || null); },
          enumerable: true,
          configurable: false,
@@ -216,7 +210,7 @@ extension JavaScript
    {
       if (!name) return;
 
-      const value = getProperty (name);
+      const value = getProperty (Browser, name);
 
       if (value instanceof X3DArrayField)
       {
@@ -243,7 +237,7 @@ extension JavaScript
       
       private final func exception (_ exception : JSValue?)
       {
-         browser .console .error (exception! .toString ())
+         scriptNode .browser! .console .error (exception! .toString ())
       }
       
       internal final func initialize ()
@@ -260,6 +254,8 @@ extension JavaScript
       
       private final func set_live ()
       {
+         let browser = scriptNode .browser!
+         
          if scriptNode .scene! .isLive || scriptNode .executionContext! .getType () .contains (.X3DPrototypeInstance)
          {
             if context .evaluateScript ("typeof prepareEvents == 'function'")! .toBool ()
@@ -327,7 +323,7 @@ extension JavaScript
          
          field .isTainted = true
          
-         function .call (withArguments: [getValue (self, field), browser .currentTime])
+         function .call (withArguments: [getValue (context, browser, field), scriptNode .browser! .currentTime])
          
          field .isTainted = false
       }

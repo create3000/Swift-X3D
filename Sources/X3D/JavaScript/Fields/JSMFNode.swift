@@ -10,16 +10,16 @@ import JavaScriptCore
 @objc internal protocol MFNodeExports :
    JSExport
 {
-   typealias SFNode  = JavaScript .SFNode
-   typealias MFNode  = JavaScript .MFNode
-   typealias Context = JavaScript .Context
+   typealias SFNode     = JavaScript .SFNode
+   typealias MFNode     = JavaScript .MFNode
+   typealias X3DBrowser = JavaScript .X3DBrowser
    
    init ()
    
    func equals (_ array : MFNode) -> JSValue
    func assign (_ array : MFNode)
 
-   func get1Value (_ context : Context, _ index : Int) -> JSValue
+   func get1Value (_ browser : X3DBrowser, _ index : Int) -> JSValue
    func set1Value (_ index : Int, _ value : SFNode?)
    
    var length : Int { get set }
@@ -45,7 +45,7 @@ extension JavaScript
       {
          context ["MFNode"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFNode\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFNode\");")
       }
       
       // Construction
@@ -93,7 +93,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ context : Context, _ index : Int) -> JSValue
+      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> JSValue
       {
          if index >= field .wrappedValue .count
          {
@@ -107,14 +107,14 @@ extension JavaScript
             return JSValue (nullIn: JSContext .current ())
          }
          
-         if let field = context .cache .object (forKey: node)
+         if let field = browser .cache .object (forKey: node)
          {
             return field
          }
          
          let field = SFNode .initWithProxy (field: X3D .SFNode (wrappedValue: node))!
 
-         context .cache .setObject (field, forKey: node)
+         browser .cache .setObject (field, forKey: node)
          
          return field
       }

@@ -10,16 +10,16 @@ import JavaScriptCore
 @objc internal protocol MFStringExports :
    JSExport
 {
-   typealias Scalar   = String
-   typealias MFString = JavaScript .MFString
-   typealias Context  = JavaScript .Context
+   typealias Scalar     = String
+   typealias MFString   = JavaScript .MFString
+   typealias X3DBrowser = JavaScript .X3DBrowser
 
    init ()
    
    func equals (_ array : MFString) -> JSValue
    func assign (_ array : MFString)
 
-   func get1Value (_ context : Context, _ index : Int) -> Scalar
+   func get1Value (_ browser : X3DBrowser, _ index : Int) -> Scalar
    func set1Value (_ index : Int, _ value : Scalar)
    
    var length : Int { get set }
@@ -46,7 +46,7 @@ extension JavaScript
       {
          context ["MFString"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, context, targets, \"MFString\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFString\");")
       }
       
       // Construction
@@ -91,7 +91,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ context : Context, _ index : Int) -> Scalar
+      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> Scalar
       {
          if index >= field .wrappedValue .count
          {

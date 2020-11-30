@@ -24,7 +24,7 @@ extension JavaScript
          context ["X3DArrayField"] = Self .self
          
          context .evaluateScript ("""
-this .X3DArrayFieldWrapper = function (global, context, targets, CLASS)
+this .X3DArrayFieldWrapper = function (global, targets, CLASS)
 {
    const Target    = global [CLASS];
    const get1Value = Target .prototype .get1Value;
@@ -58,7 +58,7 @@ this .X3DArrayFieldWrapper = function (global, context, targets, CLASS)
 
             if (Number .isInteger (index) && index >= 0)
             {
-               return get1Value .call (self, context, index);
+               return get1Value .call (self, Browser, index);
             }
             else
             {

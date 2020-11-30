@@ -13,6 +13,8 @@ import JavaScriptCore
    var accessType  : Int32 { get }
    var dataType    : Int32 { get }
    var name        : String { get }
+   
+   func toString () -> String
 }
 
 extension JavaScript
@@ -39,6 +41,13 @@ extension JavaScript
          self .accessType = accessType
          self .dataType   = dataType
          self .name       = name
+      }
+      
+      // Input/Output
+      
+      public final func toString () -> String
+      {
+         return "[object X3DFieldDefinition]"
       }
    }
 }

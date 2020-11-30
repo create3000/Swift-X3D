@@ -27,6 +27,7 @@ public final class X3DBrowser :
       console .info (t("Welcome to %@ v%@", getName (), getVersion ()))
       console .info (t("\tCurrent Graphics Renderer"))
       console .info (t("\t\tName: %@", device! .name))
+      console .info ()
    }
    
    // Configuration

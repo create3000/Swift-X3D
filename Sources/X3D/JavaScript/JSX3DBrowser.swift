@@ -66,7 +66,24 @@ extension JavaScript
          context ["Browser"]    = browser
          
          context .evaluateScript ("""
-X3DBrowser .prototype .setDescription = function (newValue) { this .description = newValue; };
+(function (targets)
+{
+   const addRoute    = X3DBrowser .prototype .addRoute;
+   const deleteRoute = X3DBrowser .prototype .deleteRoute;
+
+   X3DBrowser .prototype .setDescription = function (newValue) { this .description = newValue; };
+   
+   X3DBrowser .prototype .addRoute = function (sourceNode, sourceField, destinationNode, destinationField)
+   {
+      return addRoute .call (this, targets .get (sourceNode), sourceField, targets .get (destinationNode), destinationField)
+   };
+   
+   X3DBrowser .prototype .deleteRoute = function (sourceNode, sourceField, destinationNode, destinationField)
+   {
+      return deleteRoute .call (this, targets .get (sourceNode), sourceField, targets .get (destinationNode), destinationField)
+   };
+})
+(targets)
 """)
       }
 

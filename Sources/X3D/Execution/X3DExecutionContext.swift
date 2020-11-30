@@ -536,14 +536,13 @@ public class X3DExecutionContext :
       guard let sourceField      = try? sourceNode      .getField (name: sourceField)      else { return }
       guard let destinationField = try? destinationNode .getField (name: destinationField) else { return }
       
-      let index = routes .firstIndex (where:
+      guard let index = routes .firstIndex (where:
       {
          route in route .sourceField === sourceField && route .destinationField === destinationField
       })
+      else { return }
       
-      guard index == nil else { return }
-      
-      routes .remove (at: index!)
+      routes .remove (at: index)
   }
 
    public final func deleteRoute (route : X3DRoute)

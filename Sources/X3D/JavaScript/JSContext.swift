@@ -30,7 +30,7 @@ extension JavaScript
       internal init (scriptNode : X3D .Script, sourceText : String)
       {
          self .scriptNode = scriptNode
-         self .browser    = X3DBrowser (for: scriptNode .browser!)
+         self .browser    = X3DBrowser (scriptNode .browser!, scriptNode .executionContext!)
          self .context    = JSContext (virtualMachine: Context .vm)!
          
          // Add exception handler.

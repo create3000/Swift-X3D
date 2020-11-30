@@ -36,8 +36,9 @@ extension JavaScript
    {
       // Properties
       
-      internal unowned let browser : X3D .X3DBrowser
-      
+      internal unowned let browser          : X3D .X3DBrowser
+      internal unowned let executionContext : X3D .X3DExecutionContext
+
       internal let cache = NSMapTable <X3D .X3DNode, JSValue> (keyOptions: .weakMemory, valueOptions: .strongMemory)
       
       // Construction
@@ -52,9 +53,10 @@ X3DBrowser .prototype .setDescription = function (newValue) { this .description 
 """)
       }
 
-      internal init (for browser : X3D .X3DBrowser)
+      internal init (_ browser : X3D .X3DBrowser, _ executionContext : X3D .X3DExecutionContext)
       {
-         self .browser = browser
+         self .browser          = browser
+         self .executionContext = executionContext
       }
       
       // Properties
@@ -87,7 +89,7 @@ X3DBrowser .prototype .setDescription = function (newValue) { this .description 
       
       public final func getWorldURL () -> String
       {
-         return browser .getExecutionContext () .getWorldURL () .absoluteURL .description
+         return executionContext .getWorldURL () .absoluteURL .description
       }
       
       // print

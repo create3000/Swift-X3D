@@ -69,7 +69,7 @@ X3DBrowser .prototype .setDescription = function (newValue) { this .description 
       dynamic public final override var description : String
       {
          get { browser .getDescription () }
-         set { browser .setDescription (newValue)}
+         set { browser .setDescription (newValue) }
       }
 
       public final func getName () -> String
@@ -103,7 +103,7 @@ X3DBrowser .prototype .setDescription = function (newValue) { this .description 
       {
          if let args = JSContext .currentArguments () as? [JSValue]
          {
-            browser .print (args .map { $0 .toString () ?? "" } .joined (separator: " "))
+            browser .print (args .map { $0 .toString () ?? "" } .joined (separator: " "), " ")
          }
       }
       

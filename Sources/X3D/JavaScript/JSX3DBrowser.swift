@@ -15,15 +15,20 @@ import JavaScriptCore
    var currentSpeed     : Double { get }
    var currentFrameRate : Double { get }
    var description      : String { get set }
+   
+   func getRenderingProperty (_ name : String) -> Any
+   func getBrowserProperty (_ name : String) -> Any
+   func getBrowserOption (_ name : String) -> Any
+   func setBrowserOption (_ name : String, _ value : Any)
+   
+   func print ()
+   func println ()
 
    func getName () -> String
    func getVersion () -> String
    func getCurrentSpeed () -> Double
    func getCurrentFrameRate () -> Double
    func getWorldURL () -> String
-   
-   func print ()
-   func println ()
 
    func toString () -> String
 }
@@ -72,6 +77,66 @@ X3DBrowser .prototype .setDescription = function (newValue) { this .description 
          set { browser .setDescription (newValue) }
       }
 
+      // print
+      
+      public final func print ()
+      {
+         if let args = JSContext .currentArguments () as? [JSValue]
+         {
+            browser .print (args .map { $0 .toString () ?? "" } .joined (separator: " "))
+         }
+      }
+      
+      public final func println ()
+      {
+         if let args = JSContext .currentArguments () as? [JSValue]
+         {
+            browser .println (args .map { $0 .toString () ?? "" } .joined (separator: " "))
+         }
+      }
+      
+      func getRenderingProperty (_ name : String) -> Any
+      {
+         guard let field = try? browser .getRenderingProperties () .getField (name: name) else
+         {
+            return JSValue (undefinedIn: JSContext .current ())!
+         }
+         
+         return JavaScript .getValue (JSContext .current (), self, field)
+      }
+      
+      func getBrowserProperty (_ name : String) -> Any
+      {
+         guard let field = try? browser .getBrowserProperties () .getField (name: name) else
+         {
+            return JSValue (undefinedIn: JSContext .current ())!
+         }
+         
+         return JavaScript .getValue (JSContext .current (), self, field)
+      }
+      
+      func getBrowserOption (_ name : String) -> Any
+      {
+         guard let field = try? browser .getBrowserOptions () .getField (name: name) else
+         {
+            return JSValue (undefinedIn: JSContext .current ())!
+         }
+         
+         return JavaScript .getValue (JSContext .current (), self, field)
+      }
+      
+      func setBrowserOption (_ name : String, _ value : Any)
+      {
+         guard let field = try? browser .getBrowserOptions () .getField (name: name) else
+         {
+            return
+         }
+         
+         JavaScript .setValue (field, value)
+      }
+
+      // VRML
+      
       public final func getName () -> String
       {
          return browser .getName ()
@@ -95,24 +160,6 @@ X3DBrowser .prototype .setDescription = function (newValue) { this .description 
       public final func getWorldURL () -> String
       {
          return executionContext .getWorldURL () .absoluteURL .description
-      }
-      
-      // print
-      
-      public final func print ()
-      {
-         if let args = JSContext .currentArguments () as? [JSValue]
-         {
-            browser .print (args .map { $0 .toString () ?? "" } .joined (separator: " "), " ")
-         }
-      }
-      
-      public final func println ()
-      {
-         if let args = JSContext .currentArguments () as? [JSValue]
-         {
-            browser .println (args .map { $0 .toString () ?? "" } .joined (separator: " "))
-         }
       }
 
       // Input/Output

@@ -185,8 +185,7 @@ Object .defineProperty (SFRotation .prototype, 3, {
             return SFVec3d (field: SFVec3d .Internal (wrappedValue: Rotation4d (field .wrappedValue) * vector .field .wrappedValue))
          }
          
-         error (t("Invalid argument."))
-         return nil
+         return error (t("Invalid argument."))
       }
       
       public final func slerp (_ rotation : SFRotation, _ t : Scalar) -> SFRotation

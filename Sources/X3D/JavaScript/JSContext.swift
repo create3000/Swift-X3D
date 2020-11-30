@@ -243,7 +243,7 @@ extension JavaScript
          
          scriptNode .browser! .console .error ("""
 # JavaScript error at line \(lineNumber), \(column):
-# in Script '\(scriptNode .getName ())' url '\(scriptNode .executionContext! .getWorldURL () .absoluteURL .description)'
+# in Script '\(scriptNode .getName ())' in file '\(scriptNode .executionContext! .getWorldURL () .absoluteURL .description)'
 # in method \(stacktrace).
 #
 # \(exception!)

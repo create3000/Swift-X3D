@@ -240,13 +240,16 @@ extension JavaScript
          let stacktrace = exception! .objectForKeyedSubscript ("stack")! .toString ()! .replacingOccurrences (of: "\n", with: " ")
          let lineNumber = exception! .objectForKeyedSubscript ("line")! .toInt32 ()
          let column     = exception! .objectForKeyedSubscript ("column")! .toInt32 ()
+         let url        = scriptNode .executionContext! .getWorldURL () .absoluteURL .description
          
          scriptNode .browser! .console .error ("""
-# JavaScript error at line \(lineNumber), \(column):
-# in Script named '\(scriptNode .getName ())' in file '\(scriptNode .executionContext! .getWorldURL () .absoluteURL .description)'
-# in method \(stacktrace).
-#
-# \(exception!)
+
+JavaScript error at line \(lineNumber), \(column):
+in Script named '\(scriptNode .getName ())' in file '\(url)'
+in method \(stacktrace).
+
+\(exception!)
+
 """)
       }
       

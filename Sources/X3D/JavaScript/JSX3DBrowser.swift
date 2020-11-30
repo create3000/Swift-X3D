@@ -32,6 +32,7 @@ import JavaScriptCore
    func getCurrentFrameRate () -> Double
    func getWorldURL () -> String
    
+   func createVrmlFromString (_ vrmlSyntax : String) -> Any
    func createVrmlFromURL (_ url : [String], _ node : SFNode?, _ event : String)
    
    func addRoute (_ sourceNode : SFNode?,
@@ -199,7 +200,23 @@ extension JavaScript
          return executionContext .getWorldURL () .absoluteURL .description
       }
       
-      func createVrmlFromURL (_ url : [String], _ node : SFNode?, _ event : String)
+      public final func createVrmlFromString (_ vrmlSyntax : String) -> Any
+      {
+         do
+         {
+            let scene = try browser .createX3DFromString (x3dSyntax: vrmlSyntax)
+            
+            return JavaScript .getValue (JSContext .current (), self, scene .$rootNodes)
+         }
+         catch
+         {
+            self .browser .console .error (error .localizedDescription)
+            
+            return JSValue (undefinedIn: JSContext .current ())!
+         }
+      }
+      
+      public final func createVrmlFromURL (_ url : [String], _ node : SFNode?, _ event : String)
       {
          guard let node = node else { return }
          

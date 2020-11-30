@@ -248,6 +248,22 @@ public struct Rotation4f
    }
 }
 
+extension Rotation4d
+{
+   public init (_ rotation : Rotation4f)
+   {
+      self .init (Quaternion4d (rotation .quat))
+   }
+}
+
+extension Rotation4f
+{
+   public init (_ rotation : Rotation4d)
+   {
+      self .init (Quaternion4f (rotation .quat))
+   }
+}
+
 extension Rotation4d :
    Equatable
 {

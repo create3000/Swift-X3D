@@ -182,12 +182,7 @@ Object .defineProperty (SFRotation .prototype, 3, {
          
          if let vector = vector as? SFVec3d
          {
-            let v  = vector .field .wrappedValue
-            let vf = Vector3f (Float (v.x), Float (v.y), Float (v.z))
-            let r  = field .wrappedValue * vf
-            let rd = Vector3d (Double (r.x), Double (r.y), Double (r.z))
-
-            return SFVec3d (field: SFVec3d .Internal (wrappedValue: rd))
+            return SFVec3d (field: SFVec3d .Internal (wrappedValue: Rotation4d (field .wrappedValue) * vector .field .wrappedValue))
          }
          
          return nil

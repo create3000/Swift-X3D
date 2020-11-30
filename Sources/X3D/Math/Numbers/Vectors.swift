@@ -20,12 +20,24 @@ extension Vector2d
 {
    public static let xAxis = Vector2d (1, 0)
    public static let yAxis = Vector2d (0, 1)
+   
+   public init (_ vector : Vector2f)
+   {
+      self .init (Double (vector .x),
+                  Double (vector .y))
+   }
 }
 
 extension Vector2f
 {
    public static let xAxis = Vector2f (1, 0)
    public static let yAxis = Vector2f (0, 1)
+   
+   public init (_ vector : Vector2d)
+   {
+      self .init (Float (vector .x),
+                  Float (vector .y))
+   }
 }
 
 extension Vector3d
@@ -33,6 +45,13 @@ extension Vector3d
    public static let xAxis = Vector3d (1, 0, 0)
    public static let yAxis = Vector3d (0, 1, 0)
    public static let zAxis = Vector3d (0, 0, 1)
+   
+   public init (_ vector : Vector3f)
+   {
+      self .init (Double (vector .x),
+                  Double (vector .y),
+                  Double (vector .z))
+   }
 }
 
 extension Vector3f
@@ -40,6 +59,13 @@ extension Vector3f
    public static let xAxis = Vector3f (1, 0, 0)
    public static let yAxis = Vector3f (0, 1, 0)
    public static let zAxis = Vector3f (0, 0, 1)
+   
+   public init (_ vector : Vector3d)
+   {
+      self .init (Float (vector .x),
+                  Float (vector .y),
+                  Float (vector .z))
+   }
 }
 
 extension Vector4d
@@ -48,6 +74,14 @@ extension Vector4d
    public static let yAxis = Vector4d (0, 1, 0, 0)
    public static let zAxis = Vector4d (0, 0, 1, 0)
    public static let wAxis = Vector4d (0, 0, 0, 1)
+   
+   public init (_ vector : Vector4f)
+   {
+      self .init (Double (vector .x),
+                  Double (vector .y),
+                  Double (vector .z),
+                  Double (vector .w))
+   }
 }
 
 extension Vector4f
@@ -56,6 +90,14 @@ extension Vector4f
    public static let yAxis = Vector4f (0, 1, 0, 0)
    public static let zAxis = Vector4f (0, 0, 1, 0)
    public static let wAxis = Vector4f (0, 0, 0, 1)
+   
+   public init (_ vector : Vector4d)
+   {
+      self .init (Float (vector .x),
+                  Float (vector .y),
+                  Float (vector .z),
+                  Float (vector .w))
+   }
 }
 
 // norm

@@ -15,6 +15,11 @@ extension Quaternion4d
 {
    public static let identity = Quaternion4d (ix: 0, iy: 0, iz: 0, r: 1)
    
+   public init (_ quat : Quaternion4f)
+   {
+      self .init (real: Double (quat .real), imag: Vector3d (quat .imag))
+   }
+   
    public init (from fromVector : Vector3d, to toVector : Vector3d)
    {
       // https://bitbucket.org/Coin3D/coin/src/abc9f50968c9/src/base/SbRotation.cpp
@@ -106,6 +111,11 @@ extension Quaternion4f
 {
    public static let identity = Quaternion4f (ix: 0, iy: 0, iz: 0, r: 1)
    
+   public init (_ quat : Quaternion4d)
+   {
+      self .init (real: Float (quat .real), imag: Vector3f (quat .imag))
+   }
+
    public init (from fromVector : Vector3f, to toVector : Vector3f)
    {
       // https://bitbucket.org/Coin3D/coin/src/abc9f50968c9/src/base/SbRotation.cpp

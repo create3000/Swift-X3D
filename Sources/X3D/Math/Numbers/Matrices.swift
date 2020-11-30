@@ -19,6 +19,12 @@ extension Matrix2d
 {
    public static let identity = matrix_identity_double2x2
    
+   public init (_ matrix : Matrix2f)
+   {
+      self .init (columns: (Vector2d (matrix [0]),
+                            Vector2d (matrix [1])))
+   }
+
    public var xAxis  : Double { self [0] [0] }
    public var origin : Double { self [1] [0] }
 }
@@ -27,6 +33,12 @@ extension Matrix2f
 {
    public static let identity = matrix_identity_float2x2
    
+   public init (_ matrix : Matrix2d)
+   {
+      self .init (columns: (Vector2f (matrix [0]),
+                            Vector2f (matrix [1])))
+   }
+
    public var xAxis  : Float { self [0] [0] }
    public var origin : Float { self [1] [0] }
 }
@@ -40,6 +52,13 @@ extension Matrix3d
       self .init (rotation .quat)
    }
    
+   public init (_ matrix : Matrix3f)
+   {
+      self .init (columns: (Vector3d (matrix [0]),
+                            Vector3d (matrix [1]),
+                            Vector3d (matrix [2])))
+   }
+
    public init (_ rotation : Double)
    {
       let sinAngle = sin (rotation)
@@ -75,6 +94,13 @@ extension Matrix3f
       self .init (rotation .quat)
    }
    
+   public init (_ matrix : Matrix3d)
+   {
+      self .init (columns: (Vector3f (matrix [0]),
+                            Vector3f (matrix [1]),
+                            Vector3f (matrix [2])))
+   }
+
    public init (_ rotation : Float)
    {
       let sinAngle = sin (rotation)
@@ -110,6 +136,14 @@ extension Matrix4d
       self .init (rotation .quat)
    }
    
+   public init (_ matrix : Matrix4f)
+   {
+      self .init (columns: (Vector4d (matrix [0]),
+                            Vector4d (matrix [1]),
+                            Vector4d (matrix [2]),
+                            Vector4d (matrix [3])))
+   }
+
    public var xAxis  : Vector3d { Vector3d (self [0] [0], self [0] [1], self [0] [2]) }
    public var yAxis  : Vector3d { Vector3d (self [1] [0], self [1] [1], self [1] [2]) }
    public var zAxis  : Vector3d { Vector3d (self [2] [0], self [2] [1], self [2] [2]) }
@@ -138,6 +172,14 @@ extension Matrix4f
       self .init (rotation .quat)
    }
    
+   public init (_ matrix : Matrix4d)
+   {
+      self .init (columns: (Vector4f (matrix [0]),
+                            Vector4f (matrix [1]),
+                            Vector4f (matrix [2]),
+                            Vector4f (matrix [3])))
+   }
+
    public var xAxis  : Vector3f { Vector3f (self [0] [0], self [0] [1], self [0] [2]) }
    public var yAxis  : Vector3f { Vector3f (self [1] [0], self [1] [1], self [1] [2]) }
    public var zAxis  : Vector3f { Vector3f (self [2] [0], self [2] [1], self [2] [2]) }

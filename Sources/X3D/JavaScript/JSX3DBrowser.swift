@@ -32,13 +32,15 @@ import JavaScriptCore
    func getCurrentFrameRate () -> Double
    func getWorldURL () -> String
    
-   func addRoute (_ sourceNode : SFNode,
+   func createVrmlFromURL (_ url : [String], _ node : SFNode?, _ event : String)
+   
+   func addRoute (_ sourceNode : SFNode?,
                   _ sourceField : String,
-                  _ destinationNode : SFNode,
+                  _ destinationNode : SFNode?,
                   _ destinationField : String)
-   func deleteRoute (_ sourceNode : SFNode,
+   func deleteRoute (_ sourceNode : SFNode?,
                      _ sourceField : String,
-                     _ destinationNode : SFNode,
+                     _ destinationNode : SFNode?,
                      _ destinationField : String)
 
 
@@ -68,16 +70,22 @@ extension JavaScript
          context .evaluateScript ("""
 (function (targets)
 {
-   const addRoute    = X3DBrowser .prototype .addRoute;
-   const deleteRoute = X3DBrowser .prototype .deleteRoute;
+   const createVrmlFromURL = X3DBrowser .prototype .createVrmlFromURL;
+   const addRoute          = X3DBrowser .prototype .addRoute;
+   const deleteRoute       = X3DBrowser .prototype .deleteRoute;
 
    X3DBrowser .prototype .setDescription = function (newValue) { this .description = newValue; };
+   
+   X3DBrowser .prototype .createVrmlFromURL = function (url, node, event)
+   {
+      return createVrmlFromURL .call (this, url, targets .get (node), event)
+   };
    
    X3DBrowser .prototype .addRoute = function (sourceNode, sourceField, destinationNode, destinationField)
    {
       return addRoute .call (this, targets .get (sourceNode), sourceField, targets .get (destinationNode), destinationField)
    };
-   
+
    X3DBrowser .prototype .deleteRoute = function (sourceNode, sourceField, destinationNode, destinationField)
    {
       return deleteRoute .call (this, targets .get (sourceNode), sourceField, targets .get (destinationNode), destinationField)
@@ -191,13 +199,50 @@ extension JavaScript
          return executionContext .getWorldURL () .absoluteURL .description
       }
       
-      public final func addRoute (_ sourceNode : SFNode,
+      func createVrmlFromURL (_ url : [String], _ node : SFNode?, _ event : String)
+      {
+         guard let node = node else { return }
+         
+         guard let field = try? node .field .wrappedValue .getField (name: event) else
+         {
+            browser .console .warn (t("No such event or field '%@' in node class %@.", event, node .field .wrappedValue .getTypeName ()))
+            return
+         }
+         
+         guard field .getType () == .MFNode else
+         {
+            browser .console .warn (t("Field '%@' in node %@ must be of type MFNode.", event, node .field .wrappedValue .getTypeName ()))
+            return
+         }
+
+         browser .browserQueue .async
+         {
+            do
+            {
+               let scene = try self .browser .createX3DFromURL (url: url .map
+               {
+                  URL (string: $0, relativeTo: self .executionContext .getWorldURL ())
+               }
+               .compactMap { $0 })
+               
+               DispatchQueue .main .async { field .set (value: scene .$rootNodes) }
+            }
+            catch
+            {
+               self .browser .console .error (error .localizedDescription)
+            }
+         }
+      }
+      
+      public final func addRoute (_ sourceNode : SFNode?,
                                   _ sourceField : String,
-                                  _ destinationNode : SFNode,
+                                  _ destinationNode : SFNode?,
                                   _ destinationField : String)
       {
          do
          {
+            guard let sourceNode = sourceNode, let destinationNode = destinationNode else { return }
+            
             try executionContext .addRoute (sourceNode: sourceNode .field .wrappedValue,
                                             sourceField: sourceField,
                                             destinationNode: destinationNode .field .wrappedValue,
@@ -209,11 +254,13 @@ extension JavaScript
          }
       }
       
-      public final func deleteRoute (_ sourceNode : SFNode,
+      public final func deleteRoute (_ sourceNode : SFNode?,
                                      _ sourceField : String,
-                                     _ destinationNode : SFNode,
+                                     _ destinationNode : SFNode?,
                                      _ destinationField : String)
       {
+         guard let sourceNode = sourceNode, let destinationNode = destinationNode else { return }
+         
          executionContext .deleteRoute (sourceNode: sourceNode .field .wrappedValue,
                                         sourceField: sourceField,
                                         destinationNode: destinationNode .field .wrappedValue,

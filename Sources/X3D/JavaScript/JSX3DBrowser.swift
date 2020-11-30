@@ -18,9 +18,9 @@ import JavaScriptCore
    var currentFrameRate : Double { get }
    var description      : String { get set }
    
-   func getRenderingProperty (_ name : String) -> Any
-   func getBrowserProperty (_ name : String) -> Any
-   func getBrowserOption (_ name : String) -> Any
+   func getRenderingProperty (_ name : String) -> Any?
+   func getBrowserProperty (_ name : String) -> Any?
+   func getBrowserOption (_ name : String) -> Any?
    func setBrowserOption (_ name : String, _ value : Any)
    
    func print ()
@@ -32,7 +32,7 @@ import JavaScriptCore
    func getCurrentFrameRate () -> Double
    func getWorldURL () -> String
    
-   func createVrmlFromString (_ vrmlSyntax : String) -> Any
+   func createVrmlFromString (_ vrmlSyntax : String) -> Any?
    func createVrmlFromURL (_ url : [String], _ node : SFNode?, _ event : String)
    
    func addRoute (_ sourceNode : SFNode?,
@@ -133,31 +133,31 @@ extension JavaScript
          }
       }
       
-      func getRenderingProperty (_ name : String) -> Any
+      func getRenderingProperty (_ name : String) -> Any?
       {
          guard let field = try? browser .getRenderingProperties () .getField (name: name) else
          {
-            return JSValue (undefinedIn: JSContext .current ())!
+            return nil
          }
          
          return JavaScript .getValue (JSContext .current (), self, field)
       }
       
-      func getBrowserProperty (_ name : String) -> Any
+      func getBrowserProperty (_ name : String) -> Any?
       {
          guard let field = try? browser .getBrowserProperties () .getField (name: name) else
          {
-            return JSValue (undefinedIn: JSContext .current ())!
+            return nil
          }
          
          return JavaScript .getValue (JSContext .current (), self, field)
       }
       
-      func getBrowserOption (_ name : String) -> Any
+      func getBrowserOption (_ name : String) -> Any?
       {
          guard let field = try? browser .getBrowserOptions () .getField (name: name) else
          {
-            return JSValue (undefinedIn: JSContext .current ())!
+            return nil
          }
          
          return JavaScript .getValue (JSContext .current (), self, field)
@@ -200,7 +200,7 @@ extension JavaScript
          return executionContext .getWorldURL () .absoluteURL .description
       }
       
-      public final func createVrmlFromString (_ vrmlSyntax : String) -> Any
+      public final func createVrmlFromString (_ vrmlSyntax : String) -> Any?
       {
          do
          {
@@ -212,7 +212,7 @@ extension JavaScript
          {
             self .browser .console .error (error .localizedDescription)
             
-            return JSValue (undefinedIn: JSContext .current ())!
+            return nil
          }
       }
       

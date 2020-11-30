@@ -61,11 +61,16 @@ X3DBrowser .prototype .setDescription = function (newValue) { this .description 
       
       // Properties
       
-      dynamic public final var name                 : String { browser .getName () }
-      dynamic public final var version              : String { browser .getVersion () }
-      dynamic public final var currentSpeed         : Double { browser .getCurrentSpeed () }
-      dynamic public final var currentFrameRate     : Double { browser .getCurrentFrameRate () }
-      dynamic public final override var description : String { get { browser .getDescription () } set { browser .setDescription (newValue)} }
+      dynamic public final var name             : String { browser .getName () }
+      dynamic public final var version          : String { browser .getVersion () }
+      dynamic public final var currentSpeed     : Double { browser .getCurrentSpeed () }
+      dynamic public final var currentFrameRate : Double { browser .getCurrentFrameRate () }
+      
+      dynamic public final override var description : String
+      {
+         get { browser .getDescription () }
+         set { browser .setDescription (newValue)}
+      }
 
       public final func getName () -> String
       {

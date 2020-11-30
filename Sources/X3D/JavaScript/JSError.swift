@@ -9,15 +9,10 @@ import JavaScriptCore
 
 extension JavaScript
 {
+   @discardableResult
    internal static func error (_ message : String) -> Any?
    {
-      guard let browser = JSContext .current () .objectForKeyedSubscript ("Browser")? .toObjectOf (X3DBrowser .self) as? X3DBrowser else
-      {
-         return nil
-      }
-      
-      browser .browser .console .error ("ECMAScript error:", message)
-      
+      JSContext .current ()! .exception = JSValue (newErrorFromMessage: message, in: JSContext .current ())
       return nil
    }
 }

@@ -185,6 +185,7 @@ Object .defineProperty (SFRotation .prototype, 3, {
             return SFVec3d (field: SFVec3d .Internal (wrappedValue: Rotation4d (field .wrappedValue) * vector .field .wrappedValue))
          }
          
+         error (t("Invalid argument."))
          return nil
       }
       

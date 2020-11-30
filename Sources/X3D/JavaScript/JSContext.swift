@@ -237,7 +237,17 @@ extension JavaScript
       
       private final func exception (_ exception : JSValue?)
       {
-         scriptNode .browser! .console .error (exception! .toString ())
+         let stacktrace = exception! .objectForKeyedSubscript ("stack")! .toString ()! .replacingOccurrences (of: "\n", with: " ")
+         let lineNumber = exception! .objectForKeyedSubscript ("line")! .toInt32 ()
+         let column     = exception! .objectForKeyedSubscript ("column")! .toInt32 ()
+         
+         scriptNode .browser! .console .error ("""
+# JavaScript error at line \(lineNumber), \(column):
+# in Script '\(scriptNode .getName ())' url '\(scriptNode .executionContext! .getWorldURL () .absoluteURL .description)'
+# in method \(stacktrace).
+#
+# \(exception!)
+""")
       }
       
       internal final func initialize ()

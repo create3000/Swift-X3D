@@ -16,11 +16,11 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ array : MFColorRGBA) -> Any
-   func assign (_ array : MFColorRGBA)
+   func equals (_ array : MFColorRGBA?) -> Any?
+   func assign (_ array : MFColorRGBA?)
 
    func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFColorRGBA
-   func set1Value (_ index : Int, _ value : SFColorRGBA)
+   func set1Value (_ index : Int, _ value : SFColorRGBA?)
    
    var length : Int { get set }
 }
@@ -81,13 +81,17 @@ extension JavaScript
       
       // Common operators
       
-      public final func equals (_ array : MFColorRGBA) -> Any
+      public final func equals (_ array : MFColorRGBA?) -> Any?
       {
+         guard let array = array else { return exception (t("Invalid argument.")) }
+         
          return field .wrappedValue == array .field .wrappedValue
       }
 
-      public final func assign (_ array : MFColorRGBA)
+      public final func assign (_ array : MFColorRGBA?)
       {
+         guard let array = array else { return exception (t("Invalid argument.")) }
+         
          field .wrappedValue = array .field .wrappedValue
       }
 
@@ -103,8 +107,10 @@ extension JavaScript
          return SFColorRGBA (field: SFColorRGBAReference (field, index))
       }
       
-      public final func set1Value (_ index : Int, _ value : SFColorRGBA)
+      public final func set1Value (_ index : Int, _ value : SFColorRGBA?)
       {
+         guard let value = value else { return exception (t("Invalid argument.")) }
+         
          if index >= field .wrappedValue .count
          {
             field .wrappedValue .resize (index + 1, fillWith: .zero)

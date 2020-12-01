@@ -16,11 +16,11 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ array : MFImage) -> Any
-   func assign (_ array : MFImage)
+   func equals (_ array : MFImage?) -> Any?
+   func assign (_ array : MFImage?)
 
    func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFImage
-   func set1Value (_ index : Int, _ value : SFImage)
+   func set1Value (_ index : Int, _ value : SFImage?)
    
    var length : Int { get set }
 }
@@ -81,13 +81,17 @@ extension JavaScript
       
       // Common operators
       
-      public final func equals (_ array : MFImage) -> Any
+      public final func equals (_ array : MFImage?) -> Any?
       {
+         guard let array = array else { return exception (t("Invalid argument.")) }
+         
          return field .wrappedValue == array .field .wrappedValue
       }
 
-      public final func assign (_ array : MFImage)
+      public final func assign (_ array : MFImage?)
       {
+         guard let array = array else { return exception (t("Invalid argument.")) }
+         
          field .wrappedValue = array .field .wrappedValue
       }
 
@@ -106,8 +110,10 @@ extension JavaScript
          return SFImage (field: SFImageReference (field, index))
       }
       
-      public final func set1Value (_ index : Int, _ value : SFImage)
+      public final func set1Value (_ index : Int, _ value : SFImage?)
       {
+         guard let value = value else { return exception (t("Invalid argument.")) }
+         
          if index >= field .wrappedValue .count
          {
             for _ in field .wrappedValue .count ... index

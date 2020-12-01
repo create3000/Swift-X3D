@@ -16,8 +16,8 @@ import JavaScriptCore
    
    init ()
    
-   func equals (_ array : MFNode) -> Any
-   func assign (_ array : MFNode)
+   func equals (_ array : MFNode?) -> Any?
+   func assign (_ array : MFNode?)
 
    func get1Value (_ browser : X3DBrowser, _ index : Int) -> JSValue
    func set1Value (_ index : Int, _ value : SFNode?)
@@ -81,13 +81,17 @@ extension JavaScript
       
       // Common operators
       
-      public final func equals (_ array : MFNode) -> Any
+      public final func equals (_ array : MFNode?) -> Any?
       {
+         guard let array = array else { return exception (t("Invalid argument.")) }
+         
          return field .wrappedValue == array .field .wrappedValue
       }
 
-      public final func assign (_ array : MFNode)
+      public final func assign (_ array : MFNode?)
       {
+         guard let array = array else { return exception (t("Invalid argument.")) }
+         
          field .wrappedValue = array .field .wrappedValue
       }
 

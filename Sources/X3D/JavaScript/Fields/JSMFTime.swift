@@ -16,8 +16,8 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ array : MFTime) -> Any
-   func assign (_ array : MFTime)
+   func equals (_ array : MFTime?) -> Any?
+   func assign (_ array : MFTime?)
 
    func get1Value (_ browser : X3DBrowser, _ index : Int) -> Scalar
    func set1Value (_ index : Int, _ value : Scalar)
@@ -79,13 +79,17 @@ extension JavaScript
       
       // Common operators
       
-      public final func equals (_ array : MFTime) -> Any
+      public final func equals (_ array : MFTime?) -> Any?
       {
+         guard let array = array else { return exception (t("Invalid argument.")) }
+         
          return field .wrappedValue == array .field .wrappedValue
       }
 
-      public final func assign (_ array : MFTime)
+      public final func assign (_ array : MFTime?)
       {
+         guard let array = array else { return exception (t("Invalid argument.")) }
+         
          field .wrappedValue = array .field .wrappedValue
       }
 

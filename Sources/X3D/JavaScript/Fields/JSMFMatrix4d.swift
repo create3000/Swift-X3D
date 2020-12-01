@@ -16,11 +16,11 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ array : MFMatrix4d) -> Any
-   func assign (_ array : MFMatrix4d)
+   func equals (_ array : MFMatrix4d?) -> Any?
+   func assign (_ array : MFMatrix4d?)
 
    func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFMatrix4d
-   func set1Value (_ index : Int, _ value : SFMatrix4d)
+   func set1Value (_ index : Int, _ value : SFMatrix4d?)
    
    var length : Int { get set }
 }
@@ -81,13 +81,17 @@ extension JavaScript
       
       // Common operators
       
-      public final func equals (_ array : MFMatrix4d) -> Any
+      public final func equals (_ array : MFMatrix4d?) -> Any?
       {
+         guard let array = array else { return exception (t("Invalid argument.")) }
+         
          return field .wrappedValue == array .field .wrappedValue
       }
 
-      public final func assign (_ array : MFMatrix4d)
+      public final func assign (_ array : MFMatrix4d?)
       {
+         guard let array = array else { return exception (t("Invalid argument.")) }
+         
          field .wrappedValue = array .field .wrappedValue
       }
 
@@ -103,8 +107,10 @@ extension JavaScript
          return SFMatrix4d (field: SFMatrix4dReference (field, index))
       }
       
-      public final func set1Value (_ index : Int, _ value : SFMatrix4d)
+      public final func set1Value (_ index : Int, _ value : SFMatrix4d?)
       {
+         guard let value = value else { return exception (t("Invalid argument.")) }
+         
          if index >= field .wrappedValue .count
          {
             field .wrappedValue .resize (index + 1, fillWith: .identity)

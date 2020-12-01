@@ -10,13 +10,13 @@ import JavaScriptCore
 extension JavaScript
 {
    @discardableResult
-   internal static func error <T : Any> (_ message : String) -> T?
+   internal static func exception <T : Any> (_ message : String) -> T?
    {
-      error (message)
+      exception (message)
       return nil
    }
    
-   internal static func error (_ message : String)
+   internal static func exception (_ message : String)
    {
       JSContext .current ()! .exception = JSValue (newErrorFromMessage: message, in: JSContext .current ())
    }

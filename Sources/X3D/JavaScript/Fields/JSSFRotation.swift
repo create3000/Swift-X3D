@@ -141,14 +141,14 @@ Object .defineProperty (SFRotation .prototype, 3, {
       
       public final func equals (_ rotation : SFRotation?) -> Any?
       {
-         guard let rotation = rotation else { return error (X3D .t("Invalid argument.")) }
+         guard let rotation = rotation else { return exception (X3D .t("Invalid argument.")) }
          
          return field .wrappedValue == rotation .field .wrappedValue
       }
 
       public final func assign (_ rotation : SFRotation?)
       {
-         guard let rotation = rotation else { return error (X3D .t("Invalid argument.")) }
+         guard let rotation = rotation else { return exception (X3D .t("Invalid argument.")) }
          
          field .wrappedValue = rotation .field .wrappedValue
       }
@@ -162,7 +162,7 @@ Object .defineProperty (SFRotation .prototype, 3, {
       
       public final func setAxis (_ axis : SFVec3?)
       {
-         guard let axis = axis else { return error (X3D .t("Invalid argument.")) }
+         guard let axis = axis else { return exception (X3D .t("Invalid argument.")) }
          
          field .wrappedValue .axis = axis .field .wrappedValue
       }
@@ -176,7 +176,7 @@ Object .defineProperty (SFRotation .prototype, 3, {
 
       public final func multiply (_ rotation : SFRotation?) -> SFRotation?
       {
-         guard let rotation = rotation else { return error (X3D .t("Invalid argument.")) }
+         guard let rotation = rotation else { return exception (X3D .t("Invalid argument.")) }
          
          return SFRotation (field: Internal (wrappedValue: rotation .field .wrappedValue * field .wrappedValue))
       }
@@ -193,12 +193,12 @@ Object .defineProperty (SFRotation .prototype, 3, {
             return SFVec3d (field: SFVec3d .Internal (wrappedValue: Rotation4d (field .wrappedValue) * vector .field .wrappedValue))
          }
          
-         return error (t("Invalid argument."))
+         return exception (t("Invalid argument."))
       }
       
       public final func slerp (_ rotation : SFRotation?, _ t : Scalar) -> SFRotation?
       {
-         guard let rotation = rotation else { return error (X3D .t("Invalid argument.")) }
+         guard let rotation = rotation else { return exception (X3D .t("Invalid argument.")) }
          
          return SFRotation (field: Internal (wrappedValue: X3D .slerp (field .wrappedValue, rotation .field .wrappedValue, t: t)))
       }

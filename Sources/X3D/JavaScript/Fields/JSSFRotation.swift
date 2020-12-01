@@ -109,6 +109,12 @@ Object .defineProperty (SFRotation .prototype, 3, {
                self .field = Internal (wrappedValue: Inner (from: from .field .wrappedValue, to: to .field .wrappedValue))
             }
             else if args .count == 2,
+                    let from = args [0] .toObjectOf (SFVec3d .self) as? SFVec3d,
+                    let to   = args [1] .toObjectOf (SFVec3d .self) as? SFVec3d
+            {
+               self .field = Internal (wrappedValue: Inner (from: Vector3f (from .field .wrappedValue), to: Vector3f (to .field .wrappedValue)))
+            }
+            else if args .count == 2,
                     let axis = args [0] .toObjectOf (SFVec3f .self) as? SFVec3f
             {
                self .field = Internal (wrappedValue: Inner (axis: axis .field .wrappedValue, angle: args [1] .toFloat ()))

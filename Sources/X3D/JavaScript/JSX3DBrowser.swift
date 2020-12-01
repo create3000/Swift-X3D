@@ -189,7 +189,7 @@ extension JavaScript
          }
       }
 
-      // VRML
+      // VRML legacy functions:
       
       public final func getName () -> String
       {
@@ -216,11 +216,15 @@ extension JavaScript
          return executionContext .getWorldURL () .absoluteURL .description
       }
       
+      private static var scenes : [X3DScene] = [ ]
+      
       public final func createVrmlFromString (_ vrmlSyntax : String) -> Any?
       {
          do
          {
             let scene = try browser .createX3DFromString (x3dSyntax: vrmlSyntax)
+            
+            X3DBrowser .scenes .append (scene)
             
             return JavaScript .getValue (JSContext .current (), self, scene .$rootNodes)
          }
@@ -256,7 +260,12 @@ extension JavaScript
                }
                .compactMap { $0 })
                
-               DispatchQueue .main .async { field .set (value: scene .$rootNodes) }
+               DispatchQueue .main .async
+               {
+                  X3DBrowser .scenes .append (scene)
+                  
+                  field .set (value: scene .$rootNodes)
+               }
             }
             catch
             {

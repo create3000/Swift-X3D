@@ -243,6 +243,8 @@ extension JavaScript
          {
             return exception (t("Field '%@' in node %@ must be of type MFNode.", event, node .field .wrappedValue .getTypeName ()))
          }
+         
+         let worldURL = executionContext .getWorldURL ()
 
          browser .browserQueue .async
          {
@@ -250,7 +252,7 @@ extension JavaScript
             {
                let scene = try self .browser .createX3DFromURL (url: url .map
                {
-                  URL (string: $0, relativeTo: self .executionContext .getWorldURL ())
+                  URL (string: $0, relativeTo: worldURL)
                }
                .compactMap { $0 })
                

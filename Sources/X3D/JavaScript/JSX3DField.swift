@@ -13,8 +13,8 @@ import JavaScriptCore
    func getName () -> String
    func getTypeName () -> String
    func getType () -> Int32
-   func isReadable () -> JSValue
-   func isWritable () -> JSValue
+   func isReadable () -> Any
+   func isWritable () -> Any
 
    func toString () -> String
 }
@@ -49,14 +49,14 @@ extension JavaScript
       
       public final func getType () -> Int32 { return field .getType () .rawValue }
       
-      public final func isReadable () -> JSValue
+      public final func isReadable () -> Any
       {
-         return JSValue (bool: field .getAccessType () != .inputOnly, in: JSContext .current ())
+         return field .getAccessType () != .inputOnly
       }
       
-      public final func isWritable () -> JSValue
+      public final func isWritable () -> Any
       {
-         return JSValue (bool: field .getAccessType () != .initializeOnly, in: JSContext .current ())
+         return field .getAccessType () != .initializeOnly
       }
 
       // Input/Output

@@ -22,8 +22,7 @@ extension JavaScript
       
       // Static properties
       
-      private static let queue = DispatchQueue (label: "create3000.ecmascript")
-      private static let vm    = queue .sync { JSVirtualMachine ()! }
+      private static let vm = JSVirtualMachine ()!
 
       // Construction
       

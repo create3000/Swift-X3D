@@ -104,7 +104,7 @@ Object .defineProperty (SFRotation .prototype, 3, {
             }
             else if args .count == 2,
                     let from = args [0] .toObjectOf (SFVec3f .self) as? SFVec3f,
-                    let to = args [1] .toObjectOf (SFVec3f .self) as? SFVec3f
+                    let to   = args [1] .toObjectOf (SFVec3f .self) as? SFVec3f
             {
                self .field = Internal (wrappedValue: Inner (from: from .field .wrappedValue, to: to .field .wrappedValue))
             }

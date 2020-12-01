@@ -12,7 +12,7 @@ extension JavaScript
    @discardableResult
    internal static func error <T : Any> (_ message : String) -> T?
    {
-      JSContext .current ()! .exception = JSValue (newErrorFromMessage: message, in: JSContext .current ())
+      error (message)
       return nil
    }
    

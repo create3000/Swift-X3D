@@ -9,6 +9,10 @@
 public final class RenderingProperties :
    X3DBaseNode
 {
+   // Common properties
+   
+   internal final override class var typeName : String { "RenderingProperties" }
+   
    // Fields
    
    @SFString public final var Shading                : String = ""

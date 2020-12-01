@@ -9,6 +9,10 @@
 public final class BrowserOptions :
    X3DBaseNode
 {
+   // Common properties
+   
+   internal final override class var typeName : String { "BrowserOptions" }
+   
    // Fields
    
    @SFBool   public final var SplashScreen           : Bool = true

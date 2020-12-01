@@ -152,7 +152,7 @@ public class X3DBaseNode :
          }
       }
 
-      throw X3DError .INVALID_X3D (t("Unknown field '%@' in class '%@'.", name, getTypeName ()))
+      throw X3DError .INVALID_NAME (t("Unknown field '%@' in class '%@'.", name, getTypeName ()))
    }
    
    // Private

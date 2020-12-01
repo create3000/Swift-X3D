@@ -9,6 +9,10 @@
 public final class BrowserProperties :
    X3DBaseNode
 {
+   // Common properties
+   
+   internal final override class var typeName : String { "BrowserProperties" }
+   
    // Fields
    
    @SFBool public final var ABSTRACT_NODES        : Bool = true

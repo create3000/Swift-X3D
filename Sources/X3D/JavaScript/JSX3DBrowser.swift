@@ -135,42 +135,58 @@ extension JavaScript
       
       func getRenderingProperty (_ name : String) -> Any?
       {
-         guard let field = try? browser .getRenderingProperties () .getField (name: name) else
+         do
          {
-            return nil
+            let field = try browser .getRenderingProperties () .getField (name: name)
+
+            return JavaScript .getValue (JSContext .current (), self, field)
          }
-         
-         return JavaScript .getValue (JSContext .current (), self, field)
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
       }
       
       func getBrowserProperty (_ name : String) -> Any?
       {
-         guard let field = try? browser .getBrowserProperties () .getField (name: name) else
+         do
          {
-            return nil
+            let field = try browser .getBrowserProperties () .getField (name: name)
+            
+            return JavaScript .getValue (JSContext .current (), self, field)
          }
-         
-         return JavaScript .getValue (JSContext .current (), self, field)
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
       }
       
       func getBrowserOption (_ name : String) -> Any?
       {
-         guard let field = try? browser .getBrowserOptions () .getField (name: name) else
+         do
          {
-            return nil
-         }
+            let field = try browser .getBrowserOptions () .getField (name: name)
          
-         return JavaScript .getValue (JSContext .current (), self, field)
+            return JavaScript .getValue (JSContext .current (), self, field)
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
       }
       
       func setBrowserOption (_ name : String, _ value : Any)
       {
-         guard let field = try? browser .getBrowserOptions () .getField (name: name) else
+         do
          {
-            return
+            let field = try browser .getBrowserOptions () .getField (name: name)
+            
+            JavaScript .setValue (field, value)
          }
-         
-         JavaScript .setValue (field, value)
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
       }
 
       // VRML
@@ -210,9 +226,7 @@ extension JavaScript
          }
          catch
          {
-            self .browser .console .error (error .localizedDescription)
-            
-            return nil
+            return exception (error .localizedDescription)
          }
       }
       
@@ -222,14 +236,12 @@ extension JavaScript
          
          guard let field = try? node .field .wrappedValue .getField (name: event) else
          {
-            browser .console .warn (t("No such event or field '%@' in node class %@.", event, node .field .wrappedValue .getTypeName ()))
-            return
+            return exception (t("No such event or field '%@' in node class %@.", event, node .field .wrappedValue .getTypeName ()))
          }
          
          guard field .getType () == .MFNode else
          {
-            browser .console .warn (t("Field '%@' in node %@ must be of type MFNode.", event, node .field .wrappedValue .getTypeName ()))
-            return
+            return exception (t("Field '%@' in node %@ must be of type MFNode.", event, node .field .wrappedValue .getTypeName ()))
          }
 
          browser .browserQueue .async
@@ -267,7 +279,7 @@ extension JavaScript
          }
          catch
          {
-            browser .console .error (error .localizedDescription)
+            return exception (error .localizedDescription)
          }
       }
       

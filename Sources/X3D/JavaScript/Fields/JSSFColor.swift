@@ -19,7 +19,7 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ color : SFColor) -> JSValue
+   func equals (_ color : SFColor) -> Any
    func assign (_ color : SFColor)
    
    func getHSV () -> [Float]
@@ -107,9 +107,9 @@ Object .defineProperty (SFColor .prototype, 2, {
 
       // Common operators
       
-      public final func equals (_ color : SFColor) -> JSValue
+      public final func equals (_ color : SFColor) -> Any
       {
-         return JSValue (bool: field .wrappedValue == color .field .wrappedValue, in: JSContext .current ())
+         return field .wrappedValue == color .field .wrappedValue
       }
 
       public final func assign (_ color : SFColor)

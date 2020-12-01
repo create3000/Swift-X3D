@@ -16,7 +16,7 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ node : SFNode) -> JSValue
+   func equals (_ node : SFNode) -> Any
    //func assign (_ node : SFNode)
    
    func getProperty (_ browser : X3DBrowser, _ name : String) -> Any
@@ -275,9 +275,9 @@ extension JavaScript
 
       // Common operators
       
-      public final func equals (_ node : SFNode) -> JSValue
+      public final func equals (_ node : SFNode) -> Any
       {
-         return JSValue (bool: field .wrappedValue === node .field .wrappedValue, in: JSContext .current ())
+         field .wrappedValue === node .field .wrappedValue
       }
       
       //public final func assign (_ node : SFNode)

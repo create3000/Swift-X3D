@@ -16,7 +16,7 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ array : MFVec2f) -> JSValue
+   func equals (_ array : MFVec2f) -> Any
    func assign (_ array : MFVec2f)
 
    func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFVec2f
@@ -81,9 +81,9 @@ extension JavaScript
       
       // Common operators
       
-      public final func equals (_ array : MFVec2f) -> JSValue
+      public final func equals (_ array : MFVec2f) -> Any
       {
-         return JSValue (bool: field .wrappedValue == array .field .wrappedValue, in: JSContext .current ())
+         return field .wrappedValue == array .field .wrappedValue
       }
 
       public final func assign (_ array : MFVec2f)

@@ -17,7 +17,7 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ color : SFMatrix4f) -> JSValue
+   func equals (_ color : SFMatrix4f) -> Any
    func assign (_ color : SFMatrix4f)
    
    func get1Value (_ column : Int, _ row : Int) -> Scalar
@@ -133,9 +133,9 @@ extension JavaScript
 
       // Common operators
       
-      public final func equals (_ color : SFMatrix4f) -> JSValue
+      public final func equals (_ color : SFMatrix4f) -> Any
       {
-         return JSValue (bool: field .wrappedValue == color .field .wrappedValue, in: JSContext .current ())
+         return field .wrappedValue == color .field .wrappedValue
       }
 
       public final func assign (_ color : SFMatrix4f)

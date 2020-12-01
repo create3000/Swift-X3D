@@ -16,7 +16,7 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ array : MFRotation) -> JSValue
+   func equals (_ array : MFRotation) -> Any
    func assign (_ array : MFRotation)
 
    func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFRotation
@@ -81,9 +81,9 @@ extension JavaScript
       
       // Common operators
       
-      public final func equals (_ array : MFRotation) -> JSValue
+      public final func equals (_ array : MFRotation) -> Any
       {
-         return JSValue (bool: field .wrappedValue == array .field .wrappedValue, in: JSContext .current ())
+         return field .wrappedValue == array .field .wrappedValue
       }
 
       public final func assign (_ array : MFRotation)

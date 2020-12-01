@@ -19,7 +19,7 @@ import ComplexModule
 
    init ()
    
-   func equals (_ color : SFMatrix3f) -> JSValue
+   func equals (_ color : SFMatrix3f) -> Any
    func assign (_ color : SFMatrix3f)
    
    func get1Value (_ column : Int, _ row : Int) -> Scalar
@@ -128,9 +128,9 @@ extension JavaScript
 
       // Common operators
       
-      public final func equals (_ color : SFMatrix3f) -> JSValue
+      public final func equals (_ color : SFMatrix3f) -> Any
       {
-         return JSValue (bool: field .wrappedValue == color .field .wrappedValue, in: JSContext .current ())
+         return field .wrappedValue == color .field .wrappedValue
       }
 
       public final func assign (_ color : SFMatrix3f)

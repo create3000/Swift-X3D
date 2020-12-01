@@ -16,7 +16,7 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ array : MFMatrix3d) -> JSValue
+   func equals (_ array : MFMatrix3d) -> Any
    func assign (_ array : MFMatrix3d)
 
    func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFMatrix3d
@@ -81,9 +81,9 @@ extension JavaScript
       
       // Common operators
       
-      public final func equals (_ array : MFMatrix3d) -> JSValue
+      public final func equals (_ array : MFMatrix3d) -> Any
       {
-         return JSValue (bool: field .wrappedValue == array .field .wrappedValue, in: JSContext .current ())
+         return field .wrappedValue == array .field .wrappedValue
       }
 
       public final func assign (_ array : MFMatrix3d)

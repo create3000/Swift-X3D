@@ -16,7 +16,7 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ array : MFColorRGBA) -> JSValue
+   func equals (_ array : MFColorRGBA) -> Any
    func assign (_ array : MFColorRGBA)
 
    func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFColorRGBA
@@ -81,9 +81,9 @@ extension JavaScript
       
       // Common operators
       
-      public final func equals (_ array : MFColorRGBA) -> JSValue
+      public final func equals (_ array : MFColorRGBA) -> Any
       {
-         return JSValue (bool: field .wrappedValue == array .field .wrappedValue, in: JSContext .current ())
+         return field .wrappedValue == array .field .wrappedValue
       }
 
       public final func assign (_ array : MFColorRGBA)

@@ -20,7 +20,7 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ color : SFImage) -> JSValue
+   func equals (_ color : SFImage) -> Any
    func assign (_ color : SFImage)
 }
 
@@ -85,9 +85,9 @@ extension JavaScript
 
       // Common operators
       
-      public final func equals (_ image : SFImage) -> JSValue
+      public final func equals (_ image : SFImage) -> Any
       {
-         return JSValue (bool: field .wrappedValue == image .field .wrappedValue, in: JSContext .current ())
+         return field .wrappedValue == image .field .wrappedValue
       }
 
       public final func assign (_ image : SFImage)

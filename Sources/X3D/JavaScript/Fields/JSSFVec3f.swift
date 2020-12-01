@@ -19,7 +19,7 @@ import JavaScriptCore
    
    init ()
    
-   func equals (_ vector : SFVec) -> JSValue
+   func equals (_ vector : SFVec) -> Any
    func assign (_ vector : SFVec)
 
    func add (_ vector : SFVec) -> SFVec
@@ -116,9 +116,9 @@ Object .defineProperty (SFVec3f .prototype, 2, {
 
       // Common operators
       
-      public final func equals (_ vector : SFVec) -> JSValue
+      public final func equals (_ vector : SFVec) -> Any
       {
-         return JSValue (bool: field .wrappedValue == vector .field .wrappedValue, in: JSContext .current ())
+         return field .wrappedValue == vector .field .wrappedValue
       }
 
       public final func assign (_ vector : SFVec)

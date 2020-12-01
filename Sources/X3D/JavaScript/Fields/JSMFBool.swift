@@ -16,10 +16,10 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ array : MFBool) -> JSValue
+   func equals (_ array : MFBool) -> Any
    func assign (_ array : MFBool)
 
-   func get1Value (_ browser : X3DBrowser, _ index : Int) -> JSValue
+   func get1Value (_ browser : X3DBrowser, _ index : Int) -> Any
    func set1Value (_ index : Int, _ value : Scalar)
    
    var length : Int { get set }
@@ -79,9 +79,9 @@ extension JavaScript
       
       // Common operators
       
-      public final func equals (_ array : MFBool) -> JSValue
+      public final func equals (_ array : MFBool) -> Any
       {
-         return JSValue (bool: field .wrappedValue == array .field .wrappedValue, in: JSContext .current ())
+         return field .wrappedValue == array .field .wrappedValue
       }
 
       public final func assign (_ array : MFBool)
@@ -91,14 +91,14 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> JSValue
+      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> Any
       {
          if index >= field .wrappedValue .count
          {
-            field .wrappedValue .resize (index + 1, fillWith: Scalar ())
+            return field .wrappedValue .resize (index + 1, fillWith: Scalar ())
          }
          
-         return JSValue (bool: field .wrappedValue [index], in: JSContext .current ())
+         return field .wrappedValue [index]
       }
       
       public final func set1Value (_ index : Int, _ value : Scalar)

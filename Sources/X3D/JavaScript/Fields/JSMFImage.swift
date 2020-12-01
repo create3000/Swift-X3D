@@ -45,7 +45,7 @@ extension JavaScript
       {
          context ["MFImage"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFImage\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, Browser, targets, \"MFImage\");")
       }
       
       // Construction

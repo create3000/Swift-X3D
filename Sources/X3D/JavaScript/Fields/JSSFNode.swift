@@ -54,7 +54,7 @@ extension JavaScript
          context ["SFNode"] = Self .self
          
          context .evaluateScript ("""
-(function (global, targets)
+(function (global, Browser, targets)
 {
    const Target      = global .SFNode;
    const getProperty = Target .prototype .getProperty;
@@ -221,7 +221,7 @@ extension JavaScript
 
    global .SFNode = SFNode;
 })
-(this, targets)
+(this, Browser, targets)
 """)
          
          proxy = context .evaluateScript ("SFNode;")

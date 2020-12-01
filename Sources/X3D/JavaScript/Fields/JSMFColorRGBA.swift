@@ -45,7 +45,7 @@ extension JavaScript
       {
          context ["MFColorRGBA"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFColorRGBA\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, Browser, targets, \"MFColorRGBA\");")
       }
       
       // Construction

@@ -19,8 +19,8 @@ import ComplexModule
 
    init ()
    
-   func equals (_ color : SFMatrix3d) -> Any
-   func assign (_ color : SFMatrix3d)
+   func equals (_ matrix : SFMatrix3d?) -> Any?
+   func assign (_ matrix : SFMatrix3d?)
    
    func get1Value (_ column : Int, _ row : Int) -> Scalar
    func set1Value (_ column : Int, _ row : Int, _ value : Scalar)
@@ -31,12 +31,12 @@ import ComplexModule
    func determinant () -> Scalar
    func transpose () -> SFMatrix3d
    func inverse () -> SFMatrix3d
-   func multLeft (_ matrix : SFMatrix3d) -> SFMatrix3d
-   func multRight (_ matrix : SFMatrix3d) -> SFMatrix3d
-   func multVecMatrix (_ vector : SFVec2d) -> SFVec2d
-   func multMatrixVec (_ vector : SFVec2d) -> SFVec2d
-   func multDirMatrix (_ vector : SFVec2d) -> SFVec2d
-   func multMatrixDir (_ vector : SFVec2d) -> SFVec2d
+   func multLeft (_ matrix : SFMatrix3d?) -> SFMatrix3d?
+   func multRight (_ matrix : SFMatrix3d?) -> SFMatrix3d?
+   func multVecMatrix (_ vector : SFVec2d?) -> SFVec2d?
+   func multMatrixVec (_ vector : SFVec2d?) -> SFVec2d?
+   func multDirMatrix (_ vector : SFVec2d?) -> SFVec2d?
+   func multMatrixDir (_ vector : SFVec2d?) -> SFVec2d?
 }
 
 extension JavaScript
@@ -128,14 +128,18 @@ extension JavaScript
 
       // Common operators
       
-      public final func equals (_ color : SFMatrix3d) -> Any
+      public final func equals (_ matrix : SFMatrix3d?) -> Any?
       {
-         return field .wrappedValue == color .field .wrappedValue
+         guard let matrix = matrix else { return exception (t("Invalid argument.")) }
+         
+         return field .wrappedValue == matrix .field .wrappedValue
       }
 
-      public final func assign (_ color : SFMatrix3d)
+      public final func assign (_ matrix : SFMatrix3d?)
       {
-         field .wrappedValue = color .field .wrappedValue
+         guard let matrix = matrix else { return exception (t("Invalid argument.")) }
+         
+         field .wrappedValue = matrix .field .wrappedValue
       }
       
       // Property access
@@ -191,33 +195,45 @@ extension JavaScript
          return SFMatrix3d (field: Internal (wrappedValue: field .wrappedValue .inverse))
       }
       
-      public final func multLeft (_ matrix : SFMatrix3d) -> SFMatrix3d
+      public final func multLeft (_ matrix : SFMatrix3d?) -> SFMatrix3d?
       {
+         guard let matrix = matrix else { return exception (t("Invalid argument.")) }
+         
          return SFMatrix3d (field: Internal (wrappedValue: field .wrappedValue * matrix .field .wrappedValue))
       }
       
-      public final func multRight (_ matrix : SFMatrix3d) -> SFMatrix3d
+      public final func multRight (_ matrix : SFMatrix3d?) -> SFMatrix3d?
       {
+         guard let matrix = matrix else { return exception (t("Invalid argument.")) }
+         
          return SFMatrix3d (field: Internal (wrappedValue: matrix .field .wrappedValue * field .wrappedValue))
       }
       
-      public final func multVecMatrix (_ vector : SFVec2d) -> SFVec2d
+      public final func multVecMatrix (_ vector : SFVec2d?) -> SFVec2d?
       {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
          return SFVec2d (field: X3D .SFVec2d (wrappedValue: field .wrappedValue * vector .field .wrappedValue))
       }
       
-      public final func multMatrixVec (_ vector : SFVec2d) -> SFVec2d
+      public final func multMatrixVec (_ vector : SFVec2d?) -> SFVec2d?
       {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
          return SFVec2d (field: X3D .SFVec2d (wrappedValue: vector .field .wrappedValue * field .wrappedValue))
       }
       
-      public final func multDirMatrix (_ vector : SFVec2d) -> SFVec2d
+      public final func multDirMatrix (_ vector : SFVec2d?) -> SFVec2d?
       {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
          return SFVec2d (field: X3D .SFVec2d (wrappedValue: field .wrappedValue .submatrix * vector .field .wrappedValue))
       }
       
-      public final func multMatrixDir (_ vector : SFVec2d) -> SFVec2d
+      public final func multMatrixDir (_ vector : SFVec2d?) -> SFVec2d?
       {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
          return SFVec2d (field: X3D .SFVec2d (wrappedValue: vector .field .wrappedValue * field .wrappedValue .submatrix))
       }
    }

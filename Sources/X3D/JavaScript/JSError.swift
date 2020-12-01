@@ -10,6 +10,13 @@ import JavaScriptCore
 extension JavaScript
 {
    @discardableResult
+   internal static func exception <T : FloatingPoint> (_ message : String) -> T
+   {
+      exception (message)
+      return 0
+   }
+   
+   @discardableResult
    internal static func exception <T : Any> (_ message : String) -> T?
    {
       exception (message)

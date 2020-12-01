@@ -19,21 +19,21 @@ import JavaScriptCore
    
    init ()
    
-   func equals (_ vector : SFVec) -> Any
-   func assign (_ vector : SFVec)
+   func equals (_ vector : SFVec?) -> Any
+   func assign (_ vector : SFVec?)
 
-   func add (_ vector : SFVec) -> SFVec
-   func cross (_ vector : SFVec) -> SFVec
-   func distance (_ vector : SFVec) -> Scalar
+   func add (_ vector : SFVec?) -> SFVec?
+   func cross (_ vector : SFVec?) -> SFVec?
+   func distance (_ vector : SFVec?) -> Scalar
    func divide (_ scalar : Scalar) -> SFVec
-   func divVec (_ vector : SFVec) -> SFVec
+   func divVec (_ vector : SFVec?) -> SFVec?
    func length () -> Scalar
-   func lerp (_ vector : SFVec, _ t : Scalar) -> SFVec
+   func lerp (_ vector : SFVec?, _ t : Scalar) -> SFVec?
    func multiply (_ scalar : Scalar) -> SFVec
-   func multVec (_ vector : SFVec) -> SFVec
+   func multVec (_ vector : SFVec?) -> SFVec?
    func negate () -> SFVec
    func normalize () -> SFVec
-   func subtract (_ vector : SFVec) -> SFVec
+   func subtract (_ vector : SFVec?) -> SFVec?
 }
 
 extension JavaScript
@@ -116,30 +116,40 @@ Object .defineProperty (SFVec3f .prototype, 2, {
 
       // Common operators
       
-      public final func equals (_ vector : SFVec) -> Any
+      public final func equals (_ vector : SFVec?) -> Any
       {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
          return field .wrappedValue == vector .field .wrappedValue
       }
 
-      public final func assign (_ vector : SFVec)
+      public final func assign (_ vector : SFVec?)
       {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
          field .wrappedValue = vector .field .wrappedValue
       }
 
       // Functions
       
-      public final func add (_ vector : SFVec) -> SFVec
+      public final func add (_ vector : SFVec?) -> SFVec?
       {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
          return SFVec (field: Internal (wrappedValue: field .wrappedValue + vector .field .wrappedValue))
       }
 
-      public final func cross (_ vector : SFVec) -> SFVec
+      public final func cross (_ vector : SFVec?) -> SFVec?
       {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
          return SFVec (field: Internal (wrappedValue: simd_cross (field .wrappedValue, vector .field .wrappedValue)))
       }
 
-      public final func distance (_ vector : SFVec) -> Scalar
+      public final func distance (_ vector : SFVec?) -> Scalar
       {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
          return simd_distance (field .wrappedValue, vector .field .wrappedValue)
       }
 
@@ -148,8 +158,10 @@ Object .defineProperty (SFVec3f .prototype, 2, {
          return SFVec (field: Internal (wrappedValue: field .wrappedValue / scalar))
       }
       
-      public final func divVec (_ vector : SFVec) -> SFVec
+      public final func divVec (_ vector : SFVec?) -> SFVec?
       {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
          return SFVec (field: Internal (wrappedValue: field .wrappedValue / vector .field .wrappedValue))
       }
 
@@ -158,8 +170,10 @@ Object .defineProperty (SFVec3f .prototype, 2, {
          return simd_length (field .wrappedValue)
       }
       
-      public final func lerp (_ vector : SFVec, _ t : Scalar) -> SFVec
+      public final func lerp (_ vector : SFVec?, _ t : Scalar) -> SFVec?
       {
+         guard let vector = vector else { return exception (X3D .t("Invalid argument.")) }
+         
          return SFVec (field: Internal (wrappedValue: mix (field .wrappedValue, vector .field .wrappedValue, t: t)))
       }
 
@@ -168,8 +182,10 @@ Object .defineProperty (SFVec3f .prototype, 2, {
          return SFVec (field: Internal (wrappedValue: field .wrappedValue * scalar))
       }
       
-      public final func multVec (_ vector : SFVec) -> SFVec
+      public final func multVec (_ vector : SFVec?) -> SFVec?
       {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
          return SFVec (field: Internal (wrappedValue: field .wrappedValue * vector .field .wrappedValue))
       }
 
@@ -183,8 +199,10 @@ Object .defineProperty (SFVec3f .prototype, 2, {
          return SFVec (field: Internal (wrappedValue: simd_normalize (field .wrappedValue)))
       }
 
-      public final func subtract (_ vector : SFVec) -> SFVec
+      public final func subtract (_ vector : SFVec?) -> SFVec?
       {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
          return SFVec (field: Internal (wrappedValue: field .wrappedValue - vector .field .wrappedValue))
       }
    }

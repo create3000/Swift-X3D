@@ -20,8 +20,8 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ color : SFImage) -> Any
-   func assign (_ color : SFImage)
+   func equals (_ image : SFImage?) -> Any?
+   func assign (_ image : SFImage?)
 }
 
 extension JavaScript
@@ -85,13 +85,17 @@ extension JavaScript
 
       // Common operators
       
-      public final func equals (_ image : SFImage) -> Any
+      public final func equals (_ image : SFImage?) -> Any?
       {
+         guard let image = image else { return exception (t("Invalid argument.")) }
+         
          return field .wrappedValue == image .field .wrappedValue
       }
 
-      public final func assign (_ image : SFImage)
+      public final func assign (_ image : SFImage?)
       {
+         guard let image = image else { return exception (t("Invalid argument.")) }
+         
          field .set (value: image .field)
       }
    }

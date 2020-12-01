@@ -24,7 +24,7 @@ extension JavaScript
          context ["X3DArrayField"] = Self .self
          
          context .evaluateScript ("""
-this .X3DArrayFieldWrapper = function (global, targets, CLASS)
+this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
 {
    const Target    = global [CLASS];
    const get1Value = Target .prototype .get1Value;

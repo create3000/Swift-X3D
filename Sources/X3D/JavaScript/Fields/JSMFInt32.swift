@@ -46,7 +46,7 @@ extension JavaScript
       {
          context ["MFInt32"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, targets, \"MFInt32\");")
+         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, Browser, targets, \"MFInt32\");")
       }
       
       // Construction

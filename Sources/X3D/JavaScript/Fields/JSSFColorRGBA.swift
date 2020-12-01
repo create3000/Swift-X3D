@@ -20,13 +20,13 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ color : SFColorRGBA) -> Any
-   func assign (_ color : SFColorRGBA)
+   func equals (_ color : SFColorRGBA?) -> Any?
+   func assign (_ color : SFColorRGBA?)
    
    func getHSVA () -> [Float]
    func setHSVA (_ h : Float, _ s : Float, _ v : Float, _ a : Float)
    
-   func lerp (_ color : SFColorRGBA, _ t : Float) -> SFColorRGBA
+   func lerp (_ color : SFColorRGBA?, _ t : Float) -> SFColorRGBA?
 }
 
 extension JavaScript
@@ -116,13 +116,17 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
       
       // Common operators
       
-      public final func equals (_ color : SFColorRGBA) -> Any
+      public final func equals (_ color : SFColorRGBA?) -> Any?
       {
+         guard let color = color else { return exception (t("Invalid argument.")) }
+         
          return field .wrappedValue == color .field .wrappedValue
       }
 
-      public final func assign (_ color : SFColorRGBA)
+      public final func assign (_ color : SFColorRGBA?)
       {
+         guard let color = color else { return exception (t("Invalid argument.")) }
+         
          field .wrappedValue = color .field .wrappedValue
       }
 
@@ -142,11 +146,13 @@ Object .defineProperty (SFColorRGBA .prototype, 3, {
  
       // Functions
 
-      public final func lerp (_ color : SFColorRGBA, _ t : Float) -> SFColorRGBA
+      public final func lerp (_ color : SFColorRGBA?, _ t : Float) -> SFColorRGBA?
       {
-         let color = hsva_mix (field .wrappedValue .hsva, color .field .wrappedValue .hsva, t: t) .rgba
+         guard let color = color else { return exception (X3D .t("Invalid argument.")) }
          
-         return SFColorRGBA (field: Internal (wrappedValue: color))
+         let result = hsva_mix (field .wrappedValue .hsva, color .field .wrappedValue .hsva, t: t) .rgba
+         
+         return SFColorRGBA (field: Internal (wrappedValue: result))
       }
    }
 }

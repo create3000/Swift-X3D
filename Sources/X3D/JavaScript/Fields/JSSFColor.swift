@@ -19,13 +19,13 @@ import JavaScriptCore
 
    init ()
    
-   func equals (_ color : SFColor) -> Any
-   func assign (_ color : SFColor)
+   func equals (_ color : SFColor?) -> Any?
+   func assign (_ color : SFColor?)
    
    func getHSV () -> [Float]
    func setHSV (_ h : Float, _ s : Float, _ v : Float)
    
-   func lerp (_ color : SFColor, _ t : Float) -> SFColor
+   func lerp (_ color : SFColor?, _ t : Float) -> SFColor?
 }
 
 extension JavaScript
@@ -107,13 +107,17 @@ Object .defineProperty (SFColor .prototype, 2, {
 
       // Common operators
       
-      public final func equals (_ color : SFColor) -> Any
+      public final func equals (_ color : SFColor?) -> Any?
       {
+         guard let color = color else { return exception (t("Invalid argument.")) }
+         
          return field .wrappedValue == color .field .wrappedValue
       }
 
-      public final func assign (_ color : SFColor)
+      public final func assign (_ color : SFColor?)
       {
+         guard let color = color else { return exception (t("Invalid argument.")) }
+         
          field .wrappedValue = color .field .wrappedValue
       }
 
@@ -133,11 +137,13 @@ Object .defineProperty (SFColor .prototype, 2, {
  
       // Functions
 
-      public final func lerp (_ color : SFColor, _ t : Float) -> SFColor
+      public final func lerp (_ color : SFColor?, _ t : Float) -> SFColor?
       {
-         let color = hsv_mix (field .wrappedValue .hsv, color .field .wrappedValue .hsv, t: t) .rgb
+         guard let color = color else { return exception (X3D .t("Invalid argument.")) }
          
-         return SFColor (field: Internal (wrappedValue: color))
+         let result = hsv_mix (field .wrappedValue .hsv, color .field .wrappedValue .hsv, t: t) .rgb
+         
+         return SFColor (field: Internal (wrappedValue: result))
       }
    }
 }

@@ -97,7 +97,7 @@ public final class ImageTexture :
             do
             {
                let options : [MTKTextureLoader .Option : Any] = [
-                  .generateMipmaps : generateMipMaps,
+                  .generateMipmaps : generateMipMaps ?? true,
                   .origin          : MTKTextureLoader .Origin .flippedVertically,
                   .SRGB            : false,
                   .textureUsage    : MTLTextureUsage .shaderRead .rawValue | MTLTextureUsage .pixelFormatView .rawValue

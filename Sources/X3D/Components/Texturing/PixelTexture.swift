@@ -51,10 +51,7 @@ public final class PixelTexture :
       
       $image .addInterest ("set_image", PixelTexture .set_image, self)
       
-      DispatchQueue .main .async
-      {
-         self .set_image ()
-      }
+      self .set_image ()
    }
    
    // Event handlers
@@ -70,8 +67,11 @@ public final class PixelTexture :
       
       guard width > 0 && height > 0 && comp >= 1 && comp <= 4 else
       {
-         self .texture = browser .defaultTexture
-         self .setTransparent (false)
+         DispatchQueue .main .async
+         {
+            self .texture = browser .defaultTexture
+            self .setTransparent (false)
+         }
          
          return
       }
@@ -156,24 +156,29 @@ public final class PixelTexture :
       let textureLoader = MTKTextureLoader (device: browser .device!)
       
       let options : [MTKTextureLoader .Option : Any] = [
-         .generateMipmaps : generateMipMaps,
+         .generateMipmaps : generateMipMaps ?? (max (width, height) >= browser .minTextureSize),
          .SRGB            : false,
       ]
       
-      guard let texture = try? textureLoader .newTexture (cgImage: swifty .cgImage, options: options) else
+      let texture = try? textureLoader .newTexture (cgImage: swifty .cgImage, options: options)
+      
+      DispatchQueue .main .async
       {
-         browser .console .warn (t("Couldn't load pixel texture. Couldn't make texture from image."))
+         guard let texture = texture else
+         {
+            browser .console .warn (t("Couldn't load pixel texture. Couldn't make texture from image."))
+            
+            self .texture = browser .defaultTexture
+            self .setTransparent (false)
+            
+            return
+         }
          
-         self .texture = browser .defaultTexture
-         self .setTransparent (false)
+         // Set texture.
          
-         return
+         self .texture = texture
+         self .setTransparent (comp & 1 == 0 && swifty .isTransparent)
       }
-      
-      // Set texture.
-      
-      self .texture = texture
-      self .setTransparent (comp & 1 == 0 && swifty .isTransparent)
    }
 }
 

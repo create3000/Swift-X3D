@@ -16,6 +16,8 @@ internal extension MTKTextureLoader
 {
    func newTexture (URL: URL, options: [MTKTextureLoader .Option : Any]? = nil, convert : Bool) throws -> MTLTexture
    {
+      var options = options
+      
       guard let image = NSImage (data: try Data (contentsOf: URL)) else
       {
          throw X3DError .INVALID_URL (t("Couldn't read image data."))
@@ -24,6 +26,11 @@ internal extension MTKTextureLoader
       guard let cgImage = image .cgImage (forProposedRect: nil, context: nil, hints: nil) else
       {
          throw X3DError .INVALID_URL (t("Couldn't read image data."))
+      }
+      
+      if max (cgImage .width, cgImage .height) < 2
+      {
+         options? [.generateMipmaps] = false
       }
       
       let texture = try newTexture (cgImage: cgImage, options: options)

@@ -58,9 +58,9 @@ public class X3DTexture2DNode :
       set_textureProperties ()
    }
    
-   internal final var generateMipMaps : Bool
+   internal final var generateMipMaps : Bool?
    {
-      texturePropertiesNode? .generateMipMaps ?? true
+      texturePropertiesNode? .generateMipMaps
    }
    
    private final func set_textureProperties ()

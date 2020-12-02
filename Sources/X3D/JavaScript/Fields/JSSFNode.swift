@@ -204,10 +204,18 @@ extension JavaScript
       });
    }
 
-   function SFNode ()
+   function SFNode (object)
    {
       const proxy = new Proxy (this, handler);
-      const self  = new Target (Browser, proxy, ...arguments);
+
+      if (object instanceof Target && !targets .get (object))
+      {
+         var self = object;
+      }
+      else
+      {
+         var self = new Target (Browser, proxy, ...arguments);
+      }
 
       addFields (self);
 
@@ -270,7 +278,7 @@ extension JavaScript
       
       internal static func initWithProxy (field : Internal) -> JSValue!
       {
-         return proxy .construct (withArguments: [SFNode (field: field)])
+         return proxy .construct (withArguments: [SFNode (field: X3D .SFNode (wrappedValue: field .wrappedValue))])
       }
 
       // Common operators

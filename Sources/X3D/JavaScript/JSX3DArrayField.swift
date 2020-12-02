@@ -33,7 +33,7 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
    delete Target .prototype .get1Value;
    delete Target .prototype .set1Value;
 
-   function getMethod (target, method)
+   function getMethod (self, method)
    {
       return function ()
       {
@@ -42,7 +42,7 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
             arguments [i] = targets .get (arguments [i]) || arguments [i];
          }
 
-         return method .apply (target, arguments);
+         return method .apply (self, arguments);
       };
    }
 
@@ -120,9 +120,11 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
 
    function MFArray (object)
    {
+      const proxy = new Proxy (this, handler);
+
       if (object instanceof Target && !targets .get (object))
       {
-         var target = object;
+         var self = object;
       }
       else
       {
@@ -131,15 +133,13 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
             arguments [i] = targets .get (arguments [i]) || arguments [i];
          }
 
-         var target = new Target (...arguments);
+         var self = new Target (...arguments);
       }
 
-      const self = new Proxy (this, handler);
+      targets .set (this,  self);
+      targets .set (proxy, self);
 
-      targets .set (this, target);
-      targets .set (self, target);
-
-      return self;
+      return proxy;
    }
 
    MFArray .prototype = Target .prototype;

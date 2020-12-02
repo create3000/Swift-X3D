@@ -96,7 +96,7 @@ public class X3DNode :
                {
                   continue
                }
-               
+
                field .addReference (to: reference)
             }
          }

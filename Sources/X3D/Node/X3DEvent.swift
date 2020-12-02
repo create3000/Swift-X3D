@@ -19,6 +19,6 @@ internal final class X3DEvent
    
    internal final func copy () -> X3DEvent
    {
-      return X3DEvent (field, Set <X3DField> (sources))
+      return X3DEvent (field, sources)
    }
 }

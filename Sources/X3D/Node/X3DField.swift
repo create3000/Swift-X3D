@@ -126,7 +126,11 @@ public class X3DField :
    /// Process and forward event.
    internal final func processEvent (_ event : X3DEvent)
    {
-      guard event .sources .insert (self) .0 else { return }
+      guard event .sources .insert (self) .0 else
+      {
+         isTainted = false
+         return
+      }
       
       // Set value.
 

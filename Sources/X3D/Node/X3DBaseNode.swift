@@ -135,22 +135,6 @@ public class X3DBaseNode :
       {
          return field
       }
-      
-      if let field = fieldIndex ["set_" + name]
-      {
-         if field .getAccessType () == .inputOutput
-         {
-            return field
-         }
-      }
-      
-      if let field = fieldIndex [name + "_changed"]
-      {
-         if field .getAccessType () == .inputOutput
-         {
-            return field
-         }
-      }
 
       throw X3DError .INVALID_NAME (t("Unknown field '%@' in class '%@'.", name, getTypeName ()))
    }
@@ -167,10 +151,8 @@ public class X3DBaseNode :
    internal final override func addEvent (for object : X3DChildObject)
    {
       guard let field = object as? X3DField else { return }
-
+      
       guard !field .isTainted else { return }
-
-//      debugPrint (#file, #function, typeName, field .identifier)
 
       addEventObject (for: field, event: X3DEvent (field))
    }
@@ -178,6 +160,11 @@ public class X3DBaseNode :
    internal final override func addEventObject (for field : X3DField, event : X3DEvent)
    {
       // Register field for processEvent.
+
+//      if getName () == "Puck"
+//      {
+//         debugPrint (#file, #function, getName (), getTypeName (), field .getName (), field .isTainted, browser! .currentTime)
+//      }
 
       field .isTainted = true
 

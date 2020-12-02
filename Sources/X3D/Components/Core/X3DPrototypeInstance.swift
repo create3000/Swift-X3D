@@ -37,9 +37,7 @@ public class X3DPrototypeInstance :
       
       for protoField in protoNode .getUserDefinedFields ()
       {
-         let field = protoField .copy ()
-
-         addField (protoField .getAccessType (), protoField .getName (), field)
+         addField (protoField .getAccessType (), protoField .getName (), protoField .copy ())
       }
 
       addChildObjects ($protoNode,

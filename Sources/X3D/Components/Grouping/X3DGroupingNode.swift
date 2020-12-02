@@ -74,7 +74,26 @@ public class X3DGroupingNode :
    
    private final func set_addChildren ()
    {
+      if !$children .isTainted
+      {
+         $children .removeInterest ("set_children", X3DGroupingNode .set_children,    self)
+         $children .addInterest    ("set_children", X3DGroupingNode .connectChildren, self)
+      }
       
+      let difference = addChildren .difference (from: children)
+ 
+      for change in difference
+      {
+         switch change
+         {
+            case let .insert (_, newElement, _):
+               children .append (newElement)
+            default:
+               break
+         }
+      }
+
+      add (at: children .count, contentsOf: addChildren)
    }
    
    private final func set_removeChildren ()
@@ -86,6 +105,12 @@ public class X3DGroupingNode :
    {
       clear ()
       add (at: 0, contentsOf: children)
+   }
+   
+   private final func connectChildren ()
+   {
+      $children .removeInterest ("set_children", X3DGroupingNode .connectChildren, self)
+      $children .addInterest    ("set_children", X3DGroupingNode .set_children,    self)
    }
 
    // Methods

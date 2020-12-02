@@ -112,7 +112,7 @@ extension JavaScript
             [weak self] in JavaScript .getValue (self! .context, $0, try! self! .scriptNode .getField (name: $1))
          }
          
-         let setProperty : @convention(block) (String, Any) -> Void =
+         let setProperty : @convention(block) (String, Any?) -> Void =
          {
             [weak self] in JavaScript .setValue (try! self! .scriptNode .getField (name: $0), $1)
          }
@@ -199,7 +199,7 @@ extension JavaScript
 
       Object .defineProperty (global, name, {
          get: function () { return getProperty (Browser, name); },
-         set: function (newValue) { setProperty (name, targets .get (newValue) || null); },
+         set: function (newValue) { setProperty (name, targets .get (newValue)); },
          enumerable: true,
          configurable: false,
       });
@@ -209,26 +209,12 @@ extension JavaScript
    {
       if (!name) return;
 
-      const value = getProperty (Browser, name);
-
-      if (value instanceof X3DArrayField)
-      {
-         Object .defineProperty (global, name, {
-            get: function () { return value; },
-            set: function (newValue) { setProperty (name, targets .get (newValue)); },
-            enumerable: true,
-            configurable: false,
-         });
-      }
-      else
-      {
-         Object .defineProperty (global, name, {
-            get: function () { return value; },
-            set: function (newValue) { setProperty (name, newValue); },
-            enumerable: true,
-            configurable: false,
-         });
-      }
+      Object .defineProperty (global, name, {
+         get: function () { return getProperty (Browser, name); },
+         set: function (newValue) { setProperty (name, targets .get (newValue) || newValue); },
+         enumerable: true,
+         configurable: false,
+      });
    });
 })(this, targets);
 """)

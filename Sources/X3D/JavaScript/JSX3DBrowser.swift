@@ -21,7 +21,7 @@ import JavaScriptCore
    func getRenderingProperty (_ name : String) -> Any?
    func getBrowserProperty (_ name : String) -> Any?
    func getBrowserOption (_ name : String) -> Any?
-   func setBrowserOption (_ name : String, _ value : Any)
+   func setBrowserOption (_ name : String, _ value : Any?)
    
    func print ()
    func println ()
@@ -175,7 +175,7 @@ extension JavaScript
          }
       }
       
-      func setBrowserOption (_ name : String, _ value : Any)
+      func setBrowserOption (_ name : String, _ value : Any?)
       {
          do
          {

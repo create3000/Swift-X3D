@@ -91,17 +91,29 @@ extension JavaScript
       }
    }
    
-   static func setValue (_ field : X3D .X3DField, _ value : Any)
+   static func setValue (_ field : X3D .X3DField, _ value : Any?)
    {
       switch field .getType ()
       {
-         case .SFBool:      if let value = value as? Bool   { (field as! X3D .SFBool)   .wrappedValue = value }
-         case .SFDouble:    if let value = value as? Double { (field as! X3D .SFDouble) .wrappedValue = value }
-         case .SFFloat:     if let value = value as? Double { (field as! X3D .SFFloat)  .wrappedValue = Float (value) }
-         case .SFInt32:     if let value = value as? Int32  { (field as! X3D .SFInt32)  .wrappedValue = value }
-         case .SFString:    if let value = value as? String { (field as! X3D .SFString) .wrappedValue = value }
-         case .SFTime:      if let value = value as? Double { (field as! X3D .SFTime)   .wrappedValue = value }
-         
+         case .SFBool:
+            if let value = value as? Bool { (field as! X3D .SFBool) .wrappedValue = value }
+            else { (field as! X3D .SFBool) .wrappedValue = false }
+         case .SFDouble:
+            if let value = value as? Double { (field as! X3D .SFDouble) .wrappedValue = value }
+            else { (field as! X3D .SFDouble) .wrappedValue = Double .nan }
+         case .SFFloat:
+            if let value = value as? Double { (field as! X3D .SFFloat) .wrappedValue = Float (value) }
+            else { (field as! X3D .SFFloat) .wrappedValue = Float .nan }
+         case .SFInt32:
+            if let value = value as? Int32 { (field as! X3D .SFInt32) .wrappedValue = value }
+            else { (field as! X3D .SFInt32) .wrappedValue = 0 }
+         case .SFString:
+            if let value = value as? String { (field as! X3D .SFString) .wrappedValue = value }
+            else { (field as! X3D .SFString) .wrappedValue = "undefined" }
+         case .SFTime:
+            if let value = value as? Double { (field as! X3D .SFTime) .wrappedValue = value }
+            else { (field as! X3D .SFTime) .wrappedValue = Double .nan }
+
          case .SFColor:     if let value = value as? SFColor     { (field as! X3D .SFColor)     .wrappedValue = value .field .wrappedValue }
          case .SFColorRGBA: if let value = value as? SFColorRGBA { (field as! X3D .SFColorRGBA) .wrappedValue = value .field .wrappedValue }
          case .SFImage:     if let value = value as? SFImage     { (field as! X3D .SFImage)     .set (value: value .field) }

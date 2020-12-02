@@ -20,7 +20,7 @@ import JavaScriptCore
    //func assign (_ node : SFNode)
    
    func getProperty (_ browser : X3DBrowser, _ name : String) -> Any
-   func setProperty (_ name : String, _ value : Any)
+   func setProperty (_ name : String, _ value : Any?)
    
    func getNodeTypeName () -> String
    func getNodeName () -> String
@@ -173,7 +173,7 @@ extension JavaScript
       {
          Object .defineProperty (self, name, {
             get: function () { return getProperty .call (self, Browser, name); },
-            set: function (newValue) { setProperty .call (self, name, targets .get (newValue) || null); },
+            set: function (newValue) { setProperty .call (self, name, targets .get (newValue)); },
             enumerable: true,
             configurable: false,
          });
@@ -181,26 +181,12 @@ extension JavaScript
 
       fields .forEach (function (name)
       {
-         const value = getProperty .call (self, Browser, name);
-
-         if (value instanceof X3DArrayField)
-         {
-            Object .defineProperty (self, name, {
-               get: function () { return value; },
-               set: function (newValue) { setProperty .call (self, name, targets .get (newValue)); },
-               enumerable: true,
-               configurable: false,
-            });
-         }
-         else
-         {
-            Object .defineProperty (self, name, {
-               get: function () { return value; },
-               set: function (newValue) { setProperty .call (self, name, newValue); },
-               enumerable: true,
-               configurable: false,
-            });
-         }
+         Object .defineProperty (self, name, {
+            get: function () { return getProperty .call (self, Browser, name); },
+            set: function (newValue) { setProperty .call (self, name, targets .get (newValue) || newValue); },
+            enumerable: true,
+            configurable: false,
+         });
       });
    }
 
@@ -245,11 +231,7 @@ extension JavaScript
             let browser = args .removeFirst () .toObjectOf (X3DBrowser .self) as! X3DBrowser
             let proxy   = args .removeFirst ()
             
-            if let node = args .first! .toObjectOf (SFNode .self) as? SFNode
-            {
-               self .field = Internal (wrappedValue: node .field .wrappedValue)
-            }
-            else if let x3dSyntax = args .first! .toString ()
+            if let x3dSyntax = args .first! .toString ()
             {
                self .scene = try? browser .browser .createX3DFromString (x3dSyntax: x3dSyntax)
                self .field = Internal (wrappedValue: scene? .rootNodes .first ?? nil)
@@ -259,11 +241,13 @@ extension JavaScript
             else
             {
                self .field = Internal ()
+               exception (t("Invalid argument."))
             }
          }
          else
          {
             self .field = Internal ()
+            exception (t("Invalid argument."))
          }
          
          super .init (field)
@@ -313,7 +297,7 @@ extension JavaScript
          }
       }
       
-      public final func setProperty (_ name : String, _ value : Any)
+      public final func setProperty (_ name : String, _ value : Any?)
       {
          guard let node = field .wrappedValue else { return }
          

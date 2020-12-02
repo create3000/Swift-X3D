@@ -119,6 +119,7 @@ extension JavaScript
                switch (fieldDefinition .accessType)
                {
                   case X3DConstants .inputOutput:
+                     native .push ("set_" + fieldDefinition .name)
                      native .push (fieldDefinition .name + "_changed")
                   case X3DConstants .initializeOnly:
                   case X3DConstants .inputOnly:
@@ -133,6 +134,7 @@ extension JavaScript
                switch (fieldDefinition .accessType)
                {
                   case X3DConstants .inputOutput:
+                     nodes .push ("set_" + fieldDefinition .name)
                      nodes .push (fieldDefinition .name + "_changed")
                   case X3DConstants .initializeOnly:
                   case X3DConstants .inputOnly:
@@ -147,6 +149,7 @@ extension JavaScript
                switch (fieldDefinition .accessType)
                {
                   case X3DConstants .inputOutput:
+                     fields .push ("set_" + fieldDefinition .name)
                      fields .push (fieldDefinition .name + "_changed")
                   case X3DConstants .initializeOnly:
                   case X3DConstants .inputOnly:

@@ -111,10 +111,14 @@ public final class Script :
                browser .console .warn (t("Couldn't read ECMAScript source text."))
                continue
             }
+            
+            let context = JavaScript .Context (scriptNode: self, sourceText: sourceText)
 
             DispatchQueue .main .async
             {
-               self .context = JavaScript .Context (scriptNode: self, sourceText: sourceText)
+               self .context = context
+
+               context .initialize ()
             }
             
             return

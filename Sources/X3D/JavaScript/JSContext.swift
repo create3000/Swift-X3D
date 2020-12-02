@@ -43,8 +43,6 @@ extension JavaScript
          // Evaluate script source.
 
          context .evaluateScript (sourceText)
-         
-         initialize ()
       }
       
       private final func register ()
@@ -240,7 +238,7 @@ in method \(stacktrace).
 """)
       }
       
-      private final func initialize ()
+      internal final func initialize ()
       {
          if context .evaluateScript ("typeof initialize == 'function'")! .toBool ()
          {

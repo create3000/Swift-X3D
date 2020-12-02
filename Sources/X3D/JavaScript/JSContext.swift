@@ -108,9 +108,9 @@ extension JavaScript
 
          // Add user-defined fields to global object.
          
-         let getProperty : @convention(block) (X3DBrowser, String) -> Any =
+         let getProperty : @convention(block) (String) -> Any =
          {
-            [weak self] in JavaScript .getValue (self! .context, $0, try! self! .scriptNode .getField (name: $1))
+            [weak self] in JavaScript .getValue (self! .context, self! .browser, try! self! .scriptNode .getField (name: $0))
          }
          
          let setProperty : @convention(block) (String, Any?) -> Void =
@@ -187,7 +187,7 @@ extension JavaScript
       if (!name) return;
 
       Object .defineProperty (global, name, {
-         get: function () { return getProperty (Browser, name); },
+         get: function () { return getProperty (name); },
          set: function (newValue) { setProperty (name, newValue); },
          enumerable: true,
          configurable: false,
@@ -199,7 +199,7 @@ extension JavaScript
       if (!name) return;
 
       Object .defineProperty (global, name, {
-         get: function () { return getProperty (Browser, name); },
+         get: function () { return getProperty (name); },
          set: function (newValue) { setProperty (name, targets .get (newValue)); },
          enumerable: true,
          configurable: false,
@@ -211,7 +211,7 @@ extension JavaScript
       if (!name) return;
 
       Object .defineProperty (global, name, {
-         get: function () { return getProperty (Browser, name); },
+         get: function () { return getProperty (name); },
          set: function (newValue) { setProperty (name, targets .get (newValue) || newValue); },
          enumerable: true,
          configurable: false,

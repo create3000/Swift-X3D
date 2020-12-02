@@ -56,10 +56,11 @@ extension JavaScript
    {
       // Properties
       
-      internal unowned let browser          : X3D .X3DBrowser
-      internal unowned let executionContext : X3D .X3DExecutionContext
+      internal unowned final let browser          : X3D .X3DBrowser
+      internal unowned final let executionContext : X3D .X3DExecutionContext
+      internal final var targets                  : JSValue
 
-      internal let cache = NSMapTable <X3D .X3DNode, JSValue> (keyOptions: .weakMemory, valueOptions: .strongMemory)
+      internal final let cache = NSMapTable <X3D .X3DNode, JSValue> (keyOptions: .weakMemory, valueOptions: .strongMemory)
       
       // Construction
       
@@ -67,7 +68,7 @@ extension JavaScript
       {
          context ["X3DBrowser"] = Self .self
          context ["Browser"]    = browser
-         
+
          context .evaluateScript ("""
 (function (targets)
 {
@@ -96,10 +97,11 @@ extension JavaScript
 """)
       }
 
-      internal init (_ browser : X3D .X3DBrowser, _ executionContext : X3D .X3DExecutionContext)
+      internal init (_ context : JSContext, _ browser : X3D .X3DBrowser, _ executionContext : X3D .X3DExecutionContext)
       {
          self .browser          = browser
          self .executionContext = executionContext
+         self .targets          = context .evaluateScript ("(function (object) { return this .get (object) }) .bind (targets)")!
       }
       
       // Properties

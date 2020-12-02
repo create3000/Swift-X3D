@@ -63,6 +63,11 @@ extension JavaScript
             self .field .wrappedValue .width  = args [0] .toInt32 ()
             self .field .wrappedValue .height = args [1] .toInt32 ()
             self .field .wrappedValue .comp   = args [2] .toInt32 ()
+            
+            if let array = JSContext .current ()? .target (args [3])? .toObjectOf (MFInt32 .self) as? MFInt32
+            {
+               self .field .wrappedValue .array = array .field .wrappedValue
+            }
          }
          else
          {

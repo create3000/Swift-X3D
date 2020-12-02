@@ -18,7 +18,7 @@ extension JavaScript
       
       private unowned let scriptNode : X3D .Script
       private let context            : JSContext
-      private let browser            : X3DBrowser
+      private var browser            : X3DBrowser!
       
       // Static properties
       
@@ -30,7 +30,6 @@ extension JavaScript
       {
          self .scriptNode = scriptNode
          self .context    = JSContext (virtualMachine: Context .vm)!
-         self .browser    = X3DBrowser (scriptNode .browser!, scriptNode .executionContext!)
          
          // Add exception handler.
          
@@ -50,6 +49,8 @@ extension JavaScript
          // Add hidden objects.
          
          context .evaluateScript ("this .targets = new WeakMap ();")
+         
+         browser = X3DBrowser (context, scriptNode .browser!, scriptNode .executionContext!)
 
          // Register objects and functions.
          
@@ -347,13 +348,23 @@ extension JSContext
 {
    internal subscript (_ key : String) -> JSValue?
    {
-      get { return objectForKeyedSubscript (key as NSString) }
+      get { return objectForKeyedSubscript (key) }
    }
 
    internal subscript (_ key : String) -> Any?
    {
       get { return objectForKeyedSubscript (key) }
       set { setObject (newValue, forKeyedSubscript: key as NSString) }
+   }
+   
+   internal var browser : JavaScript .X3DBrowser?
+   {
+      return objectForKeyedSubscript ("Browser")? .toObjectOf (JavaScript .X3DBrowser .self) as? JavaScript .X3DBrowser
+   }
+   
+   internal func target (_ value : JSValue) -> JSValue?
+   {
+      browser? .targets .call (withArguments: [value])
    }
    
    private static let fixindex : NSString = "9999"

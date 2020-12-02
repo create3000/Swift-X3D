@@ -47,8 +47,6 @@ extension JavaScript
 
       // Registration
       
-      private static var proxy : JSValue!
-      
       public final override class func register (_ context : JSContext)
       {
          context ["SFNode"] = Self .self
@@ -215,13 +213,15 @@ extension JavaScript
    }
 
    SFNode .prototype = Target .prototype;
-
-   global .SFNode = SFNode;
+   
+   Object .defineProperty (global, "SFNode", {
+      value: SFNode,
+      enumerable: false,
+      configurable: false,
+   });
 })
 (this, Browser, targets)
 """)
-         
-         proxy = context .evaluateScript ("SFNode;")
       }
       
       // Construction
@@ -263,9 +263,9 @@ extension JavaScript
          super .init (field)
       }
       
-      internal static func initWithProxy (field : Internal) -> JSValue!
+      internal static func initWithProxy (_ context : JSContext, field : Internal) -> JSValue!
       {
-         return proxy .construct (withArguments: [SFNode (field: X3D .SFNode (wrappedValue: field .wrappedValue))])
+         return context ["SFNode"]! .construct (withArguments: [SFNode (field: X3D .SFNode (wrappedValue: field .wrappedValue))])
       }
 
       // Common operators

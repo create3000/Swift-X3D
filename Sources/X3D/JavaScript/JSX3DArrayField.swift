@@ -143,10 +143,12 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
    }
 
    MFArray .prototype = Target .prototype;
-
-   global [CLASS] = MFArray;
-
-   return MFArray;
+   
+   Object .defineProperty (global, CLASS, {
+      value: MFArray,
+      enumerable: false,
+      configurable: false,
+   });
 }
 """)
       }

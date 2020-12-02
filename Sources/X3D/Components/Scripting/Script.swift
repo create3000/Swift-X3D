@@ -115,8 +115,6 @@ public final class Script :
             DispatchQueue .main .async
             {
                self .context = JavaScript .Context (scriptNode: self, sourceText: sourceText)
-
-               self .context! .initialize ()
             }
             
             return

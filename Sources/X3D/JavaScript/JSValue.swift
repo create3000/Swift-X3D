@@ -58,36 +58,36 @@ extension JavaScript
                return object
             }
             
-            let object = SFNode .initWithProxy (field: field)!
+            let object = SFNode .initWithProxy (context, field: field)!
 
             browser .cache .setObject (object, forKey: node)
             
             return object
          }
          
-         case .MFBool:      return MFBool      .initWithProxy (field: (field as! X3D .MFBool))!
-         case .MFDouble:    return MFDouble    .initWithProxy (field: (field as! X3D .MFDouble))!
-         case .MFFloat:     return MFFloat     .initWithProxy (field: (field as! X3D .MFFloat))!
-         case .MFInt32:     return MFInt32     .initWithProxy (field: (field as! X3D .MFInt32))!
-         case .MFString:    return MFString    .initWithProxy (field: (field as! X3D .MFString))!
-         case .MFTime:      return MFTime      .initWithProxy (field: (field as! X3D .MFTime))!
+         case .MFBool:      return MFBool      .initWithProxy (context, field: (field as! X3D .MFBool))!
+         case .MFDouble:    return MFDouble    .initWithProxy (context, field: (field as! X3D .MFDouble))!
+         case .MFFloat:     return MFFloat     .initWithProxy (context, field: (field as! X3D .MFFloat))!
+         case .MFInt32:     return MFInt32     .initWithProxy (context, field: (field as! X3D .MFInt32))!
+         case .MFString:    return MFString    .initWithProxy (context, field: (field as! X3D .MFString))!
+         case .MFTime:      return MFTime      .initWithProxy (context, field: (field as! X3D .MFTime))!
          
-         case .MFColor:     return MFColor     .initWithProxy (field: (field as! X3D .MFColor))!
-         case .MFColorRGBA: return MFColorRGBA .initWithProxy (field: (field as! X3D .MFColorRGBA))!
-         case .MFImage:     return MFImage     .initWithProxy (field: (field as! X3D .MFImage))!
-         case .MFMatrix3d:  return MFMatrix3d  .initWithProxy (field: (field as! X3D .MFMatrix3d))!
-         case .MFMatrix3f:  return MFMatrix3f  .initWithProxy (field: (field as! X3D .MFMatrix3f))!
-         case .MFMatrix4d:  return MFMatrix4d  .initWithProxy (field: (field as! X3D .MFMatrix4d))!
-         case .MFMatrix4f:  return MFMatrix4f  .initWithProxy (field: (field as! X3D .MFMatrix4f))!
-         case .MFRotation:  return MFRotation  .initWithProxy (field: (field as! X3D .MFRotation))!
-         case .MFVec2d:     return MFVec2d     .initWithProxy (field: (field as! X3D .MFVec2d))!
-         case .MFVec2f:     return MFVec2f     .initWithProxy (field: (field as! X3D .MFVec2f))!
-         case .MFVec3d:     return MFVec3d     .initWithProxy (field: (field as! X3D .MFVec3d))!
-         case .MFVec3f:     return MFVec3f     .initWithProxy (field: (field as! X3D .MFVec3f))!
-         case .MFVec4d:     return MFVec4d     .initWithProxy (field: (field as! X3D .MFVec4d))!
-         case .MFVec4f:     return MFVec4f     .initWithProxy (field: (field as! X3D .MFVec4f))!
-            
-         case .MFNode:      return MFNode      .initWithProxy (field: (field as! X3D .MFNode))!
+         case .MFColor:     return MFColor     .initWithProxy (context, field: (field as! X3D .MFColor))!
+         case .MFColorRGBA: return MFColorRGBA .initWithProxy (context, field: (field as! X3D .MFColorRGBA))!
+         case .MFImage:     return MFImage     .initWithProxy (context, field: (field as! X3D .MFImage))!
+         case .MFMatrix3d:  return MFMatrix3d  .initWithProxy (context, field: (field as! X3D .MFMatrix3d))!
+         case .MFMatrix3f:  return MFMatrix3f  .initWithProxy (context, field: (field as! X3D .MFMatrix3f))!
+         case .MFMatrix4d:  return MFMatrix4d  .initWithProxy (context, field: (field as! X3D .MFMatrix4d))!
+         case .MFMatrix4f:  return MFMatrix4f  .initWithProxy (context, field: (field as! X3D .MFMatrix4f))!
+         case .MFRotation:  return MFRotation  .initWithProxy (context, field: (field as! X3D .MFRotation))!
+         case .MFVec2d:     return MFVec2d     .initWithProxy (context, field: (field as! X3D .MFVec2d))!
+         case .MFVec2f:     return MFVec2f     .initWithProxy (context, field: (field as! X3D .MFVec2f))!
+         case .MFVec3d:     return MFVec3d     .initWithProxy (context, field: (field as! X3D .MFVec3d))!
+         case .MFVec3f:     return MFVec3f     .initWithProxy (context, field: (field as! X3D .MFVec3f))!
+         case .MFVec4d:     return MFVec4d     .initWithProxy (context, field: (field as! X3D .MFVec4d))!
+         case .MFVec4f:     return MFVec4f     .initWithProxy (context, field: (field as! X3D .MFVec4f))!
+         
+         case .MFNode:      return MFNode      .initWithProxy (context, field: (field as! X3D .MFNode))!
       }
    }
    

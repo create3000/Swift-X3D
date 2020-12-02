@@ -17,8 +17,8 @@ extension JavaScript
       // Properties
       
       private unowned let scriptNode : X3D .Script
-      private let browser            : X3DBrowser
       private let context            : JSContext
+      private let browser            : X3DBrowser
       
       // Static properties
       
@@ -29,8 +29,8 @@ extension JavaScript
       internal init (scriptNode : X3D .Script, sourceText : String)
       {
          self .scriptNode = scriptNode
-         self .browser    = X3DBrowser (scriptNode .browser!, scriptNode .executionContext!)
          self .context    = JSContext (virtualMachine: Context .vm)!
+         self .browser    = X3DBrowser (scriptNode .browser!, scriptNode .executionContext!)
          
          // Add exception handler.
          
@@ -43,6 +43,8 @@ extension JavaScript
          // Evaluate script source.
 
          context .evaluateScript (sourceText)
+         
+         initialize ()
       }
       
       private final func register ()
@@ -238,7 +240,7 @@ in method \(stacktrace).
 """)
       }
       
-      internal final func initialize ()
+      private final func initialize ()
       {
          if context .evaluateScript ("typeof initialize == 'function'")! .toBool ()
          {

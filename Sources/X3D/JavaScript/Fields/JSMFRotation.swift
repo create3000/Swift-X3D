@@ -39,13 +39,11 @@ extension JavaScript
 
       // Registration
       
-      private static var proxy : JSValue!
-      
       internal override class func register (_ context : JSContext)
       {
          context ["MFRotation"] = Self .self
          
-         proxy = context .evaluateScript ("X3DArrayFieldWrapper (this, Browser, targets, \"MFRotation\");")
+         context .evaluateScript ("X3DArrayFieldWrapper (this, Browser, targets, \"MFRotation\");")
       }
       
       // Construction
@@ -74,9 +72,9 @@ extension JavaScript
          super .init (field)
       }
       
-      internal static func initWithProxy (field : Internal) -> JSValue!
+      internal static func initWithProxy (_ context : JSContext, field : Internal) -> JSValue!
       {
-         return proxy .construct (withArguments: [MFRotation (field: field)])
+         return context ["MFRotation"]! .construct (withArguments: [MFRotation (field: field)])
       }
       
       // Common operators

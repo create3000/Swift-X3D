@@ -70,7 +70,7 @@ extension JavaScript
          context ["Browser"]    = browser
 
          context .evaluateScript ("""
-(function (targets)
+(function (global, Browser, targets)
 {
    const createVrmlFromURL = X3DBrowser .prototype .createVrmlFromURL;
    const addRoute          = X3DBrowser .prototype .addRoute;
@@ -92,8 +92,14 @@ extension JavaScript
    {
       return deleteRoute .call (this, targets .get (sourceNode), sourceField, targets .get (destinationNode), destinationField)
    };
+
+   Object .defineProperty (global, "Browser", {
+      value: Browser,
+      enumerable: false,
+      configurable: false,
+   });
 })
-(targets)
+(this, Browser, targets)
 """)
       }
 

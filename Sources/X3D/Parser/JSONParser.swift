@@ -533,7 +533,8 @@ internal final class JSONParser :
       
       for line in objects
       {
-         lines += string (line) ?? "" + "\n"
+         lines += string (line) ?? ""
+         lines += "\n"
       }
       
       sourceText .wrappedValue .removeAll ()

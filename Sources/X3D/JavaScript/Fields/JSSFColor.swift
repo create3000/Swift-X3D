@@ -127,7 +127,7 @@ Object .defineProperty (SFColor .prototype, 2, {
       {
          let hsv = field .wrappedValue .hsv
          
-         return [hsv [0], hsv [1], hsv [2], hsv [3]]
+         return [hsv [0], hsv [1], hsv [2]]
       }
       
       public final func setHSV (_ h : Float, _ s : Float, _ v : Float)

@@ -43,7 +43,7 @@ extension JavaScript
       {
          context ["MFVec4d"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, false, \"MFVec4d\");")
+         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, true, \"MFVec4d\");")
       }
       
       // Construction

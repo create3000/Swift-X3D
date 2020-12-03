@@ -43,7 +43,7 @@ extension JavaScript
       {
          context ["MFImage"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, false, \"MFImage\");")
+         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, true, \"MFImage\");")
       }
       
       // Construction

@@ -38,6 +38,12 @@ this .X3DArrayFieldWrapper = function (global, targets, native, CLASS)
    Target .prototype .equals = function (array) { return equals .call (targets .get (this), targets .get (array)) }
    Target .prototype .assign = function (array) { return assign .call (targets .get (this), targets .get (array)) }
 
+   Target .prototype .push = function ()
+   {
+      for (var i = 0, length = arguments .length; i < length; ++ i)
+         this [this .length] = arguments [i];
+   }
+
    var handler =
    {
       get: function (target, key)

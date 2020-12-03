@@ -285,7 +285,7 @@ extension JavaScript
       {
          guard let node = field .wrappedValue else
          {
-            return JSValue (nullIn: JSContext .current ())!
+            return JSValue (undefinedIn: JSContext .current ())!
          }
          
          if let field = try? node .getField (name: name),

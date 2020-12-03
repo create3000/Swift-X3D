@@ -19,7 +19,7 @@ import JavaScriptCore
    func equals (_ array : MFRotation?) -> Any?
    func assign (_ array : MFRotation?)
 
-   func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFRotation
+   func get1Value (_ index : Int) -> SFRotation
    func set1Value (_ index : Int, _ value : SFRotation?)
    
    var length : Int { get set }
@@ -43,7 +43,7 @@ extension JavaScript
       {
          context ["MFRotation"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, Browser, targets, \"MFRotation\");")
+         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, false, \"MFRotation\");")
       }
       
       // Construction
@@ -95,7 +95,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFRotation
+      public final func get1Value (_ index : Int) -> SFRotation
       {
          if index >= field .wrappedValue .count
          {

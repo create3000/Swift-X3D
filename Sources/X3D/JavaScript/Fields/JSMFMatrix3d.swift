@@ -19,7 +19,7 @@ import JavaScriptCore
    func equals (_ array : MFMatrix3d?) -> Any?
    func assign (_ array : MFMatrix3d?)
 
-   func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFMatrix3d
+   func get1Value (_ index : Int) -> SFMatrix3d
    func set1Value (_ index : Int, _ value : SFMatrix3d?)
    
    var length : Int { get set }
@@ -43,7 +43,7 @@ extension JavaScript
       {
          context ["MFMatrix3d"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, Browser, targets, \"MFMatrix3d\");")
+         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, false, \"MFMatrix3d\");")
       }
       
       // Construction
@@ -95,7 +95,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFMatrix3d
+      public final func get1Value (_ index : Int) -> SFMatrix3d
       {
          if index >= field .wrappedValue .count
          {

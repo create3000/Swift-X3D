@@ -19,7 +19,7 @@ import JavaScriptCore
    func equals (_ array : MFImage?) -> Any?
    func assign (_ array : MFImage?)
 
-   func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFImage
+   func get1Value (_ index : Int) -> SFImage
    func set1Value (_ index : Int, _ value : SFImage?)
    
    var length : Int { get set }
@@ -43,7 +43,7 @@ extension JavaScript
       {
          context ["MFImage"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, Browser, targets, \"MFImage\");")
+         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, false, \"MFImage\");")
       }
       
       // Construction
@@ -95,7 +95,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFImage
+      public final func get1Value (_ index : Int) -> SFImage
       {
          if index >= field .wrappedValue .count
          {

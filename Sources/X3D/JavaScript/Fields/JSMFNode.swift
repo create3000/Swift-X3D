@@ -19,7 +19,7 @@ import JavaScriptCore
    func equals (_ array : MFNode?) -> Any?
    func assign (_ array : MFNode?)
 
-   func get1Value (_ browser : X3DBrowser, _ index : Int) -> JSValue
+   func get1Value (_ index : Int) -> JSValue?
    func set1Value (_ index : Int, _ value : SFNode?)
    
    var length : Int { get set }
@@ -43,7 +43,7 @@ extension JavaScript
       {
          context ["MFNode"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, Browser, targets, \"MFNode\");")
+         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, false, \"MFNode\");")
       }
       
       // Construction
@@ -95,8 +95,10 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> JSValue
+      public final func get1Value (_ index : Int) -> JSValue?
       {
+         guard let browser = JSContext .current ()? .browser else { return exception ("Invalid context.") }
+         
          if index >= field .wrappedValue .count
          {
             field .wrappedValue .resize (index + 1, fillWith: nil)
@@ -106,7 +108,7 @@ extension JavaScript
          
          guard node != nil else
          {
-            return JSValue (nullIn: JSContext .current ())
+            return nil
          }
          
          if let field = browser .cache .object (forKey: node)

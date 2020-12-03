@@ -19,7 +19,7 @@ import JavaScriptCore
    func equals (_ array : MFVec2d?) -> Any?
    func assign (_ array : MFVec2d?)
 
-   func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFVec2d
+   func get1Value (_ index : Int) -> SFVec2d
    func set1Value (_ index : Int, _ value : SFVec2d?)
    
    var length : Int { get set }
@@ -43,7 +43,7 @@ extension JavaScript
       {
          context ["MFVec2d"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, Browser, targets, \"MFVec2d\");")
+         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, false, \"MFVec2d\");")
       }
       
       // Construction
@@ -95,7 +95,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFVec2d
+      public final func get1Value (_ index : Int) -> SFVec2d
       {
          if index >= field .wrappedValue .count
          {

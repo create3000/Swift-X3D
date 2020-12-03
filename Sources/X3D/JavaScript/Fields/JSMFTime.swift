@@ -19,7 +19,7 @@ import JavaScriptCore
    func equals (_ array : MFTime?) -> Any?
    func assign (_ array : MFTime?)
 
-   func get1Value (_ browser : X3DBrowser, _ index : Int) -> Scalar
+   func get1Value (_ index : Int) -> Scalar
    func set1Value (_ index : Int, _ value : Scalar)
    
    var length : Int { get set }
@@ -44,7 +44,7 @@ extension JavaScript
       {
          context ["MFTime"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, Browser, targets, \"MFTime\");")
+         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, true, \"MFTime\");")
       }
       
       // Construction
@@ -93,7 +93,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> Scalar
+      public final func get1Value (_ index : Int) -> Scalar
       {
          if index >= field .wrappedValue .count
          {

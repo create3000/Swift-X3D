@@ -19,7 +19,7 @@ import JavaScriptCore
    func equals (_ array : MFColorRGBA?) -> Any?
    func assign (_ array : MFColorRGBA?)
 
-   func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFColorRGBA
+   func get1Value (_ index : Int) -> SFColorRGBA
    func set1Value (_ index : Int, _ value : SFColorRGBA?)
    
    var length : Int { get set }
@@ -43,7 +43,7 @@ extension JavaScript
       {
          context ["MFColorRGBA"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, Browser, targets, \"MFColorRGBA\");")
+         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, false, \"MFColorRGBA\");")
       }
       
       // Construction
@@ -95,7 +95,7 @@ extension JavaScript
 
       // Property access
       
-      public final func get1Value (_ browser : X3DBrowser, _ index : Int) -> SFColorRGBA
+      public final func get1Value (_ index : Int) -> SFColorRGBA
       {
          if index >= field .wrappedValue .count
          {

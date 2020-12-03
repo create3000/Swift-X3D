@@ -24,7 +24,7 @@ extension JavaScript
          context ["X3DArrayField"] = Self .self
          
          context .evaluateScript ("""
-this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
+this .X3DArrayFieldWrapper = function (global, targets, native, CLASS)
 {
    const Target    = global [CLASS];
    const get1Value = Target .prototype .get1Value;
@@ -50,7 +50,7 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
 
             if (Number .isInteger (index) && index >= 0)
             {
-               return get1Value .call (self, Browser, index);
+               return get1Value .call (self, index);
             }
             else
             {
@@ -64,7 +64,7 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
             return self [key];
          }
       },
-      set: function (target, key, value)
+      set: (native ? function (target, key, value)
       {
          const self = targets .get (target);
 
@@ -74,7 +74,7 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
 
             if (Number .isInteger (index) && index >= 0)
             {
-               set1Value .call (self, index, targets .get (value) || value);
+               set1Value .call (self, index, value);
             }
             else
             {
@@ -90,7 +90,33 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
             self [key] = value;
             return true;
          }
-      },
+      } : function (target, key, value)
+      {
+         const self = targets .get (target);
+
+         try
+         {
+            const index = key * 1;
+
+            if (Number .isInteger (index) && index >= 0)
+            {
+               set1Value .call (self, index, targets .get (value));
+            }
+            else
+            {
+               self [key] = value;
+            }
+
+            return true;
+         }
+         catch (error)
+         {
+            // Catch symbol error.
+
+            self [key] = value;
+            return true;
+         }
+      }),
       has: function (target, key)
       {
          if (Number .isInteger (key * 1))
@@ -99,6 +125,25 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
          return key in targets .get (target);
       },
    };
+
+   function MFNativeArray (object)
+   {
+      const proxy = new Proxy (this, handler);
+
+      if (object instanceof Target && !targets .get (object))
+      {
+         var self = object;
+      }
+      else
+      {
+         var self = new Target (...arguments);
+      }
+
+      targets .set (this,  self);
+      targets .set (proxy, self);
+
+      return proxy;
+   }
 
    function MFArray (object)
    {
@@ -124,10 +169,11 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
       return proxy;
    }
 
-   MFArray .prototype = Target .prototype;
-   
+   MFNativeArray .prototype = Target .prototype;
+   MFArray       .prototype = Target .prototype;
+
    Object .defineProperty (global, CLASS, {
-      value: MFArray,
+      value: native ? MFNativeArray : MFArray,
       enumerable: false,
       configurable: false,
    });

@@ -54,37 +54,36 @@ extension JavaScript
          context .evaluateScript ("""
 (function (global, Browser, targets)
 {
-   const Target      = global .SFNode;
-   const getProperty = Target .prototype .getProperty;
-   const setProperty = Target .prototype .setProperty;
+   const Target              = global .SFNode;
+   const getProperty         = Target .prototype .getProperty;
+   const setProperty         = Target .prototype .setProperty;
+   const equals              = Target .prototype .equals;
+   const assign              = Target .prototype .assign;
+   const getNodeTypeName     = Target .prototype .getNodeTypeName;
+   const getNodeName         = Target .prototype .getNodeName;
+   const getNodeType         = Target .prototype .getNodeType;
+   const getFieldDefinitions = Target .prototype .getFieldDefinitions;
+   const toVRMLString        = Target .prototype .toVRMLString;
+   const toXMLString         = Target .prototype .toXMLString;
 
    delete Target .prototype .getProperty;
    delete Target .prototype .setProperty;
 
-   function getMethod (target, method)
-   {
-      return function ()
-      {
-         for (var i = 0, length = arguments .length; i < length; ++ i)
-         {
-            arguments [i] = targets .get (arguments [i]) || arguments [i];
-         }
+   Target .prototype .equals = function (array) { return equals .call (targets .get (this), targets .get (array)) }
+   Target .prototype .assign = function (array) { return assign .call (targets .get (this), targets .get (array)) }
 
-         return method .apply (target, arguments);
-      };
-   }
+   Target .prototype .getNodeTypeName     = function () { return getNodeTypeName     .call (targets .get (this)) }
+   Target .prototype .getNodeName         = function () { return getNodeName         .call (targets .get (this)) }
+   Target .prototype .getNodeType         = function () { return getNodeType         .call (targets .get (this)) }
+   Target .prototype .getFieldDefinitions = function () { return getFieldDefinitions .call (targets .get (this)) }
+   Target .prototype .toVRMLString        = function () { return toVRMLString        .call (targets .get (this)) }
+   Target .prototype .toXMLString         = function () { return toXMLString         .call (targets .get (this)) }
 
    var handler =
    {
       get: function (target, key)
       {
-         const self  = targets .get (target);
-         const value = self [key];
-
-         if (typeof value == "function")
-            return getMethod (self, value);
-
-         return value;
+         return targets .get (target) [key];
       },
       set: function (target, key, value)
       {
@@ -103,7 +102,7 @@ extension JavaScript
       const nodes  = [ ];
       const fields = [ ];
 
-      self .getFieldDefinitions () .forEach (function (fieldDefinition)
+      getFieldDefinitions .call (self) .forEach (function (fieldDefinition)
       {
          switch (fieldDefinition .dataType)
          {

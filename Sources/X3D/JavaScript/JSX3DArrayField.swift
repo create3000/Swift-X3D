@@ -29,22 +29,14 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
    const Target    = global [CLASS];
    const get1Value = Target .prototype .get1Value;
    const set1Value = Target .prototype .set1Value;
-
+   const equals    = Target .prototype .equals;
+   const assign    = Target .prototype .assign;
+   
    delete Target .prototype .get1Value;
    delete Target .prototype .set1Value;
 
-   function getMethod (self, method)
-   {
-      return function ()
-      {
-         for (var i = 0, length = arguments .length; i < length; ++ i)
-         {
-            arguments [i] = targets .get (arguments [i]) || arguments [i];
-         }
-
-         return method .apply (self, arguments);
-      };
-   }
+   Target .prototype .equals = function (array) { return equals .call (targets .get (this), targets .get (array)) }
+   Target .prototype .assign = function (array) { return assign .call (targets .get (this), targets .get (array)) }
 
    var handler =
    {
@@ -62,24 +54,14 @@ this .X3DArrayFieldWrapper = function (global, Browser, targets, CLASS)
             }
             else
             {
-               const value = self [key];
-
-               if (typeof value == "function")
-                  return getMethod (self, value);
-
-               return value;
+               return self [key];
             }
          }
          catch (error)
          {
             // Catch symbol error.
 
-            const value = self [key];
-
-            if (typeof value == "function")
-               return getMethod (self, value);
-
-            return value;
+            return self [key];
          }
       },
       set: function (target, key, value)

@@ -40,10 +40,23 @@ this .X3DArrayFieldWrapper = function (global, targets, native, CLASS)
 
    Target .prototype .push = function ()
    {
-      for (var i = 0, length = arguments .length; i < length; ++ i)
-         this [this .length] = arguments [i];
-   }
+      const self = targets .get (this);
+      let   l    = self .length;
 
+      if (native)
+      {
+         for (let i = 0, length = arguments .length; i < length; ++ i)
+            set1Value .call (self, l + i, arguments [i]);
+      }
+      else
+      {
+         for (let i = 0, length = arguments .length; i < length; ++ i)
+            set1Value .call (self, l + i, targets .get (arguments [i]));
+      }
+
+      return self .length;
+   };
+   
    var handler =
    {
       get: function (target, key)

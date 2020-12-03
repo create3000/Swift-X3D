@@ -246,16 +246,19 @@ in method \(stacktrace).
             context ["initialize"]! .call (withArguments: nil)
          }
          
-         scriptNode .scene! .$isLive .addInterest ("set_live", Context .set_live, self)
+         scriptNode .scene? .$isLive .addInterest ("set_live", Context .set_live, self)
          
          set_live ()
       }
       
       private final func set_live ()
       {
-         let browser = scriptNode .browser!
+         guard let browser          = scriptNode .browser,
+               let scene            = scriptNode .scene,
+               let executionContext = scriptNode .executionContext
+         else { return }
          
-         if scriptNode .scene! .isLive || scriptNode .executionContext! .getType () .contains (.X3DPrototypeInstance)
+         if scene .isLive || executionContext .getType () .contains (.X3DPrototypeInstance)
          {
             if context .evaluateScript ("typeof prepareEvents == 'function'")! .toBool ()
             {

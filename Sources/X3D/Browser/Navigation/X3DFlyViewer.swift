@@ -10,12 +10,22 @@ import Cocoa
 internal class X3DFlyViewer :
    X3DViewer
 {
+   // Member types
+   
+   enum Mode
+   {
+      case none
+      case move
+      case pan
+   }
+   
    // Properties
    
    private final var fromVector : Vector3f = .zero
    private final var toVector   : Vector3f = .zero
    private final var direction  : Vector3f = .zero
    private final var startTime  : TimeInterval = 0
+   private final var mode       : Mode = .none
    
    // Static properties
    
@@ -23,6 +33,17 @@ internal class X3DFlyViewer :
    private static let SHIFT_SPEED_FACTOR    : Float = 4 * SPEED_FACTOR
    private static let ROTATION_SPEED_FACTOR : Float = 1.4
    private static let ROTATION_LIMIT        : Float = 40
+   
+   private final var renderer      : Renderer!
+   private final var renderContext : RenderContext!
+
+   internal override func initialize ()
+   {
+      super .initialize ()
+      
+      renderer      = browser! .renderers .pop ()
+      renderContext = RenderContext (renderer: renderer, isTransparent: false)
+   }
 
    // Event handlers
    
@@ -48,11 +69,7 @@ internal class X3DFlyViewer :
          
          fromVector = Vector3f (Float (point .x), 0, Float (-point .y))
          toVector   = fromVector
-         
-         if browser! .getBrowserOptions () .Rubberband
-         {
-            browser! .addBrowserInterest (event: .Browser_Done, id: "move", method: X3DFlyViewer .move, object: self)
-         }
+         mode       = .move
       }
    }
    
@@ -92,6 +109,7 @@ internal class X3DFlyViewer :
       disconnect ()
 
       isActive = false
+      mode     = .none
 
       browser! .removeCollision (object: self)
       browser! .setNeedsDisplay ()
@@ -147,11 +165,6 @@ internal class X3DFlyViewer :
 
       startTime = now
    }
-   
-   private final func move ()
-   {
-      
-   }
 
    private final func addFly ()
    {
@@ -165,7 +178,86 @@ internal class X3DFlyViewer :
 
    private final func disconnect ()
    {
-      browser! .removeBrowserInterest (event: .Browser_Done, id: "move", method: X3DFlyViewer .move, object: self)
-      browser! .removeBrowserInterest (event: .Browser_Done, id: "fly",  method: X3DFlyViewer .fly,  object: self)
+      browser! .removeBrowserInterest (event: .Browser_Done, id: "fly",  method: X3DFlyViewer .fly, object: self)
+   }
+   
+   internal final override func render (_ commandBuffer : MTLCommandBuffer)
+   {
+      guard browser! .getBrowserOptions () .Rubberband else { return }
+      guard mode != .none else { return }
+
+      let width     = Float (browser! .viewport [2])
+      let height    = Float (browser! .viewport [3])
+      let scale     = Float (browser! .layer! .contentsScale)
+      let fromPoint = Vector4f (fromVector .x * scale, -fromVector .z * scale, 0, 1)
+      let toPoint   = Vector4f (toVector   .x * scale, -toVector   .z * scale, 0, 1)
+      
+      let direction = toPoint - fromPoint
+      let offset    = normalize (Vector4f (-direction .y, direction .x, 0, 0)) * 3
+      let black     = Color4f (.zero, 1)
+      
+      let vertices = [
+         // Black rectable vertices
+         
+         x3d_VertexIn (fogDepth: 0, color: black, texCoords: (.zero, .zero), normal: .zero, point: fromPoint - offset),
+         x3d_VertexIn (fogDepth: 0, color: black, texCoords: (.zero, .zero), normal: .zero, point: fromPoint + offset),
+         x3d_VertexIn (fogDepth: 0, color: black, texCoords: (.zero, .zero), normal: .zero, point: toPoint   + offset),
+         
+         x3d_VertexIn (fogDepth: 0, color: black, texCoords: (.zero, .zero), normal: .zero, point: fromPoint - offset),
+         x3d_VertexIn (fogDepth: 0, color: black, texCoords: (.zero, .zero), normal: .zero, point: toPoint   + offset),
+         x3d_VertexIn (fogDepth: 0, color: black, texCoords: (.zero, .zero), normal: .zero, point: toPoint   - offset),
+
+         // White line vertices
+         
+         x3d_VertexIn (fogDepth: 0, color: .one, texCoords: (.zero, .zero), normal: .zero, point: fromPoint),
+         x3d_VertexIn (fogDepth: 0, color: .one, texCoords: (.zero, .zero), normal: .zero, point: toPoint),
+      ]
+      
+      let buffer = browser! .device! .makeBuffer (bytes: vertices,
+                                                  length: vertices .count * MemoryLayout <x3d_VertexIn> .stride,
+                                                  options: [ ])!
+      
+      // Prepare render pass, ie. create render encoder with appropriate settings.
+      
+      guard let renderPassDescriptor = browser! .currentRenderPassDescriptor else { return }
+      
+      renderPassDescriptor .depthAttachment .loadAction      = .dontCare
+      renderPassDescriptor .colorAttachments [0] .loadAction = .dontCare
+
+      guard let renderEncoder = commandBuffer .makeRenderCommandEncoder (descriptor: renderPassDescriptor) else { return }
+      
+      // Set default sampler for texture channels 0 and 1.
+      renderEncoder .setFragmentSamplerState (browser! .defaultSampler, index: 0)
+      renderEncoder .setFragmentSamplerState (browser! .defaultSampler, index: 1)
+      
+      // Set render pipeline states.
+      renderEncoder .setDepthStencilState (renderer .browser .depthStencilState [false])
+      renderEncoder .setRenderPipelineState (renderer .browser .renderPipelineState [.LineOpaque]!)
+
+      // Set uniforms.
+      let uniforms         = renderContext .uniforms
+      let projectionMatrix = Camera .ortho (left: 0, right: width, bottom: 0, top: height, nearValue: -1, farValue: 1)
+
+      uniforms .pointee .projectionMatrix = projectionMatrix
+      uniforms .pointee .modelViewMatrix  = .identity
+      uniforms .pointee .fog .type        = x3d_NoFog
+      uniforms .pointee .colorMaterial    = true
+     
+      // Set buffers.
+      renderEncoder .setVertexBuffer   (renderContext .uniformsBuffer, offset: 0, index: 1)
+      renderEncoder .setFragmentBuffer (renderContext .uniformsBuffer, offset: 0, index: 1)
+      
+      // Draw black line.
+      renderEncoder .setCullMode (.back)
+      renderEncoder .setVertexBuffer (buffer, offset: 0, index: 0)
+      renderEncoder .drawPrimitives (type: .triangle, vertexStart: 0, vertexCount: 6)
+      
+      // Draw white line.
+      renderEncoder .setVertexBuffer (buffer, offset: 0, index: 0)
+      renderEncoder .drawPrimitives (type: .line, vertexStart: 6, vertexCount: 2)
+
+      // Finish render pass.
+      
+      renderEncoder .endEncoding ()
    }
 }

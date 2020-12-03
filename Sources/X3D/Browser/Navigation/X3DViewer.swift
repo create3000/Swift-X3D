@@ -17,7 +17,8 @@ internal class X3DViewer :
    internal func mouseDragged (with event : NSEvent) { }
    internal func mouseUp (with event : NSEvent) { }
    internal func scrollWheel (with event : NSEvent) { }
-   
+   internal func render (_ commandBuffer : MTLCommandBuffer) { }
+
    // Properties
    
    internal final var isActive : Bool = false

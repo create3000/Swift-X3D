@@ -222,5 +222,7 @@ public class X3DBrowserContext :
       primitives = renderer .primitives
       
       callBrowserInterests (event: .Browser_Done)
+      
+      viewerNode .render (commandBuffer)
    }
 }

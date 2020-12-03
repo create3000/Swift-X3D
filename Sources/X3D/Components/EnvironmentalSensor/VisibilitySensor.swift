@@ -59,7 +59,9 @@ public final class VisibilitySensor :
    
    private final func set_enabled ()
    {
-      if enabled && scene? .isLive ?? false
+      guard let scene = scene else { return }
+      
+      if enabled && scene .isLive
       {
          browser! .addBrowserInterest (event: .Browser_Sensors, id: "update", method: VisibilitySensor .update, object: self)
       }

@@ -241,12 +241,14 @@ in method \(stacktrace).
       
       internal final func initialize ()
       {
+         guard let scene = scriptNode .scene else { return }
+         
          if context .evaluateScript ("typeof initialize == 'function'")! .toBool ()
          {
             context ["initialize"]! .call (withArguments: nil)
          }
          
-         scriptNode .scene? .$isLive .addInterest ("set_live", Context .set_live, self)
+         scene .$isLive .addInterest ("set_live", Context .set_live, self)
          
          set_live ()
       }

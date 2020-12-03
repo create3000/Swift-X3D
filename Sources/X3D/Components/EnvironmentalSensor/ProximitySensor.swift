@@ -84,7 +84,9 @@ public final class ProximitySensor :
    
    private final func set_enabled ()
    {
-      if isCameraObject && enabled && size != .zero && scene? .isLive ?? false
+      guard let scene = scene else { return }
+      
+      if isCameraObject && enabled && size != .zero && scene .isLive
       {
          browser! .addBrowserInterest (event: .Browser_Sensors, id: "update", method: ProximitySensor .update, object: self)
       }

@@ -117,7 +117,7 @@ public final class LOD :
       {
          childNode = nil
       }
-            
+      
       set_cameraObjects ()
       set_pickableObjects ()
    }
@@ -162,10 +162,9 @@ public final class LOD :
    {
       switch type
       {
-         case .Pointer:
-            break
-         case .Picking:
-            break
+         case .Picking: do
+         {
+         }
          case .Render: do
          {
             if !keepCurrentLevel

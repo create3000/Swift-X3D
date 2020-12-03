@@ -106,9 +106,9 @@ public final class VisibilitySensor :
 
       guard type == .Render else { return }
 
-      traversed = true
-
       guard !visible else { return }
+
+      traversed = true
 
       if size == -.one
       {

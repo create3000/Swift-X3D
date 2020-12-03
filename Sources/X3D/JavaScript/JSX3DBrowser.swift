@@ -95,7 +95,7 @@ extension JavaScript
 
    Object .defineProperty (global, "Browser", {
       value: Browser,
-      enumerable: false,
+      enumerable: true,
       configurable: false,
    });
 })

@@ -173,9 +173,9 @@ public final class ProximitySensor :
          }
          case .Render: do
          {
-            setTraversed (true)
-
             guard !inside else { return }
+
+            setTraversed (true)
 
             if size == -.one
             {

@@ -23,11 +23,30 @@ extension JavaScript
             }
          }
          
-         context ["NULL"]  = JSValue (nullIn: context)
-         context ["FALSE"] = false
-         context ["TRUE"]  = true
          context ["print"] = print
          context ["trace"] = print
+         
+         context .evaluateScript("""
+(function (global)
+{
+   Object .defineProperty (global, "NULL", {
+      value: null,
+      enumerable: true,
+      configurable: false,
+   });
+   Object .defineProperty (global, "FALSE", {
+      value: false,
+      enumerable: true,
+      configurable: false,
+   });
+   Object .defineProperty (global, "TRUE", {
+      value: true,
+      enumerable: true,
+      configurable: false,
+   });
+})
+(this)
+""")
      }
    }
 }

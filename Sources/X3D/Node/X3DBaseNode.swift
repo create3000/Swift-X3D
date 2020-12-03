@@ -169,6 +169,7 @@ public class X3DBaseNode :
 //      }
 
       browser? .addTaintedField (field: field, event: event)
+      browser? .setNeedsDisplay ()
 
       guard field .isInput || (extendedEventHandling && !field .isOutput) else { return }
 

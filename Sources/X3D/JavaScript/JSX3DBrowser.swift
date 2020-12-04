@@ -23,6 +23,8 @@ import JavaScriptCore
    func getBrowserOption (_ name : String) -> Any?
    func setBrowserOption (_ name : String, _ value : Any?)
    
+   func replaceWorld (_ scene : JSValue?)
+   
    func print ()
    func println ()
 
@@ -119,24 +121,8 @@ extension JavaScript
          get { browser .getDescription () }
          set { browser .setDescription (newValue) }
       }
-
-      // print
       
-      public final func print ()
-      {
-         if let args = JSContext .currentArguments () as? [JSValue]
-         {
-            browser .print (args .map { $0 .toString () ?? "" } .joined (separator: " "))
-         }
-      }
-      
-      public final func println ()
-      {
-         if let args = JSContext .currentArguments () as? [JSValue]
-         {
-            browser .println (args .map { $0 .toString () ?? "" } .joined (separator: " "))
-         }
-      }
+      // Properties handling
       
       func getRenderingProperty (_ name : String) -> Any?
       {
@@ -193,6 +179,53 @@ extension JavaScript
             return exception (error .localizedDescription)
          }
       }
+      
+      // Scene handling
+      
+      public final func replaceWorld (_ scene : JSValue?)
+      {
+         if let scene = scene? .toObjectOf (X3DScene .self) as? X3DScene
+         {
+            browser .replaceWorld (scene: scene .scene)
+         }
+         else if let rootNodes = scene? .toObjectOf (MFNode .self) as? MFNode
+         {
+            if rootNodes .field .wrappedValue .isEmpty
+            {
+               browser .replaceWorld (scene: nil)
+            }
+            else
+            {
+               let scene = browser .createScene (profile: try! browser .getProfile (name: "Full"), components: [ ])
+               
+               scene .rootNodes = rootNodes .field .wrappedValue
+               
+               browser .replaceWorld (scene: scene)
+            }
+         }
+         else
+         {
+            browser .replaceWorld (scene: nil)
+         }
+      }
+
+      // print handling
+      
+      public final func print ()
+      {
+         if let args = JSContext .currentArguments () as? [JSValue]
+         {
+            browser .print (args .map { $0 .toString () ?? "" } .joined (separator: " "))
+         }
+      }
+      
+      public final func println ()
+      {
+         if let args = JSContext .currentArguments () as? [JSValue]
+         {
+            browser .println (args .map { $0 .toString () ?? "" } .joined (separator: " "))
+         }
+      }
 
       // VRML legacy functions:
       
@@ -221,7 +254,7 @@ extension JavaScript
          return executionContext .getWorldURL () .absoluteURL .description
       }
       
-      private static var scenes : [X3DScene] = [ ]
+      private static var scenes : [X3D .X3DScene] = [ ]
       
       public final func createVrmlFromString (_ vrmlSyntax : String) -> Any?
       {

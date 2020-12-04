@@ -54,8 +54,10 @@ extension JavaScript
 
          // Register objects and functions.
          
-         Globals    .register (context, scriptNode .browser!)
-         X3DBrowser .register (context, browser)
+         Globals             .register (context, scriptNode .browser!)
+         X3DBrowser          .register (context, browser)
+         X3DScene            .register (context)
+         X3DExecutionContext .register (context)
          
          X3DConstants       .register (context)
          X3DFieldDefinition .register (context)

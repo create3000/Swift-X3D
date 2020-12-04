@@ -43,7 +43,7 @@ extension JavaScript
       // Private properties
       
       internal private(set) final var field : Internal
-      private final var scene : X3DScene?
+      private final var scene : X3D .X3DScene?
 
       // Registration
       

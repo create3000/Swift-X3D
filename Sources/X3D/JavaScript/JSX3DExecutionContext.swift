@@ -10,6 +10,8 @@ import JavaScriptCore
 @objc internal protocol X3DExecutionContextExports :
    JSExport
 {
+   var worldURL : String { get }
+   
    func toString () -> String
 }
 
@@ -34,7 +36,11 @@ extension JavaScript
       {
          self .executionContext = executionContext
       }
-
+      
+      //
+      
+      dynamic public final var worldURL : String { executionContext .getWorldURL () .absoluteURL .description }
+      
       // Input/Output
       
       public func toString () -> String

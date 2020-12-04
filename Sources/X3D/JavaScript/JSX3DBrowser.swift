@@ -20,6 +20,8 @@ import JavaScriptCore
    var currentFrameRate : Double { get }
    var description      : String { get set }
    
+   var currentScene : Any { get }
+   
    func replaceWorld (_ scene : JSValue?)
    func createX3DFromString (_ x3dSyntax : String) -> X3DScene?
    func createX3DFromURL (_ url : MFString?, _ node : SFNode?, _ event : String?) -> Any?
@@ -153,6 +155,18 @@ extension JavaScript
       }
       
       // Scene handling
+      
+      dynamic public final var currentScene : Any
+      {
+         if let scene = executionContext as? X3D .X3DScene
+         {
+            return X3DScene (scene)
+         }
+         else
+         {
+            return X3DExecutionContext (executionContext)
+         }
+      }
       
       public final func replaceWorld (_ scene : JSValue?)
       {

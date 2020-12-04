@@ -33,6 +33,7 @@ extension JavaScript
       configurable: false,
    });
 });
+
 [\(X3DLoadState .allCases .map { "[\"\($0)\", \(String ($0 .rawValue))]" } .joined (separator: ","))]
 .forEach (function (value)
 {
@@ -42,6 +43,7 @@ extension JavaScript
       configurable: false,
    });
 });
+
 [\(X3DAccessType .allCases .map { "[\"\($0)\", \(String ($0 .rawValue))]" } .joined (separator: ","))]
 .forEach (function (value)
 {
@@ -51,6 +53,7 @@ extension JavaScript
       configurable: false,
    });
 });
+
 [\(X3DFieldType .allCases .map { "[\"\($0)\", \(String ($0 .rawValue))]" } .joined (separator: ","))]
 .forEach (function (value)
 {
@@ -60,6 +63,7 @@ extension JavaScript
       configurable: false,
    });
 });
+
 [\(X3DNodeType .allCases .map { "[\"\($0)\", \(String ($0 .rawValue))]" } .joined (separator: ","))]
 .forEach (function (value)
 {
@@ -69,6 +73,8 @@ extension JavaScript
       configurable: false,
    });
 });
+
+DefineProperty (this, "X3DConstants", X3DConstants);
 """)
       }
       

@@ -31,7 +31,7 @@ this .DefineProperty = function (global, name, value)
 {
    Object .defineProperty (global, name, {
       value: value,
-      enumerable: false,
+      enumerable: true,
       configurable: false,
    });
 };

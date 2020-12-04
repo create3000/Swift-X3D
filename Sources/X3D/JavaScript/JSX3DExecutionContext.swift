@@ -23,7 +23,7 @@ extension JavaScript
       
       public class func register (_ context : JSContext)
       {
-         context ["X3DScene"] = Self .self
+         context ["X3DExecutionContext"] = Self .self
          
          context .evaluateScript ("DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);")
       }

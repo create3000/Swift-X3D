@@ -203,25 +203,20 @@ extension JavaScript
          }
          else if let rootNodes = scene? .toObjectOf (MFNode .self) as? MFNode
          {
-            if rootNodes .field .wrappedValue .isEmpty
+            // VRML version of replaceWorld has a MFNode value as argument.
+            
+            let scene = browser .createScene (profile: try! browser .getProfile (name: "Full"), components: [ ])
+            
+            for rootNode in rootNodes .field .wrappedValue
             {
-               browser .replaceWorld (scene: nil)
+               guard let rootNode = rootNode else { continue }
+               
+               scene .$isLive .addFieldInterest (to: rootNode .scene! .$isLive)
             }
-            else
-            {
-               let scene = browser .createScene (profile: try! browser .getProfile (name: "Full"), components: [ ])
-               
-               for rootNode in rootNodes .field .wrappedValue
-               {
-                  guard let rootNode = rootNode else { continue }
-                  
-                  scene .$isLive .addFieldInterest (to: rootNode .scene! .$isLive)
-               }
-               
-               scene .rootNodes = rootNodes .field .wrappedValue
-               
-               browser .replaceWorld (scene: scene)
-            }
+            
+            scene .rootNodes = rootNodes .field .wrappedValue
+            
+            browser .replaceWorld (scene: scene)
          }
          else
          {

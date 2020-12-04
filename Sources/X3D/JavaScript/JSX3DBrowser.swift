@@ -408,44 +408,7 @@ extension JavaScript
       
       public final func createVrmlFromURL (_ url : MFString?, _ node : SFNode?, _ event : String)
       {
-         guard let url  = url,
-               let node = node
-         else { return exception ("Invalid argument.") }
-         
-         guard let field = try? node .field .wrappedValue .getField (name: event) else
-         {
-            return exception (t("No such event or field '%@' in node class %@.", event, node .field .wrappedValue .getTypeName ()))
-         }
-         
-         guard field .getType () == .MFNode else
-         {
-            return exception (t("Field '%@' in node %@ must be of type MFNode.", event, node .field .wrappedValue .getTypeName ()))
-         }
-         
-         let worldURL = executionContext .getWorldURL ()
-
-         browser .browserQueue .async
-         {
-            do
-            {
-               let scene = try self .browser .createX3DFromURL (url: url .field .wrappedValue .map
-               {
-                  URL (string: $0, relativeTo: worldURL)
-               }
-               .compactMap { $0 })
-               
-               DispatchQueue .main .async
-               {
-                  self .browser .scriptingScenes .append (scene)
-                  
-                  field .set (value: scene .$rootNodes)
-               }
-            }
-            catch
-            {
-               self .browser .console .error (error .localizedDescription)
-            }
-         }
+         _ = createX3DFromURL (url, node, event)
       }
       
       public final func addRoute (_ sourceNode : SFNode?,

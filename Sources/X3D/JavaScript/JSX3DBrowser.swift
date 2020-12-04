@@ -22,6 +22,7 @@ import JavaScriptCore
    
    func replaceWorld (_ scene : JSValue?)
    func createX3DFromString (_ x3dSyntax : String) -> X3DScene?
+   func createX3DFromURL (_ url : MFString?, _ node : SFNode?, _ event : String?) -> Any?
    func loadURL (_ url : MFString?, _ parameter : MFString?)
 
    func getRenderingProperty (_ name : String) -> Any?
@@ -80,8 +81,9 @@ extension JavaScript
 {
    // X3D
 
-   const replaceWorld = X3DBrowser .prototype .replaceWorld;
-   const loadURL      = X3DBrowser .prototype .loadURL;
+   const replaceWorld     = X3DBrowser .prototype .replaceWorld;
+   const createX3DFromURL = X3DBrowser .prototype .createX3DFromURL;
+   const loadURL          = X3DBrowser .prototype .loadURL;
 
    X3DBrowser .prototype .replaceWorld = function (scene)
    {
@@ -91,6 +93,11 @@ extension JavaScript
    X3DBrowser .prototype .loadURL = function (url, parameter)
    {
       return loadURL .call (this, targets .get (url), targets .get (parameter));
+   };
+   
+   X3DBrowser .prototype .createX3DFromURL = function (url, node, event)
+   {
+      return createX3DFromURL .call (this, targets .get (url), targets .get (node), event)
    };
 
    // Wrap VRML legacy functions.
@@ -103,7 +110,7 @@ extension JavaScript
    
    X3DBrowser .prototype .createVrmlFromURL = function (url, node, event)
    {
-      return createVrmlFromURL .call (this, url, targets .get (node), event)
+      return createVrmlFromURL .call (this, targets .get (url), targets .get (node), event)
    };
    
    X3DBrowser .prototype .addRoute = function (sourceNode, sourceField, destinationNode, destinationField)
@@ -186,7 +193,7 @@ extension JavaScript
             
             // TODO: cache scene.
             
-            browser .getExecutionContext () .$isLive .addFieldInterest (to: scene .$isLive)
+            //browser .getExecutionContext () .$isLive .addFieldInterest (to: scene .$isLive)
             
             browser .scriptingScenes .append (scene)
             
@@ -197,7 +204,76 @@ extension JavaScript
             return exception (error .localizedDescription)
          }
       }
+      
+      public final func createX3DFromURL (_ url : MFString?, _ node : SFNode?, _ event : String?) -> Any?
+      {
+         if let url   = url,
+            let node  = node,
+            let event = event
+         {
+            guard let field = try? node .field .wrappedValue .getField (name: event) else
+            {
+               return exception (t("No such event or field '%@' in node class %@.", event, node .field .wrappedValue .getTypeName ()))
+            }
+            
+            guard field .getType () == .MFNode else
+            {
+               return exception (t("Field '%@' in node %@ must be of type MFNode.", event, node .field .wrappedValue .getTypeName ()))
+            }
+            
+            let worldURL = executionContext .getWorldURL ()
 
+            browser .browserQueue .async
+            {
+               do
+               {
+                  let scene = try self .browser .createX3DFromURL (url: url .field .wrappedValue .map
+                  {
+                     URL (string: $0, relativeTo: worldURL)
+                  }
+                  .compactMap { $0 })
+                  
+                  DispatchQueue .main .async
+                  {
+                     self .browser .scriptingScenes .append (scene)
+                     
+                     field .set (value: scene .$rootNodes)
+                  }
+               }
+               catch
+               {
+                  self .browser .console .error (error .localizedDescription)
+               }
+            }
+            
+            return JSValue (nullIn: JSContext .current ())
+         }
+         
+         if let url = url
+         {
+            do
+            {
+               let scene = try browser .createX3DFromURL (url: url .field .wrappedValue .map
+               {
+                  URL (string: $0, relativeTo: executionContext .getWorldURL ())
+               }
+               .compactMap { $0 })
+               
+               //browser .getExecutionContext () .$isLive .addFieldInterest (to: scene .$isLive)
+               
+               browser .scriptingScenes .append (scene)
+               
+               return X3DScene (scene)
+            }
+            catch
+            {
+               return exception (error .localizedDescription)
+            }
+         }
+         
+         return exception ("Invalid argument.")
+      }
+ 
       public final func loadURL (_ url : MFString?, _ parameter : MFString?)
       {
          guard let url       = url,

@@ -123,12 +123,19 @@ public final class PlaneSensor :
                                                   viewport: viewport)
             {
                startPoint = intersection
-
-               trackStart (lineTrackPoint (hit: hit,
-                                           line: Line3f (point: line .direction, direction: line .direction),
-                                           modelViewMatrix: modelViewMatrix,
-                                           projectionMatrix: projectionMatrix,
-                                           viewport: viewport)!)
+               
+               if let intersection = lineTrackPoint (hit: hit,
+                                                     line: Line3f (point: line .direction, direction: line .direction),
+                                                     modelViewMatrix: modelViewMatrix,
+                                                     projectionMatrix: projectionMatrix,
+                                                     viewport: viewport)
+               {
+                  trackStart (intersection)
+               }
+               else
+               {
+                  trackStart (startPoint)
+               }
             }
          }
       }

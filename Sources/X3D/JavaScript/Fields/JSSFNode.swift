@@ -43,7 +43,6 @@ extension JavaScript
       // Private properties
       
       internal private(set) final var field : Internal
-      private final var scene : X3D .X3DScene?
 
       // Registration
       
@@ -231,10 +230,13 @@ extension JavaScript
             
             if let x3dSyntax = args .first! .toString ()
             {
-               self .scene = try? browser .browser .createX3DFromString (x3dSyntax: x3dSyntax)
+               let scene = try? browser .browser .createX3DFromString (x3dSyntax: x3dSyntax)
+               
                self .field = Internal (wrappedValue: scene? .rootNodes .first ?? nil)
                
                browser .cache .setObject (proxy, forKey: field .wrappedValue)
+               
+               browser .browser .scriptingScenes .append (scene)
             }
             else
             {

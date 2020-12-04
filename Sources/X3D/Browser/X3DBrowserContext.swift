@@ -22,6 +22,7 @@ public class X3DBrowserContext :
    X3DNetworkingContext,
    X3DPointingDeviceSensorContext,
    X3DRenderingContext,
+   X3DScriptingContext,
    X3DShapeContext,
    X3DTextContext,
    X3DTexturingContext,
@@ -51,6 +52,7 @@ public class X3DBrowserContext :
    internal private(set) final var networkingContextProperties           : X3DNetworkingContextProperties!
    internal private(set) final var pointingDeviceSensorContextProperties : X3DPointingDeviceSensorContextProperties!
    internal private(set) final var renderingContextProperties            : X3DRenderingContextProperties!
+   internal private(set) final var scriptingContextProperties            : X3DScriptingContextProperties!
    internal private(set) final var shapeContextProperties                : X3DShapeContextProperties!
    internal private(set) final var textContextProperties                 : X3DTextContextProperties!
    internal private(set) final var texturingContextProperties            : X3DTexturingContextProperties!
@@ -83,6 +85,7 @@ public class X3DBrowserContext :
       networkingContextProperties           = X3DNetworkingContextProperties           (with: internalScene)
       pointingDeviceSensorContextProperties = X3DPointingDeviceSensorContextProperties (with: internalScene)
       renderingContextProperties            = X3DRenderingContextProperties            (with: internalScene)
+      scriptingContextProperties            = X3DScriptingContextProperties            (with: internalScene)
       shapeContextProperties                = X3DShapeContextProperties                (with: internalScene)
       textContextProperties                 = X3DTextContextProperties                 (with: internalScene)
       texturingContextProperties            = X3DTexturingContextProperties            (with: internalScene)
@@ -101,6 +104,7 @@ public class X3DBrowserContext :
       networkingContextProperties           .setup ()
       pointingDeviceSensorContextProperties .setup ()
       renderingContextProperties            .setup ()
+      scriptingContextProperties            .setup ()
       shapeContextProperties                .setup ()
       textContextProperties                 .setup ()
       texturingContextProperties            .setup ()

@@ -213,7 +213,7 @@ extension JavaScript
                
                scene .$isLive .addFieldInterest (to: rootNode .scene! .$isLive)
                
-               X3DBrowser .scenes .append (rootNode .scene!)
+               browser .scriptingScenes .append (rootNode .scene!)
             }
             
             scene .rootNodes = rootNodes .field .wrappedValue
@@ -271,15 +271,13 @@ extension JavaScript
          return executionContext .getWorldURL () .absoluteURL .description
       }
       
-      private static var scenes : [X3D .X3DScene] = [ ]
-      
       public final func createVrmlFromString (_ vrmlSyntax : String) -> Any?
       {
          do
          {
             let scene = try browser .createX3DFromString (x3dSyntax: vrmlSyntax)
             
-            X3DBrowser .scenes .append (scene)
+            browser .scriptingScenes .append (scene)
             
             return JavaScript .getValue (JSContext .current (), self, scene .$rootNodes)
          }
@@ -317,7 +315,7 @@ extension JavaScript
                
                DispatchQueue .main .async
                {
-                  X3DBrowser .scenes .append (scene)
+                  self .browser .scriptingScenes .append (scene)
                   
                   field .set (value: scene .$rootNodes)
                }

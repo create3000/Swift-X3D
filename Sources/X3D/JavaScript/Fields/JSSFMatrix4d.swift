@@ -85,7 +85,9 @@ extension JavaScript
          defineProperty (column, row);
       }
    }
-})()
+})();
+
+DefineProperty (this, "SFMatrix4d", SFMatrix4d);
 """)
       }
       

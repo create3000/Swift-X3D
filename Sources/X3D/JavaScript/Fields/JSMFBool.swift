@@ -44,7 +44,7 @@ extension JavaScript
       {
          context ["MFBool"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, true, \"MFBool\");")
+         context .evaluateScript ("MakeX3DArrayField (this, targets, true, \"MFBool\");")
       }
       
       // Construction

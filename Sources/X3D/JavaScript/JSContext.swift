@@ -105,6 +105,7 @@ extension JavaScript
          MFNode      .register (context)
 
          X3DArrayField .cleanup (context)
+         Globals       .cleanup (context)
 
          // Add user-defined fields to global object.
          

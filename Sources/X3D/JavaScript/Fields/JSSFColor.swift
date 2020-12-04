@@ -61,18 +61,22 @@ Object .defineProperty (SFColor .prototype, 0, {
    enumerable: true,
    configurable: false,
 });
+
 Object .defineProperty (SFColor .prototype, 1, {
    get: function () { return this .g; },
    set: function (newValue) { this .g = newValue; },
    enumerable: true,
    configurable: false,
 });
+
 Object .defineProperty (SFColor .prototype, 2, {
    get: function () { return this .b; },
    set: function (newValue) { this .b = newValue; },
    enumerable: true,
    configurable: false,
 });
+
+DefineProperty (this, "SFColor", SFColor);
 """)
       }
       

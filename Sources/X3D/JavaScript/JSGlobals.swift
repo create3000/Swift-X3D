@@ -34,19 +34,47 @@ extension JavaScript
       enumerable: true,
       configurable: false,
    });
+
    Object .defineProperty (global, "FALSE", {
       value: false,
       enumerable: true,
       configurable: false,
    });
+
    Object .defineProperty (global, "TRUE", {
       value: true,
       enumerable: true,
       configurable: false,
    });
+
+   Object .defineProperty (global, "print", {
+      value: print,
+      enumerable: true,
+      configurable: false,
+   });
+
+   Object .defineProperty (global, "trace", {
+      value: trace,
+      enumerable: true,
+      configurable: false,
+   });
 })
-(this)
+(this);
+
+this .DefineProperty = function (global, name, value)
+{
+   Object .defineProperty (global, name, {
+      value: value,
+      enumerable: false,
+      configurable: false,
+   });
+};
 """)
      }
+      
+      internal class func cleanup (_ context : JSContext)
+      {
+         context .evaluateScript ("delete this .DefineProperty;")
+      }
    }
 }

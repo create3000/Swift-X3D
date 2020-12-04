@@ -48,10 +48,10 @@ extension JavaScript
    X3DField .prototype .isWritable   = function () { return isWritable  .call (targets .get (this) || this) };
    X3DField .prototype .toString     = function () { return toString    .call (targets .get (this) || this) };
 })
-(targets)
+(targets);
 """)
       }
-      
+
       // Construction
       
       private final var field : X3D .X3DField

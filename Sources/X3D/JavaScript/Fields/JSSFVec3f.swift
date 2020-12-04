@@ -70,18 +70,22 @@ Object .defineProperty (SFVec3f .prototype, 0, {
    enumerable: true,
    configurable: false,
 });
+
 Object .defineProperty (SFVec3f .prototype, 1, {
    get: function () { return this .y; },
    set: function (newValue) { this .y = newValue; },
    enumerable: true,
    configurable: false,
 });
+
 Object .defineProperty (SFVec3f .prototype, 2, {
    get: function () { return this .z; },
    set: function (newValue) { this .z = newValue; },
    enumerable: true,
    configurable: false,
 });
+
+DefineProperty (this, "SFVec3f", SFVec3f);
 """)
       }
       

@@ -212,12 +212,8 @@ extension JavaScript
    }
 
    SFNode .prototype = Target .prototype;
-   
-   Object .defineProperty (global, "SFNode", {
-      value: SFNode,
-      enumerable: false,
-      configurable: false,
-   });
+
+   DefineProperty (global, "SFNode", SFNode);
 })
 (this, Browser, targets)
 """)

@@ -44,7 +44,7 @@ extension JavaScript
       {
          context ["MFInt32"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, true, \"MFInt32\");")
+         context .evaluateScript ("MakeX3DArrayField (this, targets, true, \"MFInt32\");")
       }
       
       // Construction

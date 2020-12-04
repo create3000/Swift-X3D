@@ -87,7 +87,9 @@ extension JavaScript
          defineProperty (column, row);
       }
    }
-})()
+})();
+
+DefineProperty (this, "SFMatrix3f", SFMatrix3f);
 """)
       }
       

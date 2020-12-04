@@ -34,6 +34,8 @@ extension JavaScript
       public static func register (_ context : JSContext)
       {
          context ["X3DFieldDefinition"] = Self .self
+         
+         context .evaluateScript ("DefineProperty (this, \"X3DFieldDefinition\", X3DFieldDefinition);")
       }
       
       internal init (accessType : Int32, dataType : Int32, name : String)

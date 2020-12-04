@@ -24,7 +24,7 @@ extension JavaScript
          context ["X3DArrayField"] = Self .self
          
          context .evaluateScript ("""
-this .X3DArrayFieldWrapper = function (global, targets, native, CLASS)
+this .MakeX3DArrayField = function (global, targets, native, CLASS)
 {
    const Target    = global [CLASS];
    const get1Value = Target .prototype .get1Value;
@@ -196,13 +196,13 @@ this .X3DArrayFieldWrapper = function (global, targets, native, CLASS)
       enumerable: false,
       configurable: false,
    });
-}
+};
 """)
       }
       
       internal final class func cleanup (_ context : JSContext)
       {
-         context .evaluateScript ("delete this .X3DArrayFieldWrapper;")
+         context .evaluateScript ("delete this .MakeX3DArrayField;")
       }
    }
 }

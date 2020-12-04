@@ -93,13 +93,10 @@ extension JavaScript
       return deleteRoute .call (this, targets .get (sourceNode), sourceField, targets .get (destinationNode), destinationField)
    };
 
-   Object .defineProperty (global, "Browser", {
-      value: Browser,
-      enumerable: true,
-      configurable: false,
-   });
+   DefineProperty (global, "X3DBrowser", X3DBrowser);
+   DefineProperty (global, "Browser",    Browser);
 })
-(this, Browser, targets)
+(this, Browser, targets);
 """)
       }
 

@@ -63,24 +63,29 @@ Object .defineProperty (SFColorRGBA .prototype, 0, {
    enumerable: true,
    configurable: false,
 });
+
 Object .defineProperty (SFColorRGBA .prototype, 1, {
    get: function () { return this .g; },
    set: function (newValue) { this .g = newValue; },
    enumerable: true,
    configurable: false,
 });
+
 Object .defineProperty (SFColorRGBA .prototype, 2, {
    get: function () { return this .b; },
    set: function (newValue) { this .b = newValue; },
    enumerable: true,
    configurable: false,
 });
+
 Object .defineProperty (SFColorRGBA .prototype, 3, {
    get: function () { return this .a; },
    set: function (newValue) { this .a = newValue; },
    enumerable: true,
    configurable: false,
 });
+
+DefineProperty (this, "SFColorRGBA", SFColorRGBA);
 """)
       }
       

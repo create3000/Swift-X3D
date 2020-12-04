@@ -67,12 +67,15 @@ Object .defineProperty (SFVec2f .prototype, 0, {
    enumerable: true,
    configurable: false,
 });
+
 Object .defineProperty (SFVec2f .prototype, 1, {
    get: function () { return this .y; },
    set: function (newValue) { this .y = newValue; },
    enumerable: true,
    configurable: false,
 });
+
+DefineProperty (this, "SFVec2f", SFVec2f);
 """)
       }
       

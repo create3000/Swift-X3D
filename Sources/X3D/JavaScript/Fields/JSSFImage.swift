@@ -66,6 +66,8 @@ extension JavaScript
       public final override class func register (_ context : JSContext)
       {
          context ["SFImage"] = Self .self
+         
+         context .evaluateScript ("DefineProperty (this, \"SFImage\", SFImage);")
       }
       
       // Construction

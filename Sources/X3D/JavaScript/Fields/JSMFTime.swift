@@ -44,7 +44,7 @@ extension JavaScript
       {
          context ["MFTime"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, true, \"MFTime\");")
+         context .evaluateScript ("MakeX3DArrayField (this, targets, true, \"MFTime\");")
       }
       
       // Construction

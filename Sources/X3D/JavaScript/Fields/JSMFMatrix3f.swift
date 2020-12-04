@@ -43,7 +43,7 @@ extension JavaScript
       {
          context ["MFMatrix3f"] = Self .self
          
-         context .evaluateScript ("X3DArrayFieldWrapper (this, targets, true, \"MFMatrix3f\");")
+         context .evaluateScript ("MakeX3DArrayField (this, targets, true, \"MFMatrix3f\");")
       }
       
       // Construction

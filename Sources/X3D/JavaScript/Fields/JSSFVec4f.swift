@@ -71,24 +71,29 @@ Object .defineProperty (SFVec4f .prototype, 0, {
    enumerable: true,
    configurable: false,
 });
+
 Object .defineProperty (SFVec4f .prototype, 1, {
    get: function () { return this .y; },
    set: function (newValue) { this .y = newValue; },
    enumerable: true,
    configurable: false,
 });
+
 Object .defineProperty (SFVec4f .prototype, 2, {
    get: function () { return this .z; },
    set: function (newValue) { this .z = newValue; },
    enumerable: true,
    configurable: false,
 });
+
 Object .defineProperty (SFVec4f .prototype, 3, {
    get: function () { return this .w; },
    set: function (newValue) { this .w = newValue; },
    enumerable: true,
    configurable: false,
 });
+
+DefineProperty (this, "SFVec4f", SFVec4f);
 """)
       }
       

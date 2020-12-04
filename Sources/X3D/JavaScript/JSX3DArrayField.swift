@@ -191,11 +191,7 @@ this .MakeX3DArrayField = function (global, targets, native, CLASS)
    MFNativeArray .prototype = Target .prototype;
    MFArray       .prototype = Target .prototype;
 
-   Object .defineProperty (global, CLASS, {
-      value: native ? MFNativeArray : MFArray,
-      enumerable: false,
-      configurable: false,
-   });
+   DefineProperty (global, CLASS, native ? MFNativeArray : MFArray)
 };
 """)
       }

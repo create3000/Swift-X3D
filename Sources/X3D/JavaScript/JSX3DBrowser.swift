@@ -212,6 +212,8 @@ extension JavaScript
                guard let rootNode = rootNode else { continue }
                
                scene .$isLive .addFieldInterest (to: rootNode .scene! .$isLive)
+               
+               X3DBrowser .scenes .append (rootNode .scene!)
             }
             
             scene .rootNodes = rootNodes .field .wrappedValue

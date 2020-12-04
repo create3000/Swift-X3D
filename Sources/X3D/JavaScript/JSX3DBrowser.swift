@@ -12,6 +12,7 @@ import JavaScriptCore
 {
    typealias SFNode   = JavaScript .SFNode
    typealias MFString = JavaScript .MFString
+   typealias X3DScene = JavaScript .X3DScene
    
    var name             : String { get }
    var version          : String { get }
@@ -20,6 +21,7 @@ import JavaScriptCore
    var description      : String { get set }
    
    func replaceWorld (_ scene : JSValue?)
+   func createX3DFromString (_ x3dSyntax : String) -> X3DScene?
    func loadURL (_ url : MFString?, _ parameter : MFString?)
 
    func getRenderingProperty (_ name : String) -> Any?
@@ -176,6 +178,26 @@ extension JavaScript
          }
       }
       
+      public final func createX3DFromString (_ x3dSyntax : String) -> X3DScene?
+      {
+         do
+         {
+            let scene = try browser .createX3DFromString (x3dSyntax: x3dSyntax)
+            
+            // TODO: cache scene.
+            
+            browser .getExecutionContext () .$isLive .addFieldInterest (to: scene .$isLive)
+            
+            browser .scriptingScenes .append (scene)
+            
+            return X3DScene (scene)
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
+
       public final func loadURL (_ url : MFString?, _ parameter : MFString?)
       {
          guard let url       = url,

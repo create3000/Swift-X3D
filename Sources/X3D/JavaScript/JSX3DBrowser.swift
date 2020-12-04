@@ -74,6 +74,17 @@ extension JavaScript
          context .evaluateScript ("""
 (function (global, Browser, targets)
 {
+   // X3D
+
+   const replaceWorld = X3DBrowser .prototype .replaceWorld;
+
+   X3DBrowser .prototype .replaceWorld = function (scene)
+   {
+      return replaceWorld .call (this, targets .get (scene) || scene);
+   };
+   
+   // VRML shims
+
    const createVrmlFromURL = X3DBrowser .prototype .createVrmlFromURL;
    const addRoute          = X3DBrowser .prototype .addRoute;
    const deleteRoute       = X3DBrowser .prototype .deleteRoute;
@@ -94,6 +105,8 @@ extension JavaScript
    {
       return deleteRoute .call (this, targets .get (sourceNode), sourceField, targets .get (destinationNode), destinationField)
    };
+
+   // Define properties.
 
    DefineProperty (global, "X3DBrowser", X3DBrowser);
    DefineProperty (global, "Browser",    Browser);
@@ -197,6 +210,13 @@ extension JavaScript
             else
             {
                let scene = browser .createScene (profile: try! browser .getProfile (name: "Full"), components: [ ])
+               
+               for rootNode in rootNodes .field .wrappedValue
+               {
+                  guard let rootNode = rootNode else { continue }
+                  
+                  scene .$isLive .addFieldInterest (to: rootNode .scene! .$isLive)
+               }
                
                scene .rootNodes = rootNodes .field .wrappedValue
                

@@ -10,7 +10,11 @@ import JavaScriptCore
 @objc internal protocol X3DExecutionContextExports :
    JSExport
 {
+   typealias SFNode = JavaScript .SFNode
+   
    var worldURL : String { get }
+   
+   func getNamedNode (_ name : String) -> Any?
    
    func toString () -> String
 }
@@ -40,6 +44,22 @@ extension JavaScript
       //
       
       dynamic public final var worldURL : String { executionContext .getWorldURL () .absoluteURL .description }
+      
+      // Named node handling
+      
+      public final func getNamedNode (_ name : String) -> Any?
+      {
+         do
+         {
+            let node = try executionContext .getNamedNode (name: name)
+            
+            return getValue (JSContext .current (), JSContext .current () .browser!, X3D .SFNode (wrappedValue: node))
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
       
       // Input/Output
       

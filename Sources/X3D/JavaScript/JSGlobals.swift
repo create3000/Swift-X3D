@@ -27,40 +27,6 @@ extension JavaScript
          context ["trace"] = print
          
          context .evaluateScript("""
-(function (global)
-{
-   Object .defineProperty (global, "NULL", {
-      value: null,
-      enumerable: true,
-      configurable: false,
-   });
-
-   Object .defineProperty (global, "FALSE", {
-      value: false,
-      enumerable: true,
-      configurable: false,
-   });
-
-   Object .defineProperty (global, "TRUE", {
-      value: true,
-      enumerable: true,
-      configurable: false,
-   });
-
-   Object .defineProperty (global, "print", {
-      value: print,
-      enumerable: true,
-      configurable: false,
-   });
-
-   Object .defineProperty (global, "trace", {
-      value: trace,
-      enumerable: true,
-      configurable: false,
-   });
-})
-(this);
-
 this .DefineProperty = function (global, name, value)
 {
    Object .defineProperty (global, name, {
@@ -69,6 +35,12 @@ this .DefineProperty = function (global, name, value)
       configurable: false,
    });
 };
+
+DefineProperty (this, "NULL",  null);
+DefineProperty (this, "FALSE", false);
+DefineProperty (this, "TRUE",  true);
+DefineProperty (this, "print", print);
+DefineProperty (this, "trace", trace);
 """)
      }
       

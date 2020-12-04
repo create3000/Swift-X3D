@@ -10,7 +10,8 @@ import JavaScriptCore
 @objc internal protocol X3DBrowserFieldExports :
    JSExport
 {
-   typealias SFNode = JavaScript .SFNode
+   typealias SFNode   = JavaScript .SFNode
+   typealias MFString = JavaScript .MFString
    
    var name             : String { get }
    var version          : String { get }
@@ -18,12 +19,13 @@ import JavaScriptCore
    var currentFrameRate : Double { get }
    var description      : String { get set }
    
+   func replaceWorld (_ scene : JSValue?)
+   func loadURL (_ url : MFString?, _ parameter : MFString?)
+
    func getRenderingProperty (_ name : String) -> Any?
    func getBrowserProperty (_ name : String) -> Any?
    func getBrowserOption (_ name : String) -> Any?
    func setBrowserOption (_ name : String, _ value : Any?)
-   
-   func replaceWorld (_ scene : JSValue?)
    
    func print ()
    func println ()
@@ -35,7 +37,7 @@ import JavaScriptCore
    func getWorldURL () -> String
    
    func createVrmlFromString (_ vrmlSyntax : String) -> Any?
-   func createVrmlFromURL (_ url : [String], _ node : SFNode?, _ event : String)
+   func createVrmlFromURL (_ url : MFString?, _ node : SFNode?, _ event : String)
    
    func addRoute (_ sourceNode : SFNode?,
                   _ sourceField : String,
@@ -77,12 +79,18 @@ extension JavaScript
    // X3D
 
    const replaceWorld = X3DBrowser .prototype .replaceWorld;
+   const loadURL      = X3DBrowser .prototype .loadURL;
 
    X3DBrowser .prototype .replaceWorld = function (scene)
    {
       return replaceWorld .call (this, targets .get (scene) || scene);
    };
-   
+
+   X3DBrowser .prototype .loadURL = function (url, parameter)
+   {
+      return loadURL .call (this, targets .get (url), targets .get (parameter));
+   };
+
    // Wrap VRML legacy functions.
    
    const createVrmlFromURL = X3DBrowser .prototype .createVrmlFromURL;
@@ -135,64 +143,6 @@ extension JavaScript
          set { browser .setDescription (newValue) }
       }
       
-      // Properties handling
-      
-      func getRenderingProperty (_ name : String) -> Any?
-      {
-         do
-         {
-            let field = try browser .getRenderingProperties () .getField (name: name)
-
-            return JavaScript .getValue (JSContext .current (), self, field)
-         }
-         catch
-         {
-            return exception (error .localizedDescription)
-         }
-      }
-      
-      func getBrowserProperty (_ name : String) -> Any?
-      {
-         do
-         {
-            let field = try browser .getBrowserProperties () .getField (name: name)
-            
-            return JavaScript .getValue (JSContext .current (), self, field)
-         }
-         catch
-         {
-            return exception (error .localizedDescription)
-         }
-      }
-      
-      func getBrowserOption (_ name : String) -> Any?
-      {
-         do
-         {
-            let field = try browser .getBrowserOptions () .getField (name: name)
-         
-            return JavaScript .getValue (JSContext .current (), self, field)
-         }
-         catch
-         {
-            return exception (error .localizedDescription)
-         }
-      }
-      
-      func setBrowserOption (_ name : String, _ value : Any?)
-      {
-         do
-         {
-            let field = try browser .getBrowserOptions () .getField (name: name)
-            
-            JavaScript .setValue (field, value)
-         }
-         catch
-         {
-            return exception (error .localizedDescription)
-         }
-      }
-      
       // Scene handling
       
       public final func replaceWorld (_ scene : JSValue?)
@@ -223,6 +173,77 @@ extension JavaScript
          else
          {
             browser .replaceWorld (scene: nil)
+         }
+      }
+      
+      public final func loadURL (_ url : MFString?, _ parameter : MFString?)
+      {
+         guard let url       = url,
+               let parameter = parameter
+         else { return exception ("Invalid argument.") }
+         
+         browser .loadURL (url: url .field .wrappedValue .map
+         {
+            URL (string: $0, relativeTo: executionContext .getWorldURL ())
+         }
+         .compactMap { $0 }, parameter: parameter .field .wrappedValue)
+      }
+      
+      // Properties handling
+      
+      public final func getRenderingProperty (_ name : String) -> Any?
+      {
+         do
+         {
+            let field = try browser .getRenderingProperties () .getField (name: name)
+
+            return JavaScript .getValue (JSContext .current (), self, field)
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
+      
+      public final func getBrowserProperty (_ name : String) -> Any?
+      {
+         do
+         {
+            let field = try browser .getBrowserProperties () .getField (name: name)
+            
+            return JavaScript .getValue (JSContext .current (), self, field)
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
+      
+      public final func getBrowserOption (_ name : String) -> Any?
+      {
+         do
+         {
+            let field = try browser .getBrowserOptions () .getField (name: name)
+         
+            return JavaScript .getValue (JSContext .current (), self, field)
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
+      
+      public final func setBrowserOption (_ name : String, _ value : Any?)
+      {
+         do
+         {
+            let field = try browser .getBrowserOptions () .getField (name: name)
+            
+            JavaScript .setValue (field, value)
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
          }
       }
 
@@ -287,9 +308,11 @@ extension JavaScript
          }
       }
       
-      public final func createVrmlFromURL (_ url : [String], _ node : SFNode?, _ event : String)
+      public final func createVrmlFromURL (_ url : MFString?, _ node : SFNode?, _ event : String)
       {
-         guard let node = node else { return }
+         guard let url  = url,
+               let node = node
+         else { return exception ("Invalid argument.") }
          
          guard let field = try? node .field .wrappedValue .getField (name: event) else
          {
@@ -307,7 +330,7 @@ extension JavaScript
          {
             do
             {
-               let scene = try self .browser .createX3DFromURL (url: url .map
+               let scene = try self .browser .createX3DFromURL (url: url .field .wrappedValue .map
                {
                   URL (string: $0, relativeTo: worldURL)
                }

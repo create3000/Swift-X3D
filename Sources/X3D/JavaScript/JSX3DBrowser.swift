@@ -83,8 +83,8 @@ extension JavaScript
       return replaceWorld .call (this, targets .get (scene) || scene);
    };
    
-   // VRML shims
-
+   // Wrap VRML legacy functions.
+   
    const createVrmlFromURL = X3DBrowser .prototype .createVrmlFromURL;
    const addRoute          = X3DBrowser .prototype .addRoute;
    const deleteRoute       = X3DBrowser .prototype .deleteRoute;

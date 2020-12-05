@@ -112,7 +112,7 @@ public final class X3DBindableList <Type : X3DBindableNode> :
          
          // Propagate change.
       
-         addEvent ()
+         addNodeEvent ()
       }
       
       // Clear collected array.

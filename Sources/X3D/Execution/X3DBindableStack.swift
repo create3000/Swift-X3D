@@ -94,7 +94,7 @@ public final class X3DBindableStack <Type : X3DBindableNode> :
          
          stack .last! .transitionStart (with: layer, from: boundNode)
          
-         addEvent ()
+         addNodeEvent ()
       }
    }
 }

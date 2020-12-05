@@ -394,7 +394,10 @@ extension JavaScript
       {
          if let layer = layer
          {
-            guard let layerNode = layer .field .wrappedValue as? X3DLayerNode else { return exception ("Invalid argument.") }
+            guard let layerNode = layer .field .wrappedValue as? X3DLayerNode else
+            {
+               return exception ("Invalid argument.")
+            }
             
             browser .firstViewpoint (layer: layerNode)
          }
@@ -408,7 +411,10 @@ extension JavaScript
       {
          if let layer = layer
          {
-            guard let layerNode = layer .field .wrappedValue as? X3DLayerNode else { return exception ("Invalid argument.") }
+            guard let layerNode = layer .field .wrappedValue as? X3DLayerNode else
+            {
+               return exception ("Invalid argument.")
+            }
             
             browser .previousViewpoint (layer: layerNode)
          }
@@ -422,7 +428,10 @@ extension JavaScript
       {
          if let layer = layer
          {
-            guard let layerNode = layer .field .wrappedValue as? X3DLayerNode else { return exception ("Invalid argument.") }
+            guard let layerNode = layer .field .wrappedValue as? X3DLayerNode else
+            {
+               return exception ("Invalid argument.")
+            }
             
             browser .nextViewpoint (layer: layerNode)
          }
@@ -436,7 +445,10 @@ extension JavaScript
       {
          if let layer = layer
          {
-            guard let layerNode = layer .field .wrappedValue as? X3DLayerNode else { return exception ("Invalid argument.") }
+            guard let layerNode = layer .field .wrappedValue as? X3DLayerNode else
+            {
+               return exception ("Invalid argument.")
+            }
             
             browser .lastViewpoint (layer: layerNode)
          }

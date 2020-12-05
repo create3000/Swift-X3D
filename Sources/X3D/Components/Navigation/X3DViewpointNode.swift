@@ -63,6 +63,8 @@ public class X3DViewpointNode :
 
    // Operations
    
+   internal final func setInterpolators (from viewpointNode : X3DViewpointNode) { }
+   
    internal final override func transitionStart (with layer : X3DLayerNode, from node : X3DBindableNode)
    {
       //guard let fromViewpointNode = node as? X3DViewpointNode else { return }

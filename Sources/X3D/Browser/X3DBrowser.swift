@@ -293,10 +293,89 @@ public final class X3DBrowser :
 
    // Viewpoint handling
    
-   // nextViewpoint
-   // previousViewpoint
-   // firstViewpoint
-   // lastViewpoint
+   public final func firstViewpoint (layer : X3DLayerNode? = nil)
+   {
+      guard let layerNode = layer ?? world .activeLayerNode else { return }
+      
+      let viewpoints = layerNode .getUserViewpoints ()
+
+      guard !viewpoints .isEmpty else { return }
+      
+      bindViewpoint (layerNode, viewpoints .first!)
+   }
+   
+   public final func nextViewpoint (layer : X3DLayerNode? = nil)
+   {
+      guard let layerNode = layer ?? world .activeLayerNode else { return }
+      
+      let viewpoints = layerNode .getUserViewpoints ()
+
+      guard !viewpoints .isEmpty else { return }
+
+      if let index = viewpoints .firstIndex (where: { $0 .isBound })
+      {
+         if index == 0
+         {
+            bindViewpoint (layerNode, viewpoints .last!)
+         }
+         else
+         {
+            bindViewpoint (layerNode, viewpoints [index - 1])
+         }
+      }
+      else
+      {
+         bindViewpoint (layerNode, viewpoints .last!)
+      }
+   }
+   
+   public final func previousViewpoint (layer : X3DLayerNode? = nil)
+   {
+      guard let layerNode = layer ?? world .activeLayerNode else { return }
+      
+      let viewpoints = layerNode .getUserViewpoints ()
+
+      guard !viewpoints .isEmpty else { return }
+
+      if let index = viewpoints .firstIndex (where: { $0 .isBound })
+      {
+         if index == viewpoints .count - 1
+         {
+            bindViewpoint (layerNode, viewpoints .first!)
+         }
+         else
+         {
+            bindViewpoint (layerNode, viewpoints [index + 1])
+         }
+     }
+      else
+      {
+         bindViewpoint (layerNode, viewpoints .first!)
+      }
+   }
+   
+   public final func lastViewpoint (layer : X3DLayerNode? = nil)
+   {
+      guard let layerNode = layer ?? world .activeLayerNode else { return }
+      
+      let viewpoints = layerNode .getUserViewpoints ()
+
+      guard !viewpoints .isEmpty else { return }
+      
+      bindViewpoint (layerNode, viewpoints .last!)
+   }
+   
+   private final func bindViewpoint (_ layerNode : X3DLayerNode, _ viewpointNode : X3DViewpointNode)
+   {
+      if viewpointNode .isBound
+      {
+         viewpointNode .transitionStart (with: layerNode, from: viewpointNode)
+      }
+      else
+      {
+         viewpointNode .set_bind = true
+      }
+   }
    
    // Browser interests
    

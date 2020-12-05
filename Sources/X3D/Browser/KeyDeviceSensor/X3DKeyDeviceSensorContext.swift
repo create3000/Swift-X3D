@@ -20,12 +20,26 @@ internal final class X3DKeyDeviceSensorContextProperties :
    
    internal final func keyDown (with event : NSEvent)
    {
-      //debugPrint (#function, event)
+      //browser! .console .log (#function, event .keyCode)
+      
+      switch event .keyCode
+      {
+         case KeyCodes .home:
+            browser! .firstViewpoint ()
+         case KeyCodes .pageUp:
+            browser! .previousViewpoint ()
+         case KeyCodes .pageDown:
+            browser! .nextViewpoint ()
+         case KeyCodes .end:
+            browser! .lastViewpoint ()
+         default:
+            break
+      }
    }
    
    internal final func keyUp (with event : NSEvent)
    {
-      //debugPrint (#function, event)
+      //browser! .console .log (#function, event)
    }
 }
 

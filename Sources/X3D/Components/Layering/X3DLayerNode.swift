@@ -123,6 +123,20 @@ public class X3DLayerNode :
       viewpointNode .resetUserOffsets ()
    }
    
+   public final func getUserViewpoints () -> [X3DViewpointNode]
+   {
+      var viewpoints = [X3DViewpointNode] ()
+      
+      for viewpointNode in viewpointList .list
+      {
+         guard !viewpointNode .description .isEmpty else { continue }
+         
+         viewpoints .append (viewpointNode)
+      }
+      
+      return viewpoints
+   }
+   
    // Event handlers
    
    private final func set_viewport ()

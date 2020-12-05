@@ -14,6 +14,8 @@ import JavaScriptCore
    typealias MFString = JavaScript .MFString
    typealias X3DScene = JavaScript .X3DScene
    
+   // X3D
+   
    var name             : String { get }
    var version          : String { get }
    var currentSpeed     : Double { get }
@@ -39,6 +41,8 @@ import JavaScriptCore
    
    func print ()
    func println ()
+   
+   // VRML legacy
 
    func getName () -> String
    func getVersion () -> String
@@ -57,8 +61,9 @@ import JavaScriptCore
                      _ sourceField : String,
                      _ destinationNode : SFNode?,
                      _ destinationField : String)
-
-
+   
+   // Input/Output
+   
    func toString () -> String
 }
 

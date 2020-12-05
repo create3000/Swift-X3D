@@ -304,7 +304,7 @@ public final class X3DBrowser :
       bindViewpoint (layerNode, viewpoints .first!)
    }
    
-   public final func nextViewpoint (layer : X3DLayerNode? = nil)
+   public final func previousViewpoint (layer : X3DLayerNode? = nil)
    {
       guard let layerNode = layer ?? world .activeLayerNode else { return }
       
@@ -328,8 +328,8 @@ public final class X3DBrowser :
          bindViewpoint (layerNode, viewpoints .last!)
       }
    }
-   
-   public final func previousViewpoint (layer : X3DLayerNode? = nil)
+ 
+   public final func nextViewpoint (layer : X3DLayerNode? = nil)
    {
       guard let layerNode = layer ?? world .activeLayerNode else { return }
       
@@ -353,7 +353,7 @@ public final class X3DBrowser :
          bindViewpoint (layerNode, viewpoints .first!)
       }
    }
-   
+  
    public final func lastViewpoint (layer : X3DLayerNode? = nil)
    {
       guard let layerNode = layer ?? world .activeLayerNode else { return }

@@ -343,10 +343,10 @@ public class X3DGeometryNode :
          context .localLights [index] .setUniforms (lightSources, renderer .globalLights .count + index)
       }
       
-      uniforms .pointee .numLights     = max (Int32 (renderer .globalLights .count + context .localLights .count), x3d_MaxLights)
+      uniforms .pointee .numLights     = min (Int32 (renderer .globalLights .count + context .localLights .count), x3d_MaxLights)
       uniforms .pointee .fog .fogCoord = hasFogCoord
       uniforms .pointee .colorMaterial = hasColor
-
+      
       // Set uniforms and vertex buffer.
       renderEncoder .setVertexBuffer   (primitivesBuffer,        offset: 0, index: 0)
       renderEncoder .setVertexBuffer   (context .uniformsBuffer, offset: 0, index: 1)

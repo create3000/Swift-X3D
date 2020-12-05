@@ -32,6 +32,11 @@ import JavaScriptCore
    func getBrowserOption (_ name : String) -> Any?
    func setBrowserOption (_ name : String, _ value : Any?)
    
+   func firstViewpoint (_ layer : SFNode?)
+   func previousViewpoint (_ layer : SFNode?)
+   func nextViewpoint (_ layer : SFNode?)
+   func lastViewpoint (_ layer : SFNode?)
+   
    func print ()
    func println ()
 
@@ -83,9 +88,13 @@ extension JavaScript
 {
    // X3D
 
-   const replaceWorld     = X3DBrowser .prototype .replaceWorld;
-   const createX3DFromURL = X3DBrowser .prototype .createX3DFromURL;
-   const loadURL          = X3DBrowser .prototype .loadURL;
+   const replaceWorld      = X3DBrowser .prototype .replaceWorld;
+   const createX3DFromURL  = X3DBrowser .prototype .createX3DFromURL;
+   const loadURL           = X3DBrowser .prototype .loadURL;
+   const firstViewpoint    = X3DBrowser .prototype .firstViewpoint;
+   const previousViewpoint = X3DBrowser .prototype .previousViewpoint;
+   const nextViewpoint     = X3DBrowser .prototype .nextViewpoint;
+   const lastViewpoint     = X3DBrowser .prototype .lastViewpoint;
 
    X3DBrowser .prototype .replaceWorld = function (scene)
    {
@@ -99,7 +108,27 @@ extension JavaScript
    
    X3DBrowser .prototype .createX3DFromURL = function (url, node, event)
    {
-      return createX3DFromURL .call (this, targets .get (url), targets .get (node), event)
+      return createX3DFromURL .call (this, targets .get (url), targets .get (node), event);
+   };
+   
+   X3DBrowser .prototype .firstViewpoint = function (layer)
+   {
+      return firstViewpoint .call (this, targets .get (layer));
+   };
+   
+   X3DBrowser .prototype .previousViewpoint = function (layer)
+   {
+      return previousViewpoint .call (this, targets .get (layer));
+   };
+   
+   X3DBrowser .prototype .nextViewpoint = function (layer)
+   {
+      return nextViewpoint .call (this, targets .get (layer));
+   };
+   
+   X3DBrowser .prototype .lastViewpoint = function (layer)
+   {
+      return lastViewpoint .call (this, targets .get (layer));
    };
 
    // Wrap VRML legacy functions.
@@ -112,17 +141,17 @@ extension JavaScript
    
    X3DBrowser .prototype .createVrmlFromURL = function (url, node, event)
    {
-      return createVrmlFromURL .call (this, targets .get (url), targets .get (node), event)
+      return createVrmlFromURL .call (this, targets .get (url), targets .get (node), event);
    };
    
    X3DBrowser .prototype .addRoute = function (sourceNode, sourceField, destinationNode, destinationField)
    {
-      return addRoute .call (this, targets .get (sourceNode), sourceField, targets .get (destinationNode), destinationField)
+      return addRoute .call (this, targets .get (sourceNode), sourceField, targets .get (destinationNode), destinationField);
    };
 
    X3DBrowser .prototype .deleteRoute = function (sourceNode, sourceField, destinationNode, destinationField)
    {
-      return deleteRoute .call (this, targets .get (sourceNode), sourceField, targets .get (destinationNode), destinationField)
+      return deleteRoute .call (this, targets .get (sourceNode), sourceField, targets .get (destinationNode), destinationField);
    };
 
    // Define properties.
@@ -356,6 +385,64 @@ extension JavaScript
          catch
          {
             return exception (error .localizedDescription)
+         }
+      }
+      
+      // Viewpoint handling
+      
+      public final func firstViewpoint (_ layer : SFNode?)
+      {
+         if let layer = layer
+         {
+            guard let layerNode = layer .field .wrappedValue as? X3DLayerNode else { return exception ("Invalid argument.") }
+            
+            browser .firstViewpoint (layer: layerNode)
+         }
+         else
+         {
+            browser .firstViewpoint ()
+         }
+      }
+      
+      public final func previousViewpoint (_ layer : SFNode?)
+      {
+         if let layer = layer
+         {
+            guard let layerNode = layer .field .wrappedValue as? X3DLayerNode else { return exception ("Invalid argument.") }
+            
+            browser .previousViewpoint (layer: layerNode)
+         }
+         else
+         {
+            browser .previousViewpoint ()
+         }
+      }
+      
+      public final func nextViewpoint (_ layer : SFNode?)
+      {
+         if let layer = layer
+         {
+            guard let layerNode = layer .field .wrappedValue as? X3DLayerNode else { return exception ("Invalid argument.") }
+            
+            browser .nextViewpoint (layer: layerNode)
+         }
+         else
+         {
+            browser .nextViewpoint ()
+         }
+      }
+      
+      public final func lastViewpoint (_ layer : SFNode?)
+      {
+         if let layer = layer
+         {
+            guard let layerNode = layer .field .wrappedValue as? X3DLayerNode else { return exception ("Invalid argument.") }
+            
+            browser .lastViewpoint (layer: layerNode)
+         }
+         else
+         {
+            browser .lastViewpoint ()
          }
       }
 

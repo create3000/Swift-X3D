@@ -125,16 +125,7 @@ public class X3DLayerNode :
    
    public final func getUserViewpoints () -> [X3DViewpointNode]
    {
-      var viewpoints = [X3DViewpointNode] ()
-      
-      for viewpointNode in viewpointList .list
-      {
-         guard !viewpointNode .description .isEmpty else { continue }
-         
-         viewpoints .append (viewpointNode)
-      }
-      
-      return viewpoints
+      return viewpointList .list .filter { !$0 .description .isEmpty }
    }
    
    // Event handlers

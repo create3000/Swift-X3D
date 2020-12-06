@@ -28,42 +28,22 @@ extension JavaScript
          case .SFString:    return (field as! X3D .SFString) .wrappedValue
          case .SFTime:      return (field as! X3D .SFTime)   .wrappedValue
          
-         case .SFColor:     return SFColor     (context, field: (field as! X3D .SFColor))
-         case .SFColorRGBA: return SFColorRGBA (context, field: (field as! X3D .SFColorRGBA))
-         case .SFImage:     return SFImage     (context, field: (field as! X3D .SFImage))
-         case .SFMatrix3d:  return SFMatrix3d  (context, field: (field as! X3D .SFMatrix3d))
-         case .SFMatrix3f:  return SFMatrix3f  (context, field: (field as! X3D .SFMatrix3f))
-         case .SFMatrix4d:  return SFMatrix4d  (context, field: (field as! X3D .SFMatrix4d))
-         case .SFMatrix4f:  return SFMatrix4f  (context, field: (field as! X3D .SFMatrix4f))
-         case .SFRotation:  return SFRotation  (context, field: (field as! X3D .SFRotation))
-         case .SFVec2d:     return SFVec2d     (context, field: (field as! X3D .SFVec2d))
-         case .SFVec2f:     return SFVec2f     (context, field: (field as! X3D .SFVec2f))
-         case .SFVec3d:     return SFVec3d     (context, field: (field as! X3D .SFVec3d))
-         case .SFVec3f:     return SFVec3f     (context, field: (field as! X3D .SFVec3f))
-         case .SFVec4d:     return SFVec4d     (context, field: (field as! X3D .SFVec4d))
-         case .SFVec4f:     return SFVec4f     (context, field: (field as! X3D .SFVec4f))
+         case .SFColor:     return SFColor     (context, field: field as! X3D .SFColor)
+         case .SFColorRGBA: return SFColorRGBA (context, field: field as! X3D .SFColorRGBA)
+         case .SFImage:     return SFImage     (context, field: field as! X3D .SFImage)
+         case .SFMatrix3d:  return SFMatrix3d  (context, field: field as! X3D .SFMatrix3d)
+         case .SFMatrix3f:  return SFMatrix3f  (context, field: field as! X3D .SFMatrix3f)
+         case .SFMatrix4d:  return SFMatrix4d  (context, field: field as! X3D .SFMatrix4d)
+         case .SFMatrix4f:  return SFMatrix4f  (context, field: field as! X3D .SFMatrix4f)
+         case .SFRotation:  return SFRotation  (context, field: field as! X3D .SFRotation)
+         case .SFVec2d:     return SFVec2d     (context, field: field as! X3D .SFVec2d)
+         case .SFVec2f:     return SFVec2f     (context, field: field as! X3D .SFVec2f)
+         case .SFVec3d:     return SFVec3d     (context, field: field as! X3D .SFVec3d)
+         case .SFVec3f:     return SFVec3f     (context, field: field as! X3D .SFVec3f)
+         case .SFVec4d:     return SFVec4d     (context, field: field as! X3D .SFVec4d)
+         case .SFVec4f:     return SFVec4f     (context, field: field as! X3D .SFVec4f)
          
-         case .SFNode: do
-         {
-            let field = field as! X3D .SFNode <X3D .X3DNode>
-            let node  = field .wrappedValue
-            
-            guard node != nil else
-            {
-               return JSValue (nullIn: context)!
-            }
-            
-            if let object = browser .cache .object (forKey: node)
-            {
-               return object
-            }
-            
-            let object = SFNode .initWithProxy (context, field: field)!
-
-            browser .cache .setObject (object, forKey: node)
-            
-            return object
-         }
+         case .SFNode:      return SFNode      .initWithProxy (context, field: field as! X3D .SFNode <X3DNode>)!
          
          case .MFBool:      return MFBool      .initWithProxy (context, field: (field as! X3D .MFBool))!
          case .MFDouble:    return MFDouble    .initWithProxy (context, field: (field as! X3D .MFDouble))!

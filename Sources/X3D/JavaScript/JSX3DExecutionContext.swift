@@ -14,7 +14,7 @@ import JavaScriptCore
    
    var worldURL : String { get }
    
-   func getNamedNode (_ name : String) -> Any?
+   func getNamedNode (_ name : String) -> JSValue?
    
    func toString () -> String
 }
@@ -47,13 +47,13 @@ extension JavaScript
       
       // Named node handling
       
-      public final func getNamedNode (_ name : String) -> Any?
+      public final func getNamedNode (_ name : String) -> JSValue?
       {
          do
          {
             let node = try executionContext .getNamedNode (name: name)
             
-            return getValue (JSContext .current (), JSContext .current () .browser!, X3D .SFNode (wrappedValue: node))
+            return SFNode .initWithProxy (JSContext .current (), field: X3D .SFNode (wrappedValue: node))
          }
          catch
          {

@@ -199,7 +199,7 @@ extension JavaScript
       }
       else
       {
-         var self = new Target (Browser, proxy, ...arguments);
+         var self = new Target (Browser, ...arguments);
       }
 
       addFields (self);
@@ -223,18 +223,15 @@ extension JavaScript
       required public init ()
       {
          if var args = JSContext .currentArguments () as? [JSValue],
-            args .count == 3
+            args .count == 2
          {
             let browser = args .removeFirst () .toObjectOf (X3DBrowser .self) as! X3DBrowser
-            let proxy   = args .removeFirst ()
             
             if let x3dSyntax = args .first! .toString ()
             {
                let scene = try? browser .browser .createX3DFromString (x3dSyntax: x3dSyntax)
                
                self .field = Internal (wrappedValue: scene? .rootNodes .first ?? nil)
-               
-               browser .cache .setObject (proxy, forKey: field .wrappedValue)
                
                browser .browser .scriptingScenes .append (scene)
             }
@@ -262,7 +259,7 @@ extension JavaScript
       
       internal static func initWithProxy (_ context : JSContext, field : Internal) -> JSValue!
       {
-         return context ["SFNode"]! .construct (withArguments: [SFNode (field: X3D .SFNode (wrappedValue: field .wrappedValue))])
+         return context ["SFNode"]! .construct (withArguments: [SFNode (field: field)])
       }
 
       // Common operators

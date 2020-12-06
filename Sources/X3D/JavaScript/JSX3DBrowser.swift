@@ -78,8 +78,6 @@ extension JavaScript
       internal unowned final let browser          : X3D .X3DBrowser
       internal unowned final let executionContext : X3D .X3DExecutionContext
       internal final var targets                  : JSValue
-
-      internal final let cache = NSMapTable <X3D .X3DNode, JSValue> (keyOptions: .weakMemory, valueOptions: .strongMemory)
       
       // Construction
       

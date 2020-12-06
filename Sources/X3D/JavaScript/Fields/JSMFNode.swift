@@ -97,8 +97,6 @@ extension JavaScript
       
       public final func get1Value (_ index : Int) -> JSValue?
       {
-         guard let browser = JSContext .current ()? .browser else { return exception ("Invalid context.") }
-         
          if index >= field .wrappedValue .count
          {
             field .wrappedValue .resize (index + 1, fillWith: nil)
@@ -111,14 +109,7 @@ extension JavaScript
             return nil
          }
          
-         if let field = browser .cache .object (forKey: node)
-         {
-            return field
-         }
-         
          let field = SFNode .initWithProxy (JSContext .current (), field: X3D .SFNode (wrappedValue: node))!
-
-         browser .cache .setObject (field, forKey: node)
          
          return field
       }

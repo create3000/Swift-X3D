@@ -367,6 +367,8 @@ public final class X3DBrowser :
    
    private final func bindViewpoint (_ layerNode : X3DLayerNode, _ viewpointNode : X3DViewpointNode)
    {
+      viewpointNode .animate = true // VRML
+      
       if viewpointNode .isBound
       {
          viewpointNode .transitionStart (with: layerNode, from: viewpointNode)

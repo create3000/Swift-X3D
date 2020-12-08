@@ -63,16 +63,37 @@ public class X3DViewpointNode :
 
    // Operations
    
+   internal var animate : Bool = false
+   
    internal final func setInterpolators (from viewpointNode : X3DViewpointNode) { }
    
    internal final override func transitionStart (with layer : X3DLayerNode, from node : X3DBindableNode)
    {
-      //guard let fromViewpointNode = node as? X3DViewpointNode else { return }
+      guard let fromViewpointNode = node as? X3DViewpointNode else { return }
+      
+      if jump
+      {
+         if !retainUserOffsets
+         {
+            resetUserOffsets ()
+         }
+         
+         let navigationInfoNode = layer .navigationInfoNode
+         let transitionType     = navigationInfoNode .transitionType
+         let transitionTime     = navigationInfoNode .transitionTime
+         
+         navigationInfoNode .transitionStart = true
+
+         
+      }
+      else
+      {
+         
+      }
    }
    
    internal final override func transitionStop ()
    {
-      
    }
    
    internal final func resetUserOffsets ()

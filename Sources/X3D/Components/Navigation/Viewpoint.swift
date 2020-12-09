@@ -22,11 +22,17 @@ public final class Viewpoint :
    @SFVec3f public final var position         : Vector3f = Vector3f (0, 0, 10)
    @SFVec3f public final var centerOfRotation : Vector3f = .zero
    @SFFloat public final var fieldOfView      : Float = 0.7854
+   
+   // Animation
+   
+   @SFNode private final var fieldOfViewInterpolator : ScalarInterpolator?
 
    // Construction
    
    required internal init (with executionContext : X3DExecutionContext)
    {
+      fieldOfViewInterpolator = ScalarInterpolator (with: executionContext)
+      
       super .init (executionContext .browser!, executionContext)
 
       types .append (.Viewpoint)
@@ -53,6 +59,15 @@ public final class Viewpoint :
       return Viewpoint (with: executionContext)
    }
    
+   internal final override func initialize ()
+   {
+      super .initialize ()
+      
+      fieldOfViewInterpolator! .key = [0, 1]
+      
+      fieldOfViewInterpolator! .setup ()
+   }
+   
    // Property access
    
    internal final override func getPosition () -> Vector3f { position }
@@ -77,5 +92,23 @@ public final class Viewpoint :
                                   farValue: farValue,
                                   width: Float (viewport [2]),
                                   height: Float (viewport [3]))
+   }
+   
+   // Animation
+   
+   internal final override func setInterpolators (from fromViewpoint : X3DViewpointNode)
+   {
+      if let fromViewpoint = fromViewpoint as? Viewpoint
+      {
+         let scale = fromViewpoint .getFieldOfView () / getFieldOfView ()
+
+         fieldOfViewInterpolator! .keyValue = [scale, fieldOfViewScale]
+
+         fieldOfViewScale = scale
+      }
+      else
+      {
+         fieldOfViewInterpolator! .keyValue = [fieldOfViewScale, fieldOfViewScale]
+      }
    }
 }

@@ -119,7 +119,7 @@ public class X3DViewpointNode :
    
    internal var animate : Bool = false
    
-   internal final func setInterpolators (from viewpointNode : X3DViewpointNode) { }
+   internal func setInterpolators (from viewpointNode : X3DViewpointNode) { }
    
    internal final override func transitionStart (with layer : X3DLayerNode, from node : X3DBindableNode)
    {
@@ -167,12 +167,58 @@ public class X3DViewpointNode :
                // LINEAR
                easeInEaseOut! .easeInEaseOut = [Vector2f (0, 0), Vector2f (0, 0)]
          }
+         
+         timeSensor! .cycleInterval = transitionTime
+         timeSensor! .stopTime      = browser! .currentTime
+         timeSensor! .startTime     = browser! .currentTime
+         
+         timeSensor! .$isActive .addInterest ("set_active", { _ in { [weak self] in self? .set_active (layer .navigationInfoNode) } }, self)
 
+         let relative = getRelativeTransformation (fromViewpoint: fromViewpointNode)
+
+         positionInterpolator!         .keyValue = [relative .translation,      positionOffset]
+         orientationInterpolator!      .keyValue = [relative .rotation,         orientationOffset]
+         scaleInterpolator!            .keyValue = [relative .scale,            scaleOffset]
+         scaleOrientationInterpolator! .keyValue = [relative .scaleOrientation, scaleOrientationOffset]
+
+         positionOffset         = relative .translation
+         orientationOffset      = relative .rotation
+         scaleOffset            = relative .scale
+         scaleOrientationOffset = relative .scaleOrientation
+
+         setInterpolators (from: fromViewpointNode)
       }
       else
       {
+         let relative = getRelativeTransformation (fromViewpoint: fromViewpointNode)
 
+         positionOffset         = relative .translation
+         orientationOffset      = relative .rotation
+         scaleOffset            = relative .scale
+         scaleOrientationOffset = relative .scaleOrientation
+
+         setInterpolators (from: fromViewpointNode)
       }
+   }
+   
+   private final func getRelativeTransformation (fromViewpoint : X3DViewpointNode) -> (translation : Vector3f, rotation : Rotation4f, scale : Vector3f, scaleOrientation : Rotation4f)
+   {
+      let differenceMatrix = inverse (fromViewpoint .viewMatrix * modelMatrix)
+      var relative         = decompose_transformation_matrix (differenceMatrix)
+
+      relative .translation -= getPosition ()
+      relative .rotation    *= getOrientation () .inverse
+      
+      return relative
+   }
+   
+   private final func set_active (_ navigationInfoNode : NavigationInfo)
+   {
+      guard isBound else { return }
+      
+      guard !timeSensor! .isActive else { return }
+
+      navigationInfoNode .transitionComplete = true
    }
    
    internal final override func transitionStop ()

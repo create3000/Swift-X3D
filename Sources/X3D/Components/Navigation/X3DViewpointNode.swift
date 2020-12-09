@@ -35,11 +35,27 @@ public class X3DViewpointNode :
    internal private(set) var cameraSpaceMatrix : Matrix4f = .identity
    internal private(set) var viewMatrix        : Matrix4f = .identity
    internal private(set) var modelMatrix       : Matrix4f = .identity
+   
+   // Animation
+   
+   @SFNode private final var timeSensor                   : TimeSensor?
+   @SFNode private final var easeInEaseOut                : EaseInEaseOut?
+   @SFNode private final var positionInterpolator         : PositionInterpolator?
+   @SFNode private final var orientationInterpolator      : OrientationInterpolator?
+   @SFNode private final var scaleInterpolator            : PositionInterpolator?
+   @SFNode private final var scaleOrientationInterpolator : OrientationInterpolator?
 
    // Construction
    
    internal override init (_ browser : X3DBrowser, _ executionContext : X3DExecutionContext?)
    {
+      timeSensor                   = TimeSensor              (with: executionContext!)
+      easeInEaseOut                = EaseInEaseOut           (with: executionContext!)
+      positionInterpolator         = PositionInterpolator    (with: executionContext!)
+      orientationInterpolator      = OrientationInterpolator (with: executionContext!)
+      scaleInterpolator            = PositionInterpolator    (with: executionContext!)
+      scaleOrientationInterpolator = OrientationInterpolator (with: executionContext!)
+      
       super .init (browser, executionContext)
 
       types .append (.X3DViewpointNode)
@@ -49,7 +65,45 @@ public class X3DViewpointNode :
                        $scaleOffset,
                        $scaleOrientationOffset,
                        $centerOfRotationOffset,
-                       $fieldOfViewScale)
+                       $fieldOfViewScale,
+                       $timeSensor,
+                       $easeInEaseOut,
+                       $positionInterpolator,
+                       $orientationInterpolator,
+                       $scaleInterpolator,
+                       $scaleOrientationInterpolator)
+   }
+   
+   internal override func initialize ()
+   {
+      super .initialize ()
+      
+      // Animation
+      
+      easeInEaseOut!                .key = [0, 1]
+      positionInterpolator!         .key = [0, 1]
+      orientationInterpolator!      .key = [0, 1]
+      scaleInterpolator!            .key = [0, 1]
+      scaleOrientationInterpolator! .key = [0, 1]
+      
+      timeSensor!                   .setup ()
+      easeInEaseOut!                .setup ()
+      positionInterpolator?         .setup ()
+      orientationInterpolator?      .setup ()
+      scaleInterpolator?            .setup ()
+      scaleOrientationInterpolator? .setup ()
+      
+      timeSensor! .$fraction_changed .addFieldInterest (to: easeInEaseOut! .$set_fraction)
+      
+      easeInEaseOut! .$modifiedFraction_changed .addFieldInterest (to: positionInterpolator! .$set_fraction)
+      easeInEaseOut! .$modifiedFraction_changed .addFieldInterest (to: orientationInterpolator! .$set_fraction)
+      easeInEaseOut! .$modifiedFraction_changed .addFieldInterest (to: scaleInterpolator! .$set_fraction)
+      easeInEaseOut! .$modifiedFraction_changed .addFieldInterest (to: scaleOrientationInterpolator! .$set_fraction)
+      
+      positionInterpolator!         .$value_changed .addFieldInterest (to: $positionOffset)
+      orientationInterpolator!      .$value_changed .addFieldInterest (to: $orientationOffset)
+      scaleInterpolator!            .$value_changed .addFieldInterest (to: $scaleOffset)
+      scaleOrientationInterpolator! .$value_changed .addFieldInterest (to: $scaleOrientationOffset)
    }
    
    // Property access
@@ -70,25 +124,54 @@ public class X3DViewpointNode :
    internal final override func transitionStart (with layer : X3DLayerNode, from node : X3DBindableNode)
    {
       guard let fromViewpointNode = node as? X3DViewpointNode else { return }
-      
+
       if jump
       {
          if !retainUserOffsets
          {
             resetUserOffsets ()
          }
-         
+
          let navigationInfoNode = layer .navigationInfoNode
-         let transitionType     = navigationInfoNode .transitionType
+         var transitionType     = navigationInfoNode .transitionType .first ?? "LINEAR"
          let transitionTime     = navigationInfoNode .transitionTime
-         
+
          navigationInfoNode .transitionStart = true
 
-         
+         // VRML behaviour
+
+         if executionContext! .getSpecificationVersion () == "2.0"
+         {
+            if animate
+            {
+               transitionType = "LINEAR"
+            }
+            else
+            {
+               transitionType = "TELEPORT"
+            }
+         }
+
+         animate = false // VRML
+
+         // End VRML behaviour
+
+         switch transitionType
+         {
+            case "TELEPORT":
+               layer .navigationInfoNode .transitionComplete = true
+               return
+            case "ANIMATE":
+               easeInEaseOut! .easeInEaseOut = [Vector2f (0, 1), Vector2f (1, 0)]
+            default:
+               // LINEAR
+               easeInEaseOut! .easeInEaseOut = [Vector2f (0, 0), Vector2f (0, 0)]
+         }
+
       }
       else
       {
-         
+
       }
    }
    

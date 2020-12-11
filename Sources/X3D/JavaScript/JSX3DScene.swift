@@ -10,6 +10,11 @@ import JavaScriptCore
 @objc internal protocol X3DSceneExports :
    JSExport
 {
+   typealias SFNode = JavaScript .SFNode
+   typealias MFNode = JavaScript .MFNode
+   
+   var rootNodes : MFNode { get set }
+   
    func toString () -> String
 }
 
@@ -35,6 +40,14 @@ extension JavaScript
          self .scene = scene
          
          super .init (scene)
+      }
+      
+      // Property access
+      
+      dynamic public override final var rootNodes : MFNode
+      {
+         get { MFNode (field: executionContext .$rootNodes) }
+         set { executionContext .rootNodes = newValue .field .wrappedValue }
       }
 
       // Input/Output

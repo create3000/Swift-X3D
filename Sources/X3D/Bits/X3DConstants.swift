@@ -31,7 +31,7 @@ public enum X3DLoadState :
 }
 
 public enum X3DAccessType :
-   UInt8,
+   Int32,
    CaseIterable,
    CustomStringConvertible
 {

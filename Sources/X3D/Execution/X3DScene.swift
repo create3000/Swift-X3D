@@ -86,18 +86,18 @@ public final class X3DScene :
 
    // Configuration handling
    
-   private final var profile    : X3DProfileInfo     = SupportedProfiles .profiles ["Full"]!
-   private final var components : [X3DComponentInfo] = [ ]
+   private final var profile    : ProfileInfo     = SupportedProfiles .profiles ["Full"]!
+   private final var components : [ComponentInfo] = [ ]
    
-   public final override func getProfile () -> X3DProfileInfo { profile }
+   public final override func getProfile () -> ProfileInfo { profile }
    
-   internal final override func setProfile (_ value : X3DProfileInfo) { profile = value }
+   internal final override func setProfile (_ value : ProfileInfo) { profile = value }
    
-   public final override func getComponents () -> [X3DComponentInfo] { components }
+   public final override func getComponents () -> [ComponentInfo] { components }
    
-   internal final override func setComponents (_ value : [X3DComponentInfo]) { components = value }
+   internal final override func setComponents (_ value : [ComponentInfo]) { components = value }
    
-   internal final override func addComponent (_ component : X3DComponentInfo) { components .append (component) }
+   internal final override func addComponent (_ component : ComponentInfo) { components .append (component) }
    
    // Unit handling
    

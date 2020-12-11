@@ -1,17 +1,17 @@
 //
-//  X3DComponentInfo.swift
+//  ComponentInfo.swift
 //  X3D
 //
 //  Created by Holger Seelig on 20.09.20.
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DComponentInfo :
+public final class ComponentInfo :
    X3DObject
 {
    // Common properties
    
-   internal final override class var typeName : String { "X3DComponentInfo" }
+   internal final override class var typeName : String { "ComponentInfo" }
    
    // Properties
    

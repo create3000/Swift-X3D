@@ -8,17 +8,17 @@
 
 internal final class SupportedComponents
 {
-   internal static let components : [String : X3DComponentInfo] = make ()
+   internal static let components : [String : ComponentInfo] = make ()
    internal static let aliases    : [String : String] = makeAliases ()
    
-   private static func make () -> [String : X3DComponentInfo]
+   private static func make () -> [String : ComponentInfo]
    {
       func add (title : String, name : String, level : Int32, providerUrl : String)
       {
-         components [name] = X3DComponentInfo (title: title, name: name, level: level, providerUrl: providerUrl)
+         components [name] = ComponentInfo (title: title, name: name, level: level, providerUrl: providerUrl)
       }
       
-      var components = [String : X3DComponentInfo] ()
+      var components = [String : ComponentInfo] ()
       
       add (title:      "Annotation",
            name:       "Annotation",

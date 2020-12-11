@@ -56,15 +56,15 @@ public class X3DExecutionContext :
 
    // Configuration handling
    
-   public func getProfile () -> X3DProfileInfo { scene! .getProfile () }
+   public func getProfile () -> ProfileInfo { scene! .getProfile () }
    
-   internal func setProfile (_ value : X3DProfileInfo) { scene! .setProfile (value) }
+   internal func setProfile (_ value : ProfileInfo) { scene! .setProfile (value) }
    
-   public func getComponents () -> [X3DComponentInfo] { scene! .getComponents () }
+   public func getComponents () -> [ComponentInfo] { scene! .getComponents () }
    
-   internal func setComponents (_ value : [X3DComponentInfo]) { scene! .setComponents (value) }
+   internal func setComponents (_ value : [ComponentInfo]) { scene! .setComponents (value) }
    
-   internal func addComponent (_ component : X3DComponentInfo) { scene! .addComponent (component) }
+   internal func addComponent (_ component : ComponentInfo) { scene! .addComponent (component) }
 
    // Unit handling
    

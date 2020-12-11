@@ -40,9 +40,9 @@ public final class X3DBrowser :
    
    public final func getCurrentFrameRate () -> Double { currentFrameRate }
    
-   public final func getSupportedProfiles () -> [X3DProfileInfo]
+   public final func getSupportedProfiles () -> [ProfileInfo]
    {
-      var profiles = [X3DProfileInfo] ()
+      var profiles = [ProfileInfo] ()
       
       for (_, profile) in SupportedProfiles .profiles
       {
@@ -52,7 +52,7 @@ public final class X3DBrowser :
       return profiles .sorted { $0 .name < $1 .name }
    }
 
-   public final func getProfile (name : String) throws -> X3DProfileInfo
+   public final func getProfile (name : String) throws -> ProfileInfo
    {
       guard let profile = SupportedProfiles .profiles [name] else
       {
@@ -62,9 +62,9 @@ public final class X3DBrowser :
       return profile
    }
    
-   public final func getSupportedComponents () -> [X3DComponentInfo]
+   public final func getSupportedComponents () -> [ComponentInfo]
    {
-      var components = [X3DComponentInfo] ()
+      var components = [ComponentInfo] ()
       
       for (_, component) in SupportedComponents .components
       {
@@ -74,7 +74,7 @@ public final class X3DBrowser :
       return components .sorted { $0 .name < $1 .name }
    }
    
-   public final func getComponent (name : String, level : Int32) throws -> X3DComponentInfo
+   public final func getComponent (name : String, level : Int32) throws -> ComponentInfo
    {
       guard let component = SupportedComponents .components [SupportedComponents .aliases [name] ?? name] else
       {
@@ -117,7 +117,7 @@ public final class X3DBrowser :
    
    public final func getExecutionContext () -> X3DScene { currentScene }
    
-   public final func createScene (profile : X3DProfileInfo, components : [X3DComponentInfo]) -> X3DScene
+   public final func createScene (profile : ProfileInfo, components : [ComponentInfo]) -> X3DScene
    {
       let scene = X3DScene (with: self)
       

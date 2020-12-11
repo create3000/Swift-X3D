@@ -56,6 +56,7 @@ extension JavaScript
          
          Globals             .register (context, scriptNode .browser!)
          X3DBrowser          .register (context, browser)
+         ProfileInfo         .register (context)
          X3DScene            .register (context)
          X3DExecutionContext .register (context)
          

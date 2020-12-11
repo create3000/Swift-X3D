@@ -12,7 +12,10 @@ import JavaScriptCore
 {
    typealias SFNode = JavaScript .SFNode
    
-   var worldURL : String { get }
+   var specificationVersion : String { get }
+   var encoding             : String { get }
+   var profile              : JavaScript .ProfileInfo { get }
+   var worldURL             : String { get }
    
    func getNamedNode (_ name : String) -> JSValue?
    
@@ -43,8 +46,11 @@ extension JavaScript
       
       //
       
-      dynamic public final var worldURL : String { executionContext .getWorldURL () .absoluteURL .description }
-      
+      dynamic public final var specificationVersion : String { executionContext .getSpecificationVersion () }
+      dynamic public final var encoding             : String { executionContext .getEncoding () }
+      dynamic public final var profile              : ProfileInfo { ProfileInfo (executionContext .getProfile ()) }
+      dynamic public final var worldURL             : String { executionContext .getWorldURL () .absoluteURL .description }
+
       // Named node handling
       
       public final func getNamedNode (_ name : String) -> JSValue?

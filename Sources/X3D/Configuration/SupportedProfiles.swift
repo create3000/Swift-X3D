@@ -8,19 +8,19 @@
 
 internal final class SupportedProfiles
 {
-   internal static let profiles : [String : X3DProfileInfo] = make ()
+   internal static let profiles : [String : ProfileInfo] = make ()
    
-   private static func make () -> [String : X3DProfileInfo]
+   private static func make () -> [String : ProfileInfo]
    {
       func add (title : String, name : String, providerUrl : String, components : [String])
       {
-         profiles [name] = X3DProfileInfo (name: name,
-                                           title: title,
-                                           providerUrl: providerUrl,
-                                           components: components .map { name in SupportedComponents .components [name]! })
+         profiles [name] = ProfileInfo (name: name,
+                                        title: title,
+                                        providerUrl: providerUrl,
+                                        components: components .map { name in SupportedComponents .components [name]! })
       }
       
-      var profiles = [String : X3DProfileInfo] ()
+      var profiles = [String : ProfileInfo] ()
       
       add (title: "Computer-Aided Design (CAD) interchange",
            name: "CADInterchange",

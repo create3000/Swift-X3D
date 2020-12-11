@@ -237,7 +237,7 @@ internal final class VRMLParser :
    
    private final func componentStatements () throws
    {
-      var components = [X3DComponentInfo] ()
+      var components = [ComponentInfo] ()
       
       while let component = try componentStatement ()
       {
@@ -247,7 +247,7 @@ internal final class VRMLParser :
       scene .setComponents (components)
    }
    
-   private final func componentStatement () throws -> X3DComponentInfo?
+   private final func componentStatement () throws -> ComponentInfo?
    {
       comments ()
       

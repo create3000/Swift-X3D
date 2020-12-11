@@ -6,7 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DProfileInfo :
+public final class ProfileInfo :
    X3DObject
 {
    // Common properties
@@ -18,11 +18,11 @@ public final class X3DProfileInfo :
    public final let name        : String
    public final let title       : String
    public final let providerUrl : String
-   public final let components  : [X3DComponentInfo]
+   public final let components  : [ComponentInfo]
    
    // Construciton
    
-   internal init (name : String, title : String, providerUrl : String, components : [X3DComponentInfo])
+   internal init (name : String, title : String, providerUrl : String, components : [ComponentInfo])
    {
       self .name        = name
       self .title       = title

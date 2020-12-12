@@ -44,11 +44,11 @@ extension JavaScript
       
       // Property access
 
-      dynamic public var name        : String { profile .name }
-      dynamic public var title       : String { profile .title }
-      dynamic public var providerUrl : String { profile .providerUrl }
-      dynamic public var components  : [ComponentInfo] { profile .components .map { ComponentInfo ($0) } }
-
+      dynamic public final var name        : String { profile .name }
+      dynamic public final var title       : String { profile .title }
+      dynamic public final var providerUrl : String { profile .providerUrl }
+      dynamic public final var components  : [ComponentInfo] { profile .components .map { ComponentInfo ($0) } }
+      
       // Input/Output
       
       public final func toString () -> String

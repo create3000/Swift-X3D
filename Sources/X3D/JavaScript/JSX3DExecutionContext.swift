@@ -39,6 +39,9 @@ import JavaScriptCore
    func updateImportedNode (_ inlineNode : SFNode?, _ exportedName : String, _ importedName : String?)
    func removeImportedNode (_ importedName : String)
 
+   func addRoute (_ fromNode : SFNode?, _ fromReadableField : String, _ toNode : SFNode?, _ toWritableField : String) -> X3DRoute?
+   func deleteRoute (_ route : X3DRoute?)
+
    func toString () -> String
 }
 
@@ -59,6 +62,7 @@ extension JavaScript
 {
    const updateNamedNode    = X3DExecutionContext .prototype .updateNamedNode;
    const updateImportedNode = X3DExecutionContext .prototype .updateImportedNode;
+   const addRoute           = X3DExecutionContext .prototype .addRoute;
 
    X3DExecutionContext .prototype .updateNamedNode = function (name, node)
    {
@@ -68,6 +72,11 @@ extension JavaScript
    X3DExecutionContext .prototype .updateImportedNode = function (inlineNode, exportedName, importedName)
    {
       return updateImportedNode .call (this, targets .get (inlineNode), exportedName, importedName);
+   };
+
+   X3DExecutionContext .prototype .addRoute = function (fromNode, fromReadableField, toNode, toWritableField)
+   {
+      return addRoute .call (this, targets .get (fromNode), fromReadableField, targets .get (toNode), toWritableField);
    };
 })
 (targets);
@@ -213,6 +222,38 @@ DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);
          executionContext .removeImportedNode (importedName: importedName)
       }
       
+      // Route handling
+      
+      public final func addRoute (_ fromNode : SFNode?,
+                                  _ fromReadableField : String,
+                                  _ toNode : SFNode?,
+                                  _ toWritableField : String) -> X3DRoute?
+      {
+         do
+         {
+            guard let fromNode = fromNode? .field .wrappedValue else { return exception ("FromNode is not an SFNode.") }
+            guard let toNode   = toNode?   .field .wrappedValue else { return exception ("ToNode is not an SFNode.") }
+            
+            let route = try executionContext .addRoute (sourceNode: fromNode,
+                                                        sourceField: fromReadableField,
+                                                        destinationNode: toNode,
+                                                        destinationField: toWritableField)
+            
+            return X3DRoute (route)
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
+      
+      public final func deleteRoute (_ route : X3DRoute?)
+      {
+         guard let route = route else { return exception ("Argument is not an X3DRoute.") }
+
+         executionContext .deleteRoute (route: route .route)
+      }
+
       // Input/Output
       
       public func toString () -> String

@@ -35,7 +35,7 @@ extension JavaScript
       
       // Construction
       
-      private final var route : X3D .X3DRoute
+      internal final var route : X3D .X3DRoute
       
       internal init (_ route : X3D .X3DRoute)
       {

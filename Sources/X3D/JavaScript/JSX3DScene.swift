@@ -57,7 +57,7 @@ extension JavaScript
       
       public final func getMetaData (_ key : String) -> String?
       {
-         return scene .metadata [key]? .first
+         return scene .metadata [key]? .last
       }
       
       public final func setMetaData (_ key : String, _ value : String)

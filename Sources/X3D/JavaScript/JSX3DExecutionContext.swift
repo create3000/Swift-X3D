@@ -28,6 +28,9 @@ import JavaScriptCore
    var externprotos         : [X3DExternProtoDeclaration] { get }
    var routes               : [X3DRoute] { get }
 
+   func createNode (_ typeName : String) -> JSValue?
+   func createProto (_ typeName : String) -> JSValue?
+   
    func getNamedNode (_ name : String) -> JSValue?
    
    func toString () -> String
@@ -81,6 +84,32 @@ extension JavaScript
       dynamic final public var routes : [X3DRoute]
       {
          executionContext .getRoutes () .map { X3DRoute ($0) }
+      }
+      
+      // Node creation
+      
+      public final func createNode (_ typeName : String) -> JSValue?
+      {
+         do
+         {
+            return SFNode .initWithProxy (JSContext .current (), field: X3D .SFNode (wrappedValue: try executionContext .createNode (typeName: typeName)))
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
+      
+      public final func createProto (_ typeName : String) -> JSValue?
+      {
+         do
+         {
+            return SFNode .initWithProxy (JSContext .current (), field: X3D .SFNode (wrappedValue: try executionContext .createProto (typeName: typeName)))
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
       }
 
       // Named node handling

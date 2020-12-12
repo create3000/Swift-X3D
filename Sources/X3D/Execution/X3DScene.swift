@@ -178,10 +178,8 @@ public final class X3DScene :
    }
    
    // Metadata handling
-
-   private final var _metadata : [String : [String]] = [:]
    
-   public internal(set) override var metadata : [String : [String]] { get { _metadata } set { _metadata = newValue } }
+   public final var metadata : [String : [String]] = [:]
    
    // Exported node handling
    

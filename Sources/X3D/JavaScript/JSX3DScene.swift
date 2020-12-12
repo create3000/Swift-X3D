@@ -12,9 +12,12 @@ import JavaScriptCore
 {
    typealias SFNode = JavaScript .SFNode
    typealias MFNode = JavaScript .MFNode
-   
+
    var rootNodes : MFNode { get set }
    
+   func getMetaData (_ key : String) -> String?
+   func setMetaData (_ key : String, _ value : String)
+
    func toString () -> String
 }
 
@@ -48,6 +51,18 @@ extension JavaScript
       {
          get { MFNode (field: executionContext .$rootNodes) }
          set { executionContext .rootNodes = newValue .field .wrappedValue }
+      }
+      
+      // Metadata handling
+      
+      public final func getMetaData (_ key : String) -> String?
+      {
+         return scene .metadata [key]? .first
+      }
+      
+      public final func setMetaData (_ key : String, _ value : String)
+      {
+         scene .metadata [key] = [value]
       }
 
       // Input/Output

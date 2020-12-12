@@ -84,10 +84,6 @@ public class X3DExecutionContext :
    {
       return scene! .toUnit (unit, value: value)
    }
-   
-   // Metadata handling
-   
-   public var metadata : [String : [String]] { scene! .metadata }
 
    // Node handling
    

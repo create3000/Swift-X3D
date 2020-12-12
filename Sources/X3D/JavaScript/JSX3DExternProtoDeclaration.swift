@@ -31,9 +31,9 @@ extension JavaScript
       
       public final class func register (_ context : JSContext)
       {
-         context ["X3DProtoDeclaration"] = Self .self
+         context ["X3DExternProtoDeclaration"] = Self .self
          
-         context .evaluateScript ("DefineProperty (this, \"X3DProtoDeclaration\", X3DProtoDeclaration);")
+         context .evaluateScript ("DefineProperty (this, \"X3DExternProtoDeclaration\", X3DExternProtoDeclaration);")
       }
       
       internal let externproto : X3D .X3DExternProtoDeclaration

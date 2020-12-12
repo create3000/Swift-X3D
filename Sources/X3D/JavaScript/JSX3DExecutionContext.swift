@@ -32,6 +32,8 @@ import JavaScriptCore
    func createProto (_ typeName : String) -> JSValue?
    
    func getNamedNode (_ name : String) -> JSValue?
+   func updateNamedNode (_ name : String, _ node : SFNode?)
+   func removeNamedNode (_ name : String)
    
    func toString () -> String
 }
@@ -48,7 +50,20 @@ extension JavaScript
       {
          context ["X3DExecutionContext"] = Self .self
          
-         context .evaluateScript ("DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);")
+         context .evaluateScript ("""
+(function (targets)
+{
+   const updateNamedNode = X3DExecutionContext .prototype .updateNamedNode;
+   
+   X3DExecutionContext .prototype .updateNamedNode = function (name, node)
+   {
+      return updateNamedNode .call (this, name, targets .get (node));
+   };
+})
+(targets);
+
+DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);
+""")
       }
       
       internal let executionContext : X3D .X3DExecutionContext
@@ -128,6 +143,28 @@ extension JavaScript
          }
       }
       
+      public final func updateNamedNode (_ name : String, _ node : SFNode?)
+      {
+         do
+         {
+            guard let node = node? .field .wrappedValue else
+            {
+               return exception ("Node is null.")
+            }
+            
+            try executionContext .updateNamedNode (name: name, node: node)
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
+      
+      public final func removeNamedNode (_ name : String)
+      {
+         executionContext .removeNamedNode (name: name)
+      }
+
       // Input/Output
       
       public func toString () -> String

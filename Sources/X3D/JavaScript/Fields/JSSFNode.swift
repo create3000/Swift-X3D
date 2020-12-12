@@ -27,8 +27,9 @@ import JavaScriptCore
    func getNodeType () -> [Int32]
    func getFieldDefinitions () -> [X3DFieldDefinition]
 
-   func toVRMLString () -> String
    func toXMLString () -> String
+   func toJSONString () -> String
+   func toVRMLString () -> String
 }
 
 extension JavaScript
@@ -62,8 +63,9 @@ extension JavaScript
    const getNodeName         = Target .prototype .getNodeName;
    const getNodeType         = Target .prototype .getNodeType;
    const getFieldDefinitions = Target .prototype .getFieldDefinitions;
-   const toVRMLString        = Target .prototype .toVRMLString;
    const toXMLString         = Target .prototype .toXMLString;
+   const toJSONString        = Target .prototype .toJSONString;
+   const toVRMLString        = Target .prototype .toVRMLString;
 
    delete Target .prototype .getProperty;
    delete Target .prototype .setProperty;
@@ -75,8 +77,9 @@ extension JavaScript
    Target .prototype .getNodeName         = function () { return getNodeName         .call (targets .get (this)) }
    Target .prototype .getNodeType         = function () { return getNodeType         .call (targets .get (this)) }
    Target .prototype .getFieldDefinitions = function () { return getFieldDefinitions .call (targets .get (this)) }
-   Target .prototype .toVRMLString        = function () { return toVRMLString        .call (targets .get (this)) }
    Target .prototype .toXMLString         = function () { return toXMLString         .call (targets .get (this)) }
+   Target .prototype .toJSONString        = function () { return toJSONString        .call (targets .get (this)) }
+   Target .prototype .toVRMLString        = function () { return toVRMLString        .call (targets .get (this)) }
 
    var handler =
    {
@@ -336,15 +339,20 @@ extension JavaScript
          
          return fieldDefinitions
       }
-
-      public final func toVRMLString () -> String
-      {
-         return field .wrappedValue? .toString () ?? ""
-      }
       
       public final func toXMLString () -> String
       {
-         return field .wrappedValue? .toString () ?? ""
+         return field .wrappedValue? .toXMLString () ?? ""
+      }
+      
+      public final func toJSONString () -> String
+      {
+         return field .wrappedValue? .toJSONString () ?? ""
+      }
+
+      public final func toVRMLString () -> String
+      {
+         return field .wrappedValue? .toVRMLString () ?? ""
       }
    }
 }

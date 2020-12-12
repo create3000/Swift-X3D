@@ -29,6 +29,8 @@ extension JavaScript
       internal static func register (_ context : JSContext)
       {
          context ["ComponentInfo"] = Self .self
+         
+         context .evaluateScript ("DefineProperty (this, \"ComponentInfo\", ComponentInfo);")
       }
       
       // Construction

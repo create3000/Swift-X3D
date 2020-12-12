@@ -29,6 +29,8 @@ extension JavaScript
       internal static func register (_ context : JSContext)
       {
          context ["X3DRoute"] = Self .self
+         
+         context .evaluateScript ("DefineProperty (this, \"X3DRoute\", X3DRoute);")
       }
       
       // Construction

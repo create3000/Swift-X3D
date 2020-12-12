@@ -25,6 +25,7 @@ import JavaScriptCore
    func distance (_ vector : SFVec?) -> Scalar
    func divide (_ scalar : Scalar) -> SFVec
    func divVec (_ vector : SFVec?) -> SFVec?
+   func dot (_ vector : SFVec?) -> Scalar
    func length () -> Scalar
    func lerp (_ vector : SFVec?, _ t : Scalar) -> SFVec?
    func multiply (_ scalar : Scalar) -> SFVec
@@ -149,6 +150,13 @@ DefineProperty (this, "SFVec2f", SFVec2f);
          guard let vector = vector else { return exception (t("Invalid argument.")) }
          
          return SFVec (field: Internal (wrappedValue: field .wrappedValue / vector .field .wrappedValue))
+      }
+      
+      public final func dot (_ vector : SFVec?) -> Scalar
+      {
+         guard let vector = vector else { return exception (t("Invalid argument.")) }
+         
+         return simd_dot (field .wrappedValue, vector .field .wrappedValue)
       }
 
       public final func length () -> Scalar

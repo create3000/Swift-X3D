@@ -35,6 +35,10 @@ import JavaScriptCore
    func updateNamedNode (_ name : String, _ node : SFNode?)
    func removeNamedNode (_ name : String)
    
+   func getImportedNode (_ importedName : String) -> JSValue?
+   func updateImportedNode (_ inlineNode : SFNode?, _ exportedName : String, _ importedName : String?)
+   func removeImportedNode (_ importedName : String)
+
    func toString () -> String
 }
 
@@ -53,11 +57,17 @@ extension JavaScript
          context .evaluateScript ("""
 (function (targets)
 {
-   const updateNamedNode = X3DExecutionContext .prototype .updateNamedNode;
-   
+   const updateNamedNode    = X3DExecutionContext .prototype .updateNamedNode;
+   const updateImportedNode = X3DExecutionContext .prototype .updateImportedNode;
+
    X3DExecutionContext .prototype .updateNamedNode = function (name, node)
    {
       return updateNamedNode .call (this, name, targets .get (node));
+   };
+
+   X3DExecutionContext .prototype .updateImportedNode = function (inlineNode, exportedName, importedName)
+   {
+      return updateImportedNode .call (this, targets .get (inlineNode), exportedName, importedName);
    };
 })
 (targets);
@@ -164,7 +174,45 @@ DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);
       {
          executionContext .removeNamedNode (name: name)
       }
-
+      
+      // Imported node handling
+      
+      public final func getImportedNode (_ importedName : String) -> JSValue?
+      {
+         do
+         {
+            let node = try executionContext .getImportedNode (importedName: importedName)
+            
+            return SFNode .initWithProxy (JSContext .current (), field: X3D .SFNode (wrappedValue: node))
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
+      
+      public final func updateImportedNode (_ inlineNode : SFNode?, _ exportedName : String, _ importedName : String?)
+      {
+         do
+         {
+            guard let inlineNode = inlineNode? .field .wrappedValue as? X3D .Inline else
+            {
+               return exception ("Node is not an Inline node.")
+            }
+            
+            try executionContext .updateImportedNode (inlineNode: inlineNode, exportedName: exportedName, importedName: importedName ?? exportedName)
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
+      
+      public final func removeImportedNode (_ importedName : String)
+      {
+         executionContext .removeImportedNode (importedName: importedName)
+      }
+      
       // Input/Output
       
       public func toString () -> String

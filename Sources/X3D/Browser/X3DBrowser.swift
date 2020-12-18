@@ -6,6 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
+import SwiftUI
 import Foundation
 import Gzip
 
@@ -475,4 +476,14 @@ fileprivate extension Data
 
       stream .close ()
    }
+}
+
+extension X3DBrowser :
+   NSViewRepresentable
+{
+   public typealias NSViewType = X3DBrowser
+   
+   public func makeNSView (context : Context) -> X3DBrowser { self }
+   
+   public func updateNSView (_ nsView: X3DBrowser, context: Context) { }
 }

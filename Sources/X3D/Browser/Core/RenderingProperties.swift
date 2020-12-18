@@ -37,10 +37,7 @@ public final class RenderingProperties :
       addField (.inputOutput, "ColorDepth",      $ColorDepth)
       addField (.inputOutput, "TextureMemory",   $TextureMemory)
       
-      if executionContext .getSpecificationVersion () == "2.0"
-      {
-         addFieldAlias (alias: "AntiAliased", name: "Antialiased")
-      }
+      addFieldAlias (alias: "AntiAliased", name: "Antialiased")
    }
    
    internal final override func initialize ()

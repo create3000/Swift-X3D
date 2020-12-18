@@ -47,6 +47,8 @@ internal final class X3DRenderingContextProperties :
    {
       super .initialize ()
       
+      browser! .browserOptions .$Shading .addInterest ("set_shading", X3DRenderingContextProperties .set_shading, self)
+      
       depthStencilState [false] = buildDepthStencilState (depth: false)
       depthStencilState [true]  = buildDepthStencilState (depth: true)
 
@@ -121,6 +123,20 @@ internal final class X3DRenderingContextProperties :
       sampler .lodMaxClamp           = .greatestFiniteMagnitude
       
       return browser! .device! .makeSamplerState (descriptor: sampler)!
+   }
+   
+   private final func set_shading ()
+   {
+      switch browser! .browserOptions .Shading
+      {
+         case "PHONG":
+            defaultRenderPipelineState [false] = renderPipelineState [.PhongOpaque]
+            defaultRenderPipelineState [true]  = renderPipelineState [.PhongTransparent]
+         case "GOURAUD": fallthrough
+         default:
+            defaultRenderPipelineState [false] = renderPipelineState [.GouraudOpaque]
+            defaultRenderPipelineState [true]  = renderPipelineState [.GouraudTransparent]
+      }
    }
 }
 

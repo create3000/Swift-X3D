@@ -53,9 +53,6 @@ public final class BrowserOptions :
       addField (.inputOutput, "StraightenHorizon",      $StraightenHorizon)
       addField (.inputOutput, "LogarithmicDepthBuffer", $LogarithmicDepthBuffer)
       
-      if executionContext .getSpecificationVersion () == "2.0"
-      {
-         addFieldAlias (alias: "AntiAliased", name: "Antialiased")
-      }
+      addFieldAlias (alias: "AntiAliased", name: "Antialiased")
    }
 }

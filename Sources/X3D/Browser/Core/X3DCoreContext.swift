@@ -13,14 +13,18 @@ internal final class X3DCoreContextProperties :
 {
    // Properties
    
-   @SFNode fileprivate final var browserOptions      : BrowserOptions?
-   @SFNode fileprivate final var browserProperties   : BrowserProperties?
-   @SFNode fileprivate final var renderingProperties : RenderingProperties?
+   @SFNode fileprivate final var browserOptions      : BrowserOptions!
+   @SFNode fileprivate final var browserProperties   : BrowserProperties!
+   @SFNode fileprivate final var renderingProperties : RenderingProperties!
 
    // Construction
    
    internal init (with executionContext : X3DExecutionContext)
    {
+      self .browserOptions      = BrowserOptions      (with: executionContext)
+      self .browserProperties   = BrowserProperties   (with: executionContext)
+      self .renderingProperties = RenderingProperties (with: executionContext)
+      
       super .init (executionContext .browser!, executionContext)
       
       addChildObjects ($browserOptions,
@@ -32,9 +36,9 @@ internal final class X3DCoreContextProperties :
    {
       super .initialize ()
       
-      browserOptions      = BrowserOptions      (with: executionContext!)
-      browserProperties   = BrowserProperties   (with: executionContext!)
-      renderingProperties = RenderingProperties (with: executionContext!)
+      browserOptions      .setup ()
+      browserProperties   .setup ()
+      renderingProperties .setup ()
    }
 }
 

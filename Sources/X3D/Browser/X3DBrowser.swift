@@ -10,23 +10,18 @@ import SwiftUI
 import Foundation
 import Gzip
 
-public func createBrowser () -> X3DBrowser
-{
-   return X3DBrowser ()
-}
-
-public func createBrowser (url : [URL], parameter : [String]) -> X3DBrowser
-{
-   let browser = X3DBrowser ()
-   
-   browser .loadURL (url: url, parameter: parameter)
-   
-   return browser
-}
-
 public final class X3DBrowser :
    X3DBrowserContext
 {
+   // Construction
+   
+   public convenience init (url : [URL], parameter : [String])
+   {
+      self .init ()
+      
+      self .loadURL (url: url, parameter: parameter)
+   }
+
    // Properties
    
    public final override var browser : X3DBrowser { self }

@@ -10,6 +10,20 @@ import SwiftUI
 import Foundation
 import Gzip
 
+public func createBrowser () -> X3DBrowser
+{
+   return X3DBrowser ()
+}
+
+public func createBrowser (url : [URL], parameter : [String]) -> X3DBrowser
+{
+   let browser = X3DBrowser ()
+   
+   browser .loadURL (url: url, parameter: parameter)
+   
+   return browser
+}
+
 public final class X3DBrowser :
    X3DBrowserContext
 {
@@ -449,6 +463,16 @@ public final class X3DBrowser :
    }
 }
 
+extension X3DBrowser :
+   NSViewRepresentable
+{
+   public typealias NSViewType = X3DBrowser
+   
+   public func makeNSView (context : Context) -> X3DBrowser { self }
+   
+   public func updateNSView (_ nsView : X3DBrowser, context : Context) { }
+}
+
 fileprivate extension Data
 {
    init (reading stream : InputStream)
@@ -476,14 +500,4 @@ fileprivate extension Data
 
       stream .close ()
    }
-}
-
-extension X3DBrowser :
-   NSViewRepresentable
-{
-   public typealias NSViewType = X3DBrowser
-   
-   public func makeNSView (context : Context) -> X3DBrowser { self }
-   
-   public func updateNSView (_ nsView : X3DBrowser, context : Context) { }
 }

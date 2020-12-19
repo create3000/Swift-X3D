@@ -62,7 +62,6 @@ public final class X3DWorld :
          if defaultLayerSetNode == nil
          {
             defaultLayerSetNode = LayerSet (with: executionContext!)
-            defaultLayerSetNode! .setup ()
          }
          
          layerSetNode = defaultLayerSetNode
@@ -88,6 +87,8 @@ public final class X3DWorld :
 
          activeLayerNode = layerSetNode! .activeLayerNode
       }
+      
+      defaultLayerSetNode? .setup ()
    }
 
    // Rendering

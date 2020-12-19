@@ -71,7 +71,9 @@ public final class X3DConsole
    {
       let message = arguments .map { $0 .description } .joined (separator: " ")
       
+      #if DEBUG
       os_log (self .osLogTypes [type]!, "%@", message)
+      #endif
       
       DispatchQueue .main .async
       {

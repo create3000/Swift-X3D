@@ -110,6 +110,8 @@ public final class X3DWorld :
    
    deinit
    {
+      #if DEBUG
       debugPrint (#file, #function)
+      #endif
    }
 }

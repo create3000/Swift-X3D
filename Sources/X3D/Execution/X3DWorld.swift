@@ -79,8 +79,7 @@ public final class X3DWorld :
          }
          
          executionContext! .$rootNodes .addFieldInterest (to: layerSetNode! .layerNode0! .$children)
-         layerSetNode! .layerNode0! .children .append (contentsOf: executionContext! .rootNodes)
-         layerSetNode! .layerNode0! .setup ()
+         layerSetNode! .layerNode0! .children = executionContext! .rootNodes
 
          // Handle active layer.
          

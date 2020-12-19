@@ -92,8 +92,8 @@ public final class X3DWorld :
 
          // Handle active layer.
          
-         oldLayerSetNode? .$activeLayer .removeFieldInterest (to: $activeLayerNode)
-         layerSetNode!    .$activeLayer .addFieldInterest (to: $activeLayerNode)
+         oldLayerSetNode? .$activeLayerNode .removeFieldInterest (to: $activeLayerNode)
+         layerSetNode!    .$activeLayerNode .addFieldInterest (to: $activeLayerNode)
 
          activeLayerNode = layerSetNode! .activeLayerNode
       }

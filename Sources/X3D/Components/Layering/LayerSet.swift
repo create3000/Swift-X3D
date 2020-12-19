@@ -28,7 +28,7 @@ public final class LayerSet :
    // Properties
    
    @SFNode internal private(set) final var activeLayerNode : X3DLayerNode?
-   @SFNode internal final var layerNode0 : Layer?
+   @SFNode internal final var layerNode0 : Layer? { didSet { set_layers () } }
    @MFNode private final var layerNodes : [X3DLayerNode?]
 
    // Construction
@@ -67,7 +67,6 @@ public final class LayerSet :
       $activeLayer .addInterest ("set_activeLayer", LayerSet .set_activeLayer, self)
       $order       .addInterest ("set_layers",      LayerSet .set_layers,      self)
       $layers      .addInterest ("set_layers",      LayerSet .set_layers,      self)
-      $layerNode0  .addInterest ("set_layers",      LayerSet .set_layers,      self)
 
       set_layers ()
    }

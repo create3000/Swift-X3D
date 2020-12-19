@@ -112,6 +112,8 @@ internal final class X3DNavigationContextProperties :
    
    private final func set_viewer ()
    {
+      debugPrint(#function, viewer)
+      
       switch viewer
       {
          case .EXAMINE:

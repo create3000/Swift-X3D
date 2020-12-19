@@ -17,7 +17,7 @@ public final class X3DWorld :
    
    // Properties
    
-   @SFNode private final var defaultLayerSetNode : LayerSet?
+   @SFNode private final var defaultLayerSetNode : LayerSet!
    @SFNode public private(set) final var layerSetNode : LayerSet?
    @SFNode public private(set) final var activeLayerNode : X3DLayerNode?
    
@@ -25,6 +25,8 @@ public final class X3DWorld :
    
    internal init (with scene : X3DScene)
    {
+      self .defaultLayerSetNode = LayerSet (with: scene)
+
       super .init (scene .browser!, scene)
       
       types .append (.X3DWorld)
@@ -43,6 +45,8 @@ public final class X3DWorld :
       executionContext! .$rootNodes .addInterest ("set_rootNodes", X3DWorld .set_rootNodes, self)
 
       set_rootNodes ()
+      
+      defaultLayerSetNode .setup ()
 
       layerSetNode! .bindFirstBindables ()
    }
@@ -59,11 +63,6 @@ public final class X3DWorld :
       }
       else
       {
-         if defaultLayerSetNode == nil
-         {
-            defaultLayerSetNode = LayerSet (with: executionContext!)
-         }
-         
          layerSetNode = defaultLayerSetNode
       }
       
@@ -87,8 +86,6 @@ public final class X3DWorld :
 
          activeLayerNode = layerSetNode! .activeLayerNode
       }
-      
-      defaultLayerSetNode? .setup ()
    }
 
    // Rendering

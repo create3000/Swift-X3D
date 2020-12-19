@@ -67,7 +67,8 @@ public final class LayerSet :
       $activeLayer .addInterest ("set_activeLayer", LayerSet .set_activeLayer, self)
       $order       .addInterest ("set_layers",      LayerSet .set_layers,      self)
       $layers      .addInterest ("set_layers",      LayerSet .set_layers,      self)
-      
+      $layerNode0  .addInterest ("set_layers",      LayerSet .set_layers,      self)
+
       set_layers ()
    }
    

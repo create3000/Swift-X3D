@@ -76,8 +76,19 @@ public final class X3DWorld :
             oldLayerSetNode! .layerNode0! .children .removeAll ()
          }
          
+         // Handle layer 0
+         
          executionContext! .$rootNodes .addFieldInterest (to: layerSetNode! .layerNode0! .$children)
-         layerSetNode! .layerNode0! .children = executionContext! .rootNodes
+         
+         let layerNode0 = Layer (with: executionContext!)
+         
+         layerNode0 .isPrivate = true
+         layerNode0 .isLayer0  = true
+         layerNode0 .children  = executionContext! .rootNodes
+         
+         layerNode0 .setup ()
+
+         layerSetNode! .layerNode0 = layerNode0
 
          // Handle active layer.
          

@@ -28,7 +28,7 @@ public final class LayerSet :
    // Properties
    
    @SFNode internal private(set) final var activeLayerNode : X3DLayerNode?
-   @SFNode internal private(set) final var layerNode0 : Layer?
+   @SFNode internal final var layerNode0 : Layer?
    @MFNode private final var layerNodes : [X3DLayerNode?]
 
    // Construction

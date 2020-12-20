@@ -16,6 +16,8 @@ import JavaScriptCore
    var fields        : [X3DFieldDefinition] { get }
    var isExternProto : Bool { get }
    
+   func newInstance () -> JSValue
+
    func toString () -> String
 }
 
@@ -59,6 +61,13 @@ extension JavaScript
       
       dynamic public final var isExternProto : Bool { proto .isExternProto }
       
+      public final func newInstance () -> JSValue
+      {
+         let node = proto .createInstance (with: proto .executionContext!)
+         
+         return SFNode .initWithProxy (JSContext .current (), field: X3D .SFNode (wrappedValue: node))
+      }
+
       // Input/Output
       
       public final func toString () -> String

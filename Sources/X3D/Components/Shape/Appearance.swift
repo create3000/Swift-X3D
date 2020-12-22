@@ -199,7 +199,7 @@ public final class Appearance :
          }
       }
       
-      shaderNode? .select ()
+      DispatchQueue .main .async { self .shaderNode? .select () }
    }
    
    private final func set_transparent ()

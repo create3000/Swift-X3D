@@ -275,6 +275,8 @@ public final class Appearance :
    {
       guard browser != nil else { return }
       
-      shaderNode? .deselect ()
+      let shaderNode = self .shaderNode
+      
+      DispatchQueue .main .async { [weak shaderNode] in shaderNode? .deselect () }
    }
 }

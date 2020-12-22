@@ -141,9 +141,15 @@ internal final class VRMLParser :
          if Grammar .header .matches (in: headerCharacters) != nil { return true }
       }
       
-      // Test for keywords.
+      // Remove comments.
       
       comments ()
+      
+      // Test for empty scene.
+      
+      if scanner .isAtEnd { return true }
+      
+      // Test for keywords.
       
       if scanner .scanString (Grammar .PROFILE)     != nil { return true }
       if scanner .scanString (Grammar .COMPONENT)   != nil { return true }

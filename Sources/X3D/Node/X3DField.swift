@@ -98,6 +98,8 @@ public class X3DField :
    /// Adds a interest for field.
    internal final func addFieldInterest (to field : X3DField)
    {
+      assert (field .getType () == getType ())
+      
       outputFieldInterests .add (field)
       field .addInputFieldInterest (to: self)
    }
@@ -105,6 +107,8 @@ public class X3DField :
    /// Removes a interest for field.
    internal final func removeFieldInterest (to field : X3DField)
    {
+      assert (field .getType () == getType ())
+      
       outputFieldInterests .remove (field)
       field .removeInputFieldInterest (to: self)
    }

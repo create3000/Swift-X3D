@@ -77,7 +77,7 @@ public class X3DViewpointNode :
    internal override func initialize ()
    {
       super .initialize ()
-      
+
       // Animation
       
       easeInEaseOut!                .key = [0, 1]

@@ -132,6 +132,17 @@ internal final class VRMLParser :
       
       defer { scanner .currentIndex = currentIndex }
       
+      // Test for header.
+      
+      _ = scanner .scanString (Grammar .comment)
+      
+      if let headerCharacters = scanner .scanUpToCharacters (from: Grammar .lineBreak)
+      {
+         if Grammar .header .matches (in: headerCharacters) != nil { return true }
+      }
+      
+      // Test for keywords.
+      
       comments ()
       
       if scanner .scanString (Grammar .PROFILE)     != nil { return true }

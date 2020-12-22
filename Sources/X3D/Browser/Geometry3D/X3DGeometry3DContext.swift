@@ -37,6 +37,48 @@ internal final class X3DGeometry3DContextProperties :
       coneOptions!     .setup ()
       cylinderOptions! .setup ()
       sphereOptions!   .setup ()
+      
+      browser! .browserOptions .$PrimitiveQuality .addInterest ("set_primitiveQuality", X3DGeometry3DContextProperties .set_primitiveQuality, self)
+   }
+   
+   private final func set_primitiveQuality ()
+   {
+      switch browser! .browserOptions .PrimitiveQuality
+      {
+         case "LOW": do
+         {
+            coneOptions!     .uDimension = 16
+            cylinderOptions! .uDimension = 16
+            
+            if let sphereOptions = sphereOptions as? X3DQuadSphereOptions
+            {
+               sphereOptions .uDimension = 20
+               sphereOptions .vDimension = 9
+            }
+         }
+         case "HIGH": do
+         {
+            coneOptions!     .uDimension = 32
+            cylinderOptions! .uDimension = 32
+            
+            if let sphereOptions = sphereOptions as? X3DQuadSphereOptions
+            {
+               sphereOptions .uDimension = 64
+               sphereOptions .vDimension = 31
+            }
+         }
+         default: do
+         {
+            coneOptions!     .uDimension = 20
+            cylinderOptions! .uDimension = 20
+            
+            if let sphereOptions = sphereOptions as? X3DQuadSphereOptions
+            {
+               sphereOptions .uDimension = 32
+               sphereOptions .vDimension = 15
+            }
+         }
+      }
    }
 }
 

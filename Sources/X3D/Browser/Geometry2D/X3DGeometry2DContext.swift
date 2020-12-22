@@ -41,6 +41,36 @@ internal final class X3DGeometry2DContextProperties :
       arcClose2DOptions! .setup ()
       circle2DOptions!   .setup ()
       disk2DOptions!     .setup ()
+      
+      browser! .browserOptions .$PrimitiveQuality .addInterest ("set_primitiveQuality", X3DGeometry2DContextProperties .set_primitiveQuality, self)
+   }
+   
+   private final func set_primitiveQuality ()
+   {
+      switch browser! .browserOptions .PrimitiveQuality
+      {
+         case "LOW": do
+         {
+            arc2DOptions!      .dimension = 20
+            arcClose2DOptions! .dimension = 20
+            circle2DOptions!   .dimension = 20
+            disk2DOptions!     .dimension = 20
+         }
+         case "HIGH": do
+         {
+            arc2DOptions!      .dimension = 80
+            arcClose2DOptions! .dimension = 80
+            circle2DOptions!   .dimension = 80
+            disk2DOptions!     .dimension = 80
+         }
+         default: do
+         {
+            arc2DOptions!      .dimension = 40
+            arcClose2DOptions! .dimension = 40
+            circle2DOptions!   .dimension = 40
+            disk2DOptions!     .dimension = 40
+         }
+      }
    }
 }
 

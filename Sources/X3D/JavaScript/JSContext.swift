@@ -16,9 +16,9 @@ extension JavaScript
    {
       // Properties
       
-      private unowned let scriptNode : X3D .Script
-      private let context            : JSContext
-      private var browser            : X3DBrowser!
+      private weak var scriptNode : X3D .Script?
+      private let context         : JSContext
+      private var browser         : X3DBrowser!
       
       // Static properties
       
@@ -50,11 +50,11 @@ extension JavaScript
          
          context .evaluateScript ("this .targets = new WeakMap ();")
          
-         browser = X3DBrowser (context, scriptNode .browser!, scriptNode .executionContext!)
+         browser = X3DBrowser (context, scriptNode! .browser!, scriptNode! .executionContext!)
 
          // Register objects and functions.
          
-         Globals                   .register (context, scriptNode .browser!)
+         Globals                   .register (context, scriptNode! .browser!)
          X3DBrowser                .register (context, browser)
          X3DScene                  .register (context)
          X3DExecutionContext       .register (context)
@@ -118,12 +118,12 @@ extension JavaScript
          
          let getProperty : @convention(block) (String) -> Any =
          {
-            [weak self] in JavaScript .getValue (self! .context, self! .browser, try! self! .scriptNode .getField (name: $0))
+            [weak self] in JavaScript .getValue (self! .context, self! .browser, try! self! .scriptNode! .getField (name: $0))
          }
          
          let setProperty : @convention(block) (String, Any?) -> Void =
          {
-            [weak self] in JavaScript .setValue (try! self! .scriptNode .getField (name: $0), $1)
+            [weak self] in JavaScript .setValue (try! self! .scriptNode! .getField (name: $0), $1)
          }
 
          context ["getProperty"] = getProperty
@@ -133,7 +133,7 @@ extension JavaScript
          var nodes  = [String] ()
          var fields = [String] ()
 
-         for field in scriptNode .getUserDefinedFields ()
+         for field in scriptNode! .getUserDefinedFields ()
          {
             switch field .getType ()
             {
@@ -234,12 +234,12 @@ extension JavaScript
          let stacktrace = exception! .objectForKeyedSubscript ("stack")! .toString ()! .replacingOccurrences (of: "\n", with: " ")
          let lineNumber = exception! .objectForKeyedSubscript ("line")! .toInt32 ()
          let column     = exception! .objectForKeyedSubscript ("column")! .toInt32 ()
-         let url        = scriptNode .executionContext! .getWorldURL () .absoluteURL .description
+         let url        = scriptNode! .executionContext! .getWorldURL () .absoluteURL .description
          
-         scriptNode .browser! .console .error ("""
+         scriptNode! .browser! .console .error ("""
 
 JavaScript error at line \(lineNumber), \(column):
-in Script named '\(scriptNode .getName ())' in file '\(url)'
+in Script named '\(scriptNode! .getName ())' in file '\(url)'
 in method \(stacktrace).
 
 \(exception!)
@@ -249,7 +249,7 @@ in method \(stacktrace).
       
       internal final func initialize ()
       {
-         guard let scene = scriptNode .scene else { return }
+         guard let scene = scriptNode! .scene else { return }
          
          if context .evaluateScript ("typeof initialize == 'function'")! .toBool ()
          {
@@ -263,9 +263,9 @@ in method \(stacktrace).
       
       private final func set_live ()
       {
-         guard let browser          = scriptNode .browser,
-               let scene            = scriptNode .scene,
-               let executionContext = scriptNode .executionContext
+         guard let browser          = scriptNode? .browser,
+               let scene            = scriptNode? .scene,
+               let executionContext = scriptNode? .executionContext
          else { return }
          
          if scene .isLive || executionContext .getType () .contains (.X3DPrototypeInstance)
@@ -281,10 +281,10 @@ in method \(stacktrace).
             {
                eventsProcessedFunction = context ["eventsProcessed"]
 
-               scriptNode .addInterest ("eventsProcessed", Context .eventsProcessed, self)
+               scriptNode! .addInterest ("eventsProcessed", Context .eventsProcessed, self)
             }
             
-            for field in scriptNode .getUserDefinedFields ()
+            for field in scriptNode! .getUserDefinedFields ()
             {
                switch field .getAccessType ()
                {
@@ -313,9 +313,9 @@ in method \(stacktrace).
          {
             browser .removeBrowserInterest (event: .Browser_Event, id: "prepareEvents", method: Context .prepareEvents, object: self)
             
-            scriptNode .removeInterest ("eventsProcessed", Context .eventsProcessed, self)
+            scriptNode! .removeInterest ("eventsProcessed", Context .eventsProcessed, self)
             
-            for field in scriptNode .getUserDefinedFields ()
+            for field in scriptNode! .getUserDefinedFields ()
             {
                field .removeInterest ("set_field", { _ in { } }, self)
             }
@@ -335,7 +335,7 @@ in method \(stacktrace).
          
          field .isTainted = true
          
-         function .call (withArguments: [getValue (context, browser, field), scriptNode .browser! .currentTime])
+         function .call (withArguments: [getValue (context, browser, field), scriptNode! .browser! .currentTime])
          
          field .isTainted = false
       }

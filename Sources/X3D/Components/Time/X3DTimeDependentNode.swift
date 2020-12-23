@@ -31,14 +31,6 @@ public protocol X3DTimeDependentNode :
    var isPaused    : Bool { get set }
    var isActive    : Bool { get set }
    var elapsedTime : TimeInterval { get set }
-   
-   // Event handler
-   
-   func set_start ()
-   func set_pause ()
-   func set_resume ()
-   func set_stop ()
-   func set_time ()
 }
 
 extension X3DTimeDependentNode
@@ -61,9 +53,21 @@ extension X3DTimeDependentNode
 
    // Construction
    
-   internal func initTimeDependentNode ()
+   internal func initTimeDependentNode (set_start : @escaping X3DRequester,
+                                        set_pause : @escaping X3DRequester,
+                                        set_resume : @escaping X3DRequester,
+                                        set_stop : @escaping X3DRequester,
+                                        set_time : @escaping X3DRequester)
    {
       types .append (.X3DTimeDependentNode)
+      
+      // Event handler
+      
+      timeDependentProperties .set_start  = set_start
+      timeDependentProperties .set_pause  = set_pause
+      timeDependentProperties .set_resume = set_resume
+      timeDependentProperties .set_stop   = set_stop
+      timeDependentProperties .set_time   = set_time
    }
    
    internal func initializeTimeDependentNode ()
@@ -260,11 +264,11 @@ extension X3DTimeDependentNode
 
          isActive = true
 
-         set_start ()
+         timeDependentProperties .set_start! ()
 
          if scene .isLive || isLive
          {
-            browser .addBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .set_time, object: self)
+            browser .addBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .do_set_time, object: self)
          }
          else
          {
@@ -300,9 +304,9 @@ extension X3DTimeDependentNode
       
       timeDependentProperties .pause = browser .currentTime
 
-      set_pause ()
+      timeDependentProperties .set_pause! ()
 
-      browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .set_time, object: self)
+      browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .do_set_time, object: self)
    }
 
    private func do_resume ()
@@ -330,9 +334,9 @@ extension X3DTimeDependentNode
 
       timeDependentProperties .pauseInterval += interval
 
-      set_resume ()
+      timeDependentProperties .set_resume! ()
 
-      browser .addBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .set_time, object: self)
+      browser .addBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .do_set_time, object: self)
       browser .setNeedsDisplay ()
    }
 
@@ -349,7 +353,7 @@ extension X3DTimeDependentNode
       {
          // The event order below is very important.
 
-         set_stop ()
+         timeDependentProperties .set_stop! ()
 
          elapsedTime = getElapsedTime ()
 
@@ -362,7 +366,7 @@ extension X3DTimeDependentNode
 
          if scene .isLive || isLive
          {
-            browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .set_time, object: self)
+            browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .do_set_time, object: self)
          }
       }
    }
@@ -402,6 +406,13 @@ extension X3DTimeDependentNode
       
       return task
    }
+   
+   // Callbacks
+   
+   private func do_set_time ()
+   {
+      timeDependentProperties .set_time! ()
+   }
 }
 
 fileprivate var timeDependentPropertiesIndex = X3DTimeDependentPropertiesIndex (keyOptions: .weakMemory, valueOptions: .strongMemory)
@@ -425,6 +436,12 @@ fileprivate final class X3DTimeDependentProperties
    fileprivate final var resumeTask : DispatchWorkItem?
    fileprivate final var pauseTask  : DispatchWorkItem?
    fileprivate final var stopTask   : DispatchWorkItem?
+   
+   fileprivate final var set_start  : X3DRequester?
+   fileprivate final var set_pause  : X3DRequester?
+   fileprivate final var set_resume : X3DRequester?
+   fileprivate final var set_stop   : X3DRequester?
+   fileprivate final var set_time   : X3DRequester?
    
    deinit
    {

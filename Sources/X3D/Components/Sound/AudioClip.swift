@@ -48,7 +48,12 @@ public final class AudioClip :
    {
       super .init (executionContext .browser!, executionContext)
       
-      initSoundSourceNode ()
+      initSoundSourceNode (set_start:  { [unowned self] in self .set_start () },
+                           set_pause:  { [unowned self] in self .set_pause () },
+                           set_resume: { [unowned self] in self .set_resume () },
+                           set_stop:   { [unowned self] in self .set_stop () },
+                           set_time:   { [unowned self] in self .set_time () })
+      
       initUrlObject ()
 
       types .append (.AudioClip)

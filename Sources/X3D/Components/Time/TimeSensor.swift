@@ -54,9 +54,14 @@ public final class TimeSensor :
    {
       super .init (executionContext .browser!, executionContext)
       
-      initTimeDependentNode ()
+      initTimeDependentNode (set_start:  { [unowned self] in self .set_start () },
+                             set_pause:  { [unowned self] in self .set_pause () },
+                             set_resume: { [unowned self] in self .set_resume () },
+                             set_stop:   { [unowned self] in self .set_stop () },
+                             set_time:   { [unowned self] in self .set_time () })
+      
       initSensorNode ()
-
+      
       types .append (.TimeSensor)
 
       addField (.inputOutput, "metadata",         $metadata)
@@ -147,7 +152,7 @@ public final class TimeSensor :
    
    public final func set_stop () { }
    
-   public final func set_fraction ()
+   private final func set_fraction ()
    {
       fraction         = first + fract ((browser! .currentTime - cycle) / interval) * scale
       fraction_changed = Float (fraction)

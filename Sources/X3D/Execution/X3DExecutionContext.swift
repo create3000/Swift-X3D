@@ -538,14 +538,14 @@ public class X3DExecutionContext :
       })
       else { return }
       
-      routes .remove (at: index)
+      routes .remove (at: index) .disconnect ()
   }
 
    public final func deleteRoute (route : X3DRoute)
    {
       guard let index = routes .firstIndex (of: route) else { return }
       
-      routes .remove (at: index)
+      routes .remove (at: index) .disconnect ()
    }
    
    public final func getRoutes () -> [X3DRoute] { routes }

@@ -38,4 +38,17 @@ public final class X3DRoute :
    {
       sourceField! .addFieldInterest (to: destinationField!)
    }
+   
+   internal final func disconnect ()
+   {
+      guard let sourceField      = sourceField,
+            let destinationField = destinationField else { return }
+      
+      sourceField .removeFieldInterest (to: destinationField)
+   }
+   
+   deinit
+   {
+      disconnect ()
+   }
 }

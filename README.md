@@ -2,6 +2,10 @@
 
 Swift-X3D is an X3D implementation for Swift, and SwiftUI using MetalKit for macOS.
 
+## Sample Project
+
+There is a sample project [xTraceRoute](https://github.com/create3000/xtraceroute-macos) available on GitHub that uses Swift-X3D.
+
 ## X3D-Resources
 
 * [web3d.org](https://www.web3d.org)

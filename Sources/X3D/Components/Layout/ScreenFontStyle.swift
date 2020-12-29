@@ -52,7 +52,7 @@ public final class ScreenFontStyle :
    
    internal final override var scale : Float
    {
-      return pointSize * Float (NSScreen .main! .unitsPerInch .height) / 72
+      return pointSize * Float (NSScreen .main! .unitsPerInch .height) / 72 * 4/3
    }
    
    internal final override func makeTextGeometry (textNode : Text) -> ScreenText?
@@ -72,13 +72,14 @@ public extension NSScreen
          let screenNumber    = (screenDescription [NSDeviceDescriptionKey ("NSScreenNumber")] as? NSNumber)? .uint32Value
       {
          let displayPhysicalSize = CGDisplayScreenSize (screenNumber)
-         
+
          return CGSize (width:  millimetersPerInch * displayUnitSize .width  / displayPhysicalSize .width,
                         height: millimetersPerInch * displayUnitSize .height / displayPhysicalSize .height)
-      } else
+      }
+      else
       {
          // This is the same as what CoreGraphics assumes if no EDID data is available from the display device — https://developer.apple.com/documentation/coregraphics/1456599-cgdisplayscreensize?language=objc
-         return CGSize (width: 72.0, height: 72.0)
+         return CGSize (width: 72, height: 72)
       }
    }
 }

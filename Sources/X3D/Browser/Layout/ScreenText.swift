@@ -16,6 +16,7 @@ internal final class ScreenText :
    @SFNode private final var pixelTexture    : PixelTexture!
    internal final override var isTransparent : Bool { true }
    
+   private final let pointSize : Float
    private final var matrix : Matrix4f = .identity
 
    // Construction
@@ -23,6 +24,7 @@ internal final class ScreenText :
    internal init (textNode : Text, fontStyleNode : ScreenFontStyle)
    {
       pixelTexture = PixelTexture (with: textNode .executionContext!)
+      pointSize    = fontStyleNode .pointSize
 
       super .init (textNode: textNode, fontStyleNode: fontStyleNode)
       
@@ -104,9 +106,45 @@ internal final class ScreenText :
                                space: CGColorSpace .init (name: CGColorSpace .genericRGBLinear)!,
                                bitmapInfo: CGImageAlphaInfo .premultipliedLast .rawValue)!
       
+      //let rectangle = CGRect (x: 0, y: 0, width: width, height: height)
+      //context .setFillColor (.black)
+      //context .addRect (rectangle)
+      //context .drawPath (using: .fill)
+
+      context .scaleBy (x: 1, y: -1)
+      context .setFillColor (.white)
+      context .setFont (CTFontCopyGraphicsFont (font, nil))
+      context .setFontSize (CGFloat (pointSize) * fontStyleNode .browser! .layer! .contentsScale)
+      
+      let scale = fontStyleNode .scale
+      
+      debugPrint (scale)
+      
       if fontStyleNode .horizontal
       {
-         
+         for l in 0 ..< glyphs .count
+         {
+            let line        = glyphs [l]
+            let advances    = font .advances (of: line)
+            let charSpacing = charSpacings [l]
+            let translation = translations [l]
+            var advance     = Float (0)
+
+            for g in 0 ..< line .count
+            {
+               let glyph = line [g]
+               let x     = minorAlignment .x + translation .x - min .x + advance + Float (g) * charSpacing
+               let y     = minorAlignment .y + translation .y - max .y
+               
+               debugPrint (x, y)
+
+               context .showGlyphs ([glyph], at: [CGPoint (x: CGFloat (x), y: CGFloat (y))])
+
+               // Calculate advance.
+   
+               advance += Float (advances [g] .width) * scale
+            }
+         }
       }
       else
       {

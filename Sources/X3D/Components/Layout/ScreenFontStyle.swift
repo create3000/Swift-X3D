@@ -50,8 +50,8 @@ public final class ScreenFontStyle :
    
    internal final override var scale : Float { 1 }
    
-   internal final override func makeTextGeometry (textNode : Text) -> X3DScreenText?
+   internal final override func makeTextGeometry (textNode : Text) -> ScreenText?
    {
-      return X3DScreenText (textNode: textNode, fontStyleNode: self)
+      return ScreenText (textNode: textNode, fontStyleNode: self)
    }
 }

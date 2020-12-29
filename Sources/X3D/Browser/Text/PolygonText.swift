@@ -7,7 +7,7 @@
 
 import LibTessSwift
 
-internal final class X3DPolygonText :
+internal final class PolygonText :
    X3DTextGeometry
 {
    // Member types
@@ -35,7 +35,7 @@ internal final class X3DPolygonText :
       guard let font = fontStyleNode .font else { return }
       
       let primitiveQuality = fontStyleNode .browser! .browserOptions .PrimitiveQuality
-      let dimension        = X3DPolygonText .dimension (primitiveQuality)
+      let dimension        = PolygonText .dimension (primitiveQuality)
       let scale            = Vector3f (repeating: fontStyleNode .scale)
       let spacing          = fontStyleNode .spacing
       let origin           = textNode .origin
@@ -107,7 +107,7 @@ internal final class X3DPolygonText :
    private final func glyphGeometry (_ font : CTFont, _ glyph : CGGlyph, _ dimension : Int) -> [Vector3f]
    {
       // Try get cached geometry.
-      if let geometry = X3DPolygonText .glyphCaches [fontStyleNode .fileURL!]? [glyph]
+      if let geometry = PolygonText .glyphCaches [fontStyleNode .fileURL!]? [glyph]
       {
          return geometry
       }
@@ -117,7 +117,7 @@ internal final class X3DPolygonText :
          let geometry = makeGlyphGeometry (font, glyph, dimension)
          
          // Cache geometry.
-         X3DPolygonText .glyphCaches [fontStyleNode .fileURL!, default: GlyphCache ()] [glyph] = geometry
+         PolygonText .glyphCaches [fontStyleNode .fileURL!, default: GlyphCache ()] [glyph] = geometry
          
          return geometry
       }
@@ -188,7 +188,7 @@ internal final class X3DPolygonText :
             {
                guard !contour .isEmpty else { break }
                
-               let ccw = dot (X3DPolygonText .makePolygonNormal (for: contour), .zAxis) > 0
+               let ccw = dot (PolygonText .makePolygonNormal (for: contour), .zAxis) > 0
                
                // Add contour.
                tess .addContour (ccw ? contour : contour .reversed ())

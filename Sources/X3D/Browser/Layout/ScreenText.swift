@@ -5,7 +5,7 @@
 //  Created by Holger Seelig on 06.11.20.
 //
 
-internal final class X3DScreenText :
+internal final class ScreenText :
    X3DTextGeometry
 {
    // Construction

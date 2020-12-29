@@ -52,8 +52,8 @@ public final class FontStyle :
    
    internal final override var scale : Float { size }
    
-   internal final override func makeTextGeometry (textNode : Text) -> X3DPolygonText?
+   internal final override func makeTextGeometry (textNode : Text) -> PolygonText?
    {
-      return X3DPolygonText (textNode: textNode, fontStyleNode: self)
+      return PolygonText (textNode: textNode, fontStyleNode: self)
    }
 }

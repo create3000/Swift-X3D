@@ -96,6 +96,8 @@ public final class Text :
       
       textGeometry = fontStyleNode! .makeTextGeometry (textNode: self)
       
+      setTransparent (textGeometry! .isTransparent)
+      
       requestRebuild ()
    }
    

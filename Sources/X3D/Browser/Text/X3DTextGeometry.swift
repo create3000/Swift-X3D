@@ -13,12 +13,14 @@ internal class X3DTextGeometry
 {
    internal private(set) final var textNode       : Text
    internal private(set) final var fontStyleNode  : X3DFontStyleNode
-   internal private(set) final var bbox           : Box3f = .empty
    internal private(set) final var glyphs         : [[CGGlyph]] = [ ]
    internal private(set) final var charSpacings   : [Float] = [ ]
    internal private(set) final var translations   : [Vector2f] = [ ]
    internal private(set) final var minorAlignment : Vector2f = Vector2f .zero
    internal private(set) final var bearing        : Vector2f = Vector2f .zero
+   
+   internal final var bbox    : Box3f = .empty
+   internal var isTransparent : Bool { false }
 
    internal init (textNode : Text, fontStyleNode : X3DFontStyleNode)
    {

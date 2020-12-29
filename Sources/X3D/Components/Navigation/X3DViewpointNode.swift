@@ -257,6 +257,8 @@ public class X3DViewpointNode :
 
    // Rendering
    
+   internal func getScreenScale (_ point : Vector3f, _ viewport : Vector4i) -> Vector3f { .zero }
+   
    internal func makeProjectionMatrix (_ viewport : Vector4i, _ nearValue : Float, _ farValue : Float) -> Matrix4f { .identity }
    
    // Traverse camera

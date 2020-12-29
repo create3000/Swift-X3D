@@ -22,7 +22,7 @@ public class X3DGeometryNode :
    
    @SFBool internal final var isTransparent : Bool = false
 
-   public private(set) final var bbox : Box3f = .empty
+   public internal(set) final var bbox : Box3f = .empty
    
    internal final var geometryType       : Int = 3
    internal final var isCounterClockwise : Bool = true

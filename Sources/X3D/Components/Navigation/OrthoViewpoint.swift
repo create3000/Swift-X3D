@@ -121,4 +121,26 @@ public final class OrthoViewpoint :
                                farValue: farValue)
       }
    }
+   
+   internal final override func getScreenScale (_ point : Vector3f, _ viewport : Vector4i) -> Vector3f
+   {
+      // Returns the screen scale in meter/pixel for on pixel.
+
+      let width  = Float (viewport [2])
+      let height = Float (viewport [3])
+      let aspect = width / height
+
+      if aspect > sizeX / sizeY
+      {
+         let s = sizeY / height
+
+         return Vector3f (s, s, s)
+      }
+      else
+      {
+         let s = sizeX / width
+
+         return Vector3f (s, s, s)
+      }
+   }
 }

@@ -83,17 +83,6 @@ public final class Viewpoint :
       return fieldOfView
    }
    
-   // Rendering
-   
-   internal final override func makeProjectionMatrix (_ viewport : Vector4i, _ nearValue : Float, _ farValue : Float) -> Matrix4f
-   {
-      return Camera .perspective (fieldOfView: getFieldOfView (),
-                                  nearValue: nearValue,
-                                  farValue: farValue,
-                                  width: Float (viewport [2]),
-                                  height: Float (viewport [3]))
-   }
-   
    // Animation
    
    internal final override func setInterpolators (from fromViewpoint : X3DViewpointNode)
@@ -110,5 +99,29 @@ public final class Viewpoint :
       {
          fieldOfViewInterpolator! .keyValue = [fieldOfViewScale, fieldOfViewScale]
       }
+   }
+   
+   // Rendering
+   
+   internal final override func makeProjectionMatrix (_ viewport : Vector4i, _ nearValue : Float, _ farValue : Float) -> Matrix4f
+   {
+      return Camera .perspective (fieldOfView: getFieldOfView (),
+                                  nearValue: nearValue,
+                                  farValue: farValue,
+                                  width: Float (viewport [2]),
+                                  height: Float (viewport [3]))
+   }
+
+   internal final override func getScreenScale (_ point : Vector3f, _ viewport : Vector4i) -> Vector3f
+   {
+      // Returns the screen scale in meter/pixel for on pixel.
+
+      let width  = viewport [2]
+      let height = viewport [3]
+      var size   = abs (point .z) * tan (getFieldOfView () / 2) * 2
+
+      size /= Float (width > height ? height : width)
+
+      return Vector3f (size, size, size)
    }
 }

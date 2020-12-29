@@ -193,7 +193,7 @@ internal final class ScreenText :
    
    // Rendering preparations
    
-   internal final override func transformLine (_ line : Line3f) -> Line3f { matrix * line }
+   internal final override func transformLine (_ line : Line3f) -> Line3f { matrix .inverse * line }
    
    internal final override func transformMatrix (_ matrix : Matrix4f) -> Matrix4f { matrix * self .matrix }
 

@@ -110,16 +110,14 @@ internal final class ScreenText :
       //context .setFillColor (.black)
       //context .addRect (rectangle)
       //context .drawPath (using: .fill)
-
+      
+      let scale = fontStyleNode .scale
+ 
       context .scaleBy (x: 1, y: -1)
       context .setFillColor (.white)
       context .setFont (CTFontCopyGraphicsFont (font, nil))
-      context .setFontSize (CGFloat (pointSize) * fontStyleNode .browser! .layer! .contentsScale)
-      
-      let scale = fontStyleNode .scale
-      
-      debugPrint (scale)
-      
+      context .setFontSize (CGFloat (scale))
+     
       if fontStyleNode .horizontal
       {
          for l in 0 ..< glyphs .count
@@ -175,8 +173,6 @@ internal final class ScreenText :
       }
       
       let cgImage = context .makeImage ()!
-      
-      debugPrint (cgImage .width, cgImage .height)
       
       // Create texture.
       

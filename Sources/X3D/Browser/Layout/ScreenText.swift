@@ -135,8 +135,6 @@ internal final class ScreenText :
                let glyph = line [g]
                let x     = minorAlignment .x + translation .x - min .x + advance + Float (g) * charSpacing
                let y     = minorAlignment .y + translation .y - max .y
-               
-               debugPrint (x, y)
 
                context .showGlyphs ([glyph], at: [CGPoint (x: CGFloat (x), y: CGFloat (y))])
 
@@ -148,7 +146,32 @@ internal final class ScreenText :
       }
       else
       {
-         
+         let leftToRight = fontStyleNode .leftToRight
+         let topToBottom = fontStyleNode .topToBottom
+         let first       = leftToRight ? 0 : textNode .string .count - 1
+         let last        = leftToRight ? textNode .string .count  : -1
+         let step        = leftToRight ? 1 : -1
+         var count       = 0
+
+         for l in stride (from: first, to: last, by: step)
+         {
+            let line     = glyphs [l]
+            let numChars = line .count
+            let firstG   = topToBottom ? 0 : numChars - 1
+            let lastG    = topToBottom ? numChars : -1
+            let stepG    = topToBottom ? 1 : -1
+
+            for g in stride (from: firstG, to: lastG, by: stepG)
+            {
+               let translation = translations [g + count]
+               let x           = minorAlignment .x + translation .x - min .x
+               let y           = minorAlignment .y + translation .y - max .y
+               
+               context .showGlyphs ([line [g]], at: [CGPoint (x: CGFloat (x), y: CGFloat (y))])
+            }
+            
+            count += line .count
+         }
       }
       
       let cgImage = context .makeImage ()!

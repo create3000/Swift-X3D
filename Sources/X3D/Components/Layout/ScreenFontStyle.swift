@@ -8,6 +8,8 @@
 
 import Cocoa
 
+fileprivate let scaleFactor : Float = 4/3
+
 public final class ScreenFontStyle :
    X3DFontStyleNode,
    X3DNodeInterface
@@ -52,7 +54,7 @@ public final class ScreenFontStyle :
    
    internal final override var scale : Float
    {
-      return pointSize * Float (NSScreen .main! .unitsPerInch .height) / 72 * 4/3
+      return pointSize * Float (NSScreen .main! .unitsPerInch .height) / 72 * scaleFactor
    }
    
    internal final override func makeTextGeometry (textNode : Text) -> ScreenText?

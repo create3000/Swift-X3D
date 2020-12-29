@@ -65,6 +65,10 @@ public final class Transform :
    
    // Event handlers
    
+   // Bounded object
+   
+   public final override var bbox : Box3f { matrix * super .bbox }
+
    private final var matrix : Matrix4f = .identity
 
    private final func eventsProcessed ()

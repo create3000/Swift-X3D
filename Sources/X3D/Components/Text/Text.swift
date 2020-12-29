@@ -77,6 +77,14 @@ public final class Text :
    
    // Properties access
    
+   public override final var bbox : Box3f
+   {
+      get { textGeometry! .matrix * super .bbox }
+      set { super .bbox = newValue }
+   }
+   
+   internal final override var matrix : Matrix4f { textGeometry! .matrix }
+
    internal final func length (index : Int) -> Float
    {
       length .indices .contains (index) ? max (0, length [index]) : 0
@@ -112,6 +120,16 @@ public final class Text :
    }
    
    // Rendering
+   
+   internal final override func transformLine (_ line : Line3f) -> Line3f
+   {
+      textGeometry! .transformLine (line)
+   }
+   
+   internal final override func transformMatrix (_ matrix : Matrix4f) -> Matrix4f
+   {
+      textGeometry! .transformMatrix (matrix)
+   }
    
    internal final override func traverse (_ type : TraverseType, _ renderer : Renderer)
    {

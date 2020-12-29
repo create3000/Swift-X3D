@@ -17,7 +17,6 @@ internal final class ScreenText :
    internal final override var isTransparent : Bool { true }
    
    private final let pointSize : Float
-   private final var matrix : Matrix4f = .identity
 
    // Construction
    
@@ -79,8 +78,6 @@ internal final class ScreenText :
 
       textNode .origin .x = min .x
       textNode .origin .y = max .y
-
-      bbox = Box3f (min: min, max: max)
       
       // Make geometry.
 
@@ -196,6 +193,10 @@ internal final class ScreenText :
    
    // Rendering preparations
    
+   internal final override func transformLine (_ line : Line3f) -> Line3f { matrix * line }
+   
+   internal final override func transformMatrix (_ matrix : Matrix4f) -> Matrix4f { matrix * self .matrix }
+
    internal final override func traverse (_ type : TraverseType, _ renderer : Renderer)
    {
       let modelViewMatrix  = renderer .modelViewMatrix .top
@@ -227,10 +228,6 @@ internal final class ScreenText :
       // Assign modelViewMatrix and calculate relative matrix.
 
       matrix = modelViewMatrix .inverse * screenMatrix
-         
-      // Update Text bbox.
-      
-      textNode .bbox = matrix * bbox
    }
    
    internal final override func render (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder)

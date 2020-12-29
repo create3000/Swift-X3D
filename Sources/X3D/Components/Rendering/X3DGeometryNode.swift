@@ -22,8 +22,9 @@ public class X3DGeometryNode :
    
    @SFBool internal final var isTransparent : Bool = false
 
-   public internal(set) final var bbox : Box3f = .empty
-   
+   public internal(set) var bbox : Box3f = .empty
+   internal var matrix : Matrix4f { .identity }
+
    internal final var geometryType       : Int = 3
    internal final var isCounterClockwise : Bool = true
    internal final var isSolid            : Bool = false
@@ -300,6 +301,10 @@ public class X3DGeometryNode :
 
    // Rendering
    
+   internal func transformLine (_ line : Line3f) -> Line3f { line }
+   
+   internal func transformMatrix (_ matrix : Matrix4f) -> Matrix4f { matrix }
+
    internal func traverse (_ type : TraverseType, _ renderer : Renderer) { }
    
    /// Renders geometry to surface with selected shader.
@@ -492,12 +497,6 @@ extension X3DGeometryNode
 
 extension X3DGeometryNode
 {
-   internal var matrix : Matrix4f { .identity }
-   
-   internal func transformLine (_ line : Line3f) -> Line3f { line }
-   
-   internal func transformMatrix (_ matrix : Matrix4f) -> Matrix4f { matrix }
-   
    internal func intersects (line : Line3f, modelViewMatrix : Matrix4f) -> [Intersection]?
    {
       let line            = transformLine (line)

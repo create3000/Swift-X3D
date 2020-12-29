@@ -20,8 +20,9 @@ internal class X3DTextGeometry
    internal private(set) final var bearing        : Vector2f = Vector2f .zero
    
    internal final var bbox    : Box3f = .empty
+   internal final var matrix  : Matrix4f = .identity
    internal var isTransparent : Bool { false }
-
+   
    internal init (textNode : Text, fontStyleNode : X3DFontStyleNode)
    {
       self .textNode      = textNode
@@ -440,6 +441,10 @@ internal class X3DTextGeometry
    
    // Rendering preparations
    
+   internal func transformLine (_ line : Line3f) -> Line3f { line }
+   
+   internal func transformMatrix (_ matrix : Matrix4f) -> Matrix4f { matrix }
+
    internal func traverse (_ type : TraverseType, _ renderer : Renderer) { }
    
    internal func render (_ context : RenderContext, _ renderEncoder : MTLRenderCommandEncoder) { }

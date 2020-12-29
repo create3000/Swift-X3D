@@ -63,7 +63,7 @@ public final class ScreenFontStyle :
    }
 }
 
-public extension NSScreen
+fileprivate extension NSScreen
 {
    var unitsPerInch : CGSize
    {

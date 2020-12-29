@@ -14,4 +14,22 @@ internal final class ScreenText :
    {
       super .init (textNode: textNode, fontStyleNode: fontStyleNode)
    }
+   
+   // Build
+   
+   internal final override func build ()
+   {
+      super .build ()
+      
+      guard let font = fontStyleNode .font else { return }
+      
+      if fontStyleNode .horizontal
+      {
+         
+      }
+      else
+      {
+         
+      }
+   }
 }

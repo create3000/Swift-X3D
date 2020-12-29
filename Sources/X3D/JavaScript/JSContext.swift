@@ -46,16 +46,20 @@ extension JavaScript
       
       private final func register ()
       {
+         guard let browser          = scriptNode? .browser,
+               let executionContext = scriptNode? .executionContext else
+         { return }
+         
          // Add hidden objects.
          
          context .evaluateScript ("this .targets = new WeakMap ();")
          
-         browser = X3DBrowser (context, scriptNode! .browser!, scriptNode! .executionContext!)
+         self .browser = X3DBrowser (context, browser, executionContext)
 
          // Register objects and functions.
          
-         Globals                   .register (context, scriptNode! .browser!)
-         X3DBrowser                .register (context, browser)
+         Globals                   .register (context, browser)
+         X3DBrowser                .register (context, self .browser)
          X3DScene                  .register (context)
          X3DExecutionContext       .register (context)
          ProfileInfo               .register (context)

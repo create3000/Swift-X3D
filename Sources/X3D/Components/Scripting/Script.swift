@@ -124,10 +124,17 @@ public final class Script :
             return
          }
          
+         let context = JavaScript .Context (scriptNode: self, sourceText: "")
+
          DispatchQueue .main .async
          {
-            self .context = nil
+            self .context = context
          }
       }
+   }
+   
+   public final func evaluateScript (_ script : String)
+   {
+      context? .evaluateScript (script)
    }
 }

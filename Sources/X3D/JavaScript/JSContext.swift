@@ -251,6 +251,11 @@ in method \(stacktrace).
 """)
       }
       
+      internal final func evaluateScript (_ script : String)
+      {
+         context .evaluateScript (script)
+      }
+
       internal final func initialize ()
       {
          guard let scene = scriptNode! .scene else { return }

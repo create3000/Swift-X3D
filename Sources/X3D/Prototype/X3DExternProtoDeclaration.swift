@@ -26,13 +26,13 @@ public final class X3DExternProtoDeclaration :
    
    internal init (executionContext : X3DExecutionContext, url : [String])
    {
+      self .url = url
+      
       super .init (executionContext .browser!, executionContext)
       
       addChildObjects ($loadState,
                        $url,
                        $internalScene)
-      
-      self .url .append (contentsOf: url)
    }
    
    internal final override func initialize ()

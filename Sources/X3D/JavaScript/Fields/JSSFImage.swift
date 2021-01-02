@@ -88,6 +88,10 @@ extension JavaScript
             {
                self .field .wrappedValue .array = array .field .wrappedValue
             }
+            else
+            {
+               exception ("Couldn't assign value to property array, must be a MFInt32.")
+            }
          }
          else
          {

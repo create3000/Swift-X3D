@@ -33,6 +33,8 @@ public final class X3DExternProtoDeclaration :
       addChildObjects ($loadState,
                        $url,
                        $internalScene)
+      
+      $url .setName ("url")
    }
    
    internal final override func initialize ()

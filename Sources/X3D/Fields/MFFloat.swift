@@ -51,6 +51,11 @@ public final class MFFloat :
    
    // Input/Output
    
+   public final override var description : String
+   {
+      return "\(wrappedValue .map { String ($0) } .joined (separator: ",\n"))"
+   }
+
    internal final override func toStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count

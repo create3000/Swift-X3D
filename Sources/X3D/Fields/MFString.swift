@@ -50,7 +50,11 @@ public final class MFString :
    }
    
    // Input/Output
-   
+   public final override var description : String
+   {
+      return "\(wrappedValue .map { "\"\($0 .escaped)\"" } .joined (separator: ",\n"))"
+   }
+
    internal final override func toStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count
@@ -60,7 +64,7 @@ public final class MFString :
          case 1:
             stream += "\"\(wrappedValue .first! .escaped)\""
          default:
-            stream += "[\"\(wrappedValue .map { $0 .escaped } .joined (separator: "\", \""))\"]"
+            stream += "[\(wrappedValue .map { "\"\($0 .escaped)\"" } .joined (separator: ", "))]"
       }
    }
 }

@@ -9,7 +9,8 @@
 import Foundation
 
 public class X3DField :
-   X3DFieldDefinition
+   X3DFieldDefinition,
+   CustomStringConvertible
 {
    // Construction
    
@@ -165,6 +166,10 @@ public class X3DField :
          }
       }
    }
+   
+   // Input/Output
+   
+   public var description : String { toString () }
    
    // Destruction
    

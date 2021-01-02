@@ -51,6 +51,11 @@ public final class MFVec2f :
    
    // Input/Output
    
+   public final override var description : String
+   {
+      return "\(wrappedValue .map { "\($0 .x) \($0 .y)" } .joined (separator: ",\n"))"
+   }
+
    internal final override func toStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count

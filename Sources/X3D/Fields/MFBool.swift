@@ -51,6 +51,11 @@ public final class MFBool :
    
    // Input/Output
    
+   public final override var description : String
+   {
+      return "\(wrappedValue .map { $0 ? "TRUE" : "FALSE" } .joined (separator: ",\n"))"
+   }
+
    internal final override func toStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count

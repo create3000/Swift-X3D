@@ -86,6 +86,31 @@ public final class MFImage :
    
    // Input/Output
    
+   public final override var description : String
+   {
+      return """
+\(wrappedValue .map
+{
+   var string = ""
+
+   string += String ($0 .width)
+   string += " "
+   string += String ($0 .height)
+   string += " "
+   string += String ($0 .comp)
+
+   if !$0 .array .isEmpty
+   {
+      string += " "
+      string += $0 .array .map { String (format: "0x%x", $0) } .joined (separator: " ")
+   }
+
+   return string
+}
+.joined (separator: ",\n"))
+"""
+   }
+
    internal final override func toStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count

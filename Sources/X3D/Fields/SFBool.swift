@@ -49,7 +49,7 @@ public final class SFBool :
    }
    
    // Input/Output
-   
+
    internal final override func toStream (_ stream : X3DOutputStream)
    {
       stream += wrappedValue ? "TRUE" : "FALSE"

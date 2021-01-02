@@ -51,6 +51,11 @@ public final class MFRotation :
    
    // Input/Output
    
+   public final override var description : String
+   {
+      return "\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \($0 .angle)" } .joined (separator: ",\n"))"
+   }
+
    internal final override func toStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count

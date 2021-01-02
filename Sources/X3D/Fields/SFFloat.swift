@@ -49,7 +49,7 @@ public final class SFFloat :
    }
    
    // Input/Output
-   
+
    internal final override func toStream (_ stream : X3DOutputStream)
    {
       stream += String (wrappedValue)

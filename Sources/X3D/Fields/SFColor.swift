@@ -49,7 +49,7 @@ public class SFColor :
    }
    
    // Input/Output
-   
+
    internal final override func toStream (_ stream : X3DOutputStream)
    {
       stream += "\(wrappedValue .r) \(wrappedValue .g) \(wrappedValue .b)"

@@ -127,6 +127,11 @@ public class X3DBaseNode :
       numUserDefinedFields += 1
    }
    
+   public final func getField <Type : X3DField> (of type : Type .Type, name : String) throws -> Type?
+   {
+      return try getField (name: name) as? Type
+   }
+
    public final func getField (name : String) throws -> X3DField
    {
       let name = aliases [name] ?? name

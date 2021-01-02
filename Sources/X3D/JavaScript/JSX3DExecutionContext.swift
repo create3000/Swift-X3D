@@ -23,7 +23,7 @@ import JavaScriptCore
    var profile              : ProfileInfo { get }
    var components           : [ComponentInfo] { get }
    var worldURL             : String { get }
-   var rootNodes            : MFNode { get }
+   var rootNodes            : JSValue { get }
    var protos               : [X3DProtoDeclaration] { get }
    var externprotos         : [X3DExternProtoDeclaration] { get }
    var routes               : [X3DRoute] { get }
@@ -100,9 +100,9 @@ DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);
       dynamic public final var components           : [ComponentInfo] { executionContext .getComponents () .map { ComponentInfo ($0) } }
       dynamic public final var worldURL             : String { executionContext .getWorldURL () .absoluteURL .description }
       
-      dynamic public var rootNodes : MFNode
+      dynamic public var rootNodes : JSValue
       {
-         MFNode (field: executionContext .$rootNodes)
+         MFNode .initWithProxy (JSContext .current (), field: X3D .MFNode (wrappedValue: executionContext .rootNodes))!
       }
       
       dynamic final public var protos : [X3DProtoDeclaration]

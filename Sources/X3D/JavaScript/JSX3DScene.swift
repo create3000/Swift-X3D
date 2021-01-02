@@ -13,7 +13,7 @@ import JavaScriptCore
    typealias SFNode = JavaScript .SFNode
    typealias MFNode = JavaScript .MFNode
 
-   var rootNodes : MFNode { get set }
+   var rootNodes : JSValue { get set }
    
    func getMetaData (_ key : String) -> String?
    func setMetaData (_ key : String, _ value : String)
@@ -64,10 +64,19 @@ DefineProperty (this, \"X3DScene\", X3DScene);
       
       // Property access
       
-      dynamic public override final var rootNodes : MFNode
+      dynamic public override final var rootNodes : JSValue
       {
-         get { MFNode (field: executionContext .$rootNodes) }
-         set { executionContext .rootNodes = newValue .field .wrappedValue }
+         get
+         {
+            MFNode .initWithProxy (JSContext .current (), field: executionContext .$rootNodes)!
+         }
+         
+         set
+         {
+            let target = JSContext .current ()! .target (newValue)! .toObjectOf (MFNode .self) as! MFNode
+            
+            executionContext .rootNodes = target .field .wrappedValue
+         }
       }
       
       // Metadata handling

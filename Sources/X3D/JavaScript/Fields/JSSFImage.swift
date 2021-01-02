@@ -50,11 +50,13 @@ extension JavaScript
          }
          set
          {
-            if let array = JSContext .current ()? .target (newValue)? .toObjectOf (MFInt32 .self) as? MFInt32
+            guard let array = JSContext .current ()? .target (newValue)? .toObjectOf (MFInt32 .self) as? MFInt32 else
             {
-               field .wrappedValue .array = array .field .wrappedValue
+               return exception ("Couldn't assign value to property array, must be a MFInt32.")
             }
-         }
+            
+            field .wrappedValue .array = array .field .wrappedValue
+        }
       }
 
       // Private properties

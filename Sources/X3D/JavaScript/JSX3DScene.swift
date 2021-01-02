@@ -70,10 +70,12 @@ DefineProperty (this, \"X3DScene\", X3DScene);
          {
             MFNode .initWithProxy (JSContext .current (), field: executionContext .$rootNodes)!
          }
-         
          set
          {
-            let target = JSContext .current ()! .target (newValue)! .toObjectOf (MFNode .self) as! MFNode
+            guard let target = JSContext .current ()? .target (newValue)? .toObjectOf (MFNode .self) as? MFNode else
+            {
+               return exception ("Couldn't assign value to property rootNodes, must be a MFNode.")
+            }
             
             executionContext .rootNodes = target .field .wrappedValue
          }

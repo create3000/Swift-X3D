@@ -127,9 +127,14 @@ public class X3DBaseNode :
       numUserDefinedFields += 1
    }
    
-   public final func getField <Type : X3DField> (of type : Type .Type, name : String) throws -> Type?
+   public final func getField <Type : X3DField> (of type : Type .Type, name : String) throws -> Type
    {
-      return try getField (name: name) as? Type
+      guard let field = try getField (name: name) as? Type else
+      {
+         throw X3DError .INVALID_FIELD ("Field has invalid type.")
+      }
+      
+      return field
    }
 
    public final func getField (name : String) throws -> X3DField

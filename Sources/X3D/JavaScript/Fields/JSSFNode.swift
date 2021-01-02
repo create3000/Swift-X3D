@@ -253,7 +253,7 @@ extension JavaScript
          super .init (field)
       }
       
-      internal init (field : Internal)
+      private init (field : Internal)
       {
          self .field = field
          

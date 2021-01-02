@@ -74,4 +74,14 @@ public final class X3DImage :
    }
 
    @MFInt32 public var array : [Int32]
+   {
+      didSet
+      {
+         let count = Int (width * height)
+         
+         guard array .count != count else { return }
+         
+         array .resize (count, fillWith: 0)
+      }
+   }
 }

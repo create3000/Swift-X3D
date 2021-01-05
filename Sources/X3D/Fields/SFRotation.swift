@@ -57,4 +57,9 @@ public class SFRotation :
 
       stream += "\(axis .x) \(axis .y) \(axis .z) \(angle)"
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      return parser .sfrotationValue (for: self)
+   }
 }

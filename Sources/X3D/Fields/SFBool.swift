@@ -54,4 +54,9 @@ public final class SFBool :
    {
       stream += wrappedValue ? "TRUE" : "FALSE"
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      return parser .sfboolValue (for: self)
+   }
 }

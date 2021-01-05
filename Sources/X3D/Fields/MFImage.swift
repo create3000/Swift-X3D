@@ -153,4 +153,10 @@ public final class MFImage :
 """
       }
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      try? parser .sfimageValues (for: self)
+      return true
+   }
 }

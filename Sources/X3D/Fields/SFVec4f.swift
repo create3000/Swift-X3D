@@ -54,4 +54,9 @@ public class SFVec4f :
    {
       stream += "\(wrappedValue .x) \(wrappedValue .y) \(wrappedValue .z) \(wrappedValue .w)"
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      return parser .sfvec4fValue (for: self)
+   }
 }

@@ -68,4 +68,10 @@ public final class MFFloat :
             stream += "[\(wrappedValue .map { String ($0) } .joined (separator: ", "))]"
       }
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      parser .sffloatValues (for: self)
+      return true
+   }
 }

@@ -69,4 +69,10 @@ public final class MFRotation :
             stream += "[\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \($0 .angle)" } .joined (separator: ", "))]"
       }
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      parser .sfrotationValues (for: self)
+      return true
+   }
 }

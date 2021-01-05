@@ -67,4 +67,10 @@ public final class MFString :
             stream += "[\(wrappedValue .map { "\"\($0 .escaped)\"" } .joined (separator: ", "))]"
       }
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      parser .sfstringValues (for: self)
+      return true
+   }
 }

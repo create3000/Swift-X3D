@@ -68,4 +68,10 @@ public final class MFVec4d :
             stream += "[\(wrappedValue .map { "\($0 .x) \($0 .y) \($0 .z) \($0 .w)" } .joined (separator: ", "))]"
       }
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      parser .sfvec4dValues (for: self)
+      return true
+   }
 }

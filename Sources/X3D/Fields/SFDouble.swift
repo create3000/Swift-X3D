@@ -54,4 +54,9 @@ public final class SFDouble :
    {
       stream += String (wrappedValue)
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      return parser .sfdoubleValue (for: self)
+   }
 }

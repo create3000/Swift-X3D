@@ -56,4 +56,9 @@ public final class SFTime :
    {
       stream += String (wrappedValue)
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      return parser .sftimeValue (for: self)
+   }
 }

@@ -68,4 +68,10 @@ public final class MFColor :
             stream += "[\(wrappedValue .map { "\($0 .r) \($0 .g) \($0 .b)" } .joined (separator: ", "))]"
       }
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      parser .sfcolorValues (for: self)
+      return true
+   }
 }

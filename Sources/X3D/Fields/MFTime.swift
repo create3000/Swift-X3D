@@ -70,4 +70,10 @@ public final class MFTime :
             stream += "[\(wrappedValue .map { String ($0) } .joined (separator: ", "))]"
       }
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      parser .sftimeValues (for: self)
+      return true
+   }
 }

@@ -54,6 +54,12 @@ public final class SFString :
    {
       stream += wrappedValue
    }
+   
+   public final override func parse (_ string : String, scene : X3DScene) -> Bool
+   {
+      wrappedValue = string
+      return true
+   }
 }
 
 extension String

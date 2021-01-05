@@ -68,4 +68,10 @@ public final class MFInt32 :
             stream += "[\(wrappedValue .map { String ($0) } .joined (separator: ", "))]"
       }
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      parser .sfint32Values (for: self)
+      return true
+   }
 }

@@ -68,4 +68,10 @@ public final class MFBool :
             stream += "[\(wrappedValue .map { $0 ? "TRUE" : "FALSE" } .joined (separator: ", "))]"
       }
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      parser .sfboolValues (for: self)
+      return true
+   }
 }

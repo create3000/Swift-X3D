@@ -76,4 +76,9 @@ public class SFImage :
          stream += wrappedValue .array .map { String (format: "0x%x", $0) } .joined (separator: " ")
       }
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      return (try? parser .sfimageValue (for: self)) ?? false
+   }
 }

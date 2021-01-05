@@ -54,4 +54,9 @@ public final class SFInt32 :
    {
       stream += String (wrappedValue)
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      return parser .sfint32Value (for: self)
+   }
 }

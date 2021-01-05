@@ -79,4 +79,9 @@ public class SFMatrix3f :
       stream += " "
       stream += "\(c2.x) \(c2.y) \(c2.z)"
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      return parser .sfmatrix3fValue (for: self)
+   }
 }

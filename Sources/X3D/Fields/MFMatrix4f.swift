@@ -121,4 +121,10 @@ public final class MFMatrix4f :
 """
       }
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      parser .sfmatrix4fValues (for: self)
+      return true
+   }
 }

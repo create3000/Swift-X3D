@@ -54,4 +54,9 @@ public final class SFFloat :
    {
       stream += String (wrappedValue)
    }
+   
+   internal final override func parse (_ parser : VRMLParser) -> Bool
+   {
+      return parser .sffloatValue (for: self)
+   }
 }

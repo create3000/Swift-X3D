@@ -171,6 +171,13 @@ public class X3DField :
    
    public var description : String { toString () }
    
+   public func parse (_ string : String, scene : X3DScene) -> Bool
+   {
+      return parse (VRMLParser (scene: scene, x3dSyntax: string))
+   }
+   
+   internal func parse (_ parser : VRMLParser) -> Bool { return false }
+   
    // Destruction
    
    deinit

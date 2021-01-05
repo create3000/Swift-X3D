@@ -28,7 +28,6 @@ public final class Appearance :
    @SFNode public final var texture          : X3DNode?
    @SFNode public final var textureTransform : X3DNode?
    @MFNode public final var shaders          : [X3DNode?]
-   @SFNode public final var blendMode        : X3DNode?
    
    // Properties
    
@@ -57,7 +56,6 @@ public final class Appearance :
       addField (.inputOutput, "texture",          $texture)
       addField (.inputOutput, "textureTransform", $textureTransform)
       addField (.inputOutput, "shaders",          $shaders)
-      addField (.inputOutput, "blendMode",        $blendMode)
       
       addChildObjects ($pointPropertiesNode,
                        $linePropertiesNode,

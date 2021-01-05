@@ -503,7 +503,7 @@ extension JavaScript
       
       public final func getWorldURL () -> String
       {
-         return executionContext .getWorldURL () .absoluteURL .description
+         return executionContext .getWorldURL () .absoluteString
       }
       
       public final func createVrmlFromString (_ vrmlSyntax : String) -> Any?

@@ -115,14 +115,14 @@ public final class ImageTexture :
                   self .setTransparent (isTransparent)
                   self .setLoadState (.COMPLETE_STATE)
                   
-                  browser .console .info (t("Done loading image '%@'.", URL .absoluteURL .description))
+                  browser .console .info (t("Done loading image '%@'.", URL .absoluteString))
                }
                
                return
             }
             catch
             {
-               browser .console .warn (t("Couldn't load image texture '%@'. %@", URL .absoluteURL .description, error .localizedDescription))
+               browser .console .warn (t("Couldn't load image texture '%@'. %@", URL .absoluteString, error .localizedDescription))
                
                continue
             }

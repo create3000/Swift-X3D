@@ -238,7 +238,7 @@ extension JavaScript
          let stacktrace = exception! .objectForKeyedSubscript ("stack")! .toString ()! .replacingOccurrences (of: "\n", with: " ")
          let lineNumber = exception! .objectForKeyedSubscript ("line")! .toInt32 ()
          let column     = exception! .objectForKeyedSubscript ("column")! .toInt32 ()
-         let url        = scriptNode! .executionContext! .getWorldURL () .absoluteURL .description
+         let url        = scriptNode! .executionContext! .getWorldURL () .absoluteString
          
          scriptNode! .browser! .console .error ("""
 

@@ -198,12 +198,12 @@ public final class X3DBrowser :
             }
             catch
             {
-               self .console .warn (t("Couldn't load URL '%@'. %@", URL .absoluteURL .description, error .localizedDescription))
+               self .console .warn (t("Couldn't load URL '%@'. %@", URL .absoluteString, error .localizedDescription))
                continue
             }
          }
          
-         self .console .error (t("Couldn't load any URL of '%@'.", url .map { $0 .absoluteURL .description } .joined (separator: "', '")))
+         self .console .error (t("Couldn't load any URL of '%@'.", url .map { $0 .absoluteString } .joined (separator: "', '")))
       }
    }
    
@@ -263,12 +263,12 @@ public final class X3DBrowser :
          }
          catch
          {
-            console .warn (t("Couldn't load URL '%@'. %@", URL .absoluteURL .description, error .localizedDescription))
+            console .warn (t("Couldn't load URL '%@'. %@", URL .absoluteString, error .localizedDescription))
             continue
          }
       }
       
-      let errorDescription = t("Couldn't load any URL of '%@'.", url .map { $0 .absoluteURL .description } .joined (separator: "', '"))
+      let errorDescription = t("Couldn't load any URL of '%@'.", url .map { $0 .absoluteString } .joined (separator: "', '"))
       
       console .error (errorDescription)
       

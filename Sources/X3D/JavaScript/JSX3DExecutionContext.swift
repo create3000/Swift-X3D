@@ -98,7 +98,7 @@ DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);
       dynamic public final var encoding             : String { executionContext .getEncoding () }
       dynamic public final var profile              : ProfileInfo { ProfileInfo (executionContext .getProfile ()) }
       dynamic public final var components           : [ComponentInfo] { executionContext .getComponents () .map { ComponentInfo ($0) } }
-      dynamic public final var worldURL             : String { executionContext .getWorldURL () .absoluteURL .description }
+      dynamic public final var worldURL             : String { executionContext .getWorldURL () .absoluteString }
       
       dynamic public var rootNodes : JSValue
       {

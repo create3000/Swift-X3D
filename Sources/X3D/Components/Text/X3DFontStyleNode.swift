@@ -143,12 +143,12 @@ public class X3DFontStyleNode :
       
       guard let dataProvider = CGDataProvider (data: data as CFData) else
       {
-         throw NSError (domain: "Couldn't read font data.", code: 77, userInfo: ["URL" : URL .absoluteURL .description])
+         throw NSError (domain: "Couldn't read font data.", code: 77, userInfo: ["URL" : URL .absoluteString])
       }
       
       guard let graphicsFont = CGFont (dataProvider) else
       {
-         throw NSError (domain: "Not a font file.", code: 77, userInfo: ["URL" : URL .absoluteURL .description])
+         throw NSError (domain: "Not a font file.", code: 77, userInfo: ["URL" : URL .absoluteString])
       }
       
       return CTFontCreateWithGraphicsFont (graphicsFont, 1, nil, nil)
@@ -232,7 +232,7 @@ public class X3DFontStyleNode :
                   
                   if URL .custom
                   {
-                     browser .console .info (t("Done loading font '%@'.", URL .URL! .absoluteURL .description))
+                     browser .console .info (t("Done loading font '%@'.", URL .URL! .absoluteString))
                   }
                }
                

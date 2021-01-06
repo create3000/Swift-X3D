@@ -77,7 +77,7 @@ public class SFImage :
       }
    }
    
-   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
+   internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {
       return (try? parser .sfimageValue (for: self)) ?? false
    }

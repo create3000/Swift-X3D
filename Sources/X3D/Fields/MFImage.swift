@@ -129,7 +129,7 @@ public final class MFImage :
       }
    }
    
-   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       stream += """
 \(wrappedValue .map
@@ -154,7 +154,7 @@ public final class MFImage :
 """
    }
 
-   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
+   internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {
       try? parser .sfimageValues (for: self)
       return true

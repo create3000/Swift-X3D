@@ -64,14 +64,14 @@ public final class MFFloat :
       }
    }
    
-   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       let executionContext = stream .executionContext
       
       stream += "\(wrappedValue .map { String (executionContext .toUnit (unit, value: Double ($0))) } .joined (separator: ",\n"))"
    }
 
-   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
+   internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {
       parser .sffloatValues (for: self)
       return true

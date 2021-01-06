@@ -66,7 +66,7 @@ public class SFMatrix4d :
       stream += "\(c3.x) \(c3.y) \(c3.z) \(c3.w)"
    }
    
-   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       let c0 = wrappedValue [0]
       let c1 = wrappedValue [1]
@@ -82,7 +82,7 @@ public class SFMatrix4d :
       stream += "\(c3.x) \(c3.y) \(c3.z) \(c3.w)"
    }
 
-   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
+   internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {
       return parser .sfmatrix4dValue (for: self)
    }

@@ -60,7 +60,7 @@ public final class SFBool :
       stream += wrappedValue ? "true" : "false"
    }
 
-   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
+   internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {
       return parser .sfboolValue (for: self)
    }

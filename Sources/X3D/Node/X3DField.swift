@@ -168,28 +168,28 @@ public class X3DField :
    
    // Input/Output
    
-   public final func toPrettyString (_ executionContext : X3DExecutionContext) -> String
+   public final func toDisplayString (_ executionContext : X3DExecutionContext) -> String
    {
       let stream = X3DOutputStream ()
       
       stream .executionContexts .append (executionContext)
       
-      toPrettyStream (stream)
+      toDisplayStream (stream)
       
       return stream .string
    }
    
-   internal func toPrettyStream (_ stream : X3DOutputStream)
+   internal func toDisplayStream (_ stream : X3DOutputStream)
    {
       toStream (stream)
    }
 
-   public func fromPrettyString (_ string : String, scene : X3DScene) -> Bool
+   public func fromDisplayString (_ string : String, scene : X3DScene) -> Bool
    {
-      return fromPrettyStream (VRMLParser (scene: scene, x3dSyntax: string))
+      return fromDisplayStream (VRMLParser (scene: scene, x3dSyntax: string))
    }
    
-   internal func fromPrettyStream (_ parser : VRMLParser) -> Bool { return false }
+   internal func fromDisplayStream (_ parser : VRMLParser) -> Bool { return false }
    
    // Destruction
    

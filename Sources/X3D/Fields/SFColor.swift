@@ -55,7 +55,7 @@ public class SFColor :
       stream += "\(wrappedValue .r) \(wrappedValue .g) \(wrappedValue .b)"
    }
 
-   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
+   internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {
       return parser .sfcolorValue (for: self)
    }

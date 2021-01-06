@@ -55,7 +55,7 @@ public class SFVec3d :
       stream += "\(wrappedValue .x) \(wrappedValue .y) \(wrappedValue .z)"
    }
    
-   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       let x = stream .executionContext .toUnit (unit, value: wrappedValue .x)
       let y = stream .executionContext .toUnit (unit, value: wrappedValue .y)
@@ -64,7 +64,7 @@ public class SFVec3d :
       stream += "\(x) \(y) \(z)"
    }
 
-   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
+   internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {
       return parser .sfvec3dValue (for: self)
    }

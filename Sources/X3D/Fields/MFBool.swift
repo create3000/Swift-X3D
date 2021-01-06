@@ -64,12 +64,12 @@ public final class MFBool :
       }
    }
    
-   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       stream += "\(wrappedValue .map { $0 ? "TRUE" : "FALSE" } .joined (separator: ",\n"))"
    }
 
-   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
+   internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {
       parser .sfboolValues (for: self)
       return true

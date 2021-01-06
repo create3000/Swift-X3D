@@ -55,7 +55,7 @@ public final class SFString :
       stream += wrappedValue
    }
    
-   public final override func fromPrettyString (_ string : String, scene : X3DScene) -> Bool
+   public final override func fromDisplayString (_ string : String, scene : X3DScene) -> Bool
    {
       wrappedValue = string
       return true

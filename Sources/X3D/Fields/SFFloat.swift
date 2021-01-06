@@ -55,12 +55,12 @@ public final class SFFloat :
       stream += String (wrappedValue)
    }
    
-   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       stream += String (stream .executionContext .toUnit (unit, value: Double (wrappedValue)))
    }
 
-   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
+   internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {
       return parser .sffloatValue (for: self)
    }

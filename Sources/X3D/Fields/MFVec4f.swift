@@ -64,14 +64,14 @@ public final class MFVec4f :
       }
    }
    
-   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       let executionContext = stream .executionContext
       
       stream += "\(wrappedValue .map { "\(executionContext .toUnit (unit, value: Double ($0 .x))) \(executionContext .toUnit (unit, value: Double ($0 .y))) \(executionContext .toUnit (unit, value: Double ($0 .z))) \(executionContext .toUnit (unit, value: Double ($0 .w)))" } .joined (separator: ",\n"))"
    }
 
-   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
+   internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {
       parser .sfvec4fValues (for: self)
       return true

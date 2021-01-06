@@ -58,7 +58,15 @@ public class SFRotation :
       stream += "\(axis .x) \(axis .y) \(axis .z) \(angle)"
    }
    
-   internal final override func parse (_ parser : VRMLParser) -> Bool
+   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   {
+      let axis  = wrappedValue .axis
+      let angle = wrappedValue .angle
+
+      stream += "\(axis .x) \(axis .y) \(axis .z) \(stream .executionContext .toUnit (.angle, value: Double (angle)))"
+   }
+
+   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
    {
       return parser .sfrotationValue (for: self)
    }

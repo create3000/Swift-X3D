@@ -55,7 +55,12 @@ public final class SFDouble :
       stream += String (wrappedValue)
    }
    
-   internal final override func parse (_ parser : VRMLParser) -> Bool
+   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   {
+      stream += String (stream .executionContext .toUnit (unit, value: wrappedValue))
+   }
+
+   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
    {
       return parser .sfdoubleValue (for: self)
    }

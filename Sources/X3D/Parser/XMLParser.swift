@@ -28,6 +28,8 @@ internal final class XMLParser :
 
       // Init super.
       super .init ()
+      
+      executionContexts .append (scene)
    }
    
    // Operations
@@ -77,10 +79,6 @@ internal final class XMLParser :
       {
          scene .setSpecificationVersion (version)
       }
-      
-      executionContexts .append (scene)
-      
-      defer { executionContexts .removeLast () }
 
       x3dElementChildren (element .children)
    }

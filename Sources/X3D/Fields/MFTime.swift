@@ -52,11 +52,6 @@ public final class MFTime :
    }
    
    // Input/Output
-   
-   public final override var description : String
-   {
-      return "\(wrappedValue .map { String ($0) } .joined (separator: ",\n"))"
-   }
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
@@ -71,7 +66,12 @@ public final class MFTime :
       }
    }
    
-   internal final override func parse (_ parser : VRMLParser) -> Bool
+   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   {
+      stream += "\(wrappedValue .map { String ($0) } .joined (separator: ",\n"))"
+   }
+
+   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
    {
       parser .sftimeValues (for: self)
       return true

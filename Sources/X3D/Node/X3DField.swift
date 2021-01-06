@@ -9,8 +9,7 @@
 import Foundation
 
 public class X3DField :
-   X3DFieldDefinition,
-   CustomStringConvertible
+   X3DFieldDefinition
 {
    // Construction
    
@@ -169,14 +168,28 @@ public class X3DField :
    
    // Input/Output
    
-   public var description : String { toString () }
-   
-   public func parse (_ string : String, scene : X3DScene) -> Bool
+   public final func toPrettyString (_ executionContext : X3DExecutionContext) -> String
    {
-      return parse (VRMLParser (scene: scene, x3dSyntax: string))
+      let stream = X3DOutputStream ()
+      
+      stream .executionContexts .append (executionContext)
+      
+      toPrettyStream (stream)
+      
+      return stream .string
    }
    
-   internal func parse (_ parser : VRMLParser) -> Bool { return false }
+   internal func toPrettyStream (_ stream : X3DOutputStream)
+   {
+      toStream (stream)
+   }
+
+   public func fromPrettyString (_ string : String, scene : X3DScene) -> Bool
+   {
+      return fromPrettyStream (VRMLParser (scene: scene, x3dSyntax: string))
+   }
+   
+   internal func fromPrettyStream (_ parser : VRMLParser) -> Bool { return false }
    
    // Destruction
    

@@ -30,7 +30,7 @@ public class X3DObject :
       
       toStream (stream)
       
-      return stream .description
+      return stream .string
    }
 
    public final func toXMLString () -> String
@@ -39,7 +39,7 @@ public class X3DObject :
       
       toXMLStream (stream)
       
-      return stream .description
+      return stream .string
    }
    
    public final func toJSONString () -> String
@@ -48,7 +48,7 @@ public class X3DObject :
       
       toJSONStream (stream)
       
-      return stream .description
+      return stream .string
    }
 
    public final func toVRMLString () -> String
@@ -57,7 +57,7 @@ public class X3DObject :
       
       toVRMLStream (stream)
       
-      return stream .description
+      return stream .string
    }
    
    // Convert to stream

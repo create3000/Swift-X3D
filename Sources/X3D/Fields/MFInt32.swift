@@ -50,11 +50,6 @@ public final class MFInt32 :
    }
    
    // Input/Output
-   
-   public final override var description : String
-   {
-      return "\(wrappedValue .map { String ($0) } .joined (separator: ",\n"))"
-   }
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
@@ -69,7 +64,12 @@ public final class MFInt32 :
       }
    }
    
-   internal final override func parse (_ parser : VRMLParser) -> Bool
+   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   {
+      stream += "\(wrappedValue .map { String ($0) } .joined (separator: ",\n"))"
+   }
+
+   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
    {
       parser .sfint32Values (for: self)
       return true

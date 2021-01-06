@@ -24,6 +24,8 @@ internal final class JSONParser :
 
       // Init super.
       super .init ()
+      
+      executionContexts .append (scene)
    }
 
    // Operations
@@ -47,11 +49,7 @@ internal final class JSONParser :
    private final func x3dObject (_ object : Any?)
    {
       guard let object = object as? [String : Any] else { return }
-      
-      executionContexts .append (scene)
-      
-      defer { executionContexts .removeLast () }
-      
+            
       scene .setEncoding ("JSON")
       
       if let _ = string (object ["encoding"])

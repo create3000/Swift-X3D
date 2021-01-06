@@ -50,11 +50,6 @@ public final class MFColor :
    }
    
    // Input/Output
-   
-   public final override var description : String
-   {
-      return "\(wrappedValue .map { "\($0 .r) \($0 .g) \($0 .b)" } .joined (separator: ",\n"))"
-   }
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
@@ -69,7 +64,12 @@ public final class MFColor :
       }
    }
    
-   internal final override func parse (_ parser : VRMLParser) -> Bool
+   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   {
+      stream += "\(wrappedValue .map { "\($0 .r) \($0 .g) \($0 .b)" } .joined (separator: ",\n"))"
+   }
+
+   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
    {
       parser .sfcolorValues (for: self)
       return true

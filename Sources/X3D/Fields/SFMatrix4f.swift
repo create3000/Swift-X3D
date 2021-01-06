@@ -49,26 +49,6 @@ public class SFMatrix4f :
    }
    
    // Input/Output
-   
-   public final override var description : String
-   {
-      var string = ""
-      
-      let c0 = wrappedValue [0]
-      let c1 = wrappedValue [1]
-      let c2 = wrappedValue [2]
-      let c3 = wrappedValue [3]
-
-      string += "\(c0.x) \(c0.y) \(c0.z) \(c0.w)"
-      string += " "
-      string += "\(c1.x) \(c1.y) \(c1.z) \(c1.w)"
-      string += " "
-      string += "\(c2.x) \(c2.y) \(c2.z) \(c2.w)"
-      string += " "
-      string += "\(c3.x) \(c3.y) \(c3.z) \(c3.w)"
-
-      return string
-   }
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
@@ -86,7 +66,23 @@ public class SFMatrix4f :
       stream += "\(c3.x) \(c3.y) \(c3.z) \(c3.w)"
    }
    
-   internal final override func parse (_ parser : VRMLParser) -> Bool
+   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   {
+      let c0 = wrappedValue [0]
+      let c1 = wrappedValue [1]
+      let c2 = wrappedValue [2]
+      let c3 = wrappedValue [3]
+
+      stream += "\(c0.x) \(c0.y) \(c0.z) \(c0.w)"
+      stream += "\n"
+      stream += "\(c1.x) \(c1.y) \(c1.z) \(c1.w)"
+      stream += "\n"
+      stream += "\(c2.x) \(c2.y) \(c2.z) \(c2.w)"
+      stream += "\n"
+      stream += "\(c3.x) \(c3.y) \(c3.z) \(c3.w)"
+   }
+
+   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
    {
       return parser .sfmatrix4fValue (for: self)
    }

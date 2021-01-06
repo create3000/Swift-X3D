@@ -50,11 +50,6 @@ public final class MFVec2f :
    }
    
    // Input/Output
-   
-   public final override var description : String
-   {
-      return "\(wrappedValue .map { "\($0 .x) \($0 .y)" } .joined (separator: ",\n"))"
-   }
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
@@ -69,7 +64,14 @@ public final class MFVec2f :
       }
    }
    
-   internal final override func parse (_ parser : VRMLParser) -> Bool
+   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   {
+      let executionContext = stream .executionContext
+      
+      stream += "\(wrappedValue .map { "\(executionContext .toUnit (unit, value: Double ($0 .x))) \(executionContext .toUnit (unit, value: Double ($0 .y)))" } .joined (separator: ",\n"))"
+   }
+
+   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
    {
       parser .sfvec2fValues (for: self)
       return true

@@ -122,6 +122,8 @@ internal final class VRMLParser :
 
       // Init super.
       super .init ()
+      
+      executionContexts .append (scene)
    }
    
    // Operations
@@ -193,10 +195,6 @@ internal final class VRMLParser :
    
    private final func x3dScene () throws
    {
-      executionContexts .append (scene)
-      
-      defer { executionContexts .removeLast () }
-
       headerStatement ()
       
       scene .setEncoding ("VRML")

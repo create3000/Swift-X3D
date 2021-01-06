@@ -50,32 +50,6 @@ public final class MFMatrix4f :
    }
    
    // Input/Output
-   
-   public final override var description : String
-   {
-      return """
-\(wrappedValue .map
-{
-   let c0 = $0 [0]
-   let c1 = $0 [1]
-   let c2 = $0 [2]
-   let c3 = $0 [3]
-
-   var string = ""
-
-   string += "\(c0.x) \(c0.y) \(c0.z) \(c0.w)"
-   string += "\n"
-   string += "\(c1.x) \(c1.y) \(c1.z) \(c1.w)"
-   string += "\n"
-   string += "\(c2.x) \(c2.y) \(c2.z) \(c2.w)"
-   string += "\n"
-   string += "\(c3.x) \(c3.y) \(c3.z) \(c3.w)"
-
-   return string
-}
-.joined (separator: ", "))
-"""
-   }
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
@@ -122,7 +96,33 @@ public final class MFMatrix4f :
       }
    }
    
-   internal final override func parse (_ parser : VRMLParser) -> Bool
+   internal final override func toPrettyStream (_ stream : X3DOutputStream)
+   {
+      stream += """
+\(wrappedValue .map
+{
+   let c0 = $0 [0]
+   let c1 = $0 [1]
+   let c2 = $0 [2]
+   let c3 = $0 [3]
+
+   var string = ""
+
+   string += "\(c0.x) \(c0.y) \(c0.z) \(c0.w)"
+   string += "\n"
+   string += "\(c1.x) \(c1.y) \(c1.z) \(c1.w)"
+   string += "\n"
+   string += "\(c2.x) \(c2.y) \(c2.z) \(c2.w)"
+   string += "\n"
+   string += "\(c3.x) \(c3.y) \(c3.z) \(c3.w)"
+
+   return string
+}
+.joined (separator: ", "))
+"""
+   }
+
+   internal final override func fromPrettyStream (_ parser : VRMLParser) -> Bool
    {
       parser .sfmatrix4fValues (for: self)
       return true

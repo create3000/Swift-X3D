@@ -6,15 +6,16 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-internal final class X3DOutputStream :
-   CustomStringConvertible
+internal final class X3DOutputStream
 {
-   internal final var description: String { string }
-   
-   private final var string : String = ""
+   internal private(set) final var string : String = ""
    
    internal static func += (stream : X3DOutputStream, string : String)
    {
       stream .string += string
    }
+   
+   internal var executionContexts = [X3DExecutionContext] ()
+   
+   internal var executionContext : X3DExecutionContext { executionContexts .last! }
 }

@@ -152,6 +152,11 @@ public final class X3DScene :
       }
    }
    
+   public final override func fromUnit (_ category : X3DUnitCategory, value : Float) -> Float
+   {
+      return Float (fromUnit (category, value: Double (value)))
+   }
+
    public final override func toUnit (_ category : X3DUnitCategory, value : Double) -> Double
    {
       switch category
@@ -177,6 +182,11 @@ public final class X3DScene :
       }
    }
    
+   public final override func toUnit (_ category : X3DUnitCategory, value : Float) -> Float
+   {
+      return Float (toUnit (category, value: Double (value)))
+   }
+
    // Metadata handling
    
    public final var metadata : [String : [String]] = [:]

@@ -75,7 +75,7 @@ public final class MFVec3f :
    {
       let executionContext = stream .executionContext
       
-      stream += "\(wrappedValue .map { "\(executionContext .toUnit (unit, value: Double ($0 .x))) \(executionContext .toUnit (unit, value: Double ($0 .y))) \(executionContext .toUnit (unit, value: Double ($0 .z)))" } .joined (separator: ",\n"))"
+      stream += "\(wrappedValue .map { "\(executionContext .toUnit (unit, value: $0 .x)) \(executionContext .toUnit (unit, value: $0 .y)) \(executionContext .toUnit (unit, value: $0 .z))" } .joined (separator: ",\n"))"
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

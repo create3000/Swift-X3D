@@ -84,6 +84,16 @@ public class X3DExecutionContext :
    {
       return scene! .toUnit (unit, value: value)
    }
+   
+   public func fromUnit (_ category : X3DUnitCategory, value : Float) -> Float
+   {
+      return scene! .fromUnit (category, value: value)
+   }
+   
+   public func toUnit (_ unit : X3DUnitCategory, value : Float) -> Float
+   {
+      return scene! .toUnit (unit, value: value)
+   }
 
    // Node handling
    

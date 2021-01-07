@@ -64,7 +64,7 @@ public final class SFFloat :
    
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      stream += String (stream .executionContext .toUnit (unit, value: Double (wrappedValue)))
+      stream += String (stream .executionContext .toUnit (unit, value: wrappedValue))
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

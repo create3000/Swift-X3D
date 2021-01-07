@@ -64,10 +64,10 @@ public class SFVec4f :
    
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      let x = stream .executionContext .toUnit (unit, value: Double (wrappedValue .x))
-      let y = stream .executionContext .toUnit (unit, value: Double (wrappedValue .y))
-      let z = stream .executionContext .toUnit (unit, value: Double (wrappedValue .z))
-      let w = stream .executionContext .toUnit (unit, value: Double (wrappedValue .w))
+      let x = stream .executionContext .toUnit (unit, value: wrappedValue .x)
+      let y = stream .executionContext .toUnit (unit, value: wrappedValue .y)
+      let z = stream .executionContext .toUnit (unit, value: wrappedValue .z)
+      let w = stream .executionContext .toUnit (unit, value: wrappedValue .w)
 
       stream += "\(x) \(y) \(z) \(w)"
    }

@@ -21,13 +21,13 @@ internal class X3DParser
    internal final var isInsideProtoDefinition : Bool { !protos .isEmpty }
    
    // Units
-
-   internal final func fromUnit (_ category : X3DUnitCategory, value : Float) -> Float
-   {
-      return Float (executionContext .fromUnit (category, value: Double (value)))
-   }
    
    internal final func fromUnit (_ category : X3DUnitCategory, value : Double) -> Double
+   {
+      return executionContext .fromUnit (category, value: value)
+   }
+
+   internal final func fromUnit (_ category : X3DUnitCategory, value : Float) -> Float
    {
       return executionContext .fromUnit (category, value: value)
    }

@@ -54,12 +54,12 @@ public final class PackagedShader :
       types .append (.PackagedShader)
 
       addField (.inputOutput,    "metadata",   $metadata)
-      addField (.inputOutput,    "url",        $url)
       addField (.inputOnly,      "activate",   $activate)
       addField (.outputOnly,     "isSelected", $isSelected)
       addField (.outputOnly,     "isValid",    $isValid)
       addField (.initializeOnly, "language",   $language)
-      
+      addField (.inputOutput,    "url",        $url)
+
       addChildObjects ($loadState)
    }
 

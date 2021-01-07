@@ -75,7 +75,7 @@ public final class MFFloat :
    {
       let executionContext = stream .executionContext
       
-      stream += "\(wrappedValue .map { String (executionContext .toUnit (unit, value: Double ($0))) } .joined (separator: ",\n"))"
+      stream += "\(wrappedValue .map { String (executionContext .toUnit (unit, value: $0)) } .joined (separator: ",\n"))"
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

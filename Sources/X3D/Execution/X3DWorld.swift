@@ -111,7 +111,7 @@ public final class X3DWorld :
    deinit
    {
       #if DEBUG
-      debugPrint (#file, #function)
+      //debugPrint (#file, #function)
       #endif
    }
 }

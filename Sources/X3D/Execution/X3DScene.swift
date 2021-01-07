@@ -234,7 +234,7 @@ public final class X3DScene :
    deinit
    {
       #if DEBUG
-      debugPrint (#file, #function)
+      //debugPrint (#file, #function)
       #endif
    }
 }

@@ -37,6 +37,9 @@ public final class X3DRoute :
    private final func connect ()
    {
       sourceField! .addFieldInterest (to: destinationField!)
+      
+      sourceField!      .outputRoutes .add (self)
+      destinationField! .inputRoutes  .add (self)
    }
    
    internal final func disconnect ()
@@ -45,6 +48,9 @@ public final class X3DRoute :
             let destinationField = destinationField else { return }
       
       sourceField .removeFieldInterest (to: destinationField)
+      
+      sourceField      .outputRoutes .remove (self)
+      destinationField .inputRoutes  .remove (self)
    }
    
    deinit

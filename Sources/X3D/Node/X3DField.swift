@@ -95,8 +95,10 @@ public class X3DField :
 
    // Route handling
 
-   public private(set) final var inputFieldInterests  = NSHashTable <X3DField> (options: .weakMemory)
-   public private(set) final var outputFieldInterests = NSHashTable <X3DField> (options: .weakMemory)
+   private final var inputFieldInterests      = NSHashTable <X3DField> (options: .weakMemory)
+   private final var outputFieldInterests     = NSHashTable <X3DField> (options: .weakMemory)
+   public private(set) final var inputRoutes  = NSHashTable <X3DRoute> (options: .weakMemory)
+   public private(set) final var outputRoutes = NSHashTable <X3DRoute> (options: .weakMemory)
    
    /// Adds a interest for field.
    internal final func addFieldInterest (to field : X3DField)

@@ -15,8 +15,11 @@ public class X3DField :
    
    /// Creates a new fresh copy of this field.
    public func copy () -> X3DField { self }
-      
+
    // Value handling
+
+   /// Compares this field with `other`.
+   public func equals (to field : X3DField) -> Bool { false }
 
    /// Assigns a value to this field without generating an event.
    internal func set (value field : X3DField) { }
@@ -92,8 +95,8 @@ public class X3DField :
 
    // Route handling
 
-   private final var inputFieldInterests  = NSHashTable <X3DField> (options: .weakMemory)
-   private final var outputFieldInterests = NSHashTable <X3DField> (options: .weakMemory)
+   public private(set) final var inputFieldInterests  = NSHashTable <X3DField> (options: .weakMemory)
+   public private(set) final var outputFieldInterests = NSHashTable <X3DField> (options: .weakMemory)
    
    /// Adds a interest for field.
    internal final func addFieldInterest (to field : X3DField)

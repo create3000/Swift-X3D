@@ -52,9 +52,16 @@ public class SFNode <Type : X3DBaseNode> :
 
    // Value handling
    
+   public final override func equals (to field : X3DField) -> Bool
+   {
+      guard let field = field as? Self else { return false }
+      
+      return wrappedValue === field .wrappedValue
+   }
+
    internal final override func set (value field : X3DField)
    {
-      guard let field = field as? SFNode else { return }
+      guard let field = field as? Self else { return }
       
       wrappedValue = field .wrappedValue
    }
@@ -62,7 +69,7 @@ public class SFNode <Type : X3DBaseNode> :
    internal final override func set (with protoInstance : X3DPrototypeInstance, value field : X3DField)
       where Type == X3DNode
    {
-      guard let field = field as? SFNode else { return }
+      guard let field = field as? Self else { return }
       
       wrappedValue = field .wrappedValue? .copy (with: protoInstance)
    }

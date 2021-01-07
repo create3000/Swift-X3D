@@ -50,9 +50,19 @@ public class SFImage :
 
    // Value handling
    
+   public final override func equals (to field : X3DField) -> Bool
+   {
+      guard let field = field as? Self else { return false }
+      
+      return wrappedValue .width  == field .wrappedValue .width  &&
+             wrappedValue .height == field .wrappedValue .height &&
+             wrappedValue .comp   == field .wrappedValue .comp   &&
+             wrappedValue .array  == field .wrappedValue .array
+   }
+
    internal final override func set (value field : X3DField)
    {
-      guard let field = field as? SFImage else { return }
+      guard let field = field as? Self else { return }
       
       wrappedValue .width  = field .wrappedValue .width
       wrappedValue .height = field .wrappedValue .height

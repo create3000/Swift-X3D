@@ -41,9 +41,16 @@ public class SFVec2f :
 
    // Value handling
    
+   public final override func equals (to field : X3DField) -> Bool
+   {
+      guard let field = field as? Self else { return false }
+      
+      return wrappedValue == field .wrappedValue
+   }
+
    internal final override func set (value field : X3DField)
    {
-      guard let field = field as? SFVec2f else { return }
+      guard let field = field as? Self else { return }
       
       wrappedValue = field .wrappedValue
    }

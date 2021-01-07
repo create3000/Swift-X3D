@@ -46,7 +46,7 @@ public class X3DNode :
       return self
    }
    
-   /// Copies this node into prototype instance
+   /// Copies this node into prototype instance.
    internal final func copy (with protoInstance : X3DPrototypeInstance) -> X3DNode
    {
       let body = protoInstance .getBody ()
@@ -139,9 +139,23 @@ public class X3DNode :
       
       return copy
    }
-
+ 
    // Prototype handling
    
    /// Returns the innermost node of an X3DPrototypeInstance or self.
    internal var innerNode : X3DNode? { self }
+   
+   // Field handling
+   
+   public final func isDefaultValue (_ field : X3DField) -> Bool
+   {
+      let node = create (with: executionContext!)
+      
+      guard let other = try? node .getField (name: field .getName ()) else
+      {
+         return false
+      }
+      
+      return other .equals (to: field)
+   }
 }

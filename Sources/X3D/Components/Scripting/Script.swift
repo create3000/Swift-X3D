@@ -119,6 +119,8 @@ public final class Script :
                self .context = context
 
                context .initialize ()
+               
+               self .setLoadState (.COMPLETE_STATE)
             }
             
             return
@@ -129,6 +131,8 @@ public final class Script :
          DispatchQueue .main .async
          {
             self .context = context
+            
+            self .setLoadState (.FAILED_STATE)
          }
       }
    }

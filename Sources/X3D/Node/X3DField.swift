@@ -99,6 +99,7 @@ public class X3DField :
    private final var outputFieldInterests     = NSHashTable <X3DField> (options: .weakMemory)
    public private(set) final var inputRoutes  = NSHashTable <X3DRoute> (options: .weakMemory)
    public private(set) final var outputRoutes = NSHashTable <X3DRoute> (options: .weakMemory)
+   public final let routes_changed            = Output ()
    
    /// Adds a interest for field.
    internal final func addFieldInterest (to field : X3DField)

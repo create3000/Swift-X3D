@@ -391,14 +391,14 @@ public final class X3DBrowser :
    
    // Browser interests
    
-   private final var browserInterests : [X3DBrowserEvent : SFTime] = [
-      .Browser_Initialized:      SFTime (),
-      .Browser_Shutdown:         SFTime (),
-      .Browser_URL_Error:        SFTime (),
-      .Browser_Connection_Error: SFTime (),
-      .Browser_Event:            SFTime (),
-      .Browser_Sensors:          SFTime (),
-      .Browser_Done:             SFTime (),
+   private final var browserInterests : [X3DBrowserEvent : Output] = [
+      .Browser_Initialized:      Output (),
+      .Browser_Shutdown:         Output (),
+      .Browser_URL_Error:        Output (),
+      .Browser_Connection_Error: Output (),
+      .Browser_Event:            Output (),
+      .Browser_Sensors:          Output (),
+      .Browser_Done:             Output (),
    ]
 
    public final func addBrowserInterest <Object : X3DInputOutput>

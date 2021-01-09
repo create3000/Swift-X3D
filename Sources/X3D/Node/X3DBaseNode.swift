@@ -28,7 +28,7 @@ public class X3DBaseNode :
       self .executionContext = executionContext
    }
    
-   internal final func setup ()
+   public final func setup ()
    {
       // Contruction
       
@@ -45,10 +45,14 @@ public class X3DBaseNode :
       {
          field .isTainted = false
       }
+      
+      isInitialized = true
    }
    
    /// Override to initialize node.
    internal func initialize () { }
+   
+   public private(set) final var isInitialized = false
 
    // Children handling
    

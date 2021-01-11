@@ -21,7 +21,7 @@ public final class Switch :
    
    // Fields
    
-   @SFInt32 public final var whichChoice : Int32 = 0
+   @SFInt32 public final var whichChoice : Int32 = -1
    
    // Properties
    

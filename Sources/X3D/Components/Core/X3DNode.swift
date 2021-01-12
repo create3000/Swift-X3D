@@ -147,7 +147,7 @@ public class X3DNode :
    
    // Field handling
    
-   public final func isDefaultValue (_ field : X3DField) -> Bool
+   public func isDefaultValue (_ field : X3DField) -> Bool
    {
       let node = create (with: executionContext!)
       

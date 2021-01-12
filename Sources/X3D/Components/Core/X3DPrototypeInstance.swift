@@ -44,7 +44,6 @@ public class X3DPrototypeInstance :
                        $body)
       
       self .protoNode = protoNode
-      self .body      = X3DExecutionContext (executionContext .browser!, executionContext)
       
       if let externproto = protoNode as? X3DExternProtoDeclaration
       {
@@ -61,14 +60,23 @@ public class X3DPrototypeInstance :
    {
       super .initialize ()
       
-      protoNode! .addInterest ("set_proto", X3DPrototypeInstance .set_proto, self)
+      protoNode! .addInterest ("update", X3DPrototypeInstance .update, self)
       
-      set_proto ()
+      update ()
    }
    
    private func update ()
    {
-      guard let proto = protoNode! .proto else { return }
+      guard let proto = protoNode! .proto else
+      {
+         body = X3DExecutionContext (browser!, executionContext!)
+         
+         body! .setup ()
+
+         // Inform parents about root node change.
+         addEvent ()
+         return
+      }
       
       if protoNode! .isExternProto
       {
@@ -107,9 +115,7 @@ public class X3DPrototypeInstance :
       
       // Create body.
 
-      body = X3DExecutionContext (executionContext! .browser!, executionContext)
-      
-      body! .executionContext = proto .executionContext
+      body = X3DExecutionContext (browser!, proto .executionContext)
       
       // Extern protos
       
@@ -156,13 +162,10 @@ public class X3DPrototypeInstance :
                                    destinationField: destinationField)
       }
       
+      body! .setup ()
+
       // Inform parents about root node change.
       addEvent ()
-   }
-   
-   private final func set_proto ()
-   {
-      update ()
    }
    
    internal final func getBody () -> X3DExecutionContext { body! }
@@ -174,5 +177,15 @@ public class X3DPrototypeInstance :
       guard body! .rootNodes .count > 0 else { return nil }
 
       return body! .rootNodes [0]? .innerNode
+   }
+   
+   public final override func isDefaultValue (_ field : X3DField) -> Bool
+   {
+      guard let other = try? protoNode? .getField (name: field .getName ()) else
+      {
+         return false
+      }
+      
+      return other .equals (to: field)
    }
 }

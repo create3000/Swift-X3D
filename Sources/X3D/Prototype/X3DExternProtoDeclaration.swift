@@ -153,7 +153,6 @@ public final class X3DExternProtoDeclaration :
       else
       {
          internalScene = nil
-
       }
    }
 }

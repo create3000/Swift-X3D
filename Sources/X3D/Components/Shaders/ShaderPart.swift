@@ -25,7 +25,7 @@ public final class ShaderPart :
    
    // X3DUrlObject
    
-   @SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE
+   public final var loadState = SFEnum <X3DLoadState> (wrappedValue: .NOT_STARTED_STATE)
    
    // Properties
    
@@ -45,7 +45,7 @@ public final class ShaderPart :
       addField (.initializeOnly, "type",     $type)
       addField (.inputOutput,    "url",      $url)
       
-      addChildObjects ($loadState)
+      addChildObjects (loadState)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> ShaderPart

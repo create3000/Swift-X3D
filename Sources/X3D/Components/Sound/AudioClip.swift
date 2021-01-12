@@ -40,7 +40,7 @@ public final class AudioClip :
    
    // X3DUrlObject
    
-   @SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE
+   public final var loadState = SFEnum <X3DLoadState> (wrappedValue: .NOT_STARTED_STATE)
 
    // Construction
    
@@ -73,7 +73,8 @@ public final class AudioClip :
       addField (.outputOnly,  "duration_changed", $duration_changed)
       
       addChildObjects ($isLive,
-                       $enabled)
+                       $enabled,
+                       loadState)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> AudioClip

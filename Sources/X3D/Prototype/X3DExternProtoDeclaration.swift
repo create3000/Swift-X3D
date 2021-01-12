@@ -16,11 +16,12 @@ public final class X3DExternProtoDeclaration :
    
    // Properties
    
-   @SFEnum   public   final var loadState     : X3DLoadState = .NOT_STARTED_STATE
    @MFString public   final var url           : [String]
    @SFNode   internal final var internalScene : X3DScene?
 
    public final override var isExternProto : Bool { true }
+   
+   public final var loadState = SFEnum <X3DLoadState> (wrappedValue: .NOT_STARTED_STATE)
 
    // Construction
    
@@ -30,9 +31,9 @@ public final class X3DExternProtoDeclaration :
       
       super .init (executionContext .browser!, executionContext)
       
-      addChildObjects ($loadState,
-                       $url,
-                       $internalScene)
+      addChildObjects ($url,
+                       $internalScene,
+                       loadState)
       
       $url .setName ("url")
    }
@@ -71,7 +72,7 @@ public final class X3DExternProtoDeclaration :
    
    // Property access
    
-   public final override func getProto () -> X3DProtoDeclaration?
+   public final override var proto : X3DProtoDeclaration?
    {
       if let internalScene = internalScene
       {

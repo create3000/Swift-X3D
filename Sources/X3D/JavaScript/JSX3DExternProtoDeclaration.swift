@@ -66,7 +66,7 @@ extension JavaScript
       
       dynamic public final var isExternProto : Bool { externproto .isExternProto }
       
-      dynamic public final var loadState : Int32 { Int32 (externproto .loadState .rawValue) }
+      dynamic public final var loadState : Int32 { Int32 (externproto .checkLoadState .rawValue) }
       
       public final func loadNow ()
       {

@@ -19,7 +19,7 @@ public protocol X3DUrlObject :
    
    //@SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE
    
-   var loadState : X3DLoadState { get set }
+   var loadState : SFEnum <X3DLoadState> { get }
    
    // Operations
    
@@ -39,10 +39,10 @@ extension X3DUrlObject
    
    internal func setLoadState (_ value : X3DLoadState)
    {
-      guard value != loadState else { return }
+      guard value != loadState .wrappedValue else { return }
       
-      loadState = value
+      loadState .wrappedValue = value
    }
    
-   public var checkLoadState : X3DLoadState { loadState }
+   public var checkLoadState : X3DLoadState { loadState .wrappedValue }
 }

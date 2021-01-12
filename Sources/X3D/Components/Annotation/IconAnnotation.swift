@@ -28,7 +28,7 @@ public final class IconAnnotation :
    
    // X3DUrlObject
    
-   @SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE
+   public final var loadState = SFEnum <X3DLoadState> (wrappedValue: .NOT_STARTED_STATE)
 
    // Construction
    
@@ -47,7 +47,7 @@ public final class IconAnnotation :
       addField (.inputOutput, "displayPolicy",     $displayPolicy)
       addField (.inputOutput, "url",               $url)
       
-      addChildObjects ($loadState)
+      addChildObjects (loadState)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> IconAnnotation

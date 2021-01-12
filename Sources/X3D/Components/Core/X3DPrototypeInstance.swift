@@ -68,7 +68,7 @@ public class X3DPrototypeInstance :
    
    private func update ()
    {
-      guard let proto = protoNode! .getProto () else { return }
+      guard let proto = protoNode! .proto else { return }
       
       if protoNode! .isExternProto
       {

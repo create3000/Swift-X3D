@@ -23,7 +23,7 @@ public class X3DScriptNode :
 
    // X3DUrlObject
    
-   @SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE
+   public final var loadState = SFEnum <X3DLoadState> (wrappedValue: .NOT_STARTED_STATE)
 
    // Construction
    
@@ -35,7 +35,7 @@ public class X3DScriptNode :
 
       types .append (.X3DScriptNode)
       
-      addChildObjects ($loadState)
+      addChildObjects (loadState)
    }
    
    public func requestImmediateLoad () { }

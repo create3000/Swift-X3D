@@ -30,11 +30,11 @@ public final class Inline :
    
    // X3DUrlObject
    
-   @SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE
+   public final var loadState = SFEnum <X3DLoadState> (wrappedValue: .NOT_STARTED_STATE)
    
    // Properties
    
-   @SFNode internal final var internalScene : X3DScene?
+   @SFNode public private(set) final var internalScene : X3DScene?
    @SFNode private final var groupNode : Group!
 
    // Construction
@@ -56,7 +56,7 @@ public final class Inline :
       addField (.initializeOnly, "bboxSize",   $bboxSize)
       addField (.initializeOnly, "bboxCenter", $bboxCenter)
       
-      addChildObjects ($loadState,
+      addChildObjects (loadState,
                        $internalScene)
    }
 

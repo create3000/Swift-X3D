@@ -15,7 +15,7 @@ public class X3DProtoDeclarationNode :
 
    public var isExternProto : Bool { false }
    
-   public func getProto () -> X3DProtoDeclaration? { nil }
+   public var proto : X3DProtoDeclaration? { nil }
    
    // Instance construction
    

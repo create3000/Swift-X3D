@@ -37,7 +37,7 @@ public final class X3DProtoDeclaration :
    
    // Property access
    
-   public final override func getProto () -> X3DProtoDeclaration? { self }
+   public final override var proto : X3DProtoDeclaration? { self }
    
    public final func getBody () -> X3DExecutionContext { body! }
 }

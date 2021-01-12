@@ -27,7 +27,7 @@ public final class ImageTexture :
    
    // X3DUrlObject
    
-   @SFEnum public final var loadState : X3DLoadState = .NOT_STARTED_STATE
+   public final var loadState = SFEnum <X3DLoadState> (wrappedValue: .NOT_STARTED_STATE)
 
    // Construction
    
@@ -45,7 +45,7 @@ public final class ImageTexture :
       addField (.initializeOnly, "repeatT",           $repeatT)
       addField (.initializeOnly, "textureProperties", $textureProperties)
       
-      addChildObjects ($loadState)
+      addChildObjects (loadState)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> ImageTexture

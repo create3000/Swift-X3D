@@ -110,7 +110,7 @@ public final class X3DExternProtoDeclaration :
             DispatchQueue .main .async
             {
                self .replaceScene (scene: scene)
-               self .setLoadState (.COMPLETE_STATE)
+               self .setLoadState (self .proto != nil ? .COMPLETE_STATE : .FAILED_STATE)
             }
          }
          else
@@ -153,6 +153,7 @@ public final class X3DExternProtoDeclaration :
       else
       {
          internalScene = nil
+
       }
    }
 }

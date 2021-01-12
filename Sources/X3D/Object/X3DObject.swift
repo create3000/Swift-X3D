@@ -21,7 +21,9 @@ public class X3DObject :
    public final func getName () -> String { name }
    
    internal final func setName (_ value : String) { name = value }
-
+   
+   public final func getDisplayName () -> String { remove_trailing_number (name) }
+ 
    // Convert to string
    
    public final func toString () -> String

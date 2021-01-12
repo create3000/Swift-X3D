@@ -31,6 +31,8 @@ public final class X3DExternProtoDeclaration :
       
       super .init (executionContext .browser!, executionContext)
       
+      addField (.inputOutput, "metadata", $metadata)
+      
       addChildObjects ($url,
                        $internalScene,
                        loadState)

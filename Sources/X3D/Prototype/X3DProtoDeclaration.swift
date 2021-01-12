@@ -23,6 +23,8 @@ public final class X3DProtoDeclaration :
    {
       super .init (executionContext .browser!, executionContext)
       
+      addField (.inputOutput, "metadata", $metadata)
+
       addChildObjects ($body)
       
       self .body = X3DExecutionContext (executionContext .browser!, executionContext)

@@ -11,12 +11,14 @@ public class X3DProtoDeclarationNode :
 {
    // Properties
    
+   @SFNode public final var metadata : X3DNode?
+   
    public final override var canUserDefinedFields : Bool { true }
 
    public var isExternProto : Bool { false }
    
    public var proto : X3DProtoDeclaration? { nil }
-   
+
    // Instance construction
    
    internal final func createInstance (with executionContext : X3DExecutionContext) -> X3DPrototypeInstance

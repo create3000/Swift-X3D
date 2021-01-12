@@ -16,8 +16,8 @@ public final class X3DExternProtoDeclaration :
    
    // Properties
    
-   @MFString public   final var url           : [String]
-   @SFNode   internal final var internalScene : X3DScene?
+   @MFString public final var url           : [String]
+   @SFNode   public final var internalScene : X3DScene?
 
    public final override var isExternProto : Bool { true }
    

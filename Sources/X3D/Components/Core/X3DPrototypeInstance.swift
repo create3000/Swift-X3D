@@ -22,8 +22,8 @@ public class X3DPrototypeInstance :
 
    // Properties
    
-   @SFNode private var protoNode : X3DProtoDeclarationNode?
-   @SFNode private var body      : X3DExecutionContext?
+   @SFNode public var protoNode : X3DProtoDeclarationNode?
+   @SFNode public var body      : X3DExecutionContext?
    
    // Construction
    

@@ -26,6 +26,8 @@ public class X3DBaseNode :
       
       self .browser          = browser
       self .executionContext = executionContext
+      
+      addChildObjects ($fields_changed)
    }
    
    public final func setup ()
@@ -75,6 +77,8 @@ public class X3DBaseNode :
    internal var extendedEventHandling : Bool { true }
    private final var fieldDefinitions : [X3DField] = [ ]
    private final var fieldIndex       : [String : X3DField] = [:]
+   
+   @SFTime public final var fields_changed = 0
 
    public final func getFieldDefinitions () -> [X3DField] { fieldDefinitions }
    
@@ -97,6 +101,8 @@ public class X3DBaseNode :
          fieldIndex ["set_" + name]     = field
          fieldIndex [name + "_changed"] = field
       }
+      
+      fields_changed = Date () .timeIntervalSince1970
    }
    
    private final var aliases : [String : String] = [:]
@@ -131,6 +137,24 @@ public class X3DBaseNode :
       numUserDefinedFields += 1
    }
    
+   public final func removeUserDefinedField (_ name : String)
+   {
+      guard let index = fieldDefinitions .firstIndex (where: { $0 .getName () == name }) else { return }
+      
+      guard index >= fieldDefinitions .count - numUserDefinedFields else { return }
+      
+      let field = fieldDefinitions [index]
+      
+      field .removeParent (self)
+      
+      fieldIndex .removeValue (forKey: field .getName ())
+      fieldDefinitions .remove (at: index)
+      
+      numUserDefinedFields -= 1
+      
+      fields_changed = Date () .timeIntervalSince1970
+   }
+
    public final func getField <Type : X3DField> (of type : Type .Type, name : String) throws -> Type
    {
       guard let field = try getField (name: name) as? Type else

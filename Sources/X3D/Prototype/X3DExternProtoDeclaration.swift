@@ -135,6 +135,19 @@ public final class X3DExternProtoDeclaration :
          internalScene! .executionContext = executionContext!
          internalScene! .isPrivate        = executionContext! .isPrivate
          
+         if let proto = proto
+         {
+            for field in getUserDefinedFields ()
+            {
+               removeUserDefinedField (field .getName ())
+            }
+      
+            for field in proto .getUserDefinedFields ()
+            {
+               addUserDefinedField (field .getAccessType (), field .getName (), field)
+            }
+         }
+         
          set_live ()
       }
       else

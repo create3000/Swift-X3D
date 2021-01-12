@@ -181,6 +181,11 @@ public class X3DPrototypeInstance :
    
    public final override func isDefaultValue (_ field : X3DField) -> Bool
    {
+      if field === $metadata
+      {
+         return metadata == nil
+      }
+      
       guard let other = try? protoNode? .getField (name: field .getName ()) else
       {
          return false

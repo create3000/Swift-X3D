@@ -278,13 +278,18 @@ public final class X3DBrowser :
 
    // Update control
    
+   @IBInspectable public final var onlyActiveInKeyWindow : Bool = true
+   
    private final var live : Bool = true
 
    public final func beginUpdate ()
    {
       live = true
       
-      guard let window = window, window .isKeyWindow else { return }
+      if onlyActiveInKeyWindow
+      {
+         guard let window = window, window .isKeyWindow else { return }
+      }
       
       currentScene .beginUpdate ()
    }
@@ -293,14 +298,19 @@ public final class X3DBrowser :
    {
       live = false
       
-      guard let window = window, window .isKeyWindow else { return }
-
+      if onlyActiveInKeyWindow
+      {
+         guard let window = window, window .isKeyWindow else { return }
+      }
+      
       currentScene .endUpdate ()
    }
    
-   @objc private func windowKeyednessChanged (_ note : Notification)
+   @objc private final func windowKeyednessChanged (_ note : Notification)
    {
-      guard let window = window, (note .object as? NSWindow) === window else { return }
+      guard onlyActiveInKeyWindow,
+            let window = window,
+            (note .object as? NSWindow) === window else { return }
       
       if window .isKeyWindow && live
       {

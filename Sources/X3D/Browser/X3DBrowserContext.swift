@@ -181,6 +181,27 @@ public class X3DBrowserContext :
    {
       keyDeviceSensorContextProperties .keyUp (with: event)
    }
+   
+   // Keyedness of window
+   
+   @objc public func windowKeyednessChanged (_ note : Notification) { }
+   
+   public override func viewWillMove (toWindow newWindow : NSWindow?)
+   {
+      let notificationCenter = NotificationCenter .default
+      
+      if let oldWindow = window
+      {
+         notificationCenter .removeObserver (self, name: NSWindow .didBecomeKeyNotification, object: oldWindow)
+         notificationCenter .removeObserver (self, name: NSWindow .didResignKeyNotification, object: oldWindow)
+      }
+      
+      if let newWindow = newWindow
+      {
+         notificationCenter .addObserver (self, selector: #selector(windowKeyednessChanged(_:)), name: NSWindow .didBecomeKeyNotification, object: newWindow)
+         notificationCenter .addObserver (self, selector: #selector(windowKeyednessChanged(_:)), name: NSWindow .didResignKeyNotification, object: newWindow)
+      }
+   }
 
    // Browser interests
 
@@ -228,5 +249,11 @@ public class X3DBrowserContext :
       callBrowserInterests (event: .Browser_Done)
       
       viewerNode .render (commandBuffer)
+   }
+   
+   deinit
+   {
+      // Keyedness of window
+      NotificationCenter .default .removeObserver (self)
    }
 }

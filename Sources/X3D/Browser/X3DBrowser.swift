@@ -162,7 +162,7 @@ public final class X3DBrowser :
       currentScene = scene ?? createScene (profile: try! getProfile (name: "Full"), components: [ ])
       world        = X3DWorld (with: currentScene)
       
-      if live
+      if live && (window? .isKeyWindow ?? !onlyUpdateInKeyWindow)
       {
          currentScene .beginUpdate ()
       }
@@ -306,36 +306,17 @@ public final class X3DBrowser :
       currentScene .endUpdate ()
    }
    
-   @objc private final func windowKeyednessChanged (_ note : Notification)
+   public override func windowKeyednessChanged (_ note : Notification)
    {
-      guard onlyUpdateInKeyWindow,
-            let window = window,
-            (note .object as? NSWindow) === window else { return }
+      guard onlyUpdateInKeyWindow, (note .object as? NSWindow) === window else { return }
       
-      if window .isKeyWindow && live
+      if window! .isKeyWindow && live
       {
          currentScene .beginUpdate ()
       }
       else
       {
          currentScene .endUpdate ()
-      }
-   }
-   
-   public override func viewWillMove (toWindow newWindow : NSWindow?)
-   {
-      let notificationCenter = NotificationCenter .default
-      
-      if let oldWindow = window
-      {
-         notificationCenter .removeObserver (self, name: NSWindow .didBecomeKeyNotification, object: oldWindow)
-         notificationCenter .removeObserver (self, name: NSWindow .didResignKeyNotification, object: oldWindow)
-      }
-      
-      if let newWindow = newWindow
-      {
-         notificationCenter .addObserver (self, selector: #selector(windowKeyednessChanged(_:)), name: NSWindow .didBecomeKeyNotification, object: newWindow)
-         notificationCenter .addObserver (self, selector: #selector(windowKeyednessChanged(_:)), name: NSWindow .didResignKeyNotification, object: newWindow)
       }
    }
    
@@ -499,8 +480,6 @@ public final class X3DBrowser :
    deinit
    {
       //debugPrint (#file, #function)
-      
-      NotificationCenter .default .removeObserver (self)
 
       sharedBrowser? .removeBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", method: X3DBrowser .setNeedsDisplay, object: self)
    }

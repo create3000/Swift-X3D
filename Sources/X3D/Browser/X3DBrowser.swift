@@ -284,6 +284,8 @@ public final class X3DBrowser :
    {
       live = true
       
+      guard let window = window, window .isKeyWindow else { return }
+      
       currentScene .beginUpdate ()
    }
 
@@ -291,7 +293,40 @@ public final class X3DBrowser :
    {
       live = false
       
+      guard let window = window, window .isKeyWindow else { return }
+
       currentScene .endUpdate ()
+   }
+   
+   @objc private func windowKeyednessChanged (_ note : Notification)
+   {
+      guard let window = window, (note .object as? NSWindow) === window else { return }
+      
+      if window .isKeyWindow && live
+      {
+         currentScene .beginUpdate ()
+      }
+      else
+      {
+         currentScene .endUpdate ()
+      }
+   }
+   
+   public override func viewWillMove (toWindow newWindow : NSWindow?)
+   {
+      let notificationCenter = NotificationCenter .default
+      
+      if let oldWindow = window
+      {
+         notificationCenter .removeObserver (self, name: NSWindow .didBecomeKeyNotification, object: oldWindow)
+         notificationCenter .removeObserver (self, name: NSWindow .didResignKeyNotification, object: oldWindow)
+      }
+      
+      if let newWindow = newWindow
+      {
+         notificationCenter .addObserver (self, selector: #selector(windowKeyednessChanged(_:)), name: NSWindow .didBecomeKeyNotification, object: newWindow)
+         notificationCenter .addObserver (self, selector: #selector(windowKeyednessChanged(_:)), name: NSWindow .didResignKeyNotification, object: newWindow)
+      }
    }
    
    // Browser properties
@@ -453,8 +488,10 @@ public final class X3DBrowser :
       
    deinit
    {
-      debugPrint (#file, #function)
+      //debugPrint (#file, #function)
       
+      NotificationCenter .default .removeObserver (self)
+
       sharedBrowser? .removeBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", method: X3DBrowser .setNeedsDisplay, object: self)
    }
 }

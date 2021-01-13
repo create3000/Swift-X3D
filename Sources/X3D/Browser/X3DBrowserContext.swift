@@ -159,7 +159,7 @@ public class X3DBrowserContext :
       pointingDeviceSensorContextProperties .scrollWheel (with: event)
    }
    
-   // Track mouse enter and leave events.
+   // Track mouse move, enter and leave events.
    
    public final override func updateTrackingAreas ()
    {

@@ -501,11 +501,16 @@ public class X3DExecutionContext :
       let sourceField      = try sourceNode      .getField (name: sourceField)
       let destinationField = try destinationNode .getField (name: destinationField)
       
+      guard sourceField !== destinationField else
+      {
+         throw X3DError .INVALID_FIELD (t("Bad route specification: source field must not be equal to destination field."))
+      }
+      
       guard sourceField .isOutput else
       {
          throw X3DError .INVALID_ACCESS_TYPE (t("Bad route specification: source field must be an input."))
       }
-      
+
       guard destinationField .isInput else
       {
          throw X3DError .INVALID_ACCESS_TYPE (t("Bad route specification: destination field must be an output."))

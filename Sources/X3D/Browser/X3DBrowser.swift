@@ -286,11 +286,8 @@ public final class X3DBrowser :
    {
       live = true
       
-      if onlyUpdateInKeyWindow
-      {
-         guard let window = window, window .isKeyWindow else { return }
-      }
-      
+      guard (window? .isKeyWindow ?? false) || !onlyUpdateInKeyWindow else { return }
+   
       currentScene .beginUpdate ()
    }
 
@@ -298,11 +295,8 @@ public final class X3DBrowser :
    {
       live = false
       
-      if onlyUpdateInKeyWindow
-      {
-         guard let window = window, window .isKeyWindow else { return }
-      }
-      
+      guard (window? .isKeyWindow ?? false) || !onlyUpdateInKeyWindow else { return }
+
       currentScene .endUpdate ()
    }
    

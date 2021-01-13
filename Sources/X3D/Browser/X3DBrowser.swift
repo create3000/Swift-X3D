@@ -162,7 +162,7 @@ public final class X3DBrowser :
       currentScene = scene ?? createScene (profile: try! getProfile (name: "Full"), components: [ ])
       world        = X3DWorld (with: currentScene)
       
-      if live && (window? .isKeyWindow ?? !onlyUpdateInKeyWindow)
+      if live && ((window? .isKeyWindow ?? false) || !onlyUpdateInKeyWindow)
       {
          currentScene .beginUpdate ()
       }

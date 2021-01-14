@@ -10,7 +10,7 @@ import SwiftUI
 import Foundation
 import Gzip
 
-@IBDesignable
+/* @IBDesignable */
 public final class X3DBrowser :
    X3DBrowserContext
 {

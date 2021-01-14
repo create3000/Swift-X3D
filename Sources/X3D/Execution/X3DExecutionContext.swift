@@ -532,7 +532,7 @@ public class X3DExecutionContext :
 
       // Append route.
       
-      let route = X3DRoute (sourceNode, sourceField, destinationNode, destinationField)
+      let route = X3DRoute (self, sourceNode, sourceField, destinationNode, destinationField)
       
       routes .append (route)
       

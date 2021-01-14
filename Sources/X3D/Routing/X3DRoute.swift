@@ -15,6 +15,7 @@ public final class X3DRoute :
    
    // Properties
    
+   public private(set) final weak var executionContext : X3DExecutionContext?
    public private(set) final weak var sourceNode       : X3DNode?
    public private(set) final weak var sourceField      : X3DField?
    public private(set) final weak var destinationNode  : X3DNode?
@@ -22,10 +23,15 @@ public final class X3DRoute :
 
    // Construction
 
-   internal init (_ sourceNode : X3DNode, _ sourceField : X3DField, _ destinationNode : X3DNode, _ destinationField : X3DField)
+   internal init (_ executionContext : X3DExecutionContext,
+                  _ sourceNode : X3DNode,
+                  _ sourceField : X3DField,
+                  _ destinationNode : X3DNode,
+                  _ destinationField : X3DField)
    {
       super .init ()
       
+      self .executionContext = executionContext
       self .sourceNode       = sourceNode
       self .sourceField      = sourceField
       self .destinationNode  = destinationNode

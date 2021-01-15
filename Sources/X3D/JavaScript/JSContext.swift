@@ -241,13 +241,11 @@ extension JavaScript
          let url        = scriptNode! .executionContext! .getWorldURL () .absoluteString
          
          scriptNode! .browser! .console .error ("""
-
 JavaScript error at line \(lineNumber), \(column):
 in Script named '\(scriptNode! .getName ())' in file '\(url)'
 in method \(stacktrace).
 
 \(exception!)
-
 """)
       }
       

@@ -53,7 +53,7 @@ internal final class ExamineViewer :
          mouseMode  = 1
          fromVector = trackballProjectToSphere (from: browser! .convert (event .locationInWindow, from: nil))
          rotation   = Rotation4f .identity
-         downTime   = Date () .timeIntervalSince1970
+         downTime   = SFTime .now ()
          motionTime = 0
       }
       
@@ -77,13 +77,13 @@ internal final class ExamineViewer :
          
          rotation = Rotation4f (from: toVector, to: fromVector)
          
-         if abs (rotation .angle) < SPIN_ANGLE && Date () .timeIntervalSince1970 - downTime < MOTION_TIME
+         if abs (rotation .angle) < SPIN_ANGLE && SFTime .now () - downTime < MOTION_TIME
          {
             return
          }
 
          fromVector = toVector
-         motionTime = Date () .timeIntervalSince1970
+         motionTime = SFTime .now ()
 
          do
          {
@@ -119,7 +119,7 @@ internal final class ExamineViewer :
       
       if mouseMode == 1
       {
-         if abs (rotation .angle) > SPIN_ANGLE && Date () .timeIntervalSince1970 - motionTime < SPIN_RELEASE_TIME
+         if abs (rotation .angle) > SPIN_ANGLE && SFTime .now () - motionTime < SPIN_RELEASE_TIME
          {
             rotation = slerp (Rotation4f .identity, rotation, t: SPIN_FACTOR)
 

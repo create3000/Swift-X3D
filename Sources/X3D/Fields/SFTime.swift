@@ -57,6 +57,14 @@ public final class SFTime :
       wrappedValue = field .wrappedValue
    }
    
+   // Static functions
+   
+   @inlinable
+   public static func now () -> TimeInterval
+   {
+      return Date () .timeIntervalSince1970
+   }
+   
    // Input/Output
    
    internal final override func toStream (_ stream : X3DOutputStream)

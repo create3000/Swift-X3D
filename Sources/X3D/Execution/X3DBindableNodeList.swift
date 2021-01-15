@@ -125,6 +125,6 @@ public final class X3DBindableList <Type : X3DBindableNode> :
       
       // Advance update time.
       
-      updateTime = Date () .timeIntervalSince1970
+      updateTime = SFTime .now ()
    }
 }

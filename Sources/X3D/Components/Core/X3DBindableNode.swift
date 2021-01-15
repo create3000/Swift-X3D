@@ -43,7 +43,7 @@ public class X3DBindableNode :
    {
       guard set_bind != isBound else { return }
       
-      updateTime = Date () .timeIntervalSince1970
+      updateTime = SFTime .now ()
    }
    
    // Operations

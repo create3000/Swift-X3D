@@ -13,7 +13,7 @@ internal final class X3DTimeContextProperties :
 {
    // Properties
    
-   fileprivate final var currentTime      : TimeInterval = Date () .timeIntervalSince1970
+   fileprivate final var currentTime      : TimeInterval = SFTime .now ()
    fileprivate final var currentSpeed     : Double = 0
    fileprivate final var currentFrameRate : Double = 0
    fileprivate final var lastPosition     : Vector3d = Vector3d .zero
@@ -29,7 +29,7 @@ internal final class X3DTimeContextProperties :
    
    fileprivate func advanceTime ()
    {
-      let now      = Date () .timeIntervalSince1970
+      let now      = SFTime .now ()
       let interval = now - currentTime
 
       currentTime      = now

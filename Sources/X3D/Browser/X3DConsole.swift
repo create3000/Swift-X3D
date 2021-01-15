@@ -14,6 +14,7 @@ public enum X3DLogType
    case info
    case warn
    case error
+   case code
 }
 
 public typealias X3DConsoleInterest = (X3DLogType, String) -> Void
@@ -64,7 +65,7 @@ public final class X3DConsole
       .log   : .debug,
       .info  : .info,
       .warn  : .info,
-      .error : .error
+      .error : .error,
    ]
    
    private final func dispatch (type : X3DLogType, arguments : [CustomStringConvertible], lineBreak : Bool)

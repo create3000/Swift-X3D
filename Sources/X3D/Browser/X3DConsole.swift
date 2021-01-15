@@ -14,7 +14,6 @@ public enum X3DLogType
    case info
    case warn
    case error
-   case code
 }
 
 public typealias X3DConsoleInterest = (X3DLogType, String) -> Void
@@ -73,7 +72,7 @@ public final class X3DConsole
       let message = arguments .map { $0 .description } .joined (separator: " ")
       
       #if DEBUG
-      os_log (self .osLogTypes [type]!, "%@", message)
+      os_log (osLogTypes [type]!, "%@", message)
       #endif
       
       DispatchQueue .main .async

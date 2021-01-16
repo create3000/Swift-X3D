@@ -71,6 +71,21 @@ public final class MFDouble :
       }
    }
    
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      let executionContext = stream .executionContext
+      
+      switch wrappedValue .count
+      {
+         case 0:
+            stream += "[ ]"
+         case 1:
+            stream += String (executionContext .toUnit (unit, value: wrappedValue .first!))
+         default:
+            stream += "[\(wrappedValue .map { String (executionContext .toUnit (unit, value: $0)) } .joined (separator: ", "))]"
+      }
+   }
+
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       let executionContext = stream .executionContext

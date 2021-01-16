@@ -103,6 +103,11 @@ public final class MFMatrix4d :
       }
    }
    
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      toStream (stream)
+   }
+
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       stream += """

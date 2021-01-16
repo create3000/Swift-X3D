@@ -115,4 +115,84 @@ public final class MFNode <Element : X3DBaseNode> :
             stream += "[\(wrappedValue .map { $0? .toString () ?? "NULL" } .joined (separator: ", "))]"
       }
    }
+   
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      switch wrappedValue .count
+      {
+         case 0: do
+         {
+            break
+         }
+         case 1: do
+         {
+            if wrappedValue .first! != nil
+            {
+               wrappedValue .first!! .toXMLStream (stream)
+            }
+            else
+            {
+               stream += "<!-- NULL -->"
+            }
+         }
+         default: do
+         {
+            stream += "["
+            
+            for node in wrappedValue
+            {
+               if node != nil
+               {
+                  node! .toVRMLStream (stream)
+               }
+               else
+               {
+                  stream += "<!-- NULL -->"
+               }
+            }
+            
+            stream += "]"
+         }
+      }
+   }
+
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      switch wrappedValue .count
+      {
+         case 0: do
+         {
+            stream += "[ ]"
+         }
+         case 1: do
+         {
+            if wrappedValue .first! != nil
+            {
+               wrappedValue .first!! .toVRMLStream (stream)
+            }
+            else
+            {
+               stream += "NULL"
+            }
+         }
+         default: do
+         {
+            stream += "["
+            
+            for node in wrappedValue
+            {
+               if node != nil
+               {
+                  node! .toVRMLStream (stream)
+               }
+               else
+               {
+                  stream += "NULL"
+               }
+            }
+            
+            stream += "]"
+         }
+      }
+   }
 }

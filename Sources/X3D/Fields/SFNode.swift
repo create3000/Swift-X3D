@@ -80,4 +80,40 @@ public class SFNode <Type : X3DBaseNode> :
    {
       stream += wrappedValue != nil ? wrappedValue .toString () : "NULL"
    }
+   
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      if wrappedValue != nil
+      {
+         wrappedValue .toXMLStream (stream)
+      }
+      else
+      {
+         stream += "NULL"
+      }
+   }
+   
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      if wrappedValue != nil
+      {
+         wrappedValue .toJSONStream (stream)
+      }
+      else
+      {
+         stream += "null"
+      }
+   }
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      if wrappedValue != nil
+      {
+         wrappedValue .toVRMLStream (stream)
+      }
+      else
+      {
+         stream += "NULL"
+      }
+   }
 }

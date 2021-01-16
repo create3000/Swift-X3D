@@ -70,6 +70,16 @@ public class SFMatrix3f :
       stream += "\(c2.x) \(c2.y) \(c2.z)"
    }
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      toStream (stream)
+   }
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      toStream (stream)
+   }
+
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       let c0 = wrappedValue [0]

@@ -65,6 +65,16 @@ public class SFRotation :
       stream += "\(axis .x) \(axis .y) \(axis .z) \(angle)"
    }
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      toDisplayStream (stream)
+   }
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      toDisplayStream (stream)
+   }
+
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       let axis  = wrappedValue .axis

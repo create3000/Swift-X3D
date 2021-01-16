@@ -73,6 +73,11 @@ public final class MFTime :
       }
    }
    
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      toStream (stream)
+   }
+
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       stream += "\(wrappedValue .map { String ($0) } .joined (separator: ",\n"))"

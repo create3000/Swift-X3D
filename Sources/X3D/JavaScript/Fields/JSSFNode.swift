@@ -342,17 +342,38 @@ extension JavaScript
       
       public final func toXMLString () -> String
       {
-         return field .wrappedValue? .toXMLString () ?? ""
+         if let node = field .wrappedValue
+         {
+            return node .toXMLString (node .executionContext!)
+         }
+         else
+         {
+            return "NULL"
+         }
       }
       
       public final func toJSONString () -> String
       {
-         return field .wrappedValue? .toJSONString () ?? ""
+         if let node = field .wrappedValue
+         {
+            return node .toJSONString (node .executionContext!)
+         }
+         else
+         {
+            return "null"
+         }
       }
 
       public final func toVRMLString () -> String
       {
-         return field .wrappedValue? .toVRMLString () ?? ""
+         if let node = field .wrappedValue
+         {
+            return node .toVRMLString (node .executionContext!)
+         }
+         else
+         {
+            return "NULL"
+         }
       }
    }
 }

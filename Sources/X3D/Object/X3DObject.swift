@@ -33,28 +33,34 @@ public class X3DObject :
       return stream .string
    }
 
-   public final func toXMLString () -> String
+   public final func toXMLString (_ executionContext : X3DExecutionContext) -> String
    {
       let stream = X3DOutputStream ()
       
+      stream .executionContexts .append (executionContext)
+
       toXMLStream (stream)
       
       return stream .string
    }
    
-   public final func toJSONString () -> String
+   public final func toJSONString (_ executionContext : X3DExecutionContext) -> String
    {
       let stream = X3DOutputStream ()
       
+      stream .executionContexts .append (executionContext)
+
       toJSONStream (stream)
       
       return stream .string
    }
 
-   public final func toVRMLString () -> String
+   public final func toVRMLString (_ executionContext : X3DExecutionContext) -> String
    {
       let stream = X3DOutputStream ()
       
+      stream .executionContexts .append (executionContext)
+
       toVRMLStream (stream)
       
       return stream .string

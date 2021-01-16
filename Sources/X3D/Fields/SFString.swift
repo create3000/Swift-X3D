@@ -62,6 +62,16 @@ public final class SFString :
       stream += wrappedValue
    }
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      stream += wrappedValue
+   }
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      stream += "\"\(wrappedValue .escaped)\""
+   }
+
    public final override func fromDisplayString (_ string : String, scene : X3DScene) -> Bool
    {
       wrappedValue = string

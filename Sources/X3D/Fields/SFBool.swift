@@ -66,6 +66,11 @@ public final class SFBool :
    {
       stream += wrappedValue ? "true" : "false"
    }
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      stream += wrappedValue ? "TRUE" : "FALSE"
+   }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {

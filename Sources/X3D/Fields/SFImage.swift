@@ -87,6 +87,16 @@ public class SFImage :
       }
    }
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      toStream (stream)
+   }
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      toStream (stream)
+   }
+
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {
       return (try? parser .sfimageValue (for: self)) ?? false

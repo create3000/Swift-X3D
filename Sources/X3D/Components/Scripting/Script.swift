@@ -137,8 +137,9 @@ public final class Script :
       }
    }
    
-   public final func evaluateScript (_ script : String)
+   @discardableResult
+   public final func evaluateScript (_ script : String) -> String
    {
-      context? .evaluateScript (script)
+      context! .evaluateScript (script)
    }
 }

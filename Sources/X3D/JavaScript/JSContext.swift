@@ -249,9 +249,10 @@ in method \(stacktrace).
 """)
       }
       
-      internal final func evaluateScript (_ script : String)
+      @discardableResult
+      internal final func evaluateScript (_ script : String) -> String
       {
-         context .evaluateScript (script)
+         context .evaluateScript (script) .toString ()
       }
 
       internal final func initialize ()

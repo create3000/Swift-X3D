@@ -35,10 +35,9 @@ public final class X3DBrowser :
       
       replaceWorld (scene: nil)
    
-      console .info (t("Welcome to %@ v%@", getName (), getVersion ()))
-      console .info (t("\tCurrent Graphics Renderer"))
-      console .info (t("\t\tName: %@", device! .name))
-      console .info ()
+      console .info (t("Welcome to %@ v%@\n", getName (), getVersion ()),
+                     t("\tCurrent Graphics Renderer\n"),
+                     t("\t\tName: %@", device! .name))
    }
    
    // Configuration

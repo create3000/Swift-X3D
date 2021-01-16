@@ -60,7 +60,7 @@ public final class SFTime :
    // Static functions
    
    @inlinable
-   public static func now () -> TimeInterval
+   public static var now : TimeInterval
    {
       return Date () .timeIntervalSince1970
    }

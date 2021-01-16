@@ -238,6 +238,36 @@ public final class X3DScene :
          self .isLive = isLive
       }
    }
+   
+   // Input/Output
+   
+   public final func toVRMLString () -> String
+   {
+      return toVRMLString (self)
+   }
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      var specificationVersion = getSpecificationVersion ()
+
+      if specificationVersion == "2.0"
+      {
+         specificationVersion = "3.3"
+      }
+
+      stream += "#X3D V"
+      stream += specificationVersion
+      stream += " "
+      stream += "utf8"
+      stream += " "
+      stream += browser! .getName ()
+      stream += " "
+      stream += "V"
+      stream += browser! .getVersion ()
+      stream += "\n"
+      stream += "\n"
+
+   }
 
    // Destruction
    

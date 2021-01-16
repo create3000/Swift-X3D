@@ -241,13 +241,10 @@ public final class X3DScene :
    
    // Input/Output
    
-   public final func toVRMLString () -> String
-   {
-      return toVRMLString (self)
-   }
-   
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
+      // Output header.
+      
       var specificationVersion = getSpecificationVersion ()
 
       if specificationVersion == "2.0"
@@ -266,7 +263,19 @@ public final class X3DScene :
       stream += browser! .getVersion ()
       stream += "\n"
       stream += "\n"
+      
+      // Enter stream.
 
+      stream .push (self)
+      stream .enterScope ()
+      //stream .exportedNodes (exportedNodes)
+
+      super .toVRMLStream (stream)
+
+      // Leave stream.
+      
+      stream .leaveScope ()
+      stream .pop (self)
    }
 
    // Destruction

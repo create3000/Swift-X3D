@@ -238,9 +238,26 @@ public class X3DBaseNode :
       processInterests ()
    }
    
-   // Convert to string
+   // Input/Output
    
    internal override func toStream (_ stream : X3DOutputStream)
+   {
+      stream += getTypeName ()
+      stream += " "
+      stream += "{ }"
+   }
+
+   internal override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      stream += "<\(getTypeName ())/>"
+   }
+
+   internal override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      stream += getTypeName ()
+   }
+
+   internal override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += getTypeName () + " { }"
    }

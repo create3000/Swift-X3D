@@ -344,7 +344,7 @@ extension JavaScript
       {
          if let node = field .wrappedValue
          {
-            return node .toXMLString (node .executionContext!)
+            return node .toXMLString (with: JSContext .current ()! .browser! .executionContext)
          }
          else
          {
@@ -356,7 +356,7 @@ extension JavaScript
       {
          if let node = field .wrappedValue
          {
-            return node .toJSONString (node .executionContext!)
+            return node .toJSONString (with: JSContext .current ()! .browser! .executionContext)
          }
          else
          {
@@ -368,7 +368,7 @@ extension JavaScript
       {
          if let node = field .wrappedValue
          {
-            return node .toVRMLString (node .executionContext!)
+            return node .toVRMLString (with: JSContext .current ()! .browser! .executionContext)
          }
          else
          {

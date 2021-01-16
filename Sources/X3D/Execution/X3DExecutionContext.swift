@@ -564,4 +564,57 @@ public class X3DExecutionContext :
    }
    
    public final func getRoutes () -> [X3DRoute] { routes }
+   
+   // Input/Output
+   
+   public final func toXMLString () -> String
+   {
+      return toXMLString (with: self)
+   }
+   
+   public final func toJSONString () -> String
+   {
+      return toJSONString (with: self)
+   }
+   
+   public final func toVRMLString () -> String
+   {
+      return toVRMLString (with: self)
+   }
+   
+   internal override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      // Enter stream.
+      
+      stream .push (self)
+      stream .enterScope ()
+      
+      // Output root nodes.
+      
+      for i in 0 ..< rootNodes .count
+      {
+         stream += stream .indent
+         
+         if let rootNode = rootNodes [i]
+         {
+            rootNode .toVRMLStream (stream)
+         }
+         else
+         {
+            stream += "NULL"
+         }
+         
+         stream += "\n"
+         
+         if i != rootNodes .count - 1
+         {
+            stream += "\n"
+         }
+      }
+
+      // Leave stream.
+      
+      stream .leaveScope ()
+      stream .pop (self)
+   }
 }

@@ -157,7 +157,7 @@ public class X3DNode :
          
          if let field = parent as? MFNode <X3DNode>
          {
-            c = field .wrappedValue .reduce (0, { r, n in r + (n === self ? 1 : 0) })
+            c = field .wrappedValue .reduce (0, { r, n in n === self ? r + 1 : r })
          }
          
          for parent in parent .parents .allObjects

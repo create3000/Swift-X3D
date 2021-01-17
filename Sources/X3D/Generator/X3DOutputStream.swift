@@ -35,7 +35,7 @@ internal final class X3DOutputStream
    
    // Pad
    
-   internal final func padRight (_ string : String, _ count : Int) -> String
+   internal final func padding (_ string : String, _ count : Int) -> String
    {
       return string .padding (toLength: count, withPad: " ", startingAt: 0)
    }

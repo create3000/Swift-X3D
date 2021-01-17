@@ -363,9 +363,9 @@ public class X3DNode :
       if references .isEmpty
       {
          stream += stream .indent
-         stream += stream .padRight (field .getAccessType () .description, accessTypeLength)
+         stream += stream .padding (field .getAccessType () .description, accessTypeLength)
          stream += " "
-         stream += stream .padRight (field .getTypeName (), fieldTypeLength)
+         stream += stream .padding (field .getTypeName (), fieldTypeLength)
          stream += " "
          stream += field .getName ()
 
@@ -385,9 +385,9 @@ public class X3DNode :
             // Output user defined reference field
 
             stream += stream .indent
-            stream += stream .padRight (field .getAccessType () .description, accessTypeLength)
+            stream += stream .padding (field .getAccessType () .description, accessTypeLength)
             stream += " "
-            stream += stream .padRight (field .getTypeName (), fieldTypeLength)
+            stream += stream .padding (field .getTypeName (), fieldTypeLength)
             stream += " "
             stream += field .getName ()
             stream += " "

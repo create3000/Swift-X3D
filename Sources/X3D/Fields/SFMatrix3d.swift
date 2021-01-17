@@ -73,11 +73,11 @@ public class SFMatrix3d :
       let c1 = wrappedValue [1]
       let c2 = wrappedValue [2]
 
-      stream += "\(c0.x) \(c0.y) \(c0.z)"
+      stream += String (format: "\(stream .doubleFormat) \(stream .doubleFormat) \(stream .doubleFormat)", c0.x, c0.y, c0.z)
       stream += " "
-      stream += "\(c1.x) \(c1.y) \(c1.z)"
+      stream += String (format: "\(stream .doubleFormat) \(stream .doubleFormat) \(stream .doubleFormat)", c1.x, c1.y, c1.z)
       stream += " "
-      stream += "\(c2.x) \(c2.y) \(c2.z)"
+      stream += String (format: "\(stream .doubleFormat) \(stream .doubleFormat) \(stream .doubleFormat)", c2.x, c2.y, c2.z)
    }
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)

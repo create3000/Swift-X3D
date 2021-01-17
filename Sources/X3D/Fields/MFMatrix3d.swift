@@ -78,12 +78,16 @@ public final class MFMatrix3d :
             let c1 = wrappedValue .first! [1]
             let c2 = wrappedValue .first! [2]
 
-            stream += "\(c0.x) \(c0.y) \(c0.z)"
+            let format = "\(stream .doubleFormat) \(stream .doubleFormat) \(stream .doubleFormat)"
+            
+            stream += String (format: format, c0.x, c0.y, c0.z)
             stream += " "
-            stream += "\(c1.x) \(c1.y) \(c1.z)"
+            stream += String (format: format, c1.x, c1.y, c1.z)
             stream += " "
-            stream += "\(c2.x) \(c2.y) \(c2.z)"
+            stream += String (format: format, c2.x, c2.y, c2.z)
          default:
+            let format = "\(stream .doubleFormat) \(stream .doubleFormat) \(stream .doubleFormat)"
+            
             stream += "["
             stream += stream .ListBreak
             
@@ -99,11 +103,11 @@ public final class MFMatrix3d :
    
    var string = ""
    
-   string += "\(c0.x) \(c0.y) \(c0.z)"
+   string += String (format: format, c0.x, c0.y, c0.z)
    string += " "
-   string += "\(c1.x) \(c1.y) \(c1.z)"
+   string += String (format: format, c1.x, c1.y, c1.z)
    string += " "
-   string += "\(c2.x) \(c2.y) \(c2.z)"
+   string += String (format: format, c2.x, c2.y, c2.z)
 
    return string
 }

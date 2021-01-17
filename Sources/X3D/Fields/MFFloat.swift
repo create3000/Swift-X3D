@@ -74,7 +74,7 @@ public final class MFFloat :
             stream += stream .TidySpace
             stream += "]"
          case 1:
-            stream += String (stream .toUnit (unit, value: wrappedValue .first!))
+            stream += String (format: stream .floatFormat, stream .toUnit (unit, value: wrappedValue .first!))
          default:
             stream += "["
             stream += stream .ListBreak
@@ -82,7 +82,7 @@ public final class MFFloat :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { String (stream .toUnit (unit, value: $0)) } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { String (format: stream .floatFormat, stream .toUnit (unit, value: $0)) } .joined (separator: stream .Separator))"
             stream += stream .ListBreak
             
             stream .decIndent ()
@@ -94,9 +94,7 @@ public final class MFFloat :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      let executionContext = stream .executionContext
-      
-      stream += "\(wrappedValue .map { String (executionContext .toUnit (unit, value: $0)) } .joined (separator: ",\n"))"
+      stream += "\(wrappedValue .map { String (stream .toUnit (unit, value: $0)) } .joined (separator: ",\n"))"
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

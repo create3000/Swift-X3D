@@ -74,15 +74,19 @@ public final class MFVec4f :
             stream += stream .TidySpace
             stream += "]"
          case 1:
-            stream += "\(stream .toUnit (unit, value: wrappedValue .first! .x)) \(stream .toUnit (unit, value: wrappedValue .first! .y)) \(stream .toUnit (unit, value: wrappedValue .first! .z)) \(stream .toUnit (unit, value: wrappedValue .first! .w))"
+            let format = "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)"
+               
+            stream += String (format: format, stream .toUnit (unit, value: wrappedValue .first! .x), stream .toUnit (unit, value: wrappedValue .first! .y), stream .toUnit (unit, value: wrappedValue .first! .z), stream .toUnit (unit, value: wrappedValue .first! .w))
          default:
+            let format = "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)"
+               
             stream += "["
             stream += stream .ListBreak
             
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { "\(stream .toUnit (unit, value: $0 .x)) \(stream .toUnit (unit, value: $0 .y)) \(stream .toUnit (unit, value: $0 .z)) \(stream .toUnit (unit, value: $0 .w))" } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { String (format: format, stream .toUnit (unit, value: $0.x), stream .toUnit (unit, value: $0.y), stream .toUnit (unit, value: $0.z), stream .toUnit (unit, value: $0.w)) } .joined (separator: stream .Separator))"
             stream += stream .ListBreak
             
             stream .decIndent ()
@@ -94,9 +98,7 @@ public final class MFVec4f :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      let executionContext = stream .executionContext
-      
-      stream += "\(wrappedValue .map { "\(executionContext .toUnit (unit, value: $0 .x)) \(executionContext .toUnit (unit, value: $0 .y)) \(executionContext .toUnit (unit, value: $0 .z)) \(executionContext .toUnit (unit, value: $0 .w))" } .joined (separator: ",\n"))"
+      stream += "\(wrappedValue .map { "\(stream .toUnit (unit, value: $0 .x)) \(stream .toUnit (unit, value: $0 .y)) \(stream .toUnit (unit, value: $0 .z)) \(stream .toUnit (unit, value: $0 .w))" } .joined (separator: ",\n"))"
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

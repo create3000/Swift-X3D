@@ -175,6 +175,11 @@ internal final class X3DOutputStream
       return node .getName ()
    }
    
+   // Number formats
+   
+   internal private(set) var doubleFormat = "%.16g"
+   internal private(set) var floatFormat  = "%.5g"
+
    // Unit handling
    
    private final let units : Bool

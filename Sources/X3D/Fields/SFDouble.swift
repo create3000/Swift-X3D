@@ -59,7 +59,7 @@ public final class SFDouble :
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
-      stream += String (wrappedValue)
+      toVRMLStream (stream)
    }
    
    internal final override func toXMLStream (_ stream : X3DOutputStream)
@@ -69,7 +69,7 @@ public final class SFDouble :
    
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
-      stream += String (stream .executionContext .toUnit (unit, value: wrappedValue))
+      stream += String (format: stream .doubleFormat, stream .toUnit (unit, value: wrappedValue))
    }
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)

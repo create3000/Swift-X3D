@@ -74,15 +74,17 @@ public final class MFColor :
             stream += stream .TidySpace
             stream += "]"
          case 1:
-            stream += "\(wrappedValue .first! .r) \(wrappedValue .first! .g) \(wrappedValue .first! .b)"
+            stream += String (format: "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)", wrappedValue .first! .r, wrappedValue .first! .g, wrappedValue .first! .b)
          default:
+            let format = "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)"
+            
             stream += "["
             stream += stream .ListBreak
             
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { "\($0 .r) \($0 .g) \($0 .b)" } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { String (format: format, $0.r, $0.g, $0.b) } .joined (separator: stream .Separator))"
             stream += stream .ListBreak
             
             stream .decIndent ()

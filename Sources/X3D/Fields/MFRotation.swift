@@ -75,15 +75,20 @@ public final class MFRotation :
             stream += "]"
          case 1:
             let axis = wrappedValue .first! .axis
-            stream += "\(axis .x) \(axis .y) \(axis .z) \(stream .toUnit (.angle, value: wrappedValue .first! .angle))"
+            
+            let format = "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)"
+            
+            stream += String (format: format, axis .x, axis .y, axis .z, stream .toUnit (.angle, value: wrappedValue .first! .angle))
          default:
+            let format = "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)"
+            
             stream += "["
             stream += stream .ListBreak
             
             stream .incIndent ()
             
             stream += stream .Indent
-            stream += "\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(stream .toUnit (.angle, value: $0 .angle))" } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { let axis = $0 .axis; return String (format: format, axis .x, axis .y, axis .z, stream .toUnit (.angle, value: $0 .angle)) } .joined (separator: stream .Separator))"
             stream += stream .ListBreak
             
             stream .decIndent ()
@@ -95,9 +100,7 @@ public final class MFRotation :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      let executionContext = stream .executionContext
-      
-      stream += "\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: $0 .angle))" } .joined (separator: ",\n"))"
+      stream += "\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(stream .toUnit (.angle, value: $0 .angle))" } .joined (separator: ",\n"))"
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

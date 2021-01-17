@@ -59,7 +59,7 @@ public class SFVec3f :
    
    internal final override func toStream (_ stream : X3DOutputStream)
    {
-      stream += "\(wrappedValue .x) \(wrappedValue .y) \(wrappedValue .z)"
+      toVRMLStream (stream)
    }
    
    internal final override func toXMLStream (_ stream : X3DOutputStream)
@@ -69,13 +69,11 @@ public class SFVec3f :
    
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
-      let executionContext = stream .executionContext
-      
-      let x = executionContext .toUnit (unit, value: wrappedValue .x)
-      let y = executionContext .toUnit (unit, value: wrappedValue .y)
-      let z = executionContext .toUnit (unit, value: wrappedValue .z)
+      let x = stream .toUnit (unit, value: wrappedValue .x)
+      let y = stream .toUnit (unit, value: wrappedValue .y)
+      let z = stream .toUnit (unit, value: wrappedValue .z)
 
-      stream += "\(x) \(y) \(z)"
+      stream += String (format: "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)", x, y, z)
    }
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)

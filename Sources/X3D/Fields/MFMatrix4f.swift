@@ -79,14 +79,18 @@ public final class MFMatrix4f :
             let c2 = wrappedValue .first! [2]
             let c3 = wrappedValue .first! [3]
 
-            stream += "\(c0.x) \(c0.y) \(c0.z) \(c0.w)"
+            let format = "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)"
+            
+            stream += String (format: format, c0.x, c0.y, c0.z, c0.w)
             stream += " "
-            stream += "\(c1.x) \(c1.y) \(c1.z) \(c1.w)"
+            stream += String (format: format, c1.x, c1.y, c1.z, c1.w)
             stream += " "
-            stream += "\(c2.x) \(c2.y) \(c2.z) \(c2.w)"
+            stream += String (format: format, c2.x, c2.y, c2.z, c2.w)
             stream += " "
-            stream += "\(c3.x) \(c3.y) \(c3.z) \(c3.w)"
+            stream += String (format: format, c3.x, c3.y, c3.z, c3.w)
          default:
+            let format = "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)"
+            
             stream += "["
             stream += stream .ListBreak
             
@@ -103,14 +107,14 @@ public final class MFMatrix4f :
    
    var string = ""
    
-   string += "\(c0.x) \(c0.y) \(c0.z) \(c0.w)"
+   string += String (format: format, c0.x, c0.y, c0.z, c0.w)
    string += " "
-   string += "\(c1.x) \(c1.y) \(c1.z) \(c1.w)"
+   string += String (format: format, c1.x, c1.y, c1.z, c1.w)
    string += " "
-   string += "\(c2.x) \(c2.y) \(c2.z) \(c2.w)"
+   string += String (format: format, c2.x, c2.y, c2.z, c2.w)
    string += " "
-   string += "\(c3.x) \(c3.y) \(c3.z) \(c3.w)"
-   
+   string += String (format: format, c3.x, c3.y, c3.z, c3.w)
+
    return string
 }
 .joined (separator: stream .Separator))

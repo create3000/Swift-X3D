@@ -76,7 +76,7 @@ public final class MFTime :
             stream += stream .TidySpace
             stream += "]"
          case 1:
-            stream += String (wrappedValue .first!)
+            stream += String (format: stream .doubleFormat, stream .toUnit (unit, value: wrappedValue .first!))
          default:
             stream += "["
             stream += stream .ListBreak
@@ -84,7 +84,7 @@ public final class MFTime :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { String ($0) } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { String (format: stream .doubleFormat, stream .toUnit (unit, value: $0)) } .joined (separator: stream .Separator))"
             stream += stream .ListBreak
             
             stream .decIndent ()

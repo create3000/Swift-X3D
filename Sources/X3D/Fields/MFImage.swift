@@ -91,6 +91,8 @@ public final class MFImage :
       wrappedValue = field .wrappedValue .map { $0 .copy () }
    }
    
+   public final override var count : Int { wrappedValue .count }
+
    // Input/Output
 
    internal final override func toStream (_ stream : X3DOutputStream)

@@ -8,4 +8,6 @@
 
 public class X3DArrayField :
    X3DField
-{ }
+{
+   public var count : Int { 0 }
+}

@@ -49,6 +49,8 @@ public final class MFVec3d :
       wrappedValue = field .wrappedValue
    }
    
+   public final override var count : Int { wrappedValue .count }
+
    // Input/Output
    
    public final override func equals (to field : X3DField) -> Bool

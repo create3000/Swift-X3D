@@ -101,6 +101,8 @@ public final class MFNode <Element : X3DBaseNode> :
       }
    }
    
+   public final override var count : Int { wrappedValue .count }
+
    // Input/Output
    
    internal final override func toStream (_ stream : X3DOutputStream)
@@ -139,7 +141,7 @@ public final class MFNode <Element : X3DBaseNode> :
                {
                   node .toStream (stream)
                   
-                  stream += stream .TidyBreak
+                  stream += stream .existsNode (node) ? stream .Break : stream .TidyBreak
               }
                else
                {
@@ -232,7 +234,7 @@ public final class MFNode <Element : X3DBaseNode> :
                {
                   node .toVRMLStream (stream)
                   
-                  stream += stream .TidyBreak
+                  stream += stream .existsNode (node) ? stream .Break : stream .TidyBreak
               }
                else
                {

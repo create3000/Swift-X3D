@@ -599,7 +599,7 @@ public class X3DExecutionContext :
          {
             rootNode .toVRMLStream (stream)
             
-            stream += stream .TidyBreak
+            stream += stream .existsNode (rootNode) ? stream .Break : stream .TidyBreak
          }
          else
          {

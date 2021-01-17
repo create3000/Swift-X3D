@@ -56,6 +56,8 @@ public final class MFVec2f :
       wrappedValue = field .wrappedValue
    }
    
+   public final override var count : Int { wrappedValue .count }
+
    // Input/Output
 
    internal final override func toStream (_ stream : X3DOutputStream)

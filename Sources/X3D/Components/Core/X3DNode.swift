@@ -388,7 +388,15 @@ public class X3DNode :
 
          if field .isInitializable
          {
-            stream += stream .Space
+            if let array = field as? X3DArrayField,
+               array .count != 1
+            {
+               stream += stream .TidySpace
+            }
+            else
+            {
+               stream += stream .Space
+            }
 
             field .toVRMLStream (stream)
          }
@@ -432,7 +440,16 @@ public class X3DNode :
          {
             stream += stream .Indent
             stream += field .getName ()
-            stream += stream .Space
+            
+            if let array = field as? X3DArrayField,
+               array .count != 1
+            {
+               stream += stream .TidySpace
+            }
+            else
+            {
+               stream += stream .Space
+            }
 
             field .toVRMLStream (stream)
          }

@@ -54,4 +54,6 @@ public final class MFEnum <Type : Equatable> :
 
       wrappedValue = field .wrappedValue
    }
+   
+   public final override var count : Int { wrappedValue .count }
 }

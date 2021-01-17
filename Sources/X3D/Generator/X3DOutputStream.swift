@@ -156,7 +156,7 @@ internal final class X3DOutputStream
       return false
    }
    
-   private final var nodes = Set <X3DNode> ()
+   private final var nodes = Set <X3DBaseNode> ()
    
    @inlinable
    internal final func addNode (_ node : X3DNode)
@@ -165,7 +165,7 @@ internal final class X3DOutputStream
    }
    
    @inlinable
-   internal final func existsNode (_ node : X3DNode) -> Bool
+   internal final func existsNode (_ node : X3DBaseNode) -> Bool
    {
       return nodes .contains (node)
    }

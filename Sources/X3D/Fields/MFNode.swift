@@ -166,9 +166,9 @@ public final class MFNode <Element : X3DBaseNode> :
          }
          case 1: do
          {
-            if wrappedValue .first! != nil
+            if let node = wrappedValue .first!
             {
-               wrappedValue .first!! .toVRMLStream (stream)
+               node .toVRMLStream (stream)
             }
             else
             {
@@ -178,19 +178,29 @@ public final class MFNode <Element : X3DBaseNode> :
          default: do
          {
             stream += "["
+            stream += "\n"
+            
+            stream .incIndent ()
             
             for node in wrappedValue
             {
-               if node != nil
+               stream += stream .indent
+               
+               if let node = node
                {
-                  node! .toVRMLStream (stream)
+                  node .toVRMLStream (stream)
                }
                else
                {
                   stream += "NULL"
                }
+               
+               stream += "\n"
             }
             
+            stream .decIndent ()
+            
+            stream += stream .indent
             stream += "]"
          }
       }

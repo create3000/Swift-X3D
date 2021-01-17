@@ -12,28 +12,45 @@ internal final class X3DOutputStream
    
    internal private(set) final var string : String = ""
    
-   @inlinable
    internal static func += (stream : X3DOutputStream, string : String)
    {
       stream .string += string
    }
    
+   // Indent handling
+   
+   private final var indentCharacters = "  "
+   
    internal private(set) final var indent : String = ""
    
+   internal final func incIndent ()
+   {
+      indent += indentCharacters
+   }
+   
+   internal final func decIndent ()
+   {
+      indent .removeLast (indentCharacters .count)
+   }
+   
+   // Pad
+   
+   internal final func padRight (_ string : String, _ count : Int) -> String
+   {
+      return string .padding (toLength: count, withPad: " ", startingAt: 0)
+   }
+
    // Execution context handling
    
-   @inlinable
    internal var executionContext : X3DExecutionContext { executionContexts .last! }
 
    private var executionContexts = [X3DExecutionContext] ()
    
-   @inlinable
    internal final func push (_ executionContext : X3DExecutionContext)
    {
       executionContexts .append (executionContext)
    }
    
-   @inlinable
    internal final func pop (_ executionContext : X3DExecutionContext)
    {
       executionContexts .removeLast ()

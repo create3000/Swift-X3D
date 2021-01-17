@@ -167,7 +167,8 @@ public class X3DNode :
             {
                count += c
             }
-            else if parent is X3DExecutionContext
+            else if let executionContext = parent as? X3DExecutionContext,
+                    !executionContext .isPrivate
             {
                count += c
             }
@@ -189,6 +190,31 @@ public class X3DNode :
       }
       
       return other .equals (to: field)
+   }
+   
+   private final func getChangedFields () -> [X3DField]
+   {
+      var changedFields = [X3DField] ()
+
+      for field in getPreDefinedFields ()
+      {
+         if field .references .allObjects .isEmpty
+         {
+            if !field .isInitializable
+            {
+               continue
+            }
+
+            if isDefaultValue (field)
+            {
+               continue
+            }
+         }
+
+         changedFields .append (field)
+      }
+
+      return changedFields
    }
 
    // Input/Output
@@ -219,6 +245,8 @@ public class X3DNode :
       
       if !name .isEmpty
       {
+         // Clone
+         
          if stream .existsNode (self)
          {
             stream += "USE"
@@ -228,6 +256,8 @@ public class X3DNode :
             return
          }
          
+         // Name
+         
          stream .addNode (self)
 
          stream += "DEF"
@@ -235,13 +265,212 @@ public class X3DNode :
          stream += name
          stream += " "
       }
+      
+      // Type name
 
       stream += getTypeName ()
       stream += " "
       stream += "{"
       
-      //
+      // User-defined fields
+      
+      let userDefinedFields = getUserDefinedFields ()
+      let fields            = getChangedFields ()
+      
+      var fieldTypeLength   = 0
+      var accessTypeLength  = 0
+      
+      if canUserDefinedFields
+      {
+         for field in userDefinedFields
+         {
+            fieldTypeLength  = max (fieldTypeLength,  field .getTypeName () .count)
+            accessTypeLength = max (accessTypeLength, field .getAccessType () .description .count)
+         }
+
+         if !userDefinedFields .isEmpty
+         {
+            stream += "\n"
+            
+            stream .incIndent ()
+
+            for field in userDefinedFields
+            {
+               toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength)
+
+               stream += "\n"
+            }
+
+            stream .decIndent ()
+            
+            if !fields .isEmpty
+            {
+               stream += "\n"
+            }
+         }
+      }
+
+      // Fields
+      
+      if fields .isEmpty
+      {
+         if userDefinedFields .isEmpty
+         {
+            stream += " "
+         }
+         else
+         {
+            stream += stream .indent
+         }
+      }
+      else
+      {
+         if userDefinedFields .isEmpty
+         {
+            stream += "\n"
+         }
+
+         stream .incIndent ()
+
+         for field in fields
+         {
+            toVRMLStreamField (stream, field, fieldTypeLength, accessTypeLength)
+
+            stream += "\n"
+         }
+
+         stream .decIndent ()
+         
+         stream += stream .indent
+      }
+
+      // End
       
       stream += "}"
+   }
+   
+   private final func toVRMLStreamUserDefinedField (_ stream : X3DOutputStream, _ field : X3DField, _ fieldTypeLength : Int, _ accessTypeLength : Int)
+   {
+      let references = field .references .allObjects
+      
+      if references .isEmpty
+      {
+         stream += stream .indent
+         stream += stream .padRight (field .getAccessType () .description, accessTypeLength)
+         stream += " "
+         stream += stream .padRight (field .getTypeName (), fieldTypeLength)
+         stream += " "
+         stream += field .getName ()
+
+         if field .isInitializable
+         {
+            stream += " "
+
+            field .toVRMLStream (stream)
+         }
+      }
+      else
+      {
+         var initializableReference = false
+         var i                      = 0
+
+         for reference in references
+         {
+            initializableReference = initializableReference || reference .isInitializable
+
+            // Output user defined reference field
+
+            stream += stream .indent
+            stream += stream .padRight (field .getAccessType () .description, accessTypeLength)
+            stream += " "
+            stream += stream .padRight (field .getTypeName (), fieldTypeLength)
+            stream += " "
+            stream += field .getName ()
+            stream += " "
+            stream += "IS"
+            stream += " "
+            stream += reference .getName ()
+
+            i += 1
+
+            if i != references .count
+            {
+               stream += "\n"
+            }
+         }
+
+         if field .getAccessType () == .inputOutput && !initializableReference && !isDefaultValue (field)
+         {
+            stream += "\n"
+            stream += stream .indent
+            stream += stream .padRight (field .getAccessType () .description, accessTypeLength)
+            stream += " "
+            stream += stream .padRight (field .getTypeName (), fieldTypeLength)
+            stream += " "
+            stream += field .getName ()
+
+            if field .isInitializable
+            {
+               stream += " "
+
+               field .toVRMLStream (stream)
+            }
+         }
+      }
+   }
+   
+   private final func toVRMLStreamField (_ stream : X3DOutputStream, _ field : X3DField, _ fieldTypeLength : Int, _ accessTypeLength : Int)
+   {
+      let references = field .references .allObjects
+      
+      if references .isEmpty
+      {
+         if field .isInitializable
+         {
+            stream += stream .indent
+            stream += field .getName ()
+            stream += " "
+
+            field .toVRMLStream (stream)
+         }
+      }
+      else
+      {
+         var initializableReference = false
+         var i                      = 0
+
+         for reference in references
+         {
+            initializableReference = initializableReference || reference .isInitializable
+
+            // Output build in reference field
+
+            stream += stream .indent
+            stream += field .getName ()
+            stream += " "
+            stream += "IS"
+            stream += " "
+            stream += reference .getName ()
+
+            i += 1
+
+            if i != references .count
+            {
+               stream += "\n"
+            }
+         }
+
+         if field .getAccessType () == .inputOutput && !initializableReference && !isDefaultValue (field)
+         {
+            // Output build in field
+
+            stream += "\n"
+            stream += stream .indent
+            stream += field .getName ()
+            stream += " "
+
+            field .toVRMLStream (stream)
+         }
+      }
    }
 }

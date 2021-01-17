@@ -8,7 +8,7 @@
 
 public enum OutputStyle
 {
-   case Smallest
+   case Clean
    case Small
    case Compact
    case Tidy
@@ -16,15 +16,13 @@ public enum OutputStyle
 
 internal final class X3DOutputStream
 {
-   // Member types
-   
    // Construction
    
    internal init (style : OutputStyle, units : Bool)
    {
       switch style
       {
-         case .Smallest:
+         case .Clean:
             Space                = " "
             TidySpace            = ""
             Break                = " "

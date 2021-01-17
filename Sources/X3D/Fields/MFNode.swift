@@ -107,12 +107,52 @@ public final class MFNode <Element : X3DBaseNode> :
    {
       switch wrappedValue .count
       {
-         case 0:
-            stream += "[ ]"
-         case 1:
-            stream += wrappedValue .first!? .toString () ?? "NULL"
-         default:
-            stream += "[\(wrappedValue .map { $0? .toString () ?? "NULL" } .joined (separator: ", "))]"
+         case 0: do
+         {
+            stream += "["
+            stream += stream .TidySpace
+            stream += "]"
+         }
+         case 1: do
+         {
+            if let node = wrappedValue .first!
+            {
+               node .toStream (stream)
+            }
+            else
+            {
+               stream += "NULL"
+            }
+         }
+         default: do
+         {
+            stream += "["
+            stream += stream .TidyBreak
+            
+            stream .incIndent ()
+            
+            for node in wrappedValue
+            {
+               stream += stream .Indent
+               
+               if let node = node
+               {
+                  node .toStream (stream)
+                  
+                  stream += stream .TidyBreak
+              }
+               else
+               {
+                  stream += "NULL"
+                  stream += stream .Break
+               }
+            }
+            
+            stream .decIndent ()
+            
+            stream += stream .Indent
+            stream += "]"
+         }
       }
    }
    

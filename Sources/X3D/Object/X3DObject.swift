@@ -24,7 +24,7 @@ public class X3DObject :
  
    // Convert to string
    
-   public final func toString (style : OutputStyle = .Compact) -> String
+   public final func toString (style : OutputStyle = .Tidy) -> String
    {
       let stream = X3DOutputStream (style: style, units: false)
       

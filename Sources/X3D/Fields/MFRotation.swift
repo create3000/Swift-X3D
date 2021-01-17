@@ -74,14 +74,25 @@ public final class MFRotation :
    
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
-      toStream (stream)
+      let executionContext = stream .executionContext
+      
+      switch wrappedValue .count
+      {
+         case 0:
+            stream += "[ ]"
+         case 1:
+            let axis = wrappedValue .first! .axis
+            stream += "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: wrappedValue .first! .angle))"
+         default:
+            stream += "[\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: $0 .angle))" } .joined (separator: ", "))]"
+      }
    }
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
       let executionContext = stream .executionContext
       
-      stream += "\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: Double ($0 .angle)))" } .joined (separator: ",\n"))"
+      stream += "\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: $0 .angle))" } .joined (separator: ",\n"))"
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

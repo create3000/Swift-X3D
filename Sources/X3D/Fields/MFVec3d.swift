@@ -73,7 +73,17 @@ public final class MFVec3d :
    
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
-      toStream (stream)
+      let executionContext = stream .executionContext
+      
+      switch wrappedValue .count
+      {
+         case 0:
+            stream += "[ ]"
+         case 1:
+            stream += "\(executionContext .toUnit (unit, value: wrappedValue .first! .x)) \(executionContext .toUnit (unit, value: wrappedValue .first! .y)) \(executionContext .toUnit (unit, value: wrappedValue .first! .z))"
+         default:
+            stream += "[\(wrappedValue .map { "\(executionContext .toUnit (unit, value: $0 .x)) \(executionContext .toUnit (unit, value: $0 .y)) \(executionContext .toUnit (unit, value: $0 .z))" } .joined (separator: ", "))]"
+      }
    }
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)

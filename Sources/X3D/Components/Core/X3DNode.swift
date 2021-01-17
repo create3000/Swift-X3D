@@ -371,13 +371,10 @@ public class X3DNode :
       }
       else
       {
-         var initializableReference = false
-         var i                      = 0
+         var i = 0
 
          for reference in references
          {
-            initializableReference = initializableReference || reference .isInitializable
-
             // Output user defined reference field
 
             stream += stream .indent
@@ -396,24 +393,6 @@ public class X3DNode :
             if i != references .count
             {
                stream += "\n"
-            }
-         }
-
-         if field .getAccessType () == .inputOutput && !initializableReference && !isDefaultValue (field)
-         {
-            stream += "\n"
-            stream += stream .indent
-            stream += stream .padRight (field .getAccessType () .description, accessTypeLength)
-            stream += " "
-            stream += stream .padRight (field .getTypeName (), fieldTypeLength)
-            stream += " "
-            stream += field .getName ()
-
-            if field .isInitializable
-            {
-               stream += " "
-
-               field .toVRMLStream (stream)
             }
          }
       }
@@ -436,13 +415,10 @@ public class X3DNode :
       }
       else
       {
-         var initializableReference = false
-         var i                      = 0
+         var i = 0
 
          for reference in references
          {
-            initializableReference = initializableReference || reference .isInitializable
-
             // Output build in reference field
 
             stream += stream .indent
@@ -458,18 +434,6 @@ public class X3DNode :
             {
                stream += "\n"
             }
-         }
-
-         if field .getAccessType () == .inputOutput && !initializableReference && !isDefaultValue (field)
-         {
-            // Output build in field
-
-            stream += "\n"
-            stream += stream .indent
-            stream += field .getName ()
-            stream += " "
-
-            field .toVRMLStream (stream)
          }
       }
    }

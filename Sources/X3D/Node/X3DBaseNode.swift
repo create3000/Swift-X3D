@@ -70,10 +70,6 @@ public class X3DBaseNode :
       
       self .children .append (contentsOf: children)
    }
-   
-   // Convenience function
-   
-   public final func getDisplayName () -> String { remove_trailing_number (getName ()) }
 
    // Field handling
    
@@ -245,21 +241,6 @@ public class X3DBaseNode :
       stream += getTypeName ()
       stream += " "
       stream += "{ }"
-   }
-
-   internal override func toXMLStream (_ stream : X3DOutputStream)
-   {
-      stream += "<\(getTypeName ())/>"
-   }
-
-   internal override func toJSONStream (_ stream : X3DOutputStream)
-   {
-      stream += getTypeName ()
-   }
-
-   internal override func toVRMLStream (_ stream : X3DOutputStream)
-   {
-      stream += getTypeName () + " { }"
    }
 
    // Destruction

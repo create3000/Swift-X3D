@@ -145,7 +145,39 @@ public class X3DNode :
    /// Returns the innermost node of an X3DPrototypeInstance or self.
    internal var innerNode : X3DNode? { self }
    
-   // Field handling
+   // Misc
+   
+   public final var cloneCount : Int
+   {
+      var count = 0
+      
+      for parent in parents .allObjects
+      {
+         var c = 1
+         
+         if let field = parent as? MFNode <X3DNode>
+         {
+            c = field .wrappedValue .reduce (0, { r, n in r + (n === self ? 1 : 0) })
+         }
+         
+         for parent in parent .parents .allObjects
+         {
+            if let node = parent as? X3DNode,
+               !node .isPrivate
+            {
+               count += c
+            }
+            else if parent is X3DExecutionContext
+            {
+               count += c
+            }
+         }
+      }
+      
+      return count
+   }
+      
+   public final func getDisplayName () -> String { remove_trailing_number (getName ()) }
    
    public func isDefaultValue (_ field : X3DField) -> Bool
    {
@@ -157,5 +189,59 @@ public class X3DNode :
       }
       
       return other .equals (to: field)
+   }
+
+   // Input/Output
+   
+   internal override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      stream += "<\(getTypeName ())/>"
+   }
+
+   internal override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      stream += getTypeName ()
+   }
+
+   internal override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      guard !stream .isSharedNode (self) else
+      {
+         stream += "NULL"
+         return
+      }
+      
+      stream .enterScope ()
+      
+      defer { stream .leaveScope () }
+      
+      let name = stream .getName (self)
+      
+      if !name .isEmpty
+      {
+         if stream .existsNode (self)
+         {
+            stream += "USE"
+            stream += " "
+            stream += name
+
+            return
+         }
+         
+         stream .addNode (self)
+
+         stream += "DEF"
+         stream += " "
+         stream += name
+         stream += " "
+      }
+
+      stream += getTypeName ()
+      stream += " "
+      stream += "{"
+      
+      //
+      
+      stream += "}"
    }
 }

@@ -84,6 +84,8 @@ public class X3DLayerNode :
       
       $viewport .addInterest ("set_viewport", X3DLayerNode .set_viewport, self)
       
+      groupNode! .isPrivate = true
+      
       defaultBackgroundNode! .isHidden = !isLayer0
       defaultFogNode!        .isHidden = true
       

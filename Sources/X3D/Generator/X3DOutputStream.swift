@@ -50,4 +50,26 @@ internal final class X3DOutputStream
    {
       
    }
+   
+   internal final func isSharedNode (_ node : X3DNode) -> Bool
+   {
+      return false
+   }
+   
+   private final var nodes = Set <X3DNode> ()
+   
+   internal final func addNode (_ node : X3DNode)
+   {
+      nodes .insert (node)
+   }
+   
+   internal final func existsNode (_ node : X3DNode) -> Bool
+   {
+      return nodes .contains (node)
+   }
+   
+   internal final func getName (_ node : X3DNode) -> String
+   {
+      return node .getName ()
+   }
 }

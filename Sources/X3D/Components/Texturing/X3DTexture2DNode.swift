@@ -19,7 +19,7 @@ public class X3DTexture2DNode :
    
    // Private fields
    
-   @SFNode private final var texturePropertiesNode : TextureProperties?
+   private final var texturePropertiesNode : TextureProperties?
 
    // Properties
    
@@ -43,8 +43,6 @@ public class X3DTexture2DNode :
       super .init (browser, executionContext)
 
       types .append (.X3DTexture2DNode)
-      
-      addChildObjects ($texturePropertiesNode)
    }
    
    internal override func initialize ()

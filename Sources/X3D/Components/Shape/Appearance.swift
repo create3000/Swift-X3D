@@ -31,14 +31,14 @@ public final class Appearance :
    
    // Properties
    
-   @SFNode private final var pointPropertiesNode  : PointProperties?
-   @SFNode private final var linePropertiesNode   : LineProperties?
-   @SFNode private final var fillPropertiesNode   : FillProperties?
-   @SFNode private final var materialNode         : X3DMaterialNode?
-   @SFNode private final var textureNode          : X3DTextureNode?
-   @SFNode private final var textureTransformNode : X3DTextureTransformNode?
-   @MFNode private final var shaderNodes          : [X3DShaderNode?]
-   @SFNode private final var shaderNode           : X3DShaderNode?
+   private final var pointPropertiesNode  : PointProperties?
+   private final var linePropertiesNode   : LineProperties?
+   private final var fillPropertiesNode   : FillProperties?
+   private final var materialNode         : X3DMaterialNode?
+   private final var textureNode          : X3DTextureNode?
+   private final var textureTransformNode : X3DTextureTransformNode?
+   private final var shaderNodes          : [X3DShaderNode] = [X3DShaderNode] ()
+   private final var shaderNode           : X3DShaderNode?
 
    // Construction
    
@@ -56,15 +56,6 @@ public final class Appearance :
       addField (.inputOutput, "texture",          $texture)
       addField (.inputOutput, "textureTransform", $textureTransform)
       addField (.inputOutput, "shaders",          $shaders)
-      
-      addChildObjects ($pointPropertiesNode,
-                       $linePropertiesNode,
-                       $fillPropertiesNode,
-                       $materialNode,
-                       $textureNode,
-                       $textureTransformNode,
-                       $shaderNodes,
-                       $shaderNode)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> Appearance
@@ -147,8 +138,8 @@ public final class Appearance :
    {
       for shaderNode in shaderNodes
       {
-         shaderNode! .$isValid        .removeInterest ("set_shader", Appearance .set_shader, self)
-         shaderNode! .$activationTime .removeInterest ("set_shader", Appearance .set_shader, self)
+         shaderNode .$isValid        .removeInterest ("set_shader", Appearance .set_shader, self)
+         shaderNode .$activationTime .removeInterest ("set_shader", Appearance .set_shader, self)
       }
       
       shaderNodes .removeAll (keepingCapacity: true)
@@ -163,8 +154,8 @@ public final class Appearance :
       
       for shaderNode in shaderNodes
       {
-         shaderNode! .$isValid        .addInterest ("set_shader", Appearance .set_shader, self)
-         shaderNode! .$activationTime .addInterest ("set_shader", Appearance .set_shader, self)
+         shaderNode .$isValid        .addInterest ("set_shader", Appearance .set_shader, self)
+         shaderNode .$activationTime .addInterest ("set_shader", Appearance .set_shader, self)
       }
 
       set_shader ()
@@ -178,7 +169,7 @@ public final class Appearance :
       
       for shaderNode in shaderNodes
       {
-         if shaderNode! .isValid && shaderNode! .activationTime == browser! .currentTime
+         if shaderNode .isValid && shaderNode .activationTime == browser! .currentTime
          {
             self .shaderNode = shaderNode
             break
@@ -189,7 +180,7 @@ public final class Appearance :
       {
          for shaderNode in shaderNodes
          {
-            if shaderNode! .isValid
+            if shaderNode .isValid
             {
                self .shaderNode = shaderNode
                break

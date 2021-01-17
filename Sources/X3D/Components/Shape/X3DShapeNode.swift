@@ -22,8 +22,9 @@ public class X3DShapeNode :
    // Properties
    
    @SFBool internal final var isTransparent  : Bool = false
-   @SFNode internal final var appearanceNode : X3DAppearanceNode?
-   @SFNode internal final var geometryNode   : X3DGeometryNode?
+   
+   internal final var appearanceNode : X3DAppearanceNode?
+   internal final var geometryNode   : X3DGeometryNode?
 
    // Construction
    
@@ -35,9 +36,7 @@ public class X3DShapeNode :
 
       types .append (.X3DShapeNode)
       
-      addChildObjects ($isTransparent,
-                       $appearanceNode,
-                       $geometryNode)
+      addChildObjects ($isTransparent)
    }
    
    internal override func initialize ()

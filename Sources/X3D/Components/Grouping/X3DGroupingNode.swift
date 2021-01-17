@@ -25,13 +25,13 @@ public class X3DGroupingNode :
    @MFBool public final var visible  : [Bool]
    @SFBool public final var isHidden : Bool = false
 
-   @MFNode private  final var fogNodes                  : [LocalFog?]
-   @MFNode private  final var lightNodes                : [X3DLightNode?]
-   @MFNode private  final var pointingDeviceSensorNodes : [X3DPointingDeviceSensorNode?]
-   @MFNode internal final var transformSensorNodes      : [TransformSensor?]
-   @MFNode private  final var maybeCameraObjects        : [X3DChildNode?]
-   @MFNode private  final var cameraObjects             : [X3DChildNode?]
-   @MFNode private  final var childNodes                : [X3DChildNode?]
+   private  final var fogNodes                  = [LocalFog] ()
+   private  final var lightNodes                = [X3DLightNode] ()
+   private  final var pointingDeviceSensorNodes = [X3DPointingDeviceSensorNode] ()
+   internal final var transformSensorNodes      = [TransformSensor] ()
+   private  final var maybeCameraObjects        = [X3DChildNode] ()
+   private  final var cameraObjects             = [X3DChildNode] ()
+   private  final var childNodes                = [X3DChildNode] ()
 
    // Construction
    
@@ -44,14 +44,7 @@ public class X3DGroupingNode :
       types .append (.X3DGroupingNode)
       
       addChildObjects ($visible,
-                       $isHidden,
-                       $fogNodes,
-                       $lightNodes,
-                       $pointingDeviceSensorNodes,
-                       $transformSensorNodes,
-                       $maybeCameraObjects,
-                       $cameraObjects,
-                       $childNodes)
+                       $isHidden)
    }
    
    internal override func initialize ()
@@ -117,7 +110,7 @@ public class X3DGroupingNode :
 
    private final func clear ()
    {
-      childNodes .forEach { $0! .$isCameraObject .removeInterest ("set_cameraObjects", X3DGroupingNode .set_cameraObjects, self) }
+      childNodes .forEach { $0 .$isCameraObject .removeInterest ("set_cameraObjects", X3DGroupingNode .set_cameraObjects, self) }
       
       fogNodes                  .removeAll (keepingCapacity: true)
       lightNodes                .removeAll (keepingCapacity: true)
@@ -145,11 +138,11 @@ public class X3DGroupingNode :
                   {
                      case .LocalFog: do
                      {
-                        fogNodes .append (innerNode as? LocalFog)
+                        fogNodes .append (innerNode as! LocalFog)
                      }
                      case .X3DBindableNode: do
                      {
-                        maybeCameraObjects .append (innerNode as? X3DChildNode)
+                        maybeCameraObjects .append (innerNode as! X3DChildNode)
                      }
                      case .X3DChildNode: do
                      {
@@ -162,11 +155,11 @@ public class X3DGroupingNode :
                      }
                      case .X3DLightNode: do
                      {
-                        lightNodes .append (innerNode as? X3DLightNode)
+                        lightNodes .append (innerNode as! X3DLightNode)
                      }
                      case .X3DPointingDeviceSensorNode: do
                      {
-                        pointingDeviceSensorNodes .append (innerNode as? X3DPointingDeviceSensorNode)
+                        pointingDeviceSensorNodes .append (innerNode as! X3DPointingDeviceSensorNode)
                      }
                      case
                         .BooleanFilter,
@@ -209,7 +202,7 @@ public class X3DGroupingNode :
 
       for maybeCameraObject in maybeCameraObjects
       {
-         if maybeCameraObject! .isCameraObject
+         if maybeCameraObject .isCameraObject
          {
             cameraObjects .append (maybeCameraObject)
          }
@@ -239,12 +232,12 @@ public class X3DGroupingNode :
                
                pointingDeviceSensorNodes .forEach
                {
-                  $0! .push (renderer: renderer,
-                             sensors: &browser .sensors [browser .sensors .endIndex - 1])
+                  $0 .push (renderer: renderer,
+                            sensors: &browser .sensors [browser .sensors .endIndex - 1])
                }
             }
             
-            childNodes .forEach { $0! .traverse (type, renderer) }
+            childNodes .forEach { $0 .traverse (type, renderer) }
             
             if !pointingDeviceSensorNodes .isEmpty
             {
@@ -253,27 +246,27 @@ public class X3DGroupingNode :
          }
          case .Camera: do
          {
-            cameraObjects .forEach { $0! .traverse (type, renderer) }
+            cameraObjects .forEach { $0 .traverse (type, renderer) }
          }
          case .Picking: do
          {
          }
          case .Collision: do
          {
-            childNodes .forEach { $0! .traverse (type, renderer) }
+            childNodes .forEach { $0 .traverse (type, renderer) }
          }
          case .Depth: do
          {
          }
          case .Render: do
          {
-            fogNodes   .forEach { $0! .push (renderer) }
-            lightNodes .forEach { $0! .push (renderer, self) }
+            fogNodes   .forEach { $0 .push (renderer) }
+            lightNodes .forEach { $0 .push (renderer, self) }
             
-            childNodes .forEach { $0! .traverse (type, renderer) }
+            childNodes .forEach { $0 .traverse (type, renderer) }
             
-            lightNodes .reversed () .forEach { $0! .pop (renderer) }
-            fogNodes   .reversed () .forEach { $0! .pop (renderer) }
+            lightNodes .reversed () .forEach { $0 .pop (renderer) }
+            fogNodes   .reversed () .forEach { $0 .pop (renderer) }
          }
       }
    }

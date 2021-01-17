@@ -68,11 +68,13 @@ public final class MFString :
       switch wrappedValue .count
       {
          case 0:
-            stream += "[ ]"
+            stream += "["
+            stream += stream .TidySpace
+            stream += "]"
          case 1:
             stream += "\"\(wrappedValue .first! .escaped)\""
          default:
-            stream += "[\(wrappedValue .map { "\"\($0 .escaped)\"" } .joined (separator: ", "))]"
+            stream += "[\(wrappedValue .map { "\"\($0 .escaped)\"" } .joined (separator: stream .Separator))]"
       }
    }
 

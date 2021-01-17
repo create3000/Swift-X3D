@@ -598,17 +598,18 @@ public class X3DExecutionContext :
          if let rootNode = rootNodes [i]
          {
             rootNode .toVRMLStream (stream)
+            
+            stream += stream .TidyBreak
          }
          else
          {
             stream += "NULL"
+            stream += stream .Break
          }
-         
-         stream += "\n"
          
          if i != rootNodes .count - 1
          {
-            stream += "\n"
+            stream += stream .TidyBreak
          }
       }
 

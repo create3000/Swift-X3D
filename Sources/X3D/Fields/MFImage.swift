@@ -103,7 +103,9 @@ public final class MFImage :
       switch wrappedValue .count
       {
          case 0:
-            stream += "[ ]"
+            stream += "["
+            stream += stream .TidySpace
+            stream += "]"
          case 1:
             stream += String (wrappedValue .first! .width)
             stream += " "
@@ -136,7 +138,7 @@ public final class MFImage :
    
    return string
 }
-.joined (separator: ", "))]
+.joined (separator: stream .Separator))]
 """
       }
    }

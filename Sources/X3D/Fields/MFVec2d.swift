@@ -78,11 +78,13 @@ public final class MFVec2d :
       switch wrappedValue .count
       {
          case 0:
-            stream += "[ ]"
+            stream += "["
+            stream += stream .TidySpace
+            stream += "]"
          case 1:
             stream += "\(executionContext .toUnit (unit, value: wrappedValue .first! .x)) \(executionContext .toUnit (unit, value: wrappedValue .first! .y))"
          default:
-            stream += "[\(wrappedValue .map { "\(executionContext .toUnit (unit, value: $0 .x)) \(executionContext .toUnit (unit, value: $0 .y))" } .joined (separator: ", "))]"
+            stream += "[\(wrappedValue .map { "\(executionContext .toUnit (unit, value: $0 .x)) \(executionContext .toUnit (unit, value: $0 .y))" } .joined (separator: stream .Separator))]"
       }
    }
 

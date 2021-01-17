@@ -222,7 +222,7 @@ public class X3DNode :
    internal override func toStream (_ stream : X3DOutputStream)
    {
       stream += getTypeName ()
-      stream += " "
+      stream += stream .Space
       stream += "{ }"
    }
 
@@ -257,7 +257,7 @@ public class X3DNode :
          if stream .existsNode (self)
          {
             stream += "USE"
-            stream += " "
+            stream += stream .Space
             stream += name
 
             return
@@ -268,15 +268,15 @@ public class X3DNode :
          stream .addNode (self)
 
          stream += "DEF"
-         stream += " "
+         stream += stream .Space
          stream += name
-         stream += " "
+         stream += stream .Space
       }
       
       // Type name
 
       stream += getTypeName ()
-      stream += " "
+      stream += stream .TidySpace
       stream += "{"
       
       // User-defined fields
@@ -297,7 +297,7 @@ public class X3DNode :
 
          if !userDefinedFields .isEmpty
          {
-            stream += "\n"
+            stream += stream .TidyBreak
             
             stream .incIndent ()
 
@@ -305,14 +305,14 @@ public class X3DNode :
             {
                toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength)
 
-               stream += "\n"
+               stream += stream .Break
             }
 
             stream .decIndent ()
             
             if !fields .isEmpty
             {
-               stream += "\n"
+               stream += stream .TidyBreak
             }
          }
       }
@@ -323,7 +323,7 @@ public class X3DNode :
       {
          if userDefinedFields .isEmpty
          {
-            stream += " "
+            stream += stream .TidySpace
          }
          else
          {
@@ -334,7 +334,7 @@ public class X3DNode :
       {
          if userDefinedFields .isEmpty
          {
-            stream += "\n"
+            stream += stream .TidyBreak
          }
 
          stream .incIndent ()
@@ -343,7 +343,7 @@ public class X3DNode :
          {
             toVRMLStreamField (stream, field, fieldTypeLength, accessTypeLength)
 
-            stream += "\n"
+            stream += stream .Break
          }
 
          stream .decIndent ()
@@ -364,14 +364,14 @@ public class X3DNode :
       {
          stream += stream .indent
          stream += stream .padding (field .getAccessType () .description, accessTypeLength)
-         stream += " "
+         stream += stream .Space
          stream += stream .padding (field .getTypeName (), fieldTypeLength)
-         stream += " "
+         stream += stream .Space
          stream += field .getName ()
 
          if field .isInitializable
          {
-            stream += " "
+            stream += stream .Space
 
             field .toVRMLStream (stream)
          }
@@ -386,20 +386,20 @@ public class X3DNode :
 
             stream += stream .indent
             stream += stream .padding (field .getAccessType () .description, accessTypeLength)
-            stream += " "
+            stream += stream .Space
             stream += stream .padding (field .getTypeName (), fieldTypeLength)
-            stream += " "
+            stream += stream .Space
             stream += field .getName ()
-            stream += " "
+            stream += stream .Space
             stream += "IS"
-            stream += " "
+            stream += stream .Space
             stream += reference .getName ()
 
             i += 1
 
             if i != references .count
             {
-               stream += "\n"
+               stream += stream .Break
             }
          }
       }
@@ -415,7 +415,7 @@ public class X3DNode :
          {
             stream += stream .indent
             stream += field .getName ()
-            stream += " "
+            stream += stream .Space
 
             field .toVRMLStream (stream)
          }
@@ -430,16 +430,16 @@ public class X3DNode :
 
             stream += stream .indent
             stream += field .getName ()
-            stream += " "
+            stream += stream .Space
             stream += "IS"
-            stream += " "
+            stream += stream .Space
             stream += reference .getName ()
 
             i += 1
 
             if i != references .count
             {
-               stream += "\n"
+               stream += stream .Break
             }
          }
       }

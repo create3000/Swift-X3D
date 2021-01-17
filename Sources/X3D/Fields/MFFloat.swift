@@ -78,11 +78,13 @@ public final class MFFloat :
       switch wrappedValue .count
       {
          case 0:
-            stream += "[ ]"
+            stream += "["
+            stream += stream .TidySpace
+            stream += "]"
          case 1:
             stream += String (executionContext .toUnit (unit, value: wrappedValue .first!))
          default:
-            stream += "[\(wrappedValue .map { String (executionContext .toUnit (unit, value: $0)) } .joined (separator: ", "))]"
+            stream += "[\(wrappedValue .map { String (executionContext .toUnit (unit, value: $0)) } .joined (separator: stream .Separator))]"
       }
    }
 

@@ -70,11 +70,13 @@ public final class MFTime :
       switch wrappedValue .count
       {
          case 0:
-            stream += "[ ]"
+            stream += "["
+            stream += stream .TidySpace
+            stream += "]"
          case 1:
             stream += String (wrappedValue .first!)
          default:
-            stream += "[\(wrappedValue .map { String ($0) } .joined (separator: ", "))]"
+            stream += "[\(wrappedValue .map { String ($0) } .joined (separator: stream .Separator))]"
       }
    }
 

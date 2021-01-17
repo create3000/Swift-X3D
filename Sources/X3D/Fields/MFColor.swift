@@ -68,11 +68,13 @@ public final class MFColor :
       switch wrappedValue .count
       {
          case 0:
-            stream += "[ ]"
+            stream += "["
+            stream += stream .TidySpace
+            stream += "]"
          case 1:
             stream += "\(wrappedValue .first! .r) \(wrappedValue .first! .g) \(wrappedValue .first! .b)"
          default:
-            stream += "[\(wrappedValue .map { "\($0 .r) \($0 .g) \($0 .b)" } .joined (separator: ", "))]"
+            stream += "[\(wrappedValue .map { "\($0 .r) \($0 .g) \($0 .b)" } .joined (separator: stream .Separator))]"
       }
    }
 

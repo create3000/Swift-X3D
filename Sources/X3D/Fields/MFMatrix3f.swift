@@ -68,7 +68,9 @@ public final class MFMatrix3f :
       switch wrappedValue .count
       {
          case 0:
-            stream += "[ ]"
+            stream += "["
+            stream += stream .TidySpace
+            stream += "]"
          case 1:
             let c0 = wrappedValue .first! [0]
             let c1 = wrappedValue .first! [1]
@@ -97,7 +99,7 @@ public final class MFMatrix3f :
 
    return string
 }
-.joined (separator: ", "))]
+.joined (separator: stream .Separator))]
 """
       }
    }

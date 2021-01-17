@@ -17,6 +17,15 @@ internal final class X3DOutputStream
       stream .string += string
    }
    
+   // Spaces
+   
+   internal private(set) final var Space     : String = " "
+   internal private(set) final var TidySpace : String = " "
+   internal private(set) final var Break     : String = "\n"
+   internal private(set) final var TidyBreak : String = "\n"
+   
+   internal final var Separator : String { "," + TidySpace }
+
    // Indent handling
    
    private final var indentCharacters = "  "

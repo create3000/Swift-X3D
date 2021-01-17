@@ -162,7 +162,9 @@ public final class MFNode <Element : X3DBaseNode> :
       {
          case 0: do
          {
-            stream += "[ ]"
+            stream += "["
+            stream += stream .TidySpace
+            stream += "]"
          }
          case 1: do
          {
@@ -178,7 +180,7 @@ public final class MFNode <Element : X3DBaseNode> :
          default: do
          {
             stream += "["
-            stream += "\n"
+            stream += stream .TidyBreak
             
             stream .incIndent ()
             
@@ -195,7 +197,7 @@ public final class MFNode <Element : X3DBaseNode> :
                   stream += "NULL"
                }
                
-               stream += "\n"
+               stream += stream .TidyBreak
             }
             
             stream .decIndent ()

@@ -68,11 +68,13 @@ public final class MFBool :
       switch wrappedValue .count
       {
          case 0:
-            stream += "[ ]"
+            stream += "["
+            stream += stream .TidySpace
+            stream += "]"
          case 1:
             stream += wrappedValue .first! ? "TRUE" : "FALSE"
          default:
-            stream += "[\(wrappedValue .map { $0 ? "TRUE" : "FALSE" } .joined (separator: ", "))]"
+            stream += "[\(wrappedValue .map { $0 ? "TRUE" : "FALSE" } .joined (separator: stream .Separator))]"
       }
    }
    

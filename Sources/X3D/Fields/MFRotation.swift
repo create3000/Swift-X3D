@@ -79,12 +79,14 @@ public final class MFRotation :
       switch wrappedValue .count
       {
          case 0:
-            stream += "[ ]"
+            stream += "["
+            stream += stream .TidySpace
+            stream += "]"
          case 1:
             let axis = wrappedValue .first! .axis
             stream += "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: wrappedValue .first! .angle))"
          default:
-            stream += "[\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: $0 .angle))" } .joined (separator: ", "))]"
+            stream += "[\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: $0 .angle))" } .joined (separator: stream .Separator))]"
       }
    }
 

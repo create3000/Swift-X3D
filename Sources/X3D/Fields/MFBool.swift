@@ -60,6 +60,11 @@ public final class MFBool :
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
+      toVRMLStream (stream)
+   }
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
       switch wrappedValue .count
       {
          case 0:
@@ -69,11 +74,6 @@ public final class MFBool :
          default:
             stream += "[\(wrappedValue .map { $0 ? "TRUE" : "FALSE" } .joined (separator: ", "))]"
       }
-   }
-   
-   internal final override func toVRMLStream (_ stream : X3DOutputStream)
-   {
-      toStream (stream)
    }
    
    internal final override func toDisplayStream (_ stream : X3DOutputStream)

@@ -187,7 +187,7 @@ public class X3DField :
    
    internal func toDisplayStream (_ stream : X3DOutputStream)
    {
-      toStream (stream)
+      toVRMLStream (stream)
    }
 
    public func fromDisplayString (_ string : String, scene : X3DScene) -> Bool

@@ -69,17 +69,17 @@ public final class SFTime :
    
    internal final override func toStream (_ stream : X3DOutputStream)
    {
-      stream += String (wrappedValue)
+      toVRMLStream (stream)
    }
    
    internal final override func toXMLStream (_ stream : X3DOutputStream)
    {
-      toStream (stream)
+      toVRMLStream (stream)
    }
    
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
-      toStream (stream)
+      stream += String (wrappedValue)
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

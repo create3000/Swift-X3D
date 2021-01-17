@@ -78,14 +78,14 @@ public class SFNode <Type : X3DBaseNode> :
    
    internal final override func toStream (_ stream : X3DOutputStream)
    {
-      stream += wrappedValue != nil ? wrappedValue .toString () : "NULL"
+      stream += wrappedValue? .toString () ?? "NULL"
    }
    
    internal final override func toXMLStream (_ stream : X3DOutputStream)
    {
-      if wrappedValue != nil
+      if let node = wrappedValue
       {
-         wrappedValue .toXMLStream (stream)
+         node .toXMLStream (stream)
       }
       else
       {
@@ -95,9 +95,9 @@ public class SFNode <Type : X3DBaseNode> :
    
    internal final override func toJSONStream (_ stream : X3DOutputStream)
    {
-      if wrappedValue != nil
+      if let node = wrappedValue
       {
-         wrappedValue .toJSONStream (stream)
+         node .toJSONStream (stream)
       }
       else
       {
@@ -107,9 +107,9 @@ public class SFNode <Type : X3DBaseNode> :
    
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
-      if wrappedValue != nil
+      if let node = wrappedValue
       {
-         wrappedValue .toVRMLStream (stream)
+         node .toVRMLStream (stream)
       }
       else
       {

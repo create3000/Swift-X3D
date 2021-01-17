@@ -57,8 +57,13 @@ public final class MFMatrix3f :
    }
    
    // Input/Output
-
+   
    internal final override func toStream (_ stream : X3DOutputStream)
+   {
+      toVRMLStream (stream)
+   }
+
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count
       {
@@ -95,11 +100,6 @@ public final class MFMatrix3f :
 .joined (separator: ", "))]
 """
       }
-   }
-   
-   internal final override func toVRMLStream (_ stream : X3DOutputStream)
-   {
-      toStream (stream)
    }
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)

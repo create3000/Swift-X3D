@@ -95,6 +95,11 @@ public final class MFImage :
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
+      toVRMLStream (stream)
+   }
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
       switch wrappedValue .count
       {
          case 0:
@@ -134,11 +139,6 @@ public final class MFImage :
 .joined (separator: ", "))]
 """
       }
-   }
-   
-   internal final override func toVRMLStream (_ stream : X3DOutputStream)
-   {
-      toStream (stream)
    }
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)

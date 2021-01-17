@@ -180,9 +180,6 @@ public class X3DBaseNode :
    // Private
    
    internal final var isPrivate : Bool = false
-   {
-      didSet { }
-   }
    
    // Event handling
    
@@ -232,15 +229,6 @@ public class X3DBaseNode :
       isTainted = false
 
       processInterests ()
-   }
-   
-   // Input/Output
-   
-   internal override func toStream (_ stream : X3DOutputStream)
-   {
-      stream += getTypeName ()
-      stream += " "
-      stream += "{ }"
    }
 
    // Destruction

@@ -68,25 +68,13 @@ public class X3DObject :
    
    // Convert to stream
    
-   internal func toStream (_ stream : X3DOutputStream)
-   {
-      stream += getTypeName ()
-   }
+   internal func toStream (_ stream : X3DOutputStream) { }
    
-   internal func toXMLStream (_ stream : X3DOutputStream)
-   {
-      stream += getTypeName ()
-   }
+   internal func toXMLStream (_ stream : X3DOutputStream) { }
    
-   internal func toJSONStream (_ stream : X3DOutputStream)
-   {
-      stream += getTypeName ()
-   }
+   internal func toJSONStream (_ stream : X3DOutputStream) { }
    
-   internal func toVRMLStream (_ stream : X3DOutputStream)
-   {
-      stream += getTypeName ()
-   }
+   internal func toVRMLStream (_ stream : X3DOutputStream) { }
 }
 
 extension X3DObject :

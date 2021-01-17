@@ -219,6 +219,13 @@ public class X3DNode :
 
    // Input/Output
    
+   internal override func toStream (_ stream : X3DOutputStream)
+   {
+      stream += getTypeName ()
+      stream += " "
+      stream += "{ }"
+   }
+
    internal override func toXMLStream (_ stream : X3DOutputStream)
    {
       stream += "<\(getTypeName ())/>"

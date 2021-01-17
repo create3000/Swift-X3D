@@ -74,6 +74,16 @@ public class SFImage :
    
    internal final override func toStream (_ stream : X3DOutputStream)
    {
+      toVRMLStream (stream)
+   }
+   
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      toVRMLStream (stream)
+   }
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
       stream += String (wrappedValue .width)
       stream += " "
       stream += String (wrappedValue .height)
@@ -85,16 +95,6 @@ public class SFImage :
          stream += " "
          stream += wrappedValue .array .map { String (format: "0x%x", $0) } .joined (separator: " ")
       }
-   }
-   
-   internal final override func toXMLStream (_ stream : X3DOutputStream)
-   {
-      toStream (stream)
-   }
-   
-   internal final override func toVRMLStream (_ stream : X3DOutputStream)
-   {
-      toStream (stream)
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

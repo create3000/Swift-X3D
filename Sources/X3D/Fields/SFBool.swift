@@ -59,7 +59,7 @@ public final class SFBool :
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
-      stream += wrappedValue ? "TRUE" : "FALSE"
+      toVRMLStream (stream)
    }
    
    internal final override func toXMLStream (_ stream : X3DOutputStream)

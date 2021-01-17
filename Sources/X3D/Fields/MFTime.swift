@@ -62,6 +62,11 @@ public final class MFTime :
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
+      toVRMLStream (stream)
+   }
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
       switch wrappedValue .count
       {
          case 0:
@@ -71,11 +76,6 @@ public final class MFTime :
          default:
             stream += "[\(wrappedValue .map { String ($0) } .joined (separator: ", "))]"
       }
-   }
-   
-   internal final override func toVRMLStream (_ stream : X3DOutputStream)
-   {
-      toStream (stream)
    }
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)

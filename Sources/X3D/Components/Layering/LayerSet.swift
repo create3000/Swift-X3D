@@ -28,8 +28,9 @@ public final class LayerSet :
    // Properties
    
    @SFNode internal private(set) final var activeLayerNode : X3DLayerNode?
-   @SFNode internal final var layerNode0 : Layer? { didSet { set_layers () } }
-   @MFNode private final var layerNodes : [X3DLayerNode?]
+   
+   internal final var layerNode0 : Layer { didSet { set_layers () } }
+   private final var layerNodes  : [X3DLayerNode] = [ ]
 
    // Construction
    
@@ -46,9 +47,7 @@ public final class LayerSet :
       addField (.inputOutput, "order",       $order)
       addField (.inputOutput, "layers",      $layers)
       
-      addChildObjects ($activeLayerNode,
-                       $layerNode0,
-                       $layerNodes)
+      addChildObjects ($activeLayerNode)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> LayerSet
@@ -60,9 +59,9 @@ public final class LayerSet :
    {
       super .initialize ()
       
-      layerNode0! .isPrivate = true
-      layerNode0! .isLayer0  = true
-      layerNode0! .setup ()
+      layerNode0 .isPrivate = true
+      layerNode0 .isLayer0  = true
+      layerNode0 .setup ()
       
       $activeLayer .addInterest ("set_activeLayer", LayerSet .set_activeLayer, self)
       $order       .addInterest ("set_layers",      LayerSet .set_layers,      self)
@@ -74,7 +73,7 @@ public final class LayerSet :
    ///  Bind first viewpoint and other bindables found.
    internal final func bindFirstBindables ()
    {
-      layerNode0! .bindFirstBindables ()
+      layerNode0 .bindFirstBindables ()
 
       for layer in layers
       {
@@ -149,7 +148,7 @@ public final class LayerSet :
 
             for layerNode in layerNodes
             {
-               layerNode! .traverse (type, renderer)
+               layerNode .traverse (type, renderer)
                
                renderer .layerNumber += 1
             }

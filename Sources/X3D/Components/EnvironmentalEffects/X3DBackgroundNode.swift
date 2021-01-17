@@ -32,7 +32,7 @@ public class X3DBackgroundNode :
    
    // Cube properties
    
-   @MFNode private final var textureNodes : [X3DTextureNode?] = [nil, nil, nil, nil, nil, nil]
+   private final var textureNodes : [X3DTextureNode?] = [nil, nil, nil, nil, nil, nil]
    
    private final var cubePrimitives = [x3d_VertexIn] ()
    private final var cubePrimitivesBuffer : MTLBuffer?
@@ -60,8 +60,7 @@ public class X3DBackgroundNode :
 
       types .append (.X3DBackgroundNode)
       
-      addChildObjects ($isHidden,
-                       $textureNodes)
+      addChildObjects ($isHidden)
 
       $skyAngle    .unit = .angle
       $groundAngle .unit = .angle

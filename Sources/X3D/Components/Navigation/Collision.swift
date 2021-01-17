@@ -29,7 +29,7 @@ public final class Collision :
    
    // Properties
    
-   @SFNode private final var proxyNode : X3DChildNode?
+   private final var proxyNode : X3DChildNode?
 
    // Construction
    
@@ -51,8 +51,6 @@ public final class Collision :
       addField (.inputOnly,      "addChildren",    $addChildren)
       addField (.inputOnly,      "removeChildren", $removeChildren)
       addField (.inputOutput,    "children",       $children)
-      
-      addChildObjects ($proxyNode)
       
       if executionContext .getSpecificationVersion () == "2.0"
       {

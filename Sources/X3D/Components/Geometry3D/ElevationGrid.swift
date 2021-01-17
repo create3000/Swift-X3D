@@ -38,11 +38,11 @@ public final class ElevationGrid :
 
    // Properties
    
-   @MFNode private final var attribNodes  : [X3DVertexAttributeNode?]
-   @SFNode private final var fogCoordNode : FogCoordinate?
-   @SFNode private final var colorNode    : X3DColorNode?
-   @SFNode private final var texCoordNode : X3DTextureCoordinateNode?
-   @SFNode private final var normalNode   : X3DNormalNode?
+   private final var attribNodes  : [X3DVertexAttributeNode] = [ ]
+   private final var fogCoordNode : FogCoordinate?
+   private final var colorNode    : X3DColorNode?
+   private final var texCoordNode : X3DTextureCoordinateNode?
+   private final var normalNode   : X3DNormalNode?
 
    // Construction
    
@@ -69,12 +69,6 @@ public final class ElevationGrid :
       addField (.inputOutput,    "texCoord",        $texCoord)
       addField (.inputOutput,    "normal",          $normal)
       addField (.initializeOnly, "height",          $height)
-      
-      addChildObjects ($attribNodes,
-                       $fogCoordNode,
-                       $colorNode,
-                       $texCoordNode,
-                       $normalNode)
 
       $xSpacing    .unit = .length
       $zSpacing    .unit = .length

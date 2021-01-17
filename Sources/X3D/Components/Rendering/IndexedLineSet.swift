@@ -34,10 +34,10 @@ public final class IndexedLineSet :
 
    // Properties
    
-   @MFNode private final var attribNodes  : [X3DVertexAttributeNode?]
-   @SFNode private final var fogCoordNode : FogCoordinate?
-   @SFNode private final var colorNode    : X3DColorNode?
-   @SFNode private final var coordNode    : X3DCoordinateNode?
+   private final var attribNodes  : [X3DVertexAttributeNode] = [ ]
+   private final var fogCoordNode : FogCoordinate?
+   private final var colorNode    : X3DColorNode?
+   private final var coordNode    : X3DCoordinateNode?
 
    // Construction
    
@@ -57,11 +57,6 @@ public final class IndexedLineSet :
       addField (.inputOutput,    "fogCoord",       $fogCoord)
       addField (.inputOutput,    "color",          $color)
       addField (.inputOutput,    "coord",          $coord)
-      
-      addChildObjects ($attribNodes,
-                       $fogCoordNode,
-                       $colorNode,
-                       $coordNode)
 
       geometryType  = 1
       primitiveType = .line

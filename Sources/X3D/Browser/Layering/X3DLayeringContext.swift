@@ -11,24 +11,22 @@ internal final class X3DLayeringContextProperties :
 {
    // Properties
    
-   @SFNode fileprivate private(set) var defaultViewportNode : Viewport?
+   fileprivate private(set) var defaultViewportNode : Viewport
 
    // Construction
    
    internal init (with executionContext : X3DExecutionContext)
    {
+      self .defaultViewportNode = Viewport (with: executionContext)
+
       super .init (executionContext .browser!, executionContext)
-      
-      addChildObjects ($defaultViewportNode)
    }
    
    internal final override func initialize ()
    {
       super .initialize ()
       
-      defaultViewportNode = Viewport (with: executionContext!)
-
-      defaultViewportNode! .setup ()
+      defaultViewportNode .setup ()
    }
 }
 
@@ -40,5 +38,5 @@ internal protocol X3DLayeringContext : class
 
 extension X3DLayeringContext
 {
-   internal var defaultViewportNode : Viewport { layeringContextProperties .defaultViewportNode! }
+   internal var defaultViewportNode : Viewport { layeringContextProperties .defaultViewportNode }
 }

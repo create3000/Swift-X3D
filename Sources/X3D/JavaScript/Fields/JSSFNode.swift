@@ -232,11 +232,25 @@ extension JavaScript
             
             if let x3dSyntax = args .first! .toString ()
             {
-               let scene = try? browser .browser .createX3DFromString (x3dSyntax: x3dSyntax)
+               if let scene = try? browser .browser .createX3DFromString (x3dSyntax: x3dSyntax)
+               {
+                  if let node = scene .rootNodes .first
+                  {
+                     self .field = Internal (wrappedValue: node)
                
-               self .field = Internal (wrappedValue: scene? .rootNodes .first ?? nil)
-               
-               browser .browser .scriptingScenes .append (scene)
+                     browser .browser .scriptingScenes .append (scene)
+                  }
+                  else
+                  {
+                     self .field = Internal ()
+                     exception (t("Invalid argument."))
+                  }
+               }
+               else
+               {
+                  self .field = Internal ()
+                  exception (t("Invalid argument."))
+               }
             }
             else
             {

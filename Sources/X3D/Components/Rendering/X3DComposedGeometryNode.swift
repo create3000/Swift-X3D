@@ -24,12 +24,12 @@ public class X3DComposedGeometryNode :
 
    // Properties
    
-   @MFNode internal final var attribNodes  : [X3DVertexAttributeNode?]
-   @SFNode internal final var fogCoordNode : FogCoordinate?
-   @SFNode internal final var colorNode    : X3DColorNode?
-   @SFNode internal final var texCoordNode : X3DTextureCoordinateNode?
-   @SFNode internal final var normalNode   : X3DNormalNode?
-   @SFNode internal final var coordNode    : X3DCoordinateNode?
+   internal final var attribNodes  : [X3DVertexAttributeNode] = [ ]
+   internal final var fogCoordNode : FogCoordinate?
+   internal final var colorNode    : X3DColorNode?
+   internal final var texCoordNode : X3DTextureCoordinateNode?
+   internal final var normalNode   : X3DNormalNode?
+   internal final var coordNode    : X3DCoordinateNode?
 
    // Construction
    
@@ -38,13 +38,6 @@ public class X3DComposedGeometryNode :
       super .init (browser, executionContext)
 
       types .append (.X3DComposedGeometryNode)
-      
-      addChildObjects ($attribNodes,
-                       $fogCoordNode,
-                       $colorNode,
-                       $texCoordNode,
-                       $normalNode,
-                       $coordNode)
    }
    
    internal override func initialize ()
@@ -284,5 +277,4 @@ public class X3DComposedGeometryNode :
 
       return normalize (normal)
    }
-
 }

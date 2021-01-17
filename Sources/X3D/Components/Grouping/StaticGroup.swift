@@ -26,7 +26,7 @@ public final class StaticGroup :
    
    // Properties
    
-   @SFNode private final var groupNode : Group!
+   private final var groupNode : Group
 
    // Construction
    
@@ -44,8 +44,6 @@ public final class StaticGroup :
       addField (.initializeOnly, "bboxSize",   $bboxSize)
       addField (.initializeOnly, "bboxCenter", $bboxCenter)
       addField (.initializeOnly, "children",   $children)
-      
-      addChildObjects ($groupNode)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> StaticGroup

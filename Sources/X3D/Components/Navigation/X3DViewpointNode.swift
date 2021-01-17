@@ -38,23 +38,23 @@ public class X3DViewpointNode :
    
    // Animation
    
-   @SFNode private final var timeSensor                   : TimeSensor?
-   @SFNode private final var easeInEaseOut                : EaseInEaseOut?
-   @SFNode private final var positionInterpolator         : PositionInterpolator?
-   @SFNode private final var orientationInterpolator      : OrientationInterpolator?
-   @SFNode private final var scaleInterpolator            : PositionInterpolator?
-   @SFNode private final var scaleOrientationInterpolator : OrientationInterpolator?
+   private final var timeSensor                   : TimeSensor
+   private final var easeInEaseOut                : EaseInEaseOut
+   private final var positionInterpolator         : PositionInterpolator
+   private final var orientationInterpolator      : OrientationInterpolator
+   private final var scaleInterpolator            : PositionInterpolator
+   private final var scaleOrientationInterpolator : OrientationInterpolator
 
    // Construction
    
    internal override init (_ browser : X3DBrowser, _ executionContext : X3DExecutionContext?)
    {
-      timeSensor                   = TimeSensor              (with: executionContext!)
-      easeInEaseOut                = EaseInEaseOut           (with: executionContext!)
-      positionInterpolator         = PositionInterpolator    (with: executionContext!)
-      orientationInterpolator      = OrientationInterpolator (with: executionContext!)
-      scaleInterpolator            = PositionInterpolator    (with: executionContext!)
-      scaleOrientationInterpolator = OrientationInterpolator (with: executionContext!)
+      self .timeSensor                   = TimeSensor              (with: executionContext!)
+      self .easeInEaseOut                = EaseInEaseOut           (with: executionContext!)
+      self .positionInterpolator         = PositionInterpolator    (with: executionContext!)
+      self .orientationInterpolator      = OrientationInterpolator (with: executionContext!)
+      self .scaleInterpolator            = PositionInterpolator    (with: executionContext!)
+      self .scaleOrientationInterpolator = OrientationInterpolator (with: executionContext!)
       
       super .init (browser, executionContext)
 
@@ -65,13 +65,7 @@ public class X3DViewpointNode :
                        $scaleOffset,
                        $scaleOrientationOffset,
                        $centerOfRotationOffset,
-                       $fieldOfViewScale,
-                       $timeSensor,
-                       $easeInEaseOut,
-                       $positionInterpolator,
-                       $orientationInterpolator,
-                       $scaleInterpolator,
-                       $scaleOrientationInterpolator)
+                       $fieldOfViewScale)
    }
    
    internal override func initialize ()
@@ -80,30 +74,30 @@ public class X3DViewpointNode :
 
       // Animation
       
-      easeInEaseOut!                .key = [0, 1]
-      positionInterpolator!         .key = [0, 1]
-      orientationInterpolator!      .key = [0, 1]
-      scaleInterpolator!            .key = [0, 1]
-      scaleOrientationInterpolator! .key = [0, 1]
+      easeInEaseOut                .key = [0, 1]
+      positionInterpolator         .key = [0, 1]
+      orientationInterpolator      .key = [0, 1]
+      scaleInterpolator            .key = [0, 1]
+      scaleOrientationInterpolator .key = [0, 1]
       
-      timeSensor!                   .setup ()
-      easeInEaseOut!                .setup ()
-      positionInterpolator?         .setup ()
-      orientationInterpolator?      .setup ()
-      scaleInterpolator?            .setup ()
-      scaleOrientationInterpolator? .setup ()
+      timeSensor                   .setup ()
+      easeInEaseOut                .setup ()
+      positionInterpolator         .setup ()
+      orientationInterpolator      .setup ()
+      scaleInterpolator            .setup ()
+      scaleOrientationInterpolator .setup ()
       
-      timeSensor! .$fraction_changed .addFieldInterest (to: easeInEaseOut! .$set_fraction)
+      timeSensor .$fraction_changed .addFieldInterest (to: easeInEaseOut .$set_fraction)
       
-      easeInEaseOut! .$modifiedFraction_changed .addFieldInterest (to: positionInterpolator! .$set_fraction)
-      easeInEaseOut! .$modifiedFraction_changed .addFieldInterest (to: orientationInterpolator! .$set_fraction)
-      easeInEaseOut! .$modifiedFraction_changed .addFieldInterest (to: scaleInterpolator! .$set_fraction)
-      easeInEaseOut! .$modifiedFraction_changed .addFieldInterest (to: scaleOrientationInterpolator! .$set_fraction)
+      easeInEaseOut .$modifiedFraction_changed .addFieldInterest (to: positionInterpolator         .$set_fraction)
+      easeInEaseOut .$modifiedFraction_changed .addFieldInterest (to: orientationInterpolator      .$set_fraction)
+      easeInEaseOut .$modifiedFraction_changed .addFieldInterest (to: scaleInterpolator            .$set_fraction)
+      easeInEaseOut .$modifiedFraction_changed .addFieldInterest (to: scaleOrientationInterpolator .$set_fraction)
       
-      positionInterpolator!         .$value_changed .addFieldInterest (to: $positionOffset)
-      orientationInterpolator!      .$value_changed .addFieldInterest (to: $orientationOffset)
-      scaleInterpolator!            .$value_changed .addFieldInterest (to: $scaleOffset)
-      scaleOrientationInterpolator! .$value_changed .addFieldInterest (to: $scaleOrientationOffset)
+      positionInterpolator         .$value_changed .addFieldInterest (to: $positionOffset)
+      orientationInterpolator      .$value_changed .addFieldInterest (to: $orientationOffset)
+      scaleInterpolator            .$value_changed .addFieldInterest (to: $scaleOffset)
+      scaleOrientationInterpolator .$value_changed .addFieldInterest (to: $scaleOrientationOffset)
    }
    
    // Property access
@@ -162,24 +156,24 @@ public class X3DViewpointNode :
                layer .navigationInfoNode .transitionComplete = true
                return
             case "ANIMATE":
-               easeInEaseOut! .easeInEaseOut = [Vector2f (0, 1), Vector2f (1, 0)]
+               easeInEaseOut .easeInEaseOut = [Vector2f (0, 1), Vector2f (1, 0)]
             default:
                // LINEAR
-               easeInEaseOut! .easeInEaseOut = [Vector2f (0, 0), Vector2f (0, 0)]
+               easeInEaseOut .easeInEaseOut = [Vector2f (0, 0), Vector2f (0, 0)]
          }
          
-         timeSensor! .cycleInterval = transitionTime
-         timeSensor! .stopTime      = browser! .currentTime
-         timeSensor! .startTime     = browser! .currentTime
+         timeSensor .cycleInterval = transitionTime
+         timeSensor .stopTime      = browser! .currentTime
+         timeSensor .startTime     = browser! .currentTime
          
-         timeSensor! .$isActive .addInterest ("set_active", { _ in { [weak self] in self? .set_active (layer .navigationInfoNode) } }, self)
+         timeSensor .$isActive .addInterest ("set_active", { _ in { [weak self] in self? .set_active (layer .navigationInfoNode) } }, self)
 
          let relative = getRelativeTransformation (fromViewpoint: fromViewpointNode)
 
-         positionInterpolator!         .keyValue = [relative .translation,      positionOffset]
-         orientationInterpolator!      .keyValue = [relative .rotation,         orientationOffset]
-         scaleInterpolator!            .keyValue = [relative .scale,            scaleOffset]
-         scaleOrientationInterpolator! .keyValue = [relative .scaleOrientation, scaleOrientationOffset]
+         positionInterpolator         .keyValue = [relative .translation,      positionOffset]
+         orientationInterpolator      .keyValue = [relative .rotation,         orientationOffset]
+         scaleInterpolator            .keyValue = [relative .scale,            scaleOffset]
+         scaleOrientationInterpolator .keyValue = [relative .scaleOrientation, scaleOrientationOffset]
 
          positionOffset         = relative .translation
          orientationOffset      = relative .rotation
@@ -216,7 +210,7 @@ public class X3DViewpointNode :
    {
       guard isBound else { return }
       
-      guard !timeSensor! .isActive else { return }
+      guard !timeSensor .isActive else { return }
 
       navigationInfoNode .transitionComplete = true
    }

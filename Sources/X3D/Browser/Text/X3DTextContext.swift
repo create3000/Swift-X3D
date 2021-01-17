@@ -10,24 +10,22 @@ internal final class X3DTextContextProperties :
 {
    // Properties
    
-   @SFNode fileprivate final var defaultFontStyleNode : FontStyle?
+   fileprivate final var defaultFontStyleNode : FontStyle
    
    // Construction
    
    internal init (with executionContext : X3DExecutionContext)
    {
+      self .defaultFontStyleNode = FontStyle (with: executionContext)
+
       super .init (executionContext .browser!, executionContext)
-      
-      addChildObjects ($defaultFontStyleNode)
    }
    
    internal final override func initialize ()
    {
       super .initialize ()
       
-      defaultFontStyleNode = FontStyle (with: executionContext!)
-
-      defaultFontStyleNode! .setup ()
+      defaultFontStyleNode .setup ()
    }
 }
 
@@ -39,5 +37,5 @@ internal protocol X3DTextContext : class
 
 extension X3DTextContext
 {
-   internal var defaultFontStyleNode : FontStyle { textContextProperties .defaultFontStyleNode! }
+   internal var defaultFontStyleNode : FontStyle { textContextProperties .defaultFontStyleNode }
 }

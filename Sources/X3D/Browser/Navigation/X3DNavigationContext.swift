@@ -17,8 +17,9 @@ internal final class X3DNavigationContextProperties :
    @MFEnum public final var availableViewers                      : [X3DViewerType] = [.NONE]
    @SFEnum public private(set) final var viewer                   : X3DViewerType = .NONE
    @SFNode public private(set) final var viewerNode               : X3DViewer?
-   @SFNode private final var headlightNode                        : DirectionalLight?
-   fileprivate final var headlightContainer                       : LightContainer?
+   
+   private final var headlightNode          : DirectionalLight
+   fileprivate final var headlightContainer : LightContainer
    
    // Collision properties
    
@@ -28,6 +29,9 @@ internal final class X3DNavigationContextProperties :
    
    internal init (with executionContext : X3DExecutionContext)
    {
+      self .headlightNode      = DirectionalLight (with: executionContext)
+      self .headlightContainer = LightContainer (lightNode: self .headlightNode, modelViewMatrix: Matrix4f .identity)
+
       super .init (executionContext .browser!, executionContext)
       
       addChildObjects ($activeLayerNode,
@@ -35,8 +39,7 @@ internal final class X3DNavigationContextProperties :
                        $activeViewpointNode,
                        $availableViewers,
                        $viewer,
-                       $viewerNode,
-                       $headlightNode)
+                       $viewerNode)
    }
    
    internal final override func initialize ()
@@ -45,10 +48,7 @@ internal final class X3DNavigationContextProperties :
       
       // Headlight
       
-      headlightNode      = DirectionalLight (with: executionContext!)
-      headlightContainer = LightContainer (lightNode: self .headlightNode!, modelViewMatrix: Matrix4f .identity)
-
-      headlightNode! .setup ()
+      headlightNode .setup ()
       
       // Viewer
       
@@ -141,7 +141,7 @@ internal protocol X3DNavigationContext : class
 extension X3DNavigationContext
 {
    public var viewerNode : X3DViewer { navigationContextProperties .viewerNode! }
-   internal var headlightContainer : LightContainer { navigationContextProperties .headlightContainer! }
+   internal var headlightContainer : LightContainer { navigationContextProperties .headlightContainer }
    
    internal func addCollision (object : X3DBaseNode) { navigationContextProperties .collisions .add (object) }
    internal func removeCollision (object : X3DBaseNode) { navigationContextProperties .collisions .remove (object) }

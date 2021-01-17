@@ -28,9 +28,9 @@ public final class ViewpointGroup :
    
    // Properties
    
-   @SFNode private final var proximitySensorNode : ProximitySensor!
-   @MFNode private final var cameraObjects       : [X3DChildNode?]
-   @MFNode private final var viewpointGroupNodes : [ViewpointGroup?]
+   private final var proximitySensorNode : ProximitySensor
+   private final var cameraObjects       : [X3DChildNode] = [ ]
+   private final var viewpointGroupNodes : [ViewpointGroup] = [ ]
 
    // Construction
    
@@ -49,10 +49,6 @@ public final class ViewpointGroup :
       addField (.inputOutput, "size",              $size)
       addField (.inputOutput, "center",            $center)
       addField (.inputOutput, "children",          $children)
-      
-      addChildObjects ($proximitySensorNode,
-                       $cameraObjects,
-                       $viewpointGroupNodes)
 
       $size   .unit = .length
       $center .unit = .length
@@ -122,12 +118,12 @@ public final class ViewpointGroup :
             {
                case .ViewpointGroup: do
                {
-                  cameraObjects       .append (innerNode as? ViewpointGroup)
-                  viewpointGroupNodes .append (innerNode as? ViewpointGroup)
+                  cameraObjects       .append (innerNode as! ViewpointGroup)
+                  viewpointGroupNodes .append (innerNode as! ViewpointGroup)
                }
                case .X3DViewpointNode: do
                {
-                  cameraObjects .append (innerNode as? X3DViewpointNode)
+                  cameraObjects .append (innerNode as! X3DViewpointNode)
                }
                default:
                   continue
@@ -150,7 +146,7 @@ public final class ViewpointGroup :
             {
                for cameraObject in cameraObjects
                {
-                  cameraObject! .traverse (type, renderer)
+                  cameraObject .traverse (type, renderer)
                }
             }
          }
@@ -162,7 +158,7 @@ public final class ViewpointGroup :
             {
                for viewpointGroupNode in viewpointGroupNodes
                {
-                  viewpointGroupNode! .traverse (type, renderer)
+                  viewpointGroupNode .traverse (type, renderer)
                }
             }
          }

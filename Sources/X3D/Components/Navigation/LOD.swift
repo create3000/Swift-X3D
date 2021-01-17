@@ -36,7 +36,7 @@ public final class LOD :
    private final var changeLevel      : Bool = true
    private final var keepCurrentLevel : Bool = false
 
-   @SFNode private final var childNode : X3DChildNode?
+   private final var childNode : X3DChildNode?
 
    // Construction
    
@@ -61,8 +61,6 @@ public final class LOD :
       {
          addFieldAlias (alias: "level", name: "children")
       }
-      
-      addChildObjects ($childNode)
 
       $center .unit = .length
       $range  .unit = .length

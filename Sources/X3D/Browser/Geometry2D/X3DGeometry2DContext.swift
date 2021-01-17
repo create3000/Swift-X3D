@@ -11,36 +11,31 @@ internal final class X3DGeometry2DContextProperties :
 {
    // Properties
    
-   @SFNode fileprivate private(set) var arc2DOptions      : X3DArc2DOptions?
-   @SFNode fileprivate private(set) var arcClose2DOptions : X3DArcClose2DOptions?
-   @SFNode fileprivate private(set) var circle2DOptions   : X3DCircle2DOptions?
-   @SFNode fileprivate private(set) var disk2DOptions     : X3DDisk2DOptions?
+   fileprivate private(set) var arc2DOptions      : X3DArc2DOptions
+   fileprivate private(set) var arcClose2DOptions : X3DArcClose2DOptions
+   fileprivate private(set) var circle2DOptions   : X3DCircle2DOptions
+   fileprivate private(set) var disk2DOptions     : X3DDisk2DOptions
 
    // Construction
    
    internal init (with executionContext : X3DExecutionContext)
    {
+      self .arc2DOptions      = X3DArc2DOptions      (with: executionContext)
+      self .arcClose2DOptions = X3DArcClose2DOptions (with: executionContext)
+      self .circle2DOptions   = X3DCircle2DOptions   (with: executionContext)
+      self .disk2DOptions     = X3DDisk2DOptions     (with: executionContext)
+
       super .init (executionContext .browser!, executionContext)
-      
-      addChildObjects ($arc2DOptions,
-                       $arcClose2DOptions,
-                       $circle2DOptions,
-                       $disk2DOptions)
    }
    
    internal final override func initialize ()
    {
       super .initialize ()
       
-      arc2DOptions      = X3DArc2DOptions      (with: executionContext!)
-      arcClose2DOptions = X3DArcClose2DOptions (with: executionContext!)
-      circle2DOptions   = X3DCircle2DOptions   (with: executionContext!)
-      disk2DOptions     = X3DDisk2DOptions     (with: executionContext!)
-
-      arc2DOptions!      .setup ()
-      arcClose2DOptions! .setup ()
-      circle2DOptions!   .setup ()
-      disk2DOptions!     .setup ()
+      arc2DOptions      .setup ()
+      arcClose2DOptions .setup ()
+      circle2DOptions   .setup ()
+      disk2DOptions     .setup ()
       
       browser! .browserOptions .$PrimitiveQuality .addInterest ("set_primitiveQuality", X3DGeometry2DContextProperties .set_primitiveQuality, self)
    }
@@ -51,24 +46,24 @@ internal final class X3DGeometry2DContextProperties :
       {
          case "LOW": do
          {
-            arc2DOptions!      .dimension = 20
-            arcClose2DOptions! .dimension = 20
-            circle2DOptions!   .dimension = 20
-            disk2DOptions!     .dimension = 20
+            arc2DOptions      .dimension = 20
+            arcClose2DOptions .dimension = 20
+            circle2DOptions   .dimension = 20
+            disk2DOptions     .dimension = 20
          }
          case "HIGH": do
          {
-            arc2DOptions!      .dimension = 80
-            arcClose2DOptions! .dimension = 80
-            circle2DOptions!   .dimension = 80
-            disk2DOptions!     .dimension = 80
+            arc2DOptions      .dimension = 80
+            arcClose2DOptions .dimension = 80
+            circle2DOptions   .dimension = 80
+            disk2DOptions     .dimension = 80
          }
          default: do
          {
-            arc2DOptions!      .dimension = 40
-            arcClose2DOptions! .dimension = 40
-            circle2DOptions!   .dimension = 40
-            disk2DOptions!     .dimension = 40
+            arc2DOptions      .dimension = 40
+            arcClose2DOptions .dimension = 40
+            circle2DOptions   .dimension = 40
+            disk2DOptions     .dimension = 40
          }
       }
    }
@@ -82,8 +77,8 @@ internal protocol X3DGeometry2DContext : class
 
 extension X3DGeometry2DContext
 {
-   internal var arc2DOptions      : X3DArc2DOptions { geometry2DContextProperties .arc2DOptions! }
-   internal var arcClose2DOptions : X3DArcClose2DOptions { geometry2DContextProperties .arcClose2DOptions! }
-   internal var circle2DOptions   : X3DCircle2DOptions { geometry2DContextProperties .circle2DOptions! }
-   internal var disk2DOptions     : X3DDisk2DOptions { geometry2DContextProperties .disk2DOptions! }
+   internal var arc2DOptions      : X3DArc2DOptions { geometry2DContextProperties .arc2DOptions }
+   internal var arcClose2DOptions : X3DArcClose2DOptions { geometry2DContextProperties .arcClose2DOptions }
+   internal var circle2DOptions   : X3DCircle2DOptions { geometry2DContextProperties .circle2DOptions }
+   internal var disk2DOptions     : X3DDisk2DOptions { geometry2DContextProperties .disk2DOptions }
 }

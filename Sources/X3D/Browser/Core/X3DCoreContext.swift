@@ -13,9 +13,9 @@ internal final class X3DCoreContextProperties :
 {
    // Properties
    
-   @SFNode fileprivate final var browserOptions      : BrowserOptions!
-   @SFNode fileprivate final var browserProperties   : BrowserProperties!
-   @SFNode fileprivate final var renderingProperties : RenderingProperties!
+   fileprivate final var browserOptions      : BrowserOptions
+   fileprivate final var browserProperties   : BrowserProperties
+   fileprivate final var renderingProperties : RenderingProperties
 
    // Construction
    
@@ -26,10 +26,6 @@ internal final class X3DCoreContextProperties :
       self .renderingProperties = RenderingProperties (with: executionContext)
       
       super .init (executionContext .browser!, executionContext)
-      
-      addChildObjects ($browserOptions,
-                       $browserProperties,
-                       $renderingProperties)
    }
    
    internal final override func initialize ()
@@ -50,9 +46,9 @@ internal protocol X3DCoreContext : class
 
 extension X3DCoreContext
 {
-   internal var browserOptions      : BrowserOptions { coreContextProperties .browserOptions! }
-   internal var browserProperties   : BrowserProperties { coreContextProperties .browserProperties! }
-   internal var renderingProperties : RenderingProperties { coreContextProperties .renderingProperties! }
+   internal var browserOptions      : BrowserOptions { coreContextProperties .browserOptions }
+   internal var browserProperties   : BrowserProperties { coreContextProperties .browserProperties }
+   internal var renderingProperties : RenderingProperties { coreContextProperties .renderingProperties }
    
    internal var browserQueue : DispatchQueue { DispatchQueue .global (qos: .userInteractive) }
    internal var inlineQueue  : DispatchQueue { DispatchQueue .global (qos: .userInitiated) }

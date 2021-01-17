@@ -18,13 +18,13 @@ public class X3DLayerNode :
    
    // Properties
    
-   @SFNode public private(set) final var viewportNode : X3DViewportNode?
-   @SFNode internal private(set) final var groupNode  : X3DGroupingNode?
+   public private(set) final var viewportNode : X3DViewportNode?
+   internal private(set) final var groupNode  : X3DGroupingNode
    
-   @SFNode private final var defaultNavigationInfoNode : NavigationInfo?
-   @SFNode private final var defaultViewpointNode      : X3DViewpointNode?
-   @SFNode private final var defaultBackgroundNode     : X3DBackgroundNode?
-   @SFNode private final var defaultFogNode            : Fog?
+   private final var defaultNavigationInfoNode : NavigationInfo
+   private final var defaultViewpointNode      : X3DViewpointNode
+   private final var defaultBackgroundNode     : X3DBackgroundNode
+   private final var defaultFogNode            : Fog
 
    public final let navigationInfoStack : X3DBindableStack <NavigationInfo>
    public final let viewpointStack      : X3DBindableStack <X3DViewpointNode>
@@ -69,13 +69,6 @@ public class X3DLayerNode :
       super .init (browser, executionContext)
 
       types .append (.X3DLayerNode)
-
-      addChildObjects ($viewportNode,
-                       $groupNode,
-                       $defaultNavigationInfoNode,
-                       $defaultViewpointNode,
-                       $defaultBackgroundNode,
-                       $defaultFogNode)
    }
    
    internal override func initialize ()
@@ -84,23 +77,23 @@ public class X3DLayerNode :
       
       $viewport .addInterest ("set_viewport", X3DLayerNode .set_viewport, self)
       
-      groupNode! .isPrivate = true
+      groupNode .isPrivate = true
       
-      defaultBackgroundNode! .isHidden = !isLayer0
-      defaultFogNode!        .isHidden = true
+      defaultBackgroundNode .isHidden = !isLayer0
+      defaultFogNode        .isHidden = true
       
-      defaultNavigationInfoNode! .setup ()
-      defaultViewpointNode!      .setup ()
-      defaultBackgroundNode!     .setup ()
-      defaultFogNode!            .setup ()
-      viewpointStack             .setup ()
-      navigationInfoStack        .setup ()
-      backgroundStack            .setup ()
-      fogStack                   .setup ()
-      viewpointList              .setup ()
-      navigationInfoList         .setup ()
-      backgroundList             .setup ()
-      fogList                    .setup ()
+      defaultNavigationInfoNode .setup ()
+      defaultViewpointNode      .setup ()
+      defaultBackgroundNode     .setup ()
+      defaultFogNode            .setup ()
+      viewpointStack            .setup ()
+      navigationInfoStack       .setup ()
+      backgroundStack           .setup ()
+      fogStack                  .setup ()
+      viewpointList             .setup ()
+      navigationInfoList        .setup ()
+      backgroundList            .setup ()
+      fogList                   .setup ()
 
       set_viewport ()
    }
@@ -184,7 +177,7 @@ public class X3DLayerNode :
       
       renderer .browser .makeHitRay (renderer .projectionMatrix .top, renderer .viewport .last!)
 
-      groupNode! .traverse (type, renderer)
+      groupNode .traverse (type, renderer)
 
       renderer .modelViewMatrix  .pop ()
       renderer .viewViewMatrix   .pop ()
@@ -196,7 +189,7 @@ public class X3DLayerNode :
    {
       renderer .modelViewMatrix .push (.identity)
 
-      groupNode! .traverse (type, renderer)
+      groupNode .traverse (type, renderer)
 
       renderer .modelViewMatrix .pop ()
 
@@ -225,7 +218,7 @@ public class X3DLayerNode :
       renderer .viewViewMatrix   .push (viewpointNode .viewMatrix)
       renderer .modelViewMatrix  .push (viewpointNode .viewMatrix)
 
-      groupNode! .traverse (.Collision, renderer)
+      groupNode .traverse (.Collision, renderer)
       renderer .collision ()
       
       renderer .modelViewMatrix  .pop ()
@@ -248,7 +241,7 @@ public class X3DLayerNode :
       navigationInfoNode .push (renderer)
       fogNode .push (renderer)
       
-      groupNode! .traverse (type, renderer)
+      groupNode .traverse (type, renderer)
       renderer .render ()
       
       fogNode .pop (renderer)

@@ -37,7 +37,7 @@ public final class Appearance :
    private final var materialNode         : X3DMaterialNode?
    private final var textureNode          : X3DTextureNode?
    private final var textureTransformNode : X3DTextureTransformNode?
-   private final var shaderNodes          : [X3DShaderNode] = [X3DShaderNode] ()
+   private final var shaderNodes          : [X3DShaderNode] = [ ]
    private final var shaderNode           : X3DShaderNode?
 
    // Construction

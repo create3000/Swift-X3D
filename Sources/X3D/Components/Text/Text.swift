@@ -32,7 +32,7 @@ public final class Text :
    
    // Properties
    
-   @SFNode private final var fontStyleNode : X3DFontStyleNode?
+   private final var fontStyleNode : X3DFontStyleNode?
 
    // Construction
    
@@ -51,8 +51,6 @@ public final class Text :
       addField (.outputOnly,     "textBounds", $textBounds)
       addField (.outputOnly,     "lineBounds", $lineBounds)
       addField (.inputOutput,    "fontStyle",  $fontStyle)
-      
-      addChildObjects ($fontStyleNode)
 
       $length     .unit = .length
       $maxExtent  .unit = .length

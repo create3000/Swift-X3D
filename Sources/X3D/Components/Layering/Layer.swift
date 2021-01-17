@@ -53,12 +53,12 @@ public final class Layer :
    {
       super .initialize ()
       
-      $addChildren    .addFieldInterest (to: groupNode! .$addChildren)
-      $removeChildren .addFieldInterest (to: groupNode! .$removeChildren)
-      $children       .addFieldInterest (to: groupNode! .$children)
+      $addChildren    .addFieldInterest (to: groupNode .$addChildren)
+      $removeChildren .addFieldInterest (to: groupNode .$removeChildren)
+      $children       .addFieldInterest (to: groupNode .$children)
 
-      groupNode! .children = children
+      groupNode .children = children
       
-      groupNode! .setup ()
+      groupNode .setup ()
    }
 }

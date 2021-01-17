@@ -11,24 +11,22 @@ internal final class X3DShapeContextProperties :
 {
    // Properties
    
-   @SFNode fileprivate private(set) var defaultAppearanceNode : Appearance?
+   fileprivate private(set) var defaultAppearanceNode : Appearance
    
    // Construction
    
    internal init (with executionContext : X3DExecutionContext)
    {
+      self .defaultAppearanceNode = Appearance (with: executionContext)
+
       super .init (executionContext .browser!, executionContext)
-      
-      addChildObjects ($defaultAppearanceNode)
    }
    
    internal final override func initialize ()
    {
       super .initialize ()
       
-      defaultAppearanceNode = Appearance (with: executionContext!)
-
-      defaultAppearanceNode! .setup ()
+     defaultAppearanceNode .setup ()
    }
 }
 
@@ -40,5 +38,5 @@ internal protocol X3DShapeContext : class
 
 extension X3DShapeContext
 {
-   internal var defaultAppearanceNode : Appearance { shapeContextProperties .defaultAppearanceNode! }
+   internal var defaultAppearanceNode : Appearance { shapeContextProperties .defaultAppearanceNode }
 }

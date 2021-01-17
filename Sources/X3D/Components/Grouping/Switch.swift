@@ -25,7 +25,7 @@ public final class Switch :
    
    // Properties
    
-   @SFNode private final var childNode : X3DChildNode?
+   private final var childNode : X3DChildNode?
 
    // Construction
    
@@ -47,8 +47,6 @@ public final class Switch :
       {
          addFieldAlias (alias: "choice", name: "children")
       }
-      
-      addChildObjects ($childNode)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> Switch

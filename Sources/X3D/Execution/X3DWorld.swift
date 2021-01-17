@@ -17,8 +17,8 @@ public final class X3DWorld :
    
    // Properties
    
-   @SFNode private final var defaultLayerSetNode : LayerSet!
-   @SFNode public private(set) final var layerSetNode : LayerSet?
+   private final var defaultLayerSetNode                 : LayerSet
+   @SFNode public private(set) final var layerSetNode    : LayerSet?
    @SFNode public private(set) final var activeLayerNode : X3DLayerNode?
    
    // Construction
@@ -31,8 +31,7 @@ public final class X3DWorld :
       
       types .append (.X3DWorld)
       
-      addChildObjects ($defaultLayerSetNode,
-                       $layerSetNode,
+      addChildObjects ($layerSetNode,
                        $activeLayerNode)
 
       setup ()
@@ -72,13 +71,13 @@ public final class X3DWorld :
          
          if oldLayerSetNode != nil
          {
-            executionContext! .$rootNodes .removeFieldInterest (to: oldLayerSetNode! .layerNode0! .$children)
-            oldLayerSetNode! .layerNode0! .children .removeAll ()
+            executionContext! .$rootNodes .removeFieldInterest (to: oldLayerSetNode! .layerNode0 .$children)
+            oldLayerSetNode! .layerNode0 .children .removeAll ()
          }
          
          // Handle layer 0
          
-         executionContext! .$rootNodes .addFieldInterest (to: layerSetNode! .layerNode0! .$children)
+         executionContext! .$rootNodes .addFieldInterest (to: layerSetNode! .layerNode0 .$children)
          
          let layerNode0 = Layer (with: executionContext!)
          

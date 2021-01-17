@@ -11,32 +11,28 @@ internal final class X3DGeometry3DContextProperties :
 {
    // Properties
    
-   @SFNode fileprivate private(set) var coneOptions     : X3DConeOptions?
-   @SFNode fileprivate private(set) var cylinderOptions : X3DCylinderOptions?
-   @SFNode fileprivate private(set) var sphereOptions   : X3DSphereOptions?
+   fileprivate private(set) var coneOptions     : X3DConeOptions
+   fileprivate private(set) var cylinderOptions : X3DCylinderOptions
+   fileprivate private(set) var sphereOptions   : X3DSphereOptions
 
    // Construction
    
    internal init (with executionContext : X3DExecutionContext)
    {
+      self .coneOptions     = X3DConeOptions       (with: executionContext)
+      self .cylinderOptions = X3DCylinderOptions   (with: executionContext)
+      self .sphereOptions   = X3DQuadSphereOptions (with: executionContext)
+ 
       super .init (executionContext .browser!, executionContext)
-      
-      addChildObjects ($coneOptions,
-                       $cylinderOptions,
-                       $sphereOptions)
    }
    
    internal final override func initialize ()
    {
       super .initialize ()
       
-      coneOptions     = X3DConeOptions       (with: executionContext!)
-      cylinderOptions = X3DCylinderOptions   (with: executionContext!)
-      sphereOptions   = X3DQuadSphereOptions (with: executionContext!)
- 
-      coneOptions!     .setup ()
-      cylinderOptions! .setup ()
-      sphereOptions!   .setup ()
+      coneOptions     .setup ()
+      cylinderOptions .setup ()
+      sphereOptions   .setup ()
       
       browser! .browserOptions .$PrimitiveQuality .addInterest ("set_primitiveQuality", X3DGeometry3DContextProperties .set_primitiveQuality, self)
    }
@@ -47,8 +43,8 @@ internal final class X3DGeometry3DContextProperties :
       {
          case "LOW": do
          {
-            coneOptions!     .uDimension = 16
-            cylinderOptions! .uDimension = 16
+            coneOptions     .uDimension = 16
+            cylinderOptions .uDimension = 16
             
             if let sphereOptions = sphereOptions as? X3DQuadSphereOptions
             {
@@ -58,8 +54,8 @@ internal final class X3DGeometry3DContextProperties :
          }
          case "HIGH": do
          {
-            coneOptions!     .uDimension = 32
-            cylinderOptions! .uDimension = 32
+            coneOptions     .uDimension = 32
+            cylinderOptions .uDimension = 32
             
             if let sphereOptions = sphereOptions as? X3DQuadSphereOptions
             {
@@ -69,8 +65,8 @@ internal final class X3DGeometry3DContextProperties :
          }
          default: do
          {
-            coneOptions!     .uDimension = 20
-            cylinderOptions! .uDimension = 20
+            coneOptions     .uDimension = 20
+            cylinderOptions .uDimension = 20
             
             if let sphereOptions = sphereOptions as? X3DQuadSphereOptions
             {
@@ -90,7 +86,7 @@ internal protocol X3DGeometry3DContext : class
 
 extension X3DGeometry3DContext
 {
-   internal var coneOptions     : X3DConeOptions { geometry3DContextProperties .coneOptions! }
-   internal var cylinderOptions : X3DCylinderOptions { geometry3DContextProperties .cylinderOptions! }
-   internal var sphereOptions   : X3DSphereOptions { geometry3DContextProperties .sphereOptions! }
+   internal var coneOptions     : X3DConeOptions { geometry3DContextProperties .coneOptions }
+   internal var cylinderOptions : X3DCylinderOptions { geometry3DContextProperties .cylinderOptions }
+   internal var sphereOptions   : X3DSphereOptions { geometry3DContextProperties .sphereOptions }
 }

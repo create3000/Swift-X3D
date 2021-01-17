@@ -13,17 +13,16 @@ internal final class ScreenText :
 {
    // Properties
    
-   @SFNode private final var pixelTexture    : PixelTexture!
+   private final var pixelTexture            : PixelTexture
+   private final let pointSize               : Float
    internal final override var isTransparent : Bool { true }
    
-   private final let pointSize : Float
-
    // Construction
    
    internal init (textNode : Text, fontStyleNode : ScreenFontStyle)
    {
-      pixelTexture = PixelTexture (with: textNode .executionContext!)
-      pointSize    = fontStyleNode .pointSize
+      self .pixelTexture = PixelTexture (with: textNode .executionContext!)
+      self .pointSize    = fontStyleNode .pointSize
 
       super .init (textNode: textNode, fontStyleNode: fontStyleNode)
       

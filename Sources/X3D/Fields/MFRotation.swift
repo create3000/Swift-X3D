@@ -60,22 +60,11 @@ public final class MFRotation :
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
-      switch wrappedValue .count
-      {
-         case 0:
-            stream += "[ ]"
-         case 1:
-            let axis = wrappedValue .first! .axis
-            stream += "\(axis .x) \(axis .y) \(axis .z) \(wrappedValue .first! .angle)"
-         default:
-            stream += "[\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \($0 .angle)" } .joined (separator: ", "))]"
-      }
+      toVRMLStream (stream)
    }
    
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
-      let executionContext = stream .executionContext
-      
       switch wrappedValue .count
       {
          case 0:
@@ -84,7 +73,7 @@ public final class MFRotation :
             stream += "]"
          case 1:
             let axis = wrappedValue .first! .axis
-            stream += "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: wrappedValue .first! .angle))"
+            stream += "\(axis .x) \(axis .y) \(axis .z) \(stream .toUnit (.angle, value: wrappedValue .first! .angle))"
          default:
             stream += "["
             stream += stream .ListBreak
@@ -92,7 +81,7 @@ public final class MFRotation :
             stream .incIndent ()
             
             stream += stream .Indent
-            stream += "\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: $0 .angle))" } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(stream .toUnit (.angle, value: $0 .angle))" } .joined (separator: stream .Separator))"
             stream += stream .ListBreak
             
             stream .decIndent ()

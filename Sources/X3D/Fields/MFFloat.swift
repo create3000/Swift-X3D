@@ -60,21 +60,11 @@ public final class MFFloat :
  
    internal final override func toStream (_ stream : X3DOutputStream)
    {
-      switch wrappedValue .count
-      {
-         case 0:
-            stream += "[ ]"
-         case 1:
-            stream += String (wrappedValue .first!)
-         default:
-            stream += "[\(wrappedValue .map { String ($0) } .joined (separator: ", "))]"
-      }
+      toVRMLStream (stream)
    }
    
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
-      let executionContext = stream .executionContext
-      
       switch wrappedValue .count
       {
          case 0:
@@ -82,7 +72,7 @@ public final class MFFloat :
             stream += stream .TidySpace
             stream += "]"
          case 1:
-            stream += String (executionContext .toUnit (unit, value: wrappedValue .first!))
+            stream += String (stream .toUnit (unit, value: wrappedValue .first!))
          default:
             stream += "["
             stream += stream .ListBreak
@@ -90,7 +80,7 @@ public final class MFFloat :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { String (executionContext .toUnit (unit, value: $0)) } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { String (stream .toUnit (unit, value: $0)) } .joined (separator: stream .Separator))"
             stream += stream .ListBreak
             
             stream .decIndent ()

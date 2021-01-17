@@ -20,7 +20,7 @@ internal final class X3DOutputStream
    
    // Construction
    
-   internal init (style : OutputStyle)
+   internal init (style : OutputStyle, units : Bool)
    {
       switch style
       {
@@ -61,6 +61,8 @@ internal final class X3DOutputStream
             IndentCharacters     = "  "
             TidyIndentCharacters = "  "
       }
+      
+      self .units = units
    }
    
    // String handling
@@ -109,7 +111,14 @@ internal final class X3DOutputStream
    
    internal final func padding (_ string : String, _ count : Int) -> String
    {
-      return string .padding (toLength: count, withPad: TidySpace, startingAt: 0)
+      if TidySpace .isEmpty
+      {
+         return string
+      }
+      else
+      {
+         return string .padding (toLength: count, withPad: TidySpace, startingAt: 0)
+      }
    }
 
    // Execution context handling
@@ -166,5 +175,35 @@ internal final class X3DOutputStream
    internal final func getName (_ node : X3DNode) -> String
    {
       return node .getName ()
+   }
+   
+   // Unit handling
+   
+   private final let units : Bool
+   
+   @inlinable
+   internal func toUnit (_ unit : X3DUnitCategory, value : Double) -> Double
+   {
+      if units
+      {
+         return executionContext .toUnit (unit, value: value)
+      }
+      else
+      {
+         return value
+      }
+   }
+   
+   @inlinable
+   internal func toUnit (_ unit : X3DUnitCategory, value : Float) -> Float
+   {
+      if units
+      {
+         return executionContext .toUnit (unit, value: value)
+      }
+      else
+      {
+         return value
+      }
    }
 }

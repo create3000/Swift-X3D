@@ -305,6 +305,18 @@ public class X3DNode :
             {
                toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength)
 
+               if field !== userDefinedFields .last
+               {
+                  stream += stream .Break
+               }
+            }
+            
+            if fields .isEmpty
+            {
+               stream += stream .TidyBreak
+            }
+            else
+            {
                stream += stream .Break
             }
 
@@ -343,8 +355,13 @@ public class X3DNode :
          {
             toVRMLStreamField (stream, field, fieldTypeLength, accessTypeLength)
 
-            stream += stream .Break
+            if field !== fields .last
+            {
+               stream += stream .Break
+            }
          }
+         
+         stream += stream .TidyBreak
 
          stream .decIndent ()
          

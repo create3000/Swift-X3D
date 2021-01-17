@@ -60,21 +60,11 @@ public final class MFVec4d :
 
    internal final override func toStream (_ stream : X3DOutputStream)
    {
-      switch wrappedValue .count
-      {
-         case 0:
-            stream += "[ ]"
-         case 1:
-            stream += "\(wrappedValue .first! .x) \(wrappedValue .first! .y) \(wrappedValue .first! .z) \(wrappedValue .first! .w)"
-         default:
-            stream += "[\(wrappedValue .map { "\($0 .x) \($0 .y) \($0 .z) \($0 .w)" } .joined (separator: ", "))]"
-      }
+      toVRMLStream (stream)
    }
    
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
-      let executionContext = stream .executionContext
-      
       switch wrappedValue .count
       {
          case 0:
@@ -82,7 +72,7 @@ public final class MFVec4d :
             stream += stream .TidySpace
             stream += "]"
          case 1:
-            stream += "\(executionContext .toUnit (unit, value: wrappedValue .first! .x)) \(executionContext .toUnit (unit, value: wrappedValue .first! .y)) \(executionContext .toUnit (unit, value: wrappedValue .first! .z)) \(executionContext .toUnit (unit, value: wrappedValue .first! .w))"
+            stream += "\(stream .toUnit (unit, value: wrappedValue .first! .x)) \(stream .toUnit (unit, value: wrappedValue .first! .y)) \(stream .toUnit (unit, value: wrappedValue .first! .z)) \(stream .toUnit (unit, value: wrappedValue .first! .w))"
          default:
             stream += "["
             stream += stream .ListBreak
@@ -90,7 +80,7 @@ public final class MFVec4d :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { "\(executionContext .toUnit (unit, value: $0 .x)) \(executionContext .toUnit (unit, value: $0 .y)) \(executionContext .toUnit (unit, value: $0 .z)) \(executionContext .toUnit (unit, value: $0 .w))" } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { "\(stream .toUnit (unit, value: $0 .x)) \(stream .toUnit (unit, value: $0 .y)) \(stream .toUnit (unit, value: $0 .z)) \(stream .toUnit (unit, value: $0 .w))" } .joined (separator: stream .Separator))"
             stream += stream .ListBreak
             
             stream .decIndent ()

@@ -26,7 +26,7 @@ public class X3DObject :
    
    public final func toString (style : OutputStyle = .Compact) -> String
    {
-      let stream = X3DOutputStream (style: style)
+      let stream = X3DOutputStream (style: style, units: false)
       
       toStream (stream)
       
@@ -35,7 +35,7 @@ public class X3DObject :
 
    public final func toXMLString (with executionContext : X3DExecutionContext, style : OutputStyle = .Tidy) -> String
    {
-      let stream = X3DOutputStream (style: style)
+      let stream = X3DOutputStream (style: style, units: true)
       
       stream .push (executionContext)
 
@@ -46,7 +46,7 @@ public class X3DObject :
    
    public final func toJSONString (with executionContext : X3DExecutionContext, style : OutputStyle = .Tidy) -> String
    {
-      let stream = X3DOutputStream (style: style)
+      let stream = X3DOutputStream (style: style, units: true)
       
       stream .push (executionContext)
 
@@ -57,7 +57,7 @@ public class X3DObject :
 
    public final func toVRMLString (with executionContext : X3DExecutionContext, style : OutputStyle = .Tidy) -> String
    {
-      let stream = X3DOutputStream (style: style)
+      let stream = X3DOutputStream (style: style, units: true)
       
       stream .push (executionContext)
 

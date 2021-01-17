@@ -567,19 +567,19 @@ public class X3DExecutionContext :
    
    // Input/Output
    
-   public final func toXMLString () -> String
+   public final func toXMLString (style : OutputStyle = .Tidy) -> String
    {
-      return toXMLString (with: self)
+      return toXMLString (with: self, style: style)
    }
    
-   public final func toJSONString () -> String
+   public final func toJSONString (style : OutputStyle = .Tidy) -> String
    {
-      return toJSONString (with: self)
+      return toJSONString (with: self, style: style)
    }
    
-   public final func toVRMLString () -> String
+   public final func toVRMLString (style : OutputStyle = .Tidy) -> String
    {
-      return toVRMLString (with: self)
+      return toVRMLString (with: self, style: style)
    }
    
    internal override func toVRMLStream (_ stream : X3DOutputStream)
@@ -593,7 +593,7 @@ public class X3DExecutionContext :
       
       for i in 0 ..< rootNodes .count
       {
-         stream += stream .indent
+         stream += stream .Indent
          
          if let rootNode = rootNodes [i]
          {

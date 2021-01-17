@@ -84,7 +84,19 @@ public final class MFVec4d :
          case 1:
             stream += "\(executionContext .toUnit (unit, value: wrappedValue .first! .x)) \(executionContext .toUnit (unit, value: wrappedValue .first! .y)) \(executionContext .toUnit (unit, value: wrappedValue .first! .z)) \(executionContext .toUnit (unit, value: wrappedValue .first! .w))"
          default:
-            stream += "[\(wrappedValue .map { "\(executionContext .toUnit (unit, value: $0 .x)) \(executionContext .toUnit (unit, value: $0 .y)) \(executionContext .toUnit (unit, value: $0 .z)) \(executionContext .toUnit (unit, value: $0 .w))" } .joined (separator: stream .Separator))]"
+            stream += "["
+            stream += stream .ListBreak
+            
+            stream .incIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "\(wrappedValue .map { "\(executionContext .toUnit (unit, value: $0 .x)) \(executionContext .toUnit (unit, value: $0 .y)) \(executionContext .toUnit (unit, value: $0 .z)) \(executionContext .toUnit (unit, value: $0 .w))" } .joined (separator: stream .Separator))"
+            stream += stream .ListBreak
+            
+            stream .decIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "]"
       }
    }
 

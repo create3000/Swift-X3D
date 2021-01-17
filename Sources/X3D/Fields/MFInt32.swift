@@ -74,7 +74,19 @@ public final class MFInt32 :
          case 1:
             stream += String (wrappedValue .first!)
          default:
-            stream += "[\(wrappedValue .map { String ($0) } .joined (separator: stream .Separator))]"
+            stream += "["
+            stream += stream .ListBreak
+            
+            stream .incIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "\(wrappedValue .map { String ($0) } .joined (separator: stream .Separator))"
+            stream += stream .ListBreak
+            
+            stream .decIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "]"
       }
    }
 

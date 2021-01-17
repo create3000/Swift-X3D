@@ -84,7 +84,19 @@ public final class MFDouble :
          case 1:
             stream += String (executionContext .toUnit (unit, value: wrappedValue .first!))
          default:
-            stream += "[\(wrappedValue .map { String (executionContext .toUnit (unit, value: $0)) } .joined (separator: stream .Separator))]"
+            stream += "["
+            stream += stream .ListBreak
+            
+            stream .incIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "\(wrappedValue .map { String (executionContext .toUnit (unit, value: $0)) } .joined (separator: stream .Separator))"
+            stream += stream .ListBreak
+            
+            stream .decIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "]"
       }
    }
 

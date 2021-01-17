@@ -327,7 +327,7 @@ public class X3DNode :
          }
          else
          {
-            stream += stream .indent
+            stream += stream .Indent
          }
       }
       else
@@ -348,7 +348,7 @@ public class X3DNode :
 
          stream .decIndent ()
          
-         stream += stream .indent
+         stream += stream .Indent
       }
 
       // End
@@ -362,7 +362,7 @@ public class X3DNode :
       
       if references .isEmpty
       {
-         stream += stream .indent
+         stream += stream .Indent
          stream += stream .padding (field .getAccessType () .description, accessTypeLength)
          stream += stream .Space
          stream += stream .padding (field .getTypeName (), fieldTypeLength)
@@ -384,7 +384,7 @@ public class X3DNode :
          {
             // Output user defined reference field
 
-            stream += stream .indent
+            stream += stream .Indent
             stream += stream .padding (field .getAccessType () .description, accessTypeLength)
             stream += stream .Space
             stream += stream .padding (field .getTypeName (), fieldTypeLength)
@@ -413,7 +413,7 @@ public class X3DNode :
       {
          if field .isInitializable
          {
-            stream += stream .indent
+            stream += stream .Indent
             stream += field .getName ()
             stream += stream .Space
 
@@ -428,7 +428,7 @@ public class X3DNode :
          {
             // Output build in reference field
 
-            stream += stream .indent
+            stream += stream .Indent
             stream += field .getName ()
             stream += stream .Space
             stream += "IS"

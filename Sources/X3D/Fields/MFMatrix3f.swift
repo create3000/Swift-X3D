@@ -82,8 +82,14 @@ public final class MFMatrix3f :
             stream += " "
             stream += "\(c2.x) \(c2.y) \(c2.z)"
          default:
+            stream += "["
+            stream += stream .ListBreak
+            
+            stream .incIndent ()
+            
+            stream += stream .TidyIndent
             stream += """
-[\(wrappedValue .map
+\(wrappedValue .map
 {
    let c0 = $0 [0]
    let c1 = $0 [1]
@@ -99,8 +105,14 @@ public final class MFMatrix3f :
 
    return string
 }
-.joined (separator: stream .Separator))]
+.joined (separator: stream .Separator))
 """
+            stream += stream .ListBreak
+            
+            stream .decIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "]"
       }
    }
 

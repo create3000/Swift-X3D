@@ -86,7 +86,19 @@ public final class MFRotation :
             let axis = wrappedValue .first! .axis
             stream += "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: wrappedValue .first! .angle))"
          default:
-            stream += "[\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: $0 .angle))" } .joined (separator: stream .Separator))]"
+            stream += "["
+            stream += stream .ListBreak
+            
+            stream .incIndent ()
+            
+            stream += stream .Indent
+            stream += "\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(executionContext .toUnit (.angle, value: $0 .angle))" } .joined (separator: stream .Separator))"
+            stream += stream .ListBreak
+            
+            stream .decIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "]"
       }
    }
 

@@ -186,7 +186,7 @@ public final class MFNode <Element : X3DBaseNode> :
             
             for node in wrappedValue
             {
-               stream += stream .indent
+               stream += stream .Indent
                
                if let node = node
                {
@@ -203,7 +203,7 @@ public final class MFNode <Element : X3DBaseNode> :
             
             stream .decIndent ()
             
-            stream += stream .indent
+            stream += stream .Indent
             stream += "]"
          }
       }

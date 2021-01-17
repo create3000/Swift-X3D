@@ -74,7 +74,19 @@ public final class MFBool :
          case 1:
             stream += wrappedValue .first! ? "TRUE" : "FALSE"
          default:
-            stream += "[\(wrappedValue .map { $0 ? "TRUE" : "FALSE" } .joined (separator: stream .Separator))]"
+            stream += "["
+            stream += stream .ListBreak
+            
+            stream .incIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "\(wrappedValue .map { $0 ? "TRUE" : "FALSE" } .joined (separator: stream .Separator))"
+            stream += stream .ListBreak
+            
+            stream .decIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "]"
       }
    }
    

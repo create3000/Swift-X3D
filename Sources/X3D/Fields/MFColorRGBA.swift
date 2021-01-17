@@ -74,7 +74,19 @@ public final class MFColorRGBA :
          case 1:
             stream += "\(wrappedValue .first! .r) \(wrappedValue .first! .g) \(wrappedValue .first! .b) \(wrappedValue .first! .a)"
          default:
-            stream += "[\(wrappedValue .map { "\($0 .r) \($0 .g) \($0 .b) \($0 .a)" } .joined (separator: stream .Separator))]"
+            stream += "["
+            stream += stream .ListBreak
+            
+            stream .incIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "\(wrappedValue .map { "\($0 .r) \($0 .g) \($0 .b) \($0 .a)" } .joined (separator: stream .Separator))"
+            stream += stream .ListBreak
+            
+            stream .decIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "]"
       }
    }
 

@@ -119,8 +119,14 @@ public final class MFImage :
                stream += wrappedValue .first! .array .map { String (format: "0x%x", $0) } .joined (separator: " ")
             }
          default:
+            stream += "["
+            stream += stream .ListBreak
+            
+            stream .incIndent ()
+            
+            stream += stream .TidyIndent
             stream += """
-[\(wrappedValue .map
+\(wrappedValue .map
 {
    var string = ""
    
@@ -138,8 +144,14 @@ public final class MFImage :
    
    return string
 }
-.joined (separator: stream .Separator))]
+.joined (separator: stream .Separator))
 """
+            stream += stream .ListBreak
+            
+            stream .decIndent ()
+            
+            stream += stream .TidyIndent
+            stream += "]"
       }
    }
 

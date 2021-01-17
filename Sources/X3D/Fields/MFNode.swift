@@ -191,13 +191,14 @@ public final class MFNode <Element : X3DBaseNode> :
                if let node = node
                {
                   node .toVRMLStream (stream)
-               }
+                  
+                  stream += stream .TidyBreak
+              }
                else
                {
                   stream += "NULL"
+                  stream += stream .Break
                }
-               
-               stream += stream .TidyBreak
             }
             
             stream .decIndent ()

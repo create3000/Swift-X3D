@@ -60,7 +60,7 @@ public final class LayoutLayer :
       $removeChildren .addFieldInterest (to: groupNode! .$removeChildren)
       $children       .addFieldInterest (to: groupNode! .$children)
       
-      groupNode! .children .append (contentsOf: children)
+      groupNode! .children = children
       
       groupNode! .setup ()
    }

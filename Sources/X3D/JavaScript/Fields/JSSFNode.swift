@@ -27,9 +27,9 @@ import JavaScriptCore
    func getNodeType () -> [Int32]
    func getFieldDefinitions () -> [X3DFieldDefinition]
 
-   func toXMLString () -> String
-   func toJSONString () -> String
-   func toVRMLString () -> String
+   func toXMLString (_ style : String) -> String
+   func toJSONString (_ style : String) -> String
+   func toVRMLString (_ style : String) -> String
 }
 
 extension JavaScript
@@ -354,11 +354,11 @@ extension JavaScript
          return fieldDefinitions
       }
       
-      public final func toXMLString () -> String
+      public final func toXMLString (_ style : String) -> String
       {
          if let node = field .wrappedValue
          {
-            return node .toXMLString (with: JSContext .current ()! .browser! .executionContext)
+            return node .toXMLString (with: JSContext .current ()! .browser! .executionContext, style: OutputStyle (style) ?? .Tidy)
          }
          else
          {
@@ -366,11 +366,11 @@ extension JavaScript
          }
       }
       
-      public final func toJSONString () -> String
+      public final func toJSONString (_ style : String) -> String
       {
          if let node = field .wrappedValue
          {
-            return node .toJSONString (with: JSContext .current ()! .browser! .executionContext)
+            return node .toJSONString (with: JSContext .current ()! .browser! .executionContext, style: OutputStyle (style) ?? .Tidy)
          }
          else
          {
@@ -378,11 +378,11 @@ extension JavaScript
          }
       }
 
-      public final func toVRMLString () -> String
+      public final func toVRMLString (_ style : String) -> String
       {
          if let node = field .wrappedValue
          {
-            return node .toVRMLString (with: JSContext .current ()! .browser! .executionContext)
+            return node .toVRMLString (with: JSContext .current ()! .browser! .executionContext, style: OutputStyle (style) ?? .Tidy)
          }
          else
          {

@@ -43,8 +43,8 @@ import JavaScriptCore
    func deleteRoute (_ route : X3DRoute?)
 
    func toString () -> String
-   func toXMLString () -> String
-   func toJSONString () -> String
+   func toXMLString (_ style : String) -> String
+   func toJSONString (_ style : String) -> String
    func toVRMLString (_ style : String) -> String
 }
 
@@ -264,14 +264,14 @@ DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);
          return "[object X3DExecutionContext]"
       }
       
-      public final func toXMLString () -> String
+      public final func toXMLString (_ style : String) -> String
       {
-         return executionContext .toXMLString ()
+         return executionContext .toXMLString (style: OutputStyle (style) ?? .Tidy)
       }
       
-      public final func toJSONString () -> String
+      public final func toJSONString (_ style : String) -> String
       {
-         return executionContext .toJSONString ()
+         return executionContext .toJSONString (style: OutputStyle (style) ?? .Tidy)
       }
 
       public final func toVRMLString (_ style : String) -> String

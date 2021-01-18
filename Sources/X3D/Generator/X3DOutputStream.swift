@@ -212,15 +212,17 @@ internal final class X3DOutputStream
    {
       //let index = exportedNodes .object (forKey: executionContext)
    }
+   
+   // Node handling
+   
+   private final var nodes      = Set <X3DBaseNode> ()
+   private final var routeNodes = Set <X3DBaseNode> ()
 
    @inlinable
    internal final func isSharedNode (_ node : X3DNode) -> Bool
    {
       return false
    }
-   
-   private final var nodes      = Set <X3DBaseNode> ()
-   private final var routeNodes = Set <X3DBaseNode> ()
 
    @inlinable
    internal final func addNode (_ node : X3DNode)
@@ -253,9 +255,11 @@ internal final class X3DOutputStream
       return routeNodes .contains (routeNode)
    }
    
+   // Name handling
+   
    internal final func getName (_ node : X3DNode) -> String
    {
-      // Is the node already in index
+      // Is the node already in index?
 
       if let name = namesByNode [node]
       {
@@ -264,7 +268,7 @@ internal final class X3DOutputStream
 
       let index = names .object (forKey: executionContext)!
 
-      // The node has no name
+      // The node has no name.
 
       if node .getName () .isEmpty
       {
@@ -279,16 +283,15 @@ internal final class X3DOutputStream
             return name
          }
 
-         // The node doesn't need a name
+         // The node doesn't needs a name.
 
-         return node .getName ()
+         return ""
       }
 
-      // The node has a name
+      // The node has a name.
 
-      var name      = node .getDisplayName ()
-      let hasNumber = node .getName () != name
-
+      var name = node .getDisplayName ()
+      
       if name .isEmpty
       {
          if needsName (node)
@@ -302,17 +305,7 @@ internal final class X3DOutputStream
       }
       else
       {
-         var i       = 1
-         var newName = hasNumber ? "\(name)_\(i)" : name
-
-         while index .contains (NSString (utf8String: newName))
-         {
-            i += 1
-            
-            newName = "\(name)_\(i)"
-         }
-
-         name = newName
+         name = uniqueName (name)
       }
 
       index .add (NSString (utf8String: name))
@@ -322,7 +315,7 @@ internal final class X3DOutputStream
       return name
    }
    
-   internal final func needsName (_ node : X3DNode) -> Bool
+   private final func needsName (_ node : X3DNode) -> Bool
    {
       if node .cloneCount > 1
       {
@@ -364,21 +357,34 @@ internal final class X3DOutputStream
    private final func uniqueName () -> String
    {
       let index = names .object (forKey: executionContext)!
+      
+      newName += 1
+      
+      var name = "_\(newName)"
 
-      repeat
+      while index .contains (NSString (utf8String: name))
       {
          newName += 1
-         
-         let name = "_\(newName)"
-
-         if index .contains (NSString (utf8String: name))
-         {
-            continue
-         }
-
-         return name
+         name     = "_\(newName)"
       }
-      while true
+
+      return name
+   }
+   
+   private final func uniqueName (_ name : String) -> String
+   {
+      let index   = names .object (forKey: executionContext)!
+      var newName = name
+      var i       = 0
+
+      while index .contains (NSString (utf8String: newName))
+      {
+         i += 1
+         
+         newName = "\(name)_\(i)"
+      }
+
+      return newName
    }
 
    // Number formats

@@ -136,46 +136,98 @@ internal final class X3DOutputStream
    // Execution context handling
    
    @inlinable
-   internal var executionContext : X3DExecutionContext { executionContexts .last! }
+   internal final var executionContext : X3DExecutionContext { executionContexts .last! }
 
-   private var executionContexts = [X3DExecutionContext] ()
+   private final var executionContexts = [X3DExecutionContext] ()
    
-   @inlinable
+   private final var names         = NSMapTable <X3DExecutionContext, NSHashTable <NSString>> ()
+   private final var importedNodes = NSMapTable <X3DExecutionContext, NSHashTable <X3DNode>> ()
+   private final var exportedNodes = NSMapTable <X3DExecutionContext, NSHashTable <X3DNode>> ()
+
    internal final func push (_ executionContext : X3DExecutionContext)
    {
       executionContexts .append (executionContext)
+      
+      if names .object (forKey: executionContext) == nil
+      {
+         names .setObject (NSHashTable <NSString> (), forKey: executionContext)
+      }
+
+      if importedNodes .object (forKey: executionContext) == nil
+      {
+         importedNodes .setObject (NSHashTable <X3DNode> (), forKey: executionContext)
+      }
+
+      if exportedNodes .object (forKey: executionContext) == nil
+      {
+         exportedNodes .setObject (NSHashTable <X3DNode> (), forKey: executionContext)
+      }
    }
    
    @inlinable
    internal final func pop (_ executionContext : X3DExecutionContext)
    {
       executionContexts .removeLast ()
+      
+      guard executionContexts .isEmpty else { return }
+
+      importedNodes .removeAllObjects ()
+      exportedNodes .removeAllObjects ()
    }
    
    // Scope handling
    
+   private final var level         = 0
+   private final var newName       = 0
+   private final var namesByNode   = [X3DNode : String] ()
+   private final var importedNames = [X3DNode : String] ()
+
    internal final func enterScope ()
    {
-      
+      if level == 0
+      {
+         newName = 0
+      }
+
+      level += 1
    }
    
    internal final func leaveScope ()
    {
+      level -= 1
+
+      guard level == 0 else { return }
       
+      nodes         .removeAll ()
+      namesByNode   .removeAll ()
+      importedNames .removeAll ()
    }
    
+   internal final func setImportedNodes ()
+   {
+      //let index = importedNodes .object (forKey: executionContext)
+   }
+   
+   internal final func setExportedNodes ()
+   {
+      //let index = exportedNodes .object (forKey: executionContext)
+   }
+
    @inlinable
    internal final func isSharedNode (_ node : X3DNode) -> Bool
    {
       return false
    }
    
-   private final var nodes = Set <X3DBaseNode> ()
-   
+   private final var nodes      = Set <X3DBaseNode> ()
+   private final var routeNodes = Set <X3DBaseNode> ()
+
    @inlinable
    internal final func addNode (_ node : X3DNode)
    {
       nodes .insert (node)
+      
+      addRouteNode (node)
    }
    
    @inlinable
@@ -184,11 +236,151 @@ internal final class X3DOutputStream
       return nodes .contains (node)
    }
    
-   internal final func getName (_ node : X3DNode) -> String
+   internal final func addImportedNode (_ exportedNode : X3DNode, _ importedName : String)
    {
-      return node .getName ()
+      importedNames [exportedNode] = importedName
    }
    
+   @inlinable
+   internal final func addRouteNode (_ routeNode : X3DNode)
+   {
+      routeNodes .insert (routeNode)
+   }
+   
+   @inlinable
+   internal final func existsRouteNode (_ routeNode : X3DNode) -> Bool
+   {
+      return routeNodes .contains (routeNode)
+   }
+   
+   internal final func getName (_ node : X3DNode) -> String
+   {
+      // Is the node already in index
+
+      if let name = namesByNode [node]
+      {
+         return name
+      }
+
+      let index = names .object (forKey: executionContext)!
+
+      // The node has no name
+
+      if node .getName () .isEmpty
+      {
+         if needsName (node)
+         {
+            let name = uniqueName ()
+
+            index .add (NSString (utf8String: name))
+            
+            namesByNode [node] = name
+
+            return name
+         }
+
+         // The node doesn't need a name
+
+         return node .getName ()
+      }
+
+      // The node has a name
+
+      var name      = node .getDisplayName ()
+      let hasNumber = node .getName () != name
+
+      if name .isEmpty
+      {
+         if needsName (node)
+         {
+            name = uniqueName ()
+         }
+         else
+         {
+            return ""
+         }
+      }
+      else
+      {
+         var i       = 1
+         var newName = hasNumber ? "\(name)_\(i)" : name
+
+         while index .contains (NSString (utf8String: newName))
+         {
+            i += 1
+            
+            newName = "\(name)_\(i)"
+         }
+
+         name = newName
+      }
+
+      index .add (NSString (utf8String: name))
+      
+      namesByNode [node] = name
+
+      return name
+   }
+   
+   internal final func needsName (_ node : X3DNode) -> Bool
+   {
+      if node .cloneCount > 1
+      {
+         return true
+      }
+
+      if node .hasRoutes
+      {
+         return true
+      }
+
+      let executionContext = node .executionContext!
+      
+      do
+      {
+         if let index = importedNodes .object (forKey: executionContext)
+         {
+            if index .contains (node)
+            {
+               return true
+            }
+         }
+      }
+
+      do
+      {
+         if let index = exportedNodes .object (forKey: executionContext)
+         {
+            if index .contains (node)
+            {
+               return true
+            }
+         }
+      }
+
+      return false;
+   }
+   
+   private final func uniqueName () -> String
+   {
+      let index = names .object (forKey: executionContext)!
+
+      repeat
+      {
+         newName += 1
+         
+         let name = "_\(newName)"
+
+         if index .contains (NSString (utf8String: name))
+         {
+            continue
+         }
+
+         return name
+      }
+      while true
+   }
+
    // Number formats
    
    internal private(set) var doubleFormat = "%.16g"

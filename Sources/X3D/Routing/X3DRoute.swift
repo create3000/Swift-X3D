@@ -68,6 +68,42 @@ public final class X3DRoute :
       destinationField .routes_changed .processInterests ()
    }
    
+   // Input/Output
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      guard let sourceNodeName      = stream .getLocalName (sourceNode),
+            let destinationNodeName = stream .getLocalName (destinationNode)
+      else { return }
+
+      stream += stream .Indent
+      stream += "ROUTE"
+      stream += " "
+      stream += sourceNodeName
+      stream += "."
+      stream += sourceField! .getName ()
+
+      if sourceField! .getAccessType () == .inputOutput
+      {
+         stream += "_changed"
+      }
+
+      stream += " "
+      stream += "TO"
+      stream += " "
+      stream += destinationNodeName
+      stream += "."
+
+      if destinationField! .getAccessType () == .inputOutput
+      {
+         stream += "set_"
+      }
+
+      stream += destinationField! .getName ()
+   }
+   
+   // Destruction
+   
    deinit
    {
       disconnect ()

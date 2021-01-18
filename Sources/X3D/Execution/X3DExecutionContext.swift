@@ -617,7 +617,19 @@ public class X3DExecutionContext :
             stream += stream .TidyBreak
          }
       }
+      
+      // Output routes
+      
+      if !routes .isEmpty
+      {
+         stream += stream .Break
 
+         for route in routes
+         {
+            route .toVRMLStream (stream)
+         }
+      }
+      
       // Leave stream.
       
       stream .leaveScope ()

@@ -390,6 +390,23 @@ public final class X3DOutputStream
 
       return newName
    }
+   
+   internal final func getLocalName (_ node : X3DNode?) -> String?
+   {
+      guard let node = node else { return nil }
+      
+      if let importedName = importedNames [node]
+      {
+         return importedName
+      }
+
+      if existsNode (node)
+      {
+         return getName (node)
+      }
+
+      return nil
+   }
 
    // Number formats
    

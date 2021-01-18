@@ -272,6 +272,8 @@ public final class X3DScene :
       stream .enterScope ()
       stream .setExportedNodes (exportedNodes)
 
+      // Enter X3DExecutionContext
+      
       super .toVRMLStream (stream)
 
       // Leave stream.

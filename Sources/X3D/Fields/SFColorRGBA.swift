@@ -71,6 +71,11 @@ public class SFColorRGBA :
    {
       stream += String (format: "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)", wrappedValue .r, wrappedValue .g, wrappedValue .b, wrappedValue .a)
    }
+   
+   internal final override func toDisplayStream (_ stream : X3DOutputStream)
+   {
+      stream += "\(wrappedValue .r) \(wrappedValue .g) \(wrappedValue .b) \(wrappedValue .a)"
+   }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {

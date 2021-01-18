@@ -74,7 +74,7 @@ public final class SFDouble :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      toVRMLStream (stream)
+      stream += String (stream .toUnit (unit, value: wrappedValue))
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

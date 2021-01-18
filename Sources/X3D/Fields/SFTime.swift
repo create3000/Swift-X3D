@@ -82,6 +82,11 @@ public final class SFTime :
       stream += String (format: stream .doubleFormat, wrappedValue)
    }
 
+   internal final override func toDisplayStream (_ stream : X3DOutputStream)
+   {
+      stream += String (wrappedValue)
+   }
+
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool
    {
       return parser .sftimeValue (for: self)

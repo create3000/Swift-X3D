@@ -78,7 +78,11 @@ public class SFVec3d :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      toVRMLStream (stream)
+      let x = stream .toUnit (unit, value: wrappedValue .x)
+      let y = stream .toUnit (unit, value: wrappedValue .y)
+      let z = stream .toUnit (unit, value: wrappedValue .z)
+
+      stream += "\(x) \(y) \(z)"
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

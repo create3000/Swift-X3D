@@ -245,6 +245,8 @@ public final class X3DScene :
    
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
+      guard let browser = browser else { return }
+      
       // Output header.
       
       var specificationVersion = getSpecificationVersion ()
@@ -259,10 +261,10 @@ public final class X3DScene :
       stream += " "
       stream += "utf8"
       stream += " "
-      stream += browser! .getName ()
+      stream += browser .getName ()
       stream += " "
       stream += "V"
-      stream += browser! .getVersion ()
+      stream += browser .getVersion ()
       stream += "\n"
       stream += "\n"
       

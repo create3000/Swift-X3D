@@ -569,19 +569,19 @@ public class X3DExecutionContext :
    
    // Input/Output
    
-   public final func toXMLString (style : OutputStyle = .Tidy) -> String
+   public final func toXMLString (stream : X3DOutputStream = X3DOutputStream ()) -> String
    {
-      return toXMLString (with: self, style: style)
+      return toXMLString (with: self, stream: stream)
    }
    
-   public final func toJSONString (style : OutputStyle = .Tidy) -> String
+   public final func toJSONString (stream : X3DOutputStream = X3DOutputStream ()) -> String
    {
-      return toJSONString (with: self, style: style)
+      return toJSONString (with: self, stream: stream)
    }
    
-   public final func toVRMLString (style : OutputStyle = .Tidy) -> String
+   public final func toVRMLString (stream : X3DOutputStream = X3DOutputStream ()) -> String
    {
-      return toVRMLString (with: self, style: style)
+      return toVRMLString (with: self, stream: stream)
    }
    
    internal override func toVRMLStream (_ stream : X3DOutputStream)

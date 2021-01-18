@@ -176,7 +176,10 @@ public class X3DField :
    
    public final func toDisplayString (with executionContext : X3DExecutionContext) -> String
    {
-      let stream = X3DOutputStream (style: .Small, units: true)
+      let stream = X3DOutputStream ()
+      
+      stream .style = .Small
+      stream .units = true
       
       stream .push (executionContext)
       

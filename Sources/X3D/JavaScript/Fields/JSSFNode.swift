@@ -359,7 +359,9 @@ extension JavaScript
       {
          if let node = field .wrappedValue
          {
-            return node .toXMLString (with: JSContext .current ()! .browser! .executionContext, style: OutputStyle (style) ?? .Tidy)
+            let stream = X3DOutputStream (style : X3DOutputStyle (style) ?? .Tidy)
+            
+            return node .toXMLString (with: JSContext .current ()! .browser! .executionContext, stream: stream)
          }
          else
          {
@@ -371,7 +373,9 @@ extension JavaScript
       {
          if let node = field .wrappedValue
          {
-            return node .toJSONString (with: JSContext .current ()! .browser! .executionContext, style: OutputStyle (style) ?? .Tidy)
+            let stream = X3DOutputStream (style : X3DOutputStyle (style) ?? .Tidy)
+            
+            return node .toJSONString (with: JSContext .current ()! .browser! .executionContext, stream: stream)
          }
          else
          {
@@ -383,7 +387,9 @@ extension JavaScript
       {
          if let node = field .wrappedValue
          {
-            return node .toVRMLString (with: JSContext .current ()! .browser! .executionContext, style: OutputStyle (style) ?? .Tidy)
+            let stream = X3DOutputStream (style : X3DOutputStyle (style) ?? .Tidy)
+            
+            return node .toVRMLString (with: JSContext .current ()! .browser! .executionContext, stream: stream)
          }
          else
          {

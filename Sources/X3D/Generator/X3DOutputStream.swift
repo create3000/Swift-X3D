@@ -6,14 +6,14 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public enum OutputStyle
+public enum X3DOutputStyle
 {
    case Clean
    case Small
    case Compact
    case Tidy
    
-   private static let styles : [String : OutputStyle] = [
+   private static let styles : [String : Self] = [
       "clean"   : .Clean,
       "small"   : .Small,
       "compact" : .Compact,
@@ -22,17 +22,31 @@ public enum OutputStyle
    
    init? (_ string : String)
    {
-      guard let value = OutputStyle .styles [string .lowercased ()] else { return nil }
+      guard let value = Self .styles [string .lowercased ()] else { return nil }
       
       self = value
    }
 }
 
-internal final class X3DOutputStream
+public final class X3DOutputStream
 {
    // Construction
    
-   internal init (style : OutputStyle, units : Bool)
+   public init (style : X3DOutputStyle = .Tidy)
+   {
+      self .style = style
+      
+      set (style: style)
+   }
+   
+   // Style
+   
+   public final var style : X3DOutputStyle
+   {
+      didSet { set (style: style) }
+   }
+   
+   private final func set (style : X3DOutputStyle)
    {
       switch style
       {
@@ -73,15 +87,13 @@ internal final class X3DOutputStream
             IndentCharacters     = "  "
             TidyIndentCharacters = "  "
       }
-      
-      self .units = units
    }
+
    
    // String handling
    
    internal private(set) final var string : String = ""
    
-   @inlinable
    internal static func += (stream : X3DOutputStream, string : String)
    {
       stream .string += string
@@ -89,20 +101,19 @@ internal final class X3DOutputStream
    
    // Spaces
    
-   internal private(set) final var Space     : String
-   internal private(set) final var TidySpace : String
-   internal private(set) final var Break     : String
-   internal private(set) final var TidyBreak : String
-   internal private(set) final var ListBreak : String
-   internal private(set) final var Comma     : String
+   internal private(set) final var Space     : String = ""
+   internal private(set) final var TidySpace : String = ""
+   internal private(set) final var Break     : String = ""
+   internal private(set) final var TidyBreak : String = ""
+   internal private(set) final var ListBreak : String = ""
+   internal private(set) final var Comma     : String = ""
 
-   @inlinable
    internal final var Separator : String { Comma + ListBreak + TidyIndent }
 
    // Indent handling
    
-   private final var IndentCharacters     : String
-   private final var TidyIndentCharacters : String
+   private final var IndentCharacters     : String = ""
+   private final var TidyIndentCharacters : String = ""
 
    internal private(set) final var Indent     : String = ""
    internal private(set) final var TidyIndent : String = ""
@@ -135,7 +146,6 @@ internal final class X3DOutputStream
 
    // Execution context handling
    
-   @inlinable
    internal final var executionContext : X3DExecutionContext { executionContexts .last! }
 
    private final var executionContexts = [X3DExecutionContext] ()
@@ -164,7 +174,6 @@ internal final class X3DOutputStream
       }
    }
    
-   @inlinable
    internal final func pop (_ executionContext : X3DExecutionContext)
    {
       executionContexts .removeLast ()
@@ -218,13 +227,11 @@ internal final class X3DOutputStream
    private final var nodes      = Set <X3DBaseNode> ()
    private final var routeNodes = Set <X3DBaseNode> ()
 
-   @inlinable
    internal final func isSharedNode (_ node : X3DNode) -> Bool
    {
       return false
    }
 
-   @inlinable
    internal final func addNode (_ node : X3DNode)
    {
       nodes .insert (node)
@@ -232,7 +239,6 @@ internal final class X3DOutputStream
       addRouteNode (node)
    }
    
-   @inlinable
    internal final func existsNode (_ node : X3DBaseNode) -> Bool
    {
       return nodes .contains (node)
@@ -243,13 +249,11 @@ internal final class X3DOutputStream
       importedNames [exportedNode] = importedName
    }
    
-   @inlinable
    internal final func addRouteNode (_ routeNode : X3DNode)
    {
       routeNodes .insert (routeNode)
    }
    
-   @inlinable
    internal final func existsRouteNode (_ routeNode : X3DNode) -> Bool
    {
       return routeNodes .contains (routeNode)
@@ -389,14 +393,23 @@ internal final class X3DOutputStream
 
    // Number formats
    
+   public final var doublePrecision : Int = 16
+   {
+      didSet { doubleFormat = "%.\(abs (doublePrecision))g" }
+   }
+   
+   public final var floatPrecision : Int = 5
+   {
+      didSet { floatFormat = "%.\(abs (floatPrecision))g" }
+   }
+   
    internal private(set) var doubleFormat = "%.16g"
    internal private(set) var floatFormat  = "%.5g"
 
    // Unit handling
    
-   private final let units : Bool
+   internal final var units : Bool = false
    
-   @inlinable
    internal func toUnit (_ unit : X3DUnitCategory, value : Double) -> Double
    {
       if units
@@ -409,7 +422,6 @@ internal final class X3DOutputStream
       }
    }
    
-   @inlinable
    internal func toUnit (_ unit : X3DUnitCategory, value : Float) -> Float
    {
       if units

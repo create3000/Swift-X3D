@@ -266,17 +266,17 @@ DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);
       
       public final func toXMLString (_ style : String) -> String
       {
-         return executionContext .toXMLString (style: OutputStyle (style) ?? .Tidy)
+         return executionContext .toXMLString (stream: X3DOutputStream (style: X3DOutputStyle (style) ?? .Tidy))
       }
       
       public final func toJSONString (_ style : String) -> String
       {
-         return executionContext .toJSONString (style: OutputStyle (style) ?? .Tidy)
+         return executionContext .toJSONString (stream: X3DOutputStream (style: X3DOutputStyle (style) ?? .Tidy))
       }
 
       public final func toVRMLString (_ style : String) -> String
       {
-         return executionContext .toVRMLString (style: OutputStyle (style) ?? .Tidy)
+         return executionContext .toVRMLString (stream: X3DOutputStream (style: X3DOutputStyle (style) ?? .Tidy))
       }
    }
 }

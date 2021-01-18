@@ -24,19 +24,21 @@ public class X3DObject :
  
    // Convert to string
    
-   public final func toString (style : OutputStyle = .Tidy) -> String
+   public final func toString () -> String
    {
-      let stream = X3DOutputStream (style: style, units: false)
+      let stream = X3DOutputStream ()
+      
+      stream .units = false
       
       toStream (stream)
       
       return stream .string
    }
 
-   public final func toXMLString (with executionContext : X3DExecutionContext, style : OutputStyle = .Tidy) -> String
+   public final func toXMLString (with executionContext : X3DExecutionContext, stream : X3DOutputStream = X3DOutputStream ()) -> String
    {
-      let stream = X3DOutputStream (style: style, units: true)
-      
+      stream .units = true
+
       stream .push (executionContext)
 
       toXMLStream (stream)
@@ -44,10 +46,10 @@ public class X3DObject :
       return stream .string
    }
    
-   public final func toJSONString (with executionContext : X3DExecutionContext, style : OutputStyle = .Tidy) -> String
+   public final func toJSONString (with executionContext : X3DExecutionContext, stream : X3DOutputStream = X3DOutputStream ()) -> String
    {
-      let stream = X3DOutputStream (style: style, units: true)
-      
+      stream .units = true
+
       stream .push (executionContext)
 
       toJSONStream (stream)
@@ -55,10 +57,10 @@ public class X3DObject :
       return stream .string
    }
 
-   public final func toVRMLString (with executionContext : X3DExecutionContext, style : OutputStyle = .Tidy) -> String
+   public final func toVRMLString (with executionContext : X3DExecutionContext, stream : X3DOutputStream = X3DOutputStream ()) -> String
    {
-      let stream = X3DOutputStream (style: style, units: true)
-      
+      stream .units = true
+
       stream .push (executionContext)
 
       toVRMLStream (stream)

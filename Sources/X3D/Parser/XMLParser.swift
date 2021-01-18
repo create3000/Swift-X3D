@@ -379,7 +379,7 @@ internal final class XMLParser :
                guard child .name == "ProtoBody" else { continue }
                
                protos            .append (proto)
-               executionContexts .append (proto .getBody ())
+               executionContexts .append (proto .body)
                parents           .append (proto)
                
                defer

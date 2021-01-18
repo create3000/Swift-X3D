@@ -119,21 +119,21 @@ public class X3DPrototypeInstance :
       
       // Extern protos
       
-      for externproto in proto .getBody () .getExternProtoDeclarations ()
+      for externproto in proto .body .getExternProtoDeclarations ()
       {
          try! body! .updateExternProtoDeclaration (name: externproto .getName (), externproto: externproto)
       }
       
       // Protos
       
-      for proto in proto .getBody () .getProtoDeclarations ()
+      for proto in proto .body .getProtoDeclarations ()
       {
          try! body! .updateProtoDeclaration (name: proto .getName (), proto: proto)
       }
       
       // Root nodes
       
-      for rootNode in proto .getBody () .rootNodes
+      for rootNode in proto .body .rootNodes
       {
          if rootNode == nil
          {
@@ -149,7 +149,7 @@ public class X3DPrototypeInstance :
       
       // Routes
       
-      for route in proto .getBody () .getRoutes ()
+      for route in proto .body .getRoutes ()
       {
          let sourceNode       = try! body! .getNamedNode (name: route .sourceNode! .getName ())
          let sourceField      = route .sourceField! .getName ()
@@ -167,8 +167,6 @@ public class X3DPrototypeInstance :
       // Inform parents about root node change.
       addEvent ()
    }
-   
-   internal final func getBody () -> X3DExecutionContext { body! }
 
    // Root node handling
 

@@ -15,31 +15,24 @@ public final class X3DProtoDeclaration :
    
    // Properties
    
-   @SFNode private var body : X3DExecutionContext?
+   public final override var proto    : X3DProtoDeclaration? { self }
+   public private(set) final var body : X3DExecutionContext
    
    // Construction
    
    internal init (executionContext : X3DExecutionContext)
    {
-      super .init (executionContext .browser!, executionContext)
-
-      addChildObjects ($body)
-      
       self .body = X3DExecutionContext (executionContext .browser!, executionContext)
+      
+      super .init (executionContext .browser!, executionContext)
    }
    
    internal override func initialize ()
    {
       super .initialize ()
       
-      body! .setup ()
+      body .setup ()
    }
-   
-   // Property access
-   
-   public final override var proto : X3DProtoDeclaration? { self }
-   
-   public final func getBody () -> X3DExecutionContext { body! }
    
    // Input/Output
    
@@ -98,7 +91,7 @@ public final class X3DProtoDeclaration :
 
       stream .incIndent ()
 
-      body! .toVRMLStream (stream)
+      body .toVRMLStream (stream)
 
       stream .decIndent ()
 

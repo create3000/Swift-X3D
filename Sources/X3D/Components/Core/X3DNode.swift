@@ -49,7 +49,7 @@ public class X3DNode :
    /// Copies this node into prototype instance.
    internal final func copy (with protoInstance : X3DPrototypeInstance) -> X3DNode
    {
-      let body = protoInstance .getBody ()
+      let body = protoInstance .body!
       
       if let namedNode = try? body .getNamedNode (name: getName ())
       {
@@ -63,7 +63,7 @@ public class X3DNode :
          try! body .updateNamedNode (name: getName (), node: copy)
       }
       
-      // Pre defined fields
+      // Pre-defined fields
       
       for preDefinedField in getPreDefinedFields ()
       {

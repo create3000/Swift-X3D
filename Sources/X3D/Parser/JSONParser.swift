@@ -273,7 +273,7 @@ internal final class JSONParser :
       protoInterfaceObject (object ["ProtoInterface"], proto)
       
       protos            .append (proto)
-      executionContexts .append (proto .getBody ())
+      executionContexts .append (proto .body)
 
       protoBodyObject (object ["ProtoBody"], proto)
 
@@ -296,7 +296,7 @@ internal final class JSONParser :
    {
       guard let object = object as? [String : Any] else { return }
       
-      childrenArray (object ["-children"], proto .getBody () .$rootNodes)
+      childrenArray (object ["-children"], proto .body .$rootNodes)
    }
 
    private final func routeObject (_ object : Any?)

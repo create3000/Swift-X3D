@@ -77,9 +77,10 @@ extension JavaScript
    Target .prototype .getNodeName         = function () { return getNodeName         .call (targets .get (this)) }
    Target .prototype .getNodeType         = function () { return getNodeType         .call (targets .get (this)) }
    Target .prototype .getFieldDefinitions = function () { return getFieldDefinitions .call (targets .get (this)) }
-   Target .prototype .toXMLString         = function () { return toXMLString         .call (targets .get (this)) }
-   Target .prototype .toJSONString        = function () { return toJSONString        .call (targets .get (this)) }
-   Target .prototype .toVRMLString        = function () { return toVRMLString        .call (targets .get (this)) }
+
+   Target .prototype .toXMLString  = function (style) { return toXMLString  .call (targets .get (this), style) }
+   Target .prototype .toJSONString = function (style) { return toJSONString .call (targets .get (this), style) }
+   Target .prototype .toVRMLString = function (style) { return toVRMLString .call (targets .get (this), style) }
 
    var handler =
    {

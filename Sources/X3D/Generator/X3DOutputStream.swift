@@ -14,15 +14,15 @@ public enum OutputStyle
    case Tidy
    
    private static let styles : [String : OutputStyle] = [
-      "Clean"   : .Clean,
-      "Small"   : .Small,
-      "Compact" : .Compact,
-      "Tidy"    : .Tidy,
+      "clean"   : .Clean,
+      "small"   : .Small,
+      "compact" : .Compact,
+      "tidy"    : .Tidy,
    ]
    
    init? (_ string : String)
    {
-      guard let value = OutputStyle .styles [string] else { return nil }
+      guard let value = OutputStyle .styles [string .lowercased ()] else { return nil }
       
       self = value
    }

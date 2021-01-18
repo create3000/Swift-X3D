@@ -15,8 +15,8 @@ public final class X3DProtoDeclaration :
    
    // Properties
    
-   public final override var proto    : X3DProtoDeclaration? { self }
-   public private(set) final var body : X3DExecutionContext
+   public final override var proto : X3DProtoDeclaration? { self }
+   public final let body           : X3DExecutionContext
    
    // Construction
    

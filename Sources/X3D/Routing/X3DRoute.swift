@@ -100,6 +100,7 @@ public final class X3DRoute :
       }
 
       stream += destinationField! .getName ()
+      stream += stream .Break
    }
    
    // Destruction

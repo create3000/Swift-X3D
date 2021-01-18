@@ -592,6 +592,16 @@ public class X3DExecutionContext :
       stream .enterScope ()
       stream .setImportedNodes (importedNodes)
       
+      // Output protos.
+      
+      for proto in getProtoDeclarations ()
+      {
+         proto .toVRMLStream (stream)
+         
+         stream += stream .TidyBreak
+         stream += stream .TidyBreak
+      }
+
       // Output root nodes.
       
       for i in 0 ..< rootNodes .count

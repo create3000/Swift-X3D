@@ -45,7 +45,7 @@ import JavaScriptCore
    func toString () -> String
    func toXMLString () -> String
    func toJSONString () -> String
-   func toVRMLString () -> String
+   func toVRMLString (_ style : String) -> String
 }
 
 extension JavaScript
@@ -274,9 +274,9 @@ DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);
          return executionContext .toJSONString ()
       }
 
-      public final func toVRMLString () -> String
+      public final func toVRMLString (_ style : String) -> String
       {
-         return executionContext .toVRMLString ()
+         return executionContext .toVRMLString (style: OutputStyle (style) ?? .Tidy)
       }
    }
 }

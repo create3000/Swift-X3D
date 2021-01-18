@@ -12,6 +12,20 @@ public enum OutputStyle
    case Small
    case Compact
    case Tidy
+   
+   private static let styles : [String : OutputStyle] = [
+      "Clean"   : .Clean,
+      "Small"   : .Small,
+      "Compact" : .Compact,
+      "Tidy"    : .Tidy,
+   ]
+   
+   init? (_ string : String)
+   {
+      guard let value = OutputStyle .styles [string] else { return nil }
+      
+      self = value
+   }
 }
 
 internal final class X3DOutputStream

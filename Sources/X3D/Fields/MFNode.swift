@@ -141,7 +141,7 @@ public final class MFNode <Element : X3DBaseNode> :
                {
                   node .toStream (stream)
                   
-                  stream += stream .existsNode (node) ? stream .Break : stream .TidyBreak
+                  stream += stream .TidyBreak
               }
                else
                {
@@ -232,9 +232,11 @@ public final class MFNode <Element : X3DBaseNode> :
                
                if let node = node
                {
+                  let use = stream .existsNode (node)
+                  
                   node .toVRMLStream (stream)
                   
-                  stream += stream .existsNode (node) ? stream .Break : stream .TidyBreak
+                  stream += use ? stream .Break : stream .TidyBreak
               }
                else
                {

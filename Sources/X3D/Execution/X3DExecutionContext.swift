@@ -597,9 +597,11 @@ public class X3DExecutionContext :
          
          if let rootNode = rootNodes [i]
          {
+            let use = stream .existsNode (rootNode)
+            
             rootNode .toVRMLStream (stream)
             
-            stream += stream .existsNode (rootNode) ? stream .Break : stream .TidyBreak
+            stream += use ? stream .Break : stream .TidyBreak
          }
          else
          {

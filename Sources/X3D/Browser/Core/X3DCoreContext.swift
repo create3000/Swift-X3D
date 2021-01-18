@@ -36,6 +36,24 @@ internal final class X3DCoreContextProperties :
       browserProperties   .setup ()
       renderingProperties .setup ()
    }
+   
+   private final var nodeDefinitions = [String : X3DNode] ()
+   
+   fileprivate func getNodeDefinition (typeName : String) -> X3DNode
+   {
+      if let nodeDefinition = nodeDefinitions [typeName]
+      {
+         return nodeDefinition
+      }
+      else
+      {
+         let nodeDefinition = try! executionContext! .createNode (typeName: typeName)
+         
+         nodeDefinitions [typeName] = nodeDefinition
+         
+         return nodeDefinition
+      }
+   }
 }
 
 internal protocol X3DCoreContext : class
@@ -55,4 +73,9 @@ extension X3DCoreContext
    internal var imageQueue   : DispatchQueue { DispatchQueue .global (qos: .utility) }
    internal var fontQueue    : DispatchQueue { DispatchQueue .global (qos: .utility) }
    internal var shaderQueue  : DispatchQueue { DispatchQueue .global (qos: .utility) }
+   
+   internal func getNodeDefinition (typeName : String) -> X3DNode
+   {
+      return coreContextProperties .getNodeDefinition (typeName: typeName)
+   }
 }

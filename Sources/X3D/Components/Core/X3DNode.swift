@@ -147,6 +147,8 @@ public class X3DNode :
    
    // Misc
    
+   public final func getDisplayName () -> String { remove_trailing_number (getName ()) }
+   
    public final var cloneCount : Int
    {
       var count = 0
@@ -177,14 +179,33 @@ public class X3DNode :
       
       return count
    }
-      
-   public final func getDisplayName () -> String { remove_trailing_number (getName ()) }
    
-   public func isDefaultValue (_ field : X3DField) -> Bool
+   // Field handling
+   
+   public final var hasRoutes : Bool
    {
-      let node = create (with: executionContext!)
+      for field in getFieldDefinitions ()
+      {
+         if field .inputRoutes .allObjects .count > 0
+         {
+            return true
+         }
+         
+         if field .outputRoutes .allObjects .count > 0
+         {
+            return true
+         }
+      }
       
-      guard let other = try? node .getField (name: field .getName ()) else
+      return false
+   }
+
+   public func isDefaultValue (fieldName : String) throws -> Bool
+   {
+      let field          = try getField (name: fieldName)
+      let nodeDefinition = browser! .getNodeDefinition (typeName: getTypeName ())
+      
+      guard let other = try? nodeDefinition .getField (name: fieldName) else
       {
          return false
       }
@@ -205,7 +226,7 @@ public class X3DNode :
                continue
             }
 
-            if isDefaultValue (field)
+            if try! isDefaultValue (fieldName: field .getName ())
             {
                continue
             }

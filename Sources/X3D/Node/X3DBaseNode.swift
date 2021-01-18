@@ -177,24 +177,6 @@ public class X3DBaseNode :
       throw X3DError .INVALID_NAME (t("Unknown field '%@' in class '%@'.", name, getTypeName ()))
    }
    
-   public final var hasRoutes : Bool
-   {
-      for field in fieldDefinitions
-      {
-         if field .inputRoutes .allObjects .count > 0
-         {
-            return true
-         }
-         
-         if field .outputRoutes .allObjects .count > 0
-         {
-            return true
-         }
-      }
-      
-      return false
-   }
-   
    // Private
    
    internal final var isPrivate : Bool = false

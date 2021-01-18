@@ -174,13 +174,17 @@ public class X3DPrototypeInstance :
 
    internal final override var innerNode : X3DNode?
    {
-      guard body! .rootNodes .count > 0 else { return nil }
+      guard !body! .rootNodes .isEmpty else { return nil }
 
       return body! .rootNodes [0]? .innerNode
    }
    
-   public final override func isDefaultValue (_ field : X3DField) -> Bool
+   // Field handling
+   
+   public final override func isDefaultValue (fieldName : String) throws -> Bool
    {
+      let field = try getField (name: fieldName)
+      
       if field === $metadata
       {
          return metadata == nil

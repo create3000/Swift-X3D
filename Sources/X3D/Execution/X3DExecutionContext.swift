@@ -279,6 +279,8 @@ public class X3DExecutionContext :
    
    // Imported node handling
    
+   public private(set) final var importedNodes = [String : X3DImportedNode] ()
+   
    public final func getImportedNode (importedName : String) throws -> X3DNode
    {
       throw X3DError .NOT_SUPPORTED ("getImportedNode")
@@ -588,6 +590,7 @@ public class X3DExecutionContext :
       
       stream .push (self)
       stream .enterScope ()
+      stream .setImportedNodes (importedNodes)
       
       // Output root nodes.
       

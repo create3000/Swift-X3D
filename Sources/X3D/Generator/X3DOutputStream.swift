@@ -203,14 +203,14 @@ internal final class X3DOutputStream
       importedNames .removeAll ()
    }
    
-   internal final func setImportedNodes ()
+   internal final func setImportedNodes (_ importedNodes : [String : X3DImportedNode])
    {
-      //let index = importedNodes .object (forKey: executionContext)
+      //let index = self .importedNodes .object (forKey: executionContext)
    }
    
-   internal final func setExportedNodes ()
+   internal final func setExportedNodes (_ exportedNodes : [String : X3DExportedNode])
    {
-      //let index = exportedNodes .object (forKey: executionContext)
+      //let index = self .exportedNodes .object (forKey: executionContext)
    }
    
    // Node handling

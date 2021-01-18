@@ -193,6 +193,8 @@ public final class X3DScene :
    
    // Exported node handling
    
+   public private(set) final var exportedNodes = [String : X3DExportedNode] ()
+
    public final func getExportedNode (exportedName : String) throws -> X3DNode
    {
       throw X3DError .NOT_SUPPORTED ("getExportedNode")
@@ -268,7 +270,7 @@ public final class X3DScene :
 
       stream .push (self)
       stream .enterScope ()
-      //stream .exportedNodes (exportedNodes)
+      stream .setExportedNodes (exportedNodes)
 
       super .toVRMLStream (stream)
 

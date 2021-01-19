@@ -337,6 +337,18 @@ public final class X3DScene :
       
       super .toVRMLStream (stream)
 
+      // Output exported nodes.
+      
+      if !exportedNodes .isEmpty
+      {
+         stream += stream .TidyBreak
+         
+         for (_, exportedNode) in exportedNodes
+         {
+            exportedNode .toVRMLStream (stream)
+         }
+      }
+      
       // Leave stream.
       
       stream .leaveScope ()

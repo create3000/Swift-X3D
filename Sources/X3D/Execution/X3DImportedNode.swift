@@ -50,5 +50,7 @@ public final class X3DImportedNode :
          stream += stream .Space
          stream += importedName
       }
+      
+      stream += stream .Break
    }
 }

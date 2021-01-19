@@ -640,7 +640,19 @@ public class X3DExecutionContext :
          }
       }
       
-      // Output routes
+      // Output imported nodes.
+      
+      if !importedNodes .isEmpty
+      {
+         stream += stream .Break
+         
+         for (_, importedNode) in importedNodes
+         {
+            importedNode .toVRMLStream (stream)
+         }
+      }
+      
+      // Output routes.
       
       if !routes .isEmpty
       {

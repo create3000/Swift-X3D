@@ -27,7 +27,7 @@ public final class X3DExportedNode :
    
    // Input/Output
    
-   internal final override func toVRMLStream (_ stream: X3DOutputStream)
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       guard let localName = stream .getLocalName (localNode) else { return }
       
@@ -43,5 +43,7 @@ public final class X3DExportedNode :
          stream += stream .Space
          stream += exportedName
       }
-   }
+      
+      stream += stream .Break
+  }
 }

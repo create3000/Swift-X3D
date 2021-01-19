@@ -341,7 +341,7 @@ public final class X3DScene :
       
       if !exportedNodes .isEmpty
       {
-         stream += stream .TidyBreak
+         stream += stream .Break
          
          for (_, exportedNode) in exportedNodes
          {

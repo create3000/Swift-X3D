@@ -193,7 +193,7 @@ public final class X3DScene :
    
    // Exported node handling
    
-   public private(set) final var exportedNodes = [String : X3DExportedNode] ()
+   private final var exportedNodes = [String : X3DExportedNode] ()
 
    public final func getExportedNode (exportedName : String) throws -> X3DNode
    {
@@ -211,6 +211,8 @@ public final class X3DScene :
    public final func removeExportedNode (exportedName : String)
    {
    }
+   
+   public final func getExportedNodes () -> [String : X3DExportedNode] { exportedNodes }
 
    // Update control
    

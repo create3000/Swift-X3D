@@ -279,7 +279,7 @@ public class X3DExecutionContext :
    
    // Imported node handling
    
-   public private(set) final var importedNodes = [String : X3DImportedNode] ()
+   private final var importedNodes = [String : X3DImportedNode] ()
    
    public final func getImportedNode (importedName : String) throws -> X3DNode
    {
@@ -298,6 +298,8 @@ public class X3DExecutionContext :
    {
    }
    
+   public final func getImportedNodes () -> [String : X3DImportedNode] { importedNodes }
+
    // Proto handling
    
    private final var protos = [X3DProtoDeclaration] ()
@@ -592,9 +594,19 @@ public class X3DExecutionContext :
       stream .enterScope ()
       stream .setImportedNodes (importedNodes)
       
+      // Output externprotos.
+      
+      for externproto in externprotos
+      {
+         externproto .toVRMLStream (stream)
+         
+         stream += stream .TidyBreak
+         stream += stream .TidyBreak
+      }
+      
       // Output protos.
       
-      for proto in getProtoDeclarations ()
+      for proto in protos
       {
          proto .toVRMLStream (stream)
          

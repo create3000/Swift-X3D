@@ -155,4 +155,65 @@ public final class X3DExternProtoDeclaration :
          internalScene = nil
       }
    }
+   
+   // Input/Output
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      stream += stream .Indent
+      stream += "EXTERNPROTO"
+      stream += stream .Space
+      stream += getName ()
+      stream += stream .TidySpace
+      stream += "["
+
+      let userDefinedFields = getUserDefinedFields ()
+
+      if userDefinedFields .isEmpty
+      {
+         stream += stream .TidySpace
+      }
+      else
+      {
+         var fieldTypeLength  = 0
+         var accessTypeLength = 0
+         
+         for field in userDefinedFields
+         {
+            fieldTypeLength  = max (fieldTypeLength, field .getTypeName () .count)
+            accessTypeLength = max (accessTypeLength, field .getAccessType () .description .count)
+         }
+
+         stream += stream .TidyBreak
+
+         stream .incIndent ()
+
+         for field in userDefinedFields
+         {
+            toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength)
+            
+            stream += field === userDefinedFields .last ? stream .TidyBreak : stream .Break
+         }
+
+         stream .decIndent ()
+
+         stream += stream .Indent
+      }
+
+      stream += "]"
+      stream += stream .TidyBreak
+      stream += stream .Indent
+
+      $url .toVRMLStream (stream)
+   }
+   
+   private final func toVRMLStreamUserDefinedField (_ stream : X3DOutputStream, _ field : X3DField, _ fieldTypeLength : Int, _ accessTypeLength : Int)
+   {
+      stream += stream .Indent
+      stream += stream .padding (field .getAccessType () .description, accessTypeLength)
+      stream += stream .Space
+      stream += stream .padding (field .getTypeName (), fieldTypeLength)
+      stream += stream .Space
+      stream += field .getName ()
+   }
 }

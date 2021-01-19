@@ -96,7 +96,10 @@ public final class X3DBrowser :
          throw X3DError .NOT_SUPPORTED (t("Component level '%d' for component '%@' is not supported.", level, name))
       }
       
-      return component
+      return ComponentInfo (title: component .title,
+                            name: component .name,
+                            level: level,
+                            providerUrl: component .providerUrl)
    }
    
    public final func getSupportedNodes () -> [String]

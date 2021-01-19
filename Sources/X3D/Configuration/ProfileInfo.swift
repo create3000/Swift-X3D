@@ -31,4 +31,13 @@ public final class ProfileInfo :
       
       super .init ()
    }
+   
+   // Input/Output
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      stream += "PROFILE"
+      stream += stream .Space
+      stream += name
+   }
 }

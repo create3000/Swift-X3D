@@ -6,7 +6,8 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public enum X3DUnitCategory
+public enum X3DUnitCategory :
+   CustomStringConvertible
 {
    case unitless
 
@@ -37,5 +38,23 @@ public enum X3DUnitCategory
       guard let value = X3DUnitCategory .units [string] else { return nil }
       
       self = value
+   }
+   
+   public var description : String
+   {
+      switch self
+      {
+         case .angle:
+            return "angle"
+         case .force:
+            return "force"
+         case .length:
+            return "length"
+         case .mass:
+            return "mass"
+         default:
+            assertionFailure ("not supported")
+            return ""
+      }
    }
 }

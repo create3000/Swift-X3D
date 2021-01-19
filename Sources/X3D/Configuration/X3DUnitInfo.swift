@@ -29,4 +29,17 @@ public final class X3DUnitInfo :
       
       super .init ()
    }
+   
+   // Input/Output
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      stream += "UNIT"
+      stream += stream .Space
+      stream += category .description
+      stream += stream .Space
+      stream += name
+      stream += stream .Space
+      stream += String (format: stream .doubleFormat, conversionFactor)
+   }
 }

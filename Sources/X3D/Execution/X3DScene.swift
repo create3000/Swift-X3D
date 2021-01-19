@@ -270,6 +270,63 @@ public final class X3DScene :
       stream += "\n"
       stream += "\n"
       
+      // Output profile.
+
+      profile .toVRMLStream (stream);
+
+      stream += stream .Break
+      stream += stream .TidyBreak
+      
+      // Output components.
+      
+      if !components .isEmpty
+      {
+         for component in components
+         {
+            component .toVRMLStream (stream)
+            
+            stream += stream .Break
+         }
+         
+         stream += stream .TidyBreak
+      }
+      
+      // Output units.
+      
+      let units = self .units .filter { $0 .conversionFactor != 1 }
+      
+      if !units .isEmpty
+      {
+         for unit in units
+         {
+            unit .toVRMLStream (stream)
+            
+            stream += stream .Break
+         }
+         
+         stream += stream .TidyBreak
+      }
+      
+      // Output meta data.
+      
+      if !metadata .isEmpty
+      {
+         for (key, values) in metadata
+         {
+            for value in values
+            {
+               stream += "META"
+               stream += stream .Space
+               stream += SFString (wrappedValue: key) .toVRMLString (with: self)
+               stream += stream .Space
+               stream += SFString (wrappedValue: value) .toVRMLString (with: self)
+               stream += stream .Break
+            }
+         }
+         
+         stream += stream .TidyBreak
+      }
+
       // Enter stream.
 
       stream .push (self)

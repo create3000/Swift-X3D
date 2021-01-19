@@ -31,4 +31,17 @@ public final class ComponentInfo :
       
       super .init ()
    }
+   
+   // Input/Output
+   
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
+   {
+      stream += "COMPONENT"
+      stream += stream .Space
+      stream += name
+      stream += stream .TidySpace
+      stream += ":"
+      stream += stream .TidySpace
+      stream += String (level)
+   }
 }

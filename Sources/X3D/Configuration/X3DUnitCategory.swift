@@ -44,6 +44,8 @@ public enum X3DUnitCategory :
    {
       switch self
       {
+         case .unitless:
+            return "unitless"
          case .angle:
             return "angle"
          case .force:
@@ -52,9 +54,16 @@ public enum X3DUnitCategory :
             return "length"
          case .mass:
             return "mass"
-         default:
-            assertionFailure ("not supported")
-            return ""
+         case .acceleration:
+            return "acceleration"
+         case .angular_rate:
+            return "angular_rate"
+         case .area:
+            return "area"
+         case .speed:
+            return "speed"
+         case .volume:
+            return "volume"
       }
    }
 }

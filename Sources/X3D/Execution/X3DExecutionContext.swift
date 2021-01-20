@@ -248,7 +248,7 @@ public class X3DExecutionContext :
    }
 
    /// Return either an imported node or a named node with `localName`.
-   internal final func getLocalNode (localName : String) throws -> X3DBaseNode
+   internal final func getLocalNode (localName : String) throws -> X3DRouteable
    {
       if let node = try? getNamedNode (name: localName)
       {
@@ -265,7 +265,7 @@ public class X3DExecutionContext :
       }
    }
    
-   private final func getLocalName (node : X3DBaseNode) throws -> String
+   private final func getLocalName (node : X3DNode) throws -> String
    {
       if node .executionContext === self
       {
@@ -586,20 +586,21 @@ public class X3DExecutionContext :
    
    private final var routes = [X3DRoute] ()
    
-   internal final func addRoute (sourceNode : X3DBaseNode,
+   internal final func addRoute (sourceNode : X3DRouteable,
                                  sourceField : String,
-                                 destinationNode : X3DBaseNode,
+                                 destinationNode : X3DRouteable,
                                  destinationField : String) throws
    {
       // Imported nodes handling.
 
-      var importedSourceNode      : X3DBaseNode? = sourceNode      as? X3DImportedNode
-      var importedDestinationNode : X3DBaseNode? = destinationNode as? X3DImportedNode
+      var importedSourceNode      : X3DRouteable? = sourceNode      as? X3DImportedNode
+      var importedDestinationNode : X3DRouteable? = destinationNode as? X3DImportedNode
 
       do
       {
          // If sourceNode is shared node try to find the corresponding ImportedNode.
-         if sourceNode .executionContext !== self
+         if let sourceNode = sourceNode as? X3DNode,
+            sourceNode .executionContext !== self
          {
             importedSourceNode = try getLocalNode (localName: getLocalName (node: sourceNode))
          }
@@ -612,7 +613,8 @@ public class X3DExecutionContext :
       do
       {
          // If sourceNode is shared node try to find the corresponding ImportedNode.
-         if destinationNode .executionContext !== self
+         if let destinationNode = destinationNode as? X3DNode,
+            destinationNode .executionContext !== self
          {
             importedDestinationNode = try getLocalNode (localName: getLocalName (node: destinationNode))
          }

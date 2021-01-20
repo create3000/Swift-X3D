@@ -5,8 +5,15 @@
 //  Created by Holger Seelig on 18.01.21.
 //
 
+internal protocol X3DRouteable :
+   class
+{
+   var executionContext : X3DExecutionContext? { get }
+}
+
 public final class X3DImportedNode :
-   X3DBaseNode
+   X3DObject,
+   X3DRouteable
 {
    // Common properties
    
@@ -14,9 +21,10 @@ public final class X3DImportedNode :
    
    // Properties
    
-   public private(set) final weak var inlineNode : Inline?
-   public final let exportedName                 : String
-   public final let importedName                 : String
+   public private(set) final weak var executionContext : X3DExecutionContext?
+   public private(set) final weak var inlineNode       : Inline?
+   public final let exportedName                       : String
+   public final let importedName                       : String
    
    // Construction
    
@@ -25,11 +33,10 @@ public final class X3DImportedNode :
                   _ exportedName : String,
                   _ importedName : String)
    {
-      self .inlineNode   = inlineNode
-      self .exportedName = exportedName
-      self .importedName = importedName
-      
-      super .init (executionContext .browser!, executionContext)
+      self .executionContext = executionContext
+      self .inlineNode       = inlineNode
+      self .exportedName     = exportedName
+      self .importedName     = importedName
    }
    
    // Exported node handling
@@ -39,9 +46,9 @@ public final class X3DImportedNode :
       try? inlineNode? .internalScene? .getExportedNode (exportedName: exportedName)
    }
    
-   internal final func addRoute (sourceNode : X3DBaseNode,
+   internal final func addRoute (sourceNode : X3DRouteable,
                                  sourceField : String,
-                                 destinationNode : X3DBaseNode,
+                                 destinationNode : X3DRouteable,
                                  destinationField : String)
    {
       

@@ -430,7 +430,7 @@ internal final class VRMLParser :
  
       comments ()
 
-      let node = try scene .getLocalNode (localName: localNodeNameId)
+      let node = try scene .getNamedNode (name: localNodeNameId)
       var exportedNodeNameId : String? = ""
 
       if scanner .scanString (Grammar .AS) != nil

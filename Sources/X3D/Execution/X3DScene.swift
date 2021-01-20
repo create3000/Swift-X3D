@@ -197,7 +197,12 @@ public final class X3DScene :
 
    public final func getExportedNode (exportedName : String) throws -> X3DNode
    {
-      throw X3DError .NOT_SUPPORTED ("getExportedNode")
+      guard let exportedNode = exportedNodes [exportedName] else
+      {
+         throw X3DError .INVALID_NAME (t("Exported node '%@' not found.", exportedName))
+      }
+      
+      return exportedNode .localNode!
    }
 
    public final func addExportedNode (exportedName : String, node : X3DNode) throws

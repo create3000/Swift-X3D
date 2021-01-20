@@ -385,7 +385,7 @@ internal final class JSONParser :
       
       do
       {
-         let node = try scene .getLocalNode (localName: localDEF)
+         let node = try scene .getNamedNode (name: localDEF)
 
          try scene .updateExportedNode (exportedName: ASName, node: node)
       }

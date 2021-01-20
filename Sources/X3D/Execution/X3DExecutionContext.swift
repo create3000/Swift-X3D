@@ -248,9 +248,40 @@ public class X3DExecutionContext :
    }
 
    /// Return either an imported node or a named node with `localName`.
-   internal final func getLocalNode (localName : String) throws -> X3DNode
+   internal final func getLocalNode (localName : String) throws -> X3DBaseNode
    {
-      return try getNamedNode (name: localName)
+      if let node = try? getNamedNode (name: localName)
+      {
+         return node
+      }
+      else
+      {
+         guard let importedNode = importedNodes [localName] else
+         {
+            throw X3DError .INVALID_NAME (t("Unknown named or imported node '%@'.", localName))
+         }
+         
+         return importedNode
+      }
+   }
+   
+   private final func getLocalName (node : X3DBaseNode) throws -> String
+   {
+      if node .executionContext === self
+      {
+         return node .getName ()
+      }
+      
+      for (importedName, importedNode) in importedNodes
+      {
+         if let exportedNode = importedNode .exportedNode,
+            exportedNode === node
+         {
+            return importedName
+         }
+      }
+
+      throw X3DError .INVALID_NODE (t("Couldn't get local name: node is shared."))
    }
    
    /// Returns a name for a named node that is unique in this execution context.
@@ -283,19 +314,78 @@ public class X3DExecutionContext :
    
    public final func getImportedNode (importedName : String) throws -> X3DNode
    {
-      throw X3DError .NOT_SUPPORTED ("getImportedNode")
+      guard let importedNode = importedNodes [importedName] else
+      {
+         throw X3DError .INVALID_NAME (t("Imported node '%@' not found.", importedName))
+      }
+
+      guard let exportedNode = importedNode .exportedNode else
+      {
+         throw X3DError .INVALID_NAME (t("Exported node '%@' not found.", importedNode .exportedName))
+      }
+      
+      return exportedNode
    }
 
    public final func addImportedNode (inlineNode : Inline, exportedName : String, importedName : String = "") throws
    {
+      let importedName = importedName .isEmpty ? exportedName : importedName
+
+      guard importedNodes [importedName] == nil else
+      {
+         throw X3DError .INVALID_NAME (t("Couldn't add imported node: imported name '%@' already in use.", importedName))
+      }
+      
+      try updateImportedNode (inlineNode: inlineNode, exportedName: exportedName, importedName: importedName)
    }
    
    public final func updateImportedNode (inlineNode : Inline, exportedName : String, importedName : String = "") throws
    {
-   }
+      let importedName = importedName .isEmpty ? exportedName : importedName
+
+      guard !exportedName .isEmpty else
+      {
+         throw X3DError .INVALID_NAME ("Couldn't update imported node: exported name is empty.")
+      }
+
+      guard !importedName .isEmpty else
+      {
+         throw X3DError .INVALID_NAME ("Couldn't update imported node: imported name is empty.")
+      }
+      
+      // Update existing imported node.
+
+      for (key, importedNode) in importedNodes
+      {
+         guard importedNode .inlineNode === inlineNode,
+               importedNode .exportedName == exportedName
+         else { continue }
+         
+         importedNodes .removeValue (forKey: key)
+
+         importedNodes [importedName] = X3DImportedNode (self,
+                                                         importedNode .inlineNode!,
+                                                         importedNode .exportedName,
+                                                         importedNode .importedName)
+
+         return
+      }
+
+      // Add new imported node.
+      
+      removeImportedNode (importedName: importedName)
+
+      importedNodes [importedName] = X3DImportedNode (self,
+                                                      inlineNode,
+                                                      exportedName,
+                                                      importedName)
+  }
    
    public final func removeImportedNode (importedName : String)
    {
+      guard let importedNode = importedNodes .removeValue (forKey: importedName) else { return }
+      
+      importedNode .dispose ()
    }
    
    public final func getImportedNodes () -> [String : X3DImportedNode] { importedNodes }
@@ -496,6 +586,76 @@ public class X3DExecutionContext :
    
    private final var routes = [X3DRoute] ()
    
+   internal final func addRoute (sourceNode : X3DBaseNode,
+                                 sourceField : String,
+                                 destinationNode : X3DBaseNode,
+                                 destinationField : String) throws
+   {
+      // Imported nodes handling.
+
+      var importedSourceNode      : X3DBaseNode? = sourceNode      as? X3DImportedNode
+      var importedDestinationNode : X3DBaseNode? = destinationNode as? X3DImportedNode
+
+      do
+      {
+         // If sourceNode is shared node try to find the corresponding ImportedNode.
+         if sourceNode .executionContext !== self
+         {
+            importedSourceNode = try getLocalNode (localName: getLocalName (node: sourceNode))
+         }
+      }
+      catch
+      {
+         // Source node is shared but not imported.
+      }
+      
+      do
+      {
+         // If sourceNode is shared node try to find the corresponding ImportedNode.
+         if destinationNode .executionContext !== self
+         {
+            importedDestinationNode = try getLocalNode (localName: getLocalName (node: destinationNode))
+         }
+      }
+      catch
+      {
+         // Destination node is shared but not imported.
+      }
+      
+      if let importedSourceNode = importedSourceNode as? X3DImportedNode
+      {
+         importedSourceNode .addRoute (sourceNode: importedSourceNode,
+                                       sourceField: sourceField,
+                                       destinationNode: destinationNode,
+                                       destinationField: destinationField)
+      }
+
+      if let importedDestinationNode = importedDestinationNode as? X3DImportedNode
+      {
+         importedDestinationNode .addRoute (sourceNode: sourceNode,
+                                            sourceField: sourceField,
+                                            destinationNode: importedDestinationNode,
+                                            destinationField: destinationField)
+      }
+
+      // If either sourceNode or destinationNode is an ImportedNode return here without value.
+      if importedSourceNode === sourceNode || importedDestinationNode === destinationNode
+      {
+         return
+      }
+
+      // Create route and return.
+      
+      guard let sourceNode = sourceNode as? X3DNode,
+            let destinationNode = destinationNode as? X3DNode
+      else { throw X3DError .INVALID_NODE ("Source and destination node must be of type X3DNode.") }
+      
+      try addRoute (sourceNode: sourceNode,
+                    sourceField: sourceField,
+                    destinationNode: destinationNode,
+                    destinationField: destinationField)
+   }
+      
    @discardableResult
    public final func addRoute (sourceNode : X3DNode,
                                sourceField : String,

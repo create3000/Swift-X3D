@@ -723,7 +723,7 @@ internal final class XMLParser :
          }
 
          let exportedNodeName = element .attribute (name: "AS") ?? localNodeName
-         let localNode        = try executionContext .getLocalNode (localName: localNodeName)
+         let localNode        = try executionContext .getNamedNode (name: localNodeName)
          
          try scene .updateExportedNode (exportedName: exportedNodeName, node: localNode)
       }

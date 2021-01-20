@@ -6,7 +6,7 @@
 //
 
 public final class X3DImportedNode :
-   X3DObject
+   X3DBaseNode
 {
    // Common properties
    
@@ -14,10 +14,9 @@ public final class X3DImportedNode :
    
    // Properties
    
-   public private(set) final weak var executionContext : X3DExecutionContext?
-   public private(set) final weak var inlineNode       : Inline?
-   public final let exportedName                       : String
-   public final let importedName                       : String
+   public private(set) final weak var inlineNode : Inline?
+   public final let exportedName                 : String
+   public final let importedName                 : String
    
    // Construction
    
@@ -26,10 +25,26 @@ public final class X3DImportedNode :
                   _ exportedName : String,
                   _ importedName : String)
    {
-      self .executionContext = executionContext
-      self .inlineNode       = inlineNode
-      self .exportedName     = exportedName
-      self .importedName     = importedName
+      self .inlineNode   = inlineNode
+      self .exportedName = exportedName
+      self .importedName = importedName
+      
+      super .init (executionContext .browser!, executionContext)
+   }
+   
+   // Exported node handling
+   
+   public final var exportedNode : X3DNode?
+   {
+      try? inlineNode? .internalScene? .getExportedNode (exportedName: exportedName)
+   }
+   
+   internal final func addRoute (sourceNode : X3DBaseNode,
+                                 sourceField : String,
+                                 destinationNode : X3DBaseNode,
+                                 destinationField : String)
+   {
+      
    }
    
    // Input/Output
@@ -55,5 +70,12 @@ public final class X3DImportedNode :
       }
       
       stream += stream .Break
+   }
+   
+   // Destruction
+   
+   internal final func dispose ()
+   {
+      
    }
 }

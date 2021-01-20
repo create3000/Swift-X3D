@@ -9,8 +9,7 @@
 import Foundation
 
 public class X3DNode :
-   X3DBaseNode,
-   X3DRouteable
+   X3DBaseNode
 {
    // Common properties
    

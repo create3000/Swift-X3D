@@ -5,15 +5,8 @@
 //  Created by Holger Seelig on 18.01.21.
 //
 
-internal protocol X3DRouteable :
-   class
-{
-   var executionContext : X3DExecutionContext? { get }
-}
-
 public final class X3DImportedNode :
-   X3DObject,
-   X3DRouteable
+   X3DBaseNode
 {
    // Common properties
    
@@ -21,10 +14,9 @@ public final class X3DImportedNode :
    
    // Properties
    
-   public private(set) final weak var executionContext : X3DExecutionContext?
-   public private(set) final weak var inlineNode       : Inline?
-   public final let exportedName                       : String
-   public final let importedName                       : String
+   public private(set) final weak var inlineNode : Inline?
+   public final let exportedName                 : String
+   public final let importedName                 : String
    
    // Construction
    
@@ -33,11 +25,17 @@ public final class X3DImportedNode :
                   _ exportedName : String,
                   _ importedName : String)
    {
-      self .executionContext = executionContext
-      self .inlineNode       = inlineNode
-      self .exportedName     = exportedName
-      self .importedName     = importedName
-   }
+      self .inlineNode   = inlineNode
+      self .exportedName = exportedName
+      self .importedName = importedName
+      
+      super .init (executionContext .browser!, executionContext)
+ 
+      inlineNode .loadState .addInterest ("set_loadState", X3DImportedNode .set_loadState,  self)
+      inlineNode .deleted   .addInterest ("deleted",       X3DImportedNode .set_inlineNode, self)
+
+      set_loadState ()
+  }
    
    // Exported node handling
    
@@ -46,12 +44,90 @@ public final class X3DImportedNode :
       try? inlineNode? .internalScene? .getExportedNode (exportedName: exportedName)
    }
    
-   internal final func addRoute (sourceNode : X3DRouteable,
+   private final var routes = Set <UnresolvedRoute> ()
+   
+   internal final func addRoute (sourceNode : X3DBaseNode,
                                  sourceField : String,
-                                 destinationNode : X3DRouteable,
+                                 destinationNode : X3DBaseNode,
                                  destinationField : String)
    {
+      // Add route.
       
+      let route = UnresolvedRoute (sourceNode, sourceField, destinationNode, destinationField)
+      
+      routes .insert (route)
+
+      // Try to resolve source or destination node routes.
+
+      if inlineNode? .checkLoadState == .COMPLETE_STATE
+      {
+         resolveRoute (route)
+      }
+   }
+   
+   private final func resolveRoute (_ route : UnresolvedRoute)
+   {
+      var sourceNode              = route .sourceNode      as? X3DNode
+      var destinationNode         = route .destinationNode as? X3DNode
+      let importedSourceNode      = route .sourceNode      as? X3DImportedNode
+      let importedDestinationNode = route .destinationNode as? X3DImportedNode
+      
+      if let importedSourceNode = importedSourceNode
+      {
+         sourceNode = importedSourceNode .exportedNode
+      }
+
+      if let importedDestinationNode = importedDestinationNode
+      {
+         destinationNode = importedDestinationNode .exportedNode
+      }
+      
+      if let sourceNode      = sourceNode,
+         let destinationNode = destinationNode
+      {
+         route .route = try? executionContext! .addRoute (sourceNode: sourceNode,
+                                                          sourceField: route .sourceField,
+                                                          destinationNode: destinationNode,
+                                                          destinationField: route .destinationField)
+      }
+   }
+   
+   private final func deleteRoutes ()
+   {
+      for route in routes
+      {
+         guard let route = route .route else { continue }
+         
+         executionContext? .deleteRoute (route: route)
+      }
+   }
+   
+   private final func set_loadState ()
+   {
+      switch inlineNode! .checkLoadState
+      {
+         case .NOT_STARTED_STATE: fallthrough
+         case .FAILED_STATE: do
+         {
+            deleteRoutes ()
+         }
+         case .IN_PROGRESS_STATE:
+            break
+         case .COMPLETE_STATE: do
+         {
+            deleteRoutes ()
+
+            for route in routes
+            {
+               resolveRoute (route)
+            }
+         }
+      }
+   }
+   
+   private final func set_inlineNode ()
+   {
+      executionContext? .removeImportedNode (importedName: importedName)
    }
    
    // Input/Output
@@ -77,12 +153,97 @@ public final class X3DImportedNode :
       }
       
       stream += stream .Break
+      
+      stream .addRouteNode (self)
+      
+      // Output unresolved routes.
+      
+      if let exportedNode = exportedNode
+      {
+         stream .addImportedNode (exportedNode, importedName)
+      }
+      else
+      {
+         for route in routes
+         {
+            guard let sourceNode      = route .sourceNode,
+                  let destinationNode = route .destinationNode
+            else { continue }
+            
+            let sourceField      = route .sourceField
+            let destinationField = route .destinationField
+
+            guard stream .existsRouteNode (sourceNode) && stream .existsRouteNode (destinationNode) else { continue }
+            
+            let importedSourceNode      = sourceNode      as? X3DImportedNode
+            let importedDestinationNode = destinationNode as? X3DImportedNode
+
+            let sourceNodeName = importedSourceNode != nil
+               ? importedSourceNode! .importedName
+               : stream .getName (sourceNode as! X3DNode)
+            
+            let destinationNodeName = importedDestinationNode != nil
+               ? importedDestinationNode! .importedName
+               : stream .getName (destinationNode as! X3DNode)
+
+            stream += stream .Indent
+            stream += "ROUTE"
+            stream += stream .Space
+            stream += sourceNodeName
+            stream += "."
+            stream += sourceField
+            stream += stream .Space
+            stream += "TO"
+            stream += stream .Space
+            stream += destinationNodeName
+            stream += "."
+            stream += destinationField
+            stream += stream .Break
+         }
+      }
    }
    
    // Destruction
    
    internal final func dispose ()
    {
-      
+      deleteRoutes ()
+   }
+}
+
+fileprivate class UnresolvedRoute :
+   Hashable
+{
+   fileprivate final weak var sourceNode      : X3DBaseNode?
+   fileprivate final let sourceField          : String
+   fileprivate final weak var destinationNode : X3DBaseNode?
+   fileprivate final let destinationField     : String
+   fileprivate final var route                : X3DRoute?
+   
+   init (_ sourceNode : X3DBaseNode,
+         _ sourceField : String,
+         _ destinationNode : X3DBaseNode,
+         _ destinationField : String)
+   {
+      self .sourceNode       = sourceNode
+      self .sourceField      = sourceField
+      self .destinationNode  = destinationNode
+      self .destinationField = destinationField
+   }
+   
+   static func == (lhs : UnresolvedRoute, rhs: UnresolvedRoute) -> Bool
+   {
+      return lhs .sourceNode       === rhs .sourceNode &&
+             lhs .sourceField      ==  rhs .sourceField &&
+             lhs .destinationNode  === rhs .destinationNode &&
+             lhs .destinationField ==  rhs .destinationField
+   }
+   
+   public final func hash (into hasher: inout Hasher)
+   {
+      hasher .combine (sourceNode       .hashValue)
+      hasher .combine (sourceField      .hashValue)
+      hasher .combine (destinationNode  .hashValue)
+      hasher .combine (destinationField .hashValue)
    }
 }

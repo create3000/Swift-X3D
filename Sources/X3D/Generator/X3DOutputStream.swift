@@ -249,12 +249,12 @@ public final class X3DOutputStream
       importedNames [exportedNode] = importedName
    }
    
-   internal final func addRouteNode (_ routeNode : X3DNode)
+   internal final func addRouteNode (_ routeNode : X3DBaseNode)
    {
       routeNodes .insert (routeNode)
    }
    
-   internal final func existsRouteNode (_ routeNode : X3DNode) -> Bool
+   internal final func existsRouteNode (_ routeNode : X3DBaseNode) -> Bool
    {
       return routeNodes .contains (routeNode)
    }

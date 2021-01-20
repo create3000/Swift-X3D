@@ -248,7 +248,7 @@ public class X3DExecutionContext :
    }
 
    /// Return either an imported node or a named node with `localName`.
-   internal final func getLocalNode (localName : String) throws -> X3DRouteable
+   internal final func getLocalNode (localName : String) throws -> X3DBaseNode
    {
       if let node = try? getNamedNode (name: localName)
       {
@@ -586,15 +586,15 @@ public class X3DExecutionContext :
    
    private final var routes = [X3DRoute] ()
    
-   internal final func addRoute (sourceNode : X3DRouteable,
+   internal final func addRoute (sourceNode : X3DBaseNode,
                                  sourceField : String,
-                                 destinationNode : X3DRouteable,
+                                 destinationNode : X3DBaseNode,
                                  destinationField : String) throws
    {
       // Imported nodes handling.
 
-      var importedSourceNode      : X3DRouteable? = sourceNode      as? X3DImportedNode
-      var importedDestinationNode : X3DRouteable? = destinationNode as? X3DImportedNode
+      var importedSourceNode      : X3DBaseNode? = sourceNode      as? X3DImportedNode
+      var importedDestinationNode : X3DBaseNode? = destinationNode as? X3DImportedNode
 
       do
       {

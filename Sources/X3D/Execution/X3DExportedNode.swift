@@ -14,15 +14,28 @@ public final class X3DExportedNode :
    
    // Properties
    
+   public private(set) final weak var scene     : X3DScene?
    public final let exportedName                : String
    public private(set) final weak var localNode : X3DNode?
 
    // Construction
    
-   internal init (exportedName : String, localNode : X3DNode)
+   internal init (_ scene : X3DScene,
+                  _ exportedName : String,
+                  _ localNode : X3DNode)
    {
+      self .scene        = scene
       self .exportedName = exportedName
       self .localNode    = localNode
+      
+      super .init ()
+      
+      localNode .deleted .addInterest ("deleted", X3DExportedNode .set_node, self)
+   }
+   
+   private final func set_node ()
+   {
+      scene? .removeExportedNode (exportedName: exportedName)
    }
    
    // Input/Output

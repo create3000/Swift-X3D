@@ -29,13 +29,13 @@ public final class X3DRoute :
                   _ destinationNode : X3DNode,
                   _ destinationField : X3DField)
    {
-      super .init ()
-      
       self .executionContext = executionContext
       self .sourceNode       = sourceNode
       self .sourceField      = sourceField
       self .destinationNode  = destinationNode
       self .destinationField = destinationField
+      
+      super .init ()
       
       sourceNode      .deleted .addInterest ("deleted", X3DRoute .set_node, self)
       destinationNode .deleted .addInterest ("deleted", X3DRoute .set_node, self)

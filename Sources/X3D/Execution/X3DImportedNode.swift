@@ -21,7 +21,10 @@ public final class X3DImportedNode :
    
    // Construction
    
-   internal init (executionContext : X3DExecutionContext, inlineNode : Inline, exportedName : String, importedName : String)
+   internal init (_ executionContext : X3DExecutionContext,
+                  _ inlineNode : Inline,
+                  _ exportedName : String,
+                  _ importedName : String)
    {
       self .executionContext = executionContext
       self .inlineNode       = inlineNode

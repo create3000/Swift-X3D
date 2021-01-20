@@ -202,14 +202,27 @@ public final class X3DScene :
 
    public final func addExportedNode (exportedName : String, node : X3DNode) throws
    {
+      guard exportedNodes [exportedName] == nil else
+      {
+         throw X3DError .INVALID_NAME (t("Couldn't add exported node: exported name '%@' already in use.", exportedName))
+      }
+
+      try updateExportedNode (exportedName: exportedName, node: node)
    }
    
    public final func updateExportedNode (exportedName : String, node : X3DNode) throws
    {
+      guard !exportedName .isEmpty else
+      {
+         throw X3DError .INVALID_NAME (t("Couldn't update exported node: node exported name is empty."))
+      }
+
+      exportedNodes [exportedName] = X3DExportedNode (self, exportedName, node)
    }
    
    public final func removeExportedNode (exportedName : String)
    {
+      exportedNodes .removeValue (forKey: exportedName)
    }
    
    public final func getExportedNodes () -> [String : X3DExportedNode] { exportedNodes }

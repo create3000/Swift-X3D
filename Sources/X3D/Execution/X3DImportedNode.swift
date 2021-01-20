@@ -85,10 +85,10 @@ public final class X3DImportedNode :
       if let sourceNode      = sourceNode,
          let destinationNode = destinationNode
       {
-         route .route = try? executionContext! .addRoute (sourceNode: sourceNode,
-                                                          sourceField: route .sourceField,
-                                                          destinationNode: destinationNode,
-                                                          destinationField: route .destinationField)
+         route .route = try? executionContext! .addSimpleRoute (sourceNode: sourceNode,
+                                                                sourceField: route .sourceField,
+                                                                destinationNode: destinationNode,
+                                                                destinationField: route .destinationField)
       }
    }
    

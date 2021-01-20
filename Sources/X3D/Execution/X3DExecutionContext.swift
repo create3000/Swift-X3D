@@ -586,10 +586,23 @@ public class X3DExecutionContext :
    
    private final var routes = [X3DRoute] ()
    
+   @discardableResult
+   public final func addRoute (sourceNode : X3DNode,
+                               sourceField : String,
+                               destinationNode : X3DNode,
+                               destinationField : String) throws -> X3DRoute
+   {
+      return try addRoute (sourceNode: sourceNode,
+                           sourceField: sourceField,
+                           destinationNode: destinationNode,
+                           destinationField: destinationField)!
+   }
+   
+   @discardableResult
    internal final func addRoute (sourceNode : X3DBaseNode,
                                  sourceField : String,
                                  destinationNode : X3DBaseNode,
-                                 destinationField : String) throws
+                                 destinationField : String) throws -> X3DRoute?
    {
       // Imported nodes handling.
 
@@ -643,7 +656,7 @@ public class X3DExecutionContext :
       // If either sourceNode or destinationNode is an ImportedNode return here without value.
       if importedSourceNode === sourceNode || importedDestinationNode === destinationNode
       {
-         return
+         return nil
       }
 
       // Create route and return.
@@ -652,17 +665,16 @@ public class X3DExecutionContext :
             let destinationNode = destinationNode as? X3DNode
       else { throw X3DError .INVALID_NODE ("Source and destination node must be of type X3DNode.") }
       
-      try addRoute (sourceNode: sourceNode,
-                    sourceField: sourceField,
-                    destinationNode: destinationNode,
-                    destinationField: destinationField)
+      return try addSimpleRoute (sourceNode: sourceNode,
+                                 sourceField: sourceField,
+                                 destinationNode: destinationNode,
+                                 destinationField: destinationField)
    }
       
-   @discardableResult
-   public final func addRoute (sourceNode : X3DNode,
-                               sourceField : String,
-                               destinationNode : X3DNode,
-                               destinationField : String) throws -> X3DRoute
+   internal final func addSimpleRoute (sourceNode : X3DNode,
+                                       sourceField : String,
+                                       destinationNode : X3DNode,
+                                       destinationField : String) throws -> X3DRoute
    {
       let sourceField      = try sourceNode      .getField (name: sourceField)
       let destinationField = try destinationNode .getField (name: destinationField)

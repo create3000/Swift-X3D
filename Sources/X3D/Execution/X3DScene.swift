@@ -128,7 +128,7 @@ public final class X3DScene :
          default: break
       }
       
-      units_changed = browser! .currentTime
+      units_changed = SFTime .now
    }
 
    public final override func fromUnit (_ category : X3DUnitCategory, value : Double) -> Double
@@ -230,14 +230,14 @@ public final class X3DScene :
 
       exportedNodes [exportedName] = X3DExportedNode (self, exportedName, node)
       
-      exportedNodes_changed = browser! .currentTime
+      exportedNodes_changed = SFTime .now
    }
    
    public final func removeExportedNode (exportedName : String)
    {
       exportedNodes .removeValue (forKey: exportedName)
       
-      exportedNodes_changed = browser! .currentTime
+      exportedNodes_changed = SFTime .now
    }
    
    public final func getExportedNodes () -> [String : X3DExportedNode] { exportedNodes }

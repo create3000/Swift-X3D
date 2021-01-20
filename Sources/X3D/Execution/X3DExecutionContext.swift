@@ -218,7 +218,7 @@ public class X3DExecutionContext :
       
       node .setName (name)
       
-      namedNodes_changed = browser! .currentTime
+      namedNodes_changed = SFTime .now
    }
    
    /// Update the name for a node.
@@ -245,7 +245,7 @@ public class X3DExecutionContext :
       
       node .setName (name)
       
-      namedNodes_changed = browser! .currentTime
+      namedNodes_changed = SFTime .now
    }
    
    /// Removes a named node or silently returns if a named node with`name` does not exists.
@@ -255,7 +255,7 @@ public class X3DExecutionContext :
       
       oldNamedNode .node? .setName ("")
       
-      namedNodes_changed = browser! .currentTime
+      namedNodes_changed = SFTime .now
    }
    
    public final func getNamedNodes () -> [String : X3DNamedNode] { namedNodes }
@@ -384,7 +384,7 @@ public class X3DExecutionContext :
                                                          importedNode .importedName)
 
          
-         importedNodes_changed = browser! .currentTime
+         importedNodes_changed = SFTime .now
          return
       }
 
@@ -397,7 +397,7 @@ public class X3DExecutionContext :
                                                       exportedName,
                                                       importedName)
       
-      importedNodes_changed = browser! .currentTime
+      importedNodes_changed = SFTime .now
   }
    
    public final func removeImportedNode (importedName : String)
@@ -406,7 +406,7 @@ public class X3DExecutionContext :
       
       importedNode .dispose ()
       
-      importedNodes_changed = browser! .currentTime
+      importedNodes_changed = SFTime .now
    }
    
    public final func getImportedNodes () -> [String : X3DImportedNode] { importedNodes }
@@ -457,7 +457,7 @@ public class X3DExecutionContext :
       
       protos .append (proto)
       
-      protos_changed = browser! .currentTime
+      protos_changed = SFTime .now
    }
    
    public final func updateProtoDeclaration (name : String, proto : X3DProtoDeclaration) throws
@@ -488,14 +488,14 @@ public class X3DExecutionContext :
          try addProtoDeclaration (name: name, proto: proto)
       }
       
-      protos_changed = browser! .currentTime
+      protos_changed = SFTime .now
    }
    
    public final func removeProtoDeclaration (name : String)
    {
       protos .removeAll (where: { $0 .getName () == name })
       
-      protos_changed = browser! .currentTime
+      protos_changed = SFTime .now
    }
    
    public final func hasProtoDeclaration (name : String) -> Bool
@@ -561,7 +561,7 @@ public class X3DExecutionContext :
       
       externprotos .append (externproto)
       
-      externprotos_changed = browser! .currentTime
+      externprotos_changed = SFTime .now
    }
 
    public final func updateExternProtoDeclaration (name : String, externproto : X3DExternProtoDeclaration) throws
@@ -592,14 +592,14 @@ public class X3DExecutionContext :
          try addExternProtoDeclaration (name: name, externproto: externproto)
       }
       
-      externprotos_changed = browser! .currentTime
+      externprotos_changed = SFTime .now
    }
 
    public final func removeExternProtoDeclaration (name : String)
    {
       externprotos .removeAll (where: { $0 .getName () == name })
       
-      externprotos_changed = browser! .currentTime
+      externprotos_changed = SFTime .now
    }
 
    public final func hasExternProtoDeclaration (name : String) -> Bool
@@ -753,7 +753,7 @@ public class X3DExecutionContext :
       
       routes .append (route)
       
-      routes_changed = browser! .currentTime
+      routes_changed = SFTime .now
 
       return route
    }
@@ -774,7 +774,7 @@ public class X3DExecutionContext :
       
       routes .remove (at: index) .disconnect ()
       
-      routes_changed = browser! .currentTime
+      routes_changed = SFTime .now
   }
 
    public final func deleteRoute (route : X3DRoute)
@@ -783,7 +783,7 @@ public class X3DExecutionContext :
       
       routes .remove (at: index) .disconnect ()
       
-      routes_changed = browser! .currentTime
+      routes_changed = SFTime .now
    }
    
    public final func getRoutes () -> [X3DRoute] { routes }

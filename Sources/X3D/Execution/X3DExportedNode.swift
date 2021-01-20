@@ -14,7 +14,7 @@ public final class X3DExportedNode :
    
    // Properties
    
-   public private(set) final var exportedName   : String
+   public final let exportedName                : String
    public private(set) final weak var localNode : X3DNode?
 
    // Construction

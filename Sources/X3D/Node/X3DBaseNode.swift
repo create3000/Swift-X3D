@@ -233,9 +233,13 @@ public class X3DBaseNode :
 
    // Destruction
    
+   public final let deleted = Output ()
+   
    deinit
    {
       //debugPrint (#file, #function, Swift .type (of: self))
+      
+      deleted .processInterests ()
       
       for child in children
       {
@@ -245,11 +249,6 @@ public class X3DBaseNode :
       for field in fieldDefinitions
       {
          field .removeParent (self)
-      }
-
-      if !getName () .isEmpty
-      {
-         executionContext? .removeNamedNode (name: getName ())
       }
    }
 }

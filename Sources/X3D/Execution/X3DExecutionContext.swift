@@ -209,8 +209,8 @@ public class X3DExecutionContext :
          throw X3DError .INVALID_NAME (t("Couldn't add named node: node name not empty, is '%@'.", node .getName ()))
       }
 
-      namedNodes [name] = X3DNamedNode (node)
-
+      namedNodes [name] = X3DNamedNode (self, node, name)
+      
       node .setName (name)
    }
    
@@ -234,7 +234,7 @@ public class X3DExecutionContext :
 
       namedNodes .removeValue (forKey: node .getName ())
 
-      namedNodes [name] = X3DNamedNode (node)
+      namedNodes [name] = X3DNamedNode (self, node, name)
       
       node .setName (name)
    }

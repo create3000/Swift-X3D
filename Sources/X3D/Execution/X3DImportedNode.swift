@@ -16,8 +16,8 @@ public final class X3DImportedNode :
    
    public private(set) final weak var executionContext : X3DExecutionContext?
    public private(set) final weak var inlineNode       : Inline?
-   public private(set) final var exportedName          : String
-   public private(set) final var importedName          : String
+   public final let exportedName                       : String
+   public final let importedName                       : String
    
    // Construction
    

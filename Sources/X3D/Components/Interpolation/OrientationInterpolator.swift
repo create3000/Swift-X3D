@@ -35,6 +35,9 @@ public final class OrientationInterpolator :
       addField (.inputOutput, "key",           $key)
       addField (.inputOutput, "keyValue",      $keyValue)
       addField (.outputOnly,  "value_changed", $value_changed)
+      
+      $keyValue      .unit = .angle
+      $value_changed .unit = .angle
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> OrientationInterpolator

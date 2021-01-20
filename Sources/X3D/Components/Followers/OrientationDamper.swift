@@ -43,6 +43,12 @@ public final class OrientationDamper :
       addField (.inputOutput,    "tolerance",          $tolerance)
       addField (.outputOnly,     "isActive",           $isActive)
       addField (.outputOnly,     "value_changed",      $value_changed)
+      
+      $set_value          .unit = .angle
+      $set_destination    .unit = .angle
+      $initialValue       .unit = .angle
+      $initialDestination .unit = .angle
+      $value_changed      .unit = .angle
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> OrientationDamper

@@ -38,7 +38,10 @@ public final class SquadOrientationInterpolator :
       addField (.inputOutput, "keyValue",          $keyValue)
       //addField (.inputOutput, "normalizeVelocity", $normalizeVelocity)
       addField (.outputOnly,  "value_changed",     $value_changed)
-   }
+      
+      $keyValue      .unit = .angle
+      $value_changed .unit = .angle
+    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> SquadOrientationInterpolator
    {

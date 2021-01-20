@@ -80,7 +80,10 @@ public final class Inline :
       groupNode .isPrivate = true
       groupNode .setup ()
       
-      requestImmediateLoad ()
+      if load
+      {
+         requestImmediateLoad ()
+      }
    }
 
    // Bounded object

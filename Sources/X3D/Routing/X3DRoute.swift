@@ -36,6 +36,9 @@ public final class X3DRoute :
       self .sourceField      = sourceField
       self .destinationNode  = destinationNode
       self .destinationField = destinationField
+      
+      sourceNode      .deleted .addInterest ("deleted", X3DRoute .set_node, self)
+      destinationNode .deleted .addInterest ("deleted", X3DRoute .set_node, self)
 
       connect ()
    }
@@ -66,6 +69,11 @@ public final class X3DRoute :
       
       sourceField      .routes_changed .processInterests ()
       destinationField .routes_changed .processInterests ()
+   }
+   
+   private final func set_node ()
+   {
+      executionContext? .deleteRoute (route: self)
    }
    
    // Input/Output

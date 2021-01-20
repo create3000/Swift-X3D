@@ -239,8 +239,6 @@ public class X3DBaseNode :
    {
       //debugPrint (#file, #function, Swift .type (of: self))
       
-      deleted .processInterests ()
-      
       for child in children
       {
          child .removeParent (self)
@@ -250,5 +248,7 @@ public class X3DBaseNode :
       {
          field .removeParent (self)
       }
+      
+      deleted .processInterests ()
    }
 }

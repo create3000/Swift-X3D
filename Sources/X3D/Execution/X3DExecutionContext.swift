@@ -29,7 +29,12 @@ public class X3DExecutionContext :
       
       types .append (.X3DExecutionContext)
       
-      addChildObjects ($rootNodes)
+      addChildObjects ($rootNodes,
+                       $namedNodes_changed,
+                       $importedNodes_changed,
+                       $protos_changed,
+                       $externprotos_changed,
+                       $routes_changed)
    }
    
    // Scene properties
@@ -212,6 +217,8 @@ public class X3DExecutionContext :
       namedNodes [name] = X3DNamedNode (self, node, name)
       
       node .setName (name)
+      
+      namedNodes_changed = browser! .currentTime
    }
    
    /// Update the name for a node.
@@ -237,6 +244,8 @@ public class X3DExecutionContext :
       namedNodes [name] = X3DNamedNode (self, node, name)
       
       node .setName (name)
+      
+      namedNodes_changed = browser! .currentTime
    }
    
    /// Removes a named node or silently returns if a named node with`name` does not exists.
@@ -245,7 +254,13 @@ public class X3DExecutionContext :
       guard let oldNamedNode = namedNodes .removeValue (forKey: name) else { return }
       
       oldNamedNode .node? .setName ("")
+      
+      namedNodes_changed = browser! .currentTime
    }
+   
+   public final func getNamedNodes () -> [String : X3DNamedNode] { namedNodes }
+   
+   @SFTime public final var namedNodes_changed = 0
 
    /// Return either an imported node or a named node with `localName`.
    internal final func getLocalNode (localName : String) throws -> X3DBaseNode
@@ -368,6 +383,8 @@ public class X3DExecutionContext :
                                                          importedNode .exportedName,
                                                          importedNode .importedName)
 
+         
+         importedNodes_changed = browser! .currentTime
          return
       }
 
@@ -379,6 +396,8 @@ public class X3DExecutionContext :
                                                       inlineNode,
                                                       exportedName,
                                                       importedName)
+      
+      importedNodes_changed = browser! .currentTime
   }
    
    public final func removeImportedNode (importedName : String)
@@ -386,9 +405,13 @@ public class X3DExecutionContext :
       guard let importedNode = importedNodes .removeValue (forKey: importedName) else { return }
       
       importedNode .dispose ()
+      
+      importedNodes_changed = browser! .currentTime
    }
    
    public final func getImportedNodes () -> [String : X3DImportedNode] { importedNodes }
+   
+   @SFTime public final var importedNodes_changed = 0
 
    // Proto handling
    
@@ -433,6 +456,8 @@ public class X3DExecutionContext :
       proto .setName (name)
       
       protos .append (proto)
+      
+      protos_changed = browser! .currentTime
    }
    
    public final func updateProtoDeclaration (name : String, proto : X3DProtoDeclaration) throws
@@ -462,11 +487,15 @@ public class X3DExecutionContext :
       {
          try addProtoDeclaration (name: name, proto: proto)
       }
+      
+      protos_changed = browser! .currentTime
    }
    
    public final func removeProtoDeclaration (name : String)
    {
       protos .removeAll (where: { $0 .getName () == name })
+      
+      protos_changed = browser! .currentTime
    }
    
    public final func hasProtoDeclaration (name : String) -> Bool
@@ -486,6 +515,8 @@ public class X3DExecutionContext :
    
    public final func getProtoDeclarations () -> [X3DProtoDeclaration] { protos }
    
+   @SFTime public final var protos_changed = 0
+
    // Extern proto handling
    
    private final var externprotos = [X3DExternProtoDeclaration] ()
@@ -529,6 +560,8 @@ public class X3DExecutionContext :
       externproto .setName (name)
       
       externprotos .append (externproto)
+      
+      externprotos_changed = browser! .currentTime
    }
 
    public final func updateExternProtoDeclaration (name : String, externproto : X3DExternProtoDeclaration) throws
@@ -558,11 +591,15 @@ public class X3DExecutionContext :
       {
          try addExternProtoDeclaration (name: name, externproto: externproto)
       }
+      
+      externprotos_changed = browser! .currentTime
    }
 
    public final func removeExternProtoDeclaration (name : String)
    {
       externprotos .removeAll (where: { $0 .getName () == name })
+      
+      externprotos_changed = browser! .currentTime
    }
 
    public final func hasExternProtoDeclaration (name : String) -> Bool
@@ -581,6 +618,8 @@ public class X3DExecutionContext :
    }
    
    public final func getExternProtoDeclarations () -> [X3DExternProtoDeclaration] { externprotos }
+   
+   @SFTime public final var externprotos_changed = 0
 
    // Route handling
    
@@ -714,6 +753,8 @@ public class X3DExecutionContext :
       
       routes .append (route)
       
+      routes_changed = browser! .currentTime
+
       return route
    }
    
@@ -732,6 +773,8 @@ public class X3DExecutionContext :
       else { return }
       
       routes .remove (at: index) .disconnect ()
+      
+      routes_changed = browser! .currentTime
   }
 
    public final func deleteRoute (route : X3DRoute)
@@ -739,10 +782,14 @@ public class X3DExecutionContext :
       guard let index = routes .firstIndex (of: route) else { return }
       
       routes .remove (at: index) .disconnect ()
+      
+      routes_changed = browser! .currentTime
    }
    
    public final func getRoutes () -> [X3DRoute] { routes }
    
+   @SFTime public final var routes_changed = 0
+
    // Input/Output
    
    public final func toXMLString (stream : X3DOutputStream = X3DOutputStream ()) -> String

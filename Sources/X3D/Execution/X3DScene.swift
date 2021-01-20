@@ -29,7 +29,9 @@ public final class X3DScene :
       
       types .append (.X3DScene)
       
-      addChildObjects ($isLive)
+      addChildObjects ($isLive,
+                       $units_changed,
+                       $exportedNodes_changed)
 
       $rootNodes .setAccessType (.inputOutput)
    }
@@ -125,6 +127,8 @@ public final class X3DScene :
          case .mass:   units [MASS]   = X3DUnitInfo (category: category, name: name, conversionFactor: conversionFactor)
          default: break
       }
+      
+      units_changed = browser! .currentTime
    }
 
    public final override func fromUnit (_ category : X3DUnitCategory, value : Double) -> Double
@@ -186,6 +190,8 @@ public final class X3DScene :
    {
       return Float (toUnit (category, value: Double (value)))
    }
+   
+   @SFTime public final var units_changed = 0
 
    // Metadata handling
    
@@ -223,14 +229,20 @@ public final class X3DScene :
       }
 
       exportedNodes [exportedName] = X3DExportedNode (self, exportedName, node)
+      
+      exportedNodes_changed = browser! .currentTime
    }
    
    public final func removeExportedNode (exportedName : String)
    {
       exportedNodes .removeValue (forKey: exportedName)
+      
+      exportedNodes_changed = browser! .currentTime
    }
    
    public final func getExportedNodes () -> [String : X3DExportedNode] { exportedNodes }
+   
+   @SFTime public final var exportedNodes_changed = 0
 
    // Update control
    

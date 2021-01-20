@@ -6,12 +6,12 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-internal class X3DNamedNode :
+public class X3DNamedNode :
    X3DInputOutput
 {
-   internal private(set) final weak var executionContext : X3DExecutionContext?
-   internal private(set) final weak var node             : X3DNode?
-   internal final let name                               : String
+   public private(set) final weak var executionContext : X3DExecutionContext?
+   public private(set) final weak var node             : X3DNode?
+   public final let name                               : String
 
    internal init (_ executionContext : X3DExecutionContext, _ node : X3DNode, _ name : String)
    {

@@ -240,7 +240,10 @@ public final class X3DScene :
       exportedNodes_changed = SFTime .now
    }
    
-   public final func getExportedNodes () -> [String : X3DExportedNode] { exportedNodes }
+   public final func getExportedNodes () -> [X3DExportedNode]
+   {
+      exportedNodes .map { _, exportedNode in exportedNode } .sorted { $0 .exportedName < $1 .exportedName }
+   }
    
    @SFTime public final var exportedNodes_changed = 0
 
@@ -373,7 +376,7 @@ public final class X3DScene :
       {
          stream += stream .Break
          
-         for (_, exportedNode) in exportedNodes
+         for exportedNode in getExportedNodes ()
          {
             exportedNode .toVRMLStream (stream)
          }

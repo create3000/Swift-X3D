@@ -409,7 +409,10 @@ public class X3DExecutionContext :
       importedNodes_changed = SFTime .now
    }
    
-   public final func getImportedNodes () -> [String : X3DImportedNode] { importedNodes }
+   public final func getImportedNodes () -> [X3DImportedNode]
+   {
+      importedNodes .map { (_, node) in node } .sorted { $0 .importedName < $1 .importedName }
+   }
    
    @SFTime public final var importedNodes_changed = 0
 
@@ -867,7 +870,7 @@ public class X3DExecutionContext :
       {
          stream += stream .Break
          
-         for (_, importedNode) in importedNodes
+         for importedNode in getImportedNodes ()
          {
             importedNode .toVRMLStream (stream)
          }

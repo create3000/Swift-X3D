@@ -59,11 +59,13 @@ public class X3DExecutionContext :
 
    internal func setWorldURL (_ value : URL) { scene! .setWorldURL (value) }
 
-   // Configuration handling
+   // Profile handling
    
    public func getProfile () -> ProfileInfo { scene! .getProfile () }
    
    internal func setProfile (_ value : ProfileInfo) { scene! .setProfile (value) }
+   
+   // Components handling
    
    public func getComponents () -> [ComponentInfo] { scene! .getComponents () }
    

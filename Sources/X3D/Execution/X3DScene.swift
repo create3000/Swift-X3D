@@ -30,7 +30,10 @@ public final class X3DScene :
       types .append (.X3DScene)
       
       addChildObjects ($isLive,
+                       $profile_changed,
+                       $components_changed,
                        $units_changed,
+                       $metadata_changed,
                        $exportedNodes_changed)
 
       $rootNodes .setAccessType (.inputOutput)
@@ -86,21 +89,43 @@ public final class X3DScene :
 
    internal final override func setWorldURL (_ value : URL) { worldURL = value }
 
-   // Configuration handling
+   // Profile handling
    
-   private final var profile    : ProfileInfo     = SupportedProfiles .profiles ["Full"]!
-   private final var components : [ComponentInfo] = [ ]
+   private final var profile : ProfileInfo = SupportedProfiles .profiles ["Full"]!
    
    public final override func getProfile () -> ProfileInfo { profile }
    
-   internal final override func setProfile (_ value : ProfileInfo) { profile = value }
+   internal final override func setProfile (_ value : ProfileInfo)
+   {
+      profile = value
+
+      profile_changed = SFTime .now
+   }
    
+   @SFTime public final var profile_changed = 0
+
+   // Components handling
+   
+   private final var components : [ComponentInfo] = [ ]
+
    public final override func getComponents () -> [ComponentInfo] { components }
    
-   internal final override func setComponents (_ value : [ComponentInfo]) { components = value }
+   internal final override func setComponents (_ value : [ComponentInfo])
+   {
+      components = value
+      
+      components_changed = SFTime .now
+   }
    
-   internal final override func addComponent (_ component : ComponentInfo) { components .append (component) }
+   internal final override func addComponent (_ component : ComponentInfo)
+   {
+      components .append (component)
+      
+      components_changed = SFTime .now
+   }
    
+   @SFTime public final var components_changed = 0
+
    // Unit handling
    
    private final let ANGLE  = 0
@@ -195,8 +220,10 @@ public final class X3DScene :
 
    // Metadata handling
    
-   public final var metadata : [String : [String]] = [:]
+   public final var metadata : [String : [String]] = [:] { didSet { metadata_changed = SFTime .now } }
    
+   @SFTime public final var metadata_changed = 0
+
    // Exported node handling
    
    private final var exportedNodes = [String : X3DExportedNode] ()

@@ -106,9 +106,11 @@ public final class X3DImportedNode :
    {
       for route in routes
       {
-         guard let route = route .route else { continue }
+         guard let realRoute = route .route else { continue }
          
-         executionContext? .deleteRoute (route: route)
+         route .route = nil
+         
+         executionContext? .deleteRoute (route: realRoute)
       }
    }
    

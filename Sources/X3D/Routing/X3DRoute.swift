@@ -43,11 +43,17 @@ public final class X3DRoute :
       connect ()
    }
    
+   public private(set) final var isConnected = false
+   
    private final func connect ()
    {
-      guard let sourceField      = sourceField,
-            let destinationField = destinationField else { return }
+      guard !isConnected,
+            let sourceField      = sourceField,
+            let destinationField = destinationField
+      else { return }
       
+      isConnected = true
+
       sourceField .addFieldInterest (to: destinationField)
       
       sourceField      .outputRoutes .add (self)
@@ -59,8 +65,12 @@ public final class X3DRoute :
    
    internal final func disconnect ()
    {
-      guard let sourceField      = sourceField,
-            let destinationField = destinationField else { return }
+      guard isConnected,
+            let sourceField      = sourceField,
+            let destinationField = destinationField
+      else { return }
+      
+      isConnected = false
       
       sourceField .removeFieldInterest (to: destinationField)
       
@@ -109,12 +119,5 @@ public final class X3DRoute :
 
       stream += destinationField! .getName ()
       stream += stream .Break
-   }
-   
-   // Destruction
-   
-   deinit
-   {
-      disconnect ()
    }
 }

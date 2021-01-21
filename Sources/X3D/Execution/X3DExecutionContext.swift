@@ -681,15 +681,27 @@ public class X3DExecutionContext :
          // Destination node is shared but not imported.
       }
       
-      if let importedSourceNode = importedSourceNode as? X3DImportedNode
+      if let importedSourceNode      = importedSourceNode      as? X3DImportedNode,
+         let importedDestinationNode = importedDestinationNode as? X3DImportedNode
+      {
+         importedSourceNode .addRoute (sourceNode: importedSourceNode,
+                                       sourceField: sourceField,
+                                       destinationNode: importedDestinationNode,
+                                       destinationField: destinationField)
+         
+         importedDestinationNode .addRoute (sourceNode: importedSourceNode,
+                                            sourceField: sourceField,
+                                            destinationNode: importedDestinationNode,
+                                            destinationField: destinationField)
+      }
+      else if let importedSourceNode = importedSourceNode as? X3DImportedNode
       {
          importedSourceNode .addRoute (sourceNode: importedSourceNode,
                                        sourceField: sourceField,
                                        destinationNode: destinationNode,
                                        destinationField: destinationField)
       }
-
-      if let importedDestinationNode = importedDestinationNode as? X3DImportedNode
+      else if let importedDestinationNode = importedDestinationNode as? X3DImportedNode
       {
          importedDestinationNode .addRoute (sourceNode: sourceNode,
                                             sourceField: sourceField,
@@ -705,7 +717,7 @@ public class X3DExecutionContext :
 
       // Create route and return.
       
-      guard let sourceNode = sourceNode as? X3DNode,
+      guard let sourceNode      = sourceNode      as? X3DNode,
             let destinationNode = destinationNode as? X3DNode
       else { throw X3DError .INVALID_NODE ("Source and destination node must be of type X3DNode.") }
       
@@ -762,12 +774,14 @@ public class X3DExecutionContext :
 
       return route
    }
-   
+ 
    public final func deleteRoute (sourceNode : X3DNode,
                                   sourceField : String,
                                   destinationNode : X3DNode,
                                   destinationField : String)
    {
+      // Remove route
+      
       guard let sourceField      = try? sourceNode      .getField (name: sourceField)      else { return }
       guard let destinationField = try? destinationNode .getField (name: destinationField) else { return }
       
@@ -777,6 +791,10 @@ public class X3DExecutionContext :
       })
       else { return }
       
+      deleteImportedRoute (sourceNode: sourceNode,
+                           destinationNode: destinationNode,
+                           route: routes [index])
+
       routes .remove (at: index) .disconnect ()
       
       routes_changed = SFTime .now
@@ -786,9 +804,64 @@ public class X3DExecutionContext :
    {
       guard let index = routes .firstIndex (of: route) else { return }
       
+      deleteImportedRoute (sourceNode: route .sourceNode!,
+                           destinationNode: route .destinationNode!,
+                           route: routes [index])
+      
       routes .remove (at: index) .disconnect ()
       
       routes_changed = SFTime .now
+   }
+   
+   private final func deleteImportedRoute (sourceNode : X3DNode,
+                                           destinationNode : X3DNode,
+                                           route : X3DRoute)
+   {
+      // Imported nodes handling.
+
+      var importedSourceNode      : X3DBaseNode? = nil
+      var importedDestinationNode : X3DBaseNode? = nil
+
+      do
+      {
+         // If sourceNode is shared node try to find the corresponding ImportedNode.
+         if sourceNode .executionContext !== self
+         {
+            importedSourceNode = try getLocalNode (localName: getLocalName (node: sourceNode))
+         }
+      }
+      catch
+      {
+         // Source node is shared but not imported.
+      }
+      
+      do
+      {
+         // If sourceNode is shared node try to find the corresponding ImportedNode.
+         if destinationNode .executionContext !== self
+         {
+            importedDestinationNode = try getLocalNode (localName: getLocalName (node: destinationNode))
+         }
+      }
+      catch
+      {
+         // Destination node is shared but not imported.
+      }
+      
+      if let importedSourceNode      = importedSourceNode      as? X3DImportedNode,
+         let importedDestinationNode = importedDestinationNode as? X3DImportedNode
+      {
+         importedSourceNode      .deleteRoute (route: route)
+         importedDestinationNode .deleteRoute (route: route)
+      }
+      else if let importedSourceNode = importedSourceNode as? X3DImportedNode
+      {
+         importedSourceNode .deleteRoute (route: route)
+      }
+      else if let importedDestinationNode = importedDestinationNode as? X3DImportedNode
+      {
+         importedDestinationNode .deleteRoute (route: route)
+      }
    }
    
    public final func getRoutes () -> [X3DRoute] { routes }

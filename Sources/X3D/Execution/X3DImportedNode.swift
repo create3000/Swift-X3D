@@ -92,6 +92,16 @@ public final class X3DImportedNode :
       }
    }
    
+   internal final func deleteRoute (route : X3DRoute)
+   {
+      // Delete route.
+      
+      if let route = routes .first (where: { $0 .route === route })
+      {
+         routes .remove (route)
+      }
+   }
+
    private final func deleteRoutes ()
    {
       for route in routes
@@ -241,9 +251,9 @@ fileprivate class UnresolvedRoute :
    
    public final func hash (into hasher: inout Hasher)
    {
-      hasher .combine (sourceNode       .hashValue)
-      hasher .combine (sourceField      .hashValue)
-      hasher .combine (destinationNode  .hashValue)
-      hasher .combine (destinationField .hashValue)
+      hasher .combine (sourceNode)
+      hasher .combine (sourceField)
+      hasher .combine (destinationNode)
+      hasher .combine (destinationField)
    }
 }

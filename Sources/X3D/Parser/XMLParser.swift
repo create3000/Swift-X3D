@@ -928,7 +928,7 @@ internal final class XMLParser :
          case .SFTime:
             _ = makeParser (value)? .sftimeValue (for: field as! SFTime)
          case .SFString:
-            if let value = value { (field as! SFString) .wrappedValue = value }
+            if let value = value { (field as! SFString) .wrappedValue = value .unescaped }
          case .SFVec2d:
             _ = makeParser (value)? .sfvec2dValue (for: field as! SFVec2d)
          case .SFVec2f:

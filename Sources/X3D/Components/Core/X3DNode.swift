@@ -324,7 +324,7 @@ public class X3DNode :
       var sourceText = getSourceText ()
 
       if sourceText != nil,
-         sourceText! .count == 0
+         sourceText! .wrappedValue .isEmpty
       {
          sourceText = nil
       }

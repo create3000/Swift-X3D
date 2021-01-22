@@ -213,7 +213,7 @@ public class X3DNode :
       return other .equals (to: field)
    }
    
-   private final func getChangedFields () -> [X3DField]
+   internal final func getChangedFields () -> [X3DField]
    {
       var changedFields = [X3DField] ()
 
@@ -528,7 +528,7 @@ public class X3DNode :
       stream += getTypeName ()
    }
 
-   internal override func toVRMLStream (_ stream : X3DOutputStream)
+   internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       guard !stream .isSharedNode (self) else
       {

@@ -195,4 +195,246 @@ public class X3DPrototypeInstance :
       
       return other .equals (to: field)
    }
+   
+   // Input/Output
+
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      guard !stream .isSharedNode (self) else
+      {
+         stream += stream .Indent
+         stream += "<!-- NULL -->"
+         return
+      }
+      
+      stream .enterScope ()
+      
+      defer { stream .leaveScope () }
+      
+      let name = stream .getName (self)
+      
+      if !name .isEmpty
+      {
+         if stream .existsNode (self)
+         {
+            stream += stream .Indent
+            stream += "<ProtoInstance"
+            stream += stream .Space
+            stream += "name='"
+            stream += getTypeName () .escapeXML
+            stream += "'"
+            stream += stream .Space
+            stream += "USE='"
+            stream += name .escapeXML
+            stream += "'"
+            
+            if let containerField = stream .containerField
+            {
+               if containerField .getName () != getContainerField ()
+               {
+                  stream += stream .Space
+                  stream += "containerField='"
+                  stream += containerField .getName () .escapeXML
+                  stream += "'"
+               }
+            }
+
+            stream += "/>"
+            return
+         }
+      }
+      
+      stream += stream .Indent
+      stream += "<ProtoInstance"
+      stream += stream .Space
+      stream += "name='"
+      stream += getTypeName () .escapeXML
+      stream += "'"
+
+      if !name .isEmpty
+      {
+         stream .addNode (self)
+
+         stream += stream .Space
+         stream += "DEF='"
+         stream += name .escapeXML
+         stream += "'"
+      }
+      
+      if let containerField = stream .containerField
+      {
+         if containerField .getName () != getContainerField ()
+         {
+            stream += stream .Space
+            stream += "containerField='"
+            stream += containerField .getName () .escapeXML
+            stream += "'"
+         }
+      }
+
+      let fields = getChangedFields ()
+      
+      if fields .isEmpty
+      {
+         stream += "/>";
+      }
+      else
+      {
+         stream += ">"
+         stream += stream .TidyBreak
+         
+         stream .incIndent ()
+         
+         var references = [X3DField] ()
+         
+         for field in fields
+         {
+            if !stream .metadata && field === $metadata
+            {
+               continue
+            }
+            
+            if field .references .allObjects .isEmpty
+            {
+               switch field .getType ()
+               {
+                  case .MFNode: do
+                  {
+                     let array = field as! X3DArrayField
+                     
+                     stream += stream .Indent
+                     stream += "<fieldValue"
+                     stream += stream .Space
+                     stream += "name='"
+                     stream += field .getName () .escapeXML
+                     stream += "'"
+
+                     if array .count == 0
+                     {
+                        stream += "/>"
+                        stream += stream .TidyBreak
+                     }
+                     else
+                     {
+                        stream .containerFields .append (field)
+
+                        stream += ">"
+                        stream += stream .TidyBreak
+                        
+                        stream .incIndent ()
+                        
+                        field .toXMLStream (stream)
+                        
+                        stream += stream .TidyBreak
+                        
+                        stream .decIndent ()
+                        
+                        stream += stream .Indent
+                        stream += "</fieldValue>"
+                        stream += stream .TidyBreak
+
+                        stream .containerFields .removeLast ()
+                     }
+                  }
+                  case .SFNode: do
+                  {
+                     let node = field as! SFNode
+
+                     if node .wrappedValue != nil
+                     {
+                        stream .containerFields .append (field)
+
+                        stream += stream .Indent
+                        stream += "<fieldValue"
+                        stream += stream .Space
+                        stream += "name='"
+                        stream += field .getName () .escapeXML
+                        stream += "'"
+                        stream += ">"
+                        stream += stream .TidyBreak
+                        
+                        stream .incIndent ()
+                        
+                        field .toXMLStream (stream)
+                        
+                        stream += stream .TidyBreak
+                        
+                        stream .decIndent ()
+                        
+                        stream += stream .Indent
+                        stream += "</fieldValue>"
+                        stream += stream .TidyBreak
+
+                        stream .containerFields .removeLast ()
+                        
+                        break
+                     }
+                     
+                     fallthrough
+                  }
+                  default: do
+                  {
+                     stream += stream .Indent
+                     stream += "<fieldValue"
+                     stream += stream .Space
+                     stream += "name='"
+                     stream += field .getName () .escapeXML
+                     stream += "'"
+                     stream += stream .Space
+                     stream += "value='"
+                     
+                     field .toXMLStream (stream)
+                     
+                     stream += "'"
+                     stream += "/>"
+                     stream += stream .TidyBreak
+                  }
+               }
+            }
+            else
+            {
+               references .append (field)
+            }
+         }
+                  
+         if !references .isEmpty
+         {
+            stream += stream .Indent
+            stream += "<IS>"
+            stream += stream .TidyBreak
+            
+            stream .incIndent ()
+
+            for field in references
+            {
+               for reference in field .references .allObjects
+               {
+                  stream += stream .Indent
+                  stream += "<connect"
+                  stream += stream .Space
+                  stream += "nodeField='"
+                  stream += field .getName () .escapeXML
+                  stream += "'"
+                  stream += stream .Space
+                  stream += "protoField='"
+                  stream += reference .getName () .escapeXML
+                  stream += "'"
+                  stream += "/>"
+                  stream += stream .TidyBreak;
+               }
+            }
+
+            stream .decIndent ()
+            
+            stream += stream .Indent
+            stream += "</IS>"
+            stream += stream .TidyBreak
+         }
+
+         stream .decIndent ()
+         
+         stream += stream .Indent
+         stream += "</ProtoInstance>"
+      }
+   }
 }

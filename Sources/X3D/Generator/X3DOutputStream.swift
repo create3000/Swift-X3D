@@ -143,6 +143,10 @@ public final class X3DOutputStream
          return string .padding (toLength: count, withPad: TidySpace, startingAt: 0)
       }
    }
+   
+   // Options
+   
+   public final var metadata : Bool = true
 
    // Execution context handling
    
@@ -450,4 +454,8 @@ public final class X3DOutputStream
          return value
       }
    }
+   
+   internal final var containerField : X3DField? { containerFields .last }
+   
+   internal final var containerFields = [X3DField] ()
 }

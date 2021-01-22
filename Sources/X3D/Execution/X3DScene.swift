@@ -307,10 +307,6 @@ public final class X3DScene :
    
    internal final override func toXMLStream (_ stream : X3DOutputStream)
    {
-      guard let browser = browser else { return }
-      
-      // Output header.
-      
       var specificationVersion = getSpecificationVersion ()
 
       if specificationVersion == "2.0"

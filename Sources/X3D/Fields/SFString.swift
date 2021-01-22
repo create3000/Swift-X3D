@@ -84,7 +84,7 @@ public final class SFString :
    }
 }
 
-extension String
+internal extension String
 {
    var escaped : String
    {
@@ -119,5 +119,10 @@ extension String
       }
        
       return current
+   }
+   
+   var escapeXML : String
+   {
+      return CFXMLCreateStringByEscapingEntities (nil, self as CFString, nil) as String
    }
 }

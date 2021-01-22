@@ -119,7 +119,11 @@ public final class MFNode <Element : X3DBaseNode> :
          {
             if let node = wrappedValue .first!
             {
+               stream .enterScope ()
+               
                node .toStream (stream)
+               
+               stream .leaveScope ()
             }
             else
             {
@@ -128,6 +132,8 @@ public final class MFNode <Element : X3DBaseNode> :
          }
          default: do
          {
+            stream .enterScope ()
+            
             stream += "["
             stream += stream .TidyBreak
             
@@ -154,6 +160,8 @@ public final class MFNode <Element : X3DBaseNode> :
             
             stream += stream .Indent
             stream += "]"
+            
+            stream .leaveScope ()
          }
       }
    }
@@ -170,30 +178,42 @@ public final class MFNode <Element : X3DBaseNode> :
          {
             if wrappedValue .first! != nil
             {
+               stream .enterScope ()
+               
                wrappedValue .first!! .toXMLStream (stream)
+               
+               stream += stream .TidyBreak
+
+               stream .leaveScope ()
             }
             else
             {
+               stream += stream .Indent
                stream += "<!-- NULL -->"
+               stream += stream .TidyBreak
             }
          }
          default: do
          {
-            stream += "["
+            stream .enterScope ()
             
             for node in wrappedValue
             {
                if node != nil
                {
-                  node! .toVRMLStream (stream)
+                  node! .toXMLStream (stream)
+                  
+                  stream += stream .TidyBreak
                }
                else
                {
+                  stream += stream .Indent
                   stream += "<!-- NULL -->"
+                  stream += stream .TidyBreak
                }
             }
-            
-            stream += "]"
+             
+            stream .leaveScope ()
          }
       }
    }
@@ -212,7 +232,11 @@ public final class MFNode <Element : X3DBaseNode> :
          {
             if let node = wrappedValue .first!
             {
+               stream .enterScope ()
+               
                node .toVRMLStream (stream)
+               
+               stream .leaveScope ()
             }
             else
             {
@@ -221,6 +245,8 @@ public final class MFNode <Element : X3DBaseNode> :
          }
          default: do
          {
+            stream .enterScope ()
+            
             stream += "["
             stream += stream .TidyBreak
             
@@ -249,6 +275,8 @@ public final class MFNode <Element : X3DBaseNode> :
             
             stream += stream .Indent
             stream += "]"
+            
+            stream .leaveScope ()
          }
       }
    }

@@ -86,6 +86,8 @@ public class SFNode <Type : X3DBaseNode> :
       if let node = wrappedValue
       {
          node .toXMLStream (stream)
+         
+         stream += stream .TidyBreak
       }
       else
       {

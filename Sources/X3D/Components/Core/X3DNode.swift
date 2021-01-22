@@ -249,7 +249,281 @@ public class X3DNode :
 
    internal override func toXMLStream (_ stream : X3DOutputStream)
    {
-      stream += "<\(getTypeName ())/>"
+      guard !stream .isSharedNode (self) else
+      {
+         stream += stream .Indent
+         stream += "<!-- NULL -->"
+         return
+      }
+      
+      stream .enterScope ()
+      
+      defer { stream .leaveScope () }
+      
+      let name = stream .getName (self)
+      
+      if !name .isEmpty
+      {
+         if stream .existsNode (self)
+         {
+            stream += stream .Indent
+            stream += "<"
+            stream += getTypeName ()
+            stream += stream .Space
+            stream += "USE='"
+            stream += name .escapeXML
+            stream += "'"
+            
+            if let containerField = stream .containerField
+            {
+               if containerField .getName () != getContainerField ()
+               {
+                  stream += stream .Space
+                  stream += "containerField='"
+                  stream += containerField .getName () .escapeXML
+                  stream += "'"
+               }
+            }
+
+            stream += "/>"
+            return
+         }
+      }
+      
+      stream += stream .Indent
+      stream += "<"
+      stream += getTypeName ()
+
+      if !name .isEmpty
+      {
+         stream .addNode (self)
+
+         stream += stream .Space
+         stream += "DEF='"
+         stream += name .escapeXML
+         stream += "'"
+      }
+      
+      if let containerField = stream .containerField
+      {
+         if containerField .getName () != getContainerField ()
+         {
+            stream += stream .Space
+            stream += "containerField='"
+            stream += containerField .getName () .escapeXML
+            stream += "'"
+         }
+      }
+
+      let fields            = getChangedFields ()
+      let userDefinedFields = getUserDefinedFields ()
+
+      var references = [X3DField] ()
+      var childNodes = [X3DField] ()
+
+      var sourceText = getSourceText ()
+
+      if sourceText != nil,
+         sourceText! .count == 0
+      {
+         sourceText = nil
+      }
+      
+      stream .incIndent ()
+      stream .incIndent ()
+      
+      for field in fields
+      {
+         if !stream .metadata && field === $metadata
+         {
+            continue
+         }
+         
+         if field .references .allObjects .isEmpty
+         {
+            if field .isInitializable
+            {
+               switch field .getType ()
+               {
+                  case .SFNode, .MFNode: do
+                  {
+                     childNodes .append (field)
+                  }
+                  default: do
+                  {
+                     guard field != sourceText else { break }
+                  
+                     stream += stream .Break
+                     stream += stream .Indent
+                     stream += field .getName ()
+                     stream += "='"
+                     
+                     field .toXMLStream (stream)
+                     
+                     stream += "'"
+                  }
+               }
+            }
+         }
+         else
+         {
+            references .append (field)
+         }
+      }
+      
+      stream .decIndent ()
+      stream .decIndent ()
+      
+      if (!canUserDefinedFields || userDefinedFields .isEmpty) && references .isEmpty && childNodes .isEmpty && sourceText == nil
+      {
+         stream += "/>";
+      }
+      else
+      {
+         stream += ">"
+         stream += stream .TidyBreak
+         
+         stream .incIndent ()
+         
+         if canUserDefinedFields
+         {
+            for field in userDefinedFields
+            {
+               stream += stream .Indent
+               stream += "<field"
+               stream += stream .Space
+               stream += "accessType='"
+               stream += field .getAccessType () .description
+               stream += "'"
+               stream += stream .Space
+               stream += "type='"
+               stream += field .getTypeName ()
+               stream += "'"
+               stream += stream .Space
+               stream += "name='"
+               stream += field .getName () .escapeXML
+               stream += "'"
+               
+               if field .references .allObjects .isEmpty
+               {
+                  references .append (field)
+                  
+                  if !field .isInitializable /* || field .isDefaultValue */
+                  {
+                     stream += "/>"
+                     stream += stream .TidyBreak
+                  }
+                  else
+                  {
+                     // Output value
+
+                     switch field .getType ()
+                     {
+                        case .SFNode, .MFNode: do
+                        {
+                           stream .containerFields .append (field)
+
+                           stream += ">"
+                           stream += stream .TidyBreak
+                           
+                           stream .incIndent ()
+                           
+                           field .toXMLStream (stream)
+                           
+                           stream .decIndent ()
+                           
+                           stream += stream .Indent
+                           stream += "</field>"
+                           stream += stream .TidyBreak
+                           
+                           stream .containerFields .removeLast ()
+                        }
+                        default: do
+                        {
+                           stream += stream .Space
+                           stream += "value='"
+                           
+                           field .toXMLStream (stream)
+                           
+                           stream += "'"
+                           stream += "/>"
+                           stream += stream .TidyBreak
+                        }
+                     }
+                  }
+
+               }
+               else
+               {
+                  references .append (field)
+
+                  stream += "/>"
+                  stream += stream .TidyBreak
+               }
+            }
+         }
+         
+         if !references .isEmpty
+         {
+            stream += stream .Indent
+            stream += "<IS>"
+            stream += stream .TidyBreak
+            
+            stream .incIndent ()
+
+            for field in references
+            {
+               for reference in field .references .allObjects
+               {
+                  stream += stream .Indent
+                  stream += "<connect"
+                  stream += stream .Space
+                  stream += "nodeField='"
+                  stream += field .getName () .escapeXML
+                  stream += "'"
+                  stream += stream .Space
+                  stream += "protoField='"
+                  stream += reference .getName () .escapeXML
+                  stream += "'"
+                  stream += "/>"
+                  stream += stream .TidyBreak;
+               }
+            }
+
+            stream .decIndent ()
+            
+            stream += stream .Indent
+            stream += "</IS>"
+            stream += stream .TidyBreak
+         }
+
+         for field in childNodes
+         {
+            stream .containerFields .append (field)
+
+            field .toXMLStream (stream)
+ 
+            stream .containerFields .removeLast ()
+         }
+
+         if let sourceText = sourceText
+         {
+            for value in sourceText .wrappedValue
+            {
+               stream += "<![CDATA["
+               stream += value
+               stream += "]]>"
+               stream += stream .TidyBreak;
+            }
+         }
+
+         stream .decIndent ()
+         
+         stream += stream .Indent
+         stream += "</"
+         stream += getTypeName ()
+         stream += ">"
+      }
    }
 
    internal override func toJSONStream (_ stream : X3DOutputStream)

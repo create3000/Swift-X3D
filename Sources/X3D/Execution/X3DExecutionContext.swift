@@ -894,6 +894,31 @@ public class X3DExecutionContext :
       return toVRMLString (with: self, stream: stream)
    }
    
+   internal override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      // Enter stream.
+      
+      stream .push (self)
+      stream .enterScope ()
+      stream .setImportedNodes (importedNodes)
+      
+      // Output root nodes.
+      
+      if !rootNodes .isEmpty
+      {
+         $rootNodes .toXMLStream (stream)
+      }
+
+      // Leave stream.
+      
+      stream .leaveScope ()
+      stream .pop (self)
+   }
+   
+   internal override func toJSONStream (_ stream : X3DOutputStream)
+   {
+   }
+
    internal override func toVRMLStream (_ stream : X3DOutputStream)
    {
       // Enter stream.

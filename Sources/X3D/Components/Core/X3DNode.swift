@@ -577,8 +577,13 @@ public class X3DNode :
       // User-defined fields
       
       let userDefinedFields = getUserDefinedFields ()
-      let fields            = getChangedFields ()
+      var fields            = getChangedFields ()
       
+      if !stream .metadata
+      {
+         fields = fields .filter { $0 !== $metadata }
+      }
+
       var fieldTypeLength   = 0
       var accessTypeLength  = 0
       

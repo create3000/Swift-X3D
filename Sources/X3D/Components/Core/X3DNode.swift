@@ -406,8 +406,6 @@ public class X3DNode :
                
                if field .references .allObjects .isEmpty
                {
-                  references .append (field)
-                  
                   if !field .isInitializable /* || field .isDefaultValue */
                   {
                      stream += "/>"
@@ -451,7 +449,6 @@ public class X3DNode :
                         }
                      }
                   }
-
                }
                else
                {

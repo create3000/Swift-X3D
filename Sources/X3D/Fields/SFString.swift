@@ -64,7 +64,7 @@ public final class SFString :
    
    internal final override func toXMLStream (_ stream : X3DOutputStream)
    {
-      stream += wrappedValue
+      stream += wrappedValue .escaped .escapeXML
    }
    
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
@@ -123,6 +123,21 @@ internal extension String
    
    var escapeXML : String
    {
-      return CFXMLCreateStringByEscapingEntities (nil, self as CFString, nil) as String
+      let entities = [
+         "<"  : "&lt;",
+         ">"  : "&gt;",
+         "\"" : "&quot;",
+         "'"  : "&apos;",
+         "&"  : "&amp;",
+      ]
+      
+      var current = self
+
+      for (key, value) in entities
+      {
+         current = current .replacingOccurrences (of: key, with: value)
+      }
+
+      return current
    }
 }

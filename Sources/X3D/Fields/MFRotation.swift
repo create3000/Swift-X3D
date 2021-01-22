@@ -65,6 +65,13 @@ public final class MFRotation :
       toVRMLStream (stream)
    }
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      let format = "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)"
+      
+      stream += wrappedValue .map { let axis = $0 .axis; return String (format: format, axis .x, axis .y, axis .z, stream .toUnit (.angle, value: $0 .angle)) } .joined (separator: stream .Comma + stream .TidySpace)
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count
@@ -88,7 +95,7 @@ public final class MFRotation :
             stream .incIndent ()
             
             stream += stream .Indent
-            stream += "\(wrappedValue .map { let axis = $0 .axis; return String (format: format, axis .x, axis .y, axis .z, stream .toUnit (.angle, value: $0 .angle)) } .joined (separator: stream .ListSeparator))"
+            stream += wrappedValue .map { let axis = $0 .axis; return String (format: format, axis .x, axis .y, axis .z, stream .toUnit (.angle, value: $0 .angle)) } .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
             
             stream .decIndent ()
@@ -100,7 +107,7 @@ public final class MFRotation :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      stream += "\(wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(stream .toUnit (.angle, value: $0 .angle))" } .joined (separator: ",\n"))"
+      stream += wrappedValue .map { let axis = $0 .axis; return "\(axis .x) \(axis .y) \(axis .z) \(stream .toUnit (.angle, value: $0 .angle))" } .joined (separator: ",\n")
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

@@ -65,6 +65,11 @@ public final class MFString :
       toVRMLStream (stream)
    }
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      stream += wrappedValue .map { "\"\($0 .escaped .escapeXML)\"" } .joined (separator: stream .Comma + stream .TidySpace)
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count
@@ -82,7 +87,7 @@ public final class MFString :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { "\"\($0 .escaped)\"" } .joined (separator: stream .ListSeparator))"
+            stream += wrappedValue .map { "\"\($0 .escaped)\"" } .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
             
             stream .decIndent ()
@@ -94,7 +99,7 @@ public final class MFString :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      stream += "\(wrappedValue .map { "\"\($0 .escaped)\"" } .joined (separator: ",\n"))"
+      stream += wrappedValue .map { "\"\($0 .escaped)\"" } .joined (separator: ",\n")
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

@@ -100,6 +100,29 @@ public final class MFImage :
       toVRMLStream (stream)
    }
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      stream += wrappedValue .map
+      {
+         var string = ""
+
+         string += String ($0 .width)
+         string += " "
+         string += String ($0 .height)
+         string += " "
+         string += String ($0 .comp)
+
+         if !$0 .array .isEmpty
+         {
+            string += " "
+            string += $0 .array .map { String (format: "0x%x", $0) } .joined (separator: " ")
+         }
+
+         return string
+      }
+      .joined (separator: stream .Comma + stream .TidySpace)
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count
@@ -127,27 +150,25 @@ public final class MFImage :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += """
-\(wrappedValue .map
-{
-   var string = ""
-   
-   string += String ($0 .width)
-   string += " "
-   string += String ($0 .height)
-   string += " "
-   string += String ($0 .comp)
-   
-   if !$0 .array .isEmpty
-   {
-      string += " "
-      string += $0 .array .map { String (format: "0x%x", $0) } .joined (separator: " ")
-   }
-   
-   return string
-}
-.joined (separator: stream .ListSeparator))
-"""
+            stream += wrappedValue .map
+            {
+               var string = ""
+               
+               string += String ($0 .width)
+               string += " "
+               string += String ($0 .height)
+               string += " "
+               string += String ($0 .comp)
+               
+               if !$0 .array .isEmpty
+               {
+                  string += " "
+                  string += $0 .array .map { String (format: "0x%x", $0) } .joined (separator: " ")
+               }
+               
+               return string
+            }
+            .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
             
             stream .decIndent ()
@@ -159,27 +180,25 @@ public final class MFImage :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      stream += """
-\(wrappedValue .map
-{
-   var string = ""
+      stream += wrappedValue .map
+      {
+         var string = ""
 
-   string += String ($0 .width)
-   string += " "
-   string += String ($0 .height)
-   string += " "
-   string += String ($0 .comp)
+         string += String ($0 .width)
+         string += " "
+         string += String ($0 .height)
+         string += " "
+         string += String ($0 .comp)
 
-   if !$0 .array .isEmpty
-   {
-      string += " "
-      string += $0 .array .map { String (format: "0x%x", $0) } .joined (separator: " ")
-   }
+         if !$0 .array .isEmpty
+         {
+            string += " "
+            string += $0 .array .map { String (format: "0x%x", $0) } .joined (separator: " ")
+         }
 
-   return string
-}
-.joined (separator: ",\n"))
-"""
+         return string
+      }
+      .joined (separator: ",\n")
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

@@ -67,6 +67,11 @@ public final class MFTime :
       toVRMLStream (stream)
    }
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      stream += wrappedValue .map { String (format: stream .doubleFormat, $0) } .joined (separator: stream .Comma + stream .TidySpace)
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count
@@ -76,7 +81,7 @@ public final class MFTime :
             stream += stream .TidySpace
             stream += "]"
          case 1:
-            stream += String (format: stream .doubleFormat, stream .toUnit (unit, value: wrappedValue .first!))
+            stream += String (format: stream .doubleFormat, wrappedValue .first!)
          default:
             stream += "["
             stream += stream .ListBreak
@@ -84,7 +89,7 @@ public final class MFTime :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { String (format: stream .doubleFormat, stream .toUnit (unit, value: $0)) } .joined (separator: stream .ListSeparator))"
+            stream += wrappedValue .map { String (format: stream .doubleFormat, $0) } .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
             
             stream .decIndent ()
@@ -96,7 +101,7 @@ public final class MFTime :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      stream += "\(wrappedValue .map { String ($0) } .joined (separator: ",\n"))"
+      stream += wrappedValue .map { String ($0) } .joined (separator: ",\n")
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

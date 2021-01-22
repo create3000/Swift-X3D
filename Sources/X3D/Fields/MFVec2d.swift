@@ -65,6 +65,13 @@ public final class MFVec2d :
       toVRMLStream (stream)
    }
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      let format = "\(stream .doubleFormat) \(stream .doubleFormat)"
+
+      stream += wrappedValue .map { String (format: format, stream .toUnit (unit, value: $0.x), stream .toUnit (unit, value: $0.y)) } .joined (separator: stream .Comma + stream .TidySpace)
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count
@@ -86,7 +93,7 @@ public final class MFVec2d :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { String (format: format, stream .toUnit (unit, value: $0.x), stream .toUnit (unit, value: $0.y)) } .joined (separator: stream .ListSeparator))"
+            stream += wrappedValue .map { String (format: format, stream .toUnit (unit, value: $0.x), stream .toUnit (unit, value: $0.y)) } .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
             
             stream .decIndent ()
@@ -98,7 +105,7 @@ public final class MFVec2d :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      stream += "\(wrappedValue .map { "\(stream .toUnit (unit, value: $0 .x)) \(stream .toUnit (unit, value: $0 .y))" } .joined (separator: ",\n"))"
+      stream += wrappedValue .map { "\(stream .toUnit (unit, value: $0 .x)) \(stream .toUnit (unit, value: $0 .y))" } .joined (separator: ",\n")
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

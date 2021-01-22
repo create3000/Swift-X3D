@@ -65,6 +65,11 @@ public final class MFInt32 :
       toVRMLStream (stream)
    }
 
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      stream += wrappedValue .map { String ($0) } .joined (separator: stream .Comma + stream .TidySpace)
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count
@@ -82,7 +87,7 @@ public final class MFInt32 :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { String ($0) } .joined (separator: stream .ListSeparator))"
+            stream += wrappedValue .map { String ($0) } .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
             
             stream .decIndent ()
@@ -94,7 +99,7 @@ public final class MFInt32 :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      stream += "\(wrappedValue .map { String ($0) } .joined (separator: ",\n"))"
+      stream += wrappedValue .map { String ($0) } .joined (separator: ",\n")
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

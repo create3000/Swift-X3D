@@ -65,6 +65,13 @@ public final class MFColor :
       toVRMLStream (stream)
    }
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      let format = "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)"
+      
+      stream += wrappedValue .map { String (format: format, $0.r, $0.g, $0.b) } .joined (separator: stream .Comma + stream .TidySpace)
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count
@@ -84,7 +91,7 @@ public final class MFColor :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { String (format: format, $0.r, $0.g, $0.b) } .joined (separator: stream .ListSeparator))"
+            stream += wrappedValue .map { String (format: format, $0.r, $0.g, $0.b) } .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
             
             stream .decIndent ()
@@ -96,7 +103,7 @@ public final class MFColor :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      stream += "\(wrappedValue .map { "\($0 .r) \($0 .g) \($0 .b)" } .joined (separator: ",\n"))"
+      stream += wrappedValue .map { "\($0 .r) \($0 .g) \($0 .b)" } .joined (separator: ",\n")
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

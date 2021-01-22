@@ -65,6 +65,29 @@ public final class MFMatrix3d :
       toVRMLStream (stream)
    }
 
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      let format = "\(stream .doubleFormat) \(stream .doubleFormat) \(stream .doubleFormat)"
+      
+      stream += wrappedValue .map
+      {
+         let c0 = $0 [0]
+         let c1 = $0 [1]
+         let c2 = $0 [2]
+
+         var string = ""
+
+         string += String (format: format, c0.x, c0.y, c0.z)
+         string += " "
+         string += String (format: format, c1.x, c1.y, c1.z)
+         string += " "
+         string += String (format: format, c2.x, c2.y, c2.z)
+
+         return string
+      }
+      .joined (separator: stream .Comma + stream .TidySpace)
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count
@@ -94,25 +117,23 @@ public final class MFMatrix3d :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += """
-\(wrappedValue .map
-{
-   let c0 = $0 [0]
-   let c1 = $0 [1]
-   let c2 = $0 [2]
-   
-   var string = ""
-   
-   string += String (format: format, c0.x, c0.y, c0.z)
-   string += " "
-   string += String (format: format, c1.x, c1.y, c1.z)
-   string += " "
-   string += String (format: format, c2.x, c2.y, c2.z)
+            stream += wrappedValue .map
+            {
+               let c0 = $0 [0]
+               let c1 = $0 [1]
+               let c2 = $0 [2]
+               
+               var string = ""
+               
+               string += String (format: format, c0.x, c0.y, c0.z)
+               string += " "
+               string += String (format: format, c1.x, c1.y, c1.z)
+               string += " "
+               string += String (format: format, c2.x, c2.y, c2.z)
 
-   return string
-}
-.joined (separator: stream .ListSeparator))
-"""
+               return string
+            }
+            .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
             
             stream .decIndent ()
@@ -124,25 +145,23 @@ public final class MFMatrix3d :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      stream += """
-\(wrappedValue .map
-{
-   let c0 = $0 [0]
-   let c1 = $0 [1]
-   let c2 = $0 [2]
+      stream += wrappedValue .map
+      {
+         let c0 = $0 [0]
+         let c1 = $0 [1]
+         let c2 = $0 [2]
 
-   var string = ""
+         var string = ""
 
-   string += "\(c0.x) \(c0.y) \(c0.z)"
-   string += " "
-   string += "\(c1.x) \(c1.y) \(c1.z)"
-   string += " "
-   string += "\(c2.x) \(c2.y) \(c2.z)"
+         string += "\(c0.x) \(c0.y) \(c0.z)"
+         string += " "
+         string += "\(c1.x) \(c1.y) \(c1.z)"
+         string += " "
+         string += "\(c2.x) \(c2.y) \(c2.z)"
 
-   return string
-}
-.joined (separator: ",\n"))
-"""
+         return string
+      }
+      .joined (separator: ",\n")
    }
    
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

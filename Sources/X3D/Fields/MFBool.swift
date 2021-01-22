@@ -82,7 +82,7 @@ public final class MFBool :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { $0 ? "TRUE" : "FALSE" } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { $0 ? "TRUE" : "FALSE" } .joined (separator: stream .ListSeparator))"
             stream += stream .ListBreak
             
             stream .decIndent ()

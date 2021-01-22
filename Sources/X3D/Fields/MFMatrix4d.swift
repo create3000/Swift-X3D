@@ -117,7 +117,7 @@ public final class MFMatrix4d :
 
    return string
 }
-.joined (separator: stream .Separator))
+.joined (separator: stream .ListSeparator))
 """
             stream += stream .ListBreak
             

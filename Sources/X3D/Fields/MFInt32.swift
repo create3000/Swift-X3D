@@ -82,7 +82,7 @@ public final class MFInt32 :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { String ($0) } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { String ($0) } .joined (separator: stream .ListSeparator))"
             stream += stream .ListBreak
             
             stream .decIndent ()

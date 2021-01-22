@@ -86,7 +86,7 @@ public final class MFVec2d :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { String (format: format, stream .toUnit (unit, value: $0.x), stream .toUnit (unit, value: $0.y)) } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { String (format: format, stream .toUnit (unit, value: $0.x), stream .toUnit (unit, value: $0.y)) } .joined (separator: stream .ListSeparator))"
             stream += stream .ListBreak
             
             stream .decIndent ()

@@ -146,7 +146,7 @@ public final class MFImage :
    
    return string
 }
-.joined (separator: stream .Separator))
+.joined (separator: stream .ListSeparator))
 """
             stream += stream .ListBreak
             

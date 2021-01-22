@@ -88,7 +88,7 @@ public final class MFRotation :
             stream .incIndent ()
             
             stream += stream .Indent
-            stream += "\(wrappedValue .map { let axis = $0 .axis; return String (format: format, axis .x, axis .y, axis .z, stream .toUnit (.angle, value: $0 .angle)) } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { let axis = $0 .axis; return String (format: format, axis .x, axis .y, axis .z, stream .toUnit (.angle, value: $0 .angle)) } .joined (separator: stream .ListSeparator))"
             stream += stream .ListBreak
             
             stream .decIndent ()

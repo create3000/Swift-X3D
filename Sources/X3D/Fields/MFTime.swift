@@ -84,7 +84,7 @@ public final class MFTime :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { String (format: stream .doubleFormat, stream .toUnit (unit, value: $0)) } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { String (format: stream .doubleFormat, stream .toUnit (unit, value: $0)) } .joined (separator: stream .ListSeparator))"
             stream += stream .ListBreak
             
             stream .decIndent ()

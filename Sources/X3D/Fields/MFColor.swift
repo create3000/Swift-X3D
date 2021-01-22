@@ -84,7 +84,7 @@ public final class MFColor :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { String (format: format, $0.r, $0.g, $0.b) } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { String (format: format, $0.r, $0.g, $0.b) } .joined (separator: stream .ListSeparator))"
             stream += stream .ListBreak
             
             stream .decIndent ()

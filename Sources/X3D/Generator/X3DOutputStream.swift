@@ -85,7 +85,7 @@ public final class X3DOutputStream
             ListBreak            = "\n"
             Comma                = ","
             IndentCharacters     = "  "
-            TidyIndentCharacters = "  "
+            TidyIndentCharacters = IndentCharacters
       }
    }
 
@@ -108,7 +108,7 @@ public final class X3DOutputStream
    internal private(set) final var ListBreak : String = ""
    internal private(set) final var Comma     : String = ""
 
-   internal final var Separator : String { Comma + ListBreak + TidyIndent }
+   internal final var ListSeparator : String { Comma + ListBreak + TidyIndent }
 
    // Indent handling
    

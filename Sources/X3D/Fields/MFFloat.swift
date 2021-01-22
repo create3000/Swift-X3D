@@ -82,7 +82,7 @@ public final class MFFloat :
             stream .incIndent ()
             
             stream += stream .TidyIndent
-            stream += "\(wrappedValue .map { String (format: stream .floatFormat, stream .toUnit (unit, value: $0)) } .joined (separator: stream .Separator))"
+            stream += "\(wrappedValue .map { String (format: stream .floatFormat, stream .toUnit (unit, value: $0)) } .joined (separator: stream .ListSeparator))"
             stream += stream .ListBreak
             
             stream .decIndent ()

@@ -124,11 +124,11 @@ internal extension String
    var escapeXML : String
    {
       let entities = [
-         "<"  : "&lt;",
-         ">"  : "&gt;",
-         "\"" : "&quot;",
-         "'"  : "&apos;",
-         "&"  : "&amp;",
+         ("&",  "&amp;"),
+         ("<",  "&lt;"),
+         (">",  "&gt;"),
+         ("\"", "&quot;"),
+         ("'",  "&apos;"),
       ]
       
       var current = self

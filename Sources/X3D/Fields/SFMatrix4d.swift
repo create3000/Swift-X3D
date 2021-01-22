@@ -91,11 +91,11 @@ public class SFMatrix4d :
       let c3 = wrappedValue [3]
 
       stream += "\(c0.x) \(c0.y) \(c0.z) \(c0.w)"
-      stream += "\n"
+      stream += " "
       stream += "\(c1.x) \(c1.y) \(c1.z) \(c1.w)"
-      stream += "\n"
+      stream += " "
       stream += "\(c2.x) \(c2.y) \(c2.z) \(c2.w)"
-      stream += "\n"
+      stream += " "
       stream += "\(c3.x) \(c3.y) \(c3.z) \(c3.w)"
    }
 

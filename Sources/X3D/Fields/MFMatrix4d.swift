@@ -141,16 +141,16 @@ public final class MFMatrix4d :
    var string = ""
 
    string += "\(c0.x) \(c0.y) \(c0.z) \(c0.w)"
-   string += "\n"
+   string += " "
    string += "\(c1.x) \(c1.y) \(c1.z) \(c1.w)"
-   string += "\n"
+   string += " "
    string += "\(c2.x) \(c2.y) \(c2.z) \(c2.w)"
-   string += "\n"
+   string += " "
    string += "\(c3.x) \(c3.y) \(c3.z) \(c3.w)"
 
    return string
 }
-.joined (separator: ", "))
+.joined (separator: ",\n"))
 """
    }
 

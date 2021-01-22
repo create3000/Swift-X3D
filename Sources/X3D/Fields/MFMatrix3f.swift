@@ -134,9 +134,9 @@ public final class MFMatrix3f :
    var string = ""
 
    string += "\(c0.x) \(c0.y) \(c0.z)"
-   string += "\n"
+   string += " "
    string += "\(c1.x) \(c1.y) \(c1.z)"
-   string += "\n"
+   string += " "
    string += "\(c2.x) \(c2.y) \(c2.z)"
 
    return string

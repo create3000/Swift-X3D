@@ -87,9 +87,9 @@ public class SFMatrix3d :
       let c2 = wrappedValue [2]
 
       stream += "\(c0.x) \(c0.y) \(c0.z)"
-      stream += "\n"
+      stream += " "
       stream += "\(c1.x) \(c1.y) \(c1.z)"
-      stream += "\n"
+      stream += " "
       stream += "\(c2.x) \(c2.y) \(c2.z)"
    }
 

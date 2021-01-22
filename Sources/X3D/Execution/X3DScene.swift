@@ -421,7 +421,7 @@ public final class X3DScene :
       
       // Output profile.
 
-      profile .toVRMLStream (stream);
+      profile .toVRMLStream (stream)
 
       stream += stream .Break
       stream += stream .TidyBreak

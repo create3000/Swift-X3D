@@ -276,7 +276,7 @@ public class X3DPrototypeInstance :
       
       if fields .isEmpty
       {
-         stream += "/>";
+         stream += "/>"
       }
       else
       {
@@ -420,7 +420,7 @@ public class X3DPrototypeInstance :
                   stream += reference .getName () .escapeXML
                   stream += "'"
                   stream += "/>"
-                  stream += stream .TidyBreak;
+                  stream += stream .TidyBreak
                }
             }
 

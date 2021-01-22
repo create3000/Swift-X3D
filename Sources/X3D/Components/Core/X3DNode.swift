@@ -376,7 +376,7 @@ public class X3DNode :
       
       if (!canUserDefinedFields || userDefinedFields .isEmpty) && references .isEmpty && childNodes .isEmpty && sourceText == nil
       {
-         stream += "/>";
+         stream += "/>"
       }
       else
       {
@@ -406,7 +406,7 @@ public class X3DNode :
                
                if field .references .allObjects .isEmpty
                {
-                  if !field .isInitializable /* || field .isDefaultValue */
+                  if !field .isInitializable || field .isDefaultValue
                   {
                      stream += "/>"
                      stream += stream .TidyBreak
@@ -483,7 +483,7 @@ public class X3DNode :
                   stream += reference .getName () .escapeXML
                   stream += "'"
                   stream += "/>"
-                  stream += stream .TidyBreak;
+                  stream += stream .TidyBreak
                }
             }
 
@@ -510,7 +510,7 @@ public class X3DNode :
                stream += "<![CDATA["
                stream += value
                stream += "]]>"
-               stream += stream .TidyBreak;
+               stream += stream .TidyBreak
             }
          }
 

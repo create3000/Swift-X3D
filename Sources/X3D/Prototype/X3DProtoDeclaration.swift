@@ -36,6 +36,132 @@ public final class X3DProtoDeclaration :
    
    // Input/Output
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      stream += stream .Indent
+      stream += "<ProtoDeclare"
+      stream += stream .Space
+      stream += "name='"
+      stream += getName () .escapeXML
+      stream += "'"
+      stream += ">"
+      stream += stream .TidyBreak
+
+      // <ProtoInterface>
+
+      stream .enterScope ()
+
+      let userDefinedFields = getUserDefinedFields ()
+
+      if !userDefinedFields .isEmpty
+      {
+         stream .incIndent ()
+         
+         stream += stream .Indent
+         stream += "<ProtoInterface>"
+         stream += stream .TidyBreak
+         
+         stream .incIndent ()
+
+         for field in userDefinedFields
+         {
+            stream += stream .Indent
+            stream += "<field"
+            stream += stream .Space
+            stream += "accessType='"
+            stream += field .getAccessType () .description
+            stream += "'"
+            stream += stream .Space
+            stream += "type='"
+            stream += field .getTypeName ()
+            stream += "'"
+            stream += stream .Space
+            stream += "name='"
+            stream += field .getName () .escapeXML
+            stream += "'"
+
+            if field .isDefaultValue
+            {
+               stream += "/>"
+               stream += stream .TidyBreak
+            }
+            else
+            {
+               switch field .getType ()
+               {
+                  case .SFNode, .MFNode: do
+                  {
+                     stream .containerFields .append (field)
+
+                     stream += ">"
+                     stream += stream .TidyBreak
+                     
+                     stream .incIndent ()
+                     
+                     field .toXMLStream (stream)
+                     
+                     stream += stream .TidyBreak
+                     stream .decIndent ()
+                     stream += stream .Indent
+                     stream += "</field>"
+                     stream += stream .TidyBreak
+
+                     stream .containerFields .removeLast ()
+                  }
+                  default: do
+                  {
+                     stream += stream .Space
+                     stream += "value='"
+                     
+                     field .toXMLStream (stream)
+                     
+                     stream += "'"
+                     stream += "/>"
+                     stream += stream .TidyBreak
+                  }
+               }
+            }
+         }
+
+         stream .decIndent ()
+         
+         stream += stream .Indent
+         stream += "</ProtoInterface>"
+         stream += stream .TidyBreak
+         
+         stream .decIndent ()
+      }
+
+      stream .leaveScope ()
+
+      // </ProtoInterface>
+
+      // <ProtoBody>
+
+      stream .incIndent ()
+      
+      stream += stream .Indent
+      stream += "<ProtoBody>"
+      stream += stream .TidyBreak
+      
+      stream .incIndent ()
+
+      body .toXMLStream (stream)
+
+      stream .decIndent ()
+      
+      stream += stream .Indent
+      stream += "</ProtoBody>"
+      stream += stream .TidyBreak
+      
+      stream .decIndent ()
+
+      // </ProtoBody>
+
+      stream += stream .Indent
+      stream += "</ProtoDeclare>"
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += stream .Indent

@@ -30,6 +30,8 @@ public class X3DField :
       set (value: field)
    }
    
+   public var isDefaultValue : Bool { false }
+   
    // Reference handling
    
    /// Set of `IS` relation ships.

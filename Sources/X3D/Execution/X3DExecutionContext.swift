@@ -902,6 +902,15 @@ public class X3DExecutionContext :
       stream .enterScope ()
       stream .setImportedNodes (importedNodes)
       
+      // Output protos.
+      
+      for proto in protos
+      {
+         proto .toXMLStream (stream)
+         
+         stream += stream .TidyBreak
+      }
+
       // Output root nodes.
       
       if !rootNodes .isEmpty

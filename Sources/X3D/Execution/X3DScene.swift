@@ -305,6 +305,99 @@ public final class X3DScene :
    
    // Input/Output
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      guard let browser = browser else { return }
+      
+      // Output header.
+      
+      var specificationVersion = getSpecificationVersion ()
+
+      if specificationVersion == "2.0"
+      {
+         specificationVersion = "3.3"
+      }
+
+      stream += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+      stream += "\n"
+      
+      stream += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D "
+      stream += specificationVersion
+      stream += "//EN\" \"http://www.web3d.org/specifications/x3d-"
+      stream += specificationVersion
+      stream += ".dtd\">"
+      stream += "\n"
+
+      stream += "<X3D"
+      stream += stream .Space
+      stream += "profile='"
+      stream += profile .name
+      stream += "'"
+      stream += stream .Space
+      stream += "version='"
+      stream += specificationVersion
+      stream += "'"
+      stream += stream .Space
+      stream += "xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'"
+      stream += stream .Space
+      stream += "xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-"
+      stream += specificationVersion
+      stream += ".xsd'>"
+      stream += stream .TidyBreak
+
+      // <head>
+      
+      stream .incIndent ()
+      
+      stream += stream .Indent
+      stream += "<head>"
+      stream += stream .TidyBreak
+      
+      stream .incIndent ()
+      
+      // </head>
+
+      stream .decIndent ()
+         
+      stream += stream .Indent
+      stream += "</head>"
+      stream += stream .TidyBreak
+      
+      // <Scene>
+      
+      stream += stream .Indent
+      stream += "<Scene>"
+      stream += stream .TidyBreak
+      
+      stream .incIndent ()
+      
+      // Enter stream.
+
+      stream .push (self)
+      stream .enterScope ()
+      stream .setExportedNodes (exportedNodes)
+      
+      super .toXMLStream (stream)
+
+      // Leave stream.
+      
+      stream .leaveScope ()
+      stream .pop (self)
+
+      // </Scene>
+         
+      stream .decIndent ()
+      
+      stream += stream .Indent
+      stream += "</Scene>"
+      stream += stream .TidyBreak
+      
+      stream .decIndent ()
+      
+      stream += "</X3D>"
+      stream += stream .TidyBreak
+   }
+   
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       guard let browser = browser else { return }

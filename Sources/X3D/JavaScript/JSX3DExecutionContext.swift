@@ -32,10 +32,12 @@ import JavaScriptCore
    func createProto (_ typeName : String) -> JSValue?
    
    func getNamedNode (_ name : String) -> JSValue?
+   func addNamedNode (_ name : String, _ node : SFNode?)
    func updateNamedNode (_ name : String, _ node : SFNode?)
    func removeNamedNode (_ name : String)
    
    func getImportedNode (_ importedName : String) -> JSValue?
+   func addImportedNode (_ inlineNode : SFNode?, _ exportedName : String, _ importedName : String?)
    func updateImportedNode (_ inlineNode : SFNode?, _ exportedName : String, _ importedName : String?)
    func removeImportedNode (_ importedName : String)
 
@@ -63,13 +65,25 @@ extension JavaScript
          context .evaluateScript ("""
 (function (targets)
 {
+   const addNamedNode       = X3DExecutionContext .prototype .addNamedNode;
    const updateNamedNode    = X3DExecutionContext .prototype .updateNamedNode;
+   const addImportedNode    = X3DExecutionContext .prototype .addImportedNode;
    const updateImportedNode = X3DExecutionContext .prototype .updateImportedNode;
    const addRoute           = X3DExecutionContext .prototype .addRoute;
+
+   X3DExecutionContext .prototype .addNamedNode = function (name, node)
+   {
+      return addNamedNode .call (this, name, targets .get (node));
+   };
 
    X3DExecutionContext .prototype .updateNamedNode = function (name, node)
    {
       return updateNamedNode .call (this, name, targets .get (node));
+   };
+
+   X3DExecutionContext .prototype .addImportedNode = function (inlineNode, exportedName, importedName)
+   {
+      return addImportedNode .call (this, targets .get (inlineNode), exportedName, importedName);
    };
 
    X3DExecutionContext .prototype .updateImportedNode = function (inlineNode, exportedName, importedName)
@@ -165,6 +179,23 @@ DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);
          }
       }
       
+      public final func addNamedNode (_ name : String, _ node : SFNode?)
+      {
+         do
+         {
+            guard let node = node? .field .wrappedValue else
+            {
+               return exception ("Node is null.")
+            }
+            
+            try executionContext .addNamedNode (name: name, node: node)
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
+      
       public final func updateNamedNode (_ name : String, _ node : SFNode?)
       {
          do
@@ -181,7 +212,7 @@ DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);
             return exception (error .localizedDescription)
          }
       }
-      
+
       public final func removeNamedNode (_ name : String)
       {
          executionContext .removeNamedNode (name: name)
@@ -196,6 +227,23 @@ DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);
             let node = try executionContext .getImportedNode (importedName: importedName)
             
             return SFNode .initWithProxy (JSContext .current (), field: X3D .SFNode (wrappedValue: node))
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
+      
+      public final func addImportedNode (_ inlineNode : SFNode?, _ exportedName : String, _ importedName : String?)
+      {
+         do
+         {
+            guard let inlineNode = inlineNode? .field .wrappedValue as? X3D .Inline else
+            {
+               return exception ("Node is not an Inline node.")
+            }
+            
+            try executionContext .addImportedNode (inlineNode: inlineNode, exportedName: exportedName, importedName: importedName ?? exportedName)
          }
          catch
          {
@@ -219,7 +267,7 @@ DefineProperty (this, \"X3DExecutionContext\", X3DExecutionContext);
             return exception (error .localizedDescription)
          }
       }
-      
+ 
       public final func removeImportedNode (_ importedName : String)
       {
          executionContext .removeImportedNode (importedName: importedName)

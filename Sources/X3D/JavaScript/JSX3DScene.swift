@@ -19,6 +19,7 @@ import JavaScriptCore
    func setMetaData (_ key : String, _ value : String)
    
    func getExportedNode (_ exportedName : String) -> JSValue?
+   func addExportedNode (_ exportedName : String, _ node : SFNode?)
    func updateExportedNode (_ exportedName : String, _ node : SFNode?)
    func removeExportedNode (_ exportedName : String)
 
@@ -40,7 +41,13 @@ extension JavaScript
          context .evaluateScript ("""
 (function (targets)
 {
+   const addExportedNode    = X3DScene .prototype .addExportedNode;
    const updateExportedNode = X3DScene .prototype .updateExportedNode;
+
+   X3DScene .prototype .addExportedNode = function (exportedName, node)
+   {
+      return addExportedNode .call (this, exportedName, targets .get (node));
+   };
 
    X3DScene .prototype .updateExportedNode = function (exportedName, node)
    {
@@ -107,13 +114,30 @@ DefineProperty (this, \"X3DScene\", X3DScene);
          }
      }
       
+      public final func addExportedNode (_ exportedName : String, _ node : SFNode?)
+      {
+         do
+         {
+            guard let node = node? .field .wrappedValue else
+            {
+               return exception ("Node must be a SFNode not NULL.")
+            }
+            
+            try scene .addExportedNode (exportedName: exportedName, node: node)
+         }
+         catch
+         {
+            return exception (error .localizedDescription)
+         }
+      }
+      
       public final func updateExportedNode (_ exportedName : String, _ node : SFNode?)
       {
          do
          {
             guard let node = node? .field .wrappedValue else
             {
-               return exception ("Node must be a SFNode.")
+               return exception ("Node must be a SFNode not NULL.")
             }
             
             try scene .updateExportedNode (exportedName: exportedName, node: node)
@@ -123,7 +147,7 @@ DefineProperty (this, \"X3DScene\", X3DScene);
             return exception (error .localizedDescription)
          }
       }
-      
+
       public final func removeExportedNode (_ exportedName : String)
       {
          scene .removeExportedNode (exportedName: exportedName)

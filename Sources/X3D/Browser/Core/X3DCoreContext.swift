@@ -47,7 +47,7 @@ internal final class X3DCoreContextProperties :
       }
       else
       {
-         let nodeDefinition = try! executionContext! .createNode (typeName: typeName)
+         let nodeDefinition = try! executionContext! .createNode (typeName: typeName, setup: false)
          
          nodeDefinitions [typeName] = nodeDefinition
          

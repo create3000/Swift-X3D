@@ -110,7 +110,7 @@ public final class X3DImportedNode :
          
          route .route = nil
          
-         executionContext? .deleteRoute (route: realRoute)
+         executionContext? .deleteSimpleRoute (route: realRoute)
       }
    }
    

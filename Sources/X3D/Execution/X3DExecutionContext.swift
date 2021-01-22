@@ -812,7 +812,16 @@ public class X3DExecutionContext :
       
       routes_changed = SFTime .now
    }
-   
+
+   internal final func deleteSimpleRoute (route : X3DRoute)
+   {
+      guard let index = routes .firstIndex (of: route) else { return }
+      
+      routes .remove (at: index) .disconnect ()
+      
+      routes_changed = SFTime .now
+   }
+
    private final func deleteImportedRoute (sourceNode : X3DNode,
                                            destinationNode : X3DNode,
                                            route : X3DRoute)

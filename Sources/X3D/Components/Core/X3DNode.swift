@@ -339,8 +339,30 @@ public class X3DNode :
             continue
          }
          
-         if field .references .allObjects .isEmpty
+         // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+         // for this field.
+
+         var mustOutputValue = false
+
+         if field .getAccessType () == .inputOutput && !field .references .allObjects .isEmpty
          {
+            var initializableReference = false
+
+            for reference in field .references .allObjects
+            {
+               initializableReference = initializableReference || reference .isInitializable
+            }
+
+            mustOutputValue = !initializableReference
+         }
+
+         if field .references .allObjects .isEmpty || mustOutputValue
+         {
+            if mustOutputValue
+            {
+               references .append (field)
+            }
+            
             if field .isInitializable
             {
                switch field .getType ()
@@ -401,8 +423,30 @@ public class X3DNode :
                stream += field .getName () .escapeXML
                stream += "'"
                
-               if field .references .allObjects .isEmpty
+               // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+               // for this field.
+
+               var mustOutputValue = false
+
+               if field .getAccessType () == .inputOutput && !field .references .allObjects .isEmpty
                {
+                  var initializableReference = false
+
+                  for reference in field .references .allObjects
+                  {
+                     initializableReference = initializableReference || reference .isInitializable
+                  }
+
+                  mustOutputValue = !initializableReference
+               }
+
+               if field .references .allObjects .isEmpty || mustOutputValue
+               {
+                  if mustOutputValue
+                  {
+                     references .append (field)
+                  }
+                  
                   if !field .isInitializable || field .isDefaultValue
                   {
                      stream += "/>"
@@ -685,10 +729,12 @@ public class X3DNode :
       }
       else
       {
-         var i = 0
+         var initializableReference = false
 
          for reference in references
          {
+            initializableReference = initializableReference || reference .isInitializable
+            
             // Output user defined reference field
 
             stream += stream .Indent
@@ -702,12 +748,26 @@ public class X3DNode :
             stream += stream .Space
             stream += reference .getName ()
 
-            i += 1
-
-            if i != references .count
+            if reference != references .last
             {
                stream += stream .Break
             }
+         }
+         
+         // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+         // for this field.
+         
+         if field .getAccessType () == .inputOutput && !initializableReference && !field .isDefaultValue
+         {
+            stream += stream .Break
+            stream += stream .Indent
+            stream += stream .padding (field .getAccessType () .description, accessTypeLength)
+            stream += stream .Space
+            stream += stream .padding (field .getTypeName (), fieldTypeLength)
+            stream += stream .Space
+            stream += field .getName ()
+            stream += stream .Space
+            stream += stream .toVRMLStream (field);
          }
       }
    }
@@ -738,10 +798,12 @@ public class X3DNode :
       }
       else
       {
-         var i = 0
+         var initializableReference = false
 
          for reference in references
          {
+            initializableReference = initializableReference || reference .isInitializable
+            
             // Output build in reference field
 
             stream += stream .Indent
@@ -751,12 +813,22 @@ public class X3DNode :
             stream += stream .Space
             stream += reference .getName ()
 
-            i += 1
-
-            if i != references .count
+            if reference != references .last
             {
                stream += stream .Break
             }
+         }
+         
+         // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+         // for this field.
+         
+         if field .getAccessType () == .inputOutput && !initializableReference && !field .isDefaultValue
+         {
+            stream += stream .Break
+            stream += stream .Indent
+            stream += field .getName ()
+            stream += stream .Space
+            stream += stream .toVRMLStream (field);
          }
       }
    }

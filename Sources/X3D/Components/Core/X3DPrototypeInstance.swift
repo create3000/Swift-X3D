@@ -293,8 +293,30 @@ public class X3DPrototypeInstance :
                continue
             }
             
-            if field .references .allObjects .isEmpty
+            // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+            // for this field.
+
+            var mustOutputValue = false
+
+            if field .getAccessType () == .inputOutput && !field .references .allObjects .isEmpty
             {
+               var initializableReference = false
+
+               for reference in field .references .allObjects
+               {
+                  initializableReference = initializableReference || reference .isInitializable
+               }
+
+               mustOutputValue = !initializableReference
+            }
+
+            if field .references .allObjects .isEmpty || mustOutputValue
+            {
+               if mustOutputValue
+               {
+                  references .append (field)
+               }
+               
                switch field .getType ()
                {
                   case .MFNode: do

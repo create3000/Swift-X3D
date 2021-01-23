@@ -257,7 +257,7 @@ public final class X3DScene :
       
       for (key, values) in metadata
       {
-         result .append ((key, values))
+         result .append ((key, values .sorted ()))
       }
       
       result .sort { $0 .key < $1 .key }

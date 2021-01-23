@@ -925,6 +925,14 @@ public class X3DExecutionContext :
          stream += stream .toXMLStream ($rootNodes)
       }
       
+      // Output imported nodes.
+      
+      for importedNode in getImportedNodes ()
+      {
+         stream += stream .toXMLStream (importedNode)
+         stream += stream .TidyBreak
+      }
+      
       // Output protos.
       
       for route in routes

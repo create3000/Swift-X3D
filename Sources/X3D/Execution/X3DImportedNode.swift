@@ -144,6 +144,88 @@ public final class X3DImportedNode :
    
    // Input/Output
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      guard let inlineNode = inlineNode,
+            stream .existsNode (inlineNode) else { return }
+      
+      stream += stream .Indent
+      stream += "<IMPORT"
+      stream += stream .Space
+      stream += "inlineDEF='"
+      stream += stream .getName (inlineNode) .escapeXML
+      stream += "'"
+      stream += stream .Space
+      stream += "importedDEF='"
+      stream += exportedName .escapeXML
+      stream += "'"
+
+      if importedName != exportedName
+      {
+         stream += stream .Space
+         stream += "AS='"
+         stream += importedName .escapeXML
+         stream += "'"
+      }
+
+      stream += "/>"
+
+      stream .addRouteNode (self)
+      
+      // Output unresolved routes.
+      
+      if let exportedNode = exportedNode
+      {
+         stream .addImportedNode (exportedNode, importedName)
+      }
+      else
+      {
+         for route in routes
+         {
+            guard let sourceNode      = route .sourceNode,
+                  let destinationNode = route .destinationNode
+            else { continue }
+            
+            let sourceField      = route .sourceField
+            let destinationField = route .destinationField
+
+            guard stream .existsRouteNode (sourceNode) && stream .existsRouteNode (destinationNode) else { continue }
+            
+            let importedSourceNode      = sourceNode      as? X3DImportedNode
+            let importedDestinationNode = destinationNode as? X3DImportedNode
+
+            let sourceNodeName = importedSourceNode != nil
+               ? importedSourceNode! .importedName
+               : stream .getName (sourceNode as! X3DNode)
+            
+            let destinationNodeName = importedDestinationNode != nil
+               ? importedDestinationNode! .importedName
+               : stream .getName (destinationNode as! X3DNode)
+               
+            stream += stream .TidyBreak
+            stream += stream .Indent
+            stream += "<ROUTE"
+            stream += stream .Space
+            stream += "fromNode='"
+            stream += sourceNodeName .escapeXML
+            stream += "'"
+            stream += stream .Space
+            stream += "fromField='"
+            stream += sourceField .escapeXML
+            stream += "'"
+            stream += stream .Space
+            stream += "toNode='"
+            stream += destinationNodeName .escapeXML
+            stream += "'"
+            stream += stream .Space
+            stream += "toField='"
+            stream += destinationField .escapeXML
+            stream += "'"
+            stream += "/>"
+         }
+      }
+   }
+   
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       guard let inlineNode = inlineNode,

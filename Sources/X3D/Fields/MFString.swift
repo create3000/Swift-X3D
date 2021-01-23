@@ -67,7 +67,7 @@ public final class MFString :
    
    internal final override func toXMLStream (_ stream : X3DOutputStream)
    {
-      stream += wrappedValue .map { "\"\($0 .escaped .escapeXML)\"" } .joined (separator: stream .Comma + stream .TidySpace)
+      stream += wrappedValue .map { "\"\($0 .escapeXML)\"" } .joined (separator: stream .Comma + stream .TidySpace)
    }
 
    internal final override func toVRMLStream (_ stream : X3DOutputStream)

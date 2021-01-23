@@ -66,7 +66,7 @@ public final class SFString :
    
    internal final override func toXMLStream (_ stream : X3DOutputStream)
    {
-      stream += wrappedValue .escaped .escapeXML
+      stream += wrappedValue .escapeXML
    }
    
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
@@ -90,17 +90,17 @@ internal extension String
 {
    var escaped : String
    {
-      var escaped = "";
+      var escaped = ""
    
-      for c in self
+      for character in self
       {
-         switch c
+         switch character
          {
             case "\"", "\\":
                escaped += "\\"
                fallthrough
             default:
-               escaped += String (c)
+               escaped += String (character)
          }
       }
       
@@ -125,21 +125,35 @@ internal extension String
    
    var escapeXML : String
    {
-      let entities = [
-         ("&",  "&amp;"),
-         ("<",  "&lt;"),
-         (">",  "&gt;"),
-         ("\"", "&quot;"),
-         ("'",  "&apos;"),
-      ]
-      
-      var current = self
-
-      for (key, value) in entities
+      var escaped = ""
+   
+      for character in self
       {
-         current = current .replacingOccurrences (of: key, with: value)
+         switch character
+         {
+            case "\t" :
+               escaped += "&#x9"
+            case "\n":
+               escaped += "&#xA"
+            case "\r":
+               escaped += "&#xD"
+            case "<":
+               escaped += "&lt"
+            case ">":
+               escaped += "&gt"
+            case "&":
+               escaped += "&amp"
+            case "\'":
+               escaped += "&apos"
+            case "\"":
+               escaped += "\\\""
+            case "\\":
+               escaped += "\\\\"
+            default:
+               escaped += String (character)
+         }
       }
-
-      return current
+      
+      return escaped
    }
 }

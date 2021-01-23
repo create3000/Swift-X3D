@@ -40,6 +40,28 @@ public final class X3DExportedNode :
    
    // Input/Output
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      guard let localName = stream .getLocalName (localNode) else { return }
+      
+      stream += stream .Indent
+      stream += "<EXPORT"
+      stream += stream .Space
+      stream += "localDEF='"
+      stream += localName .escapeXML
+      stream += "'"
+
+      if exportedName != localName
+      {
+         stream += stream .Space
+         stream += "AS='"
+         stream += exportedName .escapeXML
+         stream += "'"
+      }
+
+      stream += "/>"
+   }
+   
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       guard let localName = stream .getLocalName (localNode) else { return }

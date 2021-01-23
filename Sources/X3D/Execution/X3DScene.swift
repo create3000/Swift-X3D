@@ -313,9 +313,13 @@ public final class X3DScene :
       {
          specificationVersion = "3.3"
       }
+      
+      // XML
 
       stream += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
       stream += "\n"
+      
+      // DOCTYPE
       
       stream += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D "
       stream += specificationVersion
@@ -324,6 +328,8 @@ public final class X3DScene :
       stream += ".dtd\">"
       stream += "\n"
 
+      // <X3D>
+      
       stream += "<X3D"
       stream += stream .Space
       stream += "profile='"
@@ -369,7 +375,17 @@ public final class X3DScene :
       stream .enterScope ()
       stream .setExportedNodes (exportedNodes)
       
+      // Output execution context.
+      
       super .toXMLStream (stream)
+      
+      // Output exported nodes.
+      
+      for exportedNode in getExportedNodes ()
+      {
+         stream += stream .toXMLStream (exportedNode)
+         stream += stream .TidyBreak
+      }
 
       // Leave stream.
       
@@ -379,12 +395,12 @@ public final class X3DScene :
       // </Scene>
          
       stream += stream .DecIndent ()
-      
       stream += stream .Indent
       stream += "</Scene>"
       stream += stream .TidyBreak
-      
       stream += stream .DecIndent ()
+      
+      // </X3D>
       
       stream += "</X3D>"
       stream += stream .TidyBreak

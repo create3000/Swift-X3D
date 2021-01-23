@@ -108,7 +108,10 @@ public final class X3DScene :
    
    private final var components : [ComponentInfo] = [ ]
 
-   public final override func getComponents () -> [ComponentInfo] { components }
+   public final override func getComponents () -> [ComponentInfo]
+   {
+      return components .sorted { $0 .name < $1 .name }
+   }
    
    internal final override func setComponents (_ value : [ComponentInfo])
    {
@@ -220,8 +223,48 @@ public final class X3DScene :
 
    // Metadata handling
    
-   public final var metadata : [String : [String]] = [:] { didSet { metadata_changed = SFTime .now } }
+   private final var metadata : [String : [String]] = [:]
    
+   public final func getMetaData (key : String) -> [String]?
+   {
+      return metadata [key]
+   }
+   
+   public final func addMetaData (key : String, value : String)
+   {
+      metadata [key, default: [ ]] .append (value)
+      
+      metadata_changed = SFTime .now
+   }
+   
+   public final func setMetaData (key : String, value : String)
+   {
+      metadata [key] = [value]
+      
+      metadata_changed = SFTime .now
+   }
+   
+   public final func removeMetaData (key : String)
+   {
+      metadata .removeValue (forKey: key)
+      
+      metadata_changed = SFTime .now
+   }
+   
+   public final func getMetaDatas () -> [(key : String, values : [String])]
+   {
+      var result = [(key : String, values : [String])] ()
+      
+      for (key, values) in metadata
+      {
+         result .append ((key, values))
+      }
+      
+      result .sort { $0 .key < $1 .key }
+      
+      return result
+   }
+
    @SFTime public final var metadata_changed = 0
 
    // Exported node handling
@@ -357,7 +400,7 @@ public final class X3DScene :
       
       // Output components.
       
-      for component in components
+      for component in getComponents ()
       {
          stream += stream .toXMLStream (component)
          stream += stream .TidyBreak
@@ -375,7 +418,7 @@ public final class X3DScene :
       
       // Output metadata.
 
-      for (key, values) in metadata
+      for (key, values) in getMetaDatas ()
       {
          for value in values
          {
@@ -480,7 +523,7 @@ public final class X3DScene :
       
       if !components .isEmpty
       {
-         for component in components
+         for component in getComponents ()
          {
             stream += stream .toVRMLStream (component)
             stream += stream .Break
@@ -508,7 +551,7 @@ public final class X3DScene :
       
       if !metadata .isEmpty
       {
-         for (key, values) in metadata
+         for (key, values) in getMetaDatas ()
          {
             for value in values
             {

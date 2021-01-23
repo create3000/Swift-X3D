@@ -355,7 +355,7 @@ internal final class VRMLParser :
          throw X3DError .INVALID_X3D (t("Expected metadata value."))
       }
       
-      scene .metadata [metakey, default: [ ]] .append (metavalue)
+      scene .addMetaData (key: metakey, value: metavalue)
       
       return true
    }

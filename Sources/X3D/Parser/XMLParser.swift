@@ -205,7 +205,7 @@ internal final class XMLParser :
          return console .warn (t("XML parser error: bad meta statement. Expected content attribute."))
       }
       
-      scene .metadata [metakey, default: [ ]] .append (metavalue)
+      scene .addMetaData (key: metakey, value: metavalue)
    }
    
    //     .--..--..--..--..--..--.

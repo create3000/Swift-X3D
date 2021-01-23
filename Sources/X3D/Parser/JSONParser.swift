@@ -183,7 +183,7 @@ internal final class JSONParser :
          return console .warn (t("Expected metadata value."))
       }
       
-      scene .metadata [metaName, default: [ ]] .append (metaContent)
+      scene .addMetaData (key: metaName, value: metaContent)
    }
 
    private final func sceneObject (_ object : Any?)

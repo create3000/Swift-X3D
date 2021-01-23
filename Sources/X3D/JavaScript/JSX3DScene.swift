@@ -16,8 +16,10 @@ import JavaScriptCore
    var rootNodes : JSValue { get set }
    
    func getMetaData (_ key : String) -> String?
+   func addMetaData (_ key : String, _ value : String)
    func setMetaData (_ key : String, _ value : String)
-   
+   func removeMetaData (_ key : String)
+
    func getExportedNode (_ exportedName : String) -> JSValue?
    func addExportedNode (_ exportedName : String, _ node : SFNode?)
    func updateExportedNode (_ exportedName : String, _ node : SFNode?)
@@ -92,14 +94,24 @@ DefineProperty (this, \"X3DScene\", X3DScene);
       
       public final func getMetaData (_ key : String) -> String?
       {
-         return scene .metadata [key]? .last
+         return scene .getMetaData (key: key)? .last
+      }
+      
+      public final func addMetaData (_ key : String, _ value : String)
+      {
+         scene .addMetaData (key: key, value: value)
       }
       
       public final func setMetaData (_ key : String, _ value : String)
       {
-         scene .metadata [key] = [value]
+         scene .setMetaData (key: key, value: value)
       }
       
+      public final func removeMetaData (_ key : String)
+      {
+         scene .removeMetaData (key: key)
+      }
+ 
       // Exported node handling
       
       public final func getExportedNode (_ exportedName : String) -> JSValue?

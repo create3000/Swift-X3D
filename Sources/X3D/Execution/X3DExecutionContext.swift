@@ -924,6 +924,14 @@ public class X3DExecutionContext :
       {
          stream += stream .toXMLStream ($rootNodes)
       }
+      
+      // Output protos.
+      
+      for route in routes
+      {
+         stream += stream .toXMLStream (route)
+         stream += stream .TidyBreak
+      }
 
       // Leave stream.
       

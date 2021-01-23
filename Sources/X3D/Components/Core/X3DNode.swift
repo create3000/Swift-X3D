@@ -699,6 +699,67 @@ public class X3DNode :
       stream += "}"
    }
    
+   private final func toVRMLStreamField (_ stream : X3DOutputStream, _ field : X3DField, _ fieldTypeLength : Int, _ accessTypeLength : Int)
+   {
+      let references = field .references .allObjects
+      
+      if references .isEmpty
+      {
+         if field .isInitializable
+         {
+            stream += stream .Indent
+            stream += field .getName ()
+            
+            if let array = field as? X3DArrayField,
+               array .count != 1
+            {
+               stream += stream .TidySpace
+            }
+            else
+            {
+               stream += stream .Space
+            }
+
+            stream += stream .toVRMLStream (field)
+         }
+      }
+      else
+      {
+         var initializableReference = false
+
+         for reference in references
+         {
+            initializableReference = initializableReference || reference .isInitializable
+            
+            // Output build in reference field
+
+            stream += stream .Indent
+            stream += field .getName ()
+            stream += stream .Space
+            stream += "IS"
+            stream += stream .Space
+            stream += reference .getName ()
+
+            if reference != references .last
+            {
+               stream += stream .Break
+            }
+         }
+         
+         // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+         // for this field.
+         
+         if field .getAccessType () == .inputOutput && !initializableReference
+         {
+            stream += stream .Break
+            stream += stream .Indent
+            stream += field .getName ()
+            stream += stream .Space
+            stream += stream .toVRMLStream (field);
+         }
+      }
+   }
+   
    private final func toVRMLStreamUserDefinedField (_ stream : X3DOutputStream, _ field : X3DField, _ fieldTypeLength : Int, _ accessTypeLength : Int)
    {
       let references = field .references .allObjects
@@ -765,67 +826,6 @@ public class X3DNode :
             stream += stream .Space
             stream += stream .padding (field .getTypeName (), fieldTypeLength)
             stream += stream .Space
-            stream += field .getName ()
-            stream += stream .Space
-            stream += stream .toVRMLStream (field);
-         }
-      }
-   }
-   
-   private final func toVRMLStreamField (_ stream : X3DOutputStream, _ field : X3DField, _ fieldTypeLength : Int, _ accessTypeLength : Int)
-   {
-      let references = field .references .allObjects
-      
-      if references .isEmpty
-      {
-         if field .isInitializable
-         {
-            stream += stream .Indent
-            stream += field .getName ()
-            
-            if let array = field as? X3DArrayField,
-               array .count != 1
-            {
-               stream += stream .TidySpace
-            }
-            else
-            {
-               stream += stream .Space
-            }
-
-            stream += stream .toVRMLStream (field)
-         }
-      }
-      else
-      {
-         var initializableReference = false
-
-         for reference in references
-         {
-            initializableReference = initializableReference || reference .isInitializable
-            
-            // Output build in reference field
-
-            stream += stream .Indent
-            stream += field .getName ()
-            stream += stream .Space
-            stream += "IS"
-            stream += stream .Space
-            stream += reference .getName ()
-
-            if reference != references .last
-            {
-               stream += stream .Break
-            }
-         }
-         
-         // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
-         // for this field.
-         
-         if field .getAccessType () == .inputOutput && !initializableReference
-         {
-            stream += stream .Break
-            stream += stream .Indent
             stream += field .getName ()
             stream += stream .Space
             stream += stream .toVRMLStream (field);

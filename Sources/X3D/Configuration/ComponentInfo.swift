@@ -34,6 +34,21 @@ public final class ComponentInfo :
    
    // Input/Output
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      stream += stream .Indent
+      stream += "<component"
+      stream += stream .Space
+      stream += "name='"
+      stream += name
+      stream += "'"
+      stream += stream .Space
+      stream += "level='"
+      stream += String (level)
+      stream += "'"
+      stream += "/>"
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += "COMPONENT"

@@ -1,17 +1,17 @@
 //
-//  X3DUnitInfo.swift
+//  UnitInfo.swift
 //  X3D
 //
 //  Created by Holger Seelig on 21.09.20.
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public final class X3DUnitInfo :
+public final class UnitInfo :
    X3DObject
 {
    // Common properties
    
-   internal final override class var typeName : String { "X3DUnitInfo" }
+   internal final override class var typeName : String { "UnitInfo" }
    
    // Properties
    
@@ -32,6 +32,25 @@ public final class X3DUnitInfo :
    
    // Input/Output
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      stream += stream .Indent
+      stream += "<unit"
+      stream += stream .Space
+      stream += "category='"
+      stream += category .description
+      stream += "'"
+      stream += stream .Space
+      stream += "name='"
+      stream += name .escapeXML
+      stream += "'"
+      stream += stream .Space
+      stream += "conversionFactor='"
+      stream += String (format: stream .doubleFormat, conversionFactor)
+      stream += "'"
+      stream += "/>";
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += "UNIT"

@@ -200,12 +200,12 @@ public class X3DNode :
       return false
    }
 
-   public func isDefaultValue (fieldName : String) throws -> Bool
+   public func isDefaultValue (of name : String) throws -> Bool
    {
-      let field          = try getField (name: fieldName)
+      let field          = try getField (name: name)
       let nodeDefinition = browser! .getNodeDefinition (typeName: getTypeName ())
       
-      guard let other = try? nodeDefinition .getField (name: fieldName) else
+      guard let other = try? nodeDefinition .getField (name: name) else
       {
          return false
       }
@@ -226,7 +226,7 @@ public class X3DNode :
                continue
             }
 
-            if try! isDefaultValue (fieldName: field .getName ())
+            if try! isDefaultValue (of: field .getName ())
             {
                continue
             }
@@ -353,7 +353,7 @@ public class X3DNode :
                initializableReference = initializableReference || reference .isInitializable
             }
 
-            mustOutputValue = !initializableReference && !(try! isDefaultValue (fieldName: field .getName ()))
+            mustOutputValue = !initializableReference && !(try! isDefaultValue (of: field .getName ()))
          }
 
          if field .references .allObjects .isEmpty || mustOutputValue
@@ -749,7 +749,7 @@ public class X3DNode :
          // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
          // for this field.
          
-         if field .getAccessType () == .inputOutput && !initializableReference && !(try! isDefaultValue (fieldName: field .getName ()))
+         if field .getAccessType () == .inputOutput && !initializableReference && !(try! isDefaultValue (of: field .getName ()))
          {
             stream += stream .Break
             stream += stream .Indent

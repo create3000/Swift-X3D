@@ -179,9 +179,9 @@ public class X3DPrototypeInstance :
    
    // Field handling
    
-   public final override func isDefaultValue (fieldName : String) throws -> Bool
+   public final override func isDefaultValue (of name : String) throws -> Bool
    {
-      let field = try getField (name: fieldName)
+      let field = try getField (name: name)
       
       if field === $metadata
       {
@@ -307,7 +307,7 @@ public class X3DPrototypeInstance :
                   initializableReference = initializableReference || reference .isInitializable
                }
 
-               mustOutputValue = !initializableReference && !(try! isDefaultValue (fieldName: field .getName ()))
+               mustOutputValue = !initializableReference && !(try! isDefaultValue (of: field .getName ()))
             }
 
             if field .references .allObjects .isEmpty || mustOutputValue

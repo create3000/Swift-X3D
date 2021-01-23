@@ -463,6 +463,13 @@ public final class X3DOutputStream
    
    internal final var containerFields = [X3DField] ()
    
+   internal final func toStream (_ object : X3DObject) -> String
+   {
+      object .toStream (self)
+      
+      return ""
+   }
+   
    internal final func toXMLStream (_ object : X3DObject) -> String
    {
       object .toXMLStream (self)

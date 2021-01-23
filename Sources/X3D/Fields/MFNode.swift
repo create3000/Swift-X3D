@@ -144,8 +144,7 @@ public final class MFNode <Element : X3DBaseNode> :
                
                if let node = node
                {
-                  node .toStream (stream)
-                  
+                  stream += stream .toStream (node)
                   stream += stream .TidyBreak
               }
                else
@@ -158,6 +157,7 @@ public final class MFNode <Element : X3DBaseNode> :
             stream += stream .DecIndent ()
             stream += stream .Indent
             stream += "]"
+            
             stream .leaveScope ()
          }
       }
@@ -176,6 +176,7 @@ public final class MFNode <Element : X3DBaseNode> :
             if wrappedValue .first! != nil
             {
                stream .enterScope ()
+               
                stream += stream .toXMLStream (wrappedValue .first!!)
                stream += stream .TidyBreak
 
@@ -266,6 +267,7 @@ public final class MFNode <Element : X3DBaseNode> :
             stream += stream .DecIndent ()
             stream += stream .Indent
             stream += "]"
+            
             stream .leaveScope ()
          }
       }

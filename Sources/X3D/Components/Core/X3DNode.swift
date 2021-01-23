@@ -353,7 +353,7 @@ public class X3DNode :
                initializableReference = initializableReference || reference .isInitializable
             }
 
-            mustOutputValue = !initializableReference
+            mustOutputValue = !initializableReference && !(try! isDefaultValue (fieldName: field .getName ()))
          }
 
          if field .references .allObjects .isEmpty || mustOutputValue
@@ -749,7 +749,7 @@ public class X3DNode :
          // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
          // for this field.
          
-         if field .getAccessType () == .inputOutput && !initializableReference
+         if field .getAccessType () == .inputOutput && !initializableReference && !(try! isDefaultValue (fieldName: field .getName ()))
          {
             stream += stream .Break
             stream += stream .Indent

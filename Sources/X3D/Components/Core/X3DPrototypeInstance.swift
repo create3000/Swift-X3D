@@ -307,7 +307,7 @@ public class X3DPrototypeInstance :
                   initializableReference = initializableReference || reference .isInitializable
                }
 
-               mustOutputValue = !initializableReference
+               mustOutputValue = !initializableReference && !(try! isDefaultValue (fieldName: field .getName ()))
             }
 
             if field .references .allObjects .isEmpty || mustOutputValue

@@ -158,6 +158,49 @@ public final class X3DExternProtoDeclaration :
    
    // Input/Output
    
+   internal final override func toXMLStream (_ stream : X3DOutputStream)
+   {
+      stream += stream .Indent
+      stream += "<ExternProtoDeclare"
+      stream += stream .Space
+      stream += "name='"
+      stream += getName () .escapeXML
+      stream += "'"
+      stream += stream .Space
+      stream += "url='"
+      stream += stream .toXMLStream ($url)
+      stream += "'"
+      stream += ">"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+
+      let fields = getUserDefinedFields ()
+      
+      for field in fields
+      {
+         stream += stream .Indent
+         stream += "<field"
+         stream += stream .Space
+         stream += "accessType='"
+         stream += field .getAccessType () .description
+         stream += "'"
+         stream += stream .Space
+         stream += "type='"
+         stream += field .getTypeName ()
+         stream += "'"
+         stream += stream .Space
+         stream += "name='"
+         stream += field .getName () .escapeXML
+         stream += "'"
+         stream += "/>"
+         stream += stream .TidyBreak
+      }
+
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "</ExternProtoDeclare>"
+   }
+   
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += stream .Indent
@@ -185,8 +228,7 @@ public final class X3DExternProtoDeclaration :
          }
 
          stream += stream .TidyBreak
-
-         stream .incIndent ()
+         stream += stream .IncIndent ()
 
          for field in userDefinedFields
          {
@@ -195,16 +237,14 @@ public final class X3DExternProtoDeclaration :
             stream += field === userDefinedFields .last ? stream .TidyBreak : stream .Break
          }
 
-         stream .decIndent ()
-
+         stream += stream .DecIndent ()
          stream += stream .Indent
       }
 
       stream += "]"
       stream += stream .TidyBreak
       stream += stream .Indent
-
-      $url .toVRMLStream (stream)
+      stream += stream .toVRMLStream ($url)
    }
    
    private final func toVRMLStreamUserDefinedField (_ stream : X3DOutputStream, _ field : X3DField, _ fieldTypeLength : Int, _ accessTypeLength : Int)

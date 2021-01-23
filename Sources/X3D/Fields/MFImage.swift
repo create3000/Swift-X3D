@@ -146,9 +146,7 @@ public final class MFImage :
          default:
             stream += "["
             stream += stream .ListBreak
-            
-            stream .incIndent ()
-            
+            stream += stream .IncIndent ()
             stream += stream .TidyIndent
             stream += wrappedValue .map
             {
@@ -170,9 +168,7 @@ public final class MFImage :
             }
             .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
-            
-            stream .decIndent ()
-            
+            stream += stream .DecIndent ()
             stream += stream .TidyIndent
             stream += "]"
       }

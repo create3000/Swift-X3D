@@ -282,8 +282,7 @@ public class X3DPrototypeInstance :
       {
          stream += ">"
          stream += stream .TidyBreak
-         
-         stream .incIndent ()
+         stream += stream .IncIndent ()
          
          var references = [X3DField] ()
          
@@ -320,15 +319,10 @@ public class X3DPrototypeInstance :
 
                         stream += ">"
                         stream += stream .TidyBreak
-                        
-                        stream .incIndent ()
-                        
-                        field .toXMLStream (stream)
-                        
+                        stream += stream .IncIndent ()
+                        stream += stream .toXMLStream (field)
                         stream += stream .TidyBreak
-                        
-                        stream .decIndent ()
-                        
+                        stream += stream .DecIndent ()
                         stream += stream .Indent
                         stream += "</fieldValue>"
                         stream += stream .TidyBreak
@@ -352,15 +346,10 @@ public class X3DPrototypeInstance :
                         stream += "'"
                         stream += ">"
                         stream += stream .TidyBreak
-                        
-                        stream .incIndent ()
-                        
-                        field .toXMLStream (stream)
-                        
+                        stream += stream .IncIndent ()
+                        stream += stream .toXMLStream (field)
                         stream += stream .TidyBreak
-                        
-                        stream .decIndent ()
-                        
+                        stream += stream .DecIndent ()
                         stream += stream .Indent
                         stream += "</fieldValue>"
                         stream += stream .TidyBreak
@@ -382,9 +371,7 @@ public class X3DPrototypeInstance :
                      stream += "'"
                      stream += stream .Space
                      stream += "value='"
-                     
-                     field .toXMLStream (stream)
-                     
+                     stream += stream .toXMLStream (field)
                      stream += "'"
                      stream += "/>"
                      stream += stream .TidyBreak
@@ -402,8 +389,7 @@ public class X3DPrototypeInstance :
             stream += stream .Indent
             stream += "<IS>"
             stream += stream .TidyBreak
-            
-            stream .incIndent ()
+            stream += stream .IncIndent ()
 
             for field in references
             {
@@ -424,15 +410,13 @@ public class X3DPrototypeInstance :
                }
             }
 
-            stream .decIndent ()
-            
+            stream += stream .DecIndent ()
             stream += stream .Indent
             stream += "</IS>"
             stream += stream .TidyBreak
          }
 
-         stream .decIndent ()
-         
+         stream += stream .DecIndent ()
          stream += stream .Indent
          stream += "</ProtoInstance>"
       }

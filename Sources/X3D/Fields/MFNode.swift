@@ -136,8 +136,7 @@ public final class MFNode <Element : X3DBaseNode> :
             
             stream += "["
             stream += stream .TidyBreak
-            
-            stream .incIndent ()
+            stream += stream .IncIndent ()
             
             for node in wrappedValue
             {
@@ -156,11 +155,9 @@ public final class MFNode <Element : X3DBaseNode> :
                }
             }
             
-            stream .decIndent ()
-            
+            stream += stream .DecIndent ()
             stream += stream .Indent
             stream += "]"
-            
             stream .leaveScope ()
          }
       }
@@ -179,9 +176,7 @@ public final class MFNode <Element : X3DBaseNode> :
             if wrappedValue .first! != nil
             {
                stream .enterScope ()
-               
-               wrappedValue .first!! .toXMLStream (stream)
-               
+               stream += stream .toXMLStream (wrappedValue .first!!)
                stream += stream .TidyBreak
 
                stream .leaveScope ()
@@ -199,10 +194,9 @@ public final class MFNode <Element : X3DBaseNode> :
             
             for node in wrappedValue
             {
-               if node != nil
+               if let node = node
                {
-                  node! .toXMLStream (stream)
-                  
+                  stream += stream .toXMLStream (node)
                   stream += stream .TidyBreak
                }
                else
@@ -234,8 +228,8 @@ public final class MFNode <Element : X3DBaseNode> :
             {
                stream .enterScope ()
                
-               node .toVRMLStream (stream)
-               
+               stream += stream .toVRMLStream (node)
+      
                stream .leaveScope ()
             }
             else
@@ -249,8 +243,7 @@ public final class MFNode <Element : X3DBaseNode> :
             
             stream += "["
             stream += stream .TidyBreak
-            
-            stream .incIndent ()
+            stream += stream .IncIndent ()
             
             for node in wrappedValue
             {
@@ -260,8 +253,7 @@ public final class MFNode <Element : X3DBaseNode> :
                {
                   let use = stream .existsNode (node)
                   
-                  node .toVRMLStream (stream)
-                  
+                  stream += stream .toVRMLStream (node)
                   stream += use ? stream .Break : stream .TidyBreak
               }
                else
@@ -271,11 +263,9 @@ public final class MFNode <Element : X3DBaseNode> :
                }
             }
             
-            stream .decIndent ()
-            
+            stream += stream .DecIndent ()
             stream += stream .Indent
             stream += "]"
-            
             stream .leaveScope ()
          }
       }

@@ -85,15 +85,11 @@ public final class MFTime :
          default:
             stream += "["
             stream += stream .ListBreak
-            
-            stream .incIndent ()
-            
+            stream += stream .IncIndent ()
             stream += stream .TidyIndent
             stream += wrappedValue .map { String (format: stream .doubleFormat, $0) } .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
-            
-            stream .decIndent ()
-            
+            stream += stream .DecIndent ()
             stream += stream .TidyIndent
             stream += "]"
       }

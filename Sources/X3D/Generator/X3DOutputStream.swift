@@ -118,16 +118,20 @@ public final class X3DOutputStream
    internal private(set) final var Indent     : String = ""
    internal private(set) final var TidyIndent : String = ""
 
-   internal final func incIndent ()
+   internal final func IncIndent () -> String
    {
       Indent     += IndentCharacters
       TidyIndent += TidyIndentCharacters
+      
+      return ""
    }
    
-   internal final func decIndent ()
+   internal final func DecIndent () -> String
    {
       Indent     .removeLast (IndentCharacters     .count)
       TidyIndent .removeLast (TidyIndentCharacters .count)
+      
+      return ""
    }
    
    // Pad
@@ -431,7 +435,7 @@ public final class X3DOutputStream
    
    internal final var units : Bool = false
    
-   internal func toUnit (_ unit : X3DUnitCategory, value : Double) -> Double
+   internal final func toUnit (_ unit : X3DUnitCategory, value : Double) -> Double
    {
       if units
       {
@@ -443,7 +447,7 @@ public final class X3DOutputStream
       }
    }
    
-   internal func toUnit (_ unit : X3DUnitCategory, value : Float) -> Float
+   internal final func toUnit (_ unit : X3DUnitCategory, value : Float) -> Float
    {
       if units
       {
@@ -458,4 +462,25 @@ public final class X3DOutputStream
    internal final var containerField : X3DField? { containerFields .last }
    
    internal final var containerFields = [X3DField] ()
+   
+   internal final func toXMLStream (_ object : X3DObject) -> String
+   {
+      object .toXMLStream (self)
+      
+      return ""
+   }
+
+   internal final func toJSONStream (_ object : X3DObject) -> String
+   {
+      object .toJSONStream (self)
+      
+      return ""
+   }
+
+   internal final func toVRMLStream (_ object : X3DObject) -> String
+   {
+      object .toVRMLStream (self)
+      
+      return ""
+   }
 }

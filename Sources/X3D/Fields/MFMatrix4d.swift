@@ -119,9 +119,7 @@ public final class MFMatrix4d :
             
             stream += "["
             stream += stream .ListBreak
-            
-            stream .incIndent ()
-            
+            stream += stream .IncIndent ()
             stream += stream .TidyIndent
             stream += wrappedValue .map
             {
@@ -144,9 +142,7 @@ public final class MFMatrix4d :
             }
             .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
-            
-            stream .decIndent ()
-            
+            stream += stream .DecIndent ()
             stream += stream .TidyIndent
             stream += "]"
       }

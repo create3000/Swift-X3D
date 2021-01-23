@@ -55,13 +55,11 @@ public final class X3DProtoDeclaration :
 
       if !userDefinedFields .isEmpty
       {
-         stream .incIndent ()
-         
+         stream += stream .IncIndent ()
          stream += stream .Indent
          stream += "<ProtoInterface>"
          stream += stream .TidyBreak
-         
-         stream .incIndent ()
+         stream += stream .IncIndent ()
 
          for field in userDefinedFields
          {
@@ -95,13 +93,10 @@ public final class X3DProtoDeclaration :
 
                      stream += ">"
                      stream += stream .TidyBreak
-                     
-                     stream .incIndent ()
-                     
-                     field .toXMLStream (stream)
-                     
+                     stream += stream .IncIndent ()
+                     stream += stream .toXMLStream (field)
                      stream += stream .TidyBreak
-                     stream .decIndent ()
+                     stream += stream .DecIndent ()
                      stream += stream .Indent
                      stream += "</field>"
                      stream += stream .TidyBreak
@@ -112,9 +107,7 @@ public final class X3DProtoDeclaration :
                   {
                      stream += stream .Space
                      stream += "value='"
-                     
-                     field .toXMLStream (stream)
-                     
+                     stream += stream .toXMLStream (field)
                      stream += "'"
                      stream += "/>"
                      stream += stream .TidyBreak
@@ -123,13 +116,11 @@ public final class X3DProtoDeclaration :
             }
          }
 
-         stream .decIndent ()
-         
+         stream += stream .DecIndent ()
          stream += stream .Indent
          stream += "</ProtoInterface>"
          stream += stream .TidyBreak
-         
-         stream .decIndent ()
+         stream += stream .DecIndent ()
       }
 
       stream .leaveScope ()
@@ -138,23 +129,17 @@ public final class X3DProtoDeclaration :
 
       // <ProtoBody>
 
-      stream .incIndent ()
-      
+      stream += stream .IncIndent ()
       stream += stream .Indent
       stream += "<ProtoBody>"
       stream += stream .TidyBreak
-      
-      stream .incIndent ()
-
-      body .toXMLStream (stream)
-
-      stream .decIndent ()
-      
+      stream += stream .IncIndent ()
+      stream += stream .toXMLStream (body)
+      stream += stream .DecIndent ()
       stream += stream .Indent
       stream += "</ProtoBody>"
       stream += stream .TidyBreak
-      
-      stream .decIndent ()
+      stream += stream .DecIndent ()
 
       // </ProtoBody>
 
@@ -191,8 +176,7 @@ public final class X3DProtoDeclaration :
          }
 
          stream += stream .TidyBreak
-
-         stream .incIndent ()
+         stream += stream .IncIndent ()
 
          for field in userDefinedFields
          {
@@ -201,8 +185,7 @@ public final class X3DProtoDeclaration :
             stream += field === userDefinedFields .last ? stream .TidyBreak : stream .Break
          }
 
-         stream .decIndent ()
-
+         stream += stream .DecIndent ()
          stream += stream .Indent
       }
 
@@ -210,17 +193,14 @@ public final class X3DProtoDeclaration :
 
       stream += "]"
       stream += stream .TidyBreak
-
       stream += stream .Indent
       stream += "{"
       stream += stream .TidyBreak
-
-      stream .incIndent ()
+      stream += stream .IncIndent ()
 
       body .toVRMLStream (stream)
 
-      stream .decIndent ()
-
+      stream += stream .DecIndent ()
       stream += stream .Indent
       stream += "}"
    }

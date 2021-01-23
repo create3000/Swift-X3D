@@ -902,12 +902,19 @@ public class X3DExecutionContext :
       stream .enterScope ()
       stream .setImportedNodes (importedNodes)
       
+      // Output extern protos.
+      
+      for externproto in externprotos
+      {
+         stream += stream .toXMLStream (externproto)
+         stream += stream .TidyBreak
+      }
+      
       // Output protos.
       
       for proto in protos
       {
-         proto .toXMLStream (stream)
-         
+         stream += stream .toXMLStream (proto)
          stream += stream .TidyBreak
       }
 
@@ -915,7 +922,7 @@ public class X3DExecutionContext :
       
       if !rootNodes .isEmpty
       {
-         $rootNodes .toXMLStream (stream)
+         stream += stream .toXMLStream ($rootNodes)
       }
 
       // Leave stream.
@@ -940,8 +947,7 @@ public class X3DExecutionContext :
       
       for externproto in externprotos
       {
-         externproto .toVRMLStream (stream)
-         
+         stream += stream .toVRMLStream (externproto)
          stream += stream .TidyBreak
          stream += stream .TidyBreak
       }
@@ -950,8 +956,7 @@ public class X3DExecutionContext :
       
       for proto in protos
       {
-         proto .toVRMLStream (stream)
-         
+         stream += stream .toVRMLStream (proto)
          stream += stream .TidyBreak
          stream += stream .TidyBreak
       }
@@ -966,8 +971,7 @@ public class X3DExecutionContext :
          {
             let use = stream .existsNode (rootNode)
             
-            rootNode .toVRMLStream (stream)
-            
+            stream += stream .toVRMLStream (rootNode)
             stream += use ? stream .Break : stream .TidyBreak
          }
          else
@@ -990,7 +994,7 @@ public class X3DExecutionContext :
          
          for importedNode in getImportedNodes ()
          {
-            importedNode .toVRMLStream (stream)
+            stream += stream .toVRMLStream (importedNode)
          }
       }
       
@@ -1002,7 +1006,7 @@ public class X3DExecutionContext :
 
          for route in routes
          {
-            route .toVRMLStream (stream)
+            stream += stream .toVRMLStream (route)
          }
       }
       

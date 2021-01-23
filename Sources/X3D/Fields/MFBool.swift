@@ -83,15 +83,11 @@ public final class MFBool :
          default:
             stream += "["
             stream += stream .ListBreak
-            
-            stream .incIndent ()
-            
+            stream += stream .IncIndent ()
             stream += stream .TidyIndent
             stream += wrappedValue .map { $0 ? "TRUE" : "FALSE" } .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
-            
-            stream .decIndent ()
-            
+            stream += stream .DecIndent ()
             stream += stream .TidyIndent
             stream += "]"
       }

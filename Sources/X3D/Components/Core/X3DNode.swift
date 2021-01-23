@@ -329,8 +329,8 @@ public class X3DNode :
          sourceText = nil
       }
       
-      stream .incIndent ()
-      stream .incIndent ()
+      stream += stream .IncIndent ()
+      stream += stream .IncIndent ()
       
       for field in fields
       {
@@ -357,9 +357,7 @@ public class X3DNode :
                      stream += stream .Indent
                      stream += field .getName ()
                      stream += "='"
-                     
-                     field .toXMLStream (stream)
-                     
+                     stream += stream .toXMLStream (field)
                      stream += "'"
                   }
                }
@@ -371,8 +369,8 @@ public class X3DNode :
          }
       }
       
-      stream .decIndent ()
-      stream .decIndent ()
+      stream += stream .DecIndent ()
+      stream += stream .DecIndent ()
       
       if (!canUserDefinedFields || userDefinedFields .isEmpty) && references .isEmpty && childNodes .isEmpty && sourceText == nil
       {
@@ -382,8 +380,7 @@ public class X3DNode :
       {
          stream += ">"
          stream += stream .TidyBreak
-         
-         stream .incIndent ()
+         stream += stream .IncIndent ()
          
          if canUserDefinedFields
          {
@@ -423,13 +420,9 @@ public class X3DNode :
 
                            stream += ">"
                            stream += stream .TidyBreak
-                           
-                           stream .incIndent ()
-                           
-                           field .toXMLStream (stream)
-                           
-                           stream .decIndent ()
-                           
+                           stream += stream .IncIndent ()
+                           stream += stream .toXMLStream (field)
+                           stream += stream .DecIndent ()
                            stream += stream .Indent
                            stream += "</field>"
                            stream += stream .TidyBreak
@@ -440,9 +433,7 @@ public class X3DNode :
                         {
                            stream += stream .Space
                            stream += "value='"
-                           
-                           field .toXMLStream (stream)
-                           
+                           stream += stream .toXMLStream (field)
                            stream += "'"
                            stream += "/>"
                            stream += stream .TidyBreak
@@ -465,8 +456,7 @@ public class X3DNode :
             stream += stream .Indent
             stream += "<IS>"
             stream += stream .TidyBreak
-            
-            stream .incIndent ()
+            stream += stream .IncIndent ()
 
             for field in references
             {
@@ -487,8 +477,7 @@ public class X3DNode :
                }
             }
 
-            stream .decIndent ()
-            
+            stream += stream .DecIndent ()
             stream += stream .Indent
             stream += "</IS>"
             stream += stream .TidyBreak
@@ -498,8 +487,8 @@ public class X3DNode :
          {
             stream .containerFields .append (field)
 
-            field .toXMLStream (stream)
- 
+            stream += stream .toXMLStream (field)
+
             stream .containerFields .removeLast ()
          }
 
@@ -514,8 +503,7 @@ public class X3DNode :
             }
          }
 
-         stream .decIndent ()
-         
+         stream += stream .DecIndent ()
          stream += stream .Indent
          stream += "</"
          stream += getTypeName ()
@@ -595,8 +583,7 @@ public class X3DNode :
          if !userDefinedFields .isEmpty
          {
             stream += stream .TidyBreak
-            
-            stream .incIndent ()
+            stream += stream .IncIndent ()
 
             for field in userDefinedFields
             {
@@ -617,7 +604,7 @@ public class X3DNode :
                stream += stream .Break
             }
 
-            stream .decIndent ()
+            stream += stream .DecIndent ()
             
             if !fields .isEmpty
             {
@@ -646,7 +633,7 @@ public class X3DNode :
             stream += stream .TidyBreak
          }
 
-         stream .incIndent ()
+         stream += stream .IncIndent ()
 
          for field in fields
          {
@@ -659,9 +646,7 @@ public class X3DNode :
          }
          
          stream += stream .TidyBreak
-
-         stream .decIndent ()
-         
+         stream += stream .DecIndent ()
          stream += stream .Indent
       }
 
@@ -695,7 +680,7 @@ public class X3DNode :
                stream += stream .Space
             }
 
-            field .toVRMLStream (stream)
+            stream += stream .toVRMLStream (field)
          }
       }
       else
@@ -748,7 +733,7 @@ public class X3DNode :
                stream += stream .Space
             }
 
-            field .toVRMLStream (stream)
+            stream += stream .toVRMLStream (field)
          }
       }
       else

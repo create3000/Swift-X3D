@@ -89,15 +89,11 @@ public final class MFVec4d :
             
             stream += "["
             stream += stream .ListBreak
-            
-            stream .incIndent ()
-            
+            stream += stream .IncIndent ()
             stream += stream .TidyIndent
             stream += wrappedValue .map { String (format: format, stream .toUnit (unit, value: $0.x), stream .toUnit (unit, value: $0.y), stream .toUnit (unit, value: $0.z), stream .toUnit (unit, value: $0.w)) } .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
-            
-            stream .decIndent ()
-            
+            stream += stream .DecIndent ()
             stream += stream .TidyIndent
             stream += "]"
       }

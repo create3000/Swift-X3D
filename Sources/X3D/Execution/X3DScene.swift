@@ -343,18 +343,15 @@ public final class X3DScene :
 
       // <head>
       
-      stream .incIndent ()
-      
+      stream += stream .IncIndent ()
       stream += stream .Indent
       stream += "<head>"
       stream += stream .TidyBreak
-      
-      stream .incIndent ()
+      stream += stream .IncIndent ()
       
       // </head>
 
-      stream .decIndent ()
-         
+      stream += stream .DecIndent ()
       stream += stream .Indent
       stream += "</head>"
       stream += stream .TidyBreak
@@ -364,8 +361,7 @@ public final class X3DScene :
       stream += stream .Indent
       stream += "<Scene>"
       stream += stream .TidyBreak
-      
-      stream .incIndent ()
+      stream += stream .IncIndent ()
       
       // Enter stream.
 
@@ -382,13 +378,13 @@ public final class X3DScene :
 
       // </Scene>
          
-      stream .decIndent ()
+      stream += stream .DecIndent ()
       
       stream += stream .Indent
       stream += "</Scene>"
       stream += stream .TidyBreak
       
-      stream .decIndent ()
+      stream += stream .DecIndent ()
       
       stream += "</X3D>"
       stream += stream .TidyBreak
@@ -421,8 +417,7 @@ public final class X3DScene :
       
       // Output profile.
 
-      profile .toVRMLStream (stream)
-
+      stream += stream .toVRMLStream (profile)
       stream += stream .Break
       stream += stream .TidyBreak
       
@@ -432,8 +427,7 @@ public final class X3DScene :
       {
          for component in components
          {
-            component .toVRMLStream (stream)
-            
+            stream += stream .toVRMLStream (component)
             stream += stream .Break
          }
          
@@ -448,8 +442,7 @@ public final class X3DScene :
       {
          for unit in units
          {
-            unit .toVRMLStream (stream)
-            
+            stream += stream .toVRMLStream (unit)
             stream += stream .Break
          }
          
@@ -494,7 +487,7 @@ public final class X3DScene :
          
          for exportedNode in getExportedNodes ()
          {
-            exportedNode .toVRMLStream (stream)
+            stream += stream .toVRMLStream (exportedNode)
          }
       }
       

@@ -52,6 +52,8 @@ public class SFNode <Type : X3DBaseNode> :
 
    // Value handling
    
+   public final override var isDefaultValue : Bool { wrappedValue == nil }
+
    public final override func equals (to field : X3DField) -> Bool
    {
       guard let field = field as? Self else { return false }

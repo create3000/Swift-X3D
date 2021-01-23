@@ -50,6 +50,14 @@ public class SFImage :
 
    // Value handling
    
+   public final override var isDefaultValue : Bool
+   {
+      return wrappedValue .width  == 0 &&
+             wrappedValue .height == 0 &&
+             wrappedValue .comp   == 0 &&
+             wrappedValue .array .isEmpty
+   }
+
    public final override func equals (to field : X3DField) -> Bool
    {
       guard let field = field as? Self else { return false }

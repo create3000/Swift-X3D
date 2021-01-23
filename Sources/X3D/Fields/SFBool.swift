@@ -41,6 +41,8 @@ public final class SFBool :
    
    // Value handling
    
+   public final override var isDefaultValue : Bool { wrappedValue == false }
+   
    public final override func equals (to field : X3DField) -> Bool
    {
       guard let field = field as? Self else { return false }

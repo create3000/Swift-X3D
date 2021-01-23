@@ -41,6 +41,8 @@ public class SFMatrix3f :
 
    // Value handling
    
+   public final override var isDefaultValue : Bool { wrappedValue == .identity }
+
    public final override func equals (to field : X3DField) -> Bool
    {
       guard let field = field as? Self else { return false }

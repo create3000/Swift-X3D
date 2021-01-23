@@ -43,6 +43,8 @@ public final class SFTime :
 
    // Value handling
    
+   public final override var isDefaultValue : Bool { wrappedValue == 0 }
+
    public final override func equals (to field : X3DField) -> Bool
    {
       guard let field = field as? Self else { return false }

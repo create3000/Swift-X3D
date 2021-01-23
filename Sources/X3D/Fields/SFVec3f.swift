@@ -41,6 +41,8 @@ public class SFVec3f :
 
    // Value handling
    
+   public final override var isDefaultValue : Bool { wrappedValue == .zero }
+
    public final override func equals (to field : X3DField) -> Bool
    {
       guard let field = field as? Self else { return false }

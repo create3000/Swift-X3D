@@ -822,7 +822,7 @@ public class X3DNode :
          // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
          // for this field.
          
-         if field .getAccessType () == .inputOutput && !initializableReference
+         if field .getAccessType () == .inputOutput && !initializableReference && !field .isDefaultValue
          {
             stream += stream .Break
             stream += stream .Indent

@@ -210,8 +210,10 @@ internal final class JSONParser :
 
    private final func childObject (_ object : Any?) -> (Bool, X3DNode?)
    {
+      if object is NSNull { return (true, nil) }
+      
       guard let object = object as? [String : Any] else { return (false, nil) }
-            
+      
       for (key, value) in object
       {
          switch key

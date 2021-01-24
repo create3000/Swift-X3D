@@ -852,8 +852,13 @@ internal final class XMLParser :
       {
          do
          {
-            let containerField = element .attribute (name: "containerField") ?? childNode? .getContainerField () ?? ""
-            let field          = try node .getField (name: containerField)
+            guard let containerField = element .attribute (name: "containerField") ?? childNode? .getContainerField () else
+            {
+               console .warn (t("NULL node must have a container field attribute."))
+               return
+            }
+            
+            let field = try node .getField (name: containerField)
             
             switch field .getType ()
             {

@@ -541,7 +541,7 @@ public class X3DNode :
             for value in sourceText .wrappedValue
             {
                stream += "<![CDATA["
-               stream += value
+               stream += value .trimmingCharacters (in: .whitespacesAndNewlines)
                stream += "]]>"
                stream += stream .TidyBreak
             }
@@ -952,7 +952,7 @@ public class X3DNode :
          stream += "["
          stream += stream .TidyBreak
 
-         let sourceTextLines = sourceText .wrappedValue .first! .split (separator: "\n")
+         let sourceTextLines = sourceText .wrappedValue .first! .trimmingCharacters (in: .whitespacesAndNewlines) .split (separator: "\n")
 
          for i in 0 ..< sourceTextLines .count
          {

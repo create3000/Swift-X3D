@@ -745,7 +745,7 @@ internal final class XMLParser :
          {
             return
          }
-      
+         
          // Node object
       
          let node = try executionContext .createNode (typeName: element .name!, setup: false)
@@ -769,6 +769,14 @@ internal final class XMLParser :
       }
       catch
       {
+         // NULL
+         
+         if element? .name == "NULL"
+         {
+            addNode (element!, nil)
+            return
+         }
+         
          console .warn (t("XML parser error: %@", error .localizedDescription))
       }
    }
@@ -829,7 +837,7 @@ internal final class XMLParser :
       }
    }
    
-   private final func addNode (_ element : XMLElement, _ childNode : X3DNode)
+   private final func addNode (_ element : XMLElement, _ childNode : X3DNode?)
    {
       // ExecutionContext
 
@@ -844,7 +852,7 @@ internal final class XMLParser :
       {
          do
          {
-            let containerField = element .attribute (name: "containerField") ?? childNode .getContainerField ()
+            let containerField = element .attribute (name: "containerField") ?? childNode? .getContainerField () ?? ""
             let field          = try node .getField (name: containerField)
             
             switch field .getType ()

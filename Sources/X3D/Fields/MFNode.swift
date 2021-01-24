@@ -185,7 +185,18 @@ public final class MFNode <Element : X3DBaseNode> :
             else
             {
                stream += stream .Indent
-               stream += "<!-- NULL -->"
+               stream += "<"
+               stream += "NULL"
+               
+               if let containerField = stream .containerField
+               {
+                  stream += stream .Space
+                  stream += "containerField='"
+                  stream += containerField .getName () .toXMLString ()
+                  stream += "'"
+               }
+
+               stream += "/>"
                stream += stream .TidyBreak
             }
          }
@@ -203,7 +214,18 @@ public final class MFNode <Element : X3DBaseNode> :
                else
                {
                   stream += stream .Indent
-                  stream += "<!-- NULL -->"
+                  stream += "<"
+                  stream += "NULL"
+                  
+                  if let containerField = stream .containerField
+                  {
+                     stream += stream .Space
+                     stream += "containerField='"
+                     stream += containerField .getName () .toXMLString ()
+                     stream += "'"
+                  }
+
+                  stream += "/>"
                   stream += stream .TidyBreak
                }
             }

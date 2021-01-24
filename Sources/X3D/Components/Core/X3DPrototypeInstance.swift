@@ -788,11 +788,11 @@ public class X3DPrototypeInstance :
 
             for field in references
             {
-               let references = field .references .allObjects
+               let r = field .references .allObjects
                
-               for i in 0 ..< references .count
+               for i in 0 ..< r .count
                {
-                  let reference = references [i]
+                  let reference = r [i]
                   
                   stream += stream .Indent
                   stream += "{"
@@ -826,11 +826,7 @@ public class X3DPrototypeInstance :
                   stream += stream .Indent
                   stream += "}"
 
-                  if field === references .last && i == references .count - 1
-                  {
-                     // Do nothing.
-                  }
-                  else
+                  if !(field === references .last && i == r .count - 1)
                   {
                      stream += ","
                   }

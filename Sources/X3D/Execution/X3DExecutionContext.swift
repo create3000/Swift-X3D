@@ -949,6 +949,157 @@ public class X3DExecutionContext :
    
    internal override func toJSONStream (_ stream : X3DOutputStream)
    {
+      // Enter stream.
+      
+      stream .push (self)
+      stream .enterScope ()
+      stream .setImportedNodes (importedNodes)
+      
+      // Extern proto declarations
+      
+      let externprotos = getExternProtoDeclarations ()
+
+      if !externprotos .isEmpty
+      {
+         if stream .lastProperty
+         {
+            stream += ","
+            stream += stream .TidyBreak
+         }
+
+         for i in 0 ..< externprotos .count
+         {
+            stream += stream .Indent
+            stream += stream .toJSONStream (externprotos [i])
+
+            if i != externprotos .count - 1
+            {
+               stream += ","
+               stream += stream .TidyBreak
+            }
+         }
+
+         stream .lastProperty = true
+      }
+
+      // Proto declarations
+      
+      let protos = getProtoDeclarations ()
+
+      if !protos .isEmpty
+      {
+         if stream .lastProperty
+         {
+            stream += ","
+            stream += stream .TidyBreak
+         }
+
+         for i in 0 ..< protos .count
+         {
+            stream += stream .Indent
+            stream += stream .toJSONStream (protos [i])
+
+            if i != protos .count - 1
+            {
+               stream += ","
+               stream += stream .TidyBreak
+            }
+         }
+
+         stream .lastProperty = true
+      }
+      
+      // Root nodes
+
+      if !rootNodes .isEmpty
+      {
+         if stream .lastProperty
+         {
+            stream += ","
+            stream += stream .TidyBreak
+         }
+
+         for i in 0 ..< rootNodes .count
+         {
+            if let value = rootNodes [i]
+            {
+               stream += stream .Indent
+               stream += stream .toJSONStream (value)
+            }
+            else
+            {
+               stream += stream .Indent
+               stream += "null"
+            }
+
+            if i != rootNodes .count - 1
+            {
+               stream += ","
+               stream += stream .TidyBreak
+            }
+         }
+
+         stream .lastProperty = true
+      }
+      
+      // Imported nodes
+
+      let importedNodes = getImportedNodes () .map { stream .toJSONStream ($0, streaming: false) } .filter { !$0 .isEmpty }
+      
+      if !importedNodes .isEmpty
+      {
+         if stream .lastProperty
+         {
+            stream += ","
+            stream += stream .TidyBreak
+         }
+
+         for i in 0 ..< importedNodes .count
+         {
+            stream += stream .Indent
+            stream += importedNodes [i]
+
+            if i != importedNodes .count - 1
+            {
+               stream += ","
+               stream += stream .TidyBreak
+            }
+         }
+
+         stream .lastProperty = true
+      }
+
+      // Routes
+
+      let routes = getRoutes () .map { stream .toJSONStream ($0, streaming: false) } .filter { !$0 .isEmpty }
+      
+      if !routes .isEmpty
+      {
+         if stream .lastProperty
+         {
+            stream += ","
+            stream += stream .TidyBreak
+         }
+
+         for i in 0 ..< routes .count
+         {
+            stream += stream .Indent
+            stream += routes [i]
+
+            if i != routes .count - 1
+            {
+               stream += ","
+               stream += stream .TidyBreak
+            }
+         }
+
+         stream .lastProperty = true
+      }
+      
+      // Leave stream.
+      
+      stream .leaveScope ()
+      stream .pop (self)
    }
 
    internal override func toVRMLStream (_ stream : X3DOutputStream)

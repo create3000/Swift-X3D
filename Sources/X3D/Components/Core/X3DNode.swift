@@ -626,7 +626,6 @@ public class X3DNode :
       stream += stream .TidyBreak
       stream += stream .IncIndent ()
 
-
       // DEF name
 
       if !name .isEmpty
@@ -645,7 +644,6 @@ public class X3DNode :
 
          stream .lastProperty = true
       }
-
 
       // Fields
 

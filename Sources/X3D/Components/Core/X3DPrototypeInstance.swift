@@ -443,4 +443,429 @@ public class X3DPrototypeInstance :
          stream += "</ProtoInstance>"
       }
    }
+
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      guard !stream .isSharedNode (self) else
+      {
+         stream += "NULL"
+         return
+      }
+      
+      stream .enterScope ()
+      
+      defer { stream .leaveScope () }
+      
+      let name = stream .getName (self)
+
+      // USE name
+
+      if !name .isEmpty
+      {
+         if stream .existsNode (self)
+         {
+            stream += "{"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += "ProtoInstance"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidyBreak
+            stream += stream .IncIndent ()
+            stream += stream .Indent
+            stream += "{"
+            stream += stream .TidyBreak
+            stream += stream .IncIndent ()
+            
+            stream += stream .Indent
+            stream += "\""
+            stream += "@name"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += getTypeName () .escapeJSON
+            stream += "\""
+            stream += ","
+            stream += stream .TidyBreak
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "@USE"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += name .escapeJSON
+            stream += "\""
+            stream += stream .TidyBreak
+            
+            stream += stream .DecIndent ()
+            stream += stream .Indent
+            stream += "}"
+            stream += stream .TidyBreak
+            stream += stream .DecIndent ()
+            stream += stream .Indent
+            stream += "}"
+
+            return
+         }
+      }
+
+      stream .lastProperties .append (false)
+
+      // Type name
+
+      stream += "{"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += "ProtoInstance"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+      stream += stream .Indent
+      stream += "{"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+
+      // DEF name
+
+      if !name .isEmpty
+      {
+         stream .addNode (self)
+
+         stream += stream .Indent
+         stream += "\""
+         stream += "@DEF"
+         stream += "\""
+         stream += ":"
+         stream += stream .TidySpace
+         stream += "\""
+         stream += name .escapeJSON
+         stream += "\""
+
+         stream .lastProperty = true
+      }
+      
+      // Type name
+
+      if stream .lastProperty
+      {
+         stream += ","
+         stream += stream .TidyBreak
+      }
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "@name"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += getTypeName () .escapeJSON
+      stream += "\""
+
+      stream .lastProperty = true
+
+      // Fields
+
+      var fields = getChangedFields ()
+      
+      if !stream .metadata
+      {
+         fields = fields .filter { $0 !== $metadata }
+      }
+
+      // Predefined fields
+
+      if !fields .isEmpty
+      {
+         if stream .lastProperty
+         {
+            stream += ","
+            stream += stream .TidyBreak
+         }
+
+         var outputFields = [X3DField] ()
+         var references   = [X3DField] ()
+
+         for field in fields
+         {
+            // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+            // for this field.
+
+            var mustOutputValue = false
+
+            if field .getAccessType () == .inputOutput && !field .references .allObjects .isEmpty
+            {
+               var initializableReference = false
+
+               for reference in field .references .allObjects
+               {
+                  initializableReference = initializableReference || reference .isInitializable
+               }
+
+               mustOutputValue = !initializableReference && !(try! isDefaultValue (of: field .getName ()))
+            }
+
+            // If we have no execution context we are not in a proto and must not generate IS references the same is true
+            // if the node is a shared node as the node does not belong to the execution context.
+
+            if field .references .allObjects .isEmpty || mustOutputValue
+            {
+               if mustOutputValue
+               {
+                  references .append (field)
+               }
+
+               outputFields .append (field)
+            }
+            else
+            {
+               references .append (field)
+            }
+         }
+
+         stream += stream .Indent
+         stream += "\""
+         stream += "fieldValue"
+         stream += "\""
+         stream += ":"
+         stream += stream .TidySpace
+         stream += "["
+         stream += stream .TidyBreak
+         stream += stream .IncIndent ()
+
+         for i in 0 ..< outputFields .count
+         {
+            let field = outputFields [i]
+            
+            if field .isInitializable
+            {
+               switch field .getType ()
+               {
+                  case .MFNode: do
+                  {
+                     stream += stream .Indent
+                     stream += "{"
+                     stream += stream .TidyBreak
+                     stream += stream .IncIndent ()
+                     stream += stream .Indent
+                     stream += "\""
+                     stream += "@name"
+                     stream += "\""
+                     stream += ":"
+                     stream += stream .TidySpace
+                     stream += "\""
+                     stream += field .getName () .escapeJSON
+                     stream += "\""
+                     stream += ","
+                     stream += stream .TidyBreak
+                     stream += stream .Indent
+                     stream += "\""
+                     stream += "-children"
+                     stream += "\""
+                     stream += ":"
+                     stream += stream .TidySpace
+                     stream += stream .toJSONStream (field)
+                     stream += stream .TidyBreak
+                     stream += stream .DecIndent ()
+                     stream += stream .Indent
+                     stream += "}"
+                  }
+                  case .SFNode: do
+                  {
+                     stream += stream .Indent
+                     stream += "{"
+                     stream += stream .TidyBreak
+                     stream += stream .IncIndent ()
+                     stream += stream .Indent
+                     stream += "\""
+                     stream += "@name"
+                     stream += "\""
+                     stream += ":"
+                     stream += stream .TidySpace
+                     stream += "\""
+                     stream += field .getName () .escapeJSON
+                     stream += "\""
+                     stream += ","
+                     stream += stream .TidyBreak
+                     stream += stream .Indent
+                     stream += "\""
+                     stream += "-children"
+                     stream += "\""
+                     stream += ":"
+                     stream += stream .TidySpace
+                     stream += "["
+                     stream += stream .TidyBreak
+                     stream += stream .IncIndent ()
+                     stream += stream .Indent
+                     stream += stream .toJSONStream (field)
+                     stream += stream .TidyBreak
+                     stream += stream .DecIndent ()
+                     stream += stream .Indent
+                     stream += "]"
+                     stream += stream .TidyBreak
+                     stream += stream .DecIndent ()
+                     stream += stream .Indent
+                     stream += "}"
+                  }
+                  default: do
+                  {
+                     stream += stream .Indent
+                     stream += "{"
+                     stream += stream .TidyBreak
+                     stream += stream .IncIndent ()
+                     stream += stream .Indent
+                     stream += "\""
+                     stream += "@name"
+                     stream += "\""
+                     stream += ":"
+                     stream += stream .TidySpace
+                     stream += "\""
+                     stream += field .getName () .escapeJSON
+                     stream += "\""
+                     stream += ","
+                     stream += stream .TidyBreak
+                     stream += stream .Indent
+                     stream += "\""
+                     stream += "@value"
+                     stream += "\""
+                     stream += ":"
+                     stream += stream .TidySpace
+                     stream += stream .toJSONStream (field)
+                     stream += stream .TidyBreak
+                     stream += stream .DecIndent ()
+                     stream += stream .Indent
+                     stream += "}"
+                  }
+               }
+ 
+               if i != outputFields .count - 1
+               {
+                  stream += ","
+                  stream += stream .TidyBreak
+               }
+            }
+         }
+         
+         stream += stream .TidyBreak
+         stream += stream .DecIndent ()
+         stream += stream .Indent
+         stream += "]"
+
+         stream .lastProperty = true
+
+         // IS references
+
+         if !references .isEmpty
+         {
+            if stream .lastProperty
+            {
+               stream += ","
+               stream += stream .TidyBreak
+            }
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "IS"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "{"
+            stream += stream .TidyBreak
+            stream += stream .IncIndent ()
+            stream += stream .Indent
+            stream += "\""
+            stream += "connect"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "["
+            stream += stream .TidyBreak
+            stream += stream .IncIndent ()
+
+            for field in references
+            {
+               let references = field .references .allObjects
+               
+               for i in 0 ..< references .count
+               {
+                  let reference = references [i]
+                  
+                  stream += stream .Indent
+                  stream += "{"
+                  stream += stream .TidyBreak
+                  stream += stream .IncIndent ()
+
+                  stream += stream .Indent
+                  stream += "\""
+                  stream += "@nodeField"
+                  stream += "\""
+                  stream += ":"
+                  stream += stream .TidySpace
+                  stream += "\""
+                  stream += field .getName () .escapeJSON
+                  stream += "\""
+                  stream += ","
+                  stream += stream .TidyBreak
+
+                  stream += stream .Indent
+                  stream += "\""
+                  stream += "@protoField"
+                  stream += "\""
+                  stream += ":"
+                  stream += stream .TidySpace
+                  stream += "\""
+                  stream += reference .getName () .escapeJSON
+                  stream += "\""
+                  stream += stream .TidyBreak
+
+                  stream += stream .DecIndent ()
+                  stream += stream .Indent
+                  stream += "}"
+
+                  if field === references .last && i == references .count - 1
+                  {
+                     // Do nothing.
+                  }
+                  else
+                  {
+                     stream += ","
+                  }
+
+                  stream += stream .TidyBreak
+               }
+            }
+            
+            stream += stream .DecIndent ()
+            stream += stream .Indent
+            stream += "]"
+            stream += stream .TidyBreak
+            stream += stream .DecIndent ()
+            stream += stream .Indent
+            stream += "}"
+         }
+
+         stream .lastProperty = true
+      }
+
+      // End
+
+      if stream .lastProperty
+      {
+         stream += stream .TidyBreak
+      }
+
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+      stream += stream .TidyBreak
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+      
+      stream .lastProperties .removeLast ()
+   }
 }

@@ -62,6 +62,62 @@ public final class X3DExportedNode :
       stream += "/>"
    }
    
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      guard let localName = stream .getLocalName (localNode) else { return }
+      
+      stream += "{"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += "EXPORT"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+      stream += stream .Indent
+      stream += "{"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "@localDEF"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += localName .escapeJSON
+      stream += "\""
+
+      if exportedName != localName
+      {
+         stream += ","
+         stream += stream .TidyBreak
+         stream += stream .Indent
+         stream += "\""
+         stream += "@AS"
+         stream += "\""
+         stream += ":"
+         stream += stream .TidySpace
+         stream += "\""
+         stream += exportedName .escapeJSON
+         stream += "\""
+         stream += stream .TidyBreak
+      }
+      else
+      {
+         stream += stream .TidyBreak
+      }
+
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+      stream += stream .TidyBreak
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+   }
+ 
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       guard let localName = stream .getLocalName (localNode) else { return }

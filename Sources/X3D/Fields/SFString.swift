@@ -143,7 +143,7 @@ internal extension String
                escaped += "&gt"
             case "&":
                escaped += "&amp"
-            case "\'":
+            case "'":
                escaped += "&apos"
             case "\"":
                escaped += "\\\""
@@ -159,6 +159,20 @@ internal extension String
    
    var escapeJSON : String
    {
-      return self
+      var escaped = ""
+   
+      for character in self
+      {
+         switch character
+         {
+            case "\"", "\\":
+               escaped += "\\"
+               fallthrough
+            default:
+               escaped += String (character)
+         }
+      }
+      
+      return escaped
    }
 }

@@ -139,6 +139,10 @@ internal extension String
       {
          switch character
          {
+            case "\n":
+               escaped += "\\n"
+            case "\r":
+               escaped += "\\r"
             case "\"", "\\":
                escaped += "\\"
                fallthrough

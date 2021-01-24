@@ -952,7 +952,7 @@ public class X3DNode :
          stream += "["
          stream += stream .TidyBreak
 
-         let sourceTextLines = sourceText .wrappedValue .first! .trimmingCharacters (in: .whitespacesAndNewlines) .split (separator: "\n")
+         let sourceTextLines = sourceText .wrappedValue .first! .trimmingCharacters (in: .whitespacesAndNewlines) .components (separatedBy: "\n")
 
          for i in 0 ..< sourceTextLines .count
          {

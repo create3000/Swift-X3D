@@ -300,7 +300,7 @@ internal final class XMLParser :
       
       guard let value = element .stringValue else { return }
       
-      field .wrappedValue .append (value)
+      field .wrappedValue .append (value .trimmingCharacters (in: .whitespacesAndNewlines))
    }
    
    private final func externProtoDeclareElement (_ element : XMLElement?)

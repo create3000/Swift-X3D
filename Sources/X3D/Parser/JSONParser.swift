@@ -535,8 +535,7 @@ internal final class JSONParser :
          lines += "\n"
       }
       
-      sourceText .wrappedValue .removeAll ()
-      sourceText .wrappedValue .append (lines)
+      sourceText .wrappedValue .append (lines .trimmingCharacters (in: .whitespacesAndNewlines))
    }
 
    private final func fieldValueArray (_ objects : Any?, _ node : X3DNode)

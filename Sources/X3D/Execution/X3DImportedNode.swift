@@ -153,18 +153,18 @@ public final class X3DImportedNode :
       stream += "<IMPORT"
       stream += stream .Space
       stream += "inlineDEF='"
-      stream += stream .getName (inlineNode) .escapeXML
+      stream += stream .getName (inlineNode) .toXMLString ()
       stream += "'"
       stream += stream .Space
       stream += "importedDEF='"
-      stream += exportedName .escapeXML
+      stream += exportedName .toXMLString ()
       stream += "'"
 
       if importedName != exportedName
       {
          stream += stream .Space
          stream += "AS='"
-         stream += importedName .escapeXML
+         stream += importedName .toXMLString ()
          stream += "'"
       }
 
@@ -207,19 +207,19 @@ public final class X3DImportedNode :
             stream += "<ROUTE"
             stream += stream .Space
             stream += "fromNode='"
-            stream += sourceNodeName .escapeXML
+            stream += sourceNodeName .toXMLString ()
             stream += "'"
             stream += stream .Space
             stream += "fromField='"
-            stream += sourceField .escapeXML
+            stream += sourceField .toXMLString ()
             stream += "'"
             stream += stream .Space
             stream += "toNode='"
-            stream += destinationNodeName .escapeXML
+            stream += destinationNodeName .toXMLString ()
             stream += "'"
             stream += stream .Space
             stream += "toField='"
-            stream += destinationField .escapeXML
+            stream += destinationField .toXMLString ()
             stream += "'"
             stream += "/>"
          }

@@ -42,7 +42,7 @@ public final class UnitInfo :
       stream += "'"
       stream += stream .Space
       stream += "name='"
-      stream += name .escapeXML
+      stream += name .toXMLString ()
       stream += "'"
       stream += stream .Space
       stream += "conversionFactor='"
@@ -76,7 +76,7 @@ public final class UnitInfo :
       stream += ":"
       stream += stream .TidySpace
       stream += "\""
-      stream += name .escapeJSON
+      stream += name .toJSONString ()
       stream += "\""
       stream += ","
       stream += stream .TidyBreak

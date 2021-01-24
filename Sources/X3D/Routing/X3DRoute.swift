@@ -98,11 +98,11 @@ public final class X3DRoute :
       stream += "<ROUTE"
       stream += stream .Space
       stream += "fromNode='"
-      stream += sourceNodeName .escapeXML
+      stream += sourceNodeName .toXMLString ()
       stream += "'"
       stream += stream .Space
       stream += "fromField='"
-      stream += sourceField! .getName () .escapeXML
+      stream += sourceField! .getName () .toXMLString ()
 
       if sourceField! .getAccessType () == .inputOutput
       {
@@ -112,7 +112,7 @@ public final class X3DRoute :
       stream += "'"
       stream += stream .Space
       stream += "toNode='"
-      stream += destinationNodeName .escapeXML
+      stream += destinationNodeName .toXMLString ()
       stream += "'"
       stream += stream .Space
       stream += "toField='"
@@ -122,7 +122,7 @@ public final class X3DRoute :
          stream += "set_"
       }
 
-      stream += destinationField! .getName () .escapeXML
+      stream += destinationField! .getName () .toXMLString ()
       stream += "'"
       stream += "/>"
    }

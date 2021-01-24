@@ -427,11 +427,11 @@ public final class X3DScene :
          stream += "<meta"
          stream += stream .Space
          stream += "name='"
-         stream += key .escapeXML
+         stream += key .toXMLString ()
          stream += "'"
          stream += stream .Space
          stream += "content='"
-         stream += value .escapeXML
+         stream += value .toXMLString ()
          stream += "'"
          stream += "/>"
          stream += stream .TidyBreak
@@ -643,7 +643,7 @@ public final class X3DScene :
                stream += ":"
                stream += stream .TidySpace
                stream += "\""
-               stream += key .escapeJSON
+               stream += key .toJSONString ()
                stream += "\""
                stream += ","
                stream += stream .TidyBreak
@@ -655,7 +655,7 @@ public final class X3DScene :
                stream += ":"
                stream += stream .TidySpace
                stream += "\""
-               stream += value .escapeJSON
+               stream += value .toJSONString ()
                stream += "\""
                stream += stream .TidyBreak
 

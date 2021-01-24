@@ -164,7 +164,7 @@ public final class X3DExternProtoDeclaration :
       stream += "<ExternProtoDeclare"
       stream += stream .Space
       stream += "name='"
-      stream += getName () .escapeXML
+      stream += getName () .toXMLString ()
       stream += "'"
       stream += stream .Space
       stream += "url='"
@@ -190,7 +190,7 @@ public final class X3DExternProtoDeclaration :
          stream += "'"
          stream += stream .Space
          stream += "name='"
-         stream += field .getName () .escapeXML
+         stream += field .getName () .toXMLString ()
          stream += "'"
          stream += "/>"
          stream += stream .TidyBreak

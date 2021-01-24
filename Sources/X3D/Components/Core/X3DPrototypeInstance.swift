@@ -221,11 +221,11 @@ public class X3DPrototypeInstance :
             stream += "<ProtoInstance"
             stream += stream .Space
             stream += "name='"
-            stream += getTypeName () .escapeXML
+            stream += getTypeName () .toXMLString ()
             stream += "'"
             stream += stream .Space
             stream += "USE='"
-            stream += name .escapeXML
+            stream += name .toXMLString ()
             stream += "'"
             
             if let containerField = stream .containerField
@@ -234,7 +234,7 @@ public class X3DPrototypeInstance :
                {
                   stream += stream .Space
                   stream += "containerField='"
-                  stream += containerField .getName () .escapeXML
+                  stream += containerField .getName () .toXMLString ()
                   stream += "'"
                }
             }
@@ -248,7 +248,7 @@ public class X3DPrototypeInstance :
       stream += "<ProtoInstance"
       stream += stream .Space
       stream += "name='"
-      stream += getTypeName () .escapeXML
+      stream += getTypeName () .toXMLString ()
       stream += "'"
 
       if !name .isEmpty
@@ -257,7 +257,7 @@ public class X3DPrototypeInstance :
 
          stream += stream .Space
          stream += "DEF='"
-         stream += name .escapeXML
+         stream += name .toXMLString ()
          stream += "'"
       }
       
@@ -267,7 +267,7 @@ public class X3DPrototypeInstance :
          {
             stream += stream .Space
             stream += "containerField='"
-            stream += containerField .getName () .escapeXML
+            stream += containerField .getName () .toXMLString ()
             stream += "'"
          }
       }
@@ -327,7 +327,7 @@ public class X3DPrototypeInstance :
                      stream += "<fieldValue"
                      stream += stream .Space
                      stream += "name='"
-                     stream += field .getName () .escapeXML
+                     stream += field .getName () .toXMLString ()
                      stream += "'"
 
                      if array .count == 0
@@ -364,7 +364,7 @@ public class X3DPrototypeInstance :
                         stream += "<fieldValue"
                         stream += stream .Space
                         stream += "name='"
-                        stream += field .getName () .escapeXML
+                        stream += field .getName () .toXMLString ()
                         stream += "'"
                         stream += ">"
                         stream += stream .TidyBreak
@@ -389,7 +389,7 @@ public class X3DPrototypeInstance :
                      stream += "<fieldValue"
                      stream += stream .Space
                      stream += "name='"
-                     stream += field .getName () .escapeXML
+                     stream += field .getName () .toXMLString ()
                      stream += "'"
                      stream += stream .Space
                      stream += "value='"
@@ -421,11 +421,11 @@ public class X3DPrototypeInstance :
                   stream += "<connect"
                   stream += stream .Space
                   stream += "nodeField='"
-                  stream += field .getName () .escapeXML
+                  stream += field .getName () .toXMLString ()
                   stream += "'"
                   stream += stream .Space
                   stream += "protoField='"
-                  stream += reference .getName () .escapeXML
+                  stream += reference .getName () .toXMLString ()
                   stream += "'"
                   stream += "/>"
                   stream += stream .TidyBreak
@@ -484,7 +484,7 @@ public class X3DPrototypeInstance :
             stream += ":"
             stream += stream .TidySpace
             stream += "\""
-            stream += getTypeName () .escapeJSON
+            stream += getTypeName () .toJSONString ()
             stream += "\""
             stream += ","
             stream += stream .TidyBreak
@@ -496,7 +496,7 @@ public class X3DPrototypeInstance :
             stream += ":"
             stream += stream .TidySpace
             stream += "\""
-            stream += name .escapeJSON
+            stream += name .toJSONString ()
             stream += "\""
             stream += stream .TidyBreak
             
@@ -542,7 +542,7 @@ public class X3DPrototypeInstance :
          stream += ":"
          stream += stream .TidySpace
          stream += "\""
-         stream += name .escapeJSON
+         stream += name .toJSONString ()
          stream += "\""
 
          stream .lastProperty = true
@@ -563,7 +563,7 @@ public class X3DPrototypeInstance :
       stream += ":"
       stream += stream .TidySpace
       stream += "\""
-      stream += getTypeName () .escapeJSON
+      stream += getTypeName () .toJSONString ()
       stream += "\""
 
       stream .lastProperty = true
@@ -658,7 +658,7 @@ public class X3DPrototypeInstance :
                      stream += ":"
                      stream += stream .TidySpace
                      stream += "\""
-                     stream += field .getName () .escapeJSON
+                     stream += field .getName () .toJSONString ()
                      stream += "\""
                      stream += ","
                      stream += stream .TidyBreak
@@ -687,7 +687,7 @@ public class X3DPrototypeInstance :
                      stream += ":"
                      stream += stream .TidySpace
                      stream += "\""
-                     stream += field .getName () .escapeJSON
+                     stream += field .getName () .toJSONString ()
                      stream += "\""
                      stream += ","
                      stream += stream .TidyBreak
@@ -724,7 +724,7 @@ public class X3DPrototypeInstance :
                      stream += ":"
                      stream += stream .TidySpace
                      stream += "\""
-                     stream += field .getName () .escapeJSON
+                     stream += field .getName () .toJSONString ()
                      stream += "\""
                      stream += ","
                      stream += stream .TidyBreak
@@ -806,7 +806,7 @@ public class X3DPrototypeInstance :
                   stream += ":"
                   stream += stream .TidySpace
                   stream += "\""
-                  stream += field .getName () .escapeJSON
+                  stream += field .getName () .toJSONString ()
                   stream += "\""
                   stream += ","
                   stream += stream .TidyBreak
@@ -818,7 +818,7 @@ public class X3DPrototypeInstance :
                   stream += ":"
                   stream += stream .TidySpace
                   stream += "\""
-                  stream += reference .getName () .escapeJSON
+                  stream += reference .getName () .toJSONString ()
                   stream += "\""
                   stream += stream .TidyBreak
 

@@ -67,14 +67,14 @@ public final class MFString :
    
    internal final override func toXMLStream (_ stream : X3DOutputStream)
    {
-      stream += wrappedValue .map { "\"\($0 .escapeXML)\"" } .joined (separator: stream .Comma + stream .TidySpace)
+      stream += wrappedValue .map { "\"\($0 .toXMLString ())\"" } .joined (separator: stream .Comma + stream .TidySpace)
    }
 
    internal final override func toJSONStream (_ stream : X3DOutputStream)
    {
       stream += "["
       stream += stream .TidySpace
-      stream += wrappedValue .map { "\"\($0 .escapeJSON)\"" } .joined (separator: "," + stream .TidySpace)
+      stream += wrappedValue .map { "\"\($0 .toJSONString ())\"" } .joined (separator: "," + stream .TidySpace)
       stream += stream .TidySpace
       stream += "]"
    }
@@ -88,13 +88,13 @@ public final class MFString :
             stream += stream .TidySpace
             stream += "]"
          case 1:
-            stream += "\"\(wrappedValue .first! .escaped)\""
+            stream += "\"\(wrappedValue .first! .toVRMLString ())\""
          default:
             stream += "["
             stream += stream .ListBreak
             stream += stream .IncIndent ()
             stream += stream .TidyIndent
-            stream += wrappedValue .map { "\"\($0 .escaped)\"" } .joined (separator: stream .ListSeparator)
+            stream += wrappedValue .map { "\"\($0 .toVRMLString ())\"" } .joined (separator: stream .ListSeparator)
             stream += stream .ListBreak
             stream += stream .DecIndent ()
             stream += stream .TidyIndent
@@ -104,7 +104,7 @@ public final class MFString :
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)
    {
-      stream += wrappedValue .map { "\"\($0 .escaped)\"" } .joined (separator: ",\n")
+      stream += wrappedValue .map { "\"\($0 .toVRMLString ())\"" } .joined (separator: ",\n")
    }
 
    internal final override func fromDisplayStream (_ parser : VRMLParser) -> Bool

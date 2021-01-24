@@ -48,14 +48,14 @@ public final class X3DExportedNode :
       stream += "<EXPORT"
       stream += stream .Space
       stream += "localDEF='"
-      stream += localName .escapeXML
+      stream += localName .toXMLString ()
       stream += "'"
 
       if exportedName != localName
       {
          stream += stream .Space
          stream += "AS='"
-         stream += exportedName .escapeXML
+         stream += exportedName .toXMLString ()
          stream += "'"
       }
 
@@ -86,7 +86,7 @@ public final class X3DExportedNode :
       stream += ":"
       stream += stream .TidySpace
       stream += "\""
-      stream += localName .escapeJSON
+      stream += localName .toJSONString ()
       stream += "\""
 
       if exportedName != localName
@@ -100,7 +100,7 @@ public final class X3DExportedNode :
          stream += ":"
          stream += stream .TidySpace
          stream += "\""
-         stream += exportedName .escapeJSON
+         stream += exportedName .toJSONString ()
          stream += "\""
          stream += stream .TidyBreak
       }

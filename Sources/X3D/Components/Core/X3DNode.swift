@@ -271,7 +271,7 @@ public class X3DNode :
             stream += getTypeName ()
             stream += stream .Space
             stream += "USE='"
-            stream += name .escapeXML
+            stream += name .toXMLString ()
             stream += "'"
             
             if let containerField = stream .containerField
@@ -280,7 +280,7 @@ public class X3DNode :
                {
                   stream += stream .Space
                   stream += "containerField='"
-                  stream += containerField .getName () .escapeXML
+                  stream += containerField .getName () .toXMLString ()
                   stream += "'"
                }
             }
@@ -300,7 +300,7 @@ public class X3DNode :
 
          stream += stream .Space
          stream += "DEF='"
-         stream += name .escapeXML
+         stream += name .toXMLString ()
          stream += "'"
       }
       
@@ -310,7 +310,7 @@ public class X3DNode :
          {
             stream += stream .Space
             stream += "containerField='"
-            stream += containerField .getName () .escapeXML
+            stream += containerField .getName () .toXMLString ()
             stream += "'"
          }
       }
@@ -420,7 +420,7 @@ public class X3DNode :
                stream += "'"
                stream += stream .Space
                stream += "name='"
-               stream += field .getName () .escapeXML
+               stream += field .getName () .toXMLString ()
                stream += "'"
                
                // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
@@ -510,11 +510,11 @@ public class X3DNode :
                   stream += "<connect"
                   stream += stream .Space
                   stream += "nodeField='"
-                  stream += field .getName () .escapeXML
+                  stream += field .getName () .toXMLString ()
                   stream += "'"
                   stream += stream .Space
                   stream += "protoField='"
-                  stream += reference .getName () .escapeXML
+                  stream += reference .getName () .toXMLString ()
                   stream += "'"
                   stream += "/>"
                   stream += stream .TidyBreak
@@ -594,7 +594,7 @@ public class X3DNode :
             stream += ":"
             stream += stream .TidySpace
             stream += "\""
-            stream += name .escapeJSON
+            stream += name .toJSONString ()
             stream += "\""
             stream += stream .TidyBreak
             stream += stream .DecIndent ()
@@ -639,7 +639,7 @@ public class X3DNode :
          stream += ":"
          stream += stream .TidySpace
          stream += "\""
-         stream += name .escapeJSON
+         stream += name .toJSONString ()
          stream += "\""
 
          stream .lastProperty = true
@@ -957,7 +957,7 @@ public class X3DNode :
          for i in 0 ..< sourceTextLines .count
          {
             stream += "\""
-            stream += String (sourceTextLines [i]) .escapeJSON
+            stream += String (sourceTextLines [i]) .toJSONString ()
             stream += "\""
 
             if i != sourceTextLines .count - 1
@@ -1023,7 +1023,7 @@ public class X3DNode :
                stream += ":"
                stream += stream .TidySpace
                stream += "\""
-               stream += field .getName () .escapeJSON
+               stream += field .getName () .toJSONString ()
                stream += "\""
                stream += ","
                stream += stream .TidyBreak
@@ -1035,7 +1035,7 @@ public class X3DNode :
                stream += ":"
                stream += stream .TidySpace
                stream += "\""
-               stream += reference .getName () .escapeJSON
+               stream += reference .getName () .toJSONString ()
                stream += "\""
                stream += stream .TidyBreak
 

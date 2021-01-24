@@ -66,20 +66,20 @@ public final class SFString :
    
    internal final override func toXMLStream (_ stream : X3DOutputStream)
    {
-      stream += wrappedValue .escapeXML
+      stream += wrappedValue .toXMLString ()
    }
    
    internal final override func toJSONStream (_ stream : X3DOutputStream)
    {
       stream += "\""
-      stream += wrappedValue .escapeJSON
+      stream += wrappedValue .toJSONString ()
       stream += "\""
    }
 
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += "\""
-      stream += wrappedValue .escaped
+      stream += wrappedValue .toVRMLString ()
       stream += "\""
    }
 
@@ -97,42 +97,7 @@ public final class SFString :
 
 internal extension String
 {
-   var escaped : String
-   {
-      var escaped = ""
-   
-      for character in self
-      {
-         switch character
-         {
-            case "\"", "\\":
-               escaped += "\\"
-               fallthrough
-            default:
-               escaped += String (character)
-         }
-      }
-      
-      return escaped
-   }
-   
-   var unescaped : String
-   {
-      let entities = ["\0", "\t", "\n", "\r", "\"", "\'", "\\"]
-      var current  = self
-      
-      for entity in entities
-      {
-         let descriptionCharacters = entity .debugDescription .dropFirst () .dropLast ()
-         let description           = String (descriptionCharacters)
-         
-         current = current .replacingOccurrences (of: description, with: entity)
-      }
-       
-      return current
-   }
-   
-   var escapeXML : String
+   func toXMLString () -> String
    {
       var escaped = ""
    
@@ -166,7 +131,7 @@ internal extension String
       return escaped
    }
    
-   var escapeJSON : String
+   func toJSONString () -> String
    {
       var escaped = ""
    
@@ -183,5 +148,40 @@ internal extension String
       }
       
       return escaped
+   }
+
+   func toVRMLString () -> String
+   {
+      var escaped = ""
+   
+      for character in self
+      {
+         switch character
+         {
+            case "\"", "\\":
+               escaped += "\\"
+               fallthrough
+            default:
+            escaped += String (character)
+         }
+      }
+      
+      return escaped
+   }
+   
+   func fromVRMLString () -> String
+   {
+      let entities = ["\0", "\t", "\n", "\r", "\"", "\'", "\\"]
+      var current  = self
+      
+      for entity in entities
+      {
+         let descriptionCharacters = entity .debugDescription .dropFirst () .dropLast ()
+         let description           = String (descriptionCharacters)
+         
+         current = current .replacingOccurrences (of: description, with: entity)
+      }
+       
+      return current
    }
 }

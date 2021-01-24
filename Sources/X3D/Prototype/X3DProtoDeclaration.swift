@@ -42,7 +42,7 @@ public final class X3DProtoDeclaration :
       stream += "<ProtoDeclare"
       stream += stream .Space
       stream += "name='"
-      stream += getName () .escapeXML
+      stream += getName () .toXMLString ()
       stream += "'"
       stream += ">"
       stream += stream .TidyBreak
@@ -75,7 +75,7 @@ public final class X3DProtoDeclaration :
             stream += "'"
             stream += stream .Space
             stream += "name='"
-            stream += field .getName () .escapeXML
+            stream += field .getName () .toXMLString ()
             stream += "'"
 
             if field .isDefaultValue
@@ -147,6 +147,245 @@ public final class X3DProtoDeclaration :
       stream += "</ProtoDeclare>"
    }
 
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      stream += "{"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += "ProtoDeclare"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+      stream += stream .Indent
+      stream += "{"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+      stream += stream .Indent
+      stream += "\""
+      stream += "@name"
+      stream += "\""
+      stream += ":"
+      stream += "\""
+      stream += getName () .toJSONString ()
+      stream += "\""
+      stream += ","
+      stream += stream .TidyBreak
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "ProtoInterface"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "{"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+
+      // Fields
+      
+      stream .enterScope ()
+      stream .lastProperties .append (false)
+
+      let userDefinedFields = [X3DField] (getUserDefinedFields ())
+
+      if !userDefinedFields .isEmpty
+      {
+         if stream .lastProperty
+         {
+            stream += ","
+            stream += stream .TidyBreak
+         }
+
+         stream += stream .Indent
+         stream += "\""
+         stream += "field"
+         stream += "\""
+         stream += ":"
+         stream += stream .TidySpace
+         stream += "["
+         stream += stream .TidyBreak
+         stream += stream .IncIndent ()
+
+         for i in 0 ..< userDefinedFields .count
+         {
+            let field = userDefinedFields [i]
+            
+            stream += stream .Indent
+            stream += "{"
+            stream += stream .TidyBreak
+            stream += stream .IncIndent ()
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "@accessType"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += field .getAccessType () .description
+            stream += "\""
+            stream += ","
+            stream += stream .TidyBreak
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "@type"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += field .getTypeName ()
+            stream += "\""
+            stream += ","
+            stream += stream .TidyBreak
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "@name"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += field .getName () .toJSONString ()
+            stream += "\""
+
+            if field .isDefaultValue
+            {
+               stream += stream .TidyBreak
+            }
+            else
+            {
+               stream += ","
+               stream += stream .TidyBreak
+
+               // Output value
+      
+               switch field .getType ()
+               {
+                  case .MFNode: do
+                  {
+                     stream += stream .Indent
+                     stream += "\""
+                     stream += "-children"
+                     stream += "\""
+                     stream += ":"
+                     stream += stream .TidySpace
+                     stream += stream .toJSONStream (field)
+                     stream += stream .TidyBreak
+                  }
+                  case .SFNode: do
+                  {
+                     stream += stream .Indent
+                     stream += "\""
+                     stream += "-children"
+                     stream += "\""
+                     stream += ":"
+                     stream += stream .TidySpace
+                     stream += "["
+                     stream += stream .TidyBreak
+                     stream += stream .IncIndent ()
+                     stream += stream .Indent
+                     stream += stream .toJSONStream (field)
+                     stream += stream .TidyBreak
+                     stream += stream .DecIndent ()
+                     stream += stream .Indent
+                     stream += "]"
+                     stream += stream .TidyBreak
+                  }
+                  default: do
+                  {
+                     stream += stream .Indent
+                     stream += "\""
+                     stream += "@value"
+                     stream += "\""
+                     stream += ":"
+                     stream += stream .TidySpace
+                     stream += stream .toJSONStream (field)
+                     stream += stream .TidyBreak
+                  }
+               }
+            }
+
+            stream += stream .DecIndent ()
+            stream += stream .Indent
+            stream += "}"
+
+            if i != userDefinedFields .count - 1
+            {
+               stream += ","
+            }
+
+            stream += stream .TidyBreak
+         }
+
+         stream += stream .DecIndent ()
+         stream += stream .Indent
+         stream += "]"
+
+         stream .lastProperty = true
+      }
+
+      stream += stream .DecIndent ()
+      stream += stream .TidyBreak
+      stream += stream .Indent
+      stream += "}"
+      stream += ","
+      stream += stream .TidyBreak
+
+      stream .leaveScope ()
+
+      // ProtoBody
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "ProtoBody"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "{"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "-children"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "["
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+
+      stream .lastProperties .append (false)
+      
+      body .toJSONStream (stream)
+      
+      stream .lastProperties .removeLast ()
+
+      stream += stream .TidyBreak
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "]"
+      stream += stream .TidyBreak
+
+      // End
+
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+      stream += stream .TidyBreak
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+      stream += stream .TidyBreak
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+      
+      stream .lastProperties .removeLast ()
+   }
+   
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += stream .Indent

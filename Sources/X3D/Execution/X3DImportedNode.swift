@@ -226,6 +226,176 @@ public final class X3DImportedNode :
       }
    }
    
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      guard let inlineNode = inlineNode,
+            stream .existsNode (inlineNode) else { return }
+      
+      stream += "{"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += "IMPORT"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+      stream += stream .Indent
+      stream += "{"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+   
+      stream += stream .Indent
+      stream += "\""
+      stream += "@inlineDEF"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += stream .getName (inlineNode) .toJSONString ()
+      stream += "\""
+      stream += ","
+      stream += stream .TidyBreak
+   
+      stream += stream .Indent
+      stream += "\""
+      stream += "@importedDEF"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += exportedName .toJSONString ()
+      stream += "\""
+
+      if importedName != exportedName
+      {
+         stream += ","
+         stream += stream .TidyBreak
+         stream += stream .Indent
+         stream += "\""
+         stream += "@AS"
+         stream += "\""
+         stream += ":"
+         stream += stream .TidySpace
+         stream += "\""
+         stream += importedName .toJSONString ()
+         stream += "\""
+         stream += stream .TidyBreak
+      }
+      else
+      {
+         stream += stream .TidyBreak
+      }
+
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+      stream += stream .TidyBreak
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+
+      if let exportedNode = exportedNode
+      {
+         stream .addImportedNode (exportedNode, importedName)
+      }
+      else
+      {
+         for route in routes
+         {
+            guard let sourceNode      = route .sourceNode,
+                  let destinationNode = route .destinationNode
+            else { continue }
+            
+            let sourceField      = route .sourceField
+            let destinationField = route .destinationField
+
+            guard stream .existsRouteNode (sourceNode) && stream .existsRouteNode (destinationNode) else { continue }
+            
+            let importedSourceNode      = sourceNode      as? X3DImportedNode
+            let importedDestinationNode = destinationNode as? X3DImportedNode
+
+            let sourceNodeName = importedSourceNode != nil
+               ? importedSourceNode! .importedName
+               : stream .getName (sourceNode as! X3DNode)
+            
+            let destinationNodeName = importedDestinationNode != nil
+               ? importedDestinationNode! .importedName
+               : stream .getName (destinationNode as! X3DNode)
+
+            stream += ","
+            stream += stream .TidyBreak
+            stream += stream .Indent
+            stream += "{"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += "ROUTE"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidyBreak
+            stream += stream .IncIndent ()
+            stream += stream .Indent
+            stream += "{"
+            stream += stream .TidyBreak
+            stream += stream .IncIndent ()
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "@fromNode"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += sourceNodeName .toJSONString ()
+            stream += "\""
+            stream += ","
+            stream += stream .TidyBreak
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "@fromField"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += sourceField .toJSONString ()
+            stream += "\""
+            stream += ","
+            stream += stream .TidyBreak
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "@toNode"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += destinationNodeName .toJSONString ()
+            stream += "\""
+            stream += ","
+            stream += stream .TidyBreak
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "@toField"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += destinationField .toJSONString ()
+            stream += "\""
+            stream += stream .TidyBreak
+
+            stream += stream .DecIndent ()
+            stream += stream .Indent
+            stream += "}"
+            stream += stream .TidyBreak
+            stream += stream .DecIndent ()
+            stream += stream .Indent
+            stream += "}"
+         }
+      }
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       guard let inlineNode = inlineNode,

@@ -49,6 +49,38 @@ public final class ComponentInfo :
       stream += "/>"
    }
 
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      stream += "{"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "@name"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += name
+      stream += "\""
+      stream += ","
+      stream += stream .TidyBreak
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "@level"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += String (level)
+      stream += stream .TidyBreak
+
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+   }
+   
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += "COMPONENT"

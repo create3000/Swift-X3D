@@ -459,9 +459,23 @@ public final class X3DOutputStream
       }
    }
    
+   // XML
+   
    internal final var containerField : X3DField? { containerFields .last }
    
    internal final var containerFields = [X3DField] ()
+   
+   // JSON
+   
+   internal final var lastProperties = [false]
+   
+   internal final var lastProperty : Bool
+   {
+      get { lastProperties .last! }
+      set { lastProperties [lastProperties .count - 1] = newValue }
+   }
+   
+   // Convenience functions
    
    internal final func toStream (_ object : X3DObject) -> String
    {
@@ -477,11 +491,27 @@ public final class X3DOutputStream
       return ""
    }
 
-   internal final func toJSONStream (_ object : X3DObject) -> String
+   internal final func toJSONStream (_ object : X3DObject, streaming : Bool = true) -> String
    {
-      object .toJSONStream (self)
-      
-      return ""
+      if streaming
+      {
+         object .toJSONStream (self)
+         
+         return ""
+      }
+      else
+      {
+         let start = string .count
+         
+         object .toJSONStream (self)
+         
+         let count = string .count - start
+         let last  = String (string .suffix (count))
+         
+         string .removeLast (count)
+         
+         return last
+      }
    }
 
    internal final func toVRMLStream (_ object : X3DObject) -> String

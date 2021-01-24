@@ -904,7 +904,7 @@ public class X3DExecutionContext :
       
       // Output extern protos.
       
-      for externproto in externprotos
+      for externproto in getExternProtoDeclarations ()
       {
          stream += stream .toXMLStream (externproto)
          stream += stream .TidyBreak
@@ -912,7 +912,7 @@ public class X3DExecutionContext :
       
       // Output protos.
       
-      for proto in protos
+      for proto in getProtoDeclarations ()
       {
          stream += stream .toXMLStream (proto)
          stream += stream .TidyBreak
@@ -935,7 +935,7 @@ public class X3DExecutionContext :
       
       // Output protos.
       
-      for route in routes
+      for route in getRoutes ()
       {
          stream += stream .toXMLStream (route)
          stream += stream .TidyBreak
@@ -961,6 +961,8 @@ public class X3DExecutionContext :
       
       // Output externprotos.
       
+      let externprotos = getExternProtoDeclarations ()
+      
       for externproto in externprotos
       {
          stream += stream .toVRMLStream (externproto)
@@ -969,6 +971,8 @@ public class X3DExecutionContext :
       }
       
       // Output protos.
+      
+      let protos = getProtoDeclarations ()
       
       for proto in protos
       {
@@ -1004,17 +1008,21 @@ public class X3DExecutionContext :
       
       // Output imported nodes.
       
+      let importedNodes = getImportedNodes ()
+      
       if !importedNodes .isEmpty
       {
          stream += stream .Break
          
-         for importedNode in getImportedNodes ()
+         for importedNode in importedNodes
          {
             stream += stream .toVRMLStream (importedNode)
          }
       }
       
       // Output routes.
+      
+      let routes = getRoutes ()
       
       if !routes .isEmpty
       {

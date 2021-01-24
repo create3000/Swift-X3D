@@ -251,13 +251,16 @@ public final class X3DScene :
       metadata_changed = SFTime .now
    }
    
-   public final func getMetaDatas () -> [(key : String, values : [String])]
+   public final func getMetaDatas () -> [(key : String, value : String)]
    {
-      var result = [(key : String, values : [String])] ()
+      var result = [(key : String, value : String)] ()
       
       for (key, values) in metadata
       {
-         result .append ((key, values .sorted ()))
+         for value in values .sorted ()
+         {
+            result .append ((key, value))
+         }
       }
       
       result .sort { $0 .key < $1 .key }
@@ -418,23 +421,20 @@ public final class X3DScene :
       
       // Output metadata.
 
-      for (key, values) in getMetaDatas ()
+      for (key, value) in getMetaDatas ()
       {
-         for value in values
-         {
-            stream += stream .Indent
-            stream += "<meta"
-            stream += stream .Space
-            stream += "name='"
-            stream += key .escapeXML
-            stream += "'"
-            stream += stream .Space
-            stream += "content='"
-            stream += value .escapeXML
-            stream += "'"
-            stream += "/>"
-            stream += stream .TidyBreak
-         }
+         stream += stream .Indent
+         stream += "<meta"
+         stream += stream .Space
+         stream += "name='"
+         stream += key .escapeXML
+         stream += "'"
+         stream += stream .Space
+         stream += "content='"
+         stream += value .escapeXML
+         stream += "'"
+         stream += "/>"
+         stream += stream .TidyBreak
       }
  
       // </head>
@@ -488,6 +488,393 @@ public final class X3DScene :
       stream += stream .TidyBreak
    }
    
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      var specificationVersion = getSpecificationVersion ()
+
+      if specificationVersion == "2.0"
+      {
+         specificationVersion = "3.3"
+      }
+      
+      // X3D
+
+      stream += "{"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += "X3D"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "{"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+      stream += stream .IncIndent ()
+
+      // Encoding
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "encoding"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += "UTF-8"
+      stream += "\""
+      stream += ","
+      stream += stream .TidyBreak
+
+      // Profile
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "@profile"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += profile .name
+      stream += "\""
+      stream += ","
+      stream += stream .TidyBreak
+
+      // Version
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "@version"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += specificationVersion
+      stream += "\""
+      stream += ","
+      stream += stream .TidyBreak
+
+      // XSD noNamespaceSchemaLocation
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "@xsd:noNamespaceSchemaLocation"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += "http://www.web3d.org/specifications/x3d-3.3.xsd"
+      stream += "\""
+      stream += ","
+      stream += stream .TidyBreak
+
+      // JSON schema
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "JSON schema"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += "http://www.web3d.org/specifications/x3d-3.3-JSONSchema.json"
+      stream += "\""
+      stream += ","
+      stream += stream .TidyBreak
+      
+      // Head
+      
+      let components = getComponents ()
+      let units      = getUnits () .filter { $0 .conversionFactor != 1 }
+      let metadata   = getMetaDatas ()
+      
+      if !components .isEmpty,
+         !units      .isEmpty,
+         !metadata   .isEmpty
+      {
+         stream .lastProperties .append (false)
+
+         stream += stream .Indent
+         stream += "\""
+         stream += "head"
+         stream += "\""
+         stream += ":"
+         stream += stream .TidySpace
+         stream += "{"
+         stream += stream .TidyBreak
+         stream += stream .IncIndent ()
+
+         // Meta data
+
+         if !metadata .isEmpty
+         {
+            if stream .lastProperty
+            {
+               stream += ","
+               stream += stream .TidyBreak
+            }
+
+            // Meta data begin
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "meta"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "["
+            stream += stream .TidyBreak
+            stream += stream .IncIndent ()
+
+            // Meta data
+
+            for i in 0 ..< metadata .count
+            {
+               let (key, value) = metadata [i]
+               
+               stream += stream .Indent
+               stream += "{"
+               stream += stream .TidyBreak
+               stream += stream .IncIndent ()
+
+               stream += stream .Indent
+               stream += "\""
+               stream += "@name"
+               stream += "\""
+               stream += ":"
+               stream += stream .TidySpace
+               stream += "\""
+               stream += key .escapeJSON
+               stream += "\""
+               stream += ","
+               stream += stream .TidyBreak
+
+               stream += stream .Indent
+               stream += "\""
+               stream += "@content"
+               stream += "\""
+               stream += ":"
+               stream += stream .TidySpace
+               stream += "\""
+               stream += value .escapeJSON
+               stream += "\""
+               stream += stream .TidyBreak
+
+               stream += stream .DecIndent ()
+               stream += stream .Indent
+               stream += "}"
+
+               if i != metadata .count - 1
+               {
+                  stream += ","
+               }
+
+               stream += stream .TidyBreak
+            }
+
+            // Meta data end
+
+            stream += stream .DecIndent ()
+            stream += stream .Indent
+            stream += "]"
+
+            stream .lastProperty = true
+         }
+         
+         // Components
+
+         if !components .isEmpty
+         {
+            if stream .lastProperty
+            {
+               stream += ","
+               stream += stream .TidyBreak
+            }
+
+            // Components begin
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "component"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "["
+            stream += stream .TidyBreak
+            stream += stream .IncIndent ()
+
+            // Components
+
+            for i in 0 ..< components .count
+            {
+               stream += stream .Indent
+               stream += stream .toJSONStream (components [i])
+
+               if i != components .count - 1
+               {
+                  stream += ","
+               }
+
+               stream += stream .TidyBreak
+            }
+
+            // Components end
+
+            stream += stream .DecIndent ()
+            stream += stream .Indent
+            stream += "]"
+
+            stream .lastProperty = true
+         }
+
+         // Units
+
+         if !units .isEmpty
+         {
+            if stream .lastProperty
+            {
+               stream += ","
+               stream += stream .TidyBreak
+            }
+
+            // Units begin
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "unit"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "["
+            stream += stream .TidyBreak
+            stream += stream .IncIndent ()
+
+            // Units
+
+            for i in 0 ..< units .count
+            {
+               stream += stream .Indent
+               stream += stream .toJSONStream (units [i])
+
+               if i != units .count - 1
+               {
+                  stream += ","
+               }
+
+               stream += stream .TidyBreak
+            }
+
+            // Unit end
+
+            stream += stream .DecIndent ()
+            stream += stream .Indent
+            stream += "]"
+
+            stream .lastProperty = true
+         }
+
+         // Head end
+
+         stream += stream .TidyBreak
+         stream += stream .DecIndent ()
+         stream += stream .Indent
+         stream += "}"
+         stream += ","
+         stream += stream .TidyBreak
+         
+         stream .lastProperties .removeLast ()
+      }
+      
+      // Scene
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "Scene"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "{"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+      stream += stream .Indent
+      stream += "\""
+      stream += "-children"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "["
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+
+      // Enter stream.
+
+      stream .push (self)
+      stream .enterScope ()
+      stream .setExportedNodes (exportedNodes)
+
+      // Enter X3DExecutionContext
+      
+      stream .lastProperties .append (false)
+      
+      super .toJSONStream (stream)
+      
+      // Exported nodes
+      
+      let exportedNodes = getExportedNodes () .map { stream .toJSONStream ($0, streaming: false) } .filter { !$0 .isEmpty }
+      
+      if !exportedNodes .isEmpty
+      {
+         if stream .lastProperty
+         {
+            stream += ","
+            stream += stream .TidyBreak
+         }
+
+         for i in 0 ..< exportedNodes .count
+         {
+            stream += stream .Indent
+            stream += exportedNodes [i]
+
+            if i != exportedNodes .count - 1
+            {
+               stream += ","
+               stream += stream .TidyBreak
+            }
+         }
+
+         stream .lastProperty = true
+      }
+      
+      stream .lastProperties .removeLast ()
+
+      // Scene end
+
+      stream += stream .TidyBreak
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "]"
+      stream += stream .TidyBreak
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+
+      // X3D end
+
+      stream += stream .TidyBreak
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+      stream += stream .TidyBreak
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+      stream += stream .TidyBreak
+
+      // Leave stream.
+   
+      stream .leaveScope ()
+      stream .pop (self)
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       guard let browser = browser else { return }
@@ -521,9 +908,11 @@ public final class X3DScene :
       
       // Output components.
       
+      let components = getComponents ()
+      
       if !components .isEmpty
       {
-         for component in getComponents ()
+         for component in components
          {
             stream += stream .toVRMLStream (component)
             stream += stream .Break
@@ -534,7 +923,7 @@ public final class X3DScene :
       
       // Output units.
       
-      let units = self .units .filter { $0 .conversionFactor != 1 }
+      let units = getUnits () .filter { $0 .conversionFactor != 1 }
       
       if !units .isEmpty
       {
@@ -549,19 +938,18 @@ public final class X3DScene :
       
       // Output meta data.
       
+      let metadata = getMetaDatas ()
+      
       if !metadata .isEmpty
       {
-         for (key, values) in getMetaDatas ()
+         for (key, value) in metadata
          {
-            for value in values
-            {
-               stream += "META"
-               stream += stream .Space
-               stream += SFString (wrappedValue: key) .toVRMLString (with: self)
-               stream += stream .Space
-               stream += SFString (wrappedValue: value) .toVRMLString (with: self)
-               stream += stream .Break
-            }
+            stream += "META"
+            stream += stream .Space
+            stream += SFString (wrappedValue: key) .toVRMLString (with: self)
+            stream += stream .Space
+            stream += SFString (wrappedValue: value) .toVRMLString (with: self)
+            stream += stream .Break
          }
          
          stream += stream .TidyBreak
@@ -579,11 +967,13 @@ public final class X3DScene :
 
       // Output exported nodes.
       
+      let exportedNodes = getExportedNodes ()
+      
       if !exportedNodes .isEmpty
       {
          stream += stream .Break
          
-         for exportedNode in getExportedNodes ()
+         for exportedNode in exportedNodes
          {
             stream += stream .toVRMLStream (exportedNode)
          }

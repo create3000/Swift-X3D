@@ -48,7 +48,51 @@ public final class UnitInfo :
       stream += "conversionFactor='"
       stream += String (format: stream .doubleFormat, conversionFactor)
       stream += "'"
-      stream += "/>";
+      stream += "/>"
+   }
+
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      stream += "{"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "@category"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += category .description
+      stream += "\""
+      stream += ","
+      stream += stream .TidyBreak
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "@name"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += name .escapeJSON
+      stream += "\""
+      stream += ","
+      stream += stream .TidyBreak
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "@conversionFactor"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += String (format: stream .doubleFormat, conversionFactor)
+      stream += stream .TidyBreak
+
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
    }
 
    internal final override func toVRMLStream (_ stream : X3DOutputStream)

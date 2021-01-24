@@ -156,4 +156,9 @@ internal extension String
       
       return escaped
    }
+   
+   var escapeJSON : String
+   {
+      return self
+   }
 }

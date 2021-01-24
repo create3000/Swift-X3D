@@ -201,6 +201,132 @@ public final class X3DExternProtoDeclaration :
       stream += "</ExternProtoDeclare>"
    }
    
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      stream += "{"
+      stream += stream .TidySpace
+      stream += "\""
+      stream += "ExternProtoDeclare"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+      stream += stream .Indent
+      stream += "{"
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+      stream += stream .Indent
+      stream += "\""
+      stream += "@name"
+      stream += "\""
+      stream += ":"
+      stream += "\""
+      stream += getName () .toJSONString ()
+      stream += "\""
+      stream += ","
+      stream += stream .TidyBreak
+
+      // Fields
+
+      let userDefinedFields = [X3DField] (getUserDefinedFields ())
+
+      if !userDefinedFields .isEmpty
+      {
+         stream += stream .Indent
+         stream += "\""
+         stream += "field"
+         stream += "\""
+         stream += ":"
+         stream += stream .TidySpace
+         stream += "["
+         stream += stream .TidyBreak
+         stream += stream .IncIndent ()
+
+         for i in 0 ..< userDefinedFields .count
+         {
+            let field = userDefinedFields [i]
+
+            stream += stream .Indent
+            stream += "{"
+            stream += stream .TidyBreak
+            stream += stream .IncIndent ()
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "@accessType"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += field .getAccessType () .description
+            stream += "\""
+            stream += ","
+            stream += stream .TidyBreak
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "@type"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += field .getTypeName ()
+            stream += "\""
+            stream += ","
+            stream += stream .TidyBreak
+
+            stream += stream .Indent
+            stream += "\""
+            stream += "@name"
+            stream += "\""
+            stream += ":"
+            stream += stream .TidySpace
+            stream += "\""
+            stream += field .getName () .toJSONString ()
+            stream += "\""
+            stream += stream .TidyBreak
+
+            stream += stream .DecIndent ()
+            stream += stream .Indent
+            stream += "}"
+
+            if i != userDefinedFields .count - 1
+            {
+               stream += ","
+            }
+
+            stream += stream .TidyBreak
+         }
+
+         stream += stream .DecIndent ()
+         stream += stream .Indent
+         stream += "]"
+         stream += ","
+         stream += stream .TidyBreak
+      }
+
+      // URL
+
+      stream += stream .Indent
+      stream += "\""
+      stream += "@url"
+      stream += "\""
+      stream += ":"
+      stream += stream .TidySpace
+      stream += stream .toJSONStream ($url)
+      stream += stream .TidyBreak
+
+      // End
+
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+      stream += stream .TidyBreak
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      stream += "}"
+   }
+   
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += stream .Indent
@@ -232,8 +358,12 @@ public final class X3DExternProtoDeclaration :
 
          for field in userDefinedFields
          {
-            toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength)
-            
+            stream += stream .Indent
+            stream += stream .padding (field .getAccessType () .description, accessTypeLength)
+            stream += stream .Space
+            stream += stream .padding (field .getTypeName (), fieldTypeLength)
+            stream += stream .Space
+            stream += field .getName ()
             stream += field === userDefinedFields .last ? stream .TidyBreak : stream .Break
          }
 
@@ -245,15 +375,5 @@ public final class X3DExternProtoDeclaration :
       stream += stream .TidyBreak
       stream += stream .Indent
       stream += stream .toVRMLStream ($url)
-   }
-   
-   private final func toVRMLStreamUserDefinedField (_ stream : X3DOutputStream, _ field : X3DField, _ fieldTypeLength : Int, _ accessTypeLength : Int)
-   {
-      stream += stream .Indent
-      stream += stream .padding (field .getAccessType () .description, accessTypeLength)
-      stream += stream .Space
-      stream += stream .padding (field .getTypeName (), fieldTypeLength)
-      stream += stream .Space
-      stream += field .getName ()
    }
 }

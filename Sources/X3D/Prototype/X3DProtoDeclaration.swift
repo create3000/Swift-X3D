@@ -419,8 +419,28 @@ public final class X3DProtoDeclaration :
 
          for field in userDefinedFields
          {
-            toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength)
-            
+            stream += stream .Indent
+            stream += stream .padding (field .getAccessType () .description, accessTypeLength)
+            stream += stream .Space
+            stream += stream .padding (field .getTypeName (), fieldTypeLength)
+            stream += stream .Space
+            stream += field .getName ()
+
+            if field .isInitializable
+            {
+               if let array = field as? X3DArrayField,
+                  array .count != 1
+               {
+                  stream += stream .TidySpace
+               }
+               else
+               {
+                  stream += stream .Space
+               }
+
+               field .toVRMLStream (stream)
+            }
+
             stream += field === userDefinedFields .last ? stream .TidyBreak : stream .Break
          }
 
@@ -442,30 +462,5 @@ public final class X3DProtoDeclaration :
       stream += stream .DecIndent ()
       stream += stream .Indent
       stream += "}"
-   }
-   
-   private final func toVRMLStreamUserDefinedField (_ stream : X3DOutputStream, _ field : X3DField, _ fieldTypeLength : Int, _ accessTypeLength : Int)
-   {
-      stream += stream .Indent
-      stream += stream .padding (field .getAccessType () .description, accessTypeLength)
-      stream += stream .Space
-      stream += stream .padding (field .getTypeName (), fieldTypeLength)
-      stream += stream .Space
-      stream += field .getName ()
-
-      if field .isInitializable
-      {
-         if let array = field as? X3DArrayField,
-            array .count != 1
-         {
-            stream += stream .TidySpace
-         }
-         else
-         {
-            stream += stream .Space
-         }
-
-         field .toVRMLStream (stream)
-      }
    }
 }

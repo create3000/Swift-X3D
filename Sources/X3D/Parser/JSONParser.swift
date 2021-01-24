@@ -960,7 +960,7 @@ internal final class JSONParser :
          
          for ii in stride (from: first, to: min (first + array .wrappedValue .count, objects .count), by: 1)
          {
-            array .wrappedValue [ii - first] = int32 (objects [i + ii]) ?? 0
+            array .wrappedValue [ii - first] = int32 (objects [ii]) ?? 0
          }
          
          field .wrappedValue .append (element .wrappedValue)

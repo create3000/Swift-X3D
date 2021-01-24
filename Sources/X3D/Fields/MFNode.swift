@@ -212,7 +212,61 @@ public final class MFNode <Element : X3DBaseNode> :
          }
       }
    }
+   
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      if wrappedValue .isEmpty
+      {
+         stream += "["
+         stream += stream .TidySpace
+         stream += "]"
+      }
+      else
+      {
+         stream .enterScope ()
 
+         stream += "["
+         stream += stream .TidyBreak
+         stream += stream .IncIndent ()
+
+         for i in 0 ..< wrappedValue .count - 1
+         {
+            if let value = wrappedValue [i]
+            {
+               stream += stream .Indent
+               stream += stream .toJSONStream (value)
+               stream += ","
+               stream += stream .TidyBreak
+            }
+            else
+            {
+               stream += stream .Indent
+               stream += "null"
+               stream += ","
+               stream += stream .TidyBreak
+            }
+         }
+
+         if let value = wrappedValue .last!
+         {
+            stream += stream .Indent
+            stream += stream .toJSONStream (value)
+         }
+         else
+         {
+            stream += stream .Indent
+            stream += "null"
+         }
+
+         stream += stream .TidyBreak
+         stream += stream .DecIndent ()
+         stream += stream .Indent
+         stream += "]"
+
+         stream .leaveScope ()
+      }
+   }
+   
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count

@@ -123,6 +123,36 @@ public final class MFImage :
       .joined (separator: stream .Comma + stream .TidySpace)
    }
 
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      stream += "["
+      stream += stream .TidySpace
+      stream += wrappedValue .map
+      {
+         var string = ""
+
+         string += String ($0 .width)
+         string += ","
+         string += stream .TidySpace
+         string += String ($0 .height)
+         string += ","
+         string += stream .TidySpace
+         string += String ($0 .comp)
+
+         if !$0 .array .isEmpty
+         {
+            string += ","
+            string += stream .TidySpace
+            string += $0 .array .map { String ($0) } .joined (separator: "," + stream .TidySpace)
+         }
+
+         return string
+      }
+      .joined (separator: stream .Comma + stream .TidySpace)
+      stream += stream .TidySpace
+      stream += "]"
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count

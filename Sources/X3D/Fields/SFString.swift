@@ -69,9 +69,18 @@ public final class SFString :
       stream += wrappedValue .escapeXML
    }
    
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      stream += "\""
+      stream += wrappedValue .escapeJSON
+      stream += "\""
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
-      stream += "\"\(wrappedValue .escaped)\""
+      stream += "\""
+      stream += wrappedValue .escaped
+      stream += "\""
    }
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)

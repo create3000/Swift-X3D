@@ -69,6 +69,20 @@ public class SFVec4d :
       toVRMLStream (stream)
    }
    
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      let x = stream .toUnit (unit, value: wrappedValue .x)
+      let y = stream .toUnit (unit, value: wrappedValue .y)
+      let z = stream .toUnit (unit, value: wrappedValue .z)
+      let w = stream .toUnit (unit, value: wrappedValue .w)
+
+      stream += "["
+      stream += stream .TidySpace
+      stream += String (format: "\(stream .doubleFormat),\(stream .TidySpace)\(stream .doubleFormat),\(stream .TidySpace)\(stream .doubleFormat),\(stream .TidySpace)\(stream .doubleFormat)", x, y, z, w)
+      stream += stream .TidySpace
+      stream += "]"
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       let x = stream .toUnit (unit, value: wrappedValue .x)

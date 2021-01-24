@@ -69,20 +69,47 @@ public class SFMatrix4f :
       toVRMLStream (stream)
    }
    
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      let c0 = wrappedValue [0]
+      let c1 = wrappedValue [1]
+      let c2 = wrappedValue [2]
+      let c3 = wrappedValue [3]
+      
+      let format = "\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat)"
+
+      stream += "["
+      stream += stream .TidySpace
+      stream += String (format: format, c0.x, c0.y, c0.z, c0.w)
+      stream += ","
+      stream += stream .TidySpace
+      stream += String (format: format, c1.x, c1.y, c1.z, c1.w)
+      stream += ","
+      stream += stream .TidySpace
+      stream += String (format: format, c2.x, c2.y, c2.z, c2.w)
+      stream += ","
+      stream += stream .TidySpace
+      stream += String (format: format, c3.x, c3.y, c3.z, c3.w)
+      stream += stream .TidySpace
+      stream += "]"
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       let c0 = wrappedValue [0]
       let c1 = wrappedValue [1]
       let c2 = wrappedValue [2]
       let c3 = wrappedValue [3]
+      
+      let format = "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)"
 
-      stream += String (format: "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)", c0.x, c0.y, c0.z, c0.w)
+      stream += String (format: format, c0.x, c0.y, c0.z, c0.w)
       stream += " "
-      stream += String (format: "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)", c1.x, c1.y, c1.z, c1.w)
+      stream += String (format: format, c1.x, c1.y, c1.z, c1.w)
       stream += " "
-      stream += String (format: "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)", c2.x, c2.y, c2.z, c2.w)
+      stream += String (format: format, c2.x, c2.y, c2.z, c2.w)
       stream += " "
-      stream += String (format: "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)", c3.x, c3.y, c3.z, c3.w)
+      stream += String (format: format, c3.x, c3.y, c3.z, c3.w)
    }
 
    internal final override func toDisplayStream (_ stream : X3DOutputStream)

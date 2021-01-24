@@ -69,6 +69,15 @@ public class SFColorRGBA :
       toVRMLStream (stream)
    }
    
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      stream += "["
+      stream += stream .TidySpace
+      stream += String (format: "\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat)", wrappedValue .r, wrappedValue .g, wrappedValue .b, wrappedValue .a)
+      stream += stream .TidySpace
+      stream += "]"
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += String (format: "\(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat) \(stream .floatFormat)", wrappedValue .r, wrappedValue .g, wrappedValue .b, wrappedValue .a)

@@ -90,6 +90,29 @@ public class SFImage :
       toVRMLStream (stream)
    }
    
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      stream += "["
+      stream += stream .TidySpace
+      stream += String (wrappedValue .width)
+      stream += ","
+      stream += stream .TidySpace
+      stream += String (wrappedValue .height)
+      stream += ","
+      stream += stream .TidySpace
+      stream += String (wrappedValue .comp)
+      
+      if !wrappedValue .array .isEmpty
+      {
+         stream += ","
+         stream += stream .TidySpace
+         stream += wrappedValue .array .map { String ($0) } .joined (separator: "," + stream .TidySpace)
+      }
+      
+      stream += stream .TidySpace
+      stream += "]"
+  }
+   
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += String (wrappedValue .width)

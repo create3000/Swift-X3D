@@ -71,6 +71,17 @@ public final class MFRotation :
       
       stream += wrappedValue .map { let axis = $0 .axis; return String (format: format, axis .x, axis .y, axis .z, stream .toUnit (.angle, value: $0 .angle)) } .joined (separator: stream .Comma + stream .TidySpace)
    }
+   
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      let format = "\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat)"
+
+      stream += "["
+      stream += stream .TidySpace
+      stream += wrappedValue .map { let axis = $0 .axis; return String (format: format, axis .x, axis .y, axis .z, stream .toUnit (.angle, value: $0 .angle)) } .joined (separator: "," + stream .TidySpace)
+      stream += stream .TidySpace
+      stream += "]"
+   }
 
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {

@@ -69,6 +69,11 @@ public final class SFBool :
       stream += wrappedValue ? "true" : "false"
    }
    
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      stream += wrappedValue ? "true" : "false"
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += wrappedValue ? "TRUE" : "FALSE"

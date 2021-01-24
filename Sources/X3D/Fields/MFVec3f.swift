@@ -72,6 +72,17 @@ public final class MFVec3f :
       stream += wrappedValue .map { String (format: format, stream .toUnit (unit, value: $0.x), stream .toUnit (unit, value: $0.y), stream .toUnit (unit, value: $0.z)) } .joined (separator: stream .Comma + stream .TidySpace)
    }
 
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      let format = "\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat)"
+
+      stream += "["
+      stream += stream .TidySpace
+      stream += wrappedValue .map { String (format: format, stream .toUnit (unit, value: $0.x), stream .toUnit (unit, value: $0.y), stream .toUnit (unit, value: $0.z)) } .joined (separator: "," + stream .TidySpace)
+      stream += stream .TidySpace
+      stream += "]"
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count

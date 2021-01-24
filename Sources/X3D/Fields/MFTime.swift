@@ -72,6 +72,15 @@ public final class MFTime :
       stream += wrappedValue .map { String (format: stream .doubleFormat, $0) } .joined (separator: stream .Comma + stream .TidySpace)
    }
 
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      stream += "["
+      stream += stream .TidySpace
+      stream += wrappedValue .map { String (format: stream .doubleFormat, $0) } .joined (separator: "," + stream .TidySpace)
+      stream += stream .TidySpace
+      stream += "]"
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count

@@ -72,6 +72,17 @@ public final class MFColorRGBA :
       stream += wrappedValue .map { String (format: format, $0.r, $0.g, $0.b, $0.a) } .joined (separator: stream .Comma + stream .TidySpace)
    }
 
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      let format = "\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat)"
+
+      stream += "["
+      stream += stream .TidySpace
+      stream += wrappedValue .map { String (format: format, $0.r, $0.g, $0.b, $0.a) } .joined (separator: "," + stream .TidySpace)
+      stream += stream .TidySpace
+      stream += "]"
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       switch wrappedValue .count

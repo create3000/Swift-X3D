@@ -69,6 +69,18 @@ public class SFRotation :
       toVRMLStream (stream)
    }
    
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      let axis  = wrappedValue .axis
+      let angle = wrappedValue .angle
+
+      stream += "["
+      stream += stream .TidySpace
+      stream += String (format: "\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat),\(stream .TidySpace)\(stream .floatFormat)", axis .x, axis .y, axis .z, stream .toUnit (.angle, value: angle))
+      stream += stream .TidySpace
+      stream += "]"
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       let axis  = wrappedValue .axis

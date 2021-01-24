@@ -90,6 +90,39 @@ public final class MFMatrix4d :
       }
       .joined (separator: stream .Comma + stream .TidySpace)
    }
+   
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      let format = "\(stream .doubleFormat),\(stream .TidySpace)\(stream .doubleFormat),\(stream .TidySpace)\(stream .doubleFormat),\(stream .TidySpace)\(stream .doubleFormat)"
+
+      stream += "["
+      stream += stream .TidySpace
+      stream += wrappedValue .map
+      {
+         let c0 = $0 [0]
+         let c1 = $0 [1]
+         let c2 = $0 [2]
+         let c3 = $0 [3]
+
+         var string = ""
+
+         string += String (format: format, c0.x, c0.y, c0.z, c0.w)
+         string += ","
+         string += stream .TidySpace
+         string += String (format: format, c1.x, c1.y, c1.z, c1.w)
+         string += ","
+         string += stream .TidySpace
+         string += String (format: format, c2.x, c2.y, c2.z, c2.w)
+         string += ","
+         string += stream .TidySpace
+         string += String (format: format, c3.x, c3.y, c3.z, c3.w)
+
+         return string
+      }
+      .joined (separator: "," + stream .TidySpace)
+      stream += stream .TidySpace
+      stream += "]"
+   }
 
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {

@@ -69,6 +69,11 @@ public final class SFDouble :
       toVRMLStream (stream)
    }
    
+   internal final override func toJSONStream (_ stream : X3DOutputStream)
+   {
+      toVRMLStream (stream)
+   }
+
    internal final override func toVRMLStream (_ stream : X3DOutputStream)
    {
       stream += String (format: stream .doubleFormat, stream .toUnit (unit, value: wrappedValue))

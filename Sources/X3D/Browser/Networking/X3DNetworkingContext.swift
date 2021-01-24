@@ -13,7 +13,7 @@ internal final class X3DNetworkingContextProperties :
 {
    // Properties
    
-   fileprivate static let providerUrl = URL (string: "https://github.com/create3000/titania/wiki")!
+   fileprivate static let providerUrl = URL (string: "https://github.com/create3000/Swift-X3D")!
    
    // Construction
    

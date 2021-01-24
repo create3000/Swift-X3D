@@ -294,6 +294,10 @@ public final class X3DImportedNode :
       stream += stream .Indent
       stream += "}"
 
+      stream .addRouteNode (self)
+      
+      // Output unresolved routes.
+
       if let exportedNode = exportedNode
       {
          stream .addImportedNode (exportedNode, importedName)

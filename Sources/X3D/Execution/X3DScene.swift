@@ -587,9 +587,7 @@ public final class X3DScene :
       let units      = getUnits () .filter { $0 .conversionFactor != 1 }
       let metadata   = getMetaDatas ()
       
-      if !components .isEmpty,
-         !units      .isEmpty,
-         !metadata   .isEmpty
+      if !(components .isEmpty && units .isEmpty && metadata .isEmpty)
       {
          stream .lastProperties .append (false)
 

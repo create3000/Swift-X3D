@@ -49,7 +49,7 @@ internal final class SupportedProfiles
            name: "Full",
            providerUrl: X3DBrowser .providerUrl .description,
            components: [
-               "Annotation",
+//               "Annotation",
                "CADGeometry",
                "Core",
                "CubeMapTexturing",

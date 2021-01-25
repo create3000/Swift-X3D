@@ -20,10 +20,10 @@ internal final class SupportedComponents
       
       var components = [String : ComponentInfo] ()
       
-      add (title:      "Annotation",
-           name:       "Annotation",
-           level:       2,
-           providerUrl: X3DBrowser .providerUrl .description)
+//      add (title:      "Annotation",
+//           name:       "Annotation",
+//           level:       2,
+//           providerUrl: X3DBrowser .providerUrl .description)
 
       add (title:      "Computer-Aided Design (CAD) model geometry",
            name:       "CADGeometry",

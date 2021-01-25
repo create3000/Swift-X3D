@@ -220,6 +220,7 @@ public final class X3DExternProtoDeclaration :
       stream += "@name"
       stream += "\""
       stream += ":"
+      stream += stream .TidySpace
       stream += "\""
       stream += getName () .toJSONString ()
       stream += "\""

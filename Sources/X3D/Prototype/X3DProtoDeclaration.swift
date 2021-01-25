@@ -166,6 +166,7 @@ public final class X3DProtoDeclaration :
       stream += "@name"
       stream += "\""
       stream += ":"
+      stream += stream .TidySpace
       stream += "\""
       stream += getName () .toJSONString ()
       stream += "\""

@@ -106,19 +106,19 @@ internal extension String
          switch character
          {
             case "\t" :
-               escaped += "&#x9"
+               escaped += "&#x9;"
             case "\n":
-               escaped += "&#xA"
+               escaped += "&#xA;"
             case "\r":
-               escaped += "&#xD"
+               escaped += "&#xD;"
             case "<":
-               escaped += "&lt"
+               escaped += "&lt;"
             case ">":
-               escaped += "&gt"
+               escaped += "&gt;"
             case "&":
-               escaped += "&amp"
+               escaped += "&amp;"
             case "'":
-               escaped += "&apos"
+               escaped += "&apos;"
             case "\"":
                escaped += "\\\""
             case "\\":

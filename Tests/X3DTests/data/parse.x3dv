@@ -12,8 +12,8 @@ META "comment" "World of Sunrise X3D Editor"
 META "created" "Sat, 23 Jan 2021 17:53:31 +0100"
 META "creator" "Holger Seelig"
 META "generator" "Sunrise X3D Editor V1.0, https://create3000.github.io/Sunrise/"
-META "identifier" "file:///Users/holger/Desktop/Sunrise/Sunrise%20X3D%20Editor/Tests/assets/parse.x3dv"
-META "modified" "Mon, 25 Jan 2021 10:05:21 +0100"
+META "identifier" "file:///Users/holger/Desktop/Sunrise/Swift-X3D/Tests/X3DTests/data/parse.x3dv"
+META "modified" "Mon, 25 Jan 2021 15:22:24 +0100"
 
 EXTERNPROTO Extern1 [
   inputOutput MFString url

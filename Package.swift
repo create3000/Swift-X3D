@@ -48,8 +48,7 @@ let package = Package (
          name: "X3DTests",
          dependencies: ["X3D"],
          resources: [
-            .process ("data/beethoven-no-normals.x3dvz"),
-            .process ("data/forklift3.wrz")
+            .process ("data")
          ]),
     ]
 )

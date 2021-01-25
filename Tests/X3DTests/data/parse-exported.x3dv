@@ -1,0 +1,15 @@
+#X3D V3.3 utf8 Sunrise X3D Browser V1.0
+
+DEF T Transform {
+   translation 0 3 0
+   children Shape {
+     appearance Appearance {
+       material Material { diffuseColor 1 0 0 }
+     }
+     geometry Box {
+       size 4 2 2
+     }
+   }
+}
+
+EXPORT T AS ExportedTransform

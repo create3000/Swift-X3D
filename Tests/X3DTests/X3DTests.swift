@@ -33,16 +33,28 @@ final class X3DTests :
    {
       // This is an example of a functional test case.
       // Use XCTAssert and related functions to verify your tests produce the correct results.
+   }
+   
+   func testParseGenerate () throws
+   {
+      // This is an example of a functional test case.
+      // Use XCTAssert and related functions to verify your tests produce the correct results.
       
-      func peek (_ r1 : Selector, _ r2 : Selector)
-      {
-         debugPrint (r1 == r1)
-         debugPrint (r2 == r1)
-         debugPrint (r2 == r2)
-         self .perform (r1)
-      }
+      let b     = X3DBrowser ()
+      let url   = Bundle .module .url (forResource: "parse", withExtension: "x3dv")!
+      let scene = try! b .createX3DFromURL (url: [url])
+
+      let vrml = scene .toVRMLString ()
+      let xml  = scene .toXMLString ()
+      let json = scene .toJSONString ()
       
-      peek (#selector (X3DTests .test1), #selector (X3DTests .test2))
+      let vrml_vrml = try! b .createX3DFromString (x3dSyntax: vrml) .toVRMLString ()
+      let xml_vrml  = try! b .createX3DFromString (x3dSyntax: xml)  .toVRMLString ()
+      let json_vrml = try! b .createX3DFromString (x3dSyntax: json) .toVRMLString ()
+      
+      XCTAssert (vrml_vrml == vrml)
+      XCTAssert (xml_vrml  == vrml)
+      XCTAssert (json_vrml == vrml)
    }
    
    func test1 () { debugPrint ("t1") }
@@ -180,7 +192,7 @@ DEF P P { }
          let c = try s .getNamedNode (name: "P") as! X3DPrototypeInstance
          
          XCTAssert (c .innerNode! .getType () .contains (.Transform))
-         XCTAssert (c .getBody () .getRoutes () .count == 2)
+         XCTAssert (c .body! .getRoutes () .count == 2)
       }
    }
    

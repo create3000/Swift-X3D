@@ -42,7 +42,7 @@ final class X3DPerformanceTests :
       self .measure
       {
          let b   = X3DBrowser ()
-         let url = Bundle (identifier: "create3000.X3DTests")! .url (forResource: "beethoven-no-normals", withExtension: "x3dvz")
+         let url = Bundle .module .url (forResource: "beethoven-no-normals", withExtension: "x3dvz")
 
          _ = try! b .createX3DFromURL (url: [url!])
       }
@@ -57,7 +57,7 @@ final class X3DPerformanceTests :
       self .measure (options: options)
       {
          let b   = X3DBrowser ()
-         let url = Bundle (identifier: "create3000.X3DTests")! .url (forResource: "forklift3", withExtension: "wrz")
+         let url = Bundle .module .url (forResource: "forklift3", withExtension: "wrz")
 
          _ = try! b .createX3DFromURL (url: [url!])
       }

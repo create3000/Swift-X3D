@@ -136,9 +136,8 @@ internal final class VRMLParser :
       
       // Test for header.
       
-      _ = scanner .scanString (Grammar .comment)
-      
-      if let headerCharacters = scanner .scanUpToCharacters (from: Grammar .lineBreak)
+      if scanner .scanString (Grammar .comment) != nil,
+         let headerCharacters = scanner .scanUpToCharacters (from: Grammar .lineBreak)
       {
          if Grammar .header .matches (in: headerCharacters) != nil { return true }
       }

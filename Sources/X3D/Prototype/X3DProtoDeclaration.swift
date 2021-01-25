@@ -188,7 +188,7 @@ public final class X3DProtoDeclaration :
       stream .enterScope ()
       stream .lastProperties .append (false)
 
-      let userDefinedFields = [X3DField] (getUserDefinedFields ())
+      let userDefinedFields = getUserDefinedFields ()
 
       if !userDefinedFields .isEmpty
       {

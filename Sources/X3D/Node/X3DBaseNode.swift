@@ -120,14 +120,14 @@ public class X3DBaseNode :
    
    private final var numUserDefinedFields : Int = 0
    
-   public final func getPreDefinedFields () -> ArraySlice <X3DField>
+   public final func getPreDefinedFields () -> [X3DField]
    {
-      fieldDefinitions [..<(fieldDefinitions .count - numUserDefinedFields)]
+      [X3DField] (fieldDefinitions [..<(fieldDefinitions .count - numUserDefinedFields)])
    }
    
-   public final func getUserDefinedFields () -> ArraySlice <X3DField>
+   public final func getUserDefinedFields () -> [X3DField]
    {
-      fieldDefinitions [(fieldDefinitions .count - numUserDefinedFields)...]
+      [X3DField] (fieldDefinitions [(fieldDefinitions .count - numUserDefinedFields)...])
    }
  
    internal final func addUserDefinedField (_ accessType : X3DAccessType, _ name : String, _ field : X3DField)

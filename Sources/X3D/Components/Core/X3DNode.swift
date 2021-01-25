@@ -648,7 +648,7 @@ public class X3DNode :
       // Fields
 
       var fields            = getChangedFields ()
-      let userDefinedFields = [X3DField] (getUserDefinedFields ())
+      let userDefinedFields = getUserDefinedFields ()
       var references        = [X3DField] ()
       
       if !stream .metadata

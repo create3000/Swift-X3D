@@ -229,7 +229,7 @@ public final class X3DExternProtoDeclaration :
 
       // Fields
 
-      let userDefinedFields = [X3DField] (getUserDefinedFields ())
+      let userDefinedFields = getUserDefinedFields ()
 
       if !userDefinedFields .isEmpty
       {

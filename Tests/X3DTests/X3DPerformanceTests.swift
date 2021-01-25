@@ -107,8 +107,4 @@ final class X3DPerformanceTests :
          }
       }
    }
-   
-   static var allTests = [
-      ("testExample", testPerformanceExample),
-   ]
 }

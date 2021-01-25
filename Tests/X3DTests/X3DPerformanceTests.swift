@@ -68,6 +68,42 @@ final class X3DPerformanceTests :
       // 45 sec / 25 fps
    }
 
+   func testBeethovenToXMLString () throws
+   {
+      let b     = X3DBrowser ()
+      let url   = Bundle .module .url (forResource: "beethoven-no-normals", withExtension: "x3dvz")
+      let scene = try! b .createX3DFromURL (url: [url!])
+
+      self .measure
+      {
+         _ = scene .toXMLString ()
+      }
+   }
+
+   func testBeethovenToJSONString () throws
+   {
+      let b     = X3DBrowser ()
+      let url   = Bundle .module .url (forResource: "beethoven-no-normals", withExtension: "x3dvz")
+      let scene = try! b .createX3DFromURL (url: [url!])
+
+      self .measure
+      {
+         _ = scene .toJSONString ()
+      }
+   }
+
+   func testBeethovenToVRMLString () throws
+   {
+      let b     = X3DBrowser ()
+      let url   = Bundle .module .url (forResource: "beethoven-no-normals", withExtension: "x3dvz")
+      let scene = try! b .createX3DFromURL (url: [url!])
+
+      self .measure
+      {
+         _ = scene .toVRMLString ()
+      }
+   }
+
    func testScannerFloat () throws
    {
       var s = "";

@@ -16,7 +16,7 @@ public final class NurbsSet :
    internal final override class var typeName       : String { "NurbsSet" }
    internal final override class var component      : String { "NURBS" }
    internal final override class var componentLevel : Int32 { 2 }
-   internal final override class var containerField : String { "children" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

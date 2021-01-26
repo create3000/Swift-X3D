@@ -15,7 +15,7 @@ public final class ProjectionVolumeStyle :
    internal final override class var typeName       : String { "ProjectionVolumeStyle" }
    internal final override class var component      : String { "VolumeRendering" }
    internal final override class var componentLevel : Int32 { 2 }
-   internal final override class var containerField : String { "renderStyle" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

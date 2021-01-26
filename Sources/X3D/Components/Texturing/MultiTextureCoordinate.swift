@@ -15,7 +15,7 @@ public final class MultiTextureCoordinate :
    internal final override class var typeName       : String { "MultiTextureCoordinate" }
    internal final override class var component      : String { "Texturing" }
    internal final override class var componentLevel : Int32 { 2 }
-   internal final override class var containerField : String { "texCoord" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

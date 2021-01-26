@@ -15,7 +15,7 @@ public final class Color :
    internal final override class var typeName       : String { "Color" }
    internal final override class var component      : String { "Rendering" }
    internal final override class var componentLevel : Int32 { 1 }
-   internal final override class var containerField : String { "color" }
+   internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields
 

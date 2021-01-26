@@ -15,7 +15,7 @@ public final class MultiTexture :
    internal final override class var typeName       : String { "MultiTexture" }
    internal final override class var component      : String { "Texturing" }
    internal final override class var componentLevel : Int32 { 2 }
-   internal final override class var containerField : String { "texture" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

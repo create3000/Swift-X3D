@@ -15,7 +15,7 @@ public final class BoundedPhysicsModel :
    internal final override class var typeName       : String { "BoundedPhysicsModel" }
    internal final override class var component      : String { "ParticleSystems" }
    internal final override class var componentLevel : Int32 { 2 }
-   internal final override class var containerField : String { "physics" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

@@ -15,7 +15,7 @@ public final class TextureProjectorPerspective :
    internal final override class var typeName       : String { "TextureProjectorPerspective" }
    internal final override class var component      : String { "ProjectiveTextureMapping" }
    internal final override class var componentLevel : Int32 { 1 }
-   internal final override class var containerField : String { "children" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

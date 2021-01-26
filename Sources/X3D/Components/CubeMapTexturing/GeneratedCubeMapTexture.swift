@@ -15,7 +15,7 @@ public final class GeneratedCubeMapTexture :
    internal final override class var typeName       : String { "GeneratedCubeMapTexture" }
    internal final override class var component      : String { "CubeMapTexturing" }
    internal final override class var componentLevel : Int32 { 3 }
-   internal final override class var containerField : String { "texture" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

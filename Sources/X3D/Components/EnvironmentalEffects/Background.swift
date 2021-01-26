@@ -15,7 +15,7 @@ public final class Background :
    internal final override class var typeName       : String { "Background" }
    internal final override class var component      : String { "EnvironmentalEffects" }
    internal final override class var componentLevel : Int32 { 3 }
-   internal final override class var containerField : String { "children" }
+   internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields
 

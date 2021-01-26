@@ -15,7 +15,7 @@ public final class ColorRGBA :
    internal final override class var typeName       : String { "ColorRGBA" }
    internal final override class var component      : String { "Rendering" }
    internal final override class var componentLevel : Int32 { 4 }
-   internal final override class var containerField : String { "color" }
+   internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields
 

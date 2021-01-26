@@ -15,7 +15,7 @@ public final class ClipPlane :
    internal final override class var typeName       : String { "ClipPlane" }
    internal final override class var component      : String { "Rendering" }
    internal final override class var componentLevel : Int32 { 5 }
-   internal final override class var containerField : String { "children" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

@@ -15,7 +15,7 @@ public final class PositionDamper :
    internal final override class var typeName       : String { "PositionDamper" }
    internal final override class var component      : String { "Followers" }
    internal final override class var componentLevel : Int32 { 1 }
-   internal final override class var containerField : String { "children" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

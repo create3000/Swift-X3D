@@ -15,7 +15,7 @@ public final class PointProperties :
    internal final override class var typeName       : String { "PointProperties" }
    internal final override class var component      : String { "Shape" }
    internal final override class var componentLevel : Int32 { 5 }
-   internal final override class var containerField : String { "pointProperties" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

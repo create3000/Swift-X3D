@@ -15,7 +15,7 @@ public final class WindPhysicsModel :
    internal final override class var typeName       : String { "WindPhysicsModel" }
    internal final override class var component      : String { "ParticleSystems" }
    internal final override class var componentLevel : Int32 { 1 }
-   internal final override class var containerField : String { "physics" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

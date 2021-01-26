@@ -15,7 +15,7 @@ public final class StringSensor :
    internal final override class var typeName       : String { "StringSensor" }
    internal final override class var component      : String { "KeyDeviceSensor" }
    internal final override class var componentLevel : Int32 { 2 }
-   internal final override class var containerField : String { "children" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

@@ -16,7 +16,7 @@ public final class PositionInterpolator2D :
    internal final override class var typeName       : String { "PositionInterpolator2D" }
    internal final override class var component      : String { "Interpolation" }
    internal final override class var componentLevel : Int32 { 4 }
-   internal final override class var containerField : String { "children" }
+   internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields
 

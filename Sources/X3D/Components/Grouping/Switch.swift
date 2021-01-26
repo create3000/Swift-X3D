@@ -17,7 +17,7 @@ public final class Switch :
    internal final override class var typeName       : String { "Switch" }
    internal final override class var component      : String { "Grouping" }
    internal final override class var componentLevel : Int32 { 2 }
-   internal final override class var containerField : String { "children" }
+   internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
    
    // Fields
    

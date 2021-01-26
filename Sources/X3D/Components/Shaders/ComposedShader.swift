@@ -16,7 +16,7 @@ public final class ComposedShader :
    internal final override class var typeName       : String { "ComposedShader" }
    internal final override class var component      : String { "Shaders" }
    internal final override class var componentLevel : Int32 { 1 }
-   internal final override class var containerField : String { "shaders" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

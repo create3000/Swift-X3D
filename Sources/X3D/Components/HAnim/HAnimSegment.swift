@@ -15,7 +15,7 @@ public final class HAnimSegment :
    internal final override class var typeName       : String { "HAnimSegment" }
    internal final override class var component      : String { "HAnim" }
    internal final override class var componentLevel : Int32 { 1 }
-   internal final override class var containerField : String { "children" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

@@ -17,7 +17,7 @@ public final class LoadSensor :
    internal final override class var typeName       : String { "LoadSensor" }
    internal final override class var component      : String { "Networking" }
    internal final override class var componentLevel : Int32 { 3 }
-   internal final override class var containerField : String { "children" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

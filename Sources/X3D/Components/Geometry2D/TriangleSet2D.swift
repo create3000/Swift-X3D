@@ -15,7 +15,7 @@ public final class TriangleSet2D :
    internal final override class var typeName       : String { "TriangleSet2D" }
    internal final override class var component      : String { "Geometry2D" }
    internal final override class var componentLevel : Int32 { 1 }
-   internal final override class var containerField : String { "geometry" }
+   internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields
 

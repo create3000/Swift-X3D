@@ -16,7 +16,7 @@ public final class MetadataString :
    internal final override class var typeName       : String { "MetadataString" }
    internal final override class var component      : String { "Core" }
    internal final override class var componentLevel : Int32 { 1 }
-   internal final override class var containerField : String { "metadata" }
+   internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields
 

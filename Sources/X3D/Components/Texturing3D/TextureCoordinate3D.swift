@@ -15,7 +15,7 @@ public final class TextureCoordinate3D :
    internal final override class var typeName       : String { "TextureCoordinate3D" }
    internal final override class var component      : String { "Texturing3D" }
    internal final override class var componentLevel : Int32 { 1 }
-   internal final override class var containerField : String { "texCoord" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

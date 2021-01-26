@@ -15,7 +15,7 @@ public final class ElevationGrid :
    internal final override class var typeName       : String { "ElevationGrid" }
    internal final override class var component      : String { "Geometry3D" }
    internal final override class var componentLevel : Int32 { 3 }
-   internal final override class var containerField : String { "geometry" }
+   internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields
 

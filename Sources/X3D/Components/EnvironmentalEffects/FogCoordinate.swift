@@ -15,7 +15,7 @@ public final class FogCoordinate :
    internal final override class var typeName       : String { "FogCoordinate" }
    internal final override class var component      : String { "EnvironmentalEffects" }
    internal final override class var componentLevel : Int32 { 4 }
-   internal final override class var containerField : String { "fogCoord" }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields
 

@@ -46,8 +46,6 @@ public final class LayerSet :
       addField (.inputOutput, "activeLayer", $activeLayer)
       addField (.inputOutput, "order",       $order)
       addField (.inputOutput, "layers",      $layers)
-      
-      addChildObjects ($activeLayerNode)
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> LayerSet
@@ -87,7 +85,7 @@ public final class LayerSet :
    
    private final func set_activeLayer ()
    {
-      if (activeLayer == 0)
+      if activeLayer == 0
       {
          activeLayerNode = layerNode0
       }
@@ -104,6 +102,8 @@ public final class LayerSet :
             activeLayerNode = nil
          }
       }
+      
+      $activeLayerNode .processInterests ()
    }
    
    private final func set_layers ()

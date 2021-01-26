@@ -35,6 +35,8 @@ public class X3DExecutionContext :
                        $protos_changed,
                        $externprotos_changed,
                        $routes_changed)
+      
+      $rootNodes .setName ("rootNodes")
    }
    
    // Scene properties

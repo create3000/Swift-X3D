@@ -11,18 +11,24 @@ import Foundation
 public class X3DNode :
    X3DBaseNode
 {
+   // Member types
+   
+   public typealias Implemented = (sunrise : Bool, x_ite : Bool)
+   
    // Common properties
    
-   internal class var component : String { "Sunrise" }
+   internal class var component      : String { "Sunrise" }
    internal class var componentLevel : Int32 { 0 }
    internal class var containerField : String { "sunrise" }
-   
+   internal class var implemented    : Implemented { (false, false) }
+
    // Common properties
    
    public final func getComponent () -> String { Self .component }
    public final func getComponentLevel () -> Int32 { Self .componentLevel }
    public final func getContainerField () -> String { Self .containerField }
-   
+   public final func getImplemented () -> Implemented { Self .implemented }
+
    // Fields
 
    @SFNode public final var metadata : X3DNode?

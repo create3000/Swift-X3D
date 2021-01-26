@@ -17,7 +17,7 @@ public final class ShaderProgram :
    internal final override class var typeName       : String { "ShaderProgram" }
    internal final override class var component      : String { "Shaders" }
    internal final override class var componentLevel : Int32 { 1 }
-   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
+   internal final override class var implemented    : Implemented { (sunrise: false, x_ite: false) }
 
    // Fields
 

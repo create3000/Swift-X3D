@@ -53,11 +53,11 @@ extension X3DTimeDependentNode
 
    // Construction
    
-   internal func initTimeDependentNode (set_start : @escaping X3DRequester,
-                                        set_pause : @escaping X3DRequester,
-                                        set_resume : @escaping X3DRequester,
-                                        set_stop : @escaping X3DRequester,
-                                        set_time : @escaping X3DRequester)
+   internal func initTimeDependentNode (set_start : @escaping X3DClosure,
+                                        set_pause : @escaping X3DClosure,
+                                        set_resume : @escaping X3DClosure,
+                                        set_stop : @escaping X3DClosure,
+                                        set_time : @escaping X3DClosure)
    {
       types .append (.X3DTimeDependentNode)
       
@@ -268,7 +268,7 @@ extension X3DTimeDependentNode
 
          if scene .isLive || isLive
          {
-            browser .addBrowserInterest (event: .Browser_Event, id: "set_time", method: { $0 .do_set_time () }, object: self)
+            browser .addBrowserInterest (event: .Browser_Event, id: "set_time", handler: { $0 .do_set_time () }, requester: self)
          }
          else
          {
@@ -306,7 +306,7 @@ extension X3DTimeDependentNode
 
       timeDependentProperties .set_pause! ()
 
-      browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", object: self)
+      browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", requester: self)
    }
 
    private func do_resume ()
@@ -336,7 +336,7 @@ extension X3DTimeDependentNode
 
       timeDependentProperties .set_resume! ()
 
-      browser .addBrowserInterest (event: .Browser_Event, id: "set_time", method: { $0 .do_set_time () }, object: self)
+      browser .addBrowserInterest (event: .Browser_Event, id: "set_time", handler: { $0 .do_set_time () }, requester: self)
       browser .setNeedsDisplay ()
    }
 
@@ -366,7 +366,7 @@ extension X3DTimeDependentNode
 
          if scene .isLive || isLive
          {
-            browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", object: self)
+            browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", requester: self)
          }
       }
    }
@@ -437,11 +437,11 @@ fileprivate final class X3DTimeDependentProperties
    fileprivate final var pauseTask  : DispatchWorkItem?
    fileprivate final var stopTask   : DispatchWorkItem?
    
-   fileprivate final var set_start  : X3DRequester?
-   fileprivate final var set_pause  : X3DRequester?
-   fileprivate final var set_resume : X3DRequester?
-   fileprivate final var set_stop   : X3DRequester?
-   fileprivate final var set_time   : X3DRequester?
+   fileprivate final var set_start  : X3DClosure?
+   fileprivate final var set_pause  : X3DClosure?
+   fileprivate final var set_resume : X3DClosure?
+   fileprivate final var set_stop   : X3DClosure?
+   fileprivate final var set_time   : X3DClosure?
    
    deinit
    {

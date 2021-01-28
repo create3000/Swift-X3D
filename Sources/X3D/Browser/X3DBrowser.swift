@@ -424,16 +424,16 @@ public final class X3DBrowser :
       .Browser_Done:             Output (),
    ]
 
-   public final func addBrowserInterest <Object : X3DInputOutput>
-      (event : X3DBrowserEvent, id: String, method : @escaping (Object) -> Void, object : Object)
+   public final func addBrowserInterest <Requester : X3DInputOutput>
+      (event : X3DBrowserEvent, id: String, handler : @escaping (Requester) -> Void, requester : Requester)
    {
-      browserInterests [event]! .addInterest (id, method, object)
+      browserInterests [event]! .addInterest (id, handler, requester)
    }
 
-   public final func removeBrowserInterest <Object : X3DInputOutput>
-      (event : X3DBrowserEvent, id: String, object : Object)
+   public final func removeBrowserInterest <Requester : X3DInputOutput>
+      (event : X3DBrowserEvent, id: String, requester : Requester)
    {
-      browserInterests [event]! .removeInterest (id, object)
+      browserInterests [event]! .removeInterest (id, requester)
    }
    
    internal final override func callBrowserInterests (event : X3DBrowserEvent)
@@ -448,12 +448,12 @@ public final class X3DBrowser :
    {
       willSet
       {
-         sharedBrowser? .removeBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", object: self)
+         sharedBrowser? .removeBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", requester: self)
       }
       
       didSet
       {
-         sharedBrowser? .addBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", method: { $0 .setNeedsDisplay () }, object: self)
+         sharedBrowser? .addBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", handler: { $0 .setNeedsDisplay () }, requester: self)
       }
    }
    
@@ -479,7 +479,7 @@ public final class X3DBrowser :
    {
       //debugPrint (#file, #function)
 
-      sharedBrowser? .removeBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", object: self)
+      sharedBrowser? .removeBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", requester: self)
    }
 }
 

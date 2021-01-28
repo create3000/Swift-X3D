@@ -28,11 +28,11 @@ extension X3DSoundSourceNode
 {
    // Construction
    
-   internal func initSoundSourceNode (set_start : @escaping X3DRequester,
-                                      set_pause : @escaping X3DRequester,
-                                      set_resume : @escaping X3DRequester,
-                                      set_stop : @escaping X3DRequester,
-                                      set_time : @escaping X3DRequester)
+   internal func initSoundSourceNode (set_start : @escaping X3DClosure,
+                                      set_pause : @escaping X3DClosure,
+                                      set_resume : @escaping X3DClosure,
+                                      set_stop : @escaping X3DClosure,
+                                      set_time : @escaping X3DClosure)
    {
       initTimeDependentNode (set_start: set_start,
                              set_pause: set_pause,

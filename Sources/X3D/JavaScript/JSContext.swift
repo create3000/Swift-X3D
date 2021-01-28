@@ -282,7 +282,7 @@ in method \(stacktrace).
             {
                prepareEventsFunction = context ["prepareEvents"]
 
-               browser .addBrowserInterest (event: .Browser_Event, id: "prepareEvents", method: { $0 .prepareEvents () }, object: self)
+               browser .addBrowserInterest (event: .Browser_Event, id: "prepareEvents", handler: { $0 .prepareEvents () }, requester: self)
             }
 
             if context .evaluateScript ("typeof eventsProcessed == 'function'")! .toBool ()
@@ -319,7 +319,7 @@ in method \(stacktrace).
          }
          else
          {
-            browser .removeBrowserInterest (event: .Browser_Event, id: "prepareEvents", object: self)
+            browser .removeBrowserInterest (event: .Browser_Event, id: "prepareEvents", requester: self)
             
             scriptNode! .removeInterest ("eventsProcessed", self)
             

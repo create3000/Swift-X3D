@@ -8,31 +8,29 @@
 
 import Foundation
 
-internal typealias X3DRequester = () -> Void
-
 public protocol X3DInputOutput :
    class
 { }
 
 extension X3DInputOutput
 {
-   public func addInterest <Target : X3DInputOutput> (_ id : String, _ method : @escaping (Target) -> Void, _ object : Target)
+   public func addInterest <Requester : X3DInputOutput> (_ id : String, _ handler : @escaping (Requester) -> Void, _ requester : Requester)
    {
-      let requester = { [weak object] in method (object!) }
+      let closure = { [weak requester] in handler (requester!) }
       
       interestsSemaphore .wait ()
 
-      interests .outputInterests .removeAll (where: { $0 .id == id && $0 .input === object })
-      interests .outputInterests .append (X3DOutputInterest (id: id, input: object, requester: requester))
+      interests .outputInterests .removeAll (where: { $0 .id == id && $0 .requester === requester })
+      interests .outputInterests .append (X3DOutputInterest (id: id, requester: requester, closure: closure))
       
       interestsSemaphore .signal ()
    }
 
-   public func removeInterest <Object : X3DInputOutput> (_ id : String, _ object : Object)
+   public func removeInterest <Requester : X3DInputOutput> (_ id : String, _ requester : Requester)
    {
       interestsSemaphore .wait ()
 
-      interests .outputInterests .removeAll (where: { $0 .id == id && $0 .input === object })
+      interests .outputInterests .removeAll (where: { $0 .id == id && $0 .requester === requester })
       
       interestsSemaphore .signal ()
    }
@@ -46,9 +44,9 @@ extension X3DInputOutput
       
       for outputInterest in interests .outputInterests
       {
-         if outputInterest .input != nil
+         if outputInterest .requester != nil
          {
-            outputInterest .requester ()
+            outputInterest .closure ()
             index += 1
          }
          else
@@ -93,7 +91,9 @@ fileprivate class X3DInterests
 
 fileprivate struct X3DOutputInterest
 {
-   fileprivate var id         : String
-   fileprivate weak var input : X3DInputOutput?
-   fileprivate var requester  : X3DRequester
+   fileprivate var id             : String
+   fileprivate weak var requester : X3DInputOutput?
+   fileprivate var closure        : X3DClosure
 }
+
+internal typealias X3DClosure = () -> Void

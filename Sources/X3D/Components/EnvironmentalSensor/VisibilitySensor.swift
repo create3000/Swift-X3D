@@ -63,11 +63,11 @@ public final class VisibilitySensor :
       
       if enabled && scene .isLive
       {
-         browser! .addBrowserInterest (event: .Browser_Sensors, id: "update", method: { $0 .update () }, object: self)
+         browser! .addBrowserInterest (event: .Browser_Sensors, id: "update", handler: { $0 .update () }, requester: self)
       }
       else
       {
-         browser! .removeBrowserInterest (event: .Browser_Sensors, id: "update", object: self)
+         browser! .removeBrowserInterest (event: .Browser_Sensors, id: "update", requester: self)
 
          if isActive
          {

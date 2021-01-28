@@ -170,7 +170,7 @@ internal class X3DFlyViewer :
    {
       startTime = browser! .currentTime
       
-      browser! .addBrowserInterest (event: .Browser_Done, id: "fly", method: { $0 .fly () }, object: self)
+      browser! .addBrowserInterest (event: .Browser_Done, id: "fly", handler: { $0 .fly () }, requester: self)
       browser! .setNeedsDisplay ()
    }
    
@@ -178,7 +178,7 @@ internal class X3DFlyViewer :
 
    private final func disconnect ()
    {
-      browser! .removeBrowserInterest (event: .Browser_Done, id: "fly", object: self)
+      browser! .removeBrowserInterest (event: .Browser_Done, id: "fly", requester: self)
    }
    
    internal final override func render (_ commandBuffer : MTLCommandBuffer)

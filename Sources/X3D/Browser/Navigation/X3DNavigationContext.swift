@@ -52,7 +52,7 @@ internal final class X3DNavigationContextProperties :
       
       // Viewer
       
-      browser! .addBrowserInterest (event: .Browser_Initialized, id: "set_initialized", method: { $0 .set_initialized () }, object: self)
+      browser! .addBrowserInterest (event: .Browser_Initialized, id: "set_initialized", handler: { $0 .set_initialized () }, requester: self)
       $viewer .addInterest ("set_viewer", { $0 .set_viewer () }, self)
       
       set_viewer ()

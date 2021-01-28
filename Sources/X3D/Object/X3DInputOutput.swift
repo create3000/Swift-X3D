@@ -29,7 +29,7 @@ extension X3DInputOutput
    public func removeInterest <Requester : X3DInputOutput> (_ id : String, _ requester : Requester)
    {
       interestsSemaphore .wait ()
-
+      
       interests .outputInterests .removeAll (where: { $0 .id == id && $0 .requester === requester })
       
       interestsSemaphore .signal ()
@@ -42,6 +42,7 @@ extension X3DInputOutput
       let interests = self .interests
       var index     = 0
       
+      // No need to copy output interests.
       for outputInterest in interests .outputInterests
       {
          if outputInterest .requester != nil

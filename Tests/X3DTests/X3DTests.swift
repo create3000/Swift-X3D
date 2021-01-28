@@ -33,6 +33,14 @@ final class X3DTests :
    {
       // This is an example of a functional test case.
       // Use XCTAssert and related functions to verify your tests produce the correct results.
+      
+      var a = [1,2,3]
+      
+      for e in a
+      {
+         if e == 1 { a .append (4) }
+         debugPrint(e)
+      }
    }
    
    func testParseGenerate () throws
@@ -638,11 +646,11 @@ function initialize ()
             debugPrint ("-------")
             var a : A? = A ()
             
-            a! .addInterest ("foo", B .foo, b!)
-            b! .addInterest ("foo", A .foo, a!)
+            a! .addInterest ("foo", { $0 .foo () }, b!)
+            b! .addInterest ("foo", { $0 .foo () }, a!)
             b! .processInterests ()
             
-            b! .addInterest ("bah", A .bah, a!)
+            b! .addInterest ("bah", { $0 .bah () }, a!)
             a = nil
          }
          
@@ -656,9 +664,9 @@ function initialize ()
          var b : B? = B ()
          var a : A? = A ()
          
-         a! .addInterest ("foo", B .foo, b!)
-         a! .addInterest ("foo", A .foo, a!)
-         b! .addInterest ("foo", A .foo, a!)
+         a! .addInterest ("foo", { $0 .foo () }, b!)
+         a! .addInterest ("foo", { $0 .foo () }, a!)
+         b! .addInterest ("foo", { $0 .foo () }, a!)
          a! .processInterests ()
          
          b = nil
@@ -671,9 +679,9 @@ function initialize ()
          debugPrint ("-------")
          let a : A = A ()
          let b : B = B ()
-         b .addInterest ("foo", A .foo, a)
-         b .addInterest ("bah", A .bah, a)
-         b .removeInterest ("bah", A .bah, a)
+         b .addInterest ("foo", { $0 .foo () }, a)
+         b .addInterest ("bah", { $0 .bah () }, a)
+         b .removeInterest ("bah", a)
          b .processInterests ()
       }
    }

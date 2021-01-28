@@ -806,9 +806,9 @@ public class X3DExecutionContext :
    {
       guard let index = routes .firstIndex (of: route) else { return }
       
-      deleteImportedRoute (sourceNode: route .sourceNode!,
-                           destinationNode: route .destinationNode!,
-                           route: routes [index])
+      deleteImportedRoute (sourceNode: route .sourceNode,
+                           destinationNode: route .destinationNode,
+                           route: route)
       
       routes .remove (at: index) .disconnect ()
       
@@ -824,8 +824,8 @@ public class X3DExecutionContext :
       routes_changed = SFTime .now
    }
 
-   private final func deleteImportedRoute (sourceNode : X3DNode,
-                                           destinationNode : X3DNode,
+   private final func deleteImportedRoute (sourceNode : X3DNode?,
+                                           destinationNode : X3DNode?,
                                            route : X3DRoute)
    {
       // Imported nodes handling.
@@ -836,7 +836,8 @@ public class X3DExecutionContext :
       do
       {
          // If sourceNode is shared node try to find the corresponding ImportedNode.
-         if sourceNode .executionContext !== self
+         if  let sourceNode = sourceNode,
+             sourceNode .executionContext !== self
          {
             importedSourceNode = try getLocalNode (localName: getLocalName (node: sourceNode))
          }
@@ -849,7 +850,8 @@ public class X3DExecutionContext :
       do
       {
          // If sourceNode is shared node try to find the corresponding ImportedNode.
-         if destinationNode .executionContext !== self
+         if let destinationNode = destinationNode,
+            destinationNode .executionContext !== self
          {
             importedDestinationNode = try getLocalNode (localName: getLocalName (node: destinationNode))
          }

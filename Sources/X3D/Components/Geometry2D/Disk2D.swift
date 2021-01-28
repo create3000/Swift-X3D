@@ -58,7 +58,7 @@ public final class Disk2D :
       {
          guard let browser = self .browser else { return }
          
-         browser .disk2DOptions .addInterest ("requestRebuild", Disk2D .requestRebuild, self)
+         browser .disk2DOptions .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
          
          self .rebuild ()
       }

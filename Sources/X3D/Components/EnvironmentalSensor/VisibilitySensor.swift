@@ -48,9 +48,9 @@ public final class VisibilitySensor :
    {
       super .initialize ()
       
-      scene! .$isLive .addInterest ("set_enabled", VisibilitySensor .set_enabled, self)
+      scene! .$isLive .addInterest ("set_enabled", { $0 .set_enabled () }, self)
       
-      $enabled .addInterest ("set_enabled", VisibilitySensor .set_enabled, self)
+      $enabled .addInterest ("set_enabled", { $0 .set_enabled () }, self)
       
       set_enabled ()
    }
@@ -63,11 +63,11 @@ public final class VisibilitySensor :
       
       if enabled && scene .isLive
       {
-         browser! .addBrowserInterest (event: .Browser_Sensors, id: "update", method: VisibilitySensor .update, object: self)
+         browser! .addBrowserInterest (event: .Browser_Sensors, id: "update", method: { $0 .update () }, object: self)
       }
       else
       {
-         browser! .removeBrowserInterest (event: .Browser_Sensors, id: "update", method: VisibilitySensor .update, object: self)
+         browser! .removeBrowserInterest (event: .Browser_Sensors, id: "update", object: self)
 
          if isActive
          {

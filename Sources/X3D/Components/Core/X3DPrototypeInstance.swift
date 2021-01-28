@@ -60,7 +60,7 @@ public class X3DPrototypeInstance :
    {
       super .initialize ()
       
-      protoNode! .addInterest ("update", X3DPrototypeInstance .update, self)
+      protoNode! .addInterest ("update", { $0 .update () }, self)
       
       update ()
    }

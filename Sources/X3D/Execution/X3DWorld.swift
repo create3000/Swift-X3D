@@ -41,7 +41,7 @@ public final class X3DWorld :
    {
       super .initialize ()
 
-      executionContext! .$rootNodes .addInterest ("set_rootNodes", X3DWorld .set_rootNodes, self)
+      executionContext! .$rootNodes .addInterest ("set_rootNodes", { $0 .set_rootNodes () }, self)
       
       defaultLayerSetNode .setup ()
 

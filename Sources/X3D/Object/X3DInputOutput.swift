@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias X3DRequester = () -> Void
+internal typealias X3DRequester = () -> Void
 
 public protocol X3DInputOutput :
    class
@@ -16,9 +16,9 @@ public protocol X3DInputOutput :
 
 extension X3DInputOutput
 {
-   public func addInterest <Object : X3DInputOutput> (_ id : String, _ method : @escaping (Object) -> X3DRequester, _ object : Object)
+   public func addInterest <Target : X3DInputOutput> (_ id : String, _ method : @escaping (Target) -> Void, _ object : Target)
    {
-      let requester = { [weak object] in method (object!) () }
+      let requester = { [weak object] in method (object!) }
       
       interestsSemaphore .wait ()
 
@@ -28,7 +28,7 @@ extension X3DInputOutput
       interestsSemaphore .signal ()
    }
 
-   public func removeInterest <Object : X3DInputOutput> (_ id : String, _ method : @escaping (Object) -> X3DRequester, _ object : Object)
+   public func removeInterest <Object : X3DInputOutput> (_ id : String, _ object : Object)
    {
       interestsSemaphore .wait ()
 

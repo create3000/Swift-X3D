@@ -49,7 +49,7 @@ public final class OrientationInterpolator :
    {
       super .initialize ()
       
-      $keyValue .addInterest ("set_keyValue", OrientationInterpolator .set_keyValue, self)
+      $keyValue .addInterest ("set_keyValue", { $0 .set_keyValue () }, self)
    }
    
    // Event handlers

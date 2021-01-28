@@ -69,10 +69,10 @@ public final class Inline :
    {
       super .initialize ()
       
-      scene! .$isLive .addInterest ("set_live", Inline .set_live, self)
+      scene! .$isLive .addInterest ("set_live", { $0 .set_live () }, self)
       
-      $load .addInterest ("set_load", Inline .set_load, self)
-      $url  .addInterest ("set_url",  Inline .set_url,  self)
+      $load .addInterest ("set_load", { $0 .set_load () }, self)
+      $url  .addInterest ("set_url",  { $0 .set_url () },  self)
 
       groupNode .$isCameraObject   .addFieldInterest (to: $isCameraObject)
       groupNode .$isPickableObject .addFieldInterest (to: $isPickableObject)

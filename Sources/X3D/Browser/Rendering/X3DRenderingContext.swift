@@ -47,7 +47,7 @@ internal final class X3DRenderingContextProperties :
    {
       super .initialize ()
       
-      browser! .browserOptions .$Shading .addInterest ("set_shading", X3DRenderingContextProperties .set_shading, self)
+      browser! .browserOptions .$Shading .addInterest ("set_shading", { $0 .set_shading () }, self)
       
       depthStencilState [false] = buildDepthStencilState (depth: false)
       depthStencilState [true]  = buildDepthStencilState (depth: true)

@@ -68,7 +68,7 @@ public final class Text :
    {
       super .initialize ()
       
-      $fontStyle .addInterest ("set_fontStyle", Text .set_fontStyle, self)
+      $fontStyle .addInterest ("set_fontStyle", { $0 .set_fontStyle () }, self)
       
       set_fontStyle ()
    }
@@ -94,11 +94,11 @@ public final class Text :
    
    private final func set_fontStyle ()
    {
-      fontStyleNode? .$loadState .removeInterest ("requestRebuild", Text .requestRebuild, self)
+      fontStyleNode? .$loadState .removeInterest ("requestRebuild", self)
       
       fontStyleNode = fontStyle? .innerNode as? X3DFontStyleNode ?? browser! .defaultFontStyleNode
       
-      fontStyleNode? .$loadState .addInterest ("requestRebuild", Text .requestRebuild, self)
+      fontStyleNode? .$loadState .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
       
       textGeometry = fontStyleNode! .makeTextGeometry (textNode: self)
       

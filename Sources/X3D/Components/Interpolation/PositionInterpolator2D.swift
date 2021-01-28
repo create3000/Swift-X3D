@@ -47,7 +47,7 @@ public final class PositionInterpolator2D :
    {
       super .initialize ()
       
-      $keyValue .addInterest ("set_keyValue", PositionInterpolator2D .set_keyValue, self)
+      $keyValue .addInterest ("set_keyValue", { $0 .set_keyValue () }, self)
    }
    
    // Event handlers

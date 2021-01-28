@@ -34,7 +34,7 @@ internal final class X3DGeometry3DContextProperties :
       cylinderOptions .setup ()
       sphereOptions   .setup ()
       
-      browser! .browserOptions .$PrimitiveQuality .addInterest ("set_primitiveQuality", X3DGeometry3DContextProperties .set_primitiveQuality, self)
+      browser! .browserOptions .$PrimitiveQuality .addInterest ("set_primitiveQuality", { $0 .set_primitiveQuality () }, self)
    }
    
    private final func set_primitiveQuality ()

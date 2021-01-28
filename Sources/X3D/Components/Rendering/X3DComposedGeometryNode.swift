@@ -44,12 +44,12 @@ public class X3DComposedGeometryNode :
    {
       super .initialize ()
       
-      $attrib   .addInterest ("set_attrib",   X3DComposedGeometryNode .set_attrib,   self)
-      $fogCoord .addInterest ("set_fogCoord", X3DComposedGeometryNode .set_fogCoord, self)
-      $color    .addInterest ("set_color",    X3DComposedGeometryNode .set_color,    self)
-      $texCoord .addInterest ("set_texCoord", X3DComposedGeometryNode .set_texCoord, self)
-      $normal   .addInterest ("set_normal",   X3DComposedGeometryNode .set_normal,   self)
-      $coord    .addInterest ("set_coord",    X3DComposedGeometryNode .set_coord,    self)
+      $attrib   .addInterest ("set_attrib",   { $0 .set_attrib () },   self)
+      $fogCoord .addInterest ("set_fogCoord", { $0 .set_fogCoord () }, self)
+      $color    .addInterest ("set_color",    { $0 .set_color () },    self)
+      $texCoord .addInterest ("set_texCoord", { $0 .set_texCoord () }, self)
+      $normal   .addInterest ("set_normal",   { $0 .set_normal () },   self)
+      $coord    .addInterest ("set_coord",    { $0 .set_coord () },    self)
 
       set_attrib ()
       set_fogCoord ()
@@ -66,18 +66,18 @@ public class X3DComposedGeometryNode :
    
    private final func set_fogCoord ()
    {
-      fogCoordNode? .removeInterest ("requestRebuild", X3DComposedGeometryNode .requestRebuild, self)
+      fogCoordNode? .removeInterest ("requestRebuild", self)
       
       fogCoordNode = fogCoord? .innerNode as? FogCoordinate
       
-      fogCoordNode? .addInterest ("requestRebuild", X3DComposedGeometryNode .requestRebuild, self)
+      fogCoordNode? .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
    }
    
    private final func set_color ()
    {
       if colorNode != nil
       {
-         colorNode! .removeInterest ("requestRebuild", X3DComposedGeometryNode .requestRebuild, self)
+         colorNode! .removeInterest ("requestRebuild", self)
          colorNode! .$isTransparent .removeFieldInterest (to: $isTransparent)
       }
 
@@ -85,7 +85,7 @@ public class X3DComposedGeometryNode :
 
       if colorNode != nil
       {
-         colorNode! .addInterest ("requestRebuild", X3DComposedGeometryNode .requestRebuild, self)
+         colorNode! .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
          colorNode! .$isTransparent .addFieldInterest (to: $isTransparent)
          
          setTransparent (colorNode! .isTransparent)
@@ -98,29 +98,29 @@ public class X3DComposedGeometryNode :
 
    private final func set_texCoord ()
    {
-      texCoordNode? .removeInterest ("requestRebuild", X3DComposedGeometryNode .requestRebuild, self)
+      texCoordNode? .removeInterest ("requestRebuild", self)
       
       texCoordNode = texCoord? .innerNode as? X3DTextureCoordinateNode
       
-      texCoordNode? .addInterest ("requestRebuild", X3DComposedGeometryNode .requestRebuild, self)
+      texCoordNode? .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
    }
    
    private final func set_normal ()
    {
-      normalNode? .removeInterest ("requestRebuild", X3DComposedGeometryNode .requestRebuild, self)
+      normalNode? .removeInterest ("requestRebuild", self)
       
       normalNode = normal? .innerNode as? X3DNormalNode
       
-      normalNode? .addInterest ("requestRebuild", X3DComposedGeometryNode .requestRebuild, self)
+      normalNode? .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
    }
    
    private final func set_coord ()
    {
-      coordNode? .removeInterest ("requestRebuild", X3DComposedGeometryNode .requestRebuild, self)
+      coordNode? .removeInterest ("requestRebuild", self)
       
       coordNode = coord? .innerNode as? X3DCoordinateNode
       
-      coordNode? .addInterest ("requestRebuild", X3DComposedGeometryNode .requestRebuild, self)
+      coordNode? .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
    }
    
    // Build

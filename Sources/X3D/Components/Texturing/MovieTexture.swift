@@ -93,8 +93,8 @@ public final class MovieTexture :
       
       initializeSoundSourceNode ()
       
-      $isLive  .addInterest ("set_live",    MovieTexture .set_live,    self)
-      $enabled .addInterest ("set_enabled", MovieTexture .set_enabled, self)
+      $isLive  .addInterest ("set_live",    { $0 .set_live () },    self)
+      $enabled .addInterest ("set_enabled", { $0 .set_enabled () }, self)
    }
    
    public final func requestImmediateLoad ()

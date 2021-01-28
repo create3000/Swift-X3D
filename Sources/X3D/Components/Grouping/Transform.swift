@@ -58,7 +58,7 @@ public final class Transform :
    {
       super .initialize ()
       
-      addInterest ("eventsProcessed", Transform .eventsProcessed, self)
+      addInterest ("eventsProcessed", { $0 .eventsProcessed () }, self)
       
       eventsProcessed ()
    }

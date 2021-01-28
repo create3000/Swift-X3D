@@ -37,8 +37,8 @@ public final class X3DRoute :
       
       super .init ()
       
-      sourceNode      .deleted .addInterest ("deleted", X3DRoute .set_node, self)
-      destinationNode .deleted .addInterest ("deleted", X3DRoute .set_node, self)
+      sourceNode      .deleted .addInterest ("deleted", { $0 .set_node () }, self)
+      destinationNode .deleted .addInterest ("deleted", { $0 .set_node () }, self)
 
       connect ()
    }

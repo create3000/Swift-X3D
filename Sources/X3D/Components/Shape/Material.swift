@@ -56,12 +56,12 @@ public final class Material :
    {
       super .initialize ()
       
-      $ambientIntensity .addInterest ("set_ambientIntensity", Material .set_ambientIntensity, self)
-      $diffuseColor     .addInterest ("set_diffuseColor",     Material .set_diffuseColor,     self)
-      $specularColor    .addInterest ("set_specularColor",    Material .set_specularColor,    self)
-      $emissiveColor    .addInterest ("set_emissiveColor",    Material .set_emissiveColor,    self)
-      $shininess        .addInterest ("set_shininess",        Material .set_shininess,        self)
-      $transparency     .addInterest ("set_transparency",     Material .set_transparency,     self)
+      $ambientIntensity .addInterest ("set_ambientIntensity", { $0 .set_ambientIntensity () }, self)
+      $diffuseColor     .addInterest ("set_diffuseColor",     { $0 .set_diffuseColor () },     self)
+      $specularColor    .addInterest ("set_specularColor",    { $0 .set_specularColor () },    self)
+      $emissiveColor    .addInterest ("set_emissiveColor",    { $0 .set_emissiveColor () },    self)
+      $shininess        .addInterest ("set_shininess",        { $0 .set_shininess () },        self)
+      $transparency     .addInterest ("set_transparency",     { $0 .set_transparency () },     self)
       
       set_ambientIntensity ()
       set_diffuseColor ()

@@ -87,11 +87,11 @@ public final class ElevationGrid :
       
       $set_height .addFieldInterest (to: $height)
 
-      $attrib   .addInterest ("set_attrib",   ElevationGrid .set_attrib,   self)
-      $fogCoord .addInterest ("set_fogCoord", ElevationGrid .set_fogCoord, self)
-      $color    .addInterest ("set_color",    ElevationGrid .set_color,    self)
-      $texCoord .addInterest ("set_texCoord", ElevationGrid .set_texCoord, self)
-      $normal   .addInterest ("set_normal",   ElevationGrid .set_normal,   self)
+      $attrib   .addInterest ("set_attrib",   { $0 .set_attrib () },   self)
+      $fogCoord .addInterest ("set_fogCoord", { $0 .set_fogCoord () }, self)
+      $color    .addInterest ("set_color",    { $0 .set_color () },    self)
+      $texCoord .addInterest ("set_texCoord", { $0 .set_texCoord () }, self)
+      $normal   .addInterest ("set_normal",   { $0 .set_normal () },   self)
 
       set_attrib ()
       set_fogCoord ()
@@ -111,18 +111,18 @@ public final class ElevationGrid :
 
    private final func set_fogCoord ()
    {
-      fogCoordNode? .removeInterest ("requestRebuild", ElevationGrid .requestRebuild, self)
+      fogCoordNode? .removeInterest ("requestRebuild", self)
       
       fogCoordNode = fogCoord? .innerNode as? FogCoordinate
       
-      fogCoordNode? .addInterest ("requestRebuild", ElevationGrid .requestRebuild, self)
+      fogCoordNode? .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
    }
    
    private final func set_color ()
    {
       if colorNode != nil
       {
-         colorNode! .removeInterest ("requestRebuild", ElevationGrid .requestRebuild, self)
+         colorNode! .removeInterest ("requestRebuild", self)
          colorNode! .$isTransparent .removeFieldInterest (to: $isTransparent)
       }
 
@@ -130,7 +130,7 @@ public final class ElevationGrid :
 
       if colorNode != nil
       {
-         colorNode! .addInterest ("requestRebuild", ElevationGrid .requestRebuild, self)
+         colorNode! .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
          colorNode! .$isTransparent .addFieldInterest (to: $isTransparent)
          
          setTransparent (colorNode! .isTransparent)
@@ -143,20 +143,20 @@ public final class ElevationGrid :
 
    private final func set_texCoord ()
    {
-      texCoordNode? .removeInterest ("requestRebuild", ElevationGrid .requestRebuild, self)
+      texCoordNode? .removeInterest ("requestRebuild", self)
       
       texCoordNode = texCoord? .innerNode as? X3DTextureCoordinateNode
       
-      texCoordNode? .addInterest ("requestRebuild", ElevationGrid .requestRebuild, self)
+      texCoordNode? .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
    }
    
    private final func set_normal ()
    {
-      normalNode? .removeInterest ("requestRebuild", ElevationGrid .requestRebuild, self)
+      normalNode? .removeInterest ("requestRebuild", self)
       
       normalNode = normal? .innerNode as? X3DNormalNode
       
-      normalNode? .addInterest ("requestRebuild", ElevationGrid .requestRebuild, self)
+      normalNode? .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
    }
 
    // Build

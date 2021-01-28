@@ -52,7 +52,7 @@ public final class Sphere :
       {
          guard let browser = self .browser else { return }
          
-         browser .sphereOptions .addInterest ("requestRebuild", Sphere .requestRebuild, self)
+         browser .sphereOptions .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
          
          self .rebuild ()
       }

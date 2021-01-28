@@ -31,8 +31,8 @@ public final class X3DImportedNode :
       
       super .init (executionContext .browser!, executionContext)
  
-      inlineNode .loadState .addInterest ("set_loadState", X3DImportedNode .set_loadState,  self)
-      inlineNode .deleted   .addInterest ("deleted",       X3DImportedNode .set_inlineNode, self)
+      inlineNode .loadState .addInterest ("set_loadState", { $0 .set_loadState () },  self)
+      inlineNode .deleted   .addInterest ("deleted",       { $0 .set_inlineNode () }, self)
 
       set_loadState ()
   }

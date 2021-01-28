@@ -48,14 +48,14 @@ public final class X3DScene :
    {
       willSet
       {
-         executionContext? .scene? .$isLive .removeInterest ("set_live", X3DScene .set_live, self)
+         executionContext? .scene? .$isLive .removeInterest ("set_live", self)
       }
       
       didSet
       {
          guard executionContext! .scene !== self else { return }
          
-         executionContext! .scene! .$isLive .addInterest ("set_live", X3DScene .set_live, self)
+         executionContext! .scene! .$isLive .addInterest ("set_live", { $0 .set_live () }, self)
          
          set_live ()
       }

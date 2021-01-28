@@ -94,10 +94,10 @@ public final class TimeSensor :
       
       initializeTimeDependentNode ()
       
-      $isLive        .addInterest ("set_live",          TimeSensor .set_live,          self)
-      $enabled       .addInterest ("set_enabled",       TimeSensor .set_enabled,       self)
-      $cycleInterval .addInterest ("set_cycleInterval", TimeSensor .set_cycleInterval, self)
-      $range         .addInterest ("set_range",         TimeSensor .set_range,         self)
+      $isLive        .addInterest ("set_live",          { $0 .set_live () },          self)
+      $enabled       .addInterest ("set_enabled",       { $0 .set_enabled () },       self)
+      $cycleInterval .addInterest ("set_cycleInterval", { $0 .set_cycleInterval () }, self)
+      $range         .addInterest ("set_range",         { $0 .set_range () },         self)
    }
    
    private final func setRange (_ currentFraction : Double, _ firstFraction : Double, _ lastFraction : Double)

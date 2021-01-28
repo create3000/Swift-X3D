@@ -264,7 +264,7 @@ in method \(stacktrace).
             context ["initialize"]! .call (withArguments: nil)
          }
          
-         scene .$isLive .addInterest ("set_live", Context .set_live, self)
+         scene .$isLive .addInterest ("set_live", { $0 .set_live () }, self)
          
          set_live ()
       }
@@ -282,14 +282,14 @@ in method \(stacktrace).
             {
                prepareEventsFunction = context ["prepareEvents"]
 
-               browser .addBrowserInterest (event: .Browser_Event, id: "prepareEvents", method: Context .prepareEvents, object: self)
+               browser .addBrowserInterest (event: .Browser_Event, id: "prepareEvents", method: { $0 .prepareEvents () }, object: self)
             }
 
             if context .evaluateScript ("typeof eventsProcessed == 'function'")! .toBool ()
             {
                eventsProcessedFunction = context ["eventsProcessed"]
 
-               scriptNode! .addInterest ("eventsProcessed", Context .eventsProcessed, self)
+               scriptNode! .addInterest ("eventsProcessed", { $0 .eventsProcessed () }, self)
             }
             
             for field in scriptNode! .getUserDefinedFields ()
@@ -302,7 +302,7 @@ in method \(stacktrace).
                      
                      let function : JSValue? = self .context [field .getName ()]
                      
-                     field .addInterest ("set_field", { _ in { [weak self, weak field] in self? .set_field (field, function) } }, self)
+                     field .addInterest ("set_field", { $0 .set_field (field, function) }, self)
                   }
                   case .inputOutput: do
                   {
@@ -310,7 +310,7 @@ in method \(stacktrace).
                      
                      let function : JSValue? = self .context ["set_" + field .getName ()]
                      
-                     field .addInterest ("set_field", { _ in { [weak self, weak field] in self? .set_field (field, function) } }, self)
+                     field .addInterest ("set_field", { $0 .set_field (field, function) }, self)
                   }
                   default:
                      break
@@ -319,13 +319,13 @@ in method \(stacktrace).
          }
          else
          {
-            browser .removeBrowserInterest (event: .Browser_Event, id: "prepareEvents", method: Context .prepareEvents, object: self)
+            browser .removeBrowserInterest (event: .Browser_Event, id: "prepareEvents", object: self)
             
-            scriptNode! .removeInterest ("eventsProcessed", Context .eventsProcessed, self)
+            scriptNode! .removeInterest ("eventsProcessed", self)
             
             for field in scriptNode! .getUserDefinedFields ()
             {
-               field .removeInterest ("set_field", { _ in { } }, self)
+               field .removeInterest ("set_field", self)
             }
          }
       }

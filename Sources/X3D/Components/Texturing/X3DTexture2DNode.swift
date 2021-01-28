@@ -49,9 +49,9 @@ public class X3DTexture2DNode :
    {
       super .initialize ()
       
-      $repeatS           .addInterest ("set_samplerState",      X3DTexture2DNode .set_samplerState,      self)
-      $repeatT           .addInterest ("set_samplerState",      X3DTexture2DNode .set_samplerState,      self)
-      $textureProperties .addInterest ("set_textureProperties", X3DTexture2DNode .set_textureProperties, self)
+      $repeatS           .addInterest ("set_samplerState",      { $0 .set_samplerState () },      self)
+      $repeatT           .addInterest ("set_samplerState",      { $0 .set_samplerState () },      self)
+      $textureProperties .addInterest ("set_textureProperties", { $0 .set_textureProperties () }, self)
 
       set_textureProperties ()
    }
@@ -63,11 +63,11 @@ public class X3DTexture2DNode :
    
    private final func set_textureProperties ()
    {
-      texturePropertiesNode? .removeInterest ("set_samplerState", X3DTexture2DNode .set_samplerState, self)
+      texturePropertiesNode? .removeInterest ("set_samplerState", self)
       
       texturePropertiesNode = textureProperties? .innerNode as? TextureProperties
       
-      texturePropertiesNode? .addInterest ("set_samplerState", X3DTexture2DNode .set_samplerState, self)
+      texturePropertiesNode? .addInterest ("set_samplerState", { $0 .set_samplerState () }, self)
       
       set_samplerState ()
    }

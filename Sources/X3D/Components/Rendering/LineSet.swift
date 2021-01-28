@@ -62,10 +62,10 @@ public final class LineSet :
    {
       super .initialize ()
 
-      $attrib   .addInterest ("set_attrib",   LineSet .set_attrib,   self)
-      $fogCoord .addInterest ("set_fogCoord", LineSet .set_fogCoord, self)
-      $color    .addInterest ("set_color",    LineSet .set_color,    self)
-      $coord    .addInterest ("set_coord",    LineSet .set_coord,    self)
+      $attrib   .addInterest ("set_attrib",   { $0 .set_attrib () },   self)
+      $fogCoord .addInterest ("set_fogCoord", { $0 .set_fogCoord () }, self)
+      $color    .addInterest ("set_color",    { $0 .set_color () },    self)
+      $coord    .addInterest ("set_coord",    { $0 .set_coord () },    self)
 
       set_attrib ()
       set_fogCoord ()
@@ -84,18 +84,18 @@ public final class LineSet :
 
    private final func set_fogCoord ()
    {
-      fogCoordNode? .removeInterest ("requestRebuild", LineSet .requestRebuild, self)
+      fogCoordNode? .removeInterest ("requestRebuild", self)
       
       fogCoordNode = fogCoord? .innerNode as? FogCoordinate
       
-      fogCoordNode? .addInterest ("requestRebuild", LineSet .requestRebuild, self)
+      fogCoordNode? .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
    }
    
    private final func set_color ()
    {
       if colorNode != nil
       {
-         colorNode! .removeInterest ("requestRebuild", LineSet .requestRebuild, self)
+         colorNode! .removeInterest ("requestRebuild", self)
          colorNode! .$isTransparent .removeFieldInterest (to: $isTransparent)
       }
 
@@ -103,7 +103,7 @@ public final class LineSet :
 
       if colorNode != nil
       {
-         colorNode! .addInterest ("requestRebuild", LineSet .requestRebuild, self)
+         colorNode! .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
          colorNode! .$isTransparent .addFieldInterest (to: $isTransparent)
          
          setTransparent (colorNode! .isTransparent)
@@ -116,11 +116,11 @@ public final class LineSet :
    
    private final func set_coord ()
    {
-      coordNode? .removeInterest ("requestRebuild", LineSet .requestRebuild, self)
+      coordNode? .removeInterest ("requestRebuild", self)
       
       coordNode = coord? .innerNode as? X3DCoordinateNode
       
-      coordNode? .addInterest ("requestRebuild", LineSet .requestRebuild, self)
+      coordNode? .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
    }
 
    // Build

@@ -46,7 +46,7 @@ public final class EaseInEaseOut :
    {
       super .initialize ()
       
-      $easeInEaseOut .addInterest ("set_keyValue", EaseInEaseOut .set_keyValue, self)
+      $easeInEaseOut .addInterest ("set_keyValue", { $0 .set_keyValue () }, self)
    }
    
    // Event handlers

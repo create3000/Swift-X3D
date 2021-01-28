@@ -49,7 +49,7 @@ public final class PixelTexture :
    {
       super .initialize ()
       
-      $image .addInterest ("set_image", PixelTexture .set_image, self)
+      $image .addInterest ("set_image", { $0 .set_image () }, self)
       
       self .set_image ()
    }

@@ -60,12 +60,12 @@ public final class TextureBackground :
    {
       super .initialize ()
       
-      $frontTexture  .addInterest ("set_frontTexture",  TextureBackground .set_frontTexture,  self)
-      $backTexture   .addInterest ("set_backTexture",   TextureBackground .set_backTexture,   self)
-      $leftTexture   .addInterest ("set_leftTexture",   TextureBackground .set_leftTexture,   self)
-      $rightTexture  .addInterest ("set_rightTexture",  TextureBackground .set_rightTexture,  self)
-      $topTexture    .addInterest ("set_topTexture",    TextureBackground .set_topTexture,    self)
-      $bottomTexture .addInterest ("set_bottomTexture", TextureBackground .set_bottomTexture, self)
+      $frontTexture  .addInterest ("set_frontTexture",  { $0 .set_frontTexture () },  self)
+      $backTexture   .addInterest ("set_backTexture",   { $0 .set_backTexture () },   self)
+      $leftTexture   .addInterest ("set_leftTexture",   { $0 .set_leftTexture () },   self)
+      $rightTexture  .addInterest ("set_rightTexture",  { $0 .set_rightTexture () },  self)
+      $topTexture    .addInterest ("set_topTexture",    { $0 .set_topTexture () },    self)
+      $bottomTexture .addInterest ("set_bottomTexture", { $0 .set_bottomTexture () }, self)
       
       set_frontTexture ()
       set_backTexture ()

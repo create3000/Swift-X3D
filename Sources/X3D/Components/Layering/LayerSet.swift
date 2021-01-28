@@ -61,9 +61,9 @@ public final class LayerSet :
       layerNode0 .isLayer0  = true
       layerNode0 .setup ()
       
-      $activeLayer .addInterest ("set_activeLayer", LayerSet .set_activeLayer, self)
-      $order       .addInterest ("set_layers",      LayerSet .set_layers,      self)
-      $layers      .addInterest ("set_layers",      LayerSet .set_layers,      self)
+      $activeLayer .addInterest ("set_activeLayer", { $0 .set_activeLayer () }, self)
+      $order       .addInterest ("set_layers",      { $0 .set_layers () },      self)
+      $layers      .addInterest ("set_layers",      { $0 .set_layers () },      self)
 
       set_layers ()
    }

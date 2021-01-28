@@ -46,7 +46,7 @@ public final class TimeTrigger :
    {
       super .initialize ()
 
-      $set_boolean .addInterest ("set_boolean_", TimeTrigger .set_boolean_, self)
+      $set_boolean .addInterest ("set_boolean_", { $0 .set_boolean_ () }, self)
    }
    
    // Event handlers

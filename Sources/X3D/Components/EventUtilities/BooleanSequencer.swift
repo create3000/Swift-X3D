@@ -48,7 +48,7 @@ public final class BooleanSequencer :
    {
       super .initialize ()
 
-      $keyValue .addInterest ("set_index", BooleanSequencer .set_index, self)
+      $keyValue .addInterest ("set_index", { $0 .set_index () }, self)
    }
    
    // Property access

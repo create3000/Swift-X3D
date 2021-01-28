@@ -43,8 +43,8 @@ public class X3DShapeNode :
    {
       super .initialize ()
       
-      $appearance .addInterest ("set_appearance", X3DShapeNode .set_appearance, self)
-      $geometry   .addInterest ("set_geometry",   X3DShapeNode .set_geometry,   self)
+      $appearance .addInterest ("set_appearance", { $0 .set_appearance () }, self)
+      $geometry   .addInterest ("set_geometry",   { $0 .set_geometry () },   self)
       
       set_appearance ()
       set_geometry ()
@@ -67,22 +67,22 @@ public class X3DShapeNode :
    
    private final func set_appearance ()
    {
-      appearanceNode? .$isTransparent .removeInterest ("set_transparent", X3DShapeNode .set_transparent, self)
+      appearanceNode? .$isTransparent .removeInterest ("set_transparent", self)
       
       appearanceNode = appearance? .innerNode as? X3DAppearanceNode ?? browser! .defaultAppearanceNode
       
-      appearanceNode? .$isTransparent .addInterest ("set_transparent", X3DShapeNode .set_transparent, self)
+      appearanceNode? .$isTransparent .addInterest ("set_transparent", { $0 .set_transparent () }, self)
       
       set_transparent ()
    }
    
    private final func set_geometry ()
    {
-      geometryNode? .$isTransparent .removeInterest ("set_transparent", X3DShapeNode .set_transparent, self)
+      geometryNode? .$isTransparent .removeInterest ("set_transparent", self)
       
       geometryNode = geometry? .innerNode as? X3DGeometryNode
       
-      geometryNode? .$isTransparent .addInterest ("set_transparent", X3DShapeNode .set_transparent, self)
+      geometryNode? .$isTransparent .addInterest ("set_transparent", { $0 .set_transparent () }, self)
       
       set_transparent ()
    }

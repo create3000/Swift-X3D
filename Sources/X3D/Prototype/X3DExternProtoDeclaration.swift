@@ -42,9 +42,9 @@ public final class X3DExternProtoDeclaration :
    {
       super .initialize ()
       
-      scene! .$isLive .addInterest ("set_live", X3DExternProtoDeclaration .set_live, self)
+      scene! .$isLive .addInterest ("set_live", { $0 .set_live () }, self)
 
-      $url .addInterest ("set_url", X3DExternProtoDeclaration .set_url, self)
+      $url .addInterest ("set_url", { $0 .set_url () }, self)
    }
    
    // Event handlers

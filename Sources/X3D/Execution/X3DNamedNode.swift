@@ -19,7 +19,7 @@ public class X3DNamedNode :
       self .node             = node
       self .name             = name
       
-      node .deleted .addInterest ("deleted", X3DNamedNode .set_node, self)
+      node .deleted .addInterest ("deleted", { $0 .set_node () }, self)
    }
    
    private final func set_node ()

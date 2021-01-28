@@ -72,13 +72,13 @@ extension X3DTimeDependentNode
    
    internal func initializeTimeDependentNode ()
    {
-      scene! .$isLive .addInterest ("set_live", X3DTimeDependentNode .set_live, self)
+      scene! .$isLive .addInterest ("set_live", { $0 .set_live () }, self)
       
-      try! getField (name: "loop")       .addInterest ("set_loop",       X3DTimeDependentNode .set_loop,       self)
-      try! getField (name: "startTime")  .addInterest ("set_startTime",  X3DTimeDependentNode .set_startTime,  self)
-      try! getField (name: "resumeTime") .addInterest ("set_resumeTime", X3DTimeDependentNode .set_resumeTime, self)
-      try! getField (name: "pauseTime")  .addInterest ("set_pauseTime",  X3DTimeDependentNode .set_pauseTime,  self)
-      try! getField (name: "stopTime")   .addInterest ("set_stopTime",   X3DTimeDependentNode .set_stopTime,   self)
+      try! getField (name: "loop")       .addInterest ("set_loop",       { $0 .set_loop () },       self)
+      try! getField (name: "startTime")  .addInterest ("set_startTime",  { $0 .set_startTime () },  self)
+      try! getField (name: "resumeTime") .addInterest ("set_resumeTime", { $0 .set_resumeTime () }, self)
+      try! getField (name: "pauseTime")  .addInterest ("set_pauseTime",  { $0 .set_pauseTime () },  self)
+      try! getField (name: "stopTime")   .addInterest ("set_stopTime",   { $0 .set_stopTime () },   self)
       
       DispatchQueue .main .async
       {
@@ -268,7 +268,7 @@ extension X3DTimeDependentNode
 
          if scene .isLive || isLive
          {
-            browser .addBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .do_set_time, object: self)
+            browser .addBrowserInterest (event: .Browser_Event, id: "set_time", method: { $0 .do_set_time () }, object: self)
          }
          else
          {
@@ -306,7 +306,7 @@ extension X3DTimeDependentNode
 
       timeDependentProperties .set_pause! ()
 
-      browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .do_set_time, object: self)
+      browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", object: self)
    }
 
    private func do_resume ()
@@ -336,7 +336,7 @@ extension X3DTimeDependentNode
 
       timeDependentProperties .set_resume! ()
 
-      browser .addBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .do_set_time, object: self)
+      browser .addBrowserInterest (event: .Browser_Event, id: "set_time", method: { $0 .do_set_time () }, object: self)
       browser .setNeedsDisplay ()
    }
 
@@ -366,7 +366,7 @@ extension X3DTimeDependentNode
 
          if scene .isLive || isLive
          {
-            browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", method: X3DTimeDependentNode .do_set_time, object: self)
+            browser .removeBrowserInterest (event: .Browser_Event, id: "set_time", object: self)
          }
       }
    }

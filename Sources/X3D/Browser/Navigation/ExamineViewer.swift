@@ -149,13 +149,13 @@ internal final class ExamineViewer :
    
    private final func addSpinning ()
    {
-      browser! .addBrowserInterest (event: .Browser_Event, id: "spin", method: ExamineViewer .spin, object: self)
+      browser! .addBrowserInterest (event: .Browser_Event, id: "spin", method: { $0 .spin () }, object: self)
       browser! .setNeedsDisplay ()
    }
    
    private final func removeSpinning ()
    {
-      browser! .removeBrowserInterest (event: .Browser_Event, id: "spin", method: ExamineViewer .spin, object: self)
+      browser! .removeBrowserInterest (event: .Browser_Event, id: "spin", object: self)
    }
    
    private final func spin ()

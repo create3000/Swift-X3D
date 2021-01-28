@@ -37,7 +37,7 @@ public class X3DShaderNode :
    {
       super .initialize ()
       
-      $activate .addInterest ("set_activate", X3DShaderNode .set_activate, self)
+      $activate .addInterest ("set_activate", { $0 .set_activate () }, self)
    }
    
    // Event handlers

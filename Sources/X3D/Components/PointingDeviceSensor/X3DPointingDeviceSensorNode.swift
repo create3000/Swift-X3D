@@ -32,7 +32,7 @@ public class X3DPointingDeviceSensorNode :
    {
       super .initialize ()
       
-      $enabled .addInterest ("set_enabled", X3DPointingDeviceSensorNode .set_enabled, self)
+      $enabled .addInterest ("set_enabled", { $0 .set_enabled () }, self)
    }
    
    // Event handlers

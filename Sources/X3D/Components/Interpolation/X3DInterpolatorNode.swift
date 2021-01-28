@@ -31,8 +31,8 @@ public class X3DInterpolatorNode :
       // keyValue[0] is returned if keyValue is not empty. If keyValue is empty (i.e., [ ]), the initial
       // value for the respective field type is returned (EXAMPLE  (0, 0, 0) for SFVec3f)
 
-      $set_fraction .addInterest ("set_fraction_", X3DInterpolatorNode .set_fraction_, self)
-      $key          .addInterest ("set_key",       X3DInterpolatorNode .set_key,       self)
+      $set_fraction .addInterest ("set_fraction_", { $0 .set_fraction_ () }, self)
+      $key          .addInterest ("set_key",       { $0 .set_key () },       self)
 
       set_key ()
 

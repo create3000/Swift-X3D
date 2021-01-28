@@ -166,7 +166,7 @@ public class X3DViewpointNode :
          timeSensor .stopTime      = browser! .currentTime
          timeSensor .startTime     = browser! .currentTime
          
-         timeSensor .$isActive .addInterest ("set_active", { _ in { [weak self] in self? .set_active (layer .navigationInfoNode) } }, self)
+         timeSensor .$isActive .addInterest ("set_active", { $0 .set_active (layer .navigationInfoNode) }, self)
 
          let relative = getRelativeTransformation (fromViewpoint: fromViewpointNode)
 

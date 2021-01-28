@@ -42,7 +42,7 @@ public final class ColorRGBA :
    {
       super .initialize ()
       
-      $color .addInterest ("set_color", ColorRGBA .set_color, self)
+      $color .addInterest ("set_color", { $0 .set_color () }, self)
       
       set_color ()
    }

@@ -57,7 +57,7 @@ public final class ImageTexture :
    {
       super .initialize ()
       
-      $url .addInterest ("set_url", ImageTexture .set_url, self)
+      $url .addInterest ("set_url", { $0 .set_url () }, self)
       
       requestImmediateLoad ()
    }

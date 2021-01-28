@@ -52,15 +52,15 @@ internal final class X3DNavigationContextProperties :
       
       // Viewer
       
-      browser! .addBrowserInterest (event: .Browser_Initialized, id: "set_initialized", method: X3DNavigationContextProperties .set_initialized, object: self)
-      $viewer .addInterest ("set_viewer", X3DNavigationContextProperties .set_viewer, self)
+      browser! .addBrowserInterest (event: .Browser_Initialized, id: "set_initialized", method: { $0 .set_initialized () }, object: self)
+      $viewer .addInterest ("set_viewer", { $0 .set_viewer () }, self)
       
       set_viewer ()
    }
    
    private final func set_initialized ()
    {
-      browser! .world .$activeLayerNode .addInterest ("set_activeLayer", X3DNavigationContextProperties .set_activeLayer, self)
+      browser! .world .$activeLayerNode .addInterest ("set_activeLayer", { $0 .set_activeLayer () }, self)
 
       set_activeLayer ()
    }
@@ -69,13 +69,13 @@ internal final class X3DNavigationContextProperties :
    {
       guard activeLayerNode != browser! .world .activeLayerNode else { return }
       
-      activeLayerNode? .navigationInfoStack .removeInterest ("set_activeNavigationInfo", X3DNavigationContextProperties .set_activeNavigationInfo, self)
-      activeLayerNode? .viewpointStack      .removeInterest ("set_activeViewpoint",      X3DNavigationContextProperties .set_activeViewpoint,      self)
+      activeLayerNode? .navigationInfoStack .removeInterest ("set_activeNavigationInfo", self)
+      activeLayerNode? .viewpointStack      .removeInterest ("set_activeViewpoint",      self)
 
       activeLayerNode = browser! .world .activeLayerNode
 
-      activeLayerNode? .navigationInfoStack .addInterest ("set_activeNavigationInfo", X3DNavigationContextProperties .set_activeNavigationInfo, self)
-      activeLayerNode? .viewpointStack      .addInterest ("set_activeViewpoint",      X3DNavigationContextProperties .set_activeViewpoint,      self)
+      activeLayerNode? .navigationInfoStack .addInterest ("set_activeNavigationInfo", { $0 .set_activeNavigationInfo () }, self)
+      activeLayerNode? .viewpointStack      .addInterest ("set_activeViewpoint",      { $0 .set_activeViewpoint () },      self)
 
       set_activeNavigationInfo ()
       set_activeViewpoint ()

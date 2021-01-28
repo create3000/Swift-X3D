@@ -30,7 +30,7 @@ public final class X3DExportedNode :
       
       super .init ()
       
-      localNode .deleted .addInterest ("deleted", X3DExportedNode .set_node, self)
+      localNode .deleted .addInterest ("deleted", { $0 .set_node () }, self)
    }
    
    private final func set_node ()

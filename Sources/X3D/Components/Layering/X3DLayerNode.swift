@@ -75,7 +75,7 @@ public class X3DLayerNode :
    {
       super .initialize ()
       
-      $viewport .addInterest ("set_viewport", X3DLayerNode .set_viewport, self)
+      $viewport .addInterest ("set_viewport", { $0 .set_viewport () }, self)
       
       groupNode .isPrivate = true
       

@@ -37,7 +37,7 @@ internal final class X3DGeometry2DContextProperties :
       circle2DOptions   .setup ()
       disk2DOptions     .setup ()
       
-      browser! .browserOptions .$PrimitiveQuality .addInterest ("set_primitiveQuality", X3DGeometry2DContextProperties .set_primitiveQuality, self)
+      browser! .browserOptions .$PrimitiveQuality .addInterest ("set_primitiveQuality", { $0 .set_primitiveQuality () }, self)
    }
    
    private final func set_primitiveQuality ()

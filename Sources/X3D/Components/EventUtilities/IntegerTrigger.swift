@@ -46,7 +46,7 @@ public final class IntegerTrigger :
    {
       super .initialize ()
 
-      $set_boolean .addInterest ("set_boolean_", IntegerTrigger .set_boolean_, self)
+      $set_boolean .addInterest ("set_boolean_", { $0 .set_boolean_ () }, self)
    }
    
    // Event handlers

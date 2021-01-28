@@ -425,15 +425,15 @@ public final class X3DBrowser :
    ]
 
    public final func addBrowserInterest <Object : X3DInputOutput>
-      (event : X3DBrowserEvent, id: String, method : @escaping (Object) -> (X3DRequester), object : Object)
+      (event : X3DBrowserEvent, id: String, method : @escaping (Object) -> Void, object : Object)
    {
       browserInterests [event]! .addInterest (id, method, object)
    }
 
    public final func removeBrowserInterest <Object : X3DInputOutput>
-      (event : X3DBrowserEvent, id: String, method : @escaping (Object) -> (X3DRequester), object : Object)
+      (event : X3DBrowserEvent, id: String, object : Object)
    {
-      browserInterests [event]! .removeInterest (id, method, object)
+      browserInterests [event]! .removeInterest (id, object)
    }
    
    internal final override func callBrowserInterests (event : X3DBrowserEvent)
@@ -448,12 +448,12 @@ public final class X3DBrowser :
    {
       willSet
       {
-         sharedBrowser? .removeBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", method: X3DBrowser .setNeedsDisplay, object: self)
+         sharedBrowser? .removeBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", object: self)
       }
       
       didSet
       {
-         sharedBrowser? .addBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", method: X3DBrowser .setNeedsDisplay, object: self)
+         sharedBrowser? .addBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", method: { $0 .setNeedsDisplay () }, object: self)
       }
    }
    
@@ -479,7 +479,7 @@ public final class X3DBrowser :
    {
       //debugPrint (#file, #function)
 
-      sharedBrowser? .removeBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", method: X3DBrowser .setNeedsDisplay, object: self)
+      sharedBrowser? .removeBrowserInterest (event: .Browser_Event, id: "setNeedsDisplay", object: self)
    }
 }
 

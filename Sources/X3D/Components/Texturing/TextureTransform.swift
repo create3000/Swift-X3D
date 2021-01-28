@@ -50,7 +50,7 @@ public final class TextureTransform :
    {
       super .initialize ()
       
-      addInterest ("eventsProcessed", TextureTransform .eventsProcessed, self)
+      addInterest ("eventsProcessed", { $0 .eventsProcessed () }, self)
       
       eventsProcessed ()
    }

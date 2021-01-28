@@ -33,10 +33,10 @@ public class X3DSequencerNode :
    {
       super .initialize ()
 
-      $set_fraction .addInterest ("set_fraction_", X3DSequencerNode .set_fraction_, self)
-      $previous     .addInterest ("set_previous",  X3DSequencerNode .set_previous,  self)
-      $next         .addInterest ("set_next",      X3DSequencerNode .set_next,      self)
-      $key          .addInterest ("set_index",     X3DSequencerNode .set_index,     self)
+      $set_fraction .addInterest ("set_fraction_", { $0 .set_fraction_ () }, self)
+      $previous     .addInterest ("set_previous",  { $0 .set_previous () },  self)
+      $next         .addInterest ("set_next",      { $0 .set_next () },      self)
+      $key          .addInterest ("set_index",     { $0 .set_index () },     self)
    }
    
    internal var size : Int { 0 }

@@ -60,7 +60,7 @@ public final class Cone :
       {
          guard let browser = self .browser else { return }
          
-         browser .coneOptions .addInterest ("requestRebuild", Cone .requestRebuild, self)
+         browser .coneOptions .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
          
          self .rebuild ()
       }

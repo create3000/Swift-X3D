@@ -53,7 +53,7 @@ public final class Script :
    {
       super .initialize ()
       
-      $url .addInterest ("set_url", Script .set_url, self)
+      $url .addInterest ("set_url", { $0 .set_url () }, self)
 
       requestImmediateLoad ()
    }

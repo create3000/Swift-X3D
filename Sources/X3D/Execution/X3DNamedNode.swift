@@ -6,8 +6,7 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-public class X3DNamedNode :
-   X3DInputOutput
+public class X3DNamedNode
 {
    public private(set) final weak var executionContext : X3DExecutionContext?
    public private(set) final weak var node             : X3DNode?

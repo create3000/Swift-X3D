@@ -11,8 +11,7 @@ internal class JavaScript { }
 
 extension JavaScript
 {   
-   internal final class Context :
-      X3D .X3DInputOutput
+   internal final class Context
    {
       // Properties
       

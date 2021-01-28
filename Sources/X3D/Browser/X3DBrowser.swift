@@ -424,13 +424,13 @@ public final class X3DBrowser :
       .Browser_Done:             Output (),
    ]
 
-   public final func addBrowserInterest <Requester : X3DInputOutput>
+   public final func addBrowserInterest <Requester : AnyObject>
       (event : X3DBrowserEvent, id: String, handler : @escaping (Requester) -> Void, requester : Requester)
    {
       browserInterests [event]! .addInterest (id, handler, requester)
    }
 
-   public final func removeBrowserInterest <Requester : X3DInputOutput>
+   public final func removeBrowserInterest <Requester : AnyObject>
       (event : X3DBrowserEvent, id: String, requester : Requester)
    {
       browserInterests [event]! .removeInterest (id, requester)

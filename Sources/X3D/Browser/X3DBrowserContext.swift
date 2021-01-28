@@ -26,8 +26,7 @@ public class X3DBrowserContext :
    X3DShapeContext,
    X3DTextContext,
    X3DTexturingContext,
-   X3DTimeContext,
-   X3DInputOutput
+   X3DTimeContext
 {
    // Public properties
    

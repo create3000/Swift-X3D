@@ -15,6 +15,7 @@ public final class LayoutLayer :
    internal final override class var typeName       : String { "LayoutLayer" }
    internal final override class var component      : String { "Layout" }
    internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "layers" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields

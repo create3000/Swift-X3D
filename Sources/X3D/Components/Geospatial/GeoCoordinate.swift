@@ -16,6 +16,7 @@ public final class GeoCoordinate :
    internal final override class var typeName       : String { "GeoCoordinate" }
    internal final override class var component      : String { "Geospatial" }
    internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "coord" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields

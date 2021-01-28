@@ -19,6 +19,7 @@ public final class Arc2D :
    internal final override class var typeName       : String { "Arc2D" }
    internal final override class var component      : String { "Geometry2D" }
    internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "geometry" }
    internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields

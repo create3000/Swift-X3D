@@ -15,6 +15,7 @@ public final class VolumeEmitter :
    internal final override class var typeName       : String { "VolumeEmitter" }
    internal final override class var component      : String { "ParticleSystems" }
    internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "emitter" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields

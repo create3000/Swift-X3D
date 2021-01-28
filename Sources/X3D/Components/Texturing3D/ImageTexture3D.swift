@@ -16,6 +16,7 @@ public final class ImageTexture3D :
    internal final override class var typeName       : String { "ImageTexture3D" }
    internal final override class var component      : String { "Texturing3D" }
    internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "texture" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields

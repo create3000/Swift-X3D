@@ -15,6 +15,7 @@ public final class TextureTransform :
    internal final override class var typeName       : String { "TextureTransform" }
    internal final override class var component      : String { "Texturing" }
    internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "textureTransform" }
    internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields

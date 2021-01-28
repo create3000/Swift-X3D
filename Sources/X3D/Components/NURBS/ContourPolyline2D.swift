@@ -15,6 +15,7 @@ public final class ContourPolyline2D :
    internal final override class var typeName       : String { "ContourPolyline2D" }
    internal final override class var component      : String { "NURBS" }
    internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "children" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Construction

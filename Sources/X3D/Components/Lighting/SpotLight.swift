@@ -15,6 +15,7 @@ public final class SpotLight :
    internal final override class var typeName       : String { "SpotLight" }
    internal final override class var component      : String { "Lighting" }
    internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
    internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields

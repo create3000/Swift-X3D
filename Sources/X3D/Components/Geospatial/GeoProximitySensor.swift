@@ -16,6 +16,7 @@ public final class GeoProximitySensor :
    internal final override class var typeName       : String { "GeoProximitySensor" }
    internal final override class var component      : String { "Geospatial" }
    internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields

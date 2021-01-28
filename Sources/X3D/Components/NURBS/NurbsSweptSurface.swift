@@ -15,6 +15,7 @@ public final class NurbsSweptSurface :
    internal final override class var typeName       : String { "NurbsSweptSurface" }
    internal final override class var component      : String { "NURBS" }
    internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "geometry" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields

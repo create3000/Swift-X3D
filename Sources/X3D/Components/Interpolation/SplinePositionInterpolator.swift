@@ -15,6 +15,7 @@ public final class SplinePositionInterpolator :
    internal final override class var typeName       : String { "SplinePositionInterpolator" }
    internal final override class var component      : String { "Interpolation" }
    internal final override class var componentLevel : Int32 { 4 }
+   internal final override class var containerField : String { "children" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields

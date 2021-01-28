@@ -15,6 +15,7 @@ public final class Viewport :
    internal final override class var typeName       : String { "Viewport" }
    internal final override class var component      : String { "Layering" }
    internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "viewport" }
    internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields

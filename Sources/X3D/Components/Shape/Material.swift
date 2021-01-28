@@ -15,6 +15,7 @@ public final class Material :
    internal final override class var typeName       : String { "Material" }
    internal final override class var component      : String { "Shape" }
    internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "material" }
    internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields

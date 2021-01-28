@@ -15,6 +15,7 @@ public final class LineProperties :
    internal final override class var typeName       : String { "LineProperties" }
    internal final override class var component      : String { "Shape" }
    internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "lineProperties" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields

@@ -15,6 +15,7 @@ public final class FontStyle :
    internal final override class var typeName       : String { "FontStyle" }
    internal final override class var component      : String { "Text" }
    internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "fontStyle" }
    internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields

@@ -15,6 +15,7 @@ public final class GeoOrigin :
    internal final override class var typeName       : String { "GeoOrigin" }
    internal final override class var component      : String { "Geospatial" }
    internal final override class var componentLevel : Int32 { 1 }
+   internal final override class var containerField : String { "geoOrigin" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields

@@ -15,6 +15,7 @@ public final class Contour2D :
    internal final override class var typeName       : String { "Contour2D" }
    internal final override class var component      : String { "NURBS" }
    internal final override class var componentLevel : Int32 { 4 }
+   internal final override class var containerField : String { "trimmingContour" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields

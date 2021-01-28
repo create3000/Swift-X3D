@@ -15,6 +15,7 @@ public final class DISEntityManager :
    internal final override class var typeName       : String { "DISEntityManager" }
    internal final override class var component      : String { "DIS" }
    internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: false) }
 
    // Fields

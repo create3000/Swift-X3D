@@ -16,6 +16,7 @@ public final class Anchor :
    internal final override class var typeName       : String { "Anchor" }
    internal final override class var component      : String { "Networking" }
    internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields

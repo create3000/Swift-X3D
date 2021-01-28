@@ -15,6 +15,7 @@ public final class ProximitySensor :
    internal final override class var typeName       : String { "ProximitySensor" }
    internal final override class var component      : String { "EnvironmentalSensor" }
    internal final override class var componentLevel : Int32 { 2 }
+   internal final override class var containerField : String { "children" }
    internal final override class var implemented    : Implemented { (sunrise: true, x_ite: true) }
 
    // Fields

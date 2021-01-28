@@ -17,6 +17,7 @@ public final class HAnimMotion :
    internal final override class var typeName       : String { "HAnimMotion" }
    internal final override class var component      : String { "HAnim" }
    internal final override class var componentLevel : Int32 { 3 }
+   internal final override class var containerField : String { "motions" }
    internal final override class var implemented    : Implemented { (sunrise: false, x_ite: true) }
 
    // Fields

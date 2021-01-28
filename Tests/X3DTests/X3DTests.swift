@@ -34,13 +34,20 @@ final class X3DTests :
       // This is an example of a functional test case.
       // Use XCTAssert and related functions to verify your tests produce the correct results.
       
-      var a = [1,2,3]
+      var a = [1,2,3,4,5,6,7,8,9,0]
       
+      var i = 0
       for e in a
       {
-         if e == 1 { a .append (4) }
-         debugPrint(e)
+         if e % 2 == 1 { a .remove (at: i) }
+         else
+         {
+            debugPrint(e)
+            i += 1
+         }
       }
+      
+      debugPrint (a)
    }
    
    func testParseGenerate () throws

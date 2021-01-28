@@ -20,8 +20,6 @@ public typealias X3DConsoleInterest = (X3DLogType, String) -> Void
 
 public final class X3DConsole
 {
-   internal final var enabled = true
-   
    // Intercept console.
    
    private final var interests = [(id : String, object : AnyObject, requester : X3DConsoleInterest)] ()
@@ -71,13 +69,7 @@ public final class X3DConsole
    
    private final func dispatch (type : X3DLogType, arguments : [CustomStringConvertible], lineBreak : Bool)
    {
-      guard enabled else { return }
-      
       let message = arguments .map { $0 .description } .joined (separator: " ")
-      
-      #if DEBUG
-      os_log (osLogTypes [type]!, "%@", message)
-      #endif
       
       DispatchQueue .main .async
       {

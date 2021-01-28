@@ -458,8 +458,6 @@ public final class X3DBrowser :
    }
    
    // Logging
-   
-   @IBInspectable public final var logging : Bool = true { didSet { console .enabled = logging } }
 
    public final func print (_ arguments : CustomStringConvertible...)
    {

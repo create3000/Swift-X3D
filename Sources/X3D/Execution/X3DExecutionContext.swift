@@ -78,6 +78,11 @@ public class X3DExecutionContext :
    // Unit handling
    
    public func getUnits () -> [UnitInfo] { scene! .getUnits () }
+   
+   public func getUnit (_ category : X3DUnitCategory) -> UnitInfo?
+   {
+      return scene! .getUnit (category)
+   }
 
    public func updateUnit (_ category : X3DUnitCategory, name : String, conversionFactor : Double)
    {

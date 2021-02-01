@@ -144,6 +144,23 @@ public final class X3DScene :
    ]
    
    public final override func getUnits () -> [UnitInfo] { units }
+   
+   public final override func getUnit (_ category : X3DUnitCategory) -> UnitInfo?
+   {
+      switch category
+      {
+         case .angle:
+            return units [ANGLE]
+         case .force:
+            return units [FORCE]
+         case .length:
+            return units [LENGTH]
+         case .mass:
+            return units [MASS]
+         default:
+            return nil
+      }
+   }
 
    public final override func updateUnit (_ category : X3DUnitCategory, name : String, conversionFactor : Double)
    {

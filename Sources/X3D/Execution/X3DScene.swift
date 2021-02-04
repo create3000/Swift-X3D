@@ -95,7 +95,7 @@ public final class X3DScene :
    
    public final override func getProfile () -> ProfileInfo { profile }
    
-   internal final override func setProfile (_ value : ProfileInfo)
+   public final override func setProfile (_ value : ProfileInfo)
    {
       profile = value
 
@@ -113,14 +113,14 @@ public final class X3DScene :
       return components .sorted { $0 .name < $1 .name }
    }
    
-   internal final override func setComponents (_ value : [ComponentInfo])
+   public final override func setComponents (_ value : [ComponentInfo])
    {
       components = value
       
       components_changed = SFTime .now
    }
    
-   internal final override func addComponent (_ component : ComponentInfo)
+   public final override func addComponent (_ component : ComponentInfo)
    {
       components .append (component)
       

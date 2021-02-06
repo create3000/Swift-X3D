@@ -33,6 +33,8 @@ public class X3DNode :
 
    @SFNode public final var metadata : X3DNode?
    
+   // Meta data handling
+   
    public final func getMetaData (_ key : String, default value : Bool = false) -> Bool
    {
       var path      = key .components (separatedBy: ".")
@@ -53,6 +55,74 @@ public class X3DNode :
       metavalue .value = [value]
    }
    
+   public final func getMetaData (_ key : String, default value : Vector3f = .zero) -> Vector3f
+   {
+      var path      = key .components (separatedBy: ".")
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path)
+      let metavalue = metaset .getFloat (name)
+      
+      if metavalue .value .count == 3
+      {
+         return Vector3f (metavalue .value [0], metavalue .value [1], metavalue .value [2])
+      }
+      else
+      {
+         return value
+      }
+   }
+   
+   public final func setMetaData (_ key : String, _ value : Vector3f)
+   {
+      var path      = key .components (separatedBy: ".")
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path)
+      let metavalue = metaset .getFloat (name)
+      
+      metavalue .value = [value .x, value .y, value .z]
+   }
+
+   public final func getMetaData (_ key : String, of type : [Vector3f] .Type) -> [Vector3f]
+   {
+      var path      = key .components (separatedBy: ".")
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path)
+      let metavalue = metaset .getFloat (name)
+      
+      if metavalue .value .count % 3 == 0
+      {
+         var value = [Vector3f] ()
+         
+         for i in stride (from: 0, to: metavalue .value .count, by: 3)
+         {
+            value .append (Vector3f (metavalue .value [i], metavalue .value [i + 1], metavalue .value [i + 2]))
+         }
+         
+         return value
+      }
+      else
+      {
+         return [ ]
+      }
+   }
+   
+   public final func setMetaData (_ key : String, _ value : [Vector3f])
+   {
+      var path      = key .components (separatedBy: ".")
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path)
+      let metavalue = metaset .getFloat (name)
+      
+      metavalue .value .removeAll ()
+      
+      for v in value
+      {
+         metavalue .value .append (v .x)
+         metavalue .value .append (v .y)
+         metavalue .value .append (v .z)
+      }
+   }
+
    private final func getMetadataSet (_ path : [String]) -> MetadataSet
    {
       if let set = metadata as? MetadataSet,
@@ -73,7 +143,7 @@ public class X3DNode :
       }
    }
    
-   // Properties
+   // Source text handling
    
    internal func getSourceText () -> MFString? { nil }
 

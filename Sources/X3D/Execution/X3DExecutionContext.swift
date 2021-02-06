@@ -108,6 +108,41 @@ public class X3DExecutionContext :
    {
       return scene! .toUnit (unit, value: value)
    }
+   
+   private final weak var worldInfo : WorldInfo?
+   
+   internal final func setWorldInfo (_ node : WorldInfo)
+   {
+      worldInfo = node
+   }
+   
+   public final func getWorldInfo (create : WorldInfo .Create? = nil) -> WorldInfo?
+   {
+      if let worldInfo = worldInfo
+      {
+         return worldInfo
+      }
+      else if let create = create
+      {
+         worldInfo = createNode (of: WorldInfo .self)
+         
+         worldInfo! .title = getWorldURL () .lastPathComponent
+         
+         switch create
+         {
+            case .First:
+               rootNodes .insert (worldInfo, at: 0)
+            case .Last:
+               rootNodes .append (worldInfo)
+         }
+         
+         return worldInfo
+      }
+      else
+      {
+         return nil
+      }
+   }
 
    // Node handling
    

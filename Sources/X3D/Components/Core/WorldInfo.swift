@@ -22,6 +22,14 @@ public final class WorldInfo :
 
    @SFString public final var title : String = ""
    @MFString public final var info  : [String]
+   
+   // Member types
+   
+   public enum Create
+   {
+      case First
+      case Last
+   }
 
    // Construction
    
@@ -39,5 +47,12 @@ public final class WorldInfo :
    internal final override func create (with executionContext : X3DExecutionContext) -> WorldInfo
    {
       return WorldInfo (with: executionContext)
+   }
+   
+   internal final override func initialize ()
+   {
+      super .initialize ()
+      
+      executionContext! .setWorldInfo (self)
    }
 }

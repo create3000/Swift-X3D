@@ -1360,29 +1360,29 @@ public extension X3DNode
       var path      = key .components (separatedBy: ".")
       let name      = path .removeLast ()
       let metaset   = getMetadataSet (path)
-      let metavalue = metaset .getBoolean (name)
+      let metavalue = metaset? .getBoolean (name)
       
-      return metavalue .value .first ?? value
+      return metavalue? .value .first ?? value
    }
    
    final func setMetaData (_ key : String, _ value : Bool)
    {
       var path      = key .components (separatedBy: ".")
       let name      = path .removeLast ()
-      let metaset   = getMetadataSet (path)
-      let metavalue = metaset .getBoolean (name)
+      let metaset   = getMetadataSet (path, create: true)!
+      let metavalue = metaset .getBoolean (name, create: true)!
       
       metavalue .value = [value]
    }
    
    final func getMetaData (_ key : String, default value : Vector3f) -> Vector3f
    {
-      var path      = key .components (separatedBy: ".")
-      let name      = path .removeLast ()
-      let metaset   = getMetadataSet (path)
-      let metavalue = metaset .getFloat (name)
+      var path    = key .components (separatedBy: ".")
+      let name    = path .removeLast ()
+      let metaset = getMetadataSet (path)
       
-      if metavalue .value .count == 3
+      if let metavalue = metaset? .getFloat (name),
+         metavalue .value .count == 3
       {
          return Vector3f (metavalue .value [0], metavalue .value [1], metavalue .value [2])
       }
@@ -1396,20 +1396,20 @@ public extension X3DNode
    {
       var path      = key .components (separatedBy: ".")
       let name      = path .removeLast ()
-      let metaset   = getMetadataSet (path)
-      let metavalue = metaset .getFloat (name)
+      let metaset   = getMetadataSet (path, create: true)!
+      let metavalue = metaset .getFloat (name, create: true)!
       
       metavalue .value = [value .x, value .y, value .z]
    }
 
    final func getMetaData (_ key : String, of type : [Vector3f] .Type) -> [Vector3f]
    {
-      var path      = key .components (separatedBy: ".")
-      let name      = path .removeLast ()
-      let metaset   = getMetadataSet (path)
-      let metavalue = metaset .getFloat (name)
+      var path    = key .components (separatedBy: ".")
+      let name    = path .removeLast ()
+      let metaset = getMetadataSet (path)
       
-      if metavalue .value .count % 3 == 0
+      if let metavalue = metaset? .getFloat (name),
+         metavalue .value .count % 3 == 0
       {
          var value = [Vector3f] ()
          
@@ -1430,8 +1430,8 @@ public extension X3DNode
    {
       var path      = key .components (separatedBy: ".")
       let name      = path .removeLast ()
-      let metaset   = getMetadataSet (path)
-      let metavalue = metaset .getFloat (name)
+      let metaset   = getMetadataSet (path, create: true)!
+      let metavalue = metaset .getFloat (name, create: true)!
       
       metavalue .value .removeAll ()
       
@@ -1445,14 +1445,14 @@ public extension X3DNode
 
    // Set
    
-   final func getMetadataSet (_ path : [String]) -> MetadataSet
+   final func getMetadataSet (_ path : [String], create : Bool = false) -> MetadataSet?
    {
       if let set = metadata as? MetadataSet,
          set .name == "Sunrise"
       {
          return set .getSet (path)
       }
-      else
+      else if create
       {
          let set = executionContext! .createNode (of: MetadataSet .self)
          
@@ -1461,7 +1461,11 @@ public extension X3DNode
          
          metadata = set
          
-         return set .getSet (path)
+         return set .getSet (path, create: true)
+      }
+      else
+      {
+         return nil
       }
    }
 }

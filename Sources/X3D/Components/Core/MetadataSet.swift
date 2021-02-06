@@ -46,43 +46,43 @@ public final class MetadataSet :
       return MetadataSet (with: executionContext)
    }
    
-   internal final func getSet (_ path : [String]) -> MetadataSet
+   internal final func getSet (_ path : [String], create : Bool = false) -> MetadataSet?
    {
       guard !path .isEmpty else { return self }
       
       var path = path
       let name = path .removeFirst ()
-      let set  = getData (name, of: MetadataSet .self)
+      let set  = getData (name, create: create, of: MetadataSet .self)
       
-      return set .getSet (path)
+      return set? .getSet (path)
    }
    
-   internal final func getBoolean (_ name : String) -> MetadataBoolean
+   internal final func getBoolean (_ name : String, create : Bool = false) -> MetadataBoolean?
    {
-      return getData (name, of: MetadataBoolean .self)
+      return getData (name, create: create, of: MetadataBoolean .self)
    }
    
-   internal final func getDouble (_ name : String) -> MetadataDouble
+   internal final func getDouble (_ name : String, create : Bool = false) -> MetadataDouble?
    {
-      return getData (name, of: MetadataDouble .self)
+      return getData (name, create: create, of: MetadataDouble .self)
    }
    
-   internal final func getFloat (_ name : String) -> MetadataFloat
+   internal final func getFloat (_ name : String, create : Bool = false) -> MetadataFloat?
    {
-      return getData (name, of: MetadataFloat .self)
+      return getData (name, create: create, of: MetadataFloat .self)
    }
    
-   internal final func getInteger (_ name : String) -> MetadataInteger
+   internal final func getInteger (_ name : String, create : Bool = false) -> MetadataInteger?
    {
-      return getData (name, of: MetadataInteger .self)
+      return getData (name, create: create, of: MetadataInteger .self)
    }
    
-   internal final func getString (_ name : String) -> MetadataString
+   internal final func getString (_ name : String, create : Bool = false) -> MetadataString?
    {
-      return getData (name, of: MetadataString .self)
+      return getData (name, create: create, of: MetadataString .self)
    }
    
-   private final func getData <Type : X3DNode> (_ name : String, of type : Type .Type) -> Type
+   private final func getData <Type : X3DNode> (_ name : String, create : Bool = false, of type : Type .Type) -> Type?
    {
       if let data = value .first (where:
       {
@@ -98,7 +98,7 @@ public final class MetadataSet :
       {
          return data
       }
-      else
+      else if create
       {
          let data = executionContext! .createNode (of: type) as! X3DMetadataObject
          
@@ -107,7 +107,11 @@ public final class MetadataSet :
          
          value .append (data as! Type)
          
-         return data as! Type
+         return data as? Type
+      }
+      else
+      {
+         return nil
       }
    }
 }

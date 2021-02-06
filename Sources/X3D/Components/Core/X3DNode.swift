@@ -33,6 +33,46 @@ public class X3DNode :
 
    @SFNode public final var metadata : X3DNode?
    
+   public final func getMetaData (_ key : String, default value : Bool = false) -> Bool
+   {
+      var path      = key .components (separatedBy: ".")
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path)
+      let metavalue = metaset .getBoolean (name)
+      
+      return metavalue .value .first ?? value
+   }
+   
+   public final func setMetaData (_ key : String, _ value : Bool)
+   {
+      var path      = key .components (separatedBy: ".")
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path)
+      let metavalue = metaset .getBoolean (name)
+      
+      metavalue .value = [value]
+   }
+   
+   private final func getMetadataSet (_ path : [String]) -> MetadataSet
+   {
+      if let set = metadata as? MetadataSet,
+         set .name == "Sunrise"
+      {
+         return set .getSet (path)
+      }
+      else
+      {
+         let set = executionContext! .createNode (of: MetadataSet .self)
+         
+         set .name      = "Sunrise"
+         set .reference = X3DBrowser .providerUrl .absoluteString
+         
+         metadata = set
+         
+         return set .getSet (path)
+      }
+   }
+   
    // Properties
    
    internal func getSourceText () -> MFString? { nil }

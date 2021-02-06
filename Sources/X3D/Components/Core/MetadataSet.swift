@@ -45,4 +45,69 @@ public final class MetadataSet :
    {
       return MetadataSet (with: executionContext)
    }
+   
+   internal final func getSet (_ path : [String]) -> MetadataSet
+   {
+      guard !path .isEmpty else { return self }
+      
+      var path = path
+      let name = path .removeFirst ()
+      let set  = getData (name, of: MetadataSet .self)
+      
+      return set .getSet (path)
+   }
+   
+   internal final func getBoolean (_ name : String) -> MetadataBoolean
+   {
+      return getData (name, of: MetadataBoolean .self)
+   }
+   
+   internal final func getDouble (_ name : String) -> MetadataDouble
+   {
+      return getData (name, of: MetadataDouble .self)
+   }
+   
+   internal final func getFloat (_ name : String) -> MetadataFloat
+   {
+      return getData (name, of: MetadataFloat .self)
+   }
+   
+   internal final func getInteger (_ name : String) -> MetadataInteger
+   {
+      return getData (name, of: MetadataInteger .self)
+   }
+   
+   internal final func getString (_ name : String) -> MetadataString
+   {
+      return getData (name, of: MetadataString .self)
+   }
+   
+   private final func getData <Type : X3DNode> (_ name : String, of type : Type .Type) -> Type
+   {
+      if let data = value .first (where:
+      {
+         if let data = $0 as? X3DMetadataObject
+         {
+            return data .name == name
+         }
+         else
+         {
+            return false
+         }
+      }) as? Type
+      {
+         return data
+      }
+      else
+      {
+         let data = executionContext! .createNode (of: type) as! X3DMetadataObject
+         
+         data .name      = name
+         data .reference = X3DBrowser .providerUrl .absoluteString
+         
+         value .append (data as! Type)
+         
+         return data as! Type
+      }
+   }
 }

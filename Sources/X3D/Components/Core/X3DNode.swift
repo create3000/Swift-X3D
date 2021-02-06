@@ -1355,9 +1355,13 @@ public class X3DNode :
 
 public extension X3DNode
 {
+   private final var metaSeparator : String { "." }
+   
+   // Bool
+   
    final func getMetaData (_ key : String, default value : Bool) -> Bool
    {
-      var path      = key .components (separatedBy: ".")
+      var path      = key .components (separatedBy: metaSeparator)
       let name      = path .removeLast ()
       let metaset   = getMetadataSet (path)
       let metavalue = metaset? .getBoolean (name)
@@ -1367,7 +1371,7 @@ public extension X3DNode
    
    final func setMetaData (_ key : String, _ value : Bool)
    {
-      var path      = key .components (separatedBy: ".")
+      var path      = key .components (separatedBy: metaSeparator)
       let name      = path .removeLast ()
       let metaset   = getMetadataSet (path, create: true)!
       let metavalue = metaset .getBoolean (name, create: true)!
@@ -1375,9 +1379,11 @@ public extension X3DNode
       metavalue .value = [value]
    }
    
+   // Vector3f
+   
    final func getMetaData (_ key : String, default value : Vector3f) -> Vector3f
    {
-      var path    = key .components (separatedBy: ".")
+      var path    = key .components (separatedBy: metaSeparator)
       let name    = path .removeLast ()
       let metaset = getMetadataSet (path)
       
@@ -1394,17 +1400,19 @@ public extension X3DNode
    
    final func setMetaData (_ key : String, _ value : Vector3f)
    {
-      var path      = key .components (separatedBy: ".")
+      var path      = key .components (separatedBy: metaSeparator)
       let name      = path .removeLast ()
       let metaset   = getMetadataSet (path, create: true)!
       let metavalue = metaset .getFloat (name, create: true)!
       
       metavalue .value = [value .x, value .y, value .z]
    }
+   
+   // [Vector3f]
 
    final func getMetaData (_ key : String, of type : [Vector3f] .Type) -> [Vector3f]
    {
-      var path    = key .components (separatedBy: ".")
+      var path    = key .components (separatedBy: metaSeparator)
       let name    = path .removeLast ()
       let metaset = getMetadataSet (path)
       
@@ -1428,7 +1436,7 @@ public extension X3DNode
    
    final func setMetaData (_ key : String, _ value : [Vector3f])
    {
-      var path      = key .components (separatedBy: ".")
+      var path      = key .components (separatedBy: metaSeparator)
       let name      = path .removeLast ()
       let metaset   = getMetadataSet (path, create: true)!
       let metavalue = metaset .getFloat (name, create: true)!

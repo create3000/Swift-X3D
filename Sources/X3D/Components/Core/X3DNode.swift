@@ -1379,6 +1379,28 @@ public extension X3DNode
       metavalue .value = [value]
    }
    
+   // String
+   
+   final func getMetaData (_ key : String, default value : String) -> String
+   {
+      var path      = key .components (separatedBy: metaSeparator)
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path)
+      let metavalue = metaset? .getString (name)
+      
+      return metavalue? .value .first ?? value
+   }
+   
+   final func setMetaData (_ key : String, _ value : String)
+   {
+      var path      = key .components (separatedBy: metaSeparator)
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path, create: true)!
+      let metavalue = metaset .getString (name, create: true)!
+      
+      metavalue .value = [value]
+   }
+
    // Vector3f
    
    final func getMetaData (_ key : String, default value : Vector3f) -> Vector3f

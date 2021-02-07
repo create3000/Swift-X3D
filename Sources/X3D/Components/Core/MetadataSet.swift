@@ -82,12 +82,11 @@ public final class MetadataSet :
       return getData (name, create: create, of: MetadataString .self)
    }
    
-   private final func getData <Type : X3DNode> (_ name : String, create : Bool = false, of type : Type .Type) -> Type?
+   private final func getData <Type : X3DMetadataObject> (_ name : String, create : Bool = false, of type : Type .Type) -> Type?
    {
       if let data = value .first (where:
       {
-         if $0 is Type,
-            let object = $0 as? X3DMetadataObject
+         if let object = $0 as? Type
          {
             return object .name == name
          }
@@ -101,14 +100,14 @@ public final class MetadataSet :
       }
       else if create
       {
-         let data = executionContext! .createNode (of: type) as! X3DMetadataObject
+         let data = executionContext! .createNode (of: type)
          
          data .name      = name
          data .reference = X3DBrowser .providerUrl .absoluteString
          
-         value .append (data as! Type)
+         value .append (data)
          
-         return data as? Type
+         return data
       }
       else
       {

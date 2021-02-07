@@ -7,7 +7,7 @@
 //
 
 public protocol X3DPickableObject :
-   X3DBaseNode
+   X3DNode
 {
    // Fields
 

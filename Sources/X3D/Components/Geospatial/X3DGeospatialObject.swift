@@ -7,7 +7,7 @@
 //
 
 public protocol X3DGeospatialObject :
-   X3DBaseNode
+   X3DNode
 {
    // Fields
 

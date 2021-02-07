@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol X3DProgrammableShaderObject :
-   X3DBaseNode
+   X3DNode
 { }
 
 extension X3DProgrammableShaderObject

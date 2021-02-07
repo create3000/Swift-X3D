@@ -7,7 +7,7 @@
 //
 
 public protocol X3DFogObject :
-   X3DBaseNode
+   X3DNode
 {
    // Fields
 

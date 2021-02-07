@@ -7,7 +7,7 @@
 //
 
 public protocol X3DMetadataObject :
-   X3DBaseNode
+   X3DNode
 {
    // Fields
 

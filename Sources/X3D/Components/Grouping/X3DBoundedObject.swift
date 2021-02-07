@@ -7,7 +7,7 @@
 //
 
 public protocol X3DBoundedObject :
-   X3DBaseNode
+   X3DNode
 {
    // Fields
 

@@ -1541,7 +1541,7 @@ public extension X3DNode
 
    // Set
    
-   final func getMetadataSet (_ path : [String], create : Bool = false) -> MetadataSet?
+   private final func getMetadataSet (_ path : [String], create : Bool = false) -> MetadataSet?
    {
       if let set = metadata as? MetadataSet,
          set .name == "Sunrise"

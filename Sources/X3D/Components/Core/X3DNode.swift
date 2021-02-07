@@ -1379,6 +1379,72 @@ public extension X3DNode
       metavalue .value = [value]
    }
    
+   // Double
+   
+   final func getMetaData (_ key : String, default value : Double) -> Double
+   {
+      var path      = key .components (separatedBy: metaSeparator)
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path)
+      let metavalue = metaset? .getDouble (name)
+      
+      return metavalue? .value .first ?? value
+   }
+   
+   final func setMetaData (_ key : String, _ value : Double)
+   {
+      var path      = key .components (separatedBy: metaSeparator)
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path, create: true)!
+      let metavalue = metaset .getDouble (name, create: true)!
+      
+      metavalue .value = [value]
+   }
+   
+   // Float
+   
+   final func getMetaData (_ key : String, default value : Float) -> Float
+   {
+      var path      = key .components (separatedBy: metaSeparator)
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path)
+      let metavalue = metaset? .getFloat (name)
+      
+      return metavalue? .value .first ?? value
+   }
+   
+   final func setMetaData (_ key : String, _ value : Float)
+   {
+      var path      = key .components (separatedBy: metaSeparator)
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path, create: true)!
+      let metavalue = metaset .getFloat (name, create: true)!
+      
+      metavalue .value = [value]
+   }
+
+   // Int
+   
+   final func getMetaData (_ key : String, default value : Int32) -> Int32
+   {
+      var path      = key .components (separatedBy: metaSeparator)
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path)
+      let metavalue = metaset? .getInteger (name)
+      
+      return metavalue? .value .first ?? value
+   }
+   
+   final func setMetaData (_ key : String, _ value : Int32)
+   {
+      var path      = key .components (separatedBy: metaSeparator)
+      let name      = path .removeLast ()
+      let metaset   = getMetadataSet (path, create: true)!
+      let metavalue = metaset .getInteger (name, create: true)!
+      
+      metavalue .value = [value]
+   }
+
    // String
    
    final func getMetaData (_ key : String, default value : String) -> String

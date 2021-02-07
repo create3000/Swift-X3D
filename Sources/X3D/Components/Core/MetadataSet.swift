@@ -86,9 +86,10 @@ public final class MetadataSet :
    {
       if let data = value .first (where:
       {
-         if let data = $0 as? X3DMetadataObject
+         if $0 is Type,
+            let object = $0 as? X3DMetadataObject
          {
-            return data .name == name
+            return object .name == name
          }
          else
          {

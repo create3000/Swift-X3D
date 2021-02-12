@@ -8,6 +8,7 @@
 
 public final class Transform :
    X3DGroupingNode,
+   X3DTransformObject,
    X3DNodeInterface
 {
    // Common properties
@@ -70,7 +71,24 @@ public final class Transform :
    
    public final override var bbox : Box3f { matrix * super .bbox }
 
-   private final var matrix : Matrix4f = .identity
+   public private(set) final var matrix : Matrix4f = .identity
+   
+   public func setMatrix (_ matrix : Matrix4f)
+   {
+      setMatrix (matrix, with: center)
+   }
+
+   public func setMatrix (_ matrix : Matrix4f, with center: Vector3f)
+   {
+      let components = decompose_transformation_matrix (matrix, center: center)
+      
+      translation      = components .translation
+      rotation         = components .rotation
+      scale            = components .scale
+      scaleOrientation = components .scaleOrientation
+     
+      self .center = center
+   }
 
    private final func eventsProcessed ()
    {

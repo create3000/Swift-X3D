@@ -8,6 +8,7 @@
 
 public final class Billboard :
    X3DGroupingNode,
+   X3DMatrixObject,
    X3DNodeInterface
 {
    // Common properties
@@ -50,7 +51,7 @@ public final class Billboard :
    
    // Rendering
    
-   private final var matrix : Matrix4f = .identity
+   public private(set) final var matrix : Matrix4f = .identity
    
    private final func rotate (modelViewMatrix : Matrix4f) -> Matrix4f
    {

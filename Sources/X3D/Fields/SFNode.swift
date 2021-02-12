@@ -119,4 +119,16 @@ public class SFNode <Type : X3DBaseNode> :
          stream += "NULL"
       }
    }
+   
+   internal final override func toDisplayStream (_ stream : X3DOutputStream)
+   {
+      if let node = wrappedValue
+      {
+         stream += stream .toVRMLStream (node)
+      }
+      else
+      {
+         stream += "NULL"
+      }
+   }
 }

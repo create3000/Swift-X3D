@@ -353,4 +353,35 @@ public final class MFNode <Element : X3DBaseNode> :
          }
       }
    }
+
+   internal final override func toDisplayStream (_ stream : X3DOutputStream)
+   {
+      stream .enterScope ()
+      
+      stream += stream .TidyBreak
+      stream += stream .IncIndent ()
+      
+      for node in wrappedValue
+      {
+         stream += stream .Indent
+         
+         if let node = node
+         {
+            let use = stream .existsNode (node)
+            
+            stream += stream .toVRMLStream (node)
+            stream += use ? stream .Break : stream .TidyBreak
+        }
+         else
+         {
+            stream += "NULL"
+            stream += stream .Break
+         }
+      }
+      
+      stream += stream .DecIndent ()
+      stream += stream .Indent
+      
+      stream .leaveScope ()
+   }
 }

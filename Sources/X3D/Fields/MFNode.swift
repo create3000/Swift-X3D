@@ -23,6 +23,7 @@ public final class MFNode <Element : X3DBaseNode> :
    {
       willSet
       {
+         let newSet     = Set (newValue)
          let difference = newValue .difference (from: wrappedValue)
          
          for change in difference
@@ -42,7 +43,7 @@ public final class MFNode <Element : X3DBaseNode> :
             {
                case let .remove (_, oldElement, _): do
                {
-                  guard !newValue .contains (oldElement) else { continue }
+                  guard !newSet .contains (oldElement) else { continue }
                
                   oldElement? .removeParent (self)
                }

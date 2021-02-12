@@ -79,15 +79,7 @@ public final class X3DWorld :
          
          executionContext! .$rootNodes .addFieldInterest (to: layerSetNode! .layerNode0 .$children)
          
-         let layerNode0 = Layer (with: executionContext!)
-         
-         layerNode0 .isPrivate = true
-         layerNode0 .isLayer0  = true
-         layerNode0 .children  = executionContext! .rootNodes
-         
-         layerNode0 .setup ()
-
-         layerSetNode! .layerNode0 = layerNode0
+         layerSetNode! .layerNode0 .children = executionContext! .rootNodes
 
          // Handle active layer.
          

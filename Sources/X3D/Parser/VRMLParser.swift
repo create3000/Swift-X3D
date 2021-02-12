@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal final class VRMLParser :
+public final class VRMLParser :
    X3DParser,
    X3DParserInterface
 {
@@ -110,7 +110,7 @@ internal final class VRMLParser :
    
    // Construction
    
-   internal init (scene : X3DScene, x3dSyntax : String)
+   public init (scene : X3DScene, x3dSyntax : String)
    {
       // Set scene and create scanner.
       self .scene   = scene
@@ -128,7 +128,7 @@ internal final class VRMLParser :
    
    // Operations
    
-   internal final var isValid : Bool
+   public final var isValid : Bool
    {
       let currentIndex = scanner .currentIndex
       
@@ -178,7 +178,7 @@ internal final class VRMLParser :
       return false
    }
 
-   internal final func parseIntoScene () throws
+   public final func parseIntoScene () throws
    {
       do
       {

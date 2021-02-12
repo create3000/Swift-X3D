@@ -40,8 +40,12 @@ public final class MFNode <Element : X3DBaseNode> :
          {
             switch change
             {
-              case let .remove (_, oldElement, _):
+               case let .remove (_, oldElement, _): do
+               {
+                  guard !newValue .contains (oldElement) else { continue }
+               
                   oldElement? .removeParent (self)
+               }
                default:
                   break
             }

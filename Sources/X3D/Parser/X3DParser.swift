@@ -6,11 +6,11 @@
 //  Copyright © 2020 Holger Seelig. All rights reserved.
 //
 
-internal class X3DParser
+public class X3DParser
 {
    // Execution context
    
-   internal final var executionContexts = [X3DExecutionContext] ()
+   public final var executionContexts = [X3DExecutionContext] ()
    internal final var executionContext : X3DExecutionContext { executionContexts .last! }
    
    // Proto context

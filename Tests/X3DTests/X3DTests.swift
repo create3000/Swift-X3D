@@ -39,6 +39,25 @@ final class X3DTests :
       debugPrint (clamp (Int (6), min: 0, max: 5))
    }
    
+   func testCloneCount() throws
+   {
+      // This is an example of a functional test case.
+      // Use XCTAssert and related functions to verify your tests produce the correct results.
+      
+      let b = X3DBrowser ()
+      let s = b .getExecutionContext ()
+      let n = try! s .createNode (typeName: "Group")
+      
+      s .rootNodes .append (n)
+      XCTAssert (n .cloneCount == 1)
+      
+      s .rootNodes .insert (n, at: 1)
+      XCTAssert (n .cloneCount == 2)
+      
+      s .rootNodes .remove (at: 0)
+      XCTAssert (n .cloneCount == 1)
+   }
+   
    func testParseGenerate () throws
    {
       // This is an example of a functional test case.

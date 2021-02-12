@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal final class XMLParser :
+public final class XMLParser :
    X3DParser,
    X3DParserInterface
 {
@@ -20,7 +20,7 @@ internal final class XMLParser :
    
    // Construction
    
-   internal init (scene : X3DScene, x3dSyntax : String)
+   public init (scene : X3DScene, x3dSyntax : String)
    {
       // Set scene and create xml parser.
       self .scene    = scene
@@ -34,14 +34,14 @@ internal final class XMLParser :
    
    // Operations
    
-   internal final var isValid : Bool
+   public final var isValid : Bool
    {
       guard let document = document else { return false }
       
       return document .rootElement () != nil
    }
 
-   internal final func parseIntoScene () throws
+   public final func parseIntoScene () throws
    {
       guard let document = document else
       {

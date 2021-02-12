@@ -5,7 +5,7 @@
 //  Created by Holger Seelig on 07.11.20.
 //
 
-internal final class JSONParser :
+public final class JSONParser :
    X3DParser,
    X3DParserInterface
 {
@@ -16,7 +16,7 @@ internal final class JSONParser :
    
    // Construction
    
-   internal init (scene : X3DScene, x3dSyntax : String)
+   public init (scene : X3DScene, x3dSyntax : String)
    {
       // Set scene and create xml parser.
       self .scene = scene
@@ -30,9 +30,9 @@ internal final class JSONParser :
 
    // Operations
    
-   internal final var isValid : Bool { json != nil }
+   public final var isValid : Bool { json != nil }
 
-   internal final func parseIntoScene () throws
+   public final func parseIntoScene () throws
    {
       guard let json = json else
       {

@@ -13,7 +13,7 @@ META "created" "Sat, 23 Jan 2021 17:53:31 +0100"
 META "creator" "Holger Seelig"
 META "generator" "Sunrise X3D Editor V1.0, https://create3000.github.io/Sunrise/"
 META "identifier" "file:///Users/holger/Desktop/Sunrise/Swift-X3D/Tests/X3DTests/data/parse.x3dv"
-META "modified" "Mon, 25 Jan 2021 15:22:24 +0100"
+META "modified" "Sat, 13 Feb 2021 15:02:53 +0100"
 
 EXTERNPROTO Extern1 [
   inputOutput MFString url
@@ -87,12 +87,17 @@ PROTO FullProto [
   }
 }
 
+WorldInfo {
+  title "parse.x3dv"
+}
+
 DEF B Box { }
 
 Group {
   children [
     DEF T Transform {
-      rotation 1 2 3 230
+      rotation 0.26726 0.53452 0.80178 230
+      scaleOrientation -0.28533 0.76009 -0.58382 33.462
       children Shape {
         appearance Appearance {
           material Material { }
@@ -103,8 +108,8 @@ Group {
       }
     }
     USE B
-    NULL
     Switch { }
+    NULL
     DEF _1 LOD { }
     USE B
   ]
@@ -112,12 +117,12 @@ Group {
 
 USE T
 
-NULL
-
 FullProto {
   bool1 FALSE
   bool2 TRUE
 }
+
+NULL
 
 DEF I Inline {
   load FALSE

@@ -13,7 +13,7 @@ META "created" "Sat, 23 Jan 2021 17:53:31 +0100"
 META "creator" "Holger Seelig"
 META "generator" "Sunrise X3D Editor V1.0, https://create3000.github.io/Sunrise/"
 META "identifier" "file:///Users/holger/Desktop/Sunrise/Swift-X3D/Tests/X3DTests/data/parse.x3dv"
-META "modified" "Sat, 13 Feb 2021 15:02:53 +0100"
+META "modified" "Tue, 16 Feb 2021 15:29:54 +0100"
 
 EXTERNPROTO Extern1 [
   inputOutput MFString url
@@ -50,6 +50,12 @@ PROTO FullProto [
   outputOnly  SFBool out
 ]
 {
+  EXTERNPROTO Extern1 [
+    inputOutput MFString url
+    inputOutput SFColor  color
+  ]
+  "proto/proto.x3dv#Test"
+
   EXTERNPROTO Extern2 [
     inputOutput MFString url
     inputOutput SFColor  color

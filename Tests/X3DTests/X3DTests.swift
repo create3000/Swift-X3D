@@ -16,6 +16,15 @@ class TestTest
    init () { }
 }
 
+extension Array
+{
+   mutating func move (from oldIndex : Index, to newIndex : Index)
+   {
+      insert (self [oldIndex], at: newIndex)
+      remove (at: newIndex <= oldIndex ? oldIndex + 1 : oldIndex)
+   }
+}
+
 final class X3DTests :
    XCTestCase
 {
@@ -34,9 +43,10 @@ final class X3DTests :
       // This is an example of a functional test case.
       // Use XCTAssert and related functions to verify your tests produce the correct results.
       
-      debugPrint (clamp (Int (0), min: 0, max: 5))
-      debugPrint (clamp (Int (5), min: 0, max: 5))
-      debugPrint (clamp (Int (6), min: 0, max: 5))
+      var a = [1,2,3,4,5,6,7,8,9,0]
+      
+      a .move (fromOffsets: [9], toOffset: 0)
+      debugPrint (a)
    }
    
    func testCloneCount() throws

@@ -27,7 +27,7 @@ public class X3DProtoDeclarationNode :
    internal final func createInstance (with executionContext : X3DExecutionContext, setup : Bool) -> X3DPrototypeInstance
    {
       let instance = X3DPrototypeInstance (with: executionContext, from: self)
-      
+            
       if setup { instance .setup () }
       
       return instance
@@ -35,6 +35,6 @@ public class X3DProtoDeclarationNode :
    
    public final func requestUpdateInstances ()
    {
-      
+      addNodeEvent ()
    }
 }

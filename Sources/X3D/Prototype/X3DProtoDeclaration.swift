@@ -31,6 +31,8 @@ public final class X3DProtoDeclaration :
    {
       super .initialize ()
       
+      body .addParent (self)
+      
       body .setup ()
    }
    

@@ -51,7 +51,7 @@ public class X3DChildObject :
 
    // Parent handling
    
-   internal private(set) final var parents = NSHashTable <X3DChildObject> (options: .weakMemory)
+   public private(set) final var parents = NSHashTable <X3DChildObject> (options: .weakMemory)
 
    internal final func addParent (_ parent : X3DChildObject)
    {

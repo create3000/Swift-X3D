@@ -32,4 +32,9 @@ public class X3DProtoDeclarationNode :
       
       return instance
    }
+   
+   public final func requestUpdateInstances ()
+   {
+      
+   }
 }

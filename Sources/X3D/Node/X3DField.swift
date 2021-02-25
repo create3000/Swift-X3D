@@ -36,7 +36,8 @@ public class X3DField :
    
    /// Set of `IS` relation ships.
    public private(set) final var references = NSHashTable <X3DField> (options: .weakMemory)
-   
+   public final let references_changed      = Output ()
+
    /// Test if this field is possible for a `IS` relation ship.
    public final func isReference (for accessType : X3DAccessType) -> Bool
    {
@@ -68,6 +69,8 @@ public class X3DField :
             
          default: break
       }
+      
+      references_changed .processInterests ()
    }
    
    public final func removeReference (to reference : X3DField)
@@ -93,6 +96,8 @@ public class X3DField :
             
          default: break
       }
+      
+      references_changed .processInterests ()
    }
 
    // Route handling

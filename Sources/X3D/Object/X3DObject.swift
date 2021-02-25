@@ -20,7 +20,7 @@ public class X3DObject :
    
    public final func getName () -> String { name }
    
-   internal final func setName (_ value : String) { name = value }
+   internal func setName (_ value : String) { name = value }
  
    // Convert to string
    

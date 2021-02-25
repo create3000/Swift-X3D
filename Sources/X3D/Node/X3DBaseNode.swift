@@ -27,7 +27,8 @@ public class X3DBaseNode :
       self .browser          = browser
       self .executionContext = executionContext
       
-      addChildObjects ($fields_changed)
+      addChildObjects ($name_changed,
+                       $fields_changed)
    }
    
    public final func setup ()
@@ -55,6 +56,17 @@ public class X3DBaseNode :
    internal func initialize () { }
    
    public private(set) final var isInitialized = false
+   
+   // Name handling
+   
+   @SFTime public final var name_changed = 0
+
+   internal final override func setName (_ value : String)
+   {
+      super .setName (value)
+      
+      name_changed = SFTime .now
+   }
 
    // Children handling
    

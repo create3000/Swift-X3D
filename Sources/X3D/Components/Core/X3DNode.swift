@@ -180,6 +180,11 @@ public class X3DNode :
             {
                count += c
             }
+            else if let proto = parent as? X3DProtoDeclaration,
+                    !proto .isPrivate
+            {
+               count += c
+            }
          }
       }
       

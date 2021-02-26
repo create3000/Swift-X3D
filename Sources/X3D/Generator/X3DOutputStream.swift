@@ -155,9 +155,11 @@ public final class X3DOutputStream
    // Execution context handling
    
    internal final var executionContext : X3DExecutionContext { executionContexts .last! }
+   internal final var inProto          : Bool { !protos .isEmpty }
 
    private final var executionContexts = [X3DExecutionContext] ()
-   
+   private final var protos            = [X3DProtoDeclaration] ()
+
    private final var names         = NSMapTable <X3DExecutionContext, NSHashTable <NSString>> ()
    private final var importedNodes = NSMapTable <X3DExecutionContext, NSHashTable <X3DNode>> ()
    private final var exportedNodes = NSMapTable <X3DExecutionContext, NSHashTable <X3DNode>> ()
@@ -192,6 +194,16 @@ public final class X3DOutputStream
       exportedNodes .removeAllObjects ()
    }
    
+   internal final func push (_ proto : X3DProtoDeclaration)
+   {
+      protos .append (proto)
+   }
+   
+   internal final func pop (_ proto : X3DProtoDeclaration)
+   {
+      protos .removeLast ()
+   }
+
    // Scope handling
    
    private final var level         = 0

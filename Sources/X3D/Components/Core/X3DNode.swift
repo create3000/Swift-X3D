@@ -506,7 +506,7 @@ public class X3DNode :
             }
          }
          
-         if !references .isEmpty
+         if !references .isEmpty && stream .inProto
          {
             stream += stream .Indent
             stream += "<IS>"
@@ -987,7 +987,7 @@ public class X3DNode :
 
       // IS references
 
-      if !references .isEmpty
+      if !references .isEmpty && stream .inProto
       {
          if stream .lastProperty
          {
@@ -1165,7 +1165,7 @@ public class X3DNode :
             {
                let references = field .references .allObjects
                
-               if references .isEmpty
+               if references .isEmpty || !stream .inProto
                {
                   stream += stream .Indent
                   stream += stream .padding (field .getAccessType () .description, accessTypeLength)
@@ -1283,7 +1283,7 @@ public class X3DNode :
          {
             let references = field .references .allObjects
             
-            if references .isEmpty
+            if references .isEmpty || !stream .inProto
             {
                if field .isInitializable
                {

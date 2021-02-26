@@ -130,6 +130,8 @@ public final class X3DProtoDeclaration :
       // </ProtoInterface>
 
       // <ProtoBody>
+      
+      stream .push (self)
 
       stream += stream .IncIndent ()
       stream += stream .Indent
@@ -142,6 +144,8 @@ public final class X3DProtoDeclaration :
       stream += "</ProtoBody>"
       stream += stream .TidyBreak
       stream += stream .DecIndent ()
+      
+      stream .pop (self)
 
       // </ProtoBody>
 
@@ -360,11 +364,13 @@ public final class X3DProtoDeclaration :
       stream += stream .TidyBreak
       stream += stream .IncIndent ()
 
+      stream .push (self)
       stream .lastProperties .append (false)
       
       body .toJSONStream (stream)
       
       stream .lastProperties .removeLast ()
+      stream .pop (self)
 
       stream += stream .TidyBreak
       stream += stream .DecIndent ()
@@ -459,8 +465,12 @@ public final class X3DProtoDeclaration :
       stream += "{"
       stream += stream .TidyBreak
       stream += stream .IncIndent ()
+      
+      stream .push (self)
 
       body .toVRMLStream (stream)
+      
+      stream .pop (self)
 
       stream += stream .DecIndent ()
       stream += stream .Indent

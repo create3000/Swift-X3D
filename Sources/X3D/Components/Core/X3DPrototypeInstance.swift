@@ -406,7 +406,7 @@ public class X3DPrototypeInstance :
             }
          }
                   
-         if !references .isEmpty
+         if !references .isEmpty && stream .inProto
          {
             stream += stream .Indent
             stream += "<IS>"
@@ -759,7 +759,7 @@ public class X3DPrototypeInstance :
 
          // IS references
 
-         if !references .isEmpty
+         if !references .isEmpty && stream .inProto
          {
             if stream .lastProperty
             {

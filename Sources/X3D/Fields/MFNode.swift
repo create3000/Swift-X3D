@@ -358,9 +358,6 @@ public final class MFNode <Element : X3DBaseNode> :
    {
       stream .enterScope ()
       
-      stream += stream .TidyBreak
-      stream += stream .IncIndent ()
-      
       for node in wrappedValue
       {
          stream += stream .Indent
@@ -378,9 +375,6 @@ public final class MFNode <Element : X3DBaseNode> :
             stream += stream .Break
          }
       }
-      
-      stream += stream .DecIndent ()
-      stream += stream .Indent
       
       stream .leaveScope ()
    }

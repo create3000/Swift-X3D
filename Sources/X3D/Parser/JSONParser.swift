@@ -11,19 +11,17 @@ public final class JSONParser :
 {
    // Properties
    
-   private final var scene : X3DScene
-   private final var json  : [String : Any]?
+   private final var json : [String : Any]?
    
    // Construction
    
    public init (scene : X3DScene, x3dSyntax : String)
    {
       // Set scene and create xml parser.
-      self .scene = scene
-      self .json  = try? JSONSerialization .jsonObject (with: Data (x3dSyntax .utf8), options: [ ]) as? [String : Any]
-
+      self .json = try? JSONSerialization .jsonObject (with: Data (x3dSyntax .utf8), options: [ ]) as? [String : Any]
+      
       // Init super.
-      super .init ()
+      super .init (scene: scene)
       
       executionContexts .append (scene)
    }

@@ -157,12 +157,20 @@ public final class X3DOutputStream
    internal final var executionContext : X3DExecutionContext { executionContexts .last! }
    internal final var inProto          : Bool { !protos .isEmpty }
 
+   private final var scenes            = [X3DScene] ()
    private final var executionContexts = [X3DExecutionContext] ()
    private final var protos            = [X3DProtoDeclaration] ()
 
    private final var names         = NSMapTable <X3DExecutionContext, NSHashTable <NSString>> ()
    private final var importedNodes = NSMapTable <X3DExecutionContext, NSHashTable <X3DNode>> ()
    private final var exportedNodes = NSMapTable <X3DExecutionContext, NSHashTable <X3DNode>> ()
+   
+   internal final func push (_ scene : X3DScene)
+   {
+      scenes .append (scene)
+      
+      push (scene as X3DExecutionContext)
+   }
 
    internal final func push (_ executionContext : X3DExecutionContext)
    {
@@ -451,7 +459,7 @@ public final class X3DOutputStream
    {
       if units
       {
-         return executionContext .toUnit (unit, value: value)
+         return scenes .last! .toUnit (unit, value: value)
       }
       else
       {
@@ -463,7 +471,7 @@ public final class X3DOutputStream
    {
       if units
       {
-         return executionContext .toUnit (unit, value: value)
+         return scenes .last! .toUnit (unit, value: value)
       }
       else
       {

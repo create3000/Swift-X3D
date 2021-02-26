@@ -8,6 +8,15 @@
 
 public class X3DParser
 {
+   // Construction
+   
+   internal final let scene : X3DScene
+   
+   public init (scene : X3DScene)
+   {
+      self .scene = scene
+   }
+   
    // Execution context
    
    public final var executionContexts = [X3DExecutionContext] ()
@@ -24,11 +33,11 @@ public class X3DParser
    
    internal final func fromUnit (_ category : X3DUnitCategory, value : Double) -> Double
    {
-      return executionContext .fromUnit (category, value: value)
+      return scene .fromUnit (category, value: value)
    }
 
    internal final func fromUnit (_ category : X3DUnitCategory, value : Float) -> Float
    {
-      return executionContext .fromUnit (category, value: value)
+      return scene .fromUnit (category, value: value)
    }
 }

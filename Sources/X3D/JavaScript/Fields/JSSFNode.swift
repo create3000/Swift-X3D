@@ -361,7 +361,7 @@ extension JavaScript
          {
             let stream = X3DOutputStream (style : X3DOutputStyle (style) ?? .Tidy)
             
-            return node .toXMLString (with: JSContext .current ()! .browser! .executionContext, stream: stream)
+            return node .toXMLString (with: JSContext .current ()! .browser! .executionContext .scene!, stream: stream)
          }
          else
          {
@@ -375,7 +375,7 @@ extension JavaScript
          {
             let stream = X3DOutputStream (style : X3DOutputStyle (style) ?? .Tidy)
             
-            return node .toJSONString (with: JSContext .current ()! .browser! .executionContext, stream: stream)
+            return node .toJSONString (with: JSContext .current ()! .browser! .executionContext .scene!, stream: stream)
          }
          else
          {
@@ -389,7 +389,7 @@ extension JavaScript
          {
             let stream = X3DOutputStream (style : X3DOutputStyle (style) ?? .Tidy)
             
-            return node .toVRMLString (with: JSContext .current ()! .browser! .executionContext, stream: stream)
+            return node .toVRMLString (with: JSContext .current ()! .browser! .executionContext .scene!, stream: stream)
          }
          else
          {

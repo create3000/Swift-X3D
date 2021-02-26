@@ -143,9 +143,9 @@ public final class X3DScene :
       UnitInfo (category: .mass,   name: "kilogram", conversionFactor: 1),
    ]
    
-   public final override func getUnits () -> [UnitInfo] { units }
+   public final func getUnits () -> [UnitInfo] { units }
    
-   public final override func getUnit (_ category : X3DUnitCategory) -> UnitInfo?
+   public final func getUnit (_ category : X3DUnitCategory) -> UnitInfo?
    {
       switch category
       {
@@ -162,7 +162,7 @@ public final class X3DScene :
       }
    }
 
-   public final override func updateUnit (_ category : X3DUnitCategory, name : String, conversionFactor : Double)
+   public final func updateUnit (_ category : X3DUnitCategory, name : String, conversionFactor : Double)
    {
       switch category
       {
@@ -176,7 +176,7 @@ public final class X3DScene :
       units_changed = SFTime .now
    }
 
-   public final override func fromUnit (_ category : X3DUnitCategory, value : Double) -> Double
+   public final func fromUnit (_ category : X3DUnitCategory, value : Double) -> Double
    {
       switch category
       {
@@ -201,12 +201,12 @@ public final class X3DScene :
       }
    }
    
-   public final override func fromUnit (_ category : X3DUnitCategory, value : Float) -> Float
+   public final func fromUnit (_ category : X3DUnitCategory, value : Float) -> Float
    {
       return Float (fromUnit (category, value: Double (value)))
    }
 
-   public final override func toUnit (_ category : X3DUnitCategory, value : Double) -> Double
+   public final func toUnit (_ category : X3DUnitCategory, value : Double) -> Double
    {
       switch category
       {
@@ -231,7 +231,7 @@ public final class X3DScene :
       }
    }
    
-   public final override func toUnit (_ category : X3DUnitCategory, value : Float) -> Float
+   public final func toUnit (_ category : X3DUnitCategory, value : Float) -> Float
    {
       return Float (toUnit (category, value: Double (value)))
    }
@@ -368,6 +368,21 @@ public final class X3DScene :
    
    // Input/Output
    
+   public final func toXMLString (stream : X3DOutputStream = X3DOutputStream ()) -> String
+   {
+      return toXMLString (with: self, stream: stream)
+   }
+   
+   public final func toJSONString (stream : X3DOutputStream = X3DOutputStream ()) -> String
+   {
+      return toJSONString (with: self, stream: stream)
+   }
+   
+   public final func toVRMLString (stream : X3DOutputStream = X3DOutputStream ()) -> String
+   {
+      return toVRMLString (with: self, stream: stream)
+   }
+
    internal final override func toXMLStream (_ stream : X3DOutputStream)
    {
       var specificationVersion = getSpecificationVersion ()

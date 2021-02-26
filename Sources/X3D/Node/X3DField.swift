@@ -181,14 +181,14 @@ public class X3DField :
    
    // Input/Output
    
-   public final func toDisplayString (with executionContext : X3DExecutionContext) -> String
+   public final func toDisplayString (with scene : X3DScene) -> String
    {
       let stream = X3DOutputStream ()
       
       stream .style = .Small
       stream .units = true
       
-      stream .push (executionContext)
+      stream .push (scene)
       
       toDisplayStream (stream)
       

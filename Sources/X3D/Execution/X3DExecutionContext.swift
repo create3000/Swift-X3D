@@ -74,40 +74,6 @@ public class X3DExecutionContext :
    public func setComponents (_ value : [ComponentInfo]) { scene! .setComponents (value) }
    
    public func addComponent (_ component : ComponentInfo) { scene! .addComponent (component) }
-
-   // Unit handling
-   
-   public func getUnits () -> [UnitInfo] { scene! .getUnits () }
-   
-   public func getUnit (_ category : X3DUnitCategory) -> UnitInfo?
-   {
-      return scene! .getUnit (category)
-   }
-
-   public func updateUnit (_ category : X3DUnitCategory, name : String, conversionFactor : Double)
-   {
-      scene! .updateUnit (category, name: name, conversionFactor: conversionFactor)
-   }
-   
-   public func fromUnit (_ category : X3DUnitCategory, value : Double) -> Double
-   {
-      return scene! .fromUnit (category, value: value)
-   }
-   
-   public func toUnit (_ unit : X3DUnitCategory, value : Double) -> Double
-   {
-      return scene! .toUnit (unit, value: value)
-   }
-   
-   public func fromUnit (_ category : X3DUnitCategory, value : Float) -> Float
-   {
-      return scene! .fromUnit (category, value: value)
-   }
-   
-   public func toUnit (_ unit : X3DUnitCategory, value : Float) -> Float
-   {
-      return scene! .toUnit (unit, value: value)
-   }
    
    private final weak var worldInfo : WorldInfo?
    
@@ -922,21 +888,6 @@ public class X3DExecutionContext :
    @SFTime public final var routes_changed = 0
 
    // Input/Output
-   
-   public final func toXMLString (stream : X3DOutputStream = X3DOutputStream ()) -> String
-   {
-      return toXMLString (with: self, stream: stream)
-   }
-   
-   public final func toJSONString (stream : X3DOutputStream = X3DOutputStream ()) -> String
-   {
-      return toJSONString (with: self, stream: stream)
-   }
-   
-   public final func toVRMLString (stream : X3DOutputStream = X3DOutputStream ()) -> String
-   {
-      return toVRMLString (with: self, stream: stream)
-   }
    
    internal override func toXMLStream (_ stream : X3DOutputStream)
    {

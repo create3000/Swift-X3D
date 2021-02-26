@@ -14,7 +14,6 @@ public final class XMLParser :
 {
    // Properties
    
-   private final var scene    : X3DScene
    private final var document : XMLDocument?
    private final var parents  : [X3DChildObject] = [ ]
    
@@ -23,11 +22,10 @@ public final class XMLParser :
    public init (scene : X3DScene, x3dSyntax : String)
    {
       // Set scene and create xml parser.
-      self .scene    = scene
       self .document = try? XMLDocument (xmlString: x3dSyntax)
 
       // Init super.
-      super .init ()
+      super .init (scene: scene)
       
       executionContexts .append (scene)
    }

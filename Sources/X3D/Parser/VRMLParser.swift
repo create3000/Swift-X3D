@@ -100,7 +100,6 @@ public final class VRMLParser :
 
    // Properties
    
-   private final var scene   : X3DScene
    private final var scanner : Scanner
    
    private final var lineNumber : Int
@@ -113,7 +112,6 @@ public final class VRMLParser :
    public init (scene : X3DScene, x3dSyntax : String)
    {
       // Set scene and create scanner.
-      self .scene   = scene
       self .scanner = Scanner (string: x3dSyntax)
       
       // Configure scanner.
@@ -121,7 +119,7 @@ public final class VRMLParser :
       self .scanner .charactersToBeSkipped = Grammar .whiteSpaces
 
       // Init super.
-      super .init ()
+      super .init (scene: scene)
       
       executionContexts .append (scene)
    }

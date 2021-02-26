@@ -65,7 +65,10 @@ public class X3DBaseNode :
    {
       super .setName (value)
       
-      name_changed = SFTime .now
+      if Thread .isMainThread
+      {
+         name_changed = SFTime .now
+      }
    }
 
    // Children handling
@@ -114,7 +117,10 @@ public class X3DBaseNode :
          fieldIndex [name + "_changed"] = field
       }
       
-      fields_changed = SFTime .now
+      if Thread .isMainThread
+      {
+         fields_changed = SFTime .now
+      }
    }
    
    private final var aliases : [String : String] = [:]
@@ -164,7 +170,10 @@ public class X3DBaseNode :
       
       numUserDefinedFields -= 1
       
-      fields_changed = SFTime .now
+      if Thread .isMainThread
+      {
+         fields_changed = SFTime .now
+      }
    }
 
    public final func getField <Type : X3DField> (of type : Type .Type, name : String) throws -> Type

@@ -333,7 +333,7 @@ public final class XMLParser :
 
          protoInterfaceElement (element) // Parse fields.
          
-         try executionContext .updateExternProtoDeclaration (name: name, externproto: externproto)
+         try executionContext .addExternProtoDeclaration (name: name, externproto: externproto)
          
          externproto .setup ()
       }
@@ -391,7 +391,7 @@ public final class XMLParser :
             }
          }
 
-         try executionContext .updateProtoDeclaration (name: name, proto: proto)
+         try executionContext .addProtoDeclaration (name: name, proto: proto)
          
          proto .setup ()
       }

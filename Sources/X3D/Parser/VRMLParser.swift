@@ -190,6 +190,8 @@ public final class VRMLParser :
 
    // Parse
    
+   private final var console : X3DConsole { scene .browser! .console }
+
    private final func x3dScene () throws
    {
       headerStatement ()
@@ -638,7 +640,14 @@ public final class VRMLParser :
          throw X3DError .INVALID_X3D (t("Expected a '}' at the end of PROTO body."))
       }
 
-      try executionContext .updateProtoDeclaration (name: nodeTypeId, proto: proto)
+      do
+      {
+         try executionContext .addProtoDeclaration (name: nodeTypeId, proto: proto)
+      }
+      catch
+      {
+         console .warn (error .localizedDescription)
+      }
       
       proto .setup ()
 
@@ -800,8 +809,15 @@ public final class VRMLParser :
       
       let externproto = executionContext .createExternProtoDeclaration (name: nodeTypeId, interfaceDeclarations: externInterfaceDeclarations, url: URLList, setup: false)
 
-      try executionContext .updateExternProtoDeclaration (name: nodeTypeId, externproto: externproto)
-      
+      do
+      {
+         try executionContext .addExternProtoDeclaration (name: nodeTypeId, externproto: externproto)
+      }
+      catch
+      {
+         console .warn (error .localizedDescription)
+      }
+
       externproto .setup ()
 
       return true

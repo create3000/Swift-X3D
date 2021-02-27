@@ -480,25 +480,15 @@ public class X3DExecutionContext :
          throw X3DError .INVALID_NAME (t("Couldn't add proto declaration: proto name is empty."))
       }
 
-      guard !hasProtoDeclaration (name: name) else
+      proto .setName (name)
+      
+      if let index = protos .firstIndex (where: { $0 .getName () == name })
       {
-         throw X3DError .INVALID_NAME (t("Couldn't add proto declaration: proto '%@' is already in use.", name))
-      }
-
-      if let existing = try? getProtoDeclaration (name: proto .getName ())
-      {
-         if existing === proto
-         {
-            proto .setName (name)
-         }
-         else
-         {
-            try addProtoDeclaration (name: name, proto: proto)
-         }
+         protos [index] = proto
       }
       else
       {
-         try addProtoDeclaration (name: name, proto: proto)
+         protos .append (proto)
       }
       
       protos_changed = SFTime .now
@@ -584,25 +574,15 @@ public class X3DExecutionContext :
          throw X3DError .INVALID_NAME (t("Couldn't add extern proto declaration: extern proto name is empty."))
       }
 
-      guard !hasExternProtoDeclaration (name: name) else
+      externproto .setName (name)
+      
+      if let index = protos .firstIndex (where: { $0 .getName () == name })
       {
-         throw X3DError .INVALID_NAME (t("Couldn't add extern proto declaration: extern proto '%@' is already in use.", name))
-      }
-
-      if let existing = try? getExternProtoDeclaration (name: externproto .getName ())
-      {
-         if existing === externproto
-         {
-            externproto .setName (name)
-         }
-         else
-         {
-            try addExternProtoDeclaration (name: name, externproto: externproto)
-         }
+         externprotos [index] = externproto
       }
       else
       {
-         try addExternProtoDeclaration (name: name, externproto: externproto)
+         externprotos .append (externproto)
       }
       
       externprotos_changed = SFTime .now

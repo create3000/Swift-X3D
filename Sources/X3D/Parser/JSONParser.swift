@@ -254,8 +254,15 @@ public final class JSONParser :
 
       fieldArray (object ["field"], externproto)
 
-      try? executionContext .updateExternProtoDeclaration (name: name, externproto: externproto)
-      
+      do
+      {
+         try executionContext .addExternProtoDeclaration (name: name, externproto: externproto)
+      }
+      catch
+      {
+         console .warn (error .localizedDescription)
+      }
+
       externproto .setup ()
    }
 
@@ -280,8 +287,15 @@ public final class JSONParser :
       protos            .removeLast ()
       executionContexts .removeLast ()
 
-      try? executionContext .updateProtoDeclaration (name: name, proto: proto)
-      
+      do
+      {
+         try executionContext .updateProtoDeclaration (name: name, proto: proto)
+      }
+      catch
+      {
+         console .warn (error .localizedDescription)
+      }
+
       proto .setup ()
    }
    

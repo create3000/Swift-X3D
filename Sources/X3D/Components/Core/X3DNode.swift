@@ -1551,7 +1551,7 @@ public extension X3DNode
       if let set = metadata as? MetadataSet,
          set .name == "Sunrise"
       {
-         return set .getSet (path)
+         return set .getSet (path, create: create)
       }
       else if create
       {

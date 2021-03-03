@@ -54,7 +54,7 @@ public final class MetadataSet :
       let name = path .removeFirst ()
       let set  = getData (name, create: create, of: MetadataSet .self)
       
-      return set? .getSet (path)
+      return set? .getSet (path, create: create)
    }
    
    internal final func getBoolean (_ name : String, create : Bool = false) -> MetadataBoolean?

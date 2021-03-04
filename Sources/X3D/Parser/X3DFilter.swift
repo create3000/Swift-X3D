@@ -17,6 +17,15 @@ public func remove_trailing_number (_ string : String) -> String
    return matches [1]
 }
 
+internal func proto_remove_trailing_number (_ string : String) -> String
+{
+   let name = try! NSRegularExpression (pattern: "^(.*?)(?:\\d+)?$")
+   
+   guard let matches = name .matches (in: string) else { return string }
+
+   return matches [1]
+}
+
 internal func filter_data_url (string : String) -> String?
 {
    let dataURL = try! NSRegularExpression (pattern: "^(data:[\\s\\S]*?,)")

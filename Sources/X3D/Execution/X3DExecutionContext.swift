@@ -310,7 +310,7 @@ public class X3DExecutionContext :
    }
    
    /// Returns a name for a named node that is unique in this execution context.
-   public final func getUniqueName (for name: String) -> String
+   public final func getUniqueName (for name : String) -> String
    {
       let name       = remove_trailing_number (name)
       var uniqueName = name
@@ -482,16 +482,12 @@ public class X3DExecutionContext :
 
       proto .setName (name)
       
-      if let index = protos .firstIndex (where: { $0 .getName () == name })
-      {
-         protos [index] = proto
-      }
-      else
+      if !protos .contains (proto)
       {
          protos .append (proto)
+         
+         protos_changed = SFTime .now
       }
-      
-      protos_changed = SFTime .now
    }
    
    public final func removeProtoDeclaration (name : String)
@@ -519,6 +515,30 @@ public class X3DExecutionContext :
    public final func getProtoDeclarations () -> [X3DProtoDeclaration] { protos }
    
    @SFTime public final var protos_changed = 0
+   
+   /// Returns a name for a proto that is unique in this execution context.
+   public final func getUniqueProtoName (for name : String) -> String
+   {
+      let name       = proto_remove_trailing_number (name)
+      let names      = Set (protos .map { $0 .getName () })
+      var uniqueName = name
+      var i          = UInt (1)
+
+      while names .contains (uniqueName) || uniqueName .isEmpty
+      {
+         i = i == 0 ? 1 : i
+         
+         let min = i
+         let max = i << 1
+         
+         uniqueName  = name
+         uniqueName += String (UInt .random (in: min ..< max))
+
+         i = max
+      }
+
+      return uniqueName
+   }
 
    // Extern proto handling
    
@@ -576,16 +596,12 @@ public class X3DExecutionContext :
 
       externproto .setName (name)
       
-      if let index = protos .firstIndex (where: { $0 .getName () == name })
-      {
-         externprotos [index] = externproto
-      }
-      else
+      if !externprotos .contains (externproto)
       {
          externprotos .append (externproto)
+         
+         externprotos_changed = SFTime .now
       }
-      
-      externprotos_changed = SFTime .now
    }
 
    public final func removeExternProtoDeclaration (name : String)
@@ -613,6 +629,30 @@ public class X3DExecutionContext :
    public final func getExternProtoDeclarations () -> [X3DExternProtoDeclaration] { externprotos }
    
    @SFTime public final var externprotos_changed = 0
+   
+   /// Returns a name for a proto that is unique in this execution context.
+   public final func getUniqueExternProtoName (for name : String) -> String
+   {
+      let name       = proto_remove_trailing_number (name)
+      let names      = Set (externprotos .map { $0 .getName () })
+      var uniqueName = name
+      var i          = UInt (1)
+
+      while names .contains (uniqueName) || uniqueName .isEmpty
+      {
+         i = i == 0 ? 1 : i
+         
+         let min = i
+         let max = i << 1
+         
+         uniqueName  = name
+         uniqueName += String (UInt .random (in: min ..< max))
+
+         i = max
+      }
+
+      return uniqueName
+   }
 
    // Route handling
    

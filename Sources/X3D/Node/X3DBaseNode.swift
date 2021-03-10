@@ -148,7 +148,7 @@ public class X3DBaseNode :
       [X3DField] (fieldDefinitions [(fieldDefinitions .count - numUserDefinedFields)...])
    }
  
-   internal final func addUserDefinedField (_ accessType : X3DAccessType, _ name : String, _ field : X3DField)
+   public final func addUserDefinedField (_ accessType : X3DAccessType, _ name : String, _ field : X3DField)
    {
       addField (accessType, name, field)
       

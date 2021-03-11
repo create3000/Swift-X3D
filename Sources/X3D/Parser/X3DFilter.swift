@@ -36,3 +36,18 @@ internal func filter_data_url (string : String) -> String?
    
    return matches [1] + data
 }
+
+public func validate (id : String) -> Bool
+{
+   guard !id .isEmpty else { return false }
+   
+   let scanner = Scanner (string: id)
+
+   scanner .charactersToBeSkipped = VRMLParser .Grammar .nothing
+
+   guard let idFirstChars = scanner .scanCharacters (from: VRMLParser .Grammar .idFirstChar) else { return false }
+
+   let idLastChars = scanner .scanCharacters (from: VRMLParser .Grammar .idLastChars)
+
+   return (idFirstChars + (idLastChars ?? "")) == id
+}

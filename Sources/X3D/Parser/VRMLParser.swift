@@ -14,7 +14,7 @@ public final class VRMLParser :
 {
    // Grammar
 
-   private class Grammar
+   internal class Grammar
    {
       // Header
       

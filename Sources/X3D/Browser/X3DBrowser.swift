@@ -125,6 +125,16 @@ public final class X3DBrowser :
       
       return fields .sorted ()
    }
+   
+   public final func createField (type : String) throws -> X3DField
+   {
+      guard let interface = SupportedFields .fields [type] else
+      {
+         throw X3DError .INVALID_NAME (t("Invalid field type name."))
+      }
+      
+      return interface .init ()
+   }
 
    // Scene handling
    

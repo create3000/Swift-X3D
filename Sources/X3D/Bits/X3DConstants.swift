@@ -54,14 +54,14 @@ public enum X3DAccessType :
       "exposedField" : .inputOutput,
    ]
    
-   init? (_ string : String)
+   public init? (_ string : String)
    {
       guard let value = X3DAccessType .accessTypesX3D [string] else { return nil }
       
       self = value
    }
    
-   init? (vrml : String)
+   public init? (vrml : String)
    {
       guard let value = X3DAccessType .accessTypesVRML [vrml] else { return nil }
       

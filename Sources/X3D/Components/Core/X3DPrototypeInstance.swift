@@ -185,12 +185,6 @@ public class X3DPrototypeInstance :
 
       // Inform parents about root node change.
       addEvent ()
-      
-      if Thread .isMainThread
-      {
-         // Inform requester about possible fields change.
-         fields_changed = SFTime .now
-      }
    }
 
    // Root node handling

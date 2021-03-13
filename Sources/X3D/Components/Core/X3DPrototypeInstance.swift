@@ -83,6 +83,16 @@ public class X3DPrototypeInstance :
       }
       
       update ()
+      
+      // Reorder fields as ordered in proto.
+      
+      for protoField in proto .getUserDefinedFields ()
+      {
+         let field = try! getField (name: protoField .getName ())
+         
+         removeField (field)
+         addField (protoField .getAccessType (), protoField .getName (), field)
+      }
    }
    
    private func update ()

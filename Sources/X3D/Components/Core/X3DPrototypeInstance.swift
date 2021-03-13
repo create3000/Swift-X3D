@@ -45,10 +45,14 @@ public class X3DPrototypeInstance :
       
       self .protoNode = protoNode
       
+      self .protoNode! .addInterest ("update", { $0 .update () }, self)
+
       if let externproto = protoNode as? X3DExternProtoDeclaration
       {
          DispatchQueue .main .async { externproto .requestImmediateLoad () }
       }
+      
+      update ()
    }
    
    internal final override func create (with executionContext : X3DExecutionContext) -> X3DPrototypeInstance
@@ -59,10 +63,6 @@ public class X3DPrototypeInstance :
    internal final override func initialize ()
    {
       super .initialize ()
-      
-      protoNode! .addInterest ("update", { $0 .update () }, self)
-      
-      update ()
    }
    
    private func update ()
@@ -78,38 +78,45 @@ public class X3DPrototypeInstance :
          return
       }
       
-      if protoNode! .isExternProto
+      for protoField in proto .getUserDefinedFields ()
       {
-         for protoField in proto .getUserDefinedFields ()
+         if let field = try? getField (name: protoField .getName ())
          {
-            if let field = try? getField (name: protoField .getName ())
-            {
-               // Continue if something is wrong.
-               guard field .getAccessType () == protoField .getAccessType () else { continue }
- 
-               // Continue if something is wrong.
-               guard field .getType () == protoField .getType () else { continue }
+            // Continue if something is wrong.
+            guard field .getAccessType () == protoField .getAccessType () else { continue }
 
-               // Continue if field is eventIn or eventOut.
-               guard field .isInitializable else { continue }
+            // Continue if something is wrong.
+            guard field .getType () == protoField .getType () else { continue }
 
-               // Is set during parse or later.
-               guard !field .isSet else { continue }
+            // Continue if field is eventIn or eventOut.
+            guard field .isInitializable else { continue }
 
-               // Has IS references.
-               guard field .references .count == 0 else { continue }
+            // Is set during parse or later.
+            guard !field .isSet else { continue }
 
-               // Fields are equal.
-               //guard !field .equals (protoField)) else { continue }
-               
-               // If default value of protoField is different from field update default value for field.
-               field .set (value: protoField)
-            }
-            else
-            {
-               // Definition exists in proto but does not exist in extern proto.
-               addField (protoField .getAccessType (), protoField .getName (), protoField .copy ())
-            }
+            // Has IS references.
+            guard field .references .count == 0 else { continue }
+
+            // Fields are equal.
+            //guard !field .equals (protoField)) else { continue }
+            
+            // If default value of protoField is different from field update default value for field.
+            field .set (value: protoField)
+         }
+         else
+         {
+            // Definition exists in proto but does not exist in extern proto.
+            addField (protoField .getAccessType (), protoField .getName (), protoField .copy ())
+         }
+      }
+      
+      for field in getFieldDefinitions ()
+      {
+         guard field !== $metadata else { continue }
+         
+         if (try? proto .getField (name: field .getName ())) == nil
+         {
+            removeField (field)
          }
       }
       

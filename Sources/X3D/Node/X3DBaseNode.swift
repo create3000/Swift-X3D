@@ -123,6 +123,19 @@ public class X3DBaseNode :
       }
    }
    
+   internal final func removeField (_ field : X3DField)
+   {
+      field .removeParent (self)
+      
+      fieldIndex .removeValue (forKey: field .getName ())
+      fieldDefinitions .remove (at: fieldDefinitions .firstIndex { $0 === field }!)
+      
+      if Thread .isMainThread
+      {
+         fields_changed = SFTime .now
+      }
+   }
+
    private final var aliases : [String : String] = [:]
    
    internal final func addFieldAlias (alias : String, name : String)

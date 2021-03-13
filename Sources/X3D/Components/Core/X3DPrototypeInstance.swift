@@ -65,6 +65,26 @@ public class X3DPrototypeInstance :
       super .initialize ()
    }
    
+   private func reload ()
+   {
+      guard let proto = protoNode! .proto else { return }
+      
+      let fields = getFieldDefinitions () .filter { $0 !== $metadata }
+      
+      fields .forEach { removeField ($0) }
+      
+      for field in fields
+      {
+         if let protoField = try? proto .getField (name: field .getName ()),
+            protoField .getType () == field .getType ()
+         {
+            addField (protoField .getAccessType (), protoField .getName (), field)
+         }
+      }
+      
+      update ()
+   }
+   
    private func update ()
    {
       guard let proto = protoNode! .proto else
@@ -78,6 +98,8 @@ public class X3DPrototypeInstance :
          return
       }
       
+      protoNode! .addInterest ("update", { $0 .reload () }, self)
+
       for protoField in proto .getUserDefinedFields ()
       {
          if let field = try? getField (name: protoField .getName ())
@@ -107,16 +129,6 @@ public class X3DPrototypeInstance :
          {
             // Definition exists in proto but does not exist in extern proto.
             addField (protoField .getAccessType (), protoField .getName (), protoField .copy ())
-         }
-      }
-      
-      for field in getFieldDefinitions ()
-      {
-         guard field !== $metadata else { continue }
-         
-         if (try? proto .getField (name: field .getName ())) == nil
-         {
-            removeField (field)
          }
       }
       
@@ -173,6 +185,12 @@ public class X3DPrototypeInstance :
 
       // Inform parents about root node change.
       addEvent ()
+      
+      if Thread .isMainThread
+      {
+         // Inform requester about possible fields change.
+         fields_changed = SFTime .now
+      }
    }
 
    // Root node handling

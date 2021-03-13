@@ -100,7 +100,7 @@ public class X3DBaseNode :
    ///
    internal final func addField (_ accessType : X3DAccessType, _ name : String, _ field : X3DField)
    {
-      field .isTainted = true
+      field .isTainted = !isInitialized
       field .addParent (self)
 
       field .setName (name)

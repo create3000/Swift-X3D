@@ -30,7 +30,7 @@ internal final class X3DShapeContextProperties :
    }
 }
 
-internal protocol X3DShapeContext : class
+internal protocol X3DShapeContext : AnyObject
 {
    var browser                : X3DBrowser { get }
    var shapeContextProperties : X3DShapeContextProperties! { get }

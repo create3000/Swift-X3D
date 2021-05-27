@@ -23,7 +23,7 @@ internal final class X3DNetworkingContextProperties :
    }
 }
 
-internal protocol X3DNetworkingContext : class
+internal protocol X3DNetworkingContext : AnyObject
 {
    var browser                     : X3DBrowser { get }
    var networkingContextProperties : X3DNetworkingContextProperties! { get }

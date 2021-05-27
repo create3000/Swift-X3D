@@ -20,7 +20,7 @@ internal final class X3DScriptingContextProperties :
    }
 }
 
-internal protocol X3DScriptingContext : class
+internal protocol X3DScriptingContext : AnyObject
 {
    var browser                    : X3DBrowser { get }
    var scriptingContextProperties : X3DScriptingContextProperties! { get }

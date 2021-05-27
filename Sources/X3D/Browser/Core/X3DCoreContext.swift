@@ -56,7 +56,7 @@ internal final class X3DCoreContextProperties :
    }
 }
 
-internal protocol X3DCoreContext : class
+internal protocol X3DCoreContext : AnyObject
 {
    var browser               : X3DBrowser { get }
    var coreContextProperties : X3DCoreContextProperties! { get }

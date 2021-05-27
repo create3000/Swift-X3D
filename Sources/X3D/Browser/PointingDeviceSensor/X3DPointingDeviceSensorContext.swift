@@ -226,7 +226,7 @@ internal final class X3DPointingDeviceSensorContextProperties :
    }
 }
 
-internal protocol X3DPointingDeviceSensorContext : class
+internal protocol X3DPointingDeviceSensorContext : AnyObject
 {
    var browser                               : X3DBrowser { get }
    var pointingDeviceSensorContextProperties : X3DPointingDeviceSensorContextProperties! { get }

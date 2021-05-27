@@ -35,7 +35,7 @@ internal final class X3DTexturingContextProperties :
    }
 }
 
-internal protocol X3DTexturingContext : class
+internal protocol X3DTexturingContext : AnyObject
 {
    var browser                    : X3DBrowser { get }
    var texturingContextProperties : X3DTexturingContextProperties! { get }

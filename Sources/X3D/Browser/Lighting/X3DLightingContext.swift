@@ -24,7 +24,7 @@ internal final class X3DLightingContextProperties :
    }
 }
 
-internal protocol X3DLightingContext : class
+internal protocol X3DLightingContext : AnyObject
 {
    var browser                   : X3DBrowser { get }
    var lightingContextProperties : X3DLightingContextProperties! { get }

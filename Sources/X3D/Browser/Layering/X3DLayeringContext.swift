@@ -30,7 +30,7 @@ internal final class X3DLayeringContextProperties :
    }
 }
 
-internal protocol X3DLayeringContext : class
+internal protocol X3DLayeringContext : AnyObject
 {
    var browser                   : X3DBrowser { get }
    var layeringContextProperties : X3DLayeringContextProperties! { get }

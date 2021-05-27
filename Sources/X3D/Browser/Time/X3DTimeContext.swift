@@ -50,7 +50,7 @@ internal final class X3DTimeContextProperties :
    }
 }
 
-internal protocol X3DTimeContext : class
+internal protocol X3DTimeContext : AnyObject
 {
    var browser               : X3DBrowser { get }
    var timeContextProperties : X3DTimeContextProperties! { get }

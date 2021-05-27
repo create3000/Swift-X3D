@@ -69,23 +69,24 @@ public final class Disk2D :
 
    internal final override func makeBBox () -> Box3f
    {
-      let radius = max (innerRadius, outerRadius)
+      let outerRadius = max (abs (self .innerRadius), abs (self .outerRadius))
       
-      return Box3f (min: Vector3f (-radius, -radius, 0),
-                    max: Vector3f ( radius,  radius, 0))
+      return Box3f (min: Vector3f (-outerRadius, -outerRadius, 0),
+                    max: Vector3f ( outerRadius,  outerRadius, 0))
    }
 
    internal final override func build ()
    {
       guard let browser = browser else { return }
       
+      let innerRadius = min (abs (self .innerRadius), abs (self .outerRadius))
+      let outerRadius = max (abs (self .innerRadius), abs (self .outerRadius))
+
       if innerRadius == outerRadius
       {
-         let radius = abs (outerRadius)
-         
          // Point
          
-         if radius == 0
+         if outerRadius == 0
          {
             //geometryType  = 0
             //primitiveType = .point
@@ -99,7 +100,7 @@ public final class Disk2D :
          geometryType  = 1
          primitiveType = .lineStrip
          
-         if radius == 1
+         if outerRadius == 1
          {
             for vertex in browser .disk2DOptions .circlePrimitives
             {
@@ -110,7 +111,7 @@ public final class Disk2D :
          {
             for vertex in browser .disk2DOptions .circlePrimitives
             {
-               addPrimitive (point: vertex * radius)
+               addPrimitive (point: vertex * outerRadius)
             }
          }
     
@@ -119,16 +120,14 @@ public final class Disk2D :
 
       // Disk
       
-      if innerRadius == 0 || outerRadius == 0
+      if innerRadius == 0
       {
          geometryType  = 2
          primitiveType = .triangle
          isSolid       = solid
          hasTexCoord   = true
 
-         let radius = abs (max (innerRadius, outerRadius))
-
-         if radius == 1
+         if outerRadius == 1
          {
             for vertex in browser .disk2DOptions .diskPrimitives
             {
@@ -143,7 +142,7 @@ public final class Disk2D :
             {
                addPrimitive (texCoords: [vertex .texCoord],
                              normal: .zAxis,
-                             point: vertex .point * radius)
+                             point: vertex .point * outerRadius)
             }
          }
 
@@ -157,9 +156,7 @@ public final class Disk2D :
       isSolid       = solid
       hasTexCoord   = true
 
-      let maxRadius        = abs (max (innerRadius, outerRadius))
-      let minRadius        = abs (min (innerRadius, outerRadius))
-      let scale            = minRadius / maxRadius
+      let scale            = innerRadius / outerRadius
       let offset           = (1 - scale) / 2
       let primitives       = browser .disk2DOptions .diskPrimitives
 
@@ -170,28 +167,28 @@ public final class Disk2D :
 
          addPrimitive (texCoords: [Vector4f (p2 .texCoord .x * scale + offset, p2 .texCoord .y * scale + offset, 0, 1)],
                        normal: .zAxis,
-                       point: Vector3f (p2 .point * minRadius))
+                       point: Vector3f (p2 .point * innerRadius))
          
          addPrimitive (texCoords: [p2 .texCoord],
                        normal: .zAxis,
-                       point: Vector3f (p2 .point * maxRadius))
+                       point: Vector3f (p2 .point * outerRadius))
          
          addPrimitive (texCoords: [p4 .texCoord],
                        normal: .zAxis,
-                       point: Vector3f (p4 .point * maxRadius))
+                       point: Vector3f (p4 .point * outerRadius))
 
          
          addPrimitive (texCoords: [Vector4f (p2 .texCoord .x * scale + offset, p2 .texCoord .y * scale + offset, 0, 1)],
                        normal: .zAxis,
-                       point: Vector3f (p2 .point * minRadius))
+                       point: Vector3f (p2 .point * innerRadius))
          
          addPrimitive (texCoords: [p4 .texCoord],
                        normal: .zAxis,
-                       point: Vector3f (p4 .point * maxRadius))
+                       point: Vector3f (p4 .point * outerRadius))
          
          addPrimitive (texCoords: [Vector4f (p4 .texCoord .x * scale + offset, p4 .texCoord .y * scale + offset, 0, 1)],
                        normal: .zAxis,
-                       point: Vector3f (p4 .point * minRadius))
+                       point: Vector3f (p4 .point * innerRadius))
       }
    }
    

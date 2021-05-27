@@ -22,7 +22,7 @@ internal final class X3DRoutingContextProperties :
    }
 }
 
-internal protocol X3DRoutingContext : class
+internal protocol X3DRoutingContext : AnyObject
 {
    var browser                  : X3DBrowser { get }
    var routingContextProperties : X3DRoutingContextProperties! { get }

@@ -29,7 +29,7 @@ internal final class X3DTextContextProperties :
    }
 }
 
-internal protocol X3DTextContext : class
+internal protocol X3DTextContext : AnyObject
 {
    var browser               : X3DBrowser { get }
    var textContextProperties : X3DTextContextProperties! { get }

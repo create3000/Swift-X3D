@@ -43,7 +43,7 @@ internal final class X3DKeyDeviceSensorContextProperties :
    }
 }
 
-internal protocol X3DKeyDeviceSensorContext : class
+internal protocol X3DKeyDeviceSensorContext : AnyObject
 {
    var browser                          : X3DBrowser { get }
    var keyDeviceSensorContextProperties : X3DKeyDeviceSensorContextProperties! { get }

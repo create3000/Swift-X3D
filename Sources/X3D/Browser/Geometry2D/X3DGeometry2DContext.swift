@@ -69,7 +69,7 @@ internal final class X3DGeometry2DContextProperties :
    }
 }
 
-internal protocol X3DGeometry2DContext : class
+internal protocol X3DGeometry2DContext : AnyObject
 {
    var browser                     : X3DBrowser { get }
    var geometry2DContextProperties : X3DGeometry2DContextProperties! { get }

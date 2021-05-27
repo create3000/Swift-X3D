@@ -140,7 +140,7 @@ internal final class X3DRenderingContextProperties :
    }
 }
 
-internal protocol X3DRenderingContext : class
+internal protocol X3DRenderingContext : AnyObject
 {
    var browser                    : X3DBrowser { get }
    var renderingContextProperties : X3DRenderingContextProperties! { get }

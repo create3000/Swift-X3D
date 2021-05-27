@@ -132,7 +132,7 @@ internal final class X3DNavigationContextProperties :
    }
 }
 
-internal protocol X3DNavigationContext : class
+internal protocol X3DNavigationContext : AnyObject
 {
    var browser                     : X3DBrowser { get }
    var navigationContextProperties : X3DNavigationContextProperties! { get }

@@ -42,10 +42,12 @@ public final class X3DWorld :
       super .initialize ()
 
       executionContext! .$rootNodes .addInterest ("set_rootNodes", { $0 .set_rootNodes () }, self)
+
+      set_rootNodes ()
       
       defaultLayerSetNode .setup ()
 
-      set_rootNodes ()
+      activeLayerNode = layerSetNode! .activeLayerNode
 
       layerSetNode! .bindFirstBindables ()
    }

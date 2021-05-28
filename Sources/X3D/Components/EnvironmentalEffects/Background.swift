@@ -85,12 +85,12 @@ public final class Background :
       $topUrl    .addFieldInterest (to: topTextureNode    .$url)
       $bottomUrl .addFieldInterest (to: bottomTextureNode .$url)
       
-      frontTextureNode  .url .append (contentsOf: frontUrl)
-      backTextureNode   .url .append (contentsOf: backUrl)
-      leftTextureNode   .url .append (contentsOf: leftUrl)
-      rightTextureNode  .url .append (contentsOf: rightUrl)
-      topTextureNode    .url .append (contentsOf: topUrl)
-      bottomTextureNode .url .append (contentsOf: bottomUrl)
+      frontTextureNode  .url = frontUrl
+      backTextureNode   .url = backUrl
+      leftTextureNode   .url = leftUrl
+      rightTextureNode  .url = rightUrl
+      topTextureNode    .url = topUrl
+      bottomTextureNode .url = bottomUrl
       
       frontTextureNode  .textureProperties = texturePropertiesNode
       backTextureNode   .textureProperties = texturePropertiesNode

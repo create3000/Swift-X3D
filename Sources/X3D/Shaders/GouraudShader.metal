@@ -15,20 +15,6 @@
 
 using namespace metal;
 
-struct x3d_VertexOut
-{
-   float  fogDepth;
-   float4 frontColor;
-   float4 backColor;
-   float4 texCoord0;
-   float4 texCoord1;
-   float3 localNormal;
-   float3 normal;
-   float3 localPoint;
-   float4 worldPoint;
-   float4 point [[position]];
-};
-
 float4
 getGouraudMaterialColor (const bool front_facing,
                          const x3d_VertexIn in,
@@ -163,7 +149,9 @@ gouraudFragmentShader (const bool front_facing          [[ front_facing ]],
    
    if (uniforms .numTextures > 0)
    {
-      finalColor = getTextureColor (uniforms,
+      finalColor = getTextureColor (front_facing,
+                                    in,
+                                    uniforms,
                                     texture0,
                                     texture1,
                                     sampler0,

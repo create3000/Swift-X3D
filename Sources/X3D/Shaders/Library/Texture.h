@@ -15,8 +15,25 @@
 
 using namespace metal;
 
+struct x3d_VertexOut
+{
+   float  fogDepth;
+   float4 color;
+   float4 frontColor;
+   float4 backColor;
+   float4 texCoord0;
+   float4 texCoord1;
+   float3 localNormal;
+   float3 normal;
+   float3 localPoint;
+   float4 worldPoint;
+   float4 point [[position]];
+};
+
 float4
-getTextureColor (constant x3d_Uniforms & uniforms,
+getTextureColor (const bool front_facing,
+                 const x3d_VertexOut in,
+                 constant x3d_Uniforms & uniforms,
                  const texture2d <float> texture0,
                  const texture2d <float> texture1,
                  const sampler sampler0,

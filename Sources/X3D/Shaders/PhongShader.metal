@@ -15,19 +15,6 @@
 
 using namespace metal;
 
-struct x3d_VertexOut
-{
-   float  fogDepth;
-   float4 color;
-   float4 texCoord0;
-   float4 texCoord1;
-   float3 localNormal;
-   float3 normal;
-   float3 localPoint;
-   float4 worldPoint;
-   float4 point [[position]];
-};
-
 vertex
 x3d_VertexOut
 phongVertexShader (const unsigned int vertexId         [[ vertex_id ]],
@@ -85,7 +72,9 @@ getPhongMaterialColor (const bool front_facing,
       {
          if (numTextures > 0)
          {
-            const float4 T = getTextureColor (uniforms,
+            const float4 T = getTextureColor (front_facing,
+                                              in,
+                                              uniforms,
                                               texture0,
                                               texture1,
                                               sampler0,
@@ -109,7 +98,9 @@ getPhongMaterialColor (const bool front_facing,
       {
          if (numTextures > 0)
          {
-            const float4 T = getTextureColor (uniforms,
+            const float4 T = getTextureColor (front_facing,
+                                              in,
+                                              uniforms,
                                               texture0,
                                               texture1,
                                               sampler0,
@@ -189,7 +180,9 @@ getPhongMaterialColor (const bool front_facing,
       {
          if (numTextures > 0)
          {
-            finalColor = getTextureColor (uniforms,
+            finalColor = getTextureColor (front_facing,
+                                          in,
+                                          uniforms,
                                           texture0,
                                           texture1,
                                           sampler0,
@@ -208,7 +201,9 @@ getPhongMaterialColor (const bool front_facing,
       {
          if (numTextures > 0)
          {
-            finalColor = getTextureColor (uniforms,
+            finalColor = getTextureColor (front_facing,
+                                          in,
+                                          uniforms,
                                           texture0,
                                           texture1,
                                           sampler0,

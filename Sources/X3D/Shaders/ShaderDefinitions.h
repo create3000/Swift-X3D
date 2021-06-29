@@ -22,6 +22,18 @@
 
 #define x3d_MaxTextures 2
 
+#define x3d_SPHERE                      0
+#define x3d_CAMERASPACENORMAL           1
+#define x3d_CAMERASPACEPOSITION         2
+#define x3d_CAMERASPACEREFLECTIONVECTOR 3
+#define x3d_SPHERE_LOCAL                4
+#define x3d_COORD                       5
+#define x3d_COORD_EYE                   6
+#define x3d_NOISE                       7
+#define x3d_NOISE_EYE                   8
+#define x3d_SPHERE_REFLECT              9
+#define x3d_SPHERE_REFLECT_LOCAL        10
+
 struct x3d_VertexIn
 {
    float         fogDepth;
@@ -72,6 +84,12 @@ struct x3d_MaterialParameters
    float         transparency;
 };
 
+struct x3d_TextureCoordinateGeneratorParameters
+{
+   int   mode;
+   float parameter [6];
+};
+
 struct x3d_Uniforms
 {
    vector_int4     viewport;
@@ -91,6 +109,8 @@ struct x3d_Uniforms
    
    int numLights;
    int numTextures;
+   
+   struct x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator [x3d_MaxTextures];
 };
 
 #endif /* ShaderDefinitions_h */

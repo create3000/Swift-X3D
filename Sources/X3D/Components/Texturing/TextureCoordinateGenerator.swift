@@ -40,4 +40,126 @@ public final class TextureCoordinateGenerator :
    {
       return TextureCoordinateGenerator (with: executionContext)
    }
+   
+   internal final override func initialize ()
+   {
+      super .initialize ()
+      
+      $mode      .addInterest ("set_mode",      { $0 .set_mode () },      self)
+      $parameter .addInterest ("set_parameter", { $0 .set_parameter () }, self)
+      
+      set_mode ()
+      set_parameter ()
+   }
+   
+   static let modeTypes : [String : Int32] = [
+      "SPHERE" :                      x3d_SPHERE,
+      "CAMERASPACENORMAL" :           x3d_CAMERASPACENORMAL,
+      "CAMERASPACEPOSITION" :         x3d_CAMERASPACEPOSITION,
+      "CAMERASPACEREFLECTIONVECTOR" : x3d_CAMERASPACEREFLECTIONVECTOR,
+      "SPHERE-LOCAL" :                x3d_SPHERE_LOCAL,
+      "COORD" :                       x3d_COORD,
+      "COORD-EYE" :                   x3d_COORD_EYE,
+      "NOISE" :                       x3d_NOISE,
+      "NOISE-EYE" :                   x3d_NOISE_EYE,
+      "SPHERE-REFLECT" :              x3d_SPHERE_REFLECT,
+      "SPHERE-REFLECT-LOCAL" :        x3d_SPHERE_REFLECT_LOCAL,
+   ]
+   
+   private final var modeValue : Int32
+   
+   private final func set_mode ()
+   {
+      modeValue = TextureCoordinateGenerator .modeTypes [mode] ?? x3d_SPHERE
+   }
+   
+   private final var parameterValue : (Float32, Float32, Float32, Float32, Float32, Float32)
+   
+   private final func set_parameter ()
+   {
+      // 0
+      
+      if parameter .count > 0
+      {
+         parameterValue .0 = parameter [0]
+      }
+      else
+      {
+         parameterValue .0 = 0
+      }
+      
+      // 1
+      
+      if parameter .count > 1
+      {
+         parameterValue .1 = parameter [1]
+      }
+      else
+      {
+         parameterValue .1 = 0
+      }
+      
+      // 2
+      
+      if parameter .count > 2
+      {
+         parameterValue .2 = parameter [2]
+      }
+      else
+      {
+         parameterValue .2 = 0
+      }
+      
+      // 3
+      
+      if parameter .count > 3
+      {
+         parameterValue .3 = parameter [3]
+      }
+      else
+      {
+         parameterValue .3 = 0
+      }
+      
+      // 4
+      
+      if parameter .count > 4
+      {
+         parameterValue .4 = parameter [4]
+      }
+      else
+      {
+         parameterValue .4 = 0
+      }
+      
+      // 5
+      
+      if parameter .count > 5
+      {
+         parameterValue .5 = parameter [5]
+      }
+      else
+      {
+         parameterValue .5 = 0
+      }
+   }
+   
+   internal final func setUniforms (_ uniforms : UnsafeMutablePointer <x3d_Uniforms>, to channel : Int)
+   {
+      switch channel
+      {
+         case 0: do
+         {
+            uniforms .pointee .textureCoordinateGenerator .0 .mode      = modeValue
+            uniforms .pointee .textureCoordinateGenerator .0 .parameter = parameterValue
+         }
+         case 1: do
+         {
+            uniforms .pointee .textureCoordinateGenerator .1 .mode      = modeValue
+            uniforms .pointee .textureCoordinateGenerator .1 .parameter = parameterValue
+         }
+         default:
+            break
+      }
+   }
 }

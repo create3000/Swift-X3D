@@ -9,7 +9,7 @@
 #include "Texture.h"
 
 float4
-getTextureColor (const int numTextures,
+getTextureColor (constant x3d_Uniforms & uniforms,
                  const texture2d <float> texture0,
                  const texture2d <float> texture1,
                  const sampler sampler0,

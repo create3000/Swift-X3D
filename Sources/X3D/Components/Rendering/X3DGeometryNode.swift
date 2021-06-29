@@ -31,6 +31,7 @@ public class X3DGeometryNode :
    internal final var hasFogCoord        : Bool = false
    internal final var hasColor           : Bool = false
    internal final var hasTexCoord        : Bool = false
+   internal final var texCoordNode       : X3DTextureCoordinateNode?
 
    // Primitive Handling
    
@@ -351,6 +352,11 @@ public class X3DGeometryNode :
       uniforms .pointee .numLights     = min (Int32 (renderer .globalLights .count + context .localLights .count), x3d_MaxLights)
       uniforms .pointee .fog .fogCoord = hasFogCoord
       uniforms .pointee .colorMaterial = hasColor
+      
+      for channel in 0 ..< min (x3d_MaxTextures, uniforms .pointee .numTextures)
+      {
+         texCoordNode! .setUniforms (uniforms, to: channel)
+      }
       
       // Set uniforms and vertex buffer.
       renderEncoder .setVertexBuffer   (primitivesBuffer,        offset: 0, index: 0)

@@ -42,7 +42,6 @@ public final class ElevationGrid :
    private final var attribNodes  : [X3DVertexAttributeNode] = [ ]
    private final var fogCoordNode : FogCoordinate?
    private final var colorNode    : X3DColorNode?
-   private final var texCoordNode : X3DTextureCoordinateNode?
    private final var normalNode   : X3DNormalNode?
 
    // Construction
@@ -146,7 +145,7 @@ public final class ElevationGrid :
    {
       texCoordNode? .removeInterest ("requestRebuild", self)
       
-      texCoordNode = texCoord? .innerNode as? X3DTextureCoordinateNode
+      texCoordNode = texCoord? .innerNode as? X3DTextureCoordinateNode ?? browser! .defaultTextureCoordinateNode
       
       texCoordNode? .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
    }

@@ -163,7 +163,7 @@ gouraudFragmentShader (const bool front_facing          [[ front_facing ]],
    
    if (uniforms .numTextures > 0)
    {
-      finalColor = getTextureColor (uniforms .numTextures,
+      finalColor = getTextureColor (uniforms,
                                     texture0,
                                     texture1,
                                     sampler0,

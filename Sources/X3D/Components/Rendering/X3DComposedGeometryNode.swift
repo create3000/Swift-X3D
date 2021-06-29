@@ -27,7 +27,6 @@ public class X3DComposedGeometryNode :
    internal final var attribNodes  : [X3DVertexAttributeNode] = [ ]
    internal final var fogCoordNode : FogCoordinate?
    internal final var colorNode    : X3DColorNode?
-   internal final var texCoordNode : X3DTextureCoordinateNode?
    internal final var normalNode   : X3DNormalNode?
    internal final var coordNode    : X3DCoordinateNode?
 
@@ -100,7 +99,7 @@ public class X3DComposedGeometryNode :
    {
       texCoordNode? .removeInterest ("requestRebuild", self)
       
-      texCoordNode = texCoord? .innerNode as? X3DTextureCoordinateNode
+      texCoordNode = texCoord? .innerNode as? X3DTextureCoordinateNode ?? browser! .defaultTextureCoordinateNode
       
       texCoordNode? .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
    }

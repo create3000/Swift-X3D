@@ -85,7 +85,7 @@ getPhongMaterialColor (const bool front_facing,
       {
          if (numTextures > 0)
          {
-            const float4 T = getTextureColor (numTextures,
+            const float4 T = getTextureColor (uniforms,
                                               texture0,
                                               texture1,
                                               sampler0,
@@ -109,7 +109,7 @@ getPhongMaterialColor (const bool front_facing,
       {
          if (numTextures > 0)
          {
-            const float4 T = getTextureColor (numTextures,
+            const float4 T = getTextureColor (uniforms,
                                               texture0,
                                               texture1,
                                               sampler0,
@@ -189,7 +189,7 @@ getPhongMaterialColor (const bool front_facing,
       {
          if (numTextures > 0)
          {
-            finalColor = getTextureColor (numTextures,
+            finalColor = getTextureColor (uniforms,
                                           texture0,
                                           texture1,
                                           sampler0,
@@ -208,7 +208,7 @@ getPhongMaterialColor (const bool front_facing,
       {
          if (numTextures > 0)
          {
-            finalColor = getTextureColor (numTextures,
+            finalColor = getTextureColor (uniforms,
                                           texture0,
                                           texture1,
                                           sampler0,

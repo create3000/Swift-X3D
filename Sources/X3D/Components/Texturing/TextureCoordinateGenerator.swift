@@ -144,7 +144,7 @@ public final class TextureCoordinateGenerator :
       }
    }
    
-   internal final override func setUniforms (_ uniforms : UnsafeMutablePointer <x3d_Uniforms>, to channel : Int)
+   internal final override func setUniforms (_ uniforms : UnsafeMutablePointer <x3d_Uniforms>, to channel : Int32)
    {
       switch channel
       {

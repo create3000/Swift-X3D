@@ -15,12 +15,15 @@ internal final class X3DTexturingContextProperties :
 {
    // Properties
    
-   fileprivate private(set) var defaultTexture : MTLTexture?
-   
+   fileprivate private(set) var defaultTexture : MTLTexture!
+   fileprivate private(set) var defaultTextureCoordinateNode : TextureCoordinate
+ 
    // Construction
    
    internal init (with executionContext : X3DExecutionContext)
    {
+      defaultTextureCoordinateNode = TextureCoordinate (with: executionContext)
+      
       super .init (executionContext .browser!, executionContext)
    }
    
@@ -32,6 +35,8 @@ internal final class X3DTexturingContextProperties :
       let textureLoader = MTKTextureLoader (device: browser! .device!)
       
       defaultTexture = try! textureLoader .newTexture (cgImage: swifty2D .cgImage)
+      
+      defaultTextureCoordinateNode .setup ()
    }
 }
 
@@ -43,6 +48,7 @@ internal protocol X3DTexturingContext : AnyObject
 
 extension X3DTexturingContext
 {
-   internal var minTextureSize : Int { 16 }
-   internal var defaultTexture : MTLTexture { texturingContextProperties .defaultTexture! }
+   internal var minTextureSize               : Int { 16 }
+   internal var defaultTexture               : MTLTexture { texturingContextProperties .defaultTexture }
+   internal var defaultTextureCoordinateNode : TextureCoordinate { texturingContextProperties .defaultTextureCoordinateNode }
 }

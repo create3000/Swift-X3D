@@ -53,27 +53,27 @@ public final class TextureCoordinateGenerator :
    }
    
    static let modeTypes : [String : Int32] = [
-      "SPHERE" :                      x3d_SPHERE,
-      "CAMERASPACENORMAL" :           x3d_CAMERASPACENORMAL,
-      "CAMERASPACEPOSITION" :         x3d_CAMERASPACEPOSITION,
-      "CAMERASPACEREFLECTIONVECTOR" : x3d_CAMERASPACEREFLECTIONVECTOR,
-      "SPHERE-LOCAL" :                x3d_SPHERE_LOCAL,
-      "COORD" :                       x3d_COORD,
-      "COORD-EYE" :                   x3d_COORD_EYE,
-      "NOISE" :                       x3d_NOISE,
-      "NOISE-EYE" :                   x3d_NOISE_EYE,
-      "SPHERE-REFLECT" :              x3d_SPHERE_REFLECT,
-      "SPHERE-REFLECT-LOCAL" :        x3d_SPHERE_REFLECT_LOCAL,
+      "SPHERE" :                      x3d_Sphere,
+      "CAMERASPACENORMAL" :           x3d_CameraSpaceNormal,
+      "CAMERASPACEPOSITION" :         x3d_CameraSpacePosition,
+      "CAMERASPACEREFLECTIONVECTOR" : x3d_CameraSpaceReflectionVector,
+      "SPHERE-LOCAL" :                x3d_SphereLocal,
+      "COORD" :                       x3d_Coord,
+      "COORD-EYE" :                   x3d_CoordEye,
+      "NOISE" :                       x3d_Noise,
+      "NOISE-EYE" :                   x3d_NoiseEye,
+      "SPHERE-REFLECT" :              x3d_SphereReflect,
+      "SPHERE-REFLECT-LOCAL" :        x3d_SphereReflectLocal,
    ]
    
-   private final var modeValue : Int32
+   private final var modeValue : Int32 = x3d_None
    
    private final func set_mode ()
    {
-      modeValue = TextureCoordinateGenerator .modeTypes [mode] ?? x3d_SPHERE
+      modeValue = TextureCoordinateGenerator .modeTypes [mode] ?? x3d_Sphere
    }
    
-   private final var parameterValue : (Float32, Float32, Float32, Float32, Float32, Float32)
+   private final var parameterValue : (Float32, Float32, Float32, Float32, Float32, Float32) = (0, 0, 0, 0, 0, 0)
    
    private final func set_parameter ()
    {
@@ -144,7 +144,7 @@ public final class TextureCoordinateGenerator :
       }
    }
    
-   internal final func setUniforms (_ uniforms : UnsafeMutablePointer <x3d_Uniforms>, to channel : Int)
+   internal final override func setUniforms (_ uniforms : UnsafeMutablePointer <x3d_Uniforms>, to channel : Int)
    {
       switch channel
       {

@@ -387,7 +387,7 @@ public class X3DBackgroundNode :
       uniforms .pointee .projectionMatrix = sphere ? renderer .projectionMatrix .top : .identity
       uniforms .pointee .modelViewMatrix  = sphere ? modelViewMatrix : .identity
       uniforms .pointee .numTextures      = 0
-      uniforms .pointee .fog .type        = x3d_NoFog
+      uniforms .pointee .fog .type        = x3d_None
       uniforms .pointee .lighting         = false
       uniforms .pointee .colorMaterial    = true
 
@@ -443,7 +443,7 @@ public class X3DBackgroundNode :
          uniforms .pointee .modelViewMatrix  = modelViewMatrix
          uniforms .pointee .textureMatrices  = (.identity, .identity)
          uniforms .pointee .numTextures      = Int32 (textureNode .numTextures)
-         uniforms .pointee .fog .type        = x3d_NoFog
+         uniforms .pointee .fog .type        = x3d_None
          uniforms .pointee .lighting         = false
          uniforms .pointee .colorMaterial    = false
 

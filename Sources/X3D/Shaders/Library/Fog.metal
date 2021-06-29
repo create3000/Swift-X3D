@@ -13,7 +13,7 @@ getFogInterpolant (const x3d_FogParameters fog, float fogDepth, float3 worldPoin
 {
    // Returns 0.0 for fog color and 1.0 for material color.
 
-   if (fog .type == x3d_NoFog)
+   if (fog .type == x3d_None)
       return 1;
 
    if (fog .fogCoord)

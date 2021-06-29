@@ -11,7 +11,8 @@
 
 #include <simd/simd.h>
 
-#define x3d_NoFog          0
+#define x3d_None 0
+
 #define x3d_LinearFog      1
 #define x3d_ExponentialFog 2
 
@@ -22,17 +23,17 @@
 
 #define x3d_MaxTextures 2
 
-#define x3d_SPHERE                      0
-#define x3d_CAMERASPACENORMAL           1
-#define x3d_CAMERASPACEPOSITION         2
-#define x3d_CAMERASPACEREFLECTIONVECTOR 3
-#define x3d_SPHERE_LOCAL                4
-#define x3d_COORD                       5
-#define x3d_COORD_EYE                   6
-#define x3d_NOISE                       7
-#define x3d_NOISE_EYE                   8
-#define x3d_SPHERE_REFLECT              9
-#define x3d_SPHERE_REFLECT_LOCAL        10
+#define x3d_Sphere                      1
+#define x3d_CameraSpaceNormal           2
+#define x3d_CameraSpacePosition         3
+#define x3d_CameraSpaceReflectionVector 4
+#define x3d_SphereLocal                 5
+#define x3d_Coord                       6
+#define x3d_CoordEye                    7
+#define x3d_Noise                       8
+#define x3d_NoiseEye                    9
+#define x3d_SphereReflect              10
+#define x3d_SphereReflectLocal         11
 
 struct x3d_VertexIn
 {

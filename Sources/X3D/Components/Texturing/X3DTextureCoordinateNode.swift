@@ -26,4 +26,21 @@ public class X3DTextureCoordinateNode :
    // Member access
    
    internal func get1Point (at : Int) -> Vector4f { Vector4f .zero }
+   
+   internal func setUniforms (_ uniforms : UnsafeMutablePointer <x3d_Uniforms>, to channel : Int)
+   {
+      switch channel
+      {
+         case 0: do
+         {
+            uniforms .pointee .textureCoordinateGenerator .0 .mode = x3d_None
+         }
+         case 1: do
+         {
+            uniforms .pointee .textureCoordinateGenerator .1 .mode = x3d_None
+         }
+         default:
+            break
+      }
+   }
 }

@@ -44,7 +44,7 @@ extension X3DFogObject
          case "EXPONENTIAL":
             return x3d_ExponentialFog
          default:
-            return isHidden ? x3d_NoFog : x3d_LinearFog
+            return isHidden ? x3d_None : x3d_LinearFog
       }
    }
    

@@ -240,7 +240,7 @@ internal class X3DFlyViewer :
 
       uniforms .pointee .projectionMatrix = projectionMatrix
       uniforms .pointee .modelViewMatrix  = .identity
-      uniforms .pointee .fog .type        = x3d_NoFog
+      uniforms .pointee .fog .type        = x3d_None
       uniforms .pointee .colorMaterial    = true
      
       // Set buffers.

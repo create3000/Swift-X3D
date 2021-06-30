@@ -145,7 +145,7 @@ public final class ElevationGrid :
    {
       texCoordNode? .removeInterest ("requestRebuild", self)
       
-      texCoordNode = texCoord? .innerNode as? X3DTextureCoordinateNode ?? browser! .defaultTextureCoordinateNode
+      texCoordNode = texCoord? .innerNode as? X3DTextureCoordinateNode
       
       texCoordNode? .addInterest ("requestRebuild", { $0 .requestRebuild () }, self)
    }

@@ -353,10 +353,11 @@ public class X3DGeometryNode :
       uniforms .pointee .fog .fogCoord = hasFogCoord
       uniforms .pointee .colorMaterial = hasColor
       
-      for channel in 0 ..< min (x3d_MaxTextures, uniforms .pointee .numTextures)
-      {
-         texCoordNode! .setUniforms (uniforms, to: channel)
-      }
+      // Handle TextureCoordinateGenerator node
+      
+      let texCoordNode = texCoordNode ?? browser .defaultTextureCoordinateNode
+      
+      texCoordNode .setUniforms (uniforms)
       
       // Set uniforms and vertex buffer.
       renderEncoder .setVertexBuffer   (primitivesBuffer,        offset: 0, index: 0)

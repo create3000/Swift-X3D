@@ -25,29 +25,29 @@ getTextureCoordinate (const bool front_facing,
       }
       case x3d_Sphere:
       {
-         const float2 N = normalize (front_facing ? in .normal : -in .normal) .xy;
+         const auto N = normalize (front_facing ? in .normal : -in .normal) .xy;
 
          return float4 (N / 2.0 + 0.5, 0.0, 1.0);
       }
       case x3d_CameraSpaceNormal:
       {
-         const float3 N = normalize (front_facing ? in .normal : -in .normal);
+         const auto N = normalize (front_facing ? in .normal : -in .normal);
 
          return float4 (N, 1.0);
       }
       case x3d_CameraSpacePosition:
       {
-         return float4 (in .worldPoint .xyz, 1.0);
+         return float4 (in .cameraPoint .xyz, 1.0);
       }
       case x3d_CameraSpaceReflectionVector:
       {
-         const float3 N = normalize (front_facing ? -in .normal : in .normal);
+         const auto N = normalize (front_facing ? -in .normal : in .normal);
 
-         return float4 (reflect (normalize (in .worldPoint .xyz), N), 1.0);
+         return float4 (reflect (normalize (in .cameraPoint .xyz), N), 1.0);
       }
       case x3d_SphereLocal:
       {
-         const float2 N = normalize (front_facing ? in .localNormal : -in .localNormal) .xy;
+         const auto N = normalize (front_facing ? in .localNormal : -in .localNormal) .xy;
 
          return float4 (N / 2.0 + 0.5, 0.0, 1.0);
       }
@@ -57,7 +57,7 @@ getTextureCoordinate (const bool front_facing,
       }
       case x3d_CoordEye:
       {
-         return float4 (in .worldPoint .xyz, 1.0);
+         return float4 (in .cameraPoint .xyz, 1.0);
       }
       case x3d_Noise:
       {
@@ -71,14 +71,14 @@ getTextureCoordinate (const bool front_facing,
          const auto scale       = float3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
          const auto translation = float3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);
 
-         return float4 (perlin (in .worldPoint .xyz * scale + translation), 1.0);
+         return float4 (perlin (in .cameraPoint .xyz * scale + translation), 1.0);
       }
       case x3d_SphereReflect:
       {
          const auto N   = normalize (front_facing ? -in .normal : in .normal);
          const auto eta = textureCoordinateGenerator .parameter [0];
 
-         return float4 (refract (normalize (in .worldPoint .xyz), N, eta), 1.0);
+         return float4 (refract (normalize (in .cameraPoint .xyz), N, eta), 1.0);
       }
       case x3d_SphereReflectLocal:
       {

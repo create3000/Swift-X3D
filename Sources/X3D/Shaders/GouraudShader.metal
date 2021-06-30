@@ -24,7 +24,7 @@ getGouraudMaterialColor (const bool front_facing,
 {
    const auto color         = in .color;
    const auto normal        = out .normal;
-   const auto point         = out .worldPoint .xyz;
+   const auto point         = out .cameraPoint .xyz;
    const auto numLights     = uniforms .numLights;
    const auto lighting      = uniforms .lighting;
    const auto material      = front_facing ? uniforms .frontMaterial : uniforms .backMaterial;
@@ -127,8 +127,8 @@ gouraudVertexShader (const unsigned int vertexId                      [[ vertex_
    out .localNormal = in .normal;
    out .normal      = uniforms .normalMatrix * in .normal;
    out .localPoint  = in .point .xyz;
-   out .worldPoint  = uniforms .modelViewMatrix * in .point;
-   out .point       = uniforms .projectionMatrix * out .worldPoint;
+   out .cameraPoint = uniforms .modelViewMatrix * in .point;
+   out .point       = uniforms .projectionMatrix * out .cameraPoint;
    out .frontColor  = getGouraudMaterialColor (true,  in, out, uniforms, lightSources);
    out .backColor   = getGouraudMaterialColor (false, in, out, uniforms, lightSources);
 
@@ -163,7 +163,7 @@ gouraudFragmentShader (const bool front_facing          [[ front_facing ]],
    }
 
    finalColor      = getProjectiveTextureColor (finalColor);
-   finalColor .rgb = getFogColor (finalColor .rgb, uniforms .fog, in .fogDepth, in .worldPoint .xyz);
+   finalColor .rgb = getFogColor (finalColor .rgb, uniforms .fog, in .fogDepth, in .cameraPoint .xyz);
    
    return finalColor;
 }

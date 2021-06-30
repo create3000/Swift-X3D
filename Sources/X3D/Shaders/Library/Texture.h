@@ -26,7 +26,7 @@ struct x3d_VertexOut
    float3 localNormal;
    float3 normal;
    float3 localPoint;
-   float4 worldPoint;
+   float4 cameraPoint;
    float4 point [[position]];
 };
 

@@ -31,8 +31,8 @@ phongVertexShader (const unsigned int vertexId         [[ vertex_id ]],
    out .localNormal = in .normal;
    out .normal      = uniforms .normalMatrix * in .normal;
    out .localPoint  = in .point .xyz;
-   out .worldPoint  = uniforms .modelViewMatrix * in .point;
-   out .point       = uniforms .projectionMatrix * out .worldPoint;
+   out .cameraPoint = uniforms .modelViewMatrix * in .point;
+   out .point       = uniforms .projectionMatrix * out .cameraPoint;
 
    return out;
 }
@@ -51,7 +51,7 @@ getPhongMaterialColor (const bool front_facing,
    const auto texCoord0     = in .texCoord0;
    const auto texCoord1     = in .texCoord1;
    const auto normal        = in .normal;
-   const auto point         = in .worldPoint .xyz;
+   const auto point         = in .cameraPoint .xyz;
    const auto numLights     = uniforms .numLights;
    const auto lighting      = uniforms .lighting;
    const auto material      = front_facing ? uniforms .frontMaterial : uniforms .backMaterial;
@@ -232,7 +232,7 @@ phongFragmentShader (const bool front_facing                          [[ front_f
 {
    float4 finalColor = getPhongMaterialColor (front_facing, in, uniforms, lightSources, texture0, texture1, sampler0, sampler1);
    
-   finalColor .rgb = getFogColor (finalColor .rgb, uniforms .fog, in .fogDepth, in .worldPoint .xyz);
+   finalColor .rgb = getFogColor (finalColor .rgb, uniforms .fog, in .fogDepth, in .cameraPoint .xyz);
 
    return finalColor;
 }

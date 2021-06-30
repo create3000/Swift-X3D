@@ -353,8 +353,7 @@ public class X3DGeometryNode :
       uniforms .pointee .fog .fogCoord = hasFogCoord
       uniforms .pointee .colorMaterial = hasColor
       
-      // Handle TextureCoordinateGenerator node
-      
+      // Handle TextureCoordinateGenerator node.
       let texCoordNode = texCoordNode ?? browser .defaultTextureCoordinateNode
       
       texCoordNode .setUniforms (uniforms)

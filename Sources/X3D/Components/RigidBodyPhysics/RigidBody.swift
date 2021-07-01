@@ -27,7 +27,7 @@ public final class RigidBody :
    @SFVec3f    public final var linearVelocity       : Vector3f = .zero
    @SFVec3f    public final var angularVelocity      : Vector3f = .zero
    @SFBool     public final var useFiniteRotation    : Bool = false
-   @SFVec3f    public final var finiteRotationAxis   : Vector3f = .zero
+   @SFVec3f    public final var finiteRotationAxis   : Vector3f = .yAxis
    @SFBool     public final var autoDamp             : Bool = false
    @SFFloat    public final var linearDampingFactor  : Float = 0.001
    @SFFloat    public final var angularDampingFactor : Float = 0.001

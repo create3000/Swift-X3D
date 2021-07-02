@@ -20,12 +20,12 @@ public final class ComposedCubeMapTexture :
 
    // Fields
 
-   @SFNode public final var front  : X3DNode?
-   @SFNode public final var back   : X3DNode?
-   @SFNode public final var left   : X3DNode?
-   @SFNode public final var right  : X3DNode?
-   @SFNode public final var top    : X3DNode?
-   @SFNode public final var bottom : X3DNode?
+   @SFNode public final var frontTexture  : X3DNode?
+   @SFNode public final var backTexture   : X3DNode?
+   @SFNode public final var leftTexture   : X3DNode?
+   @SFNode public final var rightTexture  : X3DNode?
+   @SFNode public final var topTexture    : X3DNode?
+   @SFNode public final var bottomTexture : X3DNode?
 
    // Construction
    
@@ -35,13 +35,20 @@ public final class ComposedCubeMapTexture :
 
       types .append (.ComposedCubeMapTexture)
 
-      addField (.inputOutput, "metadata", $metadata)
-      addField (.inputOutput, "front",    $front)
-      addField (.inputOutput, "back",     $back)
-      addField (.inputOutput, "left",     $left)
-      addField (.inputOutput, "right",    $right)
-      addField (.inputOutput, "top",      $top)
-      addField (.inputOutput, "bottom",   $bottom)
+      addField (.inputOutput, "metadata",      $metadata)
+      addField (.inputOutput, "frontTexture",  $frontTexture)
+      addField (.inputOutput, "backTexture",   $backTexture)
+      addField (.inputOutput, "leftTexture",   $leftTexture)
+      addField (.inputOutput, "rightTexture",  $rightTexture)
+      addField (.inputOutput, "topTexture",    $topTexture)
+      addField (.inputOutput, "bottomTexture", $bottomTexture)
+      
+      addFieldAlias (alias: "front",  name: "frontTexture")
+      addFieldAlias (alias: "back",   name: "backTexture")
+      addFieldAlias (alias: "left",   name: "leftTexture")
+      addFieldAlias (alias: "right",  name: "rightTexture")
+      addFieldAlias (alias: "top",    name: "topTexture")
+      addFieldAlias (alias: "bottom", name: "bottomTexture")
    }
 
    internal final override func create (with executionContext : X3DExecutionContext) -> ComposedCubeMapTexture
